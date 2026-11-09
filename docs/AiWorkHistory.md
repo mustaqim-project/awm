@@ -33,6 +33,70 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-10-387] Google Trends Business Research, Blog Article Production (20 Artikel SEO Edukasi UMKM ID 311-330) & Production Deployment for COOCA
+
+- **Date:** 2026-11-10
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Indonesia & Regulatory Analysis 10 November 2026, 20 Curated SEO Articles (Batch 5: ID 311-330), Zero Em Dash & En Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration (336 Posts Published)
+- **Work Type:** Feature | Content & SEO | Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika tren bisnis, regulasi perpajakan terkini (klarifikasi resmi DJP PMK 49/2026 tentang SPP-TDLN dan transaksi QRIS/transfer bank), momentum Hari Pahlawan 10 November & Gerakan Nasional Bangga Buatan Indonesia (BBI), kurasi UMKM SMEsta Kementerian untuk Harbolnas target Rp40T, mitigasi penipuan paket COD fiktif, manajemen piutang tempo akhir tahun, dan standarisasi operasional kasir serta gudang per 10 November 2026.
+- **Target:**
+  1. Melakukan riset mendalam Google Trends Indonesia & Regulasi Bisnis Nasional tanggal 10 November 2026 dan menyusun dataset intelijen `database/data/articles/trending-research-2026-11-10.json` serta `database/data/articles/keyword-research-2026-11-10.json` (20 topik operasional esensial).
+  2. Memproduksi 20 artikel edukasi bisnis berkualitas tinggi (ID 311 hingga 330) dengan kepatuhan editorial ketat:
+     - Mutlak tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel, tanpa tautan eksternal).
+     - Struktur SEO on-page lengkap: single H1 exact match primary keyword, primary keyword di 100 kata pertama dan minimal satu H2, 4-8 H2, FAQPage (4-6 item), meta title (<= 60 karakter), meta description (120-160 karakter), tabel simulasi data konkret (maksimal 4-5 kolom), penempatan peran Cooca yang jujur (Solo Owner Rp 0 gratis selamanya, tanpa klaim palsu/trial), serta Article JSON-LD Schema.
+     - 100% lolos linter konten (`lint_content.py`) dengan status 0 FAIL.
+  3. Mengimpor seluruh artikel ke database sistem melalui `php artisan blog:import-articles --force` (total 346 berkas artikel terproses, 336 artikel aktif dan terpublikasi dalam database), memperbarui `public/sitemap_blog.xml` (336 postingan aktif), dan memperbarui dataset `blog_links.json` serta `database/data/blog_links.json` (336 tautan artikel unik).
+  4. Memverifikasi render antarmuka `PublicBlogController::show()` untuk seluruh 20 artikel berstatus HTTP 200 OK dengan Schema.org JSON-LD Article dan FAQPage yang valid.
+
+#### 2. What Was Done
+1. **Riset Tren & Regulasi Bisnis Nasional (10 November 2026):**
+   - ID 311: Isu Pajak QRIS dan Transaksi Digital UMKM Berdasarkan Klarifikasi Resmi DJP PMK 49 2026 (`isu-pajak-qris-dan-transaksi-digital-umkm`).
+   - ID 312: Cara Mencegah Retur COD Paket Fiktif Menjelang Lonjakan Harbolnas (`cara-mencegah-retur-cod-paket-fiktif-marketplace`).
+   - ID 313: Strategi Promo Hari Pahlawan Produk Lokal UMKM untuk Menaikkan Penjualan Brand (`strategi-promo-hari-pahlawan-produk-lokal-umkm`).
+   - ID 314: Panduan Pendaftaran Harbolnas UMKM SMEsta Kementerian untuk Akses Etalase Khusus (`panduan-pendaftaran-harbolnas-umkm-portal-smesta`).
+   - ID 315: Cara Mengelola Piutang Usaha dan Penagihan Tempo B2B Agar Arus Kas Akhir Tahun Lancar (`cara-mengelola-piutang-usaha-dan-penagihan-tempo`).
+   - ID 316: SOP Kasir Kafe Jam Sibuk dan Split Bill Mengatasi Antrean Panjang Pelanggan (`sop-kasir-kafe-jam-sibuk-dan-split-bill`).
+   - ID 317: Cara Cuci Gudang Dead Stock Toko Ritel Akhir Tahun untuk Mengamankan Arus Kas (`cara-cuci-gudang-dead-stock-toko-ritel`).
+   - ID 318: Cara Menghitung Upah Lembur Karyawan Toko Saat Flash Sale Sesuai Permenaker (`cara-menghitung-upah-lembur-karyawan-toko-umkm`).
+   - ID 319: Panduan QRIS Cross Border Usaha UMKM untuk Menerima Pembayaran Wisatawan Asing (`panduan-qris-cross-border-usaha-umkm`).
+   - ID 320: Cara Negosiasi Tempo Pembayaran Supplier Bahan Baku Menjelang Tutup Tahun (`cara-negosiasi-tempo-pembayaran-supplier-bahan-baku`).
+   - ID 321: Cara Menghitung Biaya Kemasan Ramah Lingkungan Tanpa Mengorbankan Margin HPP (`cara-menghitung-biaya-kemasan-ramah-lingkungan-hpp`).
+   - ID 322: SOP Penerimaan Barang Supplier Gudang Toko untuk Mencegah Selisih Stok (`sop-penerimaan-barang-supplier-gudang-toko`).
+   - ID 323: Strategi Program Loyalty Point Membership Toko Fisik untuk Lonjakan Repeat Order (`strategi-program-loyalty-point-membership-toko`).
+   - ID 324: Panduan Memilih Jasa Ekspedisi Kurir Toko Online Sesuai Karakteristik Produk (`panduan-memilih-jasa-ekspedisi-kurir-toko-online`).
+   - ID 325: Cara Menyusun Anggaran Operasional Toko UMKM dan Proyeksi Arus Kas Triwulan I 2027 (`cara-menyusun-anggaran-operasional-toko-umkm`).
+   - ID 326: SOP Kas Kecil Petty Cash Toko Ritel dengan Sistem Imprest Dana Tetap (`sop-kas-kecil-petty-cash-toko-ritel-imprest`).
+   - ID 327: Strategi Live Shopping Affiliate TikTok Tokopedia Bersama Kreator Produk Lokal (`strategi-live-shopping-affiliate-tiktok-tokopedia-umkm`).
+   - ID 328: Cara Mengurus Sertifikasi Halal Reguler LPH untuk Usaha Skala Menengah dan Resto (`cara-mengurus-sertifikasi-halal-reguler-lph`).
+   - ID 329: Panduan Standarisasi Resep dan Recipe Costing Franchise untuk Kemitraan Kuliner (`standarisasi-resep-dan-recipe-costing-franchise`).
+   - ID 330: Cara Mengaktifkan Pelanggan Pasif via WhatsApp Melalui Pesan Siaran Tersegmentasi (`cara-mengaktifkan-pelanggan-pasif-via-whatsapp`).
+
+2. **Automated Production & Verification Pipeline:**
+   - Menyusun skrip modular generator Batch 5: `scripts/batch5_common.py`, `scripts/generate_batch5_part1.py` s/d `part4.py`, dan orchestrator `scripts/build_and_validate_batch5.py`.
+   - Menguji ke-20 artikel secara otomatis terhadap linter konten `scripts/lint_content.py` -> 100% lulus (0 FAIL).
+   - Menjalankan `php artisan blog:import-articles --force` -> 346 berkas tersinkronisasi, 336 artikel berstatus Published dalam database MySQL.
+   - Meregenerasi `public/sitemap_blog.xml` (336 postingan aktif) dan menyelaraskan `blog_links.json` serta `database/data/blog_links.json`.
+   - Menjalankan script validasi live controller `scripts/verify_batch5_db.php` -> 20/20 artikel berhasil dirender dengan HTTP 200 OK, tag H1 valid, dan Schema.org JSON-LD terverifikasi.
+
+#### 3. Technical Changes
+- **Files Created:**
+  - `database/data/articles/trending-research-2026-11-10.json`
+  - `database/data/articles/keyword-research-2026-11-10.json`
+  - 20 berkas Markdown (`.md`) dan 20 berkas metadata (`.json`) di `database/data/articles/` (ID 311 hingga 330)
+  - Skrip operasional generator: `scripts/batch5_common.py`, `scripts/generate_batch5_part1.py` s/d `part4.py`, `scripts/build_and_validate_batch5.py`, `scripts/verify_batch5_db.php`
+- **Files Updated:**
+  - `public/sitemap_blog.xml`
+  - `blog_links.json`
+  - `database/data/blog_links.json`
+  - `docs/AiWorkHistory.md`
+- **Database Status:**
+  - 346 entri artikel tersinkronisasi di tabel `posts`, 336 artikel aktif berstatus Published (`published_at <= now()`).
+
 ### [WORK-2026-11-09-386] Google Trends Business Research, Blog Article Production (20 Artikel SEO Edukasi UMKM ID 291-310) & Production Deployment for COOCA
 
 - **Date:** 2026-11-09

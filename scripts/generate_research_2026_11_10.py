@@ -1,0 +1,570 @@
+# scripts/generate_research_2026_11_10.py
+import json, os
+
+trending_data = {
+  "date": "2026-11-10",
+  "batch": 5,
+  "geo": "ID",
+  "category": 3,
+  "category_name": "Bisnis (Business & Industrial / Finance / Retail Operations)",
+  "source": "Google Trends Indonesia & Regulatory Analysis 10 November 2026",
+  "total_topics": 20,
+  "topics": [
+    {
+      "id": 311,
+      "topic": "Klarifikasi Isu Pajak Transaksi Digital dan QRIS UMKM Berdasarkan PMK 49 Tahun 2026",
+      "trending_query": "isu pajak qris dan transaksi digital umkm",
+      "primary_keyword": "isu pajak qris dan transaksi digital umkm",
+      "secondary_keywords": [
+        "pajak qris djp november 2026",
+        "aturan spp tdln pmk 49 tahun 2026",
+        "apakah transfer bank kena pajak baru",
+        "pajak digital luar negeri pmse",
+        "kewajiban pph final umkm setengah persen"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Viralitas rumor pemotongan pajak otomatis pada transaksi QRIS toko fisik per November 2026)",
+      "trending_reason": "Beredar kesalahpahaman luas di kalangan pelaku UMKM bahwa transaksi QRIS dan transfer perbankan harian akan dikenakan pajak baru mulai 9 November 2026. DJP Kemenkeu telah memberikan klarifikasi resmi bahwa regulasi PMK 49 Tahun 2026 merupakan perluasan penunjukan bank dan fintech memungut PPN atas transaksi digital luar negeri (SPP-TDLN), bukan pajak baru untuk transaksi QRIS domestik UMKM.",
+      "credible_sources": [
+        "Direktorat Jenderal Pajak Kementerian Keuangan RI",
+        "Peraturan Menteri Keuangan Nomor 49 Tahun 2026",
+        "Komite Stabilitas Sistem Keuangan Nasional",
+        "Pusat Edukasi Perpajakan Indonesia"
+      ],
+      "msme_opportunity": "Pelaku usaha mikro dapat menjalankan transaksi digital dengan tenang tanpa rasa takut dipotong pajak liar, sambil menjaga kepatuhan pencatatan omzet untuk fasilitas PPh Final 0,5 persen.",
+      "article_angle": "Klarifikasi resmi DJP, perbandingan objek pajak digital luar negeri vs transaksi ritel domestik, dan panduan pembukuan pajak UMKM yang aman.",
+      "slug": "isu-pajak-qris-dan-transaksi-digital-umkm",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 312,
+      "topic": "Cara Mencegah Penipuan Retur COD Paket Fiktif Menjelang Lonjakan Harbolnas",
+      "trending_query": "cara mencegah retur cod paket fiktif",
+      "primary_keyword": "cara mencegah retur cod paket fiktif",
+      "secondary_keywords": [
+        "mitigasi return to seller rts marketplace",
+        "sop verifikasi whatsapp pesanan cod",
+        "pembatalan pesanan akun fiktif marketplace",
+        "rekaman video unboxing retur kurir",
+        "proteksi ongkir bolak balik seller"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Kekhawatiran lonjakan retur COD palsu saat pesta belanja 11.11 dan Harbolnas)",
+      "trending_reason": "Metode pembayaran COD masih disukai pembeli luar kota, namun kerap disalahgunakan untuk pesanan palsu (prank order). Seller menanggung rugi ongkos kirim bolak-balik (RTS), kerusakan kemasan produk, dan potensi penurunan rating toko.",
+      "credible_sources": [
+        "Asosiasi Logistik Indonesia (ALI)",
+        "Pusat Resolusi Seller Marketplace Nasional",
+        "Standar Manajemen Pengiriman Ritel E-Commerce",
+        "Riset Logistik Terpadu Indonesia"
+      ],
+      "msme_opportunity": "Toko online dapat menekan rasio retur COD hingga di bawah 3 persen dengan menerapkan SOP verifikasi nomor WhatsApp otomatis dan pengarsipan rekaman video packing yang kuat.",
+      "article_angle": "Panduan verifikasi pra-pengiriman, template chat konfirmasi pembeli, SOP video packing anti-sengketa, dan prosedur klaim ganti rugi barang rusak ke ekspedisi.",
+      "slug": "cara-mencegah-retur-cod-paket-fiktif-marketplace",
+      "assigned_category": "Operasional"
+    },
+    {
+      "id": 313,
+      "topic": "Strategi Promo Hari Pahlawan 10 November dan Bangga Buatan Indonesia untuk Menaikkan Penjualan Brand Lokal",
+      "trending_query": "strategi promo hari pahlawan produk lokal umkm",
+      "primary_keyword": "strategi promo hari pahlawan produk lokal umkm",
+      "secondary_keywords": [
+        "kampanye bangga buatan indonesia bbi",
+        "ide diskon tematik hari pahlawan toko",
+        "copywriting promosi produk lokal instagram",
+        "bazar virtual umkm hari pahlawan",
+        "storytelling kemerdekaan brand lokal"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Momentum Hari Pahlawan Nasional 10 November untuk mendorong konsumsi produk buatan dalam negeri)",
+      "trending_reason": "Hari Pahlawan membangkitkan sentimen patriotisme ekonomi dan kebanggaan pada produk dalam negeri. Brand UMKM dapat memanfaatkan momentum ini untuk menggaet konsumen baru yang ingin mendukung produk karya anak bangsa.",
+      "credible_sources": [
+        "Kementerian Pariwisata dan Ekonomi Kreatif RI",
+        "Gerakan Nasional Bangga Buatan Indonesia (GNBBI)",
+        "Dewan Kerajinan Nasional (Dekranas)",
+        "Asosiasi Pengusaha Ritel Indonesia (Aprindo)"
+      ],
+      "msme_opportunity": "Brand lokal dapat mengonversi antusiasme patriotik menjadi transaksi riil dengan paket bundling produk lokal, penawaran diskon tematik, dan konten storytelling autentik nusantara.",
+      "article_angle": "Penyusunan promo Hari Pahlawan tanpa merusak margin, strategi konten storytelling media sosial, dan penataan etalase khusus produk lokal.",
+      "slug": "strategi-promo-hari-pahlawan-produk-lokal-umkm",
+      "assigned_category": "Marketing"
+    },
+    {
+      "id": 314,
+      "topic": "Panduan Pendaftaran Road to Harbolnas 2026 Melalui Portal SMEsta Kementerian UMKM",
+      "trending_query": "panduan pendaftaran harbolnas umkm smesta",
+      "primary_keyword": "panduan pendaftaran harbolnas umkm smesta",
+      "secondary_keywords": [
+        "target transaksi harbolnas empat puluh triliun",
+        "kurasi produk lokal binaan pemerintah smesta",
+        "etalase khusus umkm marketplace nasional",
+        "persyaratan legalitas nib dan sertifikat halal",
+        "pelatihan pemasaran digital road to harbolnas"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Pemerintah menargetkan transaksi Harbolnas 2026 Rp40 triliun dan membuka pendaftaran kurasi etalase khusus)",
+      "trending_reason": "Kemenko Pemberdayaan Masyarakat dan Kementerian UMKM mematok target Harbolnas 2026 sebesar Rp40 triliun dan mewajibkan e-commerce menyediakan etalase khusus UMKM lokal. Pendaftaran dibuka melalui portal resmi SMEsta.",
+      "credible_sources": [
+        "Kementerian UMKM RI (SMEsta.id)",
+        "Kemenko Pemberdayaan Masyarakat RI",
+        "Asosiasi E-Commerce Indonesia (idEA)",
+        "Kementerian Perdagangan RI"
+      ],
+      "msme_opportunity": "Jenama lokal berkesempatan memperoleh sorotan trafik prioritas di marketplace terkemuka, program pembinaan mutu, dan fasilitas promosi bersubsidi pemerintah.",
+      "article_angle": "Langkah pendaftaran di portal SMEsta, syarat kurasi dokumen usaha, optimasi katalog produk, dan strategi memaksimalkan etalase khusus Harbolnas.",
+      "slug": "panduan-pendaftaran-harbolnas-umkm-portal-smesta",
+      "assigned_category": "Marketing & WhatsApp"
+    },
+    {
+      "id": 315,
+      "topic": "Cara Mengelola Piutang Usaha dan Penagihan Tempo B2B Agar Arus Kas Akhir Tahun Lancar",
+      "trending_query": "cara mengelola piutang usaha dan penagihan tempo",
+      "primary_keyword": "cara mengelola piutang usaha dan penagihan tempo",
+      "secondary_keywords": [
+        "aging schedule umur piutang usaha toko",
+        "sop penagihan invoice jatuh tempo whatsapp",
+        "diskon pembayaran cepat early payment discount",
+        "mitigasi kredit macet piutang dagang b2b",
+        "days sales outstanding dso arus kas"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kekhawatiran invoice macet dan keterlambatan pembayaran tempo jelang penutupan tahun buku 2026)",
+      "trending_reason": "Pelaku usaha pemasok dan distributor sering mengalami kemacetan arus kas di kuartal akhir karena mitra bisnis menunda pelunasan faktur tempo. Lemahnya pemantauan jadwal jatuh tempo memicu risiko kerugian piutang tak tertagih.",
+      "credible_sources": [
+        "Ikatan Akuntan Indonesia (IAI)",
+        "Lembaga Manajemen Keuangan Usaha Nasional",
+        "Otoritas Jasa Keuangan (OJK)",
+        "Standar Pengelolaan Modal Kerja Perusahaan Ritel"
+      ],
+      "msme_opportunity": "Bisnis dapat mempercepat perputaran kas dan memangkas waktu penagihan piutang hingga 30 persen melalui tabel penuaan piutang (aging schedule) dan pengingat faktur otomatis via WhatsApp.",
+      "article_angle": "Struktur lembar aging schedule piutang, template pesan WhatsApp penagihan bertahap, formula early payment discount 2/10 net 30, dan prosedur penanganan komplain faktur.",
+      "slug": "cara-mengelola-piutang-usaha-dan-penagihan-tempo",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 316,
+      "topic": "SOP Kasir Jam Sibuk Mengatasi Antrean Panjang dan Split Bill Kafe Restoran",
+      "trending_query": "sop kasir kafe jam sibuk dan split bill",
+      "primary_keyword": "sop kasir kafe jam sibuk dan split bill",
+      "secondary_keywords": [
+        "alur antrean kasir cepat rush hour resto",
+        "cara membagi tagihan split bill pos kasir",
+        "qris dinamis customer display meja kasir",
+        "pencegahan selisih uang register kasir",
+        "standar pelayanan kru kasir kafe modern"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Keluhan antrean mengular di meja kasir saat jam makan siang dan kendala membagi bon tagihan per pelanggan)",
+      "trending_reason": "Saat jam makan siang dan akhir pekan, antrean kasir kafe kerap macet karena pesanan rombongan yang meminta tagihan dipisah (split bill) secara manual, memicu kepanikan kasir dan risiko salah hitung uang kembalian.",
+      "credible_sources": [
+        "Asosiasi Pengusaha Kafe dan Restoran Indonesia (Apkrindo)",
+        "Standar Kompetensi Kerja Nasional Indonesia (SKKNI) Kasir",
+        "Pusat Studi Pelayanan Hospitality Nusantara"
+      ],
+      "msme_opportunity": "Kafe dapat memproses transaksi di bawah 45 detik per pelanggan, menghilangkan antrean panjang, dan menjaga kepuasan pelanggan tetap prima saat jam sibuk.",
+      "article_angle": "Alur pembagian tugas kasir dan pengantar nota, panduan teknis fitur split bill pada software kasir POS, pemanfaatan QRIS dinamis, dan prosedur rekonsiliasi kas register.",
+      "slug": "sop-kasir-kafe-jam-sibuk-dan-split-bill",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 317,
+      "topic": "Cara Mengidentifikasi Dead Stock dan Strategi Cuci Gudang Akhir Tahun Toko Ritel",
+      "trending_query": "cara cuci gudang dead stock toko ritel",
+      "primary_keyword": "cara cuci gudang dead stock toko ritel",
+      "secondary_keywords": [
+        "identifikasi persediaan slow moving toko",
+        "strategi flash sale clearance sale akhir tahun",
+        "teknik bundling produk likuidasi modal",
+        "analisis rasio perputaran persediaan barang",
+        "penghapusan persediaan buku akuntansi toko"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Pemilik toko ritel bersiap membersihkan barang menumpuk sebelum tutup buku akhir tahun)",
+      "trending_reason": "Barang mengendap lebih dari tiga bulan mengunci modal kerja, menghabiskan ruang simpan rak, dan berisiko mengalami penurunan kualitas. Menjelang akhir tahun, toko perlu menguras stok lama tanpa merusak persepsi harga produk utama.",
+      "credible_sources": [
+        "Asosiasi Ritel Indonesia",
+        "Supply Chain Management Institute",
+        "Standar Akuntansi Persediaan Barang Dagang Indonesia"
+      ],
+      "msme_opportunity": "Toko ritel dapat mencairkan dana yang tertanam di stok mati menjadi uang tunai segar untuk kulakan produk baru awal tahun melalui program cuci gudang kreatif dan bundling cerdas.",
+      "article_angle": "Matriks identifikasi stok mati berbasis perputaran barang, rumus diskon bertahap penyelamat modal, teknik bundling produk laris dan lambat, serta pencatatan akuntansi persediaan akhir.",
+      "slug": "cara-cuci-gudang-dead-stock-toko-ritel",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 318,
+      "topic": "Perhitungan Upah Lembur Karyawan Toko Saat Kampanye Flash Sale Sesuai Permenaker",
+      "trending_query": "cara menghitung upah lembur karyawan toko",
+      "primary_keyword": "cara menghitung upah lembur karyawan toko",
+      "secondary_keywords": [
+        "rumus upah lembur permenaker nomor 35 tahun 2021",
+        "perhitungan lembur jam pertama dan berikutnya",
+        "kompensasi lembur shift malam packing harbolnas",
+        "batas maksimal jam lembur karyawan ritel",
+        "slip gaji transparan karyawan toko umkm"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Lonjakan shift lembur karyawan saat kampanye belanja online membutuhkan kepatuhan perhitungan upah resmi)",
+      "trending_reason": "Peak season pesanan belanja online memaksa toko memberlakukan jam kerja lembur untuk packing dan pengiriman. Pemilik usaha wajib menghitung upah lembur secara tepat sesuai aturan ketenagakerjaan demi keadilan dan keharmonisan tim.",
+      "credible_sources": [
+        "Kementerian Ketenagakerjaan RI",
+        "Peraturan Pemerintah Nomor 35 Tahun 2021",
+        "Dinas Tenaga Kerja dan Transmigrasi Daerah",
+        "Pusat Konsultasi Hubungan Industrial Indonesia"
+      ],
+      "msme_opportunity": "Pengusaha menjaga kepatuhan hukum ketenagakerjaan, menciptakan transparansi slip gaji, dan memotivasi semangat kerja staf dengan pembayaran upah lembur yang presisi.",
+      "article_angle": "Rumus dasar upah sejam (1/173 kali gaji sebulan), perkalian tarif lembur jam kerja biasa vs hari libur resmi, contoh simulasi riil, dan pencatatan lembar tugas lembur.",
+      "slug": "cara-menghitung-upah-lembur-karyawan-toko-umkm",
+      "assigned_category": "Strategi & Operasional"
+    },
+    {
+      "id": 319,
+      "topic": "Panduan Pemanfaatan QRIS Cross-Border untuk Penjualan Produk Kreatif Wisata dan Ekspor Regional",
+      "trending_query": "panduan qris cross border usaha umkm",
+      "primary_keyword": "panduan qris cross border usaha umkm",
+      "secondary_keywords": [
+        "qris antarnegara wisatawan asing asean",
+        "pembayaran wisatawan thailand malaysia singapura",
+        "kurs konversi otomatis rupiah qris merchant",
+        "penjualan toko suvenir dan oleh oleh nusantara",
+        "registrasi merchant qris cross border bank indonesia"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kenaikan kunjungan wisatawan mancanegara dan integrasi pembayaran QRIS di kawasan ASEAN)",
+      "trending_reason": "Bank Indonesia telah mengintegrasikan QRIS dengan sistem pembayaran negara tetangga (Thailand, Malaysia, Singapura). Merchant toko oleh-oleh, kriya, dan restoran kini bisa menerima pembayaran digital dari pelancong asing secara langsung.",
+      "credible_sources": [
+        "Bank Indonesia (bi.go.id)",
+        "Asosiasi Sistem Pembayaran Indonesia (ASPI)",
+        "Kementerian Pariwisata dan Ekonomi Kreatif RI",
+        "Pusat Kajian Integrasi Keuangan Kawasan Regional"
+      ],
+      "msme_opportunity": "Toko produk kreatif wisata dapat mempermudah turis bertransaksi tanpa repot menukar uang tunai kertas, meningkatkan nilai belanja per kunjungan, dan menerima dana bersih dalam rupiah.",
+      "article_angle": "Mekanisme kerja transaksi QRIS antarnegara, panduan pendaftaran bagi merchant lokal, simulasi penyelesaian dana (settlement) rupiah, dan tips melayani wisatawan asing di kasir.",
+      "slug": "panduan-qris-cross-border-usaha-umkm",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 320,
+      "topic": "Cara Negosiasi Perpanjangan Tempo Pembayaran Supplier Menjelang Tutup Tahun",
+      "trending_query": "cara negosiasi tempo pembayaran supplier bahan baku",
+      "primary_keyword": "cara negosiasi tempo pembayaran supplier bahan baku",
+      "secondary_keywords": [
+        "term of payment net tiga puluh net empat puluh lima",
+        "rekanan supplier bahan baku bisnis kuliner ritel",
+        "purchase order resmi dokumen pengajuan tempo",
+        "strategi menjaga hubungan baik pemasok bahan",
+        "manajemen likuiditas kas operasional toko"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Menengah (Kebutuhan amankan pasokan bahan baku di tengah keterbatasan likuiditas kas akhir tahun)",
+      "trending_reason": "Lonjakan harga bahan baku dan kebutuhan stok penyangga menjelang liburan menekan arus kas toko. Menegosiasikan perpanjangan batas pembayaran (Account Payable) dari net-14 menjadi net-30 atau net-45 memberi kelonggaran perputaran modal.",
+      "credible_sources": [
+        "Supply Chain Management Indonesia",
+        "Pusat Riset Negosiasi Bisnis B2B Nasional",
+        "Komunitas Pengusaha Kuliner dan Manufaktur Kecil Indonesia"
+      ],
+      "msme_opportunity": "Pengusaha dapat mengamankan pasokan barang dagang secara stabil tanpa harus menguras saldo kas tunai secara mendadak di masa sibuk.",
+      "article_angle": "Taktik negosiasi etis berbasis riwayat bayar lancar, skema komitmen volume pembelian berulang, penyusunan Purchase Order formal, dan mitigasi penolakan pengajuan tempo.",
+      "slug": "cara-negosiasi-tempo-pembayaran-supplier-bahan-baku",
+      "assigned_category": "Invoice, PO & SO"
+    },
+    {
+      "id": 321,
+      "topic": "Cara Menghitung Biaya Kemasan Ramah Lingkungan Tanpa Mengorbankan Margin HPP",
+      "trending_query": "cara menghitung biaya kemasan ramah lingkungan",
+      "primary_keyword": "cara menghitung biaya kemasan ramah lingkungan",
+      "secondary_keywords": [
+        "biaya kemasan biodegradable paper bag kafe",
+        "kalkulasi hpp packaging ramah lingkungan",
+        "kebijakan larangan kantong plastik daerah",
+        "skema penambahan biaya kemasan eco friendly kasir",
+        "strategi pembelian grosir kemasan makanan minuman"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Penegakan regulasi pembatasan plastik sekali pakai di berbagai kota mendorong adopsi kemasan hijau)",
+      "trending_reason": "Peraturan daerah kian memperketat sanksi kantong plastik sekali pakai, sementara harga kemasan ramah lingkungan lebih mahal 20 hingga 40 persen. Usaha kuliner dan ritel butuh kalkulasi HPP yang presisi agar peralihan kemasan tidak memakan laba bersih.",
+      "credible_sources": [
+        "Kementerian Lingkungan Hidup dan Kehutanan RI",
+        "Asosiasi Kemasan Makanan dan Daur Ulang Indonesia",
+        "Pusat Studi Keberlanjutan Bisnis UMKM"
+      ],
+      "msme_opportunity": "Brand dapat menonjolkan citra peduli lingkungan, memenuhi kepatuhan regulasi lingkungan, dan menjaga margin keuntungan bersih tetap stabil melalui penetapan harga kemasan yang tepat.",
+      "article_angle": "Komponen biaya kemasan per unit porsi, simulasi inclusion fee pada harga menu vs opsi tambahan di kasir POS, strategi pembelian volume grosir, dan tips desain branding ramah lingkungan.",
+      "slug": "cara-menghitung-biaya-kemasan-ramah-lingkungan-hpp",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 322,
+      "topic": "SOP Penerimaan Barang dari Supplier Gudang Toko untuk Mencegah Selisih Stok",
+      "trending_query": "sop penerimaan barang supplier gudang toko",
+      "primary_keyword": "sop penerimaan barang supplier gudang toko",
+      "secondary_keywords": [
+        "alur receiving barang masuk gudang ritel",
+        "pemeriksaan fisik purchase order surat jalan",
+        "berita acara serah terima barang rusak supplier",
+        "pencegahan selisih stok opname toko fisik",
+        "input kartu persediaan barang digital cepat"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Sering terjadi kehilangan stok dan ketidaksesuaian barang datang karena absennya SOP pemeriksaan barang masuk)",
+      "trending_reason": "Banyak toko ritel baru menyadari barang datang kurang jumlah, salah varian, atau cacat berhari-hari setelah sopir pemasok pergi. Ketiadaan tanda terima formal mempersulit klaim ganti rugi ke supplier.",
+      "credible_sources": [
+        "Lembaga Logistik Indonesia",
+        "Standar Prosedur Operasional Pergudangan Ritel Modern",
+        "Pedoman Pengendalian Mutu Persediaan Dagang"
+      ],
+      "msme_opportunity": "Staf gudang dapat memvalidasi akurasi pasokan seratus persen, menghentikan kebocoran barang rusak seketika, dan menyinkronkan data stok fisik dengan sistem kasir.",
+      "article_angle": "Alur tiga tahap penerimaan barang (verifikasi dokumen PO vs surat jalan, audit fisik blind count, penandatanganan berita acara), tata cara menolak barang cacat, dan input langsung ke kartu stok digital.",
+      "slug": "sop-penerimaan-barang-supplier-gudang-toko",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 323,
+      "topic": "Strategi Program Membership Tier dan Poin Loyalitas Pelanggan Toko Fisik",
+      "trending_query": "strategi program loyalty point membership toko",
+      "primary_keyword": "strategi program loyalty point membership toko",
+      "secondary_keywords": [
+        "desain sistem membership poin belanja toko",
+        "peningkatan repeat order pelanggan setia ritel",
+        "skema tingkatan tier silver gold platinum",
+        "perhitungan nilai konversi poin reward aman",
+        "integrasi loyalty program whatsapp kasir pos"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Toko ritel membutuhkan cara mengikat pelanggan tetap agar tidak berpindah ke kompetitor)",
+      "trending_reason": "Mempertahankan pelanggan lama jauh lebih hemat biaya daripada mencari konsumen baru. Program loyalitas berbasis tingkatan membership (tier) dan poin belanja digital terbukti meningkatkan nilai belanja rata-rata dan frekuensi kunjungan.",
+      "credible_sources": [
+        "Asosiasi Pengusaha Ritel Indonesia (Aprindo)",
+        "Riset Manajemen Loyalitas Pelanggan Konsumen Ritel",
+        "Pusat Kajian Pemasaran Relasional Indonesia"
+      ],
+      "msme_opportunity": "Toko fisik dapat menciptakan hubungan erat dengan pelanggan, memberikan reward belanja yang menarik tanpa membakar uang modal, dan memantau riwayat preferensi produk konsumen.",
+      "article_angle": "Rumus konversi poin belanja yang aman bagi laba kotor, syarat kenaikan jenjang keanggotaan, integrasi nomor WhatsApp pelanggan di layar kasir POS, dan strategi promo eksklusif member.",
+      "slug": "strategi-program-loyalty-point-membership-toko",
+      "assigned_category": "CRM & Loyalty"
+    },
+    {
+      "id": 324,
+      "topic": "Panduan Memilih Jasa Ekspedisi dan Kurir Logistik Toko Online Sesuai Karakteristik Produk",
+      "trending_query": "panduan memilih jasa ekspedisi kurir toko online",
+      "primary_keyword": "panduan memilih jasa ekspedisi kurir toko online",
+      "secondary_keywords": [
+        "komparasi layanan kurir instan reguler kargo",
+        "rumus hitung berat volumetrik kubikasi paket",
+        "pengiriman makanan beku cold chain ekspedisi",
+        "mitigasi paket rusak terlambat sampai konsumen",
+        "integrasi multi ekspedisi resi pengiriman otomatis"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Banyaknya komplain pelanggan mengenai paket lambat sampai atau biaya ongkos kirim membengkak karena hitungan volume)",
+      "trending_reason": "Setiap jasa pengiriman memiliki jangkauan wilayah, durasi ketepatan waktu (SLA), dan toleransi timbangan berat volume yang berbeda. Ketidaktepatan memilih mitra logistik berisiko menimbulkan komplain pembeli dan beban selisih ongkir.",
+      "credible_sources": [
+        "Asosiasi Perusahaan Jasa Pengiriman Ekspres Indonesia (Asperindo)",
+        "Survei Kepuasan Pelanggan Logistik E-Commerce Nasional",
+        "Pedoman Pengiriman Logistik Dingin Indonesia"
+      ],
+      "msme_opportunity": "Seller dapat menentukan mitra ekspedisi terbaik berdasarkan kategori produk (instan untuk kuliner segar, reguler untuk barang ringan, kargo untuk produk besar), menekan biaya logistik, dan menjaga ulasan bintang lima.",
+      "article_angle": "Matriks perbandingan kurir instan vs reguler vs kargo, rumus berat volume panjang kali lebar kali tinggi dibagi enam ribu, SOP packing barang rentan pecah, dan integrasi nomor resi otomatis.",
+      "slug": "panduan-memilih-jasa-ekspedisi-kurir-toko-online",
+      "assigned_category": "Operasional"
+    },
+    {
+      "id": 325,
+      "topic": "Cara Menyusun Anggaran Operasional dan Proyeksi Arus Kas Triwulan Pertama 2027",
+      "trending_query": "cara menyusun anggaran operasional toko umkm",
+      "primary_keyword": "cara menyusun anggaran operasional toko umkm",
+      "secondary_keywords": [
+        "proyeksi cash flow operasional awal tahun",
+        "pemisahan biaya tetap fixed cost dan variabel",
+        "metode penyusunan anggaran bottom up toko ritel",
+        "alokasi dana cadangan pajak dan perawatan alat",
+        "manajemen likuiditas musim sepi low season"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Menengah (Perencanaan keuangan bisnis menyambut tahun anggaran baru 2027)",
+      "trending_reason": "Bulan Januari dan Februari biasanya menjadi periode penurunan belanja konsumen (low season). Tanpa anggaran yang matang, toko rentan kehabisan kas untuk membayar sewa tempat, gaji karyawan, dan tagihan listrik.",
+      "credible_sources": [
+        "Ikatan Akuntan Indonesia (IAI)",
+        "Kementerian Koperasi dan UKM RI",
+        "Pedoman Perencanaan Keuangan Bisnis Usaha Kecil"
+      ],
+      "msme_opportunity": "Pemilik usaha dapat melewati periode sepi awal tahun dengan tenang karena memiliki cadangan kas operasional yang memadai dan kontrol pengeluaran biaya yang disiplin.",
+      "article_angle": "Langkah menyusun anggaran bottom-up, cara memilah biaya tetap vs variabel, tabel simulasi arus kas mingguan, dan strategi membentuk dana cadangan darurat tiga bulan operasional.",
+      "slug": "cara-menyusun-anggaran-operasional-toko-umkm",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 326,
+      "topic": "SOP Pengelolaan Kas Kecil Petty Cash Toko Ritel dengan Sistem Imprest",
+      "trending_query": "sop kas kecil petty cash toko ritel",
+      "primary_keyword": "sop kas kecil petty cash toko ritel",
+      "secondary_keywords": [
+        "pengelolaan petty cash sistem imprest dana tetap",
+        "format voucher kas kecil bukti nota pengeluaran",
+        "pencegahan kebocoran uang kasir belanja operasional",
+        "prosedur reimbursement kas kecil mingguan",
+        "tanggung jawab pemegang kasir kas kecil toko"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kerap terjadi selisih kas kasir akibat pengeluaran receh seperti galon air, bensin kurir, ATK yang tidak tercatat rapi)",
+      "trending_reason": "Pengeluaran operasional kecil sering kali diambil langsung dari laci kasir penjualan tanpa ada bukti kuitansi atau nota fisik. Kebiasaan ini menyebabkan pembukuan berantakan dan rawan penyalahgunaan uang usaha.",
+      "credible_sources": [
+        "Standar Akuntansi Keuangan Entitas Mikro Kecil Menengah",
+        "Pedoman Pengendalian Kas Ritel Internal",
+        "Asosiasi Auditor Internal Indonesia"
+      ],
+      "msme_opportunity": "Toko dapat mengunci batas dana kas kecil, memastikan setiap rupiah pengeluaran operasional memiliki nota bukti yang sah, dan mempermudah rekonsiliasi kas mingguan.",
+      "article_angle": "Penerapan sistem imprest plafon tetap, alur pengeluaran dengan formulir voucher kas kecil, penunjukan satu penanggung jawab laci petty cash, dan tahapan pengisian kembali saldo.",
+      "slug": "sop-kas-kecil-petty-cash-toko-ritel-imprest",
+      "assigned_category": "Keuangan"
+    },
+    {
+      "id": 327,
+      "topic": "Strategi Live Streaming Shopping TikTok dan Tokopedia Bersama Affiliate Creator",
+      "trending_query": "strategi live shopping affiliate tiktok tokopedia",
+      "primary_keyword": "strategi live shopping affiliate tiktok tokopedia",
+      "secondary_keywords": [
+        "kolaborasi affiliate creator tiktok shop tokopedia",
+        "skema komisi afiliasi produk lokal menguntungkan",
+        "briefing host live streaming penjualan produk",
+        "teknik semat pin keranjang kuning traffic tinggi",
+        "evaluasi return on investment siaran langsung"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Sangat Tinggi (Format siaran langsung menjadi motor utama penjualan diskon Harbolnas)",
+      "trending_reason": "Tren berbelanja sambil menonton siaran langsung kian digemari masyarakat. Berkolaborasi dengan jejaring affiliate creator memungkinkan brand UMKM menjual produk secara masif tanpa harus merekrut tim siaran langsung in-house.",
+      "credible_sources": [
+        "Pusat Riset Social Commerce Indonesia",
+        "Pedoman Edukasi Seller TikTok Shop by Tokopedia",
+        "Komunitas Kreator Afiliasi Digital Nusantara"
+      ],
+      "msme_opportunity": "Jenama lokal dapat melipatgandakan omzet harian dengan mendistribusikan sampel produk ke puluhan affiliate creator yang memiliki audiens setia sesuai target pasar.",
+      "article_angle": "Penetapan persentase komisi afiliasi yang aman dari gerusan margin, lembar contekan produk (product cheat sheet) untuk host, taktik menaikkan interaksi siaran, dan analisis konversi penjualan.",
+      "slug": "strategi-live-shopping-affiliate-tiktok-tokopedia",
+      "assigned_category": "Marketing"
+    },
+    {
+      "id": 328,
+      "topic": "Cara Mengurus Sertifikasi Halal Jalur Reguler untuk Usaha Skala Menengah dan Daging Olahan",
+      "trending_query": "cara mengurus sertifikasi halal reguler lph",
+      "primary_keyword": "cara mengurus sertifikasi halal reguler lph",
+      "secondary_keywords": [
+        "perbedaan halal self declare sehati dan reguler",
+        "audit lembaga pemeriksa halal lph bpjph",
+        "penyusunan manual sistem jaminan produk halal sjph",
+        "dokumen asal bahan baku hewani rumah potong hewan",
+        "simulasi biaya sertifikasi halal mandiri usaha"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Kewajiban halal bagi produk olahan hewani dan usaha menengah yang tidak bisa memakai jalur self-declare gratis)",
+      "trending_reason": "Banyak pengusaha kuliner olahan daging (bakso, sosis, katering, restoran ayam) keliru mengira bisa memakai jalur gratis self-declare SEHATI. Bahan hewani memiliki titik kritis kehalalan tinggi sehingga wajib diaudit melalui jalur reguler oleh Lembaga Pemeriksa Halal (LPH).",
+      "credible_sources": [
+        "Badan Penyelenggara Jaminan Produk Halal (BPJPH Kemenag RI)",
+        "Majelis Ulama Indonesia (MUI)",
+        "Lembaga Pengkajian Pangan, Obat-obatan, dan Kosmetika (LPPOM)",
+        "Peraturan Pemerintah Nomor 42 Tahun 2024"
+      ],
+      "msme_opportunity": "Produsen makanan olahan dan resto dapat mengantongi sertifikat halal resmi, memperluas jangkauan ke pasar modern dan katering korporat, serta terhindar dari sanksi pengawasan produk beredar.",
+      "article_angle": "Perbedaan tegas jalur reguler vs self-declare, tahapan audit oleh LPH, panduan menyusun dokumen manual SJPH, penyiapan surat jaminan bahan hewani bersertifikat halal, dan transparansi rincian biaya audit.",
+      "slug": "cara-mengurus-sertifikasi-halal-reguler-lph",
+      "assigned_category": "Pajak & Legalitas"
+    },
+    {
+      "id": 329,
+      "topic": "Panduan Standarisasi Resep dan Recipe Costing untuk Usaha Waralaba Franchise Kuliner",
+      "trending_query": "standarisasi resep dan recipe costing franchise",
+      "primary_keyword": "standarisasi resep dan recipe costing franchise",
+      "secondary_keywords": [
+        "standard recipe card takaran gramasi kuliner",
+        "recipe costing kalkulasi cogs franchise cabang",
+        "pencegahan pemborosan bumbu bahan baku dapur",
+        "sistem bumbu premix pusat kemitraan kuliner",
+        "lembar portion control chart juru masak cabang"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Banyaknya brand kuliner lokal yang ingin membuka sistem kemitraan atau cabang baru namun terhambat rasa tidak konsisten)",
+      "trending_reason": "Kegagalan ekspansi cabang waralaba sering dipicu oleh takaran bumbu yang diserahkan pada selera juru masak cabang. Ketidakseragaman takaran merusak rasa makanan, membuat HPP membengkak, dan memicu kekecewaan mitra.",
+      "credible_sources": [
+        "Asosiasi Franchise Indonesia (AFI)",
+        "Asosiasi Lisensi Indonesia (Asensi)",
+        "Standar Manajemen Operasional Dapur Restoran Rantai Nasional"
+      ],
+      "msme_opportunity": "Pemilik usaha kuliner dapat menduplikasi kualitas menu secara identik di puluhan cabang melalui kartu resep baku, pasokan bumbu premix terpusat, dan lembar kontrol porsi yang terukur.",
+      "article_angle": "Pembuatan formulir Standard Recipe Card berskala gramasi dan mililiter, metode recipe costing akurat, strategi bumbu premix kemitraan, dan pelatihan juru masak cabang.",
+      "slug": "standarisasi-resep-dan-recipe-costing-franchise",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 330,
+      "topic": "Strategi Mengaktifkan Pelanggan Pasif Melalui Siaran Pesan WhatsApp Tersegmentasi",
+      "trending_query": "cara mengaktifkan pelanggan pasif via whatsapp",
+      "primary_keyword": "cara mengaktifkan pelanggan pasif via whatsapp",
+      "secondary_keywords": [
+        "segmentasi data pelanggan rfm toko umkm",
+        "reaktivasi pelanggan pasif churn enam puluh hari",
+        "copywriting pesan broadcast whatsapp ramah",
+        "voucher sambut kembali welcome back discount",
+        "kepatuhan kebijakan anti spam whatsapp business"
+      ],
+      "search_intent": "Informational",
+      "search_interest": "Tinggi (Penurunan omzet akibat hilangnya pembeli lama yang tidak pernah melakukan transaksi ulang)",
+      "trending_reason": "Mengirim pesan siaran massal tanpa segmentasi ke pelanggan pasif rawan dilaporkan sebagai spam dan berisiko pemblokiran nomor WhatsApp bisnis. Diperlukan strategi pesan personal berbasis waktu transaksi terakhir untuk mengajak mereka kembali berbelanja.",
+      "credible_sources": [
+        "Kebijakan WhatsApp Business Policy Resmi",
+        "Riset Conversational Commerce Indonesia",
+        "Asosiasi Pemasaran Digital dan CRM Indonesia"
+      ],
+      "msme_opportunity": "Toko ritel dan online dapat membangkitkan kembali 15 hingga 25 persen pelanggan pasif menjadi pembeli aktif dengan biaya komunikasi yang sangat murah dibandingkan beriklan ke calon pelanggan baru.",
+      "article_angle": "Kriteria segmentasi pelanggan tidur berdasarkan Recency-Frequency-Monetary (RFM), contoh template pesan WhatsApp sapaan hangat, penawaran kode kupon personal, dan etika pengiriman pesan anti-blokir.",
+      "slug": "cara-mengaktifkan-pelanggan-pasif-via-whatsapp",
+      "assigned_category": "Marketing & WhatsApp"
+    }
+  ]
+}
+
+keyword_data = {
+  "research_date": "2026-11-10",
+  "batch": 5,
+  "timezone": "Asia/Jakarta",
+  "platform": "Cooca (cooca.id)",
+  "total_articles": 20,
+  "target_audience": [
+    "Pelaku usaha mikro dan toko ritel yang resah terhadap isu pajak transaksi digital dan QRIS",
+    "Seller marketplace Shopee, Tokopedia, dan TikTok Shop yang menghadapi lonjakan pesanan dan ancaman retur COD fiktif",
+    "Brand lokal dan pelaku UMKM kreatif yang memanfaatkan kampanye Hari Pahlawan 10 November dan Bangga Buatan Indonesia",
+    "Pengusaha UMKM binaan pemerintah yang ingin mendaftar kurasi Road to Harbolnas 2026 melalui portal SMEsta",
+    "Penyedia barang B2B, vendor, dan distributor yang mengelola penagihan piutang dan tempo faktur jelang tutup tahun",
+    "Pemilik kafe dan restoran yang mengatasi antrean panjang kasir serta permintaan split bill saat jam sibuk",
+    "Pengelola toko ritel dan fesyen yang mengevaluasi persediaan mengendap (dead stock) untuk program cuci gudang",
+    "Manajer operasional dan pemilik usaha yang menghitung upah lembur karyawan toko saat kampanye belanja puncak",
+    "Pedagang cinderamata, toko kriya, dan restoran di sentra wisata yang mengadopsi pembayaran QRIS cross-border ASEAN",
+    "Pengusaha kuliner dan ritel yang merestrukturisasi batas tempo pembayaran bahan baku kepada supplier",
+    "Pelaku usaha kuliner dan ritel yang beralih ke kemasan ramah lingkungan dan menghitung dampaknya pada HPP",
+    "Staf gudang dan supervisor toko ritel yang menerapkan SOP receiving barang masuk supplier untuk mencegah selisih stok",
+    "Pengelola toko ritel yang merancang program loyalitas membership poin untuk meningkatkan retensi pelanggan",
+    "Seller online yang memilah jasa ekspedisi logistik instan, reguler, dan kargo sesuai karakteristik komoditas barang",
+    "Pemilik bisnis yang menyusun anggaran operasional (budgeting) dan proyeksi arus kas triwulan pertama tahun 2027",
+    "Kasir dan staf administrasi toko yang mengelola kas kecil (petty cash) dengan sistem imprest dana tetap",
+    "Brand UMKM lokal yang berkolaborasi dengan affiliate creator untuk siaran langsung (live shopping) TikTok dan Tokopedia",
+    "Pengusaha kuliner olahan hewani dan restoran skala menengah yang menempuh sertifikasi halal jalur reguler LPH",
+    "Pemilik brand kuliner yang menyiapkan standarisasi kartu resep dan recipe costing untuk ekspansi franchise cabang",
+    "Pemasar dan pemilik toko yang mereaktivasi pelanggan pasif lewat pesan siaran WhatsApp tersegmentasi"
+  ]
+}
+
+def main():
+    out_dir = os.path.join("database", "data", "articles")
+    os.makedirs(out_dir, exist_ok=True)
+    
+    trending_file = os.path.join(out_dir, "trending-research-2026-11-10.json")
+    keyword_file = os.path.join(out_dir, "keyword-research-2026-11-10.json")
+    
+    with open(trending_file, "w", encoding="utf-8") as f:
+        json.dump(trending_data, f, indent=2, ensure_ascii=False)
+    print(f"Generated {trending_file}")
+    
+    with open(keyword_file, "w", encoding="utf-8") as f:
+        json.dump(keyword_data, f, indent=2, ensure_ascii=False)
+    print(f"Generated {keyword_file}")
+
+if __name__ == "__main__":
+    main()
