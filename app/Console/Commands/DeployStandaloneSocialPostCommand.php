@@ -253,8 +253,8 @@ class DeployStandaloneSocialPostCommand extends Command
     protected function getFallbackItem(string $channel, string $dimensions): array
     {
         return [
-            'media_url'  => asset('assets/image/1785229034_logo_light.png'),
-            'local_path' => 'public/assets/image/1785229034_logo_light.png',
+            'media_url'  => asset('assets/image/1785229034_logo_dark.png'),
+            'local_path' => 'public/assets/image/1785229034_logo_dark.png',
             'file_size'  => 50000,
             'title'      => 'COOCA - Solusi Sistem Ritel',
         ];

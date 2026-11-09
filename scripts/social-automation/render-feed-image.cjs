@@ -10,7 +10,7 @@ function getBase64Image(filePath) {
 }
 
 async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona }) {
-  const logoPath = path.resolve('public/assets/image/1785229034_logo_light.png');
+  const logoPath = path.resolve('public/assets/image/1785229034_logo_dark.png');
   const logoDataUri = getBase64Image(logoPath);
   const screenshotDataUri = getBase64Image(screenshotPath);
 
@@ -84,6 +84,10 @@ async function renderFeedGraphic({ feature, screenshotPath, outputPath, persona 
     }
 
     .brand-logo {
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
       height: 46px;
       width: auto;
       object-fit: contain;

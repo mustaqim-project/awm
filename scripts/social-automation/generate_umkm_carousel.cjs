@@ -12,7 +12,7 @@ function getBase64Image(filePath) {
   return `data:image/${ext};base64,${buf.toString('base64')}`;
 }
 
-const LOGO_PATH = path.resolve('public/assets/image/1785229034_logo_light.png');
+const LOGO_PATH = path.resolve('public/assets/image/1785229034_logo_dark.png');
 const PINTEREST_ASSETS_DIR = path.resolve('public/admin/social-media-assets/pinterest-showcase');
 const SCREENSHOTS_DIR = path.resolve('storage/app/public/content-assets/screenshots');
 
@@ -591,7 +591,7 @@ body {
 }
 .s3-dot-red { background: #EF4444; }
 .s3-dot-yellow { background: #F59E0B; }
-.s3-dot-green { background: #10B981; }
+.s3-dot-green { background: #2563EB; }
 
 .s3-window-title {
   margin-left: 12px;
@@ -794,9 +794,9 @@ body {
 }
 
 .s5-offer-badge {
-  background: rgba(16, 185, 129, 0.22);
-  border: 1.5px solid rgba(16, 185, 129, 0.6);
-  color: #34D399;
+  background: rgba(37, 99, 235, 0.22);
+  border: 1.5px solid rgba(37, 99, 235, 0.6);
+  color: #38BDF8;
   border-radius: 999px;
   padding: 6px 16px;
   font-size: 20px;

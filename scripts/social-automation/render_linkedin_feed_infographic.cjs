@@ -13,7 +13,7 @@ function getBase64Image(filePath) {
 }
 
 const ROOT_DIR = 'C:/laragon/www/cooca_core';
-const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_light.png');
+const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_dark.png');
 const ASSETS_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
 
 const logoBase64 = getBase64Image(LOGO_PATH);
@@ -42,7 +42,7 @@ body {
   background-image: 
     radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.22) 0%, transparent 45%),
     radial-gradient(circle at 90% 20%, rgba(14, 165, 233, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.15) 0%, transparent 50%);
+    radial-gradient(circle at 50% 90%, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   color: #FFFFFF;
   overflow: hidden;
@@ -90,6 +90,10 @@ body {
 }
 
 .brand-logo {
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   height: 40px;
   width: auto;
   object-fit: contain;
@@ -144,7 +148,7 @@ body {
 }
 
 .headline span {
-  background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 60%, #34D399 100%);
+  background: linear-gradient(135deg, #60A5FA 0%, #38BDF8 60%, #38BDF8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -173,9 +177,9 @@ body {
 }
 
 .card-cooca {
-  background: rgba(16, 185, 129, 0.06);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15);
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.35);
+  box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.15);
 }
 
 .card-header {
@@ -201,9 +205,9 @@ body {
 }
 
 .card-cooca .card-label {
-  background: rgba(16, 185, 129, 0.18);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: rgba(37, 99, 235, 0.18);
+  color: #38BDF8;
+  border: 1px solid rgba(37, 99, 235, 0.35);
 }
 
 .metric-group {
@@ -245,7 +249,7 @@ body {
 }
 
 .val-success {
-  color: #34D399;
+  color: #38BDF8;
 }
 
 /* Key Highlight Banner */
@@ -381,7 +385,7 @@ body {
       <div>
         <div class="card-header">
           <span class="card-label">Kasir Modern COOCA</span>
-          <span style="font-size: 12px; color: #34D399; font-weight: 600;">Optimal &amp; Presisi</span>
+          <span style="font-size: 12px; color: #38BDF8; font-weight: 600;">Optimal &amp; Presisi</span>
         </div>
         <div class="metric-group">
           <div class="metric-item">

@@ -380,10 +380,10 @@ Setiap desain grafis yang dibuat melalui Canva MCP atau canvas visual **WAJIB me
    - **Tipografi & Konten Utama:** Wajib **White** (`#FFFFFF`, `#F8FAFC`). Kontras tinggi, tegas, tajam, dan mudah dibaca secara nyaman pada layar smartphone.
    - **Aksen Visual Sekunder Resmi COOCA:**
      - **Electric / Cyan Blue** (`#38BDF8`, `#2563EB`) untuk tombol, pill, dan penyorot konteks.
-     - **Emerald Green** (`#10B981`, `#34D399`) untuk badge solusi terverifikasi, checklist keberhasilan, dan ROI positif.
+     - **Cooca Blue / Electric Blue** (`#2563EB`, `#38BDF8`) untuk badge solusi terverifikasi, checklist keberhasilan, dan ROI positif (DILARANG HIJAU).
      - **Crimson Alert** (`#EF4444`, `#F87171`) untuk indikator bahaya, titik celah kebocoran meja kasir, atau selisih stok.
 2. **Penggunaan Logo Resmi COOCA (Wajib):**
-   - Setiap aset visual (Feed 1 gambar atau setiap slide Carousel) **WAJIB mencantumkan Logo Resmi COOCA** (`public/assets/image/1785229034_logo_light.png` / versi putih transparan untuk background gelap) di bagian header atau sudut atas visual.
+   - Setiap aset visual (Feed 1 gambar atau setiap slide Carousel) **WAJIB mencantumkan Logo Resmi COOCA** (`public/assets/image/1785229034_logo_dark.png` / versi putih transparan untuk background gelap) di bagian header atau sudut atas visual.
    - Logo harus tampil bersih, proporsional, dan memiliki kontras tinggi di atas latar belakang Dark Blue.
 
 ---

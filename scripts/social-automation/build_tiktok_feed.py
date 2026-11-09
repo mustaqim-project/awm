@@ -20,7 +20,7 @@ def get_base64_data_uri(file_path):
 
 def build_tiktok_feed_html():
     root = Path(r"c:\laragon\www\cooca_core")
-    logo_path = root / "public" / "assets" / "image" / "1785229034_logo_light.png"
+    logo_path = root / "public" / "assets" / "image" / "1785229034_logo_dark.png"
     ss_path = root / "storage" / "app" / "public" / "content-assets" / "screenshots" / "fraud_prevention-desktop.png"
     cutout_path = root / "public" / "storage" / "admin" / "social-media-assets" / "pinterest-showcase" / "cutout_3d_shop.png"
 
@@ -45,7 +45,7 @@ def build_tiktok_feed_html():
   --blue-500: #2563EB;
   --cyan-400: #38BDF8;
   --cyan-300: #7DD3FC;
-  --emerald-400: #10B981;
+  --emerald-400: #2563EB;
   --amber-400: #F59E0B;
   --tiktok-red: #FE2C55;
   --paper: #FFFFFF;
@@ -256,7 +256,7 @@ body {{
 .dot {{ width: 10px; height: 10px; border-radius: 50%; }}
 .dot-red {{ background: #EF4444; }}
 .dot-yellow {{ background: #F59E0B; }}
-.dot-green {{ background: #10B981; }}
+.dot-green {{ background: #2563EB; }}
 
 .window-url-bar {{
   margin-left: 12px;
@@ -305,8 +305,8 @@ body {{
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #10B981;
-  box-shadow: 0 0 10px #10B981;
+  background: #2563EB;
+  box-shadow: 0 0 10px #2563EB;
 }}
 
 .badge-text {{
@@ -410,8 +410,8 @@ body {{
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #10B981;
-  box-shadow: 0 0 10px #10B981;
+  background: #2563EB;
+  box-shadow: 0 0 10px #2563EB;
 }}
 
 .alert-text {{

@@ -131,14 +131,14 @@ Panduan riset dan kepatuhan lengkap tersedia di: `scripts/social-automation/inst
 
 ## 2. ATURAN BRAND & VISUAL COOCA (WAJIB)
 - **Tema Warna Wajib:** Latar belakang **Dark Blue / Deep Navy** (`#070B19` atau `#0A1128`) dan teks utama **White** (`#FFFFFF`). Dilarang background putih polos atau warna generik non-brand.
-- **Aksen Sekunder:** Cyan Blue (`#38BDF8`), Emerald Green (`#10B981`) untuk badge solusi/sukses, dan Crimson Alert (`#EF4444`) untuk peringatan kebocoran kasir/stok.
+- **Aksen Sekunder:** Cyan Blue (`#38BDF8`), Emerald Green (`#2563EB`) untuk badge solusi/sukses, dan Crimson Alert (`#EF4444`) untuk peringatan kebocoran kasir/stok.
 - **Tipografi Wajib (Plus Jakarta Sans):**
   - Headline utama: **Plus Jakarta Sans Bold / ExtraBold**
   - Subheadline: **Plus Jakarta Sans SemiBold**
   - Isi konten: **Plus Jakarta Sans Regular / Medium**
   - Angka & statistik: **Plus Jakarta Sans Bold / ExtraBold**
   - CTA: **Plus Jakarta Sans Bold**
-- **Logo Resmi COOCA (Wajib):** Wajib mencantumkan Logo Resmi COOCA (`public/assets/image/1785229034_logo_light.png`) di bagian header atau sudut atas visual.
+- **Logo Resmi COOCA (Wajib):** Wajib mencantumkan Logo Resmi COOCA (`public/assets/image/1785229034_logo_dark.png`) di bagian header atau sudut atas visual.
 
 ## 3. STRICT COMPLIANCE
 - **Bebas Nama Usaha & Bebas Nama User:** 100% netral, dilarang mencantumkan nama bisnis fiktif seperti 'Toko Kamu' atau nama user tertentu.

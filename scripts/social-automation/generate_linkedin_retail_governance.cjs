@@ -12,7 +12,7 @@ function getBase64Image(filePath) {
   return `data:image/${ext};base64,${buf.toString('base64')}`;
 }
 
-const LOGO_PATH = path.resolve('public/assets/image/1785229034_logo_light.png');
+const LOGO_PATH = path.resolve('public/assets/image/1785229034_logo_dark.png');
 const PINTEREST_ASSETS_DIR = path.resolve('public/admin/social-media-assets/pinterest-showcase');
 const SCREENSHOTS_DIR = path.resolve('storage/app/public/content-assets/screenshots');
 
@@ -54,7 +54,7 @@ function buildCarouselHtml() {
   --cyan-400: #38BDF8;
   --cyan-300: #7DD3FC;
   --amber-400: #F59E0B;
-  --emerald-400: #10B981;
+  --emerald-400: #2563EB;
   --rose-400: #F43F5E;
   --paper: #FFFFFF;
   --mist: #EEF3FF;
@@ -612,7 +612,7 @@ body {
      SLIDE 6: KONSOLIDASI LAPORAN MULTI-CABANG REAL-TIME
      ========================================================================= -->
 <section class="slide" id="slide-06">
-  <div class="ambient-glow" style="width: 450px; height: 450px; background: #10B981; left: -50px; top: 120px; opacity: 0.18;"></div>
+  <div class="ambient-glow" style="width: 450px; height: 450px; background: #2563EB; left: -50px; top: 120px; opacity: 0.18;"></div>
   
   <div class="top-bar">
     <img class="logo" src="${logoBase64}" alt="Cooca Logo">

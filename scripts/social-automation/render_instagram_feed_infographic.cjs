@@ -13,7 +13,7 @@ function getBase64Image(filePath) {
 }
 
 const ROOT_DIR = 'C:/laragon/www/cooca_core';
-const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_light.png');
+const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_dark.png');
 const ASSETS_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
 
 const logoBase64 = getBase64Image(LOGO_PATH);
@@ -41,7 +41,7 @@ body {
   background-color: #070B14;
   background-image: 
     radial-gradient(circle at 10% 15%, rgba(239, 68, 68, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.20) 0%, transparent 45%),
+    radial-gradient(circle at 90% 20%, rgba(37, 99, 235, 0.20) 0%, transparent 45%),
     radial-gradient(circle at 50% 90%, rgba(59, 130, 246, 0.16) 0%, transparent 50%);
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   color: #FFFFFF;
@@ -90,6 +90,10 @@ body {
 }
 
 .brand-logo {
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   height: 38px;
   width: auto;
   object-fit: contain;
@@ -159,7 +163,7 @@ body {
 }
 
 .main-title span.highlight-solution {
-  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+  background: linear-gradient(135deg, #38BDF8 0%, #2563EB 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -311,14 +315,14 @@ body {
 
 /* Solution Banner */
 .solution-banner {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.28) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(6, 78, 59, 0.28) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.35);
   border-radius: 18px;
   padding: 16px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.12);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.12);
   backdrop-filter: blur(12px);
   margin-top: 4px;
 }
@@ -333,12 +337,12 @@ body {
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(16, 185, 129, 0.22);
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(37, 99, 235, 0.22);
+  border: 1px solid rgba(37, 99, 235, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #34D399;
+  color: #38BDF8;
   font-size: 22px;
   flex-shrink: 0;
 }
@@ -359,7 +363,7 @@ body {
 }
 
 .sol-badge {
-  background: #10B981;
+  background: #2563EB;
   color: #064E3B;
   font-weight: 800;
   font-size: 12px;
@@ -368,7 +372,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
 /* Footer */

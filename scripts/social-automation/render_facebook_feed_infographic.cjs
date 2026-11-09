@@ -13,7 +13,7 @@ function getBase64Image(filePath) {
 }
 
 const ROOT_DIR = 'C:/laragon/www/cooca_core';
-const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_light.png');
+const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_dark.png');
 const ASSETS_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
 
 const logoBase64 = getBase64Image(LOGO_PATH);
@@ -41,7 +41,7 @@ body {
   background-color: #0A0E1A;
   background-image: 
     radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 85% 25%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(37, 99, 235, 0.18) 0%, transparent 45%),
     radial-gradient(circle at 50% 90%, rgba(245, 158, 11, 0.15) 0%, transparent 50%);
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   color: #FFFFFF;
@@ -90,6 +90,10 @@ body {
 }
 
 .brand-logo {
+  background: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
   height: 40px;
   width: auto;
   object-fit: contain;
@@ -144,7 +148,7 @@ body {
 }
 
 .headline span {
-  background: linear-gradient(135deg, #FBBF24 0%, #34D399 60%, #60A5FA 100%);
+  background: linear-gradient(135deg, #FBBF24 0%, #38BDF8 60%, #60A5FA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -216,15 +220,15 @@ body {
 }
 
 .badge-success {
-  background: rgba(16, 185, 129, 0.18);
-  color: #34D399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: rgba(37, 99, 235, 0.18);
+  color: #38BDF8;
+  border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
 /* Highlight Banner */
 .highlight-banner {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(15, 23, 42, 0.65) 100%);
+  border: 1px solid rgba(37, 99, 235, 0.35);
   border-radius: 20px;
   padding: 18px 24px;
   display: flex;
@@ -260,7 +264,7 @@ body {
 .banner-pill {
   padding: 8px 18px;
   border-radius: 12px;
-  background: #10B981;
+  background: #2563EB;
   color: #FFFFFF;
   font-size: 13px;
   font-weight: 700;
