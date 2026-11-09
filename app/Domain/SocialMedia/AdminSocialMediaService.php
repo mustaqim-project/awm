@@ -649,35 +649,58 @@ class AdminSocialMediaService
     }
 
     /**
-     * Delete a platform post and its local physical media files.
+     * Delete a platform post and its local physical media files, and prevent resurrection.
      */
     public function deletePlatformPost(SocialMediaPost $post): bool
     {
+        // 1. Blacklist post signature so background importers/schedulers will never resurrect it
+        $this->blacklistDeletedPost($post);
+
+        // 2. Purge local media files via SocialMediaService helper
         try {
             app(\App\Domain\SocialMedia\SocialMediaService::class)->purgePostLocalMedia($post);
         } catch (\Throwable) {
             // Non-fatal, continue with direct storage cleanup
         }
 
+        // 3. Purge all media files from local_media_paths
         if (is_array($post->local_media_paths)) {
             foreach ($post->local_media_paths as $localPath) {
                 if (! empty($localPath)) {
-                    \App\Domain\Storage\AdminStorage::deletePublicFile((string) $localPath);
+                    $this->purgeDeletedPhysicalAsset((string) $localPath);
                 }
             }
         } elseif (is_string($post->local_media_paths) && ! empty($post->local_media_paths)) {
-            \App\Domain\Storage\AdminStorage::deletePublicFile($post->local_media_paths);
+            $this->purgeDeletedPhysicalAsset($post->local_media_paths);
         }
 
+        // 4. Purge media files derived from media_urls
+        if (is_array($post->media_urls)) {
+            foreach ($post->media_urls as $mediaUrl) {
+                if (is_string($mediaUrl) && ! empty($mediaUrl)) {
+                    $parsedPath = parse_url($mediaUrl, PHP_URL_PATH);
+                    if ($parsedPath && str_contains($parsedPath, '/storage/')) {
+                        $rel = strstr($parsedPath, '/storage/');
+                        $this->purgeDeletedPhysicalAsset(substr((string) $rel, 9));
+                    }
+                }
+            }
+        }
+
+        // 5. Purge SocialPostMedia records and files
         foreach ($post->media as $media) {
             if (! empty($media->file_path)) {
-                \App\Domain\Storage\AdminStorage::deletePublicFile($media->file_path);
+                $this->purgeDeletedPhysicalAsset($media->file_path);
             }
             if (! empty($media->local_path)) {
-                \App\Domain\Storage\AdminStorage::deletePublicFile($media->local_path);
+                $this->purgeDeletedPhysicalAsset($media->local_path);
             }
         }
 
+        // 6. Scrub entry from last-generated.json if present
+        $this->scrubFromLastGeneratedJson($post);
+
+        // 7. Atomic DB removal
         \Illuminate\Support\Facades\DB::transaction(function () use ($post) {
             $post->comments()->delete();
             $post->targets()->delete();
@@ -686,6 +709,155 @@ class AdminSocialMediaService
         });
 
         return true;
+    }
+
+    /**
+     * Delete physical asset completely from all potential disk locations.
+     */
+    public function purgeDeletedPhysicalAsset(?string $path): bool
+    {
+        if (empty($path)) {
+            return false;
+        }
+
+        // Clean leading slashes and storage prefix
+        $clean = ltrim($path, '/\\');
+        if (str_starts_with($clean, 'public/')) {
+            $clean = substr($clean, 7);
+        }
+        if (str_starts_with($clean, 'storage/')) {
+            $clean = substr($clean, 8);
+        }
+
+        // Call AdminStorage helper
+        \App\Domain\Storage\AdminStorage::deletePublicFile($clean);
+
+        // Also perform direct physical unlinks to guarantee removal
+        $locations = [
+            storage_path('app/public/' . $clean),
+            public_path('storage/' . $clean),
+            public_path($clean),
+            storage_path('app/' . $clean),
+            storage_path('app/public/admin/social-media-assets/' . $clean),
+            storage_path('app/public/content-assets/' . $clean),
+        ];
+
+        $deleted = false;
+        foreach ($locations as $loc) {
+            if (file_exists($loc) && is_file($loc)) {
+                @unlink($loc);
+                $deleted = true;
+            }
+        }
+
+        return $deleted;
+    }
+
+    /**
+     * Record a deleted post's signature into permanent blacklist.
+     */
+    public function blacklistDeletedPost(SocialMediaPost $post): void
+    {
+        $blacklistFile = storage_path('app/social_deleted_signatures.json');
+        $blacklist = [];
+
+        if (file_exists($blacklistFile)) {
+            $blacklist = json_decode((string) file_get_contents($blacklistFile), true) ?: [];
+        }
+
+        $caption = trim((string) $post->content);
+        $signatures = [
+            'id_' . $post->id,
+            'caption_md5_' . md5($caption),
+        ];
+
+        if (! empty($post->metrics['automation_id'])) {
+            $signatures[] = 'auto_' . $post->metrics['automation_id'];
+        }
+
+        if (is_array($post->local_media_paths)) {
+            foreach ($post->local_media_paths as $p) {
+                if (! empty($p)) {
+                    $signatures[] = 'path_' . basename((string) $p);
+                }
+            }
+        }
+
+        foreach ($signatures as $sig) {
+            if (! in_array($sig, $blacklist, true)) {
+                $blacklist[] = $sig;
+            }
+        }
+
+        @file_put_contents($blacklistFile, json_encode(array_values(array_unique($blacklist)), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    }
+
+    /**
+     * Check if a post candidate is in the deleted blacklist.
+     */
+    public function isPostBlacklisted(string $caption, ?string $mediaPath = null, ?string $postId = null, ?string $automationId = null): bool
+    {
+        $blacklistFile = storage_path('app/social_deleted_signatures.json');
+        if (! file_exists($blacklistFile)) {
+            return false;
+        }
+
+        $blacklist = json_decode((string) file_get_contents($blacklistFile), true) ?: [];
+        if (empty($blacklist)) {
+            return false;
+        }
+
+        if ($postId && in_array('id_' . $postId, $blacklist, true)) {
+            return true;
+        }
+
+        $captionMd5 = 'caption_md5_' . md5(trim($caption));
+        if (in_array($captionMd5, $blacklist, true)) {
+            return true;
+        }
+
+        if ($mediaPath && in_array('path_' . basename($mediaPath), $blacklist, true)) {
+            return true;
+        }
+
+        if ($automationId && in_array('auto_' . $automationId, $blacklist, true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove matching entry from last-generated.json.
+     */
+    protected function scrubFromLastGeneratedJson(SocialMediaPost $post): void
+    {
+        $jsonPath = storage_path('app/public/content-assets/last-generated.json');
+        if (! file_exists($jsonPath)) {
+            return;
+        }
+
+        $items = json_decode((string) file_get_contents($jsonPath), true);
+        if (! is_array($items) || empty($items)) {
+            return;
+        }
+
+        $postCaption = trim((string) $post->content);
+        $filtered = array_filter($items, function ($item) use ($postCaption, $post) {
+            $itemCaption = trim((string) ($item['caption'] ?? ''));
+            if (! empty($postCaption) && $itemCaption === $postCaption) {
+                return false;
+            }
+            if (is_array($post->local_media_paths)) {
+                $itemPath = (string) ($item['image_relative_path'] ?? '');
+                if (in_array($itemPath, $post->local_media_paths, true)) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        @file_put_contents($jsonPath, json_encode(array_values($filtered), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     /**

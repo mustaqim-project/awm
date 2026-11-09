@@ -66,6 +66,20 @@ class ImportDailySocialContentCommand extends Command
                 continue;
             }
 
+            // Check if post is permanently blacklisted (deleted by admin)
+            if ($adminSocialMediaService->isPostBlacklisted($item['caption'] ?? '', $localRelPath, $item['id'] ?? null)) {
+                $this->warn("Skipping permanently blacklisted post (previously deleted): {$item['feature_name']}");
+                continue;
+            }
+
+            // Ensure physical image file actually exists on disk
+            $fullStoragePath = storage_path('app/public/' . ltrim($localRelPath, '/\\'));
+            $fullPublicPath = public_path('storage/' . ltrim($localRelPath, '/\\'));
+            if (! file_exists($fullStoragePath) && ! file_exists($fullPublicPath)) {
+                $this->warn("Skipping post because image file does not exist: {$localRelPath}");
+                continue;
+            }
+
             // Check if already registered
             $existing = SocialMediaPost::where('is_platform', true)
                 ->where(function ($q) use ($localRelPath, $item) {
