@@ -233,6 +233,18 @@
                             </div>
                         </a>
 
+                        <!-- Tarif Upah & Biaya Mesin HPP -->
+                        <a href="#sec-labor-machines" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-amber-500/15 text-amber-600 dark:bg-amber-400/20 dark:text-amber-400 flex items-center justify-center shrink-0">
+                                <i data-lucide="cog" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Tarif Upah &amp; Mesin HPP</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">Manufaktur</span>
+                            </div>
+                        </a>
+
                         <!-- Impor Massal Excel & Migrasi -->
                         <a href="#sec-import" @click="if(activeTab !== 'all') activeTab = 'all'"
                             class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
@@ -260,6 +272,18 @@
                         <div class="px-2 pt-1.5 pb-0.5 text-[10px] font-extrabold tracking-wider uppercase text-black/40 dark:text-white/40 select-none">
                             Finance &amp; Accounting
                         </div>
+
+                        <!-- Faktur Penjualan & Invoices -->
+                        <a href="#sec-invoices" @click="if(activeTab !== 'all') activeTab = 'all'"
+                            class="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-[10px] font-semibold text-black/80 dark:text-white/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-[#007AFF] transition-all group">
+                            <span class="w-6 h-6 rounded-[7px] bg-[#007AFF]/15 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            </span>
+                            <div class="flex items-center justify-between flex-1 min-w-0">
+                                <span class="truncate tracking-tight font-medium text-[12px]">Faktur Penjualan (Invoices)</span>
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">Piutang B2B</span>
+                            </div>
+                        </a>
 
                         <!-- Keuangan & Akuntansi -->
                         <a href="#sec-finance" @click="if(activeTab !== 'all') activeTab = 'all'"
@@ -561,6 +585,12 @@
             @include('app.docs.partials.sec_inventory')
 
             <!-- ===================================================== -->
+            <!-- SECTION: TARIF UPAH KERJA & BIAYA MESIN PRODUKSI      -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & AKURASI HPP B2B)    -->
+            <!-- ===================================================== -->
+            @include('app.docs.partials.sec_labor_machines')
+
+            <!-- ===================================================== -->
             <!-- SECTION: PUSAT IMPORT MASSAL EXCEL & MIGRASI DATA     -->
             <!-- (PANDUAN LENGKAP 20 JENIS USAHA & SMART LIVING LOOKUP)-->
             <!-- ===================================================== -->
@@ -609,45 +639,10 @@
             </section>
 
             <!-- ===================================================== -->
-            <!-- SECTION 5: PENJUALAN B2B, QUOTATION & INVOICE        -->
+            <!-- SECTION 5: FAKTUR PENJUALAN & INVOICE COMMERCE        -->
+            <!-- (PANDUAN LENGKAP 20 JENIS USAHA & PENAGIHAN PIUTANG)  -->
             <!-- ===================================================== -->
-            <section id="sec-sales-b2b" class="space-y-4"
-                x-show="(activeTab === 'all' || activeTab === 'sales_purchasing') && matchesSearch('penjualan b2b quotation so sales order surat jalan delivery order invoice piutang ar')">
-
-                <div class="flex items-center justify-between gap-3 pb-2 border-b border-black/5 dark:border-white/10">
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-500 flex items-center justify-center font-bold text-sm">
-                            5
-                        </span>
-                        <div>
-                            <h2 class="text-lg sm:text-xl font-bold text-black dark:text-white tracking-tight">Penjualan B2B, Penawaran &amp; Invoice</h2>
-                            <p class="text-xs text-black/50 dark:text-white/50">Transaksi grosir partai besar, pesanan tender, dan manajemen penagihan piutang</p>
-                        </div>
-                    </div>
-                    @if(\App\Support\Context::hasPermission('sales.view'))
-                        <a href="{{ route('sales.orders.index') }}" class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>{{ __('docs.buka_pesanan_penjualan') }}</span>
-                            <i data-lucide="arrow-right" class="w-3 h-3"></i>
-                        </a>
-                    @endif
-                </div>
-
-                <div class="p-5 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-3 text-xs text-black/70 dark:text-white/70 shadow-2xs">
-                    <p class="leading-relaxed">
-                        Untuk transaksi korporat atau pelanggan grosir, Cooca menyediakan siklus penjualan terintegrasi:
-                    </p>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                        <div class="p-3 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-black dark:text-white">Quotation &rarr; Sales Order (SO)</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Kirim surat penawaran resmi berformat PDF ke pelanggan. Saat disetujui, konversi langsung menjadi Sales Order.</p>
-                        </div>
-                        <div class="p-3 rounded-xl border border-black/5 dark:border-white/10 space-y-1">
-                            <span class="font-bold text-black dark:text-white">Surat Jalan &rarr; Invoice Penagihan</span>
-                            <p class="text-black/60 dark:text-white/60 text-[11px]">Cetak Surat Jalan (Delivery Order) untuk tim logistik pengiriman, kemudian terbitkan Invoice bertempo (Term of Payment).</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            @include('app.docs.partials.sec_invoices')
 
             <!-- ===================================================== -->
             <!-- SECTION: MODUL ANALITIK & TREN PERTUMBUHAN BISNIS    -->
