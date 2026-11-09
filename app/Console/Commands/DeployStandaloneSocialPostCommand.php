@@ -227,7 +227,7 @@ class DeployStandaloneSocialPostCommand extends Command
         } else {
             $specificFeedMap = [
                 'facebook'  => 'platform/facebook-feed-inventory-1080x1080.png',
-                'linkedin'  => 'platform/2026-11-07-toko-kamu-linkedin-finance-1080x1350.png',
+                'linkedin'  => 'content-assets/linkedin-feed-roi-cashier-1080x1080.png',
                 'instagram' => ($dimensions === '1080x1350')
                     ? 'platform/2026-11-06-danastri-apparel-1080x1350.png'
                     : 'platform/2026-11-07-toko-kamu-instagram-fraud_prevention-1080x1350.png',
