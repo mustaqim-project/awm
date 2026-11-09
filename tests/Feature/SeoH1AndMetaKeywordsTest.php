@@ -15,11 +15,16 @@ class SeoH1AndMetaKeywordsTest extends TestCase
 
     public function test_landing_page_has_exactly_one_h1_and_no_meta_keywords(): void
     {
+        \App\Models\SystemSetting::set(
+            'seo_meta_keywords',
+            'Cooca, software kasir gratis, erp umkm, pos kasir toko, aplikasi pembukuan gratis, kalkulator hpp, kalkulator bep, template pembukuan excel, cooca.id'
+        );
+
         $response = $this->get('/');
         $response->assertOk();
 
-        // 1. Must NOT have <meta name="keywords">
-        $response->assertDontSee('<meta name="keywords"', false);
+        // 1. Must render <meta name="keywords"> when configured by admin in settings
+        $response->assertSee('<meta name="keywords" content="Cooca, software kasir gratis, erp umkm, pos kasir toko, aplikasi pembukuan gratis, kalkulator hpp, kalkulator bep, template pembukuan excel, cooca.id">', false);
 
         // 2. Must have exactly one <h1>
         preg_match_all('/<h1\b[^>]*>(.*?)<\/h1>/si', $response->getContent(), $matches);

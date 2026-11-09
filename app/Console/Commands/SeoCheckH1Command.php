@@ -98,12 +98,14 @@ final class SeoCheckH1Command extends Command
                 preg_match_all('/<h1\b[^>]*>(.*?)<\/h1>/si', $content, $h1Matches);
                 $h1Count = count($h1Matches[0]);
 
-                // 2. Check meta keywords presence
+                // 2. Check meta keywords presence (Allowed on root '/' per Admin Settings, forbidden on subpages)
+                $isRoot = ($path === '/' || $path === '');
                 $hasKeywords = (bool) preg_match('/<meta\s+name=[\x22\x27]keywords[\x22\x27]/i', $content);
+                $hasForbiddenKeywords = !$isRoot && $hasKeywords;
 
                 $h1Texts = array_map(fn($t) => trim(preg_replace('/\s+/', ' ', strip_tags($t))), $h1Matches[0]);
 
-                if ($h1Count !== 1 || $hasKeywords || $statusCode !== 200) {
+                if ($h1Count !== 1 || $hasForbiddenKeywords || $statusCode !== 200) {
                     $statusReason = [];
                     if ($statusCode !== 200) {
                         $statusReason[] = "HTTP {$statusCode}";
@@ -113,8 +115,8 @@ final class SeoCheckH1Command extends Command
                     } elseif ($h1Count > 1) {
                         $statusReason[] = "DOBEL H1 ({$h1Count}x)";
                     }
-                    if ($hasKeywords) {
-                        $statusReason[] = 'META KEYWORDS TERDETEKSI';
+                    if ($hasForbiddenKeywords) {
+                        $statusReason[] = 'META KEYWORDS TERDETEKSI (SUBPAGE)';
                     }
 
                     $violations[] = [
@@ -122,7 +124,7 @@ final class SeoCheckH1Command extends Command
                         'status' => $statusCode,
                         'h1_count' => $h1Count,
                         'h1_preview' => implode(' | ', array_map(fn($t) => Str::limit($t, 35), $h1Texts)),
-                        'has_keywords' => $hasKeywords ? 'Ada (Bermasalah)' : 'Bersih',
+                        'has_keywords' => $hasForbiddenKeywords ? 'Ada (Bermasalah)' : ($hasKeywords ? 'Ada (Homepage Admin Config)' : 'Bersih'),
                         'issue' => implode(', ', $statusReason),
                     ];
                 } else {

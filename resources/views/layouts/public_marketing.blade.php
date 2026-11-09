@@ -50,6 +50,10 @@
             'seo_meta_description',
             'Platform Omnichannel & ERP all-in-one untuk UMKM Indonesia. Kelola kasir POS, marketplace, stok multi-cabang, resep BOM, akuntansi otomatis & WhatsApp CRM.',
         );
+        $seoMetaKeywords = \App\Models\SystemSetting::get(
+            'seo_meta_keywords',
+            'Cooca, software kasir gratis, erp umkm, pos kasir toko, aplikasi pembukuan gratis, kalkulator hpp, kalkulator bep, template pembukuan excel, cooca.id'
+        );
         $seoAuthor = \App\Models\SystemSetting::get('seo_author', 'COOCA Indonesia');
         $seoRobots = \App\Models\SystemSetting::get('seo_robots', 'index, follow');
         $seoCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url()->current();
@@ -67,6 +71,7 @@
         'fallbackImage' => asset('assets/seo/cooca-og-default.jpg'),
         'noindex' => $noindex ?? false,
         'robots' => $robots ?? null,
+        'keywords' => $keywords ?? null,
         'isPublicMarketing' => true,
         'isStorefront' => false,
     ])

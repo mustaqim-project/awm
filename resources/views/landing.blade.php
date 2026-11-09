@@ -9,6 +9,10 @@
         'seo_meta_description',
         config('seo.pages./.description', 'Platform terintegrasi kasir POS, akuntansi riil, stok resep bahan baku, WhatsApp otomatis, dan toko online untuk UMKM Indonesia.')
     );
+    $landingMetaKeywords = \App\Models\SystemSetting::get(
+        'seo_meta_keywords',
+        'Cooca, software kasir gratis, erp umkm, pos kasir toko, aplikasi pembukuan gratis, kalkulator hpp, kalkulator bep, template pembukuan excel, cooca.id'
+    );
     $landingOgTitle = \App\Models\SystemSetting::get('seo_og_title') ?: config('seo.pages./.og_title', $landingMetaTitle);
     $landingOgDescription = \App\Models\SystemSetting::get('seo_og_description') ?: config('seo.pages./.og_description', $landingMetaDescription);
     $landingCanonical = \App\Models\SystemSetting::get('seo_canonical_url') ?: url('/');
@@ -33,6 +37,9 @@
 
 @section('title', $landingMetaTitle)
 @section('description', $landingMetaDescription)
+@if (!empty($landingMetaKeywords))
+    @section('keywords', $landingMetaKeywords)
+@endif
 @section('og_title', $landingOgTitle)
 @section('og_description', $landingOgDescription)
 @section('canonical', $landingCanonical)

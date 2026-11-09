@@ -8,6 +8,7 @@
     $adminCustomDesc = $isRootPath ? \App\Models\SystemSetting::get('seo_meta_description') : null;
     $adminCustomOgTitle = $isRootPath ? \App\Models\SystemSetting::get('seo_og_title') : null;
     $adminCustomOgDesc = $isRootPath ? \App\Models\SystemSetting::get('seo_og_description') : null;
+    $adminCustomKeywords = $isRootPath ? \App\Models\SystemSetting::get('seo_meta_keywords') : null;
 
     // 1. Resolve Title (Single source of truth with admin CMS override capability)
     $rawTitle = $adminCustomTitle ?: ($pageSeo['title'] ?? ($title ?? (View::hasSection('title') ? View::yieldContent('title') : null)));
@@ -22,6 +23,13 @@
         );
     }
     $resolvedDesc = SeoMetadataService::cleanText((string) $rawDesc, 160);
+
+    // 2b. Resolve Meta Keywords (Dynamic from Admin SEO Settings for root/landing page https://cooca.id)
+    $rawKeywords = $isRootPath
+        ? ($adminCustomKeywords ?: \App\Models\SystemSetting::get('seo_meta_keywords'))
+        : null;
+
+    $resolvedKeywords = !empty($rawKeywords) ? trim(strip_tags((string) $rawKeywords)) : null;
 
     // 3. Resolve Canonical & OG URL (Absolute, clean, no tracker params)
     $resolvedCanonical = SeoMetadataService::resolveCanonicalUrl($url ?? $canonical ?? null);
@@ -89,6 +97,9 @@
 <!-- Primary HTML Meta Tags -->
 <title>{{ $resolvedTitle }}</title>
 <meta name="description" content="{{ $resolvedDesc }}">
+@if(!empty($resolvedKeywords))
+<meta name="keywords" content="{{ $resolvedKeywords }}">
+@endif
 <meta name="author" content="{{ $resolvedAuthor }}">
 <link rel="canonical" href="{{ $resolvedCanonical }}">
 <meta name="robots" content="{{ $resolvedRobots }}">
