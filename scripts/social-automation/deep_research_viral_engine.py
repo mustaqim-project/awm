@@ -543,6 +543,54 @@ def calculate_viral_score(framework: str, channel: str) -> tuple[float, dict]:
     total = (scores["velocity"] * 0.30) + (scores["urgency"] * 0.30) + (scores["platform_fit"] * 0.25) + (scores["cta"] * 0.15)
     return round(total, 2), scores
 
+
+def resolve_adaptive_visual_subject(feature_key: str, topic_name: str, hook_title: str) -> str:
+    """
+    Menyesuaikan subjek fotografi secara dinamis dengan materi konten dan keyword,
+    bukan memaksakan subjek hardcode orang memegang tablet kasir.
+    """
+    text = f"{feature_key} {topic_name} {hook_title}".lower()
+    
+    if any(k in text for k in ["stok", "gudang", "inventori", "inventory", "opname", "supplier", "barcode", "rak"]):
+        return (
+            "Photorealistic high-end photography of organized modern retail store inventory shelves, "
+            "warehouse logistics, or a merchant conducting a barcode stock check matching the inventory topic"
+        )
+    elif any(k in text for k in ["kasir", "bocor", "void", "shift", "laci", "antrean", "antri", "kembalian"]):
+        return (
+            "Photorealistic editorial photography of an active modern store checkout counter, cash drawer, "
+            "or POS station authentically illustrating cashier operations and transaction security"
+        )
+    elif any(k in text for k in ["bon", "hutang", "piutang", "whatsapp", "wa", "tagihan", "pelanggan"]):
+        return (
+            "Photorealistic authentic photography of store customer relations, clean digital receipt, "
+            "or retail desk with invoice reminders reflecting debt and cashflow management"
+        )
+    elif any(k in text for k in ["multi", "cabang", "outlet", "warehouse", "franchise", "ekspansi"]):
+        return (
+            "Photorealistic corporate retail management photography, modern store supervision, "
+            "or multi-outlet operations analytics vividly representing business expansion"
+        )
+    elif any(k in text for k in ["tiktok", "shopee", "tokopedia", "online", "marketplace", "omnichannel", "pesanan", "packing"]):
+        return (
+            "Photorealistic dynamic photography of an e-commerce order fulfillment desk with neatly packed customer parcels, "
+            "shipping labels, and omnichannel retail dispatch"
+        )
+    elif any(k in text for k in ["laba", "margin", "rugi", "omzet", "profit", "cogs", "biaya", "keuangan", "hpp"]):
+        return (
+            "Photorealistic modern retail finance workspace with profit-loss analytics, financial ledger, "
+            "calculator, and revenue metrics representing business profitability"
+        )
+    elif any(k in text for k in ["f&b", "kafe", "makanan", "minuman", "resep", "bahan baku", "bom"]):
+        return (
+            "Photorealistic vibrant cafe or culinary counter with fresh raw ingredients, recipe inventory prep, "
+            "and active food service operations"
+        )
+    else:
+        return (
+            f"Photorealistic high-end photography authentically visualizing the core theme and keyword: '{hook_title}'"
+        )
+
 def main():
     parser = argparse.ArgumentParser(description="Cooca Dynamic Viral Research & Synthesis Engine")
     parser.add_argument("--automation-id", required=True, help="Automation ID (e.g. cooca-carousel-linkedin)")
@@ -601,6 +649,23 @@ def main():
 
     brief_topic = synthesized.get("topic_name", "MANAJEMEN BISNIS")
     brief_hook = synthesized.get("hook_title", "Kendali Penuh Toko Bersama COOCA")
+    adaptive_visual = resolve_adaptive_visual_subject(
+        primary_feature_info.get("key", ""),
+        brief_topic,
+        brief_hook
+    )
+    format_dim_text = "Multi-page portrait carousel (1080x1350 px)" if dimensions == "1080x1350" else (
+        f"Multi-slide square carousel (1080x1080 px)" if content_format == "carousel" else f"Square 1:1 feed (1080x1080 px)"
+    )
+    canva_brief = (
+        f"{format_dim_text} for Cooca POS Indonesia (cooca.id). "
+        f"Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. "
+        f"Subject: High-realism photography dynamically tailored to the content and keyword ({adaptive_visual}). Strictly authentic photography (NO 2D cartoon / flat illustration). "
+        f"Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. "
+        f"Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. "
+        f"Elements: Top category overline '{brief_topic}', bold headline '{brief_hook}', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. "
+        f"Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
+    )
     result_payload = {
         "automation_id": args.automation_id,
         "channel": channel,
@@ -670,15 +735,7 @@ def main():
                 "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
             ]
         },
-        "canva_mcp_prompt_brief": (
-            f"Square 1:1 {content_format} (1080x1080 px) for Cooca POS Indonesia (cooca.id). "
-            f"Visual Style: High-end photo-led Bento Grid layout. "
-            f"Subject: Photorealistic studio portrait of a confident Indonesian retail business owner or cashier holding an iPad tablet POS terminal, smiling warmly. "
-            f"Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. "
-            f"Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. "
-            f"Elements: Top category overline '{brief_topic}', bold headline '{brief_hook}', floating glassmorphism bento metric cards, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. "
-            f"Highly realistic photography, clean editorial layout, zero clutter, square 1080x1080."
-        ),
+        "canva_mcp_prompt_brief": canva_brief
     }
 
     if args.automation_id == "cooca-carousel-facebook":
