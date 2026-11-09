@@ -85,21 +85,19 @@ fi
 # Auto-deploy all 9 daily social media automations on production (Cooca Multi-Platform Social Intelligence)
 TODAY="$(date '+%Y%m%d')"
 
-AUTOMATIONS=(
-    "cooca-daily-umkm-carousel"
-    "cooca-carousel-instagram"
-    "cooca-carousel-linkedin"
-    "cooca-carousel-facebook"
-    "cooca-carousel-tiktok"
-    "cooca-feed-instagram"
-    "cooca-feed-linkedin"
-    "cooca-feed-facebook"
-    "cooca-feed-tiktok"
-)
-
 "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
 
-for AUTO_ID in "${AUTOMATIONS[@]}"; do
+for AUTO_ID in \
+    cooca-daily-umkm-carousel \
+    cooca-carousel-instagram \
+    cooca-carousel-linkedin \
+    cooca-carousel-facebook \
+    cooca-carousel-tiktok \
+    cooca-feed-instagram \
+    cooca-feed-linkedin \
+    cooca-feed-facebook \
+    cooca-feed-tiktok
+do
     LOCK_FILE="$SCRIPT_DIR/storage/framework/deploy_${AUTO_ID}_${TODAY}.lock"
     SPEC_FILE="$SCRIPT_DIR/storage/app/public/content-assets/spec-${AUTO_ID}.json"
     if [ ! -f "$LOCK_FILE" ] && [ -f "$SPEC_FILE" ]; then
