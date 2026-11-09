@@ -207,7 +207,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             {"slide": 2, "title": "Friction Point: Kebocoran Wewenang Antar Gerai", "tag": "Identifikasi Masalah"},
             {"slide": 3, "title": "Prinsip Otorisasi Bertingkat: Kasir vs Supervisor", "tag": "Standar SOP"},
             {"slide": 4, "title": "Konsolidasi Mutasi Stok Gudang & Penjualan Real-Time", "tag": "Otomasi Sistem"},
-            {"slide": 5, "title": f"Sentralisasi Kendali Multi-Outlet Bersama COOCA ({feat_route})", "tag": "Solusi Strategis"}
+            {"slide": 5, "title": f"Sentralisasi Kendali Multi-Outlet Bersama COOCA", "tag": "Solusi Strategis"}
         ]
         caption = (
             f"{hook_title}\n\n"
@@ -217,7 +217,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"1. Pembatasan Otorisasi Kasir: Staf hanya memproses transaksi, sementara pembatalan nota (void) dan diskon manual wajib otorisasi PIN Supervisor.\n"
             f"2. Integrasi Mutasi Stok Real-Time: Pengiriman barang antar cabang tercatat otomatis dengan pemindaian barcode terpusat.\n"
             f"3. Laporan Konsolidasi 1 Layar: Pemilik dapat memantau perputaran omzet dan profitabilitas setiap gerai tanpa harus berkeliling lokasi.\n\n"
-            f"Seluruh arsitektur tata kelola ritel multi-cabang ini diintegrasikan melalui modul {feat_name} di platform COOCA: https://cooca.id{feat_route}\n\n"
+            f"Seluruh arsitektur tata kelola ritel multi-cabang ini diintegrasikan melalui modul {feat_name} di platform COOCA: cooca.id\n\n"
             f"#TataKelolaRitel #ManajemenBisnis #MultiCabang #SOPRitel #EfisiensiOperasional #COOCA"
         )
 
@@ -235,7 +235,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"- Rekonsiliasi tutup shift kasir selesai dalam 3 menit dengan akurasi 100%.\n"
             f"- Penghematan waktu staf operasional mencapai 14 jam kerja produktif per minggu.\n\n"
             f"Modernisasi sistem kasir bukan pos pengeluaran, melainkan investasi strategis perlindungan margin bisnis ritel.\n"
-            f"Pelajari simulasi sistem selengkapnya di https://cooca.id{feat_route}\n\n"
+            f"Pelajari simulasi sistem selengkapnya di cooca.id\n\n"
             f"#AnalisisROI #EfisiensiBisnis #AplikasiKasirRitel #SOPRitel #ManajemenKasir #COOCA"
         )
 
@@ -246,7 +246,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             {"slide": 2, "title": "Langkah 1: Kunci Saldo Awal Kasir di Awal Hari", "tag": "Modal Kasir"},
             {"slide": 3, "title": "Langkah 2: Rekam Pengeluaran Operasional (Petty Cash)", "tag": "Arus Kas Kecil"},
             {"slide": 4, "title": "Langkah 3: Selesaikan Transaksi Tertunda Sebelum Shift Berakhir", "tag": "Disiplin Kasir"},
-            {"slide": 5, "title": f"Langkah 4-5: Cetak Rekap Shift Otomatis di COOCA ({feat_route})", "tag": "Verifikasi Sistem"}
+            {"slide": 5, "title": f"Langkah 4-5: Cetak Rekap Shift Otomatis di COOCA", "tag": "Verifikasi Sistem"}
         ]
         caption = (
             f"{hook_title}\n\n"
@@ -257,7 +257,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"3. Pastikan tidak ada transaksi menggantung saat pergantian shift staf kasir.\n"
             f"4. Hitung uang fisik dan bandingkan langsung dengan ringkasan sistem kasir.\n"
             f"5. Cetak rekap shift otomatis untuk arsip verifikasi harian tanpa perlu hitung kalkulator manual.\n\n"
-            f"Kelola kasir toko lebih rapi, tenang, dan anti-selisih bersama fitur {feat_name} COOCA di https://cooca.id{feat_route}\n\n"
+            f"Kelola kasir toko lebih rapi, tenang, dan anti-selisih bersama fitur {feat_name} COOCA di cooca.id\n\n"
             f"#tipsbisnis #kasirtoko #selisihkas #sopkasir #manajemenkasir #keuanganritel #COOCA"
         )
 
@@ -273,7 +273,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n"
             f"3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\n"
             f"Lindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\n"
-            f"Pelajari fitur pengamanan kasir modern COOCA di https://cooca.id{feat_route}\n\n"
+            f"Pelajari fitur pengamanan kasir modern COOCA di cooca.id\n\n"
             f"#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA"
         )
 
@@ -285,7 +285,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             {"slide": 3, "title": "Fase 2: Transaksi Kasir Scanner Cepat Kurang dari 3 Detik", "tag": "Layanan Kilat"},
             {"slide": 4, "title": "Fase 3: Kartu Stok Digital & Notifikasi Batas Minimum", "tag": "Pergudangan"},
             {"slide": 5, "title": "Fase 4: Pemisahan Rekening Kas Usaha dan Rekening Pribadi", "tag": "Disiplin Finansial"},
-            {"slide": 6, "title": f"Tumbuh Mandiri & Modern Bersama Ekosistem COOCA ({feat_route})", "tag": "Solusi Terintegrasi"}
+            {"slide": 6, "title": f"Tumbuh Mandiri & Modern Bersama Ekosistem COOCA", "tag": "Solusi Terintegrasi"}
         ]
         caption = (
             f"{hook_title}\n\n"
@@ -298,7 +298,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n"
             f"5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n"
             f"6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\n"
-            f"Bawa bisnis ritel Anda naik kelas hari ini bersama platform COOCA di https://cooca.id{feat_route}\n\n"
+            f"Bawa bisnis ritel Anda naik kelas hari ini bersama platform COOCA di cooca.id\n\n"
             f"#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA"
         )
 
@@ -309,7 +309,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             {"slide": 2, "title": "Akar Masalah: Mutasi Barang yang Tidak Terekam", "tag": "Analisis Penyebab"},
             {"slide": 3, "title": "Dampak Finansial Terhadap Arus Kas Toko", "tag": "Risiko Finansial"},
             {"slide": 4, "title": "Penerapan Barcode Scanner Masuk & Keluar Otomatis", "tag": "Langkah Mitigasi"},
-            {"slide": 5, "title": f"Otomatisasi Kartu Stok Real-Time COOCA ({feat_route})", "tag": "Solusi Akurat"}
+            {"slide": 5, "title": f"Otomatisasi Kartu Stok Real-Time COOCA", "tag": "Solusi Akurat"}
         ]
         caption = (
             f"{hook_title}\n\n"
@@ -319,7 +319,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"2. Dampak Finansial: Pembeli kecewa karena barang di sistem tercatat ada tapi di rak kosong, serta risiko kerugian modal barang.\n"
             f"3. Solusi Otomasi: Terapkan pemindaian barcode saat barang masuk dan aktifkan notifikasi otomatis saat stok mencapai batas minimum.\n\n"
             f"Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time.\n"
-            f"Bagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di https://cooca.id{feat_route}\n\n"
+            f"Bagikan pengalaman rekan-rekan di kolom komentar atau pelajari sistemnya di cooca.id\n\n"
             f"#KomunitasRitel #StudiKasusUMKM #StokGudang #AplikasiToko #ManajemenInventori #COOCA"
         )
 
@@ -337,7 +337,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"- Setiap bon tercatat langsung di sistem saat transaksi kasir berlangsung.\n"
             f"- Kirim struk dan pengingat tanggal jatuh tempo yang sopan dan otomatis via WhatsApp.\n\n"
             f"Arus kas toko tetap sehat, hubungan baik dengan pelanggan pun tetap terjaga harmonis.\n"
-            f"Diskusikan sistem pembukuan piutang toko bersama modul {feat_name} di https://cooca.id{feat_route}\n\n"
+            f"Diskusikan sistem pembukuan piutang toko bersama modul {feat_name} di cooca.id\n\n"
             f"#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #ManajemenKas #COOCA"
         )
 
@@ -348,7 +348,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             {"slide": 2, "title": "Trik 1: Tombol Shortcut Produk Terlaris Sekali Sentuh", "tag": "Kecepatan Kasir"},
             {"slide": 3, "title": "Trik 2: Scan QRIS Dinamis Langsung Sesuai Total Belanja", "tag": "Pembayaran Instan"},
             {"slide": 4, "title": "Trik 3: Kirim Struk Pembelian Langsung ke WhatsApp Pembeli", "tag": "Hemat Kertas"},
-            {"slide": 5, "title": f"Operasional Kasir Lebih Gesit Bareng COOCA ({feat_route})", "tag": "Teknologi Ritel"}
+            {"slide": 5, "title": f"Operasional Kasir Lebih Gesit Bareng COOCA", "tag": "Teknologi Ritel"}
         ]
         caption = (
             f"{hook_title}\n\n"
@@ -358,7 +358,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"2. QRIS Dinamis 2 Detik: Total belanja langsung otomatis muncul di barcode pembeli tanpa input nominal manual.\n"
             f"3. Struk Digital WhatsApp: Hemat biaya kertas thermal dan nomor pelanggan tersimpan otomatis untuk promosi.\n\n"
             f"Praktis, cepat, dan membuat pelayanan kasir jauh lebih responsif!\n\n"
-            f"Coba gratis sekarang fitur {feat_name} di https://cooca.id{feat_route} (klik link di bio profil!)\n\n"
+            f"Coba gratis sekarang fitur {feat_name} di cooca.id (klik link di bio profil!)\n\n"
             f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #operasionalritel #COOCA"
         )
 
@@ -374,7 +374,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"- Staf kasir tidak bisa membatalkan transaksi tanpa otorisasi PIN Supervisor.\n"
             f"- Rekap kas otomatis per pergantian shift kasir selesai dalam 1 menit.\n"
             f"- Struk belanja langsung terkirim secara instan via WhatsApp pelanggan.\n\n"
-            f"Coba sistem keamanan kasir pintar COOCA di https://cooca.id{feat_route} (klik link di bio!)\n\n"
+            f"Coba sistem keamanan kasir pintar COOCA di cooca.id (klik link di bio!)\n\n"
             f"#trikbisnis #kasirtoko #aplikasikasir #umkmmaju #keamanantoko #COOCA"
         )
 
@@ -391,13 +391,13 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
             f"- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum merupakan laba riil!\n"
             f"- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan perlengkapan pengemasan.\n"
             f"- Margin Bersih: Keuntungan sejati yang sah ditarik sebagai profit bisnis.\n\n"
-            f"Hitung dan pantau margin laba bersih bisnis secara otomatis dan akurat melalui modul {feat_name} COOCA di https://cooca.id{feat_route}\n\n"
+            f"Hitung dan pantau margin laba bersih bisnis secara otomatis dan akurat melalui modul {feat_name} COOCA di cooca.id\n\n"
             f"#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #keuanganritel #COOCA"
         )
     else:
         hook_title = f"Edukasi Operasional Bisnis Ritel Modern ({pillar})"
         slides = [{"slide": 1, "title": pillar, "tag": "Ritel Modern"}]
-        caption = f"{hook_title}\n\nTingkatkan efisiensi bisnis ritel bersama platform COOCA di https://cooca.id{feat_route}"
+        caption = f"{hook_title}\n\nTingkatkan efisiensi bisnis ritel bersama platform COOCA di cooca.id"
 
     clean_caption = clean_dashes(caption)
     clean_hook = clean_dashes(hook_title)
@@ -407,7 +407,7 @@ def synthesize_content_dynamically(profile: dict, feature_info: dict, live_trend
         "caption": clean_caption,
         "slides": slides,
         "topic_name": pillar,
-        "solution_summary": f"Integrasi fitur {feat_name} ({feat_route}) untuk optimalisasi operasional ritel.",
+        "solution_summary": f"Integrasi fitur {feat_name} di COOCA untuk optimalisasi operasional ritel.",
         "dimensions": dimensions,
     }
 
@@ -452,7 +452,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
                     "Lakukan cycle count mingguan untuk 10-20 SKU produk terlaris tanpa harus tutup toko",
                     "Kunci otorisasi koreksi stok rusak/hilang hanya melalui persetujuan Supervisor"
                 ],
-                "cooca_organic_link": f"Modul {feat_name} ({feat_route}) COOCA menyediakan kartu stok digital real-time dan notifikasi dini batas minimum",
+                "cooca_organic_link": f"Modul {feat_name} di COOCA menyediakan kartu stok digital real-time dan notifikasi dini batas minimum",
                 "audience_relevance_score": 96.5,
                 "content_audience_matching_justification": "Sangat relevan karena lebih dari 78% pedagang ritel dan grosir di komunitas Facebook menghadapi masalah selisih fisik saat audit stok bulanan"
             },
@@ -461,7 +461,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
                 "audience_connection": "Bagi rekan-rekan pemilik toko dan grosir ritel, situasi selisih stok fisik vs buku adalah kendala operasional yang sangat menyita waktu dan biaya.",
                 "educational_value": "Membedah 3 faktor utama penyebab selisih stok: mutasi tak terekam, human error kasir salah barcode, dan barang rusak tanpa pencatatan.",
                 "practical_takeaway": "Terapkan pemindaian barcode saat barang masuk dan aktifkan peringatan otomatis saat stok menipis.",
-                "cooca_solution": f"Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time di https://cooca.id{feat_route}",
+                "cooca_solution": f"Sistem manajemen inventori ritel modern COOCA memastikan akurasi stok hingga 99% secara real-time di cooca.id",
                 "engagement_cta": "Bagikan pengalaman rekan-rekan di kolom komentar: seberapa sering toko Anda mengalami selisih stok fisik?",
                 "hashtags": ["#KomunitasRitel", "#StudiKasusUMKM", "#StokGudang", "#AplikasiToko", "#ManajemenInventori", "#COOCA"]
             },
@@ -507,7 +507,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
             "content_angle": "Operational Awareness",
             "key_message": f"Tingkatkan stabilitas toko dengan standarisasi {profile.get('core_pillar')}",
             "practical_takeaways": ["Gunakan pencatatan otomatis", "Terapkan SOP harian", "Evaluasi berkala"],
-            "cooca_organic_link": f"Solusi {feat_name} ({feat_route}) COOCA",
+            "cooca_organic_link": f"Solusi {feat_name} di COOCA",
             "audience_relevance_score": 95.0,
             "content_audience_matching_justification": f"Konten selaras dengan kebutuhan audiens {channel.upper()} dalam mengoptimalkan pengelolaan bisnis ritel"
         },
@@ -516,7 +516,7 @@ def synthesize_audience_intelligence(automation_id: str, profile: dict, primary_
             "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
             "educational_value": "Edukasi praktis langkah demi langkah.",
             "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
-            "cooca_solution": f"Informasi lebih lanjut di https://cooca.id{feat_route}",
+            "cooca_solution": f"Informasi lebih lanjut di cooca.id",
             "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
             "hashtags": ["#TipsBisnis", "#ManajemenToko", "#UMKM", "#COOCA"]
         },
@@ -599,6 +599,8 @@ def main():
 
     audience_intel = synthesize_audience_intelligence(args.automation_id, profile, primary_feature_info, synthesized)
 
+    brief_topic = synthesized.get("topic_name", "MANAJEMEN BISNIS")
+    brief_hook = synthesized.get("hook_title", "Kendali Penuh Toko Bersama COOCA")
     result_payload = {
         "automation_id": args.automation_id,
         "channel": channel,
@@ -668,7 +670,15 @@ def main():
                 "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
             ]
         },
-        "canva_mcp_prompt_brief": f"Create modern {content_format} in Indonesian for COOCA. Theme: White & Blue identity (Pure White #FFFFFF & Cooca Blue #2563EB, #0A1128, strictly NO green) using Plus Jakarta Sans font hierarchy (Bold headline, SemiBold subheadline, Regular body text, Bold numbers & CTA) with electric cyan accents. Official COOCA Dark Logo (1785229034_logo_dark.png) included at top. Topic: {synthesized['topic_name']}. Headline: {synthesized['hook_title']}.",
+        "canva_mcp_prompt_brief": (
+            f"Square 1:1 {content_format} (1080x1080 px) for Cooca POS Indonesia (cooca.id). "
+            f"Visual Style: High-end photo-led Bento Grid layout. "
+            f"Subject: Photorealistic studio portrait of a confident Indonesian retail business owner or cashier holding an iPad tablet POS terminal, smiling warmly. "
+            f"Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. "
+            f"Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. "
+            f"Elements: Top category overline '{brief_topic}', bold headline '{brief_hook}', floating glassmorphism bento metric cards, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. "
+            f"Highly realistic photography, clean editorial layout, zero clutter, square 1080x1080."
+        ),
     }
 
     if args.automation_id == "cooca-carousel-facebook":
