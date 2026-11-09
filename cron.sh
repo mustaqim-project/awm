@@ -61,8 +61,8 @@ rm -f "$SCRIPT_DIR/bootstrap/cache/routes"*.php 2>/dev/null || true
 # Auto-import newly published blog articles into production database (https://cooca.id/admin/posts)
 "$PHP_BIN" artisan blog:import-articles >> "$SCRIPT_DIR/storage/logs/blog_import.log" 2>&1 || true
 
-# Auto-import daily social media content into production Admin Social Media Center (https://cooca.id/admin/social-media)
-"$PHP_BIN" artisan cooca:import-social-content >> "$SCRIPT_DIR/storage/logs/social_import.log" 2>&1 || true
+# Auto-cleanup obsolete, broken or deleted social media posts on production
+"$PHP_BIN" artisan cooca:cleanup-deleted-posts >> "$SCRIPT_DIR/storage/logs/cleanup_deleted.log" 2>&1 || true
 
 # Auto-retry pending failed TikTok post with automatic fallback to TikTok Inbox
 if [ ! -f "$SCRIPT_DIR/storage/framework/retry_tiktok_0b21a626.lock" ]; then
