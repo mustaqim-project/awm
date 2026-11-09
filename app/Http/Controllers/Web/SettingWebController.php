@@ -152,6 +152,7 @@ final class SettingWebController extends Controller implements HasMiddleware
             'email' => ['nullable', 'email', 'max:150'],
             'address' => ['nullable', 'string', 'max:500'],
             'tax_identification_number' => ['nullable', 'string', 'max:50'],
+            'tax_entity_type' => ['nullable', 'string', 'in:individual,pt_individual,corporate'],
             'pos_enable_tax' => ['nullable', 'boolean'],
             'pos_show_product_images' => ['nullable', 'boolean'],
             'pos_tax_percent' => ['nullable', 'numeric', 'min:0', 'max:100'],
@@ -192,6 +193,9 @@ final class SettingWebController extends Controller implements HasMiddleware
         }
         if (array_key_exists('tax_identification_number', $validated)) {
             $updateData['tax_identification_number'] = $validated['tax_identification_number'];
+        }
+        if (array_key_exists('tax_entity_type', $validated) && $validated['tax_entity_type']) {
+            $updateData['tax_entity_type'] = $validated['tax_entity_type'];
         }
         if ($request->has('pos_enable_tax')) {
             $updateData['pos_enable_tax'] = $request->boolean('pos_enable_tax');

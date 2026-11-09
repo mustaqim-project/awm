@@ -42,6 +42,12 @@ class Business extends Model
 
     public const SCALE_CORPORATE_TIER = 'corporate';
 
+    public const TAX_ENTITY_INDIVIDUAL = 'individual'; // Usaha Perorangan (WP OP)
+
+    public const TAX_ENTITY_PT_INDIVIDUAL = 'pt_individual'; // PT Perorangan (Perseroan Perorangan)
+
+    public const TAX_ENTITY_CORPORATE = 'corporate'; // PT Badan / CV / Firma
+
     protected $fillable = [
         'name',
         'slug',
@@ -51,6 +57,7 @@ class Business extends Model
         'email',
         'address',
         'tax_identification_number',
+        'tax_entity_type',
         'bank_name',
         'bank_account_number',
         'bank_account_holder',
@@ -188,6 +195,43 @@ class Business extends Model
     public function getOperatingHours(): array
     {
         return \App\Support\TimezoneHelper::normalizeOperatingHours($this->operating_hours);
+    }
+
+    /**
+     * Dapatkan jenis entitas perpajakan usaha.
+     * Default: individual (Usaha Perorangan).
+     */
+    public function getTaxEntityType(): string
+    {
+        $type = $this->tax_entity_type;
+        if (! empty($type) && in_array($type, [self::TAX_ENTITY_INDIVIDUAL, self::TAX_ENTITY_PT_INDIVIDUAL, self::TAX_ENTITY_CORPORATE], true)) {
+            return $type;
+        }
+
+        // Fallback backward-compatible: jika ada di settings JSON
+        if (isset($this->settings['tax_entity_type'])) {
+            $settingType = (string) $this->settings['tax_entity_type'];
+            if (in_array($settingType, [self::TAX_ENTITY_INDIVIDUAL, self::TAX_ENTITY_PT_INDIVIDUAL, self::TAX_ENTITY_CORPORATE], true)) {
+                return $settingType;
+            }
+        }
+
+        return self::TAX_ENTITY_INDIVIDUAL;
+    }
+
+    public function isIndividualTaxpayer(): bool
+    {
+        return $this->getTaxEntityType() === self::TAX_ENTITY_INDIVIDUAL;
+    }
+
+    public function isPtIndividualTaxpayer(): bool
+    {
+        return $this->getTaxEntityType() === self::TAX_ENTITY_PT_INDIVIDUAL;
+    }
+
+    public function isCorporateTaxpayer(): bool
+    {
+        return $this->getTaxEntityType() === self::TAX_ENTITY_CORPORATE;
     }
 
     public function localNow(): \Carbon\Carbon
@@ -487,6 +531,22 @@ class Business extends Model
     public function employeeLoans(): HasMany
     {
         return $this->hasMany(EmployeeLoan::class, 'business_id');
+    }
+
+    /**
+     * Determine if sales tax (PPN / PB1) is globally enabled across all transaction channels.
+     */
+    public function isSalesTaxEnabled(): bool
+    {
+        return (bool) ($this->pos_enable_tax ?? false);
+    }
+
+    /**
+     * Get the active sales tax percentage (e.g. 11.00 or 10.00). Returns 0.0 if disabled.
+     */
+    public function getSalesTaxPercent(): float
+    {
+        return $this->isSalesTaxEnabled() ? (float) ($this->pos_tax_percent ?? 0.0) : 0.0;
     }
 
     /**

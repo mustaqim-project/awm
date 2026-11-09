@@ -280,6 +280,58 @@
                         </div>
                     </div>
 
+                    <!-- Bentuk Badan Usaha & Skema Pajak Wajib -->
+                    <div class="p-4 rounded-[14px] bg-[#007AFF]/[0.04] dark:bg-[#007AFF]/[0.08] border border-[#007AFF]/20 space-y-3">
+                        <div class="flex items-start justify-between gap-3">
+                            <div>
+                                <label for="biz_tax_entity_type" class="block text-[13px] font-bold text-black dark:text-white">
+                                    Bentuk Entitas Usaha (Kewajiban Pajak DJP) <span class="text-[#FF3B30]">*</span>
+                                </label>
+                                <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5">
+                                    Wajib ditentukan agar sistem otomatis menghitung tarif pajak resmi (PPh Final PP 55/2022, PPh Badan Pasal 31E, atau PPh Pribadi Pasal 17).
+                                </p>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] shrink-0 whitespace-nowrap">
+                                Kepatuhan Pajak
+                            </span>
+                        </div>
+
+                        @php
+                            $currentTaxEntity = old('tax_entity_type', $business->getTaxEntityType());
+                        @endphp
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                            <label class="relative flex flex-col justify-between p-3.5 rounded-[12px] border cursor-pointer transition-all {{ $currentTaxEntity === 'individual' ? 'border-[#007AFF] bg-white dark:bg-[#1C1C1E] shadow-sm ring-1 ring-[#007AFF]/40' : 'border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20' }}">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[13px] font-bold text-black dark:text-white">Usaha Perorangan</span>
+                                    <input type="radio" name="tax_entity_type" value="individual" {{ $currentTaxEntity === 'individual' ? 'checked' : '' }} class="text-[#007AFF] focus:ring-0">
+                                </div>
+                                <p class="text-[11px] text-black/55 dark:text-white/55 leading-relaxed">
+                                    Wajib Pajak Orang Pribadi (WP OP). Bebas PPh Final 0.5% untuk omzet s/d <strong>Rp 500 Juta/tahun</strong>.
+                                </p>
+                            </label>
+
+                            <label class="relative flex flex-col justify-between p-3.5 rounded-[12px] border cursor-pointer transition-all {{ $currentTaxEntity === 'pt_individual' ? 'border-[#007AFF] bg-white dark:bg-[#1C1C1E] shadow-sm ring-1 ring-[#007AFF]/40' : 'border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20' }}">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[13px] font-bold text-black dark:text-white">PT Perorangan</span>
+                                    <input type="radio" name="tax_entity_type" value="pt_individual" {{ $currentTaxEntity === 'pt_individual' ? 'checked' : '' }} class="text-[#007AFF] focus:ring-0">
+                                </div>
+                                <p class="text-[11px] text-black/55 dark:text-white/55 leading-relaxed">
+                                    Badan hukum perseroan 1 orang. PPh Final 0.5% dari rupiah pertama (tanpa batas 500 Jt), batas masa 4 tahun.
+                                </p>
+                            </label>
+
+                            <label class="relative flex flex-col justify-between p-3.5 rounded-[12px] border cursor-pointer transition-all {{ $currentTaxEntity === 'corporate' ? 'border-[#007AFF] bg-white dark:bg-[#1C1C1E] shadow-sm ring-1 ring-[#007AFF]/40' : 'border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] hover:border-black/20' }}">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-[13px] font-bold text-black dark:text-white">PT Badan / CV</span>
+                                    <input type="radio" name="tax_entity_type" value="corporate" {{ $currentTaxEntity === 'corporate' ? 'checked' : '' }} class="text-[#007AFF] focus:ring-0">
+                                </div>
+                                <p class="text-[11px] text-black/55 dark:text-white/55 leading-relaxed">
+                                    Badan usaha persekutuan modal. Tarif PPh Badan fasilitas <strong>11%</strong> (Pasal 31E) atau PPh Final 0.5% (max 3 th).
+                                </p>
+                            </label>
+                        </div>
+                    </div>
+
                     <!-- Input Grid: Phone & Email -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>

@@ -53,7 +53,7 @@ return [
     'pos_config' => 'POS Configuration',
     'pos_config_desc' => 'Configure sales tax collection and visual catalog cards for the POS cashier terminal.',
     'sales_tax' => 'Sales Tax (VAT / PB1)',
-    'sales_tax_desc' => 'Enable automatic sales tax collection on POS sales transactions',
+    'sales_tax_desc' => 'Enable automatic sales tax collection across all sales channels (POS Cashier, Table QR, Invoices, and Sales Orders).',
     'pos_product_photos' => 'Product Photos on POS Menu',
     'pos_product_photos_desc' => 'Display product photo thumbnails on cashier catalog (disable for fast text mode)',
     'section_pos_title' => 'POS Configuration',

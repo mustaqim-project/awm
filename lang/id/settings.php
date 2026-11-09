@@ -53,7 +53,7 @@ return [
     'pos_config' => 'Konfigurasi Kasir (Point of Sale)',
     'pos_config_desc' => 'Atur pemungutan pajak penjualan serta tampilan kartu menu pada terminal kasir POS.',
     'sales_tax' => 'Pajak Penjualan (PPN / PB1)',
-    'sales_tax_desc' => 'Aktifkan pemungutan tarif pajak otomatis pada transaksi penjualan POS',
+    'sales_tax_desc' => 'Aktifkan pemungutan tarif pajak otomatis pada seluruh transaksi penjualan (Kasir POS, QR Meja, Faktur Penjualan, dan Sales Order).',
     'pos_product_photos' => 'Foto Produk di Menu Kasir',
     'pos_product_photos_desc' => 'Tampilkan foto produk pada katalog kasir (nonaktifkan untuk mode teks cepat)',
     'section_pos_title' => 'Konfigurasi Kasir (Point of Sale)',

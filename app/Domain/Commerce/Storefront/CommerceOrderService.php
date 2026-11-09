@@ -369,7 +369,11 @@ final class CommerceOrderService
                 }
             }
 
-            $totalAmount = $subtotal + $shippingCost + $biteshipServiceFee;
+            // Sales Tax (PPN / PB1) calculation when globally enabled
+            $taxPercent = $business->isSalesTaxEnabled() ? $business->getSalesTaxPercent() : 0.0;
+            $taxAmount = $taxPercent > 0 ? round(($subtotal * $taxPercent) / 100.0, 2) : 0.0;
+
+            $totalAmount = $subtotal + $shippingCost + $biteshipServiceFee + $taxAmount;
 
             $persistedShippingRuleId = null;
             if (! empty($shippingRuleId) && \Illuminate\Support\Str::isUuid((string) $shippingRuleId)) {
@@ -411,6 +415,8 @@ final class CommerceOrderService
                 'shipping_cost' => $shippingCost,
                 'biteship_service_fee' => $biteshipServiceFee,
                 'discount_amount' => 0.0,
+                'tax_percentage' => $taxPercent,
+                'tax_amount' => $taxAmount,
                 'total_amount' => $totalAmount,
                 'reserved_until' => $reservedUntil,
                 'notes' => $options['order_notes'] ?? ($options['notes'] ?? ($customerData['notes'] ?? null)),

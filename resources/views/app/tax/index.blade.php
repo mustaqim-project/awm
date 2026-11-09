@@ -17,7 +17,7 @@
         if (['sales', 'transaksi', 'pb1', 'ppn'].includes(tab)) return 'sales';
         return 'net_income';
     })(),
-    taxpayerType: '{{ $isIndividual ? 'individual' : 'corporate' }}',
+    taxpayerType: '{{ $taxpayerType }}',
     ptkpStatus: '{{ $ptkpStatus }}',
     currentYear: {{ $currentYear }},
 
@@ -32,6 +32,7 @@
         gross_revenue: {{ (float) ($netIncomeSummary['total_revenue_year'] > 0 ? $netIncomeSummary['total_revenue_year'] : 50000000) }},
         cogs: {{ (float) ($netIncomeSummary['total_cogs_year'] > 0 ? $netIncomeSummary['total_cogs_year'] : 25000000) }},
         operating_expenses: {{ (float) ($netIncomeSummary['total_expenses_year'] > 0 ? $netIncomeSummary['total_expenses_year'] : 12000000) }},
+        tax_entity_type: '{{ $taxpayerType }}',
         is_corporate: {{ $isIndividual ? 'false' : 'true' }},
         ptkp_status: '{{ $ptkpStatus }}',
         nppn_rate: 0
@@ -43,6 +44,7 @@
     umkmInput: {
         monthly_revenue: 35000000,
         prior_cumulative: {{ (float) ($umkmSummary['total_revenue_year'] ?? 0) }},
+        tax_entity_type: '{{ $taxpayerType }}',
         is_individual: {{ $isIndividual ? 'true' : 'false' }}
     },
     umkmResult: null,
@@ -343,8 +345,9 @@
             <div class="flex items-center gap-2">
                 <label for="taxpayer-select" class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('tax.year_filter.type_label') }}</label>
                 <select id="taxpayer-select" name="taxpayer_type" onchange="this.form.submit()" class="h-10 text-sm font-medium rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
-                    <option value="individual" {{ $isIndividual ? 'selected' : '' }}>{{ __('tax.year_filter.type_individual') }}</option>
-                    <option value="corporate" {{ ! $isIndividual ? 'selected' : '' }}>{{ __('tax.year_filter.type_corporate') }}</option>
+                    <option value="individual" {{ $taxpayerType === 'individual' ? 'selected' : '' }}>{{ __('tax.year_filter.type_individual') }}</option>
+                    <option value="pt_individual" {{ $taxpayerType === 'pt_individual' ? 'selected' : '' }}>{{ __('tax.year_filter.type_pt_individual') }}</option>
+                    <option value="corporate" {{ $taxpayerType === 'corporate' ? 'selected' : '' }}>{{ __('tax.year_filter.type_corporate') }}</option>
                 </select>
             </div>
 
@@ -445,15 +448,16 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-3 pt-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                         <div>
                             <label for="net-is-corporate" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('tax.net_income.field_entity') }}:</label>
-                            <select id="net-is-corporate" x-model="netIncomeInput.is_corporate" @change="runNetIncomeSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
-                                <option :value="false">{{ __('tax.net_income.entity_individual') }}</option>
-                                <option :value="true">{{ __('tax.net_income.entity_corporate') }}</option>
+                            <select id="net-is-corporate" x-model="netIncomeInput.tax_entity_type" @change="netIncomeInput.is_corporate = (netIncomeInput.tax_entity_type !== 'individual'); runNetIncomeSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                                <option value="individual">{{ __('tax.year_filter.type_individual') }}</option>
+                                <option value="pt_individual">{{ __('tax.year_filter.type_pt_individual') }}</option>
+                                <option value="corporate">{{ __('tax.year_filter.type_corporate') }}</option>
                             </select>
                         </div>
-                        <div x-show="!netIncomeInput.is_corporate">
+                        <div x-show="netIncomeInput.tax_entity_type === 'individual'">
                             <label for="net-ptkp-status" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Status PTKP:</label>
                             <select id="net-ptkp-status" x-model="netIncomeInput.ptkp_status" @change="runNetIncomeSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
                                 @foreach(['TK/0', 'TK/1', 'TK/2', 'TK/3', 'K/0', 'K/1', 'K/2', 'K/3'] as $status)
@@ -461,9 +465,9 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div x-show="netIncomeInput.is_corporate" class="flex items-end">
+                        <div x-show="netIncomeInput.tax_entity_type !== 'individual'" class="flex items-end">
                             <div class="text-[11px] text-black/60 dark:text-white/60 bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5 rounded-xl w-full">
-                                Fasilitas Pasal 31E UU PPh (Tarif Efektif 11% s/d 4.8M)
+                                Fasilitas PPh Badan Pasal 31E UU PPh (Tarif Efektif 11% s/d 4.8M)
                             </div>
                         </div>
                     </div>
@@ -571,14 +575,36 @@
 
                     <div class="pt-2">
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-2">{{ __('tax.umkm.field_taxpayer_type') }}:</label>
-                        <div class="grid grid-cols-2 gap-3">
-                            <button type="button" @click="umkmInput.is_individual = true; runUmkmSim()" :class="umkmInput.is_individual ? 'border-[#34C759] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-2' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60 bg-black/[0.02] dark:bg-white/[0.04]'" class="p-3 rounded-2xl border text-left text-xs transition-all min-h-[44px]">
-                                <div class="font-bold">{{ __('tax.umkm.entity_individual') }}</div>
-                                <div class="text-[10px] mt-0.5 opacity-80">{{ __('tax.umkm.entity_individual_desc') }}</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                            <button type="button" @click="umkmInput.tax_entity_type = 'individual'; umkmInput.is_individual = true; runUmkmSim()" :class="umkmInput.tax_entity_type === 'individual' ? 'border-[#34C759] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-2 shadow-xs' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60 bg-black/[0.02] dark:bg-white/[0.04]'" class="p-3 rounded-2xl border text-left text-xs transition-all min-h-[52px] flex flex-col justify-between">
+                                <div>
+                                    <div class="font-bold text-xs leading-tight">{{ __('tax.umkm.entity_individual') }}</div>
+                                    <div class="text-[10px] mt-1 opacity-80 leading-normal">{{ __('tax.umkm.entity_individual_desc') }}</div>
+                                </div>
+                                <div class="mt-2 inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 px-2 py-0.5 rounded-full w-fit">
+                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                    <span>Bebas 500 Jt • 7 Thn</span>
+                                </div>
                             </button>
-                            <button type="button" @click="umkmInput.is_individual = false; runUmkmSim()" :class="!umkmInput.is_individual ? 'border-[#34C759] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-2' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60 bg-black/[0.02] dark:bg-white/[0.04]'" class="p-3 rounded-2xl border text-left text-xs transition-all min-h-[44px]">
-                                <div class="font-bold">{{ __('tax.umkm.entity_corporate') }}</div>
-                                <div class="text-[10px] mt-0.5 opacity-80">{{ __('tax.umkm.entity_corporate_desc') }}</div>
+                            <button type="button" @click="umkmInput.tax_entity_type = 'pt_individual'; umkmInput.is_individual = false; runUmkmSim()" :class="umkmInput.tax_entity_type === 'pt_individual' ? 'border-[#34C759] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-2 shadow-xs' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60 bg-black/[0.02] dark:bg-white/[0.04]'" class="p-3 rounded-2xl border text-left text-xs transition-all min-h-[52px] flex flex-col justify-between">
+                                <div>
+                                    <div class="font-bold text-xs leading-tight">{{ __('tax.umkm.entity_pt_individual') }}</div>
+                                    <div class="text-[10px] mt-1 opacity-80 leading-normal">{{ __('tax.umkm.entity_pt_individual_desc') }}</div>
+                                </div>
+                                <div class="mt-2 inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 px-2 py-0.5 rounded-full w-fit">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    <span>Maks. 4 Tahun</span>
+                                </div>
+                            </button>
+                            <button type="button" @click="umkmInput.tax_entity_type = 'corporate'; umkmInput.is_individual = false; runUmkmSim()" :class="umkmInput.tax_entity_type === 'corporate' ? 'border-[#34C759] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border-2 shadow-xs' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60 bg-black/[0.02] dark:bg-white/[0.04]'" class="p-3 rounded-2xl border text-left text-xs transition-all min-h-[52px] flex flex-col justify-between">
+                                <div>
+                                    <div class="font-bold text-xs leading-tight">{{ __('tax.umkm.entity_corporate') }}</div>
+                                    <div class="text-[10px] mt-1 opacity-80 leading-normal">{{ __('tax.umkm.entity_corporate_desc') }}</div>
+                                </div>
+                                <div class="mt-2 inline-flex items-center gap-1 text-[9px] font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 px-2 py-0.5 rounded-full w-fit">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    <span>Maks. 3 Tahun</span>
+                                </div>
                             </button>
                         </div>
                     </div>
@@ -601,7 +627,7 @@
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
                             <div class="bg-white dark:bg-[#1C1C1E] p-3.5 rounded-2xl border border-black/10 dark:border-white/10 shadow-xs">
                                 <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('tax.umkm.card_new_cumulative') }}</div>
-                                <div class="text-base font-bold text-black dark:text-white mt-0.5" x-text="formatRupiah(umkmResult?.current_cumulative)"></div>
+                                <div class="text-base font-bold text-black dark:text-white mt-0.5" x-text="formatRupiah(umkmResult?.current_cumulative || umkmResult?.new_cumulative)"></div>
                             </div>
                             <div class="bg-white dark:bg-[#1C1C1E] p-3.5 rounded-2xl border border-black/10 dark:border-white/10 shadow-xs">
                                 <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('tax.umkm.card_dpp') }}</div>
@@ -609,8 +635,17 @@
                             </div>
                             <div class="bg-white dark:bg-[#1C1C1E] p-3.5 rounded-2xl border border-black/10 dark:border-white/10 shadow-xs col-span-2 sm:col-span-1">
                                 <div class="text-[11px] text-black/50 dark:text-white/50">{{ __('tax.umkm.card_exempt_facility') }}</div>
-                                <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1" x-text="umkmResult?.is_under_threshold ? @js(__('tax.umkm.exempt_active')) : @js(__('tax.umkm.exempt_exceeded'))"></div>
+                                <div class="text-xs font-bold mt-1" :class="umkmResult?.is_under_threshold ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'" x-text="umkmResult?.is_under_threshold ? @js(__('tax.umkm.exempt_active')) : (umkmInput.tax_entity_type === 'individual' ? @js(__('tax.umkm.exempt_exceeded')) : 'PPh Badan 0.5% sejak Rp 1')"></div>
                             </div>
+                        </div>
+
+                        {{-- Entity Limit & Status Banner --}}
+                        <div class="mt-3 p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center justify-between text-xs">
+                            <div class="flex items-center gap-2">
+                                <i data-lucide="info" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
+                                <span class="text-black/70 dark:text-white/70" x-text="umkmInput.tax_entity_type === 'individual' ? 'Fasilitas Omzet Bebas s.d Rp 500 Juta/Tahun (Maks. 7 Tahun Masa Pemanfaatan)' : (umkmInput.tax_entity_type === 'pt_individual' ? 'Wajib Pajak Badan PT Perorangan: Kena 0.5% sejak Rp 1 (Maks. 4 Tahun)' : 'Wajib Pajak Badan PT / CV: Kena 0.5% sejak Rp 1 (Maks. 3 Tahun)')"></span>
+                            </div>
+                            <span class="font-bold text-emerald-600 dark:text-emerald-400 shrink-0 ml-2" x-text="umkmInput.tax_entity_type === 'individual' ? 'Batas: 7 Thn' : (umkmInput.tax_entity_type === 'pt_individual' ? 'Batas: 4 Thn' : 'Batas: 3 Thn')"></span>
                         </div>
 
                         {{-- Tax Amount Box --}}

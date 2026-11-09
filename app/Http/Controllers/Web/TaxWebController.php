@@ -64,14 +64,23 @@ final class TaxWebController extends Controller implements HasMiddleware
     {
         $business = Context::requireBusiness();
         $currentYear = (int) $request->query('year', date('Y'));
-        $taxpayerType = $request->query('taxpayer_type', 'individual');
+
+        // Default Wajib Pajak mengambil konfigurasi profil usaha jika tidak di-override query parameter
+        $defaultTaxEntity = $business->getTaxEntityType();
+        $taxpayerType = (string) $request->query('taxpayer_type', $defaultTaxEntity);
+        if (! in_array($taxpayerType, ['individual', 'pt_individual', 'corporate'], true)) {
+            $taxpayerType = 'individual';
+        }
+
         $isIndividual = $taxpayerType === 'individual';
         $ptkpStatus = (string) $request->query('ptkp_status', 'TK/0');
 
         // Rekapitulasi Tahunan PPh Final UMKM 0.5% (PP 55/2022)
+        // Usaha Perorangan (individual) dapat fasilitas batas Rp 500 Juta, PT Perorangan & PT Badan tidak
         $umkmSummary = $this->pphFinalService->getYearlySummary($business, $currentYear, $isIndividual);
 
         // Rekapitulasi Tahunan PPh Berdasarkan Hasil Penjualan & Laba Bersih (UU HPP / Pasal 31E / Pasal 17)
+        // PT Perorangan & PT Badan dikenakan PPh Badan (Pasal 31E 11%), sedangkan Usaha Perorangan dikenakan Pasal 17 progresif + PTKP
         $netIncomeSummary = $this->netIncomeTaxService->getYearlyNetIncomeTaxSummary(
             $business,
             $currentYear,
@@ -140,14 +149,30 @@ final class TaxWebController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'monthly_revenue' => 'required|numeric|min:0|max:1000000000000',
             'prior_cumulative' => 'required|numeric|min:0|max:1000000000000',
-            'is_individual' => 'required|boolean',
+            'is_individual' => 'nullable|boolean',
+            'tax_entity_type' => 'nullable|string|in:individual,pt_individual,corporate',
         ]);
+
+        $taxEntityType = $validated['tax_entity_type'] ?? null;
+        if ($taxEntityType !== null) {
+            $isIndividual = ($taxEntityType === 'individual');
+        } else {
+            $isIndividual = (bool) ($validated['is_individual'] ?? true);
+            $taxEntityType = $isIndividual ? 'individual' : 'corporate';
+        }
 
         $result = $this->pphFinalService->calculate(
             (float) $validated['monthly_revenue'],
             (float) $validated['prior_cumulative'],
-            (bool) $validated['is_individual']
+            $isIndividual
         );
+
+        $result['tax_entity_type'] = $taxEntityType;
+        $result['entity_time_limit_years'] = match ($taxEntityType) {
+            'individual' => 7,
+            'pt_individual' => 4,
+            default => 3,
+        };
 
         return response()->json(['success' => true, 'data' => $result]);
     }
@@ -409,19 +434,30 @@ final class TaxWebController extends Controller implements HasMiddleware
             'gross_revenue' => 'required|numeric|min:0|max:1000000000000',
             'cogs' => 'required|numeric|min:0|max:1000000000000',
             'operating_expenses' => 'required|numeric|min:0|max:1000000000000',
-            'is_corporate' => 'required|boolean',
+            'is_corporate' => 'nullable|boolean',
+            'tax_entity_type' => 'nullable|string|in:individual,pt_individual,corporate',
             'ptkp_status' => 'nullable|string|in:TK/0,TK/1,TK/2,TK/3,K/0,K/1,K/2,K/3',
             'nppn_rate' => 'nullable|numeric|min:0|max:1',
         ]);
+
+        $taxEntityType = $validated['tax_entity_type'] ?? null;
+        if ($taxEntityType !== null) {
+            $isCorporate = ($taxEntityType !== 'individual');
+        } else {
+            $isCorporate = (bool) ($validated['is_corporate'] ?? false);
+            $taxEntityType = $isCorporate ? 'corporate' : 'individual';
+        }
 
         $result = $this->netIncomeTaxService->calculate(
             (float) $validated['gross_revenue'],
             (float) $validated['cogs'],
             (float) $validated['operating_expenses'],
-            (bool) $validated['is_corporate'],
+            $isCorporate,
             $validated['ptkp_status'] ?? 'TK/0',
             (float) ($validated['nppn_rate'] ?? 0.0)
         );
+
+        $result['tax_entity_type'] = $taxEntityType;
 
         return response()->json(['success' => true, 'data' => $result]);
     }

@@ -303,6 +303,15 @@ final class TripayService
             ];
         }
 
+        // If sales tax (PPN/PB1) exists, append as an item line
+        if ((float) ($order->tax_amount ?? 0) > 0) {
+            $orderItems[] = [
+                'name' => 'Pajak (PPN/PB1)',
+                'price' => (int) round((float) $order->tax_amount),
+                'quantity' => 1,
+            ];
+        }
+
         // Reconcile items to guarantee sum(order_items.price * quantity) === amount (TriPay strict requirement)
         $itemsSum = 0;
         foreach ($orderItems as $oi) {

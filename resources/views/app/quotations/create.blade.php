@@ -242,6 +242,7 @@
             ],
             subtotal: 0,
             discountAmount: 0,
+            taxPercent: {{ $business->pos_enable_tax ? (float) $business->pos_tax_percent : 0 }},
             taxAmount: 0,
             grandTotal: 0,
 
@@ -277,6 +278,10 @@
 
             calculateTotals() {
                 this.subtotal = this.items.reduce((sum, it) => sum + ((it.quantity || 0) * (it.unit_price || 0)), 0);
+                if (this.taxPercent > 0 && (!this.taxAmount || this.taxAmount === 0)) {
+                    const taxable = Math.max(0, this.subtotal - (this.discountAmount || 0));
+                    this.taxAmount = Math.round((taxable * this.taxPercent) / 100);
+                }
                 this.grandTotal = Math.max(0, (this.subtotal - (this.discountAmount || 0)) + (this.taxAmount || 0));
             }
         };

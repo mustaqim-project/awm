@@ -52,6 +52,52 @@
         {{-- ========================================================== --}}
         <x-module-tabs module="finance" />
 
+        {{-- Tax Engine & Entity Compliance Banner --}}
+        @php
+            $currentBiz = \App\Support\Context::business();
+            $taxEntityType = $currentBiz?->getTaxEntityType() ?? 'individual';
+            $entityName = match ($taxEntityType) {
+                'individual' => 'Usaha Perorangan (WP OP)',
+                'pt_individual' => 'PT Perorangan (Perseroan Perorangan)',
+                default => 'Badan Usaha (PT / CV)',
+            };
+            $taxBadgeInfo = match ($taxEntityType) {
+                'individual' => 'PPh Final 0.5% (Bebas s/d 500 Jt • 7 Thn) atau PPh Laba Bersih Progresif',
+                'pt_individual' => 'PPh Final 0.5% sejak Rp 1 (4 Thn) atau Fasilitas PPh Badan 31E 11%',
+                default => 'PPh Final 0.5% sejak Rp 1 (3 Thn) atau Fasilitas PPh Badan 31E 11%',
+            };
+        @endphp
+        <div class="rounded-2xl bg-gradient-to-r from-emerald-500/10 via-blue-500/10 to-transparent border border-emerald-500/20 p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+            <div class="flex items-center gap-3">
+                <span class="w-10 h-10 rounded-xl bg-emerald-500/20 text-[#34C759] dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <i data-lucide="scale" class="w-5 h-5"></i>
+                </span>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-black dark:text-white">{{ __('finance.tax_compliance_banner_title', ['entity' => $entityName]) }}</span>
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">
+                            {{ $entityName }}
+                        </span>
+                    </div>
+                    <p class="text-[11px] text-black/60 dark:text-white/60 mt-0.5">
+                        {{ $taxBadgeInfo }}
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 w-full sm:w-auto shrink-0 justify-end">
+                <a href="{{ route('tax.index', ['tab' => 'umkm', 'taxpayer_type' => $taxEntityType]) }}"
+                    class="min-h-[44px] sm:min-h-0 h-10 sm:h-8 px-3 rounded-xl bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.08] transition flex items-center gap-1.5 shadow-2xs">
+                    <i data-lucide="calculator" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                    <span>Kalkulator PPh</span>
+                </a>
+                <a href="{{ route('settings.index') }}#tax-entity-section"
+                    class="min-h-[44px] sm:min-h-0 h-10 sm:h-8 px-3 rounded-xl bg-black dark:bg-white text-white dark:text-black hover:bg-black/80 dark:hover:bg-white/90 text-xs font-semibold transition flex items-center gap-1.5 shadow-2xs">
+                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                    <span>Atur Bentuk Usaha</span>
+                </a>
+            </div>
+        </div>
+
         {{-- Flash Message --}}
         @if (session('success'))
             <div

@@ -330,6 +330,7 @@ final class AutoJournalService
         $hppAccount = $this->getAccount($business, '5-5001');
         $mdrExpenseAccount = $this->getAccount($business, '6-6003') ?? $this->getAccount($business, '6-6002');
         $diskonAccount = $this->getAccount($business, '6-6001');
+        $ppnAccount = $this->getAccount($business, '2-2002');
 
         if (! $revenueOnlineAccount || ! $bankAccount) {
             return null;
@@ -352,7 +353,8 @@ final class AutoJournalService
             $revenueOnlineAccount,
             $hppAccount,
             $mdrExpenseAccount,
-            $diskonAccount
+            $diskonAccount,
+            $ppnAccount
         ) {
             $entry = JournalEntry::create([
                 'business_id' => $business->id,
@@ -420,6 +422,19 @@ final class AutoJournalService
                 'notes' => "Pendapatan Penjualan Toko Online #{$order->order_number}",
             ]);
             $totalCredit += $grossSales;
+
+            // 4b. Credit: Sales Tax / PPN Keluaran (if any)
+            $taxAmount = (float) ($order->tax_amount ?? 0.0);
+            if ($taxAmount > 0 && $ppnAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id' => $ppnAccount->id,
+                    'type' => JournalEntryLine::TYPE_CREDIT,
+                    'amount' => $taxAmount,
+                    'notes' => "Hutang PPN Keluaran Toko Online #{$order->order_number}",
+                ]);
+                $totalCredit += $taxAmount;
+            }
 
             // 5. COGS & Inventory (HPP vs Persediaan)
             if ($persediaanAccount && $hppAccount) {

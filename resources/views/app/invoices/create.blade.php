@@ -56,7 +56,7 @@
 
     discountType: '{{ $selectedPo?->discount_type ?? 'fixed' }}',
     discountValue: {{ (float) ($selectedPo?->discount_value ?? 0) }},
-    taxPercentage: {{ (float) ($selectedPo?->tax_percentage ?? 0) }},
+    taxPercentage: {{ (float) ($selectedPo?->tax_percentage ?? ($business->pos_enable_tax ? (float) $business->pos_tax_percent : 0)) }},
     shippingCost: 0,
 
     customers: {{ Js::from($customers) }},

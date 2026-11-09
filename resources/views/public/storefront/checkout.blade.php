@@ -38,6 +38,8 @@
             defaultAddress: @js($customerAddresses->firstWhere('is_default', true) ?: $customerAddresses->first()),
             biteshipServiceFee: @js((float) (\App\Models\SystemSetting::get('biteship_service_fee') ?? config('services.biteship.service_fee', 1000))),
             minOrderAmount: @js((float) ($storeSetting->min_order_amount ?? 0)),
+            isTaxEnabled: @js($business->isSalesTaxEnabled()),
+            taxPercent: @js($business->getSalesTaxPercent()),
         };
 
         function storefrontCheckout(config) {
@@ -410,12 +412,20 @@
                     return 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700';
                 },
 
+                taxAmount() {
+                    if (!config.isTaxEnabled || !config.taxPercent || config.taxPercent <= 0) return 0;
+                    const cart = this.$store ? this.$store.cart : null;
+                    const sub = cart ? cart.subtotal() : 0;
+                    return Math.round((sub * config.taxPercent) / 100);
+                },
+
                 grandTotal() {
                     const cart = this.$store ? this.$store.cart : null;
                     const sub = cart ? cart.subtotal() : 0;
                     const ship = this.fulfillmentType === 'delivery' ? this.shippingCost : 0;
                     const fee = this.fulfillmentType === 'delivery' ? this.serviceFee : 0;
-                    return Math.max(0, sub + ship + fee);
+                    const tax = this.taxAmount();
+                    return Math.max(0, sub + ship + fee + tax);
                 },
 
                 async submitOrder() {
@@ -1144,6 +1154,18 @@
                                 </span>
                                 <span style="font-variant-numeric: tabular-nums;" class="font-semibold text-neutral-900 dark:text-white"
                                     x-text="'Rp ' + Number(serviceFee).toLocaleString('id-ID')"></span>
+                            </div>
+
+                            {{-- Sales Tax (PPN / PB1) Row --}}
+                            <div class="flex justify-between items-center text-neutral-600 dark:text-neutral-400"
+                                x-show="taxAmount() > 0">
+                                <span class="flex items-center gap-1.5">
+                                    <span>Pajak Penjualan (PPN/PB1)</span>
+                                    <span class="px-1.5 py-0.2 rounded text-[9.5px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                                        x-text="(window.__coocaCheckoutConfig.taxPercent || 0) + '%'"></span>
+                                </span>
+                                <span style="font-variant-numeric: tabular-nums;" class="font-semibold text-neutral-900 dark:text-white"
+                                    x-text="'Rp ' + taxAmount().toLocaleString('id-ID')"></span>
                             </div>
 
                             <div

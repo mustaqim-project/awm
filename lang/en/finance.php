@@ -1004,4 +1004,5 @@ return [
 
     'categories.' => 'Category',
     'inflow_categories.' => 'Inflow Category',
+    'tax_compliance_banner_title' => 'Business Tax Compliance & Forecast: :entity',
 ];

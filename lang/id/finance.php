@@ -1004,4 +1004,5 @@ return [
 
     'categories.' => 'Kategori',
     'inflow_categories.' => 'Kategori Pemasukan',
+    'tax_compliance_banner_title' => 'Kepatuhan & Estimasi Pajak Usaha: :entity',
 ];
