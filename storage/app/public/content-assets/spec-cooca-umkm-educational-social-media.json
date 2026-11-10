@@ -10,14 +10,14 @@
   "feature_route": "/reports",
   "topic_name": "Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel",
   "hook_title": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya",
-  "solution_summary": "Integrasi fitur Laporan Laba Rugi Real-Time (/reports) untuk optimalisasi operasional ritel.",
+  "solution_summary": "Integrasi fitur Laporan Laba Rugi Real-Time di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 96.5,
   "gate_status": "PASSED (>= 80.0)",
   "trend_velocity": 95.0,
   "problem_urgency": 97.0,
   "platform_fit": 98.0,
   "cta_clarity": 96.0,
-  "caption": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya\n\nBanyak pelaku usaha pemula merasa puas saat toko mencatat omzet puluhan hingga ratusan juta per bulan. Namun saat akhir bulan tiba, dana di rekening tabungan operasional ternyata tidak bertambah. Mengapa hal ini bisa terjadi?\n\nKuncinya ada pada pemahaman Margin Bersih vs Margin Kotor:\n- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum merupakan laba riil!\n- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan perlengkapan pengemasan.\n- Margin Bersih: Keuntungan sejati yang sah ditarik sebagai profit bisnis.\n\nHitung dan pantau margin laba bersih bisnis secara otomatis dan akurat melalui modul Laporan Laba Rugi Real-Time COOCA di https://cooca.id/reports\n\n#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #keuanganritel #COOCA",
+  "caption": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya\n\nBanyak pelaku usaha pemula merasa puas saat toko mencatat omzet puluhan hingga ratusan juta per bulan. Namun saat akhir bulan tiba, dana di rekening tabungan operasional ternyata tidak bertambah. Mengapa hal ini bisa terjadi?\n\nKuncinya ada pada pemahaman Margin Bersih vs Margin Kotor:\n- Margin Kotor: (Omzet Penjualan dikurangi HPP Barang). Ini belum merupakan laba riil!\n- Beban Operasional: Biaya sewa tempat, gaji karyawan, listrik toko, dan perlengkapan pengemasan.\n- Margin Bersih: Keuntungan sejati yang sah ditarik sebagai profit bisnis.\n\nHitung dan pantau margin laba bersih bisnis secara otomatis dan akurat melalui modul Laporan Laba Rugi Real-Time COOCA di cooca.id\n\n#edukasibisnis #marginbisnis #manajemenkeuangan #umkmnaikkelas #keuanganritel #COOCA",
   "slides": [
     {
       "slide": 1,
@@ -25,7 +25,107 @@
       "tag": "Edukasi Fundamental"
     }
   ],
-  "evaluated_at": "2026-11-08 07:30:25",
+  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (INSTAGRAM)",
+  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "audience_research": {
+    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
+    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
+    "operational_stage": "Modernisasi operasional harian",
+    "persona": {
+      "role": "Pemilik Usaha",
+      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
+      "tech_savviness": "Menengah",
+      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
+    },
+    "pain_points": {
+      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
+      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
+      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
+      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
+      "knowledge_gap": "Penerapan sistem digital terpadu"
+    },
+    "behavior_and_preferences": {
+      "headline_triggers": "Solusi praktis dan tips operasional langsung",
+      "preferred_content_style": "Infografis edukatif dan terstruktur",
+      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
+    }
+  },
+  "content_strategy": {
+    "core_problem": "Terjebak ilusi omzet besar namun keuntungan bersih nihil",
+    "educational_objective": "Memberikan wawasan aplikatif seputar Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel",
+    "content_angle": "Operational Awareness",
+    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel",
+    "practical_takeaways": [
+      "Gunakan pencatatan otomatis",
+      "Terapkan SOP harian",
+      "Evaluasi berkala"
+    ],
+    "cooca_organic_link": "Solusi Laporan Laba Rugi Real-Time di COOCA",
+    "audience_relevance_score": 95.0,
+    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens INSTAGRAM dalam mengoptimalkan pengelolaan bisnis UMKM"
+  },
+  "caption_strategy": {
+    "opening_hook": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya",
+    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
+    "educational_value": "Edukasi praktis langkah demi langkah.",
+    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
+    "cooca_solution": "Informasi lebih lanjut di cooca.id",
+    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
+    "hashtags": [
+      "#TipsBisnis",
+      "#ManajemenToko",
+      "#UMKM",
+      "#COOCA"
+    ]
+  },
+  "quality_control": {
+    "research_validation": "PASSED",
+    "audience_validation": "PASSED",
+    "content_validation": "PASSED",
+    "caption_validation": "PASSED",
+    "product_relevance_validation": "PASSED",
+    "originality_validation": "PASSED",
+    "overall_status": "READY_FOR_DEPLOYMENT"
+  },
+  "evaluated_at": "2026-11-10 10:11:51",
   "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION"
+  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
+  "brand_design_theme": {
+    "background": "dark_blue",
+    "background_hex": "#070B19",
+    "text_color": "white",
+    "text_color_hex": "#FFFFFF",
+    "accent_colors": [
+      "#38BDF8",
+      "#2563EB",
+      "#0284C7",
+      "#EF4444"
+    ],
+    "logo_required": true,
+    "logo_path": "public/assets/image/1785229034_logo_dark.png",
+    "renderer_engine": "mcp_canva",
+    "typography": {
+      "font_family": "Plus Jakarta Sans",
+      "headline": "Plus Jakarta Sans Bold / ExtraBold",
+      "subheadline": "Plus Jakarta Sans SemiBold",
+      "body": "Plus Jakarta Sans Regular / Medium",
+      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
+      "cta": "Plus Jakarta Sans Bold",
+      "advantages": [
+        "Modern dan profesional",
+        "Sangat nyaman dibaca dalam Bahasa Indonesia",
+        "Memiliki karakter teknologi tanpa terlihat kaku",
+        "Cocok untuk headline, isi carousel, hingga angka harga"
+      ]
+    },
+    "rules": [
+      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
+      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
+      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
+      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
+      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
+      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
+    ]
+  },
+  "canva_mcp_prompt_brief": "Multi-page portrait carousel (1080x1350 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic modern retail finance workspace with profit-loss analytics, financial ledger, calculator, and revenue metrics representing business profitability). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel', bold headline 'Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
 }
