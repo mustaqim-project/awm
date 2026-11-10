@@ -70,6 +70,11 @@ class DeployStandaloneSocialPostCommand extends Command
         $timeStr = (string) ($this->option('time') ?: ($spec['target_time'] ?? '12:15'));
         $scheduledAtCarbon = Carbon::parse("{$startDateStr} {$timeStr}:00");
 
+        // Jika start-date tidak dispesifikasikan manual dan jam tayang hari ini sudah terlewat, jadwalkan ke hari berikutnya
+        if (! $this->option('start-date') && $scheduledAtCarbon->isPast()) {
+            $scheduledAtCarbon = $scheduledAtCarbon->addDay();
+        }
+
         $this->info('====================================================================');
         $this->info("  COOCA STANDALONE DEPLOY: {$automationId}");
         $this->info("  Channel: " . strtoupper($channel) . " | Format: " . strtoupper($format) . " ({$dimensions})");

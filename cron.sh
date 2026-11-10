@@ -47,6 +47,7 @@ mkdir -p "$SCRIPT_DIR/storage/logs"
 
 # Auto-pull latest code from origin main if .git is present
 if [ -d "$SCRIPT_DIR/.git" ]; then
+    git -C "$SCRIPT_DIR" pull --rebase origin main >> "$SCRIPT_DIR/storage/logs/git_pull.log" 2>&1 || \
     git -C "$SCRIPT_DIR" pull origin main >> "$SCRIPT_DIR/storage/logs/git_pull.log" 2>&1 || true
 fi
 
@@ -83,10 +84,13 @@ if [ ! -f "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" ]; then
     touch "$SCRIPT_DIR/storage/framework/linkedin_test_v2.lock" 2>/dev/null || true
 fi
 
-# Auto-deploy all 9 daily social media automations on production (Cooca Multi-Platform Social Intelligence)
+# Auto-deploy all 10 daily social media automations on production (Cooca Multi-Platform Social Intelligence)
 TODAY="$(date '+%Y%m%d')"
 
 "$PHP_BIN" artisan storage:link >> /dev/null 2>&1 || true
+
+# Bersihkan lock file kosong/legacy 0-byte dari run terdahulu agar tidak memblokir automasi
+find "$SCRIPT_DIR/storage/framework" -name "deploy_*_${TODAY}.lock" -size 0 -delete 2>/dev/null || true
 
 for AUTO_ID in \
     cooca-daily-umkm-carousel \
@@ -102,9 +106,29 @@ for AUTO_ID in \
 do
     LOCK_FILE="$SCRIPT_DIR/storage/framework/deploy_${AUTO_ID}_${TODAY}.lock"
     SPEC_FILE="$SCRIPT_DIR/storage/app/public/content-assets/spec-${AUTO_ID}.json"
-    if [ ! -f "$LOCK_FILE" ] && [ -f "$SPEC_FILE" ]; then
-        "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id="$AUTO_ID" --spec-json="storage/app/public/content-assets/spec-${AUTO_ID}.json" >> "$SCRIPT_DIR/storage/logs/${AUTO_ID}_deploy.log" 2>&1 || true
-        touch "$LOCK_FILE" 2>/dev/null || true
+
+    if [ -f "$SPEC_FILE" ]; then
+        # Hitung hash spesifikasi konten untuk deteksi konten baru/terupdate
+        SPEC_HASH=""
+        if command -v md5sum >/dev/null 2>&1; then
+            SPEC_HASH="$(md5sum "$SPEC_FILE" | awk '{print $1}')"
+        elif command -v md5 >/dev/null 2>&1; then
+            SPEC_HASH="$(md5 -q "$SPEC_FILE")"
+        else
+            SPEC_HASH="$(cksum "$SPEC_FILE" | awk '{print $1}')"
+        fi
+
+        RECORDED_HASH=""
+        if [ -f "$LOCK_FILE" ]; then
+            RECORDED_HASH="$(cat "$LOCK_FILE" 2>/dev/null || true)"
+        fi
+
+        # Deploy jika belum ada lock, lock kosong, atau hash konten berubah
+        if [ ! -f "$LOCK_FILE" ] || [ -z "$RECORDED_HASH" ] || [ "$SPEC_HASH" != "$RECORDED_HASH" ]; then
+            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Deploying $AUTO_ID ($SPEC_HASH)..." >> "$SCRIPT_DIR/storage/logs/deploy_all.log"
+            "$PHP_BIN" artisan cooca:deploy-standalone-post --automation-id="$AUTO_ID" --spec-json="storage/app/public/content-assets/spec-${AUTO_ID}.json" --force >> "$SCRIPT_DIR/storage/logs/${AUTO_ID}_deploy.log" 2>&1 || true
+            echo "$SPEC_HASH" > "$LOCK_FILE" 2>/dev/null || true
+        fi
     fi
 done
 
