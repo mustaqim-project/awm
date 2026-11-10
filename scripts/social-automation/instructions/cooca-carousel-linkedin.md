@@ -8,10 +8,16 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**Target audiens:** pengambil keputusan usaha yang aktif di LinkedIn, yaitu founder, direktur operasional, pemilik usaha multi-cabang, dan pelaku usaha B2B dari semua sektor di atas. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor, ke ritel, atau ke satu jenis usaha.
+### Ketentuan Strategi Platform (LinkedIn)
 
-**Tujuan konten:** membangun kepercayaan dan minat, lalu mengajak pembaca mencoba Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** saves, shares, komentar bermutu, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin memancing saves dan diskusi profesional.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **LinkedIn** | Profesional & decision maker | Authority & partnership | Insight bisnis, teknologi, founder story |
+
+**Target audiens:** Profesional & decision maker usaha yang aktif di LinkedIn, yaitu founder, direktur operasional, pemilik usaha multi-cabang, dan pelaku usaha B2B dari semua sektor di atas. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor, ke ritel, atau ke satu jenis usaha.
+
+**Tujuan konten:** Authority & partnership (membangun kepercayaan, otoritas, dan minat, lalu mengajak pembaca mencoba Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
+**Jenis konten & indikator keberhasilan:** Insight bisnis, teknologi, dan founder story dalam format dokumen carousel PDF 5 slide. Indikator keberhasilan meliputi saves, shares, komentar bermutu, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin memancing saves dan diskusi profesional.
 
 **Sudut pandang LinkedIn:** audiens di sini memikirkan efisiensi operasional, kontrol biaya, visibilitas data, dan skala usaha. Angkat masalah dan solusi dari sudut itu. Paket Free hanya disebut apa adanya (gratis selamanya untuk Solo Owner). Jangan mengklaim Paket Free cocok untuk operasi multi-cabang atau tim besar.
 

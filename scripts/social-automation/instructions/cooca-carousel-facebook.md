@@ -8,10 +8,16 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**Target audiens:** pemilik usaha UMKM lintas 20 sektor yang aktif di Facebook, termasuk anggota komunitas dan grup usaha, pemilik warung dan toko, pelaku jasa lokal (bengkel, laundry, salon), pengusaha kuliner, produsen, dan distributor. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Audiens Facebook cenderung lebih beragam usianya, jadi bahasa harus mudah dipahami semua kalangan.
+### Ketentuan Strategi Platform (Facebook)
 
-**Tujuan konten:** mengajak pemilik UMKM mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** shares, komentar, saves, klik ke cooca.id, dan signup Paket Free. Pilih tren yang paling mungkin memancing share dan komentar, karena itu yang paling berpengaruh di Facebook.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **Facebook** | Pemilik UMKM matang, 35–60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
+
+**Target audiens:** Pemilik UMKM matang, 35–60+ lintas 20 sektor yang aktif di Facebook, termasuk anggota komunitas dan grup usaha, pemilik warung dan toko, pelaku jasa lokal (bengkel, laundry, salon), pengusaha kuliner, produsen, dan distributor. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Bahasa harus mudah dipahami dan relatable untuk audiens matang.
+
+**Tujuan konten:** Lead & konversi (mengajak pemilik UMKM mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
+**Jenis konten & indikator keberhasilan:** Masalah bisnis, edukasi, dan komunitas dalam format carousel 5 slide (album foto). Indikator keberhasilan meliputi shares, komentar, saves, klik ke cooca.id, dan signup Paket Free. Pilih tren yang paling mungkin memancing share dan komentar komunitas.
 
 **Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, dan brief visual SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 

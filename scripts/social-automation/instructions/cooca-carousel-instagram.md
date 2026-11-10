@@ -10,12 +10,16 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
+### Ketentuan Strategi Platform (Instagram)
 
-**Target audiens:** pemilik usaha UMKM lintas 20 sektor di atas, termasuk pengusaha kuliner/F&B, pelaku usaha jasa, dan pemilik toko modern. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **Instagram** | Pemilik bisnis modern, 25–45 | Brand trust & consideration | Carousel, Reels, visual edukatif |
 
+**Target audiens:** Pemilik bisnis modern, 25–45 lintas 20 sektor di atas, termasuk pengusaha kuliner/F&B, pelaku usaha jasa, dan pemilik toko modern. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor.
 
-**Tujuan konten:** mengajak pemilik UMKM mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** saves, shares, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
+**Tujuan konten:** Brand trust & consideration (membangun kepercayaan merek dan mengajak pemilik UMKM mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
+**Jenis konten & indikator keberhasilan:** Carousel 5 slide visual edukatif. Indikator keberhasilan meliputi saves, shares, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
 
 
 **Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, dan brief visual SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.

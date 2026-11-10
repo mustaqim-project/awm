@@ -8,10 +8,16 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**Target audiens:** pemilik usaha UMKM lintas 20 sektor yang aktif di TikTok, cenderung lebih muda, serta tim operasional usaha (kasir, admin, gudang, produksi) sebagai pengguna sehari-hari. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu peran atau satu sektor.
+### Ketentuan Strategi Platform (TikTok)
 
-**Tujuan konten:** mengajak pemilik UMKM mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** saves, shares, komentar, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves, shares, dan komentar.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **TikTok** | Calon pengusaha & UMKM modern, 20–45 | Awareness & discovery | Video pendek, problem-solution |
+
+**Target audiens:** Calon pengusaha & UMKM modern, 20–45 lintas 20 sektor yang aktif di TikTok, cenderung lebih muda, serta tim operasional usaha (kasir, admin, gudang, produksi) sebagai pengguna sehari-hari. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu peran atau satu sektor.
+
+**Tujuan konten:** Awareness & discovery (mengajak pemilik UMKM mengenal Cooca dan mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
+**Jenis konten & indikator keberhasilan:** Video pendek / feed gambar vertikal berkontras tinggi berfokus problem-solution. Indikator keberhasilan meliputi saves, shares, komentar, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves, shares, dan komentar.
 
 **Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, pertanyaan komentar, brief visual, dan nama file output SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel, dan agar file lama tidak tertimpa. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 

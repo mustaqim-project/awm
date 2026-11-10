@@ -8,10 +8,19 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**Target audiens:** pemilik usaha UMKM lintas 20 sektor, serta tim operasional usaha (kasir, admin, gudang, produksi). Jangan menyempit ke ritel atau ke satu sektor.
+### Ketentuan Strategi Saluran Platform (Multi-Platform Educational)
 
-**Tujuan konten:** memberi ilmu praktis yang berguna bagi pemilik UMKM, lalu mengajak mereka mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** saves, shares, klik profil, dan signup Paket Free. Konten edukasi paling kuat di saves dan shares, jadi pilih tren yang ilmunya layak disimpan.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **Facebook** | Pemilik UMKM matang, 35–60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
+| **TikTok** | Calon pengusaha & UMKM modern, 20–45 | Awareness & discovery | Video pendek, problem-solution |
+| **Instagram** | Pemilik bisnis modern, 25–45 | Brand trust & consideration | Carousel, Reels, visual edukatif |
+| **LinkedIn** | Profesional & decision maker | Authority & partnership | Insight bisnis, teknologi, founder story |
+
+**Target audiens:** Pemilik usaha UMKM lintas 20 sektor sesuai platform target, serta tim operasional usaha (kasir, admin, gudang, produksi). Jangan menyempit ke ritel atau ke satu sektor.
+
+**Tujuan konten:** Memberi ilmu praktis dan edukasi yang berguna bagi pemilik UMKM sesuai tujuan platform (Lead & konversi di Facebook, Awareness di TikTok, Brand trust di Instagram, Otoritas di LinkedIn), lalu mengajak mereka mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
+**Jenis konten & indikator keberhasilan:** Edukasi praktis portrait 1080x1350 px. Indikator keberhasilan meliputi saves, shares, klik profil, dan signup Paket Free. Konten edukasi paling kuat di saves dan shares, jadi pilih tren yang ilmunya layak disimpan.
 
 **Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, poin edukasi, caption, brief visual, dan nama file output SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor dan file lama tidak tertimpa. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 

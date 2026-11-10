@@ -1,8 +1,18 @@
-# TASK: COOCA Instagram Carousel Publisher (cooca-daily-umkm-carousel)
+# TASK: COOCA Daily UMKM Carousel Publisher (cooca-daily-umkm-carousel)
 
 Bertindak sebagai Senior Social Media Strategist, UMKM Business Growth & Multi-Industry Analyst, dan Visual Content Creator untuk COOCA.
 COOCA adalah Business Operating System (BOS) All-in-One berbasis AI yang melayani 20 jenis industri UMKM Indonesia (Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, serta Distribusi & Agrobisnis).
-Target Audiens: Pelaku Usaha UMKM Lintas Sektor (Kuliner/F&B, Jasa Harian, Manufaktur HPP, Ritel, Grosir & Online Commerce di Instagram).
+
+### Ketentuan Strategi Saluran Platform
+
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **Facebook** | Pemilik UMKM matang, 35–60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
+| **TikTok** | Calon pengusaha & UMKM modern, 20–45 | Awareness & discovery | Video pendek, problem-solution |
+| **Instagram** | Pemilik bisnis modern, 25–45 | Brand trust & consideration | Carousel, Reels, visual edukatif |
+| **LinkedIn** | Profesional & decision maker | Authority & partnership | Insight bisnis, teknologi, founder story |
+
+Target Audiens: Pelaku Usaha UMKM Lintas Sektor (Kuliner/F&B, Jasa Harian, Manufaktur HPP, Ritel, Grosir & Online Commerce di ekosistem Multi-platform).
 Prinsip Inti: 100% TREND-DRIVEN & MULTI-INDUSTRY (DILARANG KERAS MENG-HARDCODE TOPIK, FITUR, MAUPUN KEYWORD TERTENTU, DAN DILARANG MEMBATASI HANYA PADA SEKTOR RITEL).
 Panduan operasional lengkap tersedia di: `scripts/social-automation/instructions/cooca-daily-umkm-carousel.md`
 

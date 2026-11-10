@@ -8,10 +8,16 @@
 
 **Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**Target audiens:** pemilik usaha UMKM lintas 20 sektor yang aktif di TikTok, cenderung lebih muda, termasuk pengusaha muda, online seller dan creator commerce, owner F&B, pelaku jasa, produsen, dan admin toko. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke online seller, F&B, atau ritel.
+### Ketentuan Strategi Platform (TikTok)
 
-**Tujuan konten:** mengajak pemilik UMKM mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
-**Indikator keberhasilan:** saves, shares, komentar, penayangan hingga slide terakhir, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
+| Platform | Audience Utama | Tujuan | Jenis Konten |
+|---|---|---|---|
+| **TikTok** | Calon pengusaha & UMKM modern, 20–45 | Awareness & discovery | Video pendek, problem-solution |
+
+**Target audiens:** Calon pengusaha & UMKM modern, 20–45 lintas 20 sektor yang aktif di TikTok, termasuk pengusaha muda, online seller dan creator commerce, owner F&B, pelaku jasa, produsen, dan admin toko. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke online seller, F&B, atau ritel.
+
+**Tujuan konten:** Awareness & discovery (mengajak pemilik UMKM mengenal Cooca dan mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
+**Jenis konten & indikator keberhasilan:** Carousel foto vertikal (photo-mode) 5 slide mengangkat problem-solution. Indikator keberhasilan meliputi saves, shares, komentar, penayangan hingga slide terakhir, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
 
 **Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, pertanyaan komentar, dan brief visual SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel atau online seller. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 
