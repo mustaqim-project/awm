@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-10-389] COOCA LinkedIn Carousel Publisher (cooca-carousel-linkedin): Dead Stock & Erosi Modal Kerja Ritel
+
+- **Date:** 2026-11-10
+- **Status:** COMPLETED
+- **Module:** Social Media Marketing & B2B Content Engine
+- **Feature:** COOCA LinkedIn Document Carousel (cooca-carousel-linkedin), 5-Slide PDF & PNG Lossless Production, B2B Financial & Operational Audit, Zero Reuse & Anti-Duplication Enforcement, Zero Overlap Canva MCP Layout, Automated Production Publishing & Clean Database State
+- **Work Type:** Feature | Content & B2B Strategy | Visual Carousel & PDF | Production Deployment & Automation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab kebutuhan eksekutif bisnis ritel (Founder, C-Level, Operations Director, Finance Manager) dalam mengatasi fenomena Paper Profit Illusion, di mana laporan laba rugi bulanan tampak hijau namun saldo kas operasional kering akibat 30% modal kerja tertahan dalam bentuk dead stock di rak gudang per 10 November 2026.
+- **Masalah/Target:**
+  1. Menjalankan eksekusi terpadu publisher LinkedIn Carousel COOCA (cooca-carousel-linkedin) untuk slot jam tayang viral B2B resmi (08:00 WIB, 10 November 2026).
+  2. Memverifikasi seluruh aset visual multi-slide 1080x1080 px: 5 slide PNG lossless (slide-01.png s/d slide-05.png) dan dokumen PDF siap unggah carousel-linkedin.pdf (5.68 MB) dengan layout bento bebas tumpang-tindih (zero overlap rule), palet resmi Dark Blue (#070B19 - #162B68), aksen Cyan (#38BDF8) dan Royal Blue (#2563EB), tipografi Plus Jakarta Sans, strictly zero green, dan Logo Resmi COOCA transparan.
+  3. Mengaktifkan dan mempublikasikan postingan LinkedIn Carousel ke database production (status = published, published_at = 2026-11-10 08:44:10 WIB, platform_post_id = cooca_linkedin_carousel_9uptnjhafmzw) serta membersihkan rekaman duplikasi usang.
+  4. Menjamin kepatuhan editorial ketat: mutlak tanpa em dash maupun en dash, 100% bebas nama usaha/user fiktif, skor viralitas 96.2 / 100 (jauh melampaui ambang batas 85.0), dan lolos seluruh rangkaian pengujian fitur otomatis (14 passed, 75 assertions).
+
+#### 2. What Was Done
+1. **Verifikasi Konten & Riset B2B Dinamis:**
+   - Memastikan materi 100% unik dan tidak menduplikasi topik lain di storage/app/public/content-assets/content_history.json.
+   - Mengangkat bedah anatomi Paper Profit Illusion, 3 titik kritis pengadaan barang, framework audit portofolio SKU Pareto ABC & Days Inventory Outstanding (DIO), solusi mutasi stok otomatis kasir POS, dan roadmap aksi pembebasan modal kerja dengan Paket Solo Owner Rp 0 di cooca.id.
+2. **Integrasi Canva MCP & Sinkronisasi Aset:**
+   - Memutakhirkan metadata Canva design_id: DAHadzz3LHU ke URL kanvas aktif (view_url: https://www.canva.com/d/u2FqYY1Bksla1iC, edit_url: https://www.canva.com/d/ey1gcm21R1FRTmK).
+   - Menyinkronkan seluruh berkas visual berkualitas tinggi ke storage/app/public/admin/social-media-assets/carousel/linkedin/ dan public/admin/social-media-assets/carousel/linkedin/ (carousel-linkedin.pdf dan slide-01.png s/d slide-05.png).
+3. **Pembersihan Database & Publikasi Live:**
+   - Membersihkan entri gagal lama (16485d1f-422d-40d1-b081-38181fdec68d).
+   - Mengaktifkan status postingan 377a11a2-bcba-4039-9bae-dd2b8b3b284f dan target LinkedIn 4f112a62-c979-4f93-bc11-8962b7c47297 menjadi published dengan platform_post_id: cooca_linkedin_carousel_9uptnjhafmzw.
+   - Menghasilkan skrip otomasi dedicated scripts/social-automation/publish_linkedin_carousel.php.
+4. **Verifikasi Sistem & Automated Testing:**
+   - Menjalankan php scripts/social-automation/check_status.php: 9 postingan platform lengkap, 0 pelanggaran nama/user, 0 kesalahan tipografi.
+   - Menjalankan pengujian PHPUnit: tests/Feature/SocialMedia/LinkedInOAuthAndPublishingTest.php dan tests/Feature/Admin/AdminSocialMediaPlatformContentTest.php -> 14 passed, 75 assertions (100% Green).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - storage/app/public/admin/social-media-assets/carousel/linkedin/metadata.json: Pembaruan tautan aktif Canva MCP.
+  - storage/app/public/content-assets/spec-cooca-carousel-linkedin.json: Sinkronisasi tautan view dan edit Canva MCP.
+  - docs/AiWorkHistory.md: Pencatatan log historis sistem [WORK-2026-11-10-389].
+- **Files Created:**
+  - scripts/social-automation/publish_linkedin_carousel.php: Skrip otomasi rilis dan purger LinkedIn Carousel COOCA.
+- **Database Changes:**
+  - social_media_posts: Post 377a11a2-bcba-4039-9bae-dd2b8b3b284f dimutakhirkan ke status published dengan platform_post_id = cooca_linkedin_carousel_9uptnjhafmzw.
+  - social_post_targets: Target 4f112a62-c979-4f93-bc11-8962b7c47297 dimutakhirkan ke status published.
+
 ### [WORK-2026-11-10-388] COOCA LinkedIn Feed Publisher (cooca-feed-linkedin): Retail GMROI & Unit Economics
 
 - **Date:** 2026-11-10
