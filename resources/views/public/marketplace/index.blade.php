@@ -388,39 +388,35 @@
             </div>
         </section>
 
-        {{-- Section 4: Shopee "FLASH SALE" Bar with Real-Time Countdown Timer --}}
-        <section id="flash-sale" class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-sm space-y-4">
-            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-white/10 pb-3">
-                <div class="flex items-center gap-3">
-                    <span class="text-sm sm:text-base font-black tracking-wider text-[#007AFF] uppercase flex items-center gap-1.5">
-                        <i data-lucide="zap" class="w-4 h-4 fill-[#007AFF] text-[#007AFF]"></i>
-                        <span>{{ __('public_marketplace.mkt_flash_sale_title') }}</span>
-                    </span>
+        {{-- Section 4: Shopee "FLASH SALE" Bar with Real-Time Countdown Timer (Only when real products exist) --}}
+        @if ($popularProducts->isNotEmpty())
+            <section id="flash-sale" class="bg-white dark:bg-[#1C1C1E] rounded-2xl border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-sm space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-white/10 pb-3">
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm sm:text-base font-black tracking-wider text-[#007AFF] uppercase flex items-center gap-1.5">
+                            <i data-lucide="zap" class="w-4 h-4 fill-[#007AFF] text-[#007AFF]"></i>
+                            <span>{{ __('public_marketplace.mkt_flash_sale_title') }}</span>
+                        </span>
 
-                    {{-- Shopee-Style Countdown Badges --}}
-                    <div class="flex items-center gap-1 text-xs font-bold font-mono">
-                        <span id="timer-hours" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">06</span>
-                        <span class="text-slate-400">:</span>
-                        <span id="timer-minutes" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">29</span>
-                        <span class="text-slate-400">:</span>
-                        <span id="timer-seconds" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">54</span>
+                        {{-- Shopee-Style Countdown Badges --}}
+                        <div class="flex items-center gap-1 text-xs font-bold font-mono">
+                            <span id="timer-hours" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">06</span>
+                            <span class="text-slate-400">:</span>
+                            <span id="timer-minutes" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">29</span>
+                            <span class="text-slate-400">:</span>
+                            <span id="timer-seconds" class="px-2 py-0.5 rounded-md bg-[#060B1E] text-white">54</span>
+                        </div>
                     </div>
+
+                    <a href="{{ route('marketplace.sub.products') }}" class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
+                        <span>Lihat Semua Promo</span>
+                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                    </a>
                 </div>
 
-                <a href="{{ route('marketplace.sub.products') }}" class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                    <span>Lihat Semua Promo</span>
-                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                </a>
-            </div>
-
-            {{-- Flash Sale 6-Column Grid --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3">
-                @php
-                    $flashItems = $popularProducts->take(6);
-                @endphp
-
-                @if ($flashItems->isNotEmpty())
-                    @foreach ($flashItems as $index => $item)
+                {{-- Flash Sale 6-Column Grid (Real Products) --}}
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3">
+                    @foreach ($popularProducts->take(6) as $index => $item)
                         <a href="{{ url('/' . $item->business->slug . '/produk/' . ($item->slug ?: $item->id)) }}"
                             class="group rounded-xl border border-slate-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E] overflow-hidden hover:border-[#007AFF] hover:shadow-md transition-all flex flex-col justify-between">
                             <div class="aspect-square bg-slate-100 dark:bg-[#2C2C2E] overflow-hidden relative">
@@ -433,7 +429,7 @@
                                     </div>
                                 @endif
                                 <span class="absolute top-1.5 right-1.5 bg-amber-500 text-white font-bold text-[10px] px-1.5 py-0.5 rounded shadow-sm">
-                                    -{{ [15, 20, 25, 30][$index % 4] }}%
+                                    PROMO
                                 </span>
                             </div>
 
@@ -445,47 +441,15 @@
                                     Rp {{ number_format($item->selling_price, 0, ',', '.') }}
                                 </p>
                                 <div class="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-amber-500 to-[#007AFF] h-full rounded-full" style="width: {{ [75, 88, 62, 91, 55, 80][$index % 6] }}%"></div>
+                                    <div class="bg-gradient-to-r from-amber-500 to-[#007AFF] h-full rounded-full" style="width: 85%"></div>
                                 </div>
-                                <span class="text-[10px] font-semibold text-amber-600 block text-center uppercase">Segera Habis</span>
+                                <span class="text-[10px] font-semibold text-amber-600 block text-center uppercase">Stok Terbatas</span>
                             </div>
                         </a>
                     @endforeach
-                @else
-                    {{-- Graceful Shopee Preview Flash Sale Items --}}
-                    @foreach ([
-                        ['name' => 'Kopi Arabika Ciwidey 250g', 'price' => 55000, 'disc' => 20, 'cat' => 'fnb'],
-                        ['name' => 'Kaos Polos Cotton Combed', 'price' => 45000, 'disc' => 25, 'cat' => 'fashion'],
-                        ['name' => 'Keripik Tempe Renyah Gurih', 'price' => 15000, 'disc' => 15, 'cat' => 'fnb'],
-                        ['name' => 'Sabun Cuci Kendaraan 1L', 'price' => 28000, 'disc' => 30, 'cat' => 'service'],
-                        ['name' => 'Tas Totebag Kanvas Tebal', 'price' => 35000, 'disc' => 20, 'cat' => 'fashion'],
-                        ['name' => 'Madu Hutan Tropis Murni', 'price' => 75000, 'disc' => 15, 'cat' => 'fnb'],
-                    ] as $i => $demo)
-                        <a href="{{ route('marketplace.sub.products') }}"
-                            class="group rounded-xl border border-slate-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E] overflow-hidden hover:border-[#007AFF] hover:shadow-md transition-all flex flex-col justify-between">
-                            <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/5 dark:to-white/10 flex items-center justify-center relative">
-                                <i data-lucide="package" class="w-10 h-10 text-[#007AFF]/60 group-hover:scale-110 transition-transform"></i>
-                                <span class="absolute top-1.5 right-1.5 bg-amber-500 text-white font-bold text-[10px] px-1.5 py-0.5 rounded shadow-sm">
-                                    -{{ $demo['disc'] }}%
-                                </span>
-                            </div>
-                            <div class="p-2.5 space-y-1.5">
-                                <h3 class="text-xs font-medium text-slate-800 dark:text-slate-100 line-clamp-1 group-hover:text-[#007AFF] transition-colors">
-                                    {{ $demo['name'] }}
-                                </h3>
-                                <p class="text-sm font-bold text-[#007AFF] dark:text-[#38bdf8] font-mono">
-                                    Rp {{ number_format($demo['price'], 0, ',', '.') }}
-                                </p>
-                                <div class="w-full bg-slate-100 dark:bg-white/10 h-2 rounded-full overflow-hidden">
-                                    <div class="bg-gradient-to-r from-amber-500 to-[#007AFF] h-full rounded-full" style="width: {{ 65 + ($i * 5) }}%"></div>
-                                </div>
-                                <span class="text-[10px] font-semibold text-amber-600 block text-center uppercase">Promo Terbatas</span>
-                            </div>
-                        </a>
-                    @endforeach
-                @endif
-            </div>
-        </section>
+                </div>
+            </section>
+        @endif
 
         {{-- Section 5: Shopee Mall / Official Stores (TOKO PILIHAN RESMI) --}}
         @if ($featuredStores->isNotEmpty())
@@ -549,9 +513,9 @@
                 </span>
             </div>
 
-            {{-- 6-Column Responsive Product Cards Grid --}}
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
-                @if ($popularProducts->isNotEmpty())
+            {{-- 6-Column Responsive Product Cards Grid (Real Data Schema) --}}
+            @if ($popularProducts->isNotEmpty())
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3.5">
                     @foreach ($popularProducts as $idx => $product)
                         <a href="{{ url('/' . $product->business->slug . '/produk/' . ($product->slug ?: $product->id)) }}"
                             class="group bg-white dark:bg-[#1C1C1E] border border-slate-200/90 dark:border-white/10 rounded-xl overflow-hidden hover:border-[#007AFF] hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between shadow-sm">
@@ -590,7 +554,7 @@
                                         {{ $product->name }}
                                     </h3>
 
-                                    {{-- Shopee Tag (Cicilan / Stok / Grosir) --}}
+                                    {{-- Tag --}}
                                     <span class="inline-block border border-[#007AFF]/30 text-[#007AFF] text-[9px] font-semibold px-1 rounded">
                                         Stok Siap
                                     </span>
@@ -608,82 +572,45 @@
                                             <i data-lucide="map-pin" class="w-2.5 h-2.5 shrink-0"></i>
                                             {{ $product->business->city ?: 'Indonesia' }}
                                         </span>
-                                        <span class="shrink-0 text-slate-500 font-medium">Terjual 10+</span>
+                                        <span class="shrink-0 text-slate-500 font-medium">Tersedia</span>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     @endforeach
-                @else
-                    {{-- Shopee Demo Grid when database has no products yet --}}
-                    @foreach ([
-                        ['title' => 'Kopi Arabika Ciwidey Single Origin 250g', 'price' => 65000, 'city' => 'Kab. Bandung', 'sold' => '150+'],
-                        ['title' => 'Kaos Polos Cotton Combed 30s Premium', 'price' => 45000, 'city' => 'Kota Bandung', 'sold' => '420+'],
-                        ['title' => 'Keripik Pisang Cokelat Lumer Khas Lampung', 'price' => 18000, 'city' => 'Bandar Lampung', 'sold' => '310+'],
-                        ['title' => 'Madu Hutan Sumbawa Asli Murni 500ml', 'price' => 95000, 'city' => 'Mataram', 'sold' => '85+'],
-                        ['title' => 'Sabun Cuci Kendaraan Concentrate Wash 1L', 'price' => 32000, 'city' => 'Jakarta Barat', 'sold' => '190+'],
-                        ['title' => 'Tas Totebag Vintage Kanvas Tebal Tali Webbing', 'price' => 39000, 'city' => 'Surakarta', 'sold' => '240+'],
-                        ['title' => 'Sambal Cumi Asin Pedas Gurih Siap Saji 200g', 'price' => 28000, 'city' => 'Surabaya', 'sold' => '500+'],
-                        ['title' => 'Deterjen Cair Laundry Konsentrat Rendah Busa 5L', 'price' => 58000, 'city' => 'Tangerang', 'sold' => '120+'],
-                        ['title' => 'Sepatu Sneakers Pria Kanvas Casual Slip-on', 'price' => 110000, 'city' => 'Mojokerto', 'sold' => '75+'],
-                        ['title' => 'Kerupuk Ikan Tenggiri Khas Palembang 250g', 'price' => 25000, 'city' => 'Palembang', 'sold' => '210+'],
-                        ['title' => 'Oli Mesin Matic Sintetik 10W-30 Original 800ml', 'price' => 48000, 'city' => 'Semarang', 'sold' => '330+'],
-                        ['title' => 'Pouch Kosmetik Make Up Wanita Anti Air', 'price' => 22000, 'city' => 'Yogyakarta', 'sold' => '180+'],
-                    ] as $demoItem)
-                        <a href="{{ route('marketplace.sub.products') }}"
-                            class="group bg-white dark:bg-[#1C1C1E] border border-slate-200/90 dark:border-white/10 rounded-xl overflow-hidden hover:border-[#007AFF] hover:shadow-lg hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between shadow-sm">
-                            <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 dark:from-white/5 dark:to-white/10 overflow-hidden relative flex items-center justify-center">
-                                <i data-lucide="package" class="w-10 h-10 text-[#007AFF]/60 group-hover:scale-110 transition-transform"></i>
-                                <span class="absolute top-1.5 right-1.5 bg-[#007AFF] text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">
-                                    PROMO
-                                </span>
-                            </div>
+                </div>
 
-                            <div class="p-2.5 space-y-1.5 flex-1 flex flex-col justify-between">
-                                <div class="space-y-1">
-                                    <div class="flex items-center gap-1">
-                                        <span class="bg-[#007AFF]/10 text-[#007AFF] text-[9px] font-bold px-1.5 py-0.5 rounded flex items-center gap-0.5">
-                                            <i data-lucide="check" class="w-2.5 h-2.5"></i> Star
-                                        </span>
-                                        <span class="text-[10px] text-slate-400">Toko Lokal</span>
-                                    </div>
-
-                                    <h3 class="text-xs sm:text-[13px] text-slate-800 dark:text-slate-100 font-normal leading-snug line-clamp-2 group-hover:text-[#007AFF] transition-colors">
-                                        {{ $demoItem['title'] }}
-                                    </h3>
-
-                                    <span class="inline-block border border-[#007AFF]/30 text-[#007AFF] text-[9px] font-semibold px-1 rounded">
-                                        Stok Siap
-                                    </span>
-                                </div>
-
-                                <div class="pt-1.5 space-y-1">
-                                    <p class="font-extrabold text-sm sm:text-base text-[#007AFF] dark:text-[#38bdf8] font-mono leading-none">
-                                        Rp {{ number_format($demoItem['price'], 0, ',', '.') }}
-                                    </p>
-
-                                    <div class="flex items-center justify-between text-[10px] text-slate-400 pt-0.5 border-t border-slate-100 dark:border-white/5">
-                                        <span class="truncate flex items-center gap-0.5">
-                                            <i data-lucide="map-pin" class="w-2.5 h-2.5 shrink-0"></i>
-                                            {{ $demoItem['city'] }}
-                                        </span>
-                                        <span class="shrink-0 text-slate-500 font-medium">Terjual {{ $demoItem['sold'] }}</span>
-                                    </div>
-                                </div>
-                            </div>
+                {{-- Shopee-Style "Lihat Lebih Banyak" Button --}}
+                <div class="pt-6 text-center">
+                    <a href="{{ route('marketplace.sub.products') }}"
+                        class="inline-flex items-center justify-center gap-2 h-11 px-10 rounded-xl bg-white dark:bg-[#1C1C1E] border border-slate-300 dark:border-white/15 hover:border-[#007AFF] text-slate-700 dark:text-slate-200 hover:text-[#007AFF] text-xs sm:text-sm font-semibold shadow-sm transition active:scale-95">
+                        <span>{{ __('public_marketplace.mkt_load_more_products') }}</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            @else
+                {{-- Clean Real Empty State (Zero Dummy Data) --}}
+                <div class="p-8 sm:p-12 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-slate-200/80 dark:border-white/10 text-center space-y-3 shadow-sm">
+                    <div class="w-14 h-14 rounded-2xl bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto">
+                        <i data-lucide="package" class="w-7 h-7"></i>
+                    </div>
+                    <div class="max-w-md mx-auto space-y-1">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white">
+                            {{ __('public_marketplace.prod_empty_title') }}
+                        </h3>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                            {{ __('public_marketplace.prod_empty_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2">
+                        <a href="{{ route('register') }}"
+                            class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs sm:text-sm font-semibold shadow-sm transition">
+                            <span>{{ __('public_marketplace.prod_empty_cta') }}</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </a>
-                    @endforeach
-                @endif
-            </div>
-
-            {{-- Shopee-Style "Lihat Lebih Banyak" Button --}}
-            <div class="pt-6 text-center">
-                <a href="{{ route('marketplace.sub.products') }}"
-                    class="inline-flex items-center justify-center gap-2 h-11 px-10 rounded-xl bg-white dark:bg-[#1C1C1E] border border-slate-300 dark:border-white/15 hover:border-[#007AFF] text-slate-700 dark:text-slate-200 hover:text-[#007AFF] text-xs sm:text-sm font-semibold shadow-sm transition active:scale-95">
-                    <span>{{ __('public_marketplace.mkt_load_more_products') }}</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </a>
-            </div>
+                    </div>
+                </div>
+            @endif
         </section>
 
         {{-- Section 7: Merchant Acquisition Banner (Cooca Midnight Blue Theme) --}}

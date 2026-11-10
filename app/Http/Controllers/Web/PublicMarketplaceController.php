@@ -55,17 +55,8 @@ final class PublicMarketplaceController extends Controller
         // Category aggregation
         $categories = $this->buildCategoryData();
 
-        // Popular search keywords suggestions (Shopee-style quick keywords under search)
-        $popularKeywords = [
-            'Kopi Arabika',
-            'Kaos Polos & Fashion',
-            'Snack & Keripik',
-            'Bahan Baku UMKM',
-            'Bengkel & Sparepart',
-            'Sabun & Skincare Lokal',
-            'Jasa Percetakan',
-            'Frozen Food Siap Masak',
-        ];
+        // Popular search keywords dynamically derived from active category sectors (zero dummy data)
+        $popularKeywords = collect($categories)->pluck('label')->take(8)->all();
 
         // Statistics (Only counting public, verified, non-test stores and products)
         $totalStores = Business::publicListed()
