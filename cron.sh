@@ -97,7 +97,8 @@ for AUTO_ID in \
     cooca-feed-instagram \
     cooca-feed-linkedin \
     cooca-feed-facebook \
-    cooca-feed-tiktok
+    cooca-feed-tiktok \
+    cooca-umkm-educational-social-media
 do
     LOCK_FILE="$SCRIPT_DIR/storage/framework/deploy_${AUTO_ID}_${TODAY}.lock"
     SPEC_FILE="$SCRIPT_DIR/storage/app/public/content-assets/spec-${AUTO_ID}.json"
