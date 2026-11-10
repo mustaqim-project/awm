@@ -32,8 +32,8 @@
       "slide": 1,
       "title": "Slide 1: Executive Financial & Inventory Audit - The Hook",
       "tag": "Audit Finansial B2B",
-      "headline": "Laba di Pembukuan Naik, Kenapa Kas Operasional Malah Kering?",
-      "subtitle": "Anatomi 30% modal kerja ritel yang membeku di tumpukan kardus rak gudang.",
+      "headline": "Bongkar Modal Macet di Rak Gudang",
+      "subtitle": "30% modal bisnis ritel sering membeku di rak gudang.",
       "narrative": "Paper Profit Illusion: Laba tercatat di pembukuan, namun uang fisik tidak ada di rekening kas.",
       "visual_direction": "Deep Midnight Navy (#070B19 ke #162B68), Logo resmi COOCA di header, kartu perbandingan laba kotor vs kas fisik riil."
     },
@@ -41,8 +41,8 @@
       "slide": 2,
       "title": "Slide 2: Friction Points - 3 Kesalahan Fatal Pengadaan Barang",
       "tag": "Diagnosa Titik Bocor",
-      "headline": "3 Titik Kritis Pengadaan Barang yang Membekukan Modal",
-      "subtitle": "Ketika pengadaan barang dilakukan atas dasar tebakan, bukan kecepatan perputaran kasir.",
+      "headline": "3 Titik Kritis Stok Macet",
+      "subtitle": "Audit titik kritis penumpukan barang dan kebocoran kas.",
       "narrative": "Diskon kuantitas semu, ketiadaan klasifikasi fast-moving vs dead weight, dan stock opname yang terlambat.",
       "visual_direction": "Bento stage dengan 3 kartu alert beraksen Crimson Alert (#EF4444) dan nomor urut 01, 02, 03."
     },
@@ -50,8 +50,8 @@
       "slide": 3,
       "title": "Slide 3: Framework - Audit Portofolio SKU dengan Prinsip ABC & DIO",
       "tag": "Kerangka Kerja Manajemen",
-      "headline": "Audit Portofolio SKU dengan Prinsip Analisis ABC",
-      "subtitle": "Petakan seluruh portofolio SKU untuk mempercepat Days Inventory Outstanding (DIO).",
+      "headline": "Audit Portofolio dengan Analisis ABC",
+      "subtitle": "Kelola portofolio SKU untuk percepat perputaran kasir.",
       "narrative": "Kategori A (80% omzet toko) diprioritaskan, Kategori C (5% omzet) dihentikan PO-nya jika usia > 60 hari.",
       "visual_direction": "Matriks tabel ABC terstruktur, aksen Cyan Glow (#38BDF8) dan Sapphire Blue (#2563EB)."
     },
@@ -59,8 +59,8 @@
       "slide": 4,
       "title": "Slide 4: System Solution - Kunci Mutasi Stok Otomatis dari Kasir",
       "tag": "Otomasi Sistem Cloud",
-      "headline": "Kunci Mutasi Stok Otomatis dari Transaksi Kasir",
-      "subtitle": "Hubungkan kasir POS ke kartu stok gudang tanpa rekonsiliasi manual.",
+      "headline": "Solusi & Otomasi Kasir Terpadu",
+      "subtitle": "Hubungkan kasir POS ke kartu stok secara otomatis.",
       "narrative": "Potong stok 0 detik saat scan kasir, notifikasi stok menipis, reduksi dead stock hingga 40%.",
       "visual_direction": "Metrik KPI 0 Detik & 40% Reduksi Dead Stock dengan visual antarmuka sistem COOCA /inventory/stocks."
     },
@@ -68,8 +68,8 @@
       "slide": 5,
       "title": "Slide 5: Actionable Roadmap - 3 Langkah Bebaskan Modal Kerja",
       "tag": "Langkah Implementasi",
-      "headline": "Mulai Audit Stok dan Bebaskan Modal Kerja Bisnis Anda",
-      "subtitle": "Kendalikan arus kas dan valuasi stok dengan sistem Cooca modern.",
+      "headline": "Bebaskan Modal Kerja Toko Anda",
+      "subtitle": "Kendalikan arus kas dan valuasi stok bersama Cooca.",
       "narrative": "Jalankan audit penuaan stok, kunci reorder point otomatis, dan mulai gratis di cooca.id Paket Solo Owner Rp 0.",
       "visual_direction": "Kartu aksi 3 langkah terstruktur, badge Cooca Solo Owner Rp 0 Gratis Selamanya, CTA cooca.id."
     }
