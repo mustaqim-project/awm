@@ -19,15 +19,15 @@
              x-transition:leave-end="opacity-0 translate-y-2 scale-95"
              class="hidden sm:block pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
              @click="toggleChat()">
-            <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-[10px] shadow-xs" aria-label="{{ __('public_marketing.live_chat_close_greeting') }}">
-                ✕
+            <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs shadow-xs" aria-label="{{ __('public_marketing.live_chat_close_greeting') }}">
+                <span aria-hidden="true">&times;</span>
             </button>
             <div class="flex items-center gap-2 mb-1">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                 <span class="text-[11px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300">Live Support Online</span>
             </div>
             <p class="text-[12.5px] font-medium text-gray-800 dark:text-gray-100 leading-snug">
-                Ada yang bisa kami bantu seputar sistem <strong class="text-violet-600 dark:text-violet-400">COOCA</strong>? Chat langsung sekarang! 👋
+                Ada yang bisa kami bantu seputar sistem <strong class="text-violet-600 dark:text-violet-400">COOCA</strong>? Chat langsung sekarang!
             </p>
         </div>
 
@@ -240,7 +240,7 @@
                     <span>Chat dengan: <strong x-text="visitorData.name || 'Anda'"></strong></span>
                 </div>
                 <div class="flex items-center gap-1 text-[10.5px] text-violet-600 dark:text-violet-400">
-                    <span x-text="isReverbConnected ? '🟢 Reverb Live' : '🟠 Polling Mode'"></span>
+                    <span x-text="isReverbConnected ? 'Reverb Live' : 'Polling Mode'"></span>
                 </div>
             </div>
 
@@ -249,7 +249,7 @@
                 
                 {{-- System Welcome Message --}}
                 <div class="p-3 rounded-2xl bg-white dark:bg-[#27272A] border border-gray-100 dark:border-white/5 shadow-xs text-[12px] text-gray-600 dark:text-gray-300 leading-relaxed">
-                    👋 <strong>Halo <span x-text="visitorData.name || 'Bapak/Ibu'"></span>!</strong> Terima kasih telah menghubungi COOCA. Pertanyaan Anda sudah diteruskan langsung ke tim admin kami melalui dashboard omnichannel. Kami akan segera membalasnya di sini.
+                    <strong>Halo <span x-text="visitorData.name || 'Bapak/Ibu'"></span>!</strong> Terima kasih telah menghubungi COOCA. Pertanyaan Anda sudah diteruskan langsung ke tim admin kami melalui dashboard omnichannel. Kami akan segera membalasnya di sini.
                 </div>
 
                 {{-- Messages Bubbles --}}
@@ -506,7 +506,7 @@ function coocaLiveChatWidget() {
                 const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
                 this.messages.push({
                     id: 'closing_' + Date.now(),
-                    message: `Baik Kak${name}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja. 🙏😊`,
+                    message: `Baik Kak${name}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja.`,
                     from_name: 'Cooca Support',
                     is_cooca: true,
                     is_from_page: true,
