@@ -1,0 +1,61 @@
+{
+  "clusters": [
+    {
+      "cluster_id": "culinary_fb",
+      "cluster_name": "Kuliner & F&B",
+      "sectors": [
+        {"id": "resto_dine_in", "name": "Restoran Dine-In", "needs": "Manajemen meja, KDS tiket dapur, resep BOM bahan baku, pesanan terjadwal"},
+        {"id": "coffee_shop", "name": "Coffee Shop & Cafe", "needs": "Gramasi resep bahan baku, food cost HPP per cup, varian rasa, waste tracking"},
+        {"id": "bakery", "name": "Bakery & Toko Roti", "needs": "Kalkulasi HPP batch adonan, bahan baku expired date, konsinyasi"},
+        {"id": "cloud_kitchen", "name": "Cloud Kitchen Online", "needs": "Integrasi order omnichannel online, pesanan multi-brand, stok bahan baku terpusat"},
+        {"id": "catering", "name": "Katering Prasmanan", "needs": "Estimasi porsi borongan, pengingat DP jadwal pengiriman, belanja bahan baku partai"}
+      ]
+    },
+    {
+      "cluster_id": "manufacturing_cogs",
+      "cluster_name": "Manufaktur & HPP",
+      "sectors": [
+        {"id": "konveksi_garment", "name": "Konveksi & Garment", "needs": "Perhitungan HPP multi-tier (kain + ongkos jahit + aksesoris), lead time produksi, termin DP"},
+        {"id": "percetakan_offset", "name": "Percetakan & Offset Digital", "needs": "Kalkulasi bahan baku kertas, tinta, jasa potong/finishing, nota SPK kerja"},
+        {"id": "mebel_furniture", "name": "Mebel & Furniture Kayu", "needs": "HPP material kayu, cat, finishing, ongkos tukang per unit pesanan"},
+        {"id": "bengkel_bubut", "name": "Bengkel Bubut & Logam", "needs": "Jasa fabrikasi kustom, pemakaian bahan logam, ongkos jam kerja teknisi"},
+        {"id": "craft_handmade", "name": "Kerajinan Tangan / Craft", "needs": "Harga pokok produksi per piece karya, konsinyasi pameran, bahan baku seni"}
+      ]
+    },
+    {
+      "cluster_id": "retail_pharmacy",
+      "cluster_name": "Ritel & Toko Obat",
+      "sectors": [
+        {"id": "minimarket_kelontong", "name": "Minimarket & Kelontong", "needs": "Scan barcode cepat, multi-satuan dus/renteng/pcs, batas minimum restock"},
+        {"id": "apotek_toko_obat", "name": "Apotek & Toko Obat", "needs": "Nomor batch, kartu stok obat, masa kadaluarsa (expired date), resep dokter"}
+      ]
+    },
+    {
+      "cluster_id": "daily_services",
+      "cluster_name": "Jasa Harian",
+      "sectors": [
+        {"id": "bengkel_motor_mobil", "name": "Bengkel Mobil & Motor", "needs": "Form PKB/SPK nopol kendaraan, komisi mekanik servis, kartu riwayat servis pelanggan"},
+        {"id": "barbershop_salon", "name": "Barbershop & Salon", "needs": "Bagi hasil komisi kapster/terapis, antrean booking, paket layanan perawatan"},
+        {"id": "laundry_kiloan", "name": "Laundry Kiloan & Satuan", "needs": "Timbangan kg, nomor loker rak pakaian, notifikasi WhatsApp selesai cuci"},
+        {"id": "cuci_mobil_detailing", "name": "Cuci Mobil & Detailing", "needs": "Paket cuci nopol kendaraan, antrean bay, durasi pengerjaan, komisi staf"}
+      ]
+    },
+    {
+      "cluster_id": "project_services",
+      "cluster_name": "Jasa Proyek",
+      "sectors": [
+        {"id": "kontraktor_renovasi", "name": "Kontraktor & Renovasi", "needs": "Surat penawaran quotation, termin penagihan progres lapangan, budget material vs riil"},
+        {"id": "event_organizer", "name": "Event / Wedding Organizer", "needs": "Manajemen vendor rekanan, termin DP klien, breakdown anggaran rundown"},
+        {"id": "creative_agency", "name": "Digital IT & Creative Agency", "needs": "Alokasi man-hour proyek, timesheet, termin milestone delivery invoice"}
+      ]
+    },
+    {
+      "cluster_id": "distribution_agro",
+      "cluster_name": "Distribusi & Agrobisnis",
+      "sectors": [
+        {"id": "distributor_b2b_agro", "name": "Distributor Grosir B2B & Agrobisnis", "needs": "Surat jalan kirim barang, batas jatuh tempo tempo hutang/piutang mitra, stok gudang cabang"}
+      ]
+    }
+  ]
+}
+

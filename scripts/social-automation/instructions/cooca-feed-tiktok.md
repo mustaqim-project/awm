@@ -1,992 +1,232 @@
-# TASK: DYNAMIC TIKTOK VIRAL TREND, AUDIENCE INTELLIGENCE & SINGLE FEED CONTENT FOR COOCA
+# TASK: COOCA TikTok Feed Generator & Deployer (cooca-feed-tiktok)
 
-## ROLE & PRIMARY OBJECTIVE
+## 1. PERAN, TUJUAN, DAN BATAS OTONOMI
 
-Bertindak sebagai **TikTok Content Strategist, Viral Trend Researcher, Audience Intelligence Analyst, Retail Operations Specialist & Static Feed Visual Designer untuk COOCA**.
+**Peran:** Anda adalah operator konten otomatis COOCA sekaligus Social Media Strategist dan Visual Content Creator. Anda meriset tren, membuat satu feed foto TikTok (gambar tunggal vertikal berkontras tinggi), men-deploy hasilnya ke database COOCA, lalu commit dan push.
 
-Tugas utama Anda adalah menemukan peluang konten strategis TikTok berdasarkan dinamika tren, komentar komunitas, kegelisahan operasional, dan perilaku belanja audiens di TikTok Indonesia, kemudian merancangnya menjadi konten yang relevan, edukatif, dan menarik bagi target pasar COOCA.
+**Arti "publish" di task ini:** konten masuk ke antrean/database sistem COOCA dan ter-commit ke repo. Task ini TIDAK memposting langsung ke TikTok dan TIDAK memilih musik atau sound. Jangan mengklaim konten sudah tayang di TikTok.
 
-Tugas Anda bukan sekadar mengejar tren viral, melainkan membedah secara presisi:
-1. Siapa segmen audiens bisnis yang paling membutuhkan solusi dari topik tersebut?
-2. Apa karakteristik usaha dan persoalan riil kasir/gudang yang mereka alami?
-3. Pola komunikasi dan visual hook apa yang memicu mereka berhenti scrolling dalam 2 detik pertama?
-4. Informasi praktis apa yang dapat mereka pahami dan terapkan seketika?
-5. Bagaimana headline, komposisi visual feed, dan copywriting caption dapat memicu interaksi dan komentar berkualitas?
-6. Bagaimana memposisikan COOCA secara alami sebagai solusi teknologi terpercaya tanpa kesan hard-selling?
+**Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-**PRINSIP UTAMA: AUDIENCE FIRST, CONTENT SECOND, DATA & CONVERSION DRIVEN.**
+**Target audiens:** pemilik usaha UMKM lintas 20 sektor yang aktif di TikTok, cenderung lebih muda, serta tim operasional usaha (kasir, admin, gudang, produksi) sebagai pengguna sehari-hari. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu peran atau satu sektor.
 
-Konten harus dibuat untuk orang yang tepat, bukan sekadar mengejar angka views. Tujuan akhir adalah membangun brand awareness berbobot, engagement berkualitas, dan ketertarikan nyata dari calon pengguna COOCA.
+**Tujuan konten:** mengajak pemilik UMKM mendaftar Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
+**Indikator keberhasilan:** saves, shares, komentar, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves, shares, dan komentar.
 
----
+**Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, pertanyaan komentar, brief visual, dan nama file output SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel, dan agar file lama tidak tertimpa. Sumber tren yang dipakai (trending search, konten kompetitor, komunitas/forum UMKM) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 
-## KETENTUAN WAJIB SISTEM (CANVA MCP & BRAND DIRECTIVES)
+**Prinsip bahasa:** semua teks untuk audiens ditulis santai, akrab, dan tidak baku, seperti ngobrol dengan sesama pemilik usaha (sapaan "kamu", bukan "Anda"). Alasannya: bahasa yang dekat dengan keseharian bikin orang lebih mau berhenti scroll dan lebih percaya. Aturan lengkapnya ada di bagian 3.
 
-Setiap siklus eksekusi automasi TikTok Single Feed ini terikat secara ketat pada aturan produksi wajib berikut:
+**Kerangka tetap vs isi dinamis:** format satu gambar statis vertikal 1080x1920 px yang membawa satu pesan utama berkontras tinggi, serta palet visual, adalah kerangka tetap. Yang dinamis adalah topik, sudut masalah, fitur, subjek foto, dan copy.
 
-1. **Wajib Integrasi Canva MCP (`canva_canva`) untuk Generate & Regenerate Konten:**
-   - Seluruh pembuatan aset visual single feed TikTok (1080x1080 px) **WAJIB menggunakan tool Canva MCP** (`create-design`, `get-create-design-async-job`, `export-design`).
-   - Apabila hasil visual awal belum memenuhi skor kelayakan, hierarki tipografi kurang tegas, komposisi visual kaku, atau ada penyesuaian materi, agent **WAJIB melakukan regenerasi konten visual (regenerate)** melalui Canva MCP (`start-editing-transaction` / `perform-editing-operations` atau memanggil kembali `create-design` dengan parameter prompt yang disempurnakan).
-   - Dilarang keras menggunakan generator grafis pihak ketiga di luar Canva MCP.
+**Koordinasi dengan automation lain:** semua automation (carousel dan feed, Instagram, Facebook, TikTok, termasuk seri edukasi) berbagi riwayat konten. Cek riwayat semuanya sebelum riset supaya tidak mengangkat topik yang sama.
 
-2. **Wajib Logo Resmi COOCA PNG Tanpa Background:**
-   - Gambar feed **WAJIB mencantumkan Logo Resmi COOCA PNG transparan tanpa background**:
-     `C:\laragon\www\cooca_core\public\assets\image\1785229034_logo_dark.png`
-   - Logo harus diletakkan secara proporsional dan bersih pada bagian header atau sudut atas visual dengan kontras tinggi di atas latar belakang gelap.
+**Prioritas aturan (bila ada konflik):**
+1. Gerbang keselamatan di bagian 5
+2. `scripts/social-automation/instructions/cooca-feed-tiktok.md`
+3. Dokumen task ini
 
-3. **Standar Identitas Visual Dark-Tech COOCA:**
-   - **Background Wajib:** Dark Blue / Deep Navy (`#070B19`, `#0A1128`, atau `#0F172A`). Dilarang latar belakang putih polos atau warna-warni yang merusak estetika premium dark-tech Cooca.
-   - **Tipografi Wajib:** White (`#FFFFFF`, `#F8FAFC`) untuk keterbacaan tajam dan optimal pada layar smartphone TikTok.
-   - **Aksen Sekunder Resmi:** Electric / Cyan Blue (`#38BDF8`, `#2563EB`) dan Crimson Alert (`#EF4444`, `#F87171`). Dilarang menggunakan aksen hijau untuk checklist/ROI.
-   - **Font Resmi Tunggal:** Wajib keluarga **Plus Jakarta Sans** (Bold/ExtraBold untuk headline, Medium/Regular untuk body).
+Jika dokumen task ini bertentangan dengan file instruksi, ikuti file instruksi lalu catat konfliknya di laporan akhir.
 
-4. **Kepatuhan Copywriting Tanpa Em Dash:**
-   - Dilarang menggunakan tanda pisah em-dash (—) maupun en-dash (–) pada seluruh headline visual, body teks, caption TikTok, maupun hashtag.
+**Batas otonomi:** Anda boleh menjalankan script riset, memanggil Canva MCP, menjalankan perintah deploy, dan melakukan commit serta push, tetapi HANYA jika semua gerbang di bagian 5 lolos. Bila ada gerbang yang gagal, berhenti dan laporkan. Jangan membuat konten pengganti secara asal, jangan melewati gerbang, dan jangan pernah memakai `--force`.
 
 ---
 
----
+## 2. WORKFLOW EKSEKUSI
 
-# 1. AUTOMATION CONFIGURATION
+### Langkah 0: Cek riwayat (sebelum riset)
+Kumpulkan riwayat konten dari:
+- `database/data/social_content/`
+- semua file `spec-cooca-*.json` di `storage/app/public/content-assets/` (mencakup semua automation, termasuk yang ditambahkan nanti)
+- postingan yang sudah ada di database
 
-- Automation ID: `cooca-feed-tiktok`
-- Project Directory: `C:\laragon\www\cooca_core`
-- Platform: TikTok
-- Format: Single Static Image Feed
-- Canvas: 1080 × 1080 px
-- Jumlah: Tepat 1 gambar statis.
-- Target Tayang: 19:45 WIB
-- Bahasa: Indonesia natural, komunikatif, dan mudah dipahami.
-- Target pasar: Pelaku UMKM, bisnis retail, toko, grosir, distributor, dan F&B.
+Dari riwayat, hitung:
+- sektor yang dipakai dalam 10 konten terakhir (semua platform digabung). Hindari semuanya, prioritaskan sektor yang paling lama tidak diangkat.
+- daftar keyword, hook title, dan pasangan (pilar masalah + fitur) yang sudah pernah dipakai.
 
-Target pasar di atas merupakan cakupan eksplorasi, bukan target audiens yang harus selalu digunakan.
+Konten baru dinyatakan **DUPLIKAT** jika salah satu terpenuhi:
+- keyword utama sama,
+- hook title mirip secara makna,
+- pasangan (sektor + pilar masalah) sama,
+- pasangan (pilar masalah + fitur) sama.
 
-Setiap konten harus menentukan target audiens berdasarkan hasil riset masing-masing.
+Cek ini berlaku lintas platform: topik yang sudah dipakai di platform lain tidak diulang di TikTok. Nama file lama bertopik (misalnya "fraud-prevention") menunjukkan topik itu sudah pernah dipakai, jadi jangan diangkat lagi.
 
----
+Jika duplikat, ulangi riset dengan sektor atau sudut lain, maksimal 3 percobaan. Setelah itu berhenti sesuai bagian 5.
 
-# 2. MANDATORY RESEARCH WORKFLOW
-
-Setiap eksekusi wajib mengikuti tahapan:
-
-**TREND DISCOVERY**
-→ **KEYWORD RESEARCH**
-→ **COMMUNITY DISCUSSION AUDIT**
-→ **VIRAL SIGNAL ANALYSIS**
-→ **TARGET AUDIENCE RESEARCH**
-→ **AUDIENCE SEGMENTATION**
-→ **AUDIENCE PERSONA**
-→ **PAIN POINT ANALYSIS**
-→ **AUDIENCE BEHAVIOR ANALYSIS**
-→ **AUDIENCE INTENT & AWARENESS**
-→ **CONTENT-AUDIENCE MATCHING**
-→ **COOCA RELEVANCE ANALYSIS**
-→ **CONTENT STRATEGY**
-→ **AUDIENCE-BASED COPYWRITING**
-→ **VISUAL GENERATION**
-→ **QUALITY CONTROL**
-→ **DEPLOYMENT**
-
-Jangan melewati tahapan audience research.
-
-Jangan langsung membuat visual atau caption setelah menemukan topik yang sedang viral.
-
----
-
-# 3. DYNAMIC TIKTOK TREND RESEARCH
-
-Lakukan riset dinamis untuk menemukan minimal 5 kandidat topik.
-
-Sumber riset dapat mencakup:
-
-- TikTok videos.
-- TikTok search.
-- TikTok comments.
-- TikTok creators.
-- TikTok business communities.
-- Konten edukasi bisnis.
-- Diskusi publik pelaku UMKM.
-- Sumber publik relevan lainnya.
-
-Eksplorasi dapat mencakup:
-
-- Retail security.
-- Pencegahan fraud.
-- Pengelolaan transaksi.
-- Kasir dan POS.
-- Refund, discount, dan void.
-- Pengendalian hak akses karyawan.
-- Rekonsiliasi kas.
-- Selisih stok.
-- Inventory management.
-- Produktivitas karyawan.
-- Pengelolaan shift.
-- Pengalaman pelanggan.
-- Operasional toko.
-- Pengelolaan bisnis F&B.
-- Kesalahan pemilik usaha.
-- Teknologi untuk operasional bisnis.
-
-Daftar tersebut hanya referensi eksplorasi.
-
-Jangan mengunci konten pada anti-fraud, void, PIN supervisor, atau satu fitur COOCA tertentu.
-
-### Prosedur riset
-
-1. Temukan minimal 5 kandidat topik.
-2. Identifikasi sumber dan waktu pengamatan.
-3. Analisis pola konten yang menarik perhatian.
-4. Pelajari komentar dan respons audiens.
-5. Identifikasi permasalahan yang mendasari topik.
-6. Analisis potensi stop-scroll, komentar, save, dan share.
-7. Pilih kandidat yang paling relevan dengan target pasar COOCA.
-
-Jangan mengarang jumlah views, engagement, atau popularitas.
-
-Bedakan antara tren yang benar-benar terverifikasi dan topik yang hanya memiliki potensi menarik.
-
----
-
-# 4. MANDATORY TARGET AUDIENCE RESEARCH
-
-**Riset audiens adalah tahapan wajib dan sama pentingnya dengan riset materi konten.**
-
-Setiap topik harus memiliki target audiens yang jelas.
-
-## A. AUDIENCE SEGMENTATION
-
-Identifikasi segmen yang paling relevan.
-
-Contoh:
-
-1. Pemilik toko kelontong.
-2. Pemilik retail fashion.
-3. Pemilik toko elektronik.
-4. Pemilik bisnis F&B.
-5. Pemilik restoran.
-6. Pemilik minimarket.
-7. Distributor.
-8. Supplier.
-9. Pemilik grosir.
-10. Reseller.
-11. Pemilik bisnis multi-cabang.
-12. Supervisor toko.
-13. Retail manager.
-14. Kepala gudang.
-15. Staf kasir.
-
-Jangan memilih audiens secara acak.
-
-Pilih berdasarkan permasalahan yang ditemukan.
-
-## B. AUDIENCE PERSONA
-
-Buat satu primary audience persona dan optional secondary audience persona.
-
-Identifikasi:
-
-- Jenis bisnis.
-- Skala usaha.
-- Tahap perkembangan bisnis.
-- Jabatan atau peran.
-- Aktivitas operasional.
-- Tingkat pemahaman bisnis.
-- Tingkat pemahaman teknologi.
-- Tanggung jawab.
-- Tantangan sehari-hari.
-- Kebutuhan informasi.
-- Motivasi.
-- Hambatan.
-- Tujuan bisnis.
-
-Contoh:
-
-**Primary Audience: Pemilik toko retail skala kecil hingga menengah**
-
-Karakteristik:
-- Mengelola operasional toko sehari-hari.
-- Memiliki beberapa karyawan.
-- Bertanggung jawab atas transaksi dan stok.
-- Membutuhkan kontrol terhadap aktivitas toko.
-- Menghadapi kesulitan ketika pencatatan masih dilakukan secara manual.
-
-Contoh ini bukan persona permanen. Persona aktual harus ditentukan dari hasil riset.
-
-Jangan mengarang umur, pendapatan, demografi, atau kebiasaan audiens jika tidak ada bukti.
-
-## C. AUDIENCE PAIN POINT ANALYSIS
-
-Identifikasi:
-
-**Functional Pain**
-- Kesalahan operasional.
-- Proses manual.
-- Kesulitan pengawasan.
-- Ketidaksesuaian pencatatan.
-- Kurangnya kontrol.
-
-**Financial Pain**
-- Selisih kas.
-- Potensi kerugian.
-- Kesalahan perhitungan.
-- Pemborosan operasional.
-- Ketidaksesuaian laporan.
-
-**Emotional Pain**
-- Kekhawatiran terhadap bisnis.
-- Frustrasi menghadapi masalah berulang.
-- Kesulitan mempercayai laporan.
-- Kehilangan kendali terhadap operasional.
-
-**Knowledge Gap**
-- Hal yang belum dipahami.
-- Kesalahan karena kurang informasi.
-- Miskonsepsi bisnis.
-- Informasi yang mereka butuhkan.
-
-**Business Aspiration**
-- Meningkatkan efisiensi.
-- Mengembangkan usaha.
-- Mengurangi kesalahan.
-- Mengontrol operasional.
-- Membangun sistem bisnis yang lebih baik.
-
-## D. AUDIENCE BEHAVIOR
-
-Pelajari:
-
-- Jenis konten yang mereka perhatikan.
-- Pertanyaan yang sering muncul.
-- Masalah yang sering dikomentari.
-- Gaya bahasa yang digunakan.
-- Format konten yang relevan.
-- Hal yang membuat mereka membagikan konten.
-- Hal yang membuat mereka menyimpan konten.
-- Topik yang mendorong mereka berbagi pengalaman.
-
-Gunakan komentar dan pola interaksi sebagai bukti.
-
-Jika tidak tersedia bukti yang cukup, tandai sebagai hipotesis.
-
----
-
-# 5. AUDIENCE INTENT & AWARENESS LEVEL
-
-Tentukan tingkat kesadaran target audiens.
-
-### LEVEL 1: UNAWARE
-
-Audiens belum menyadari masalah.
-
-Strategi:
-- Fakta menarik.
-- Kesalahan yang tidak disadari.
-- Situasi yang relatable.
-- Edukasi dasar.
-
-### LEVEL 2: PROBLEM AWARE
-
-Audiens sudah mengalami masalah.
-
-Strategi:
-- Bedah penyebab.
-- Dampak permasalahan.
-- Kesalahan umum.
-- Contoh kasus.
-
-### LEVEL 3: SOLUTION AWARE
-
-Audiens sedang mencari solusi.
-
-Strategi:
-- Tips praktis.
-- Cara kerja sistem.
-- Perbandingan metode.
-- Solusi operasional.
-
-### LEVEL 4: PRODUCT AWARE
-
-Audiens sudah mengenal kategori software bisnis.
-
-Strategi:
-- Edukasi fitur.
-- Cara penggunaan.
-- Efisiensi operasional.
-- Pengenalan solusi COOCA.
-
-Pilih awareness level berdasarkan hasil riset.
-
-Jangan selalu membuat konten promosi.
-
----
-
-# 6. CONTENT-AUDIENCE MATCHING ENGINE
-
-Setelah mendapatkan hasil riset audiens, lakukan pencocokan materi.
-
-Jawab pertanyaan berikut:
-
-1. Apakah target audiens mengalami masalah tersebut?
-2. Apakah masalah tersebut penting bagi mereka?
-3. Apakah materi sesuai dengan pengetahuan mereka?
-4. Apakah istilah yang digunakan mudah dipahami?
-5. Apakah contoh sesuai dengan aktivitas bisnis mereka?
-6. Apakah informasi memberikan manfaat?
-7. Apakah konten relevan dengan kebutuhan target pasar COOCA?
-8. Apakah audiens berpotensi tertarik dengan solusi COOCA?
-
-### Contoh penyesuaian materi
-
-Topik: Pengendalian transaksi.
-
-**Target A: Pemilik toko kecil**
-
-Materi:
-- Mengapa uang kas sering tidak cocok?
-- Kesalahan pencatatan transaksi.
-- Cara sederhana memeriksa transaksi.
-
-Gaya bahasa: Sederhana dan praktis.
-
-**Target B: Supervisor retail**
-
-Materi:
-- Pentingnya pengawasan transaksi.
-- Pengelolaan hak akses.
-- Kontrol aktivitas kasir.
-
-Gaya bahasa: Profesional dan operasional.
-
-**Target C: Pemilik retail multi-cabang**
-
-Materi:
-- Konsistensi pengawasan transaksi.
-- Kontrol operasional antar cabang.
-- Standardisasi prosedur toko.
-
-Gaya bahasa: Strategis dan analitis.
-
-Satu topik dapat menghasilkan berbagai angle.
-
-Namun, satu konten harus memiliki satu target audiens utama dan satu pesan utama.
-
-Jangan mencampurkan kebutuhan audiens yang berbeda dalam satu visual.
-
----
-
-# 7. CONTENT STRATEGY & CREATIVE ANGLE
-
-Tentukan pendekatan kreatif berdasarkan hasil riset.
-
-Pilihan format:
-
-- POV.
-- Storytelling.
-- Relatable situation.
-- Unexpected business fact.
-- Myth vs fact.
-- Business mistakes.
-- Warning and awareness.
-- Mini case study.
-- Problem solving.
-- Before vs after.
-- Discussion-based content.
-- Educational insight.
-
-POV bukan format wajib.
-
-Jangan menggunakan hook yang sama setiap hari.
-
-Setiap konten harus memiliki:
-
-- Primary audience.
-- Audience persona.
-- Main pain point.
-- Awareness level.
-- Content objective.
-- Educational objective.
-- Creative angle.
-- Emotional trigger.
-- Main message.
-- Discussion trigger.
-- Practical takeaway.
-
-**Konten harus disesuaikan dengan audiens, bukan audiens dipaksakan mengikuti format konten.**
-
----
-
-# 8. COOCA PRODUCT RELEVANCE
-
-COOCA merupakan Business Operating System dan Omnichannel ERP untuk UMKM.
-
-Fitur yang dapat dipertimbangkan:
-
-- `/roles`
-- `/pos`
-- `/reports`
-- Manajemen stok.
-- Pengelolaan transaksi.
-- Pengendalian akses.
-- Pengelolaan operasional.
-- Fitur lain yang benar-benar tersedia.
-
-Jangan menjadikan satu fitur sebagai topik permanen.
-
-Alur:
-
-1. Temukan masalah.
-2. Identifikasi audiens.
-3. Tentukan materi.
-4. Cari solusi yang relevan.
-5. Periksa fitur aktual COOCA.
-6. Integrasikan secara natural jika sesuai.
-
-Jangan membuat klaim bahwa COOCA dapat menghilangkan fraud atau menjamin tidak terjadi kerugian.
-
-Periksa implementasi aktual sebelum menyebut kemampuan produk.
-
-Jika fitur tidak relevan, jangan memaksakan penyebutannya.
-
----
-
-# 9. AUDIENCE-BASED VISUAL GENERATION
-
-Hasil akhir wajib tepat satu gambar statis 1080 × 1080 px.
-
-Visual harus mencerminkan target audiens.
-
-Contoh:
-
-- Toko kelontong: rak barang, transaksi, kasir.
-- Retail fashion: pakaian, display, transaksi.
-- F&B: restoran, meja kasir, pelayanan.
-- Distributor: gudang, barang, persediaan.
-- Multi-cabang: operasional beberapa toko.
-- Supervisor: aktivitas pengawasan operasional.
-
-### Visual Requirements
-
-- Headline menjadi fokus utama.
-- Satu gambar menyampaikan satu gagasan.
-- Hook mudah dipahami dalam beberapa detik.
-- Visual sesuai dengan masalah audiens.
-- Komposisi profesional dan modern.
-- Kontras dan keterbacaan tinggi.
-- Tidak terlalu banyak teks.
-- Identitas COOCA digunakan secara proporsional.
-- Tidak menggunakan desain generik yang sama setiap hari.
-
-Jika menggunakan interface COOCA, gunakan screenshot asli.
-
-Dilarang membuat interface palsu atau mengarang fitur.
-
-Jangan menampilkan informasi bisnis atau data pribadi yang sensitif.
-
----
-
-# 10. AUDIENCE-BASED CAPTION ENGINE
-
-**Caption wajib dibuat berdasarkan audience persona, bukan hanya berdasarkan headline atau gambar.**
-
-Caption harus terasa seperti berbicara langsung kepada target audiens.
-
-### A. CAPTION PERSONALIZATION
-
-Sesuaikan dengan:
-
-- Jenis bisnis.
-- Skala usaha.
-- Pain point.
-- Awareness level.
-- Tingkat pengetahuan.
-- Gaya bahasa.
-- Kebutuhan informasi.
-- Motivasi audiens.
-
-Contoh:
-
-Untuk pemilik toko kecil:
-Gunakan bahasa sederhana dan dekat dengan keseharian.
-
-Untuk supervisor:
-Gunakan bahasa operasional dan berorientasi pada pengawasan.
-
-Untuk pemilik bisnis multi-cabang:
-Gunakan bahasa strategis, efisiensi, dan kontrol bisnis.
-
-### B. CAPTION STRUCTURE
-
-**1. Opening Hook**
-
-Kalimat pertama harus menarik perhatian audiens.
-
-**2. Audience Connection**
-
-Hubungkan dengan pengalaman atau masalah mereka.
-
-**3. Educational Value**
-
-Berikan insight tambahan.
-
-**4. Practical Takeaway**
-
-Berikan informasi yang dapat diterapkan.
-
-**5. COOCA Connection**
-
-Hubungkan dengan COOCA jika relevan.
-
-**6. Engagement CTA**
-
-Ajak audiens berbagi pengalaman atau pendapat.
-
-### C. CAPTION RULES
-
-- Bahasa Indonesia natural.
-- Tidak kaku.
-- Tidak terlalu teknis.
-- Tidak mengulang seluruh teks visual.
-- Tidak clickbait menyesatkan.
-- Tidak terlalu agresif menjual produk.
-- CTA harus sesuai topik.
-- Emoji secukupnya.
-- Hashtag relevan dengan audiens.
-- Jangan menggunakan em dash atau en dash.
-
-### D. CAPTION VALIDATION
-
-Periksa:
-
-1. Apakah caption ditujukan kepada audiens yang benar?
-2. Apakah opening hook menarik bagi mereka?
-3. Apakah bahasa sesuai tingkat pemahaman?
-4. Apakah caption memberikan nilai tambah?
-5. Apakah CTA relevan?
-6. Apakah COOCA disebutkan secara natural?
-7. Apakah caption berpotensi menghasilkan interaksi berkualitas?
-
-Jika tidak memenuhi standar, lakukan revisi.
-
----
-
-# 11. VIRALITY & AUDIENCE SCORING
-
-Gunakan penilaian berikut:
-
-| Kriteria | Bobot |
-|---|---:|
-| TikTok Trend Signal | 10% |
-| Audience Relevance | 20% |
-| Pain Point Strength | 15% |
-| Educational Value | 10% |
-| Hook Strength | 10% |
-| Engagement Potential | 10% |
-| Save & Share Potential | 5% |
-| COOCA Relevance | 10% |
-| Originality | 5% |
-| Research Evidence Quality | 5% |
-| Total | 100% |
-
-Minimum kelayakan: 85/100.
-
-Berikan juga:
-- Audience Relevance Score.
-- Content-Audience Matching Score.
-- Research Confidence Level.
-
-Skor harus didukung bukti atau indikator yang jelas.
-
-Jangan mengarang metrik aktual TikTok.
-
-Jika tidak ada kandidat yang memenuhi standar, lakukan riset ulang dan jangan memaksakan publikasi.
-
----
-
-# 12. CONTENT VARIETY
-
-Jangan terus-menerus membahas anti-fraud, manipulasi void, atau PIN supervisor.
-
-Variasikan berdasarkan peluang riset terbaru.
-
-Variasikan pula target audiens.
-
-Contoh:
-- Pemilik toko.
-- Supervisor.
-- Kasir.
-- Pemilik F&B.
-- Distributor.
-- Retail manager.
-- Pemilik bisnis multi-cabang.
-
-Variasi harus berdasarkan relevansi, bukan sekadar pemerataan.
-
-Lakukan historical audit agar tidak mengulang:
-- Topik.
-- Headline.
-- Hook.
-- Creative angle.
-- Pain point.
-- Konsep visual.
-
----
-
-# 13. OUTPUT REQUIREMENTS
-
-Setiap eksekusi wajib menghasilkan:
-
-### A. TREND RESEARCH
-
-1. Minimal 5 kandidat topik.
-2. Keyword.
-3. Sumber.
-4. Tanggal riset.
-5. Viral signal.
-6. Community insight.
-7. Alasan pemilihan.
-
-### B. AUDIENCE RESEARCH
-
-1. Primary target audience.
-2. Secondary target audience.
-3. Jenis bisnis.
-4. Skala bisnis.
-5. Audience persona.
-6. Pain points.
-7. Needs and motivations.
-8. Knowledge level.
-9. Awareness level.
-10. Audience behavior.
-11. Content preferences.
-12. Research evidence.
-13. Confidence level.
-
-### C. CONTENT STRATEGY
-
-1. Selected topic.
-2. Target audience.
-3. Main problem.
-4. Content objective.
-5. Educational objective.
-6. Creative angle.
-7. Emotional trigger.
-8. Main message.
-9. Discussion trigger.
-10. Practical takeaway.
-11. COOCA relevance.
-12. Scoring.
-
-### D. CONTENT PRODUCTION
-
-1. Visual headline.
-2. Visual subheadline.
-3. Visual concept.
-4. Visual direction.
-5. Main message.
-6. TikTok caption.
-7. CTA.
-8. Hashtags.
-9. Publication metadata.
-
-### E. QUALITY CONTROL
-
-- Trend Research: PASS/FAIL.
-- Audience Research: PASS/FAIL.
-- Audience Persona: PASS/FAIL.
-- Pain Point Validation: PASS/FAIL.
-- Content-Audience Matching: PASS/FAIL.
-- Content Accuracy: PASS/FAIL.
-- COOCA Relevance: PASS/FAIL.
-- Caption Quality: PASS/FAIL.
-- Visual Relevance: PASS/FAIL.
-- Originality: PASS/FAIL.
-- Static Image Compliance: PASS/FAIL.
-
-Jika validasi wajib gagal, jangan deploy.
-
----
-
-# 14. JSON OUTPUT REQUIREMENTS
-
-Pastikan JSON kompatibel dengan deployment engine yang sudah ada.
-
-Tambahkan struktur minimal berikut tanpa menghapus field lama yang masih dibutuhkan.
-
-```json
-{
-  "research": {
-    "selected_topic": "",
-    "keywords": [],
-    "sources": [],
-    "research_date": "",
-    "candidates": [],
-    "viral_signals": [],
-    "community_insights": []
-  },
-  "audience": {
-    "primary_segment": "",
-    "secondary_segment": "",
-    "persona": {
-      "business_type": "",
-      "business_scale": "",
-      "business_stage": "",
-      "role": "",
-      "knowledge_level": "",
-      "awareness_level": ""
-    },
-    "pain_points": [],
-    "needs": [],
-    "motivations": [],
-    "behavior_insights": [],
-    "content_preferences": [],
-    "evidence": [],
-    "confidence_level": ""
-  },
-  "content_strategy": {
-    "content_angle": "",
-    "content_objective": "",
-    "educational_objective": "",
-    "main_message": "",
-    "emotional_trigger": "",
-    "discussion_trigger": "",
-    "practical_takeaway": "",
-    "cooca_relevance": ""
-  },
-  "content": {
-    "platform": "tiktok",
-    "format": "single_static_feed",
-    "canvas": "1080x1080",
-    "headline": "",
-    "subheadline": "",
-    "visual_concept": "",
-    "visual_direction": "",
-    "caption": "",
-    "cta": "",
-    "hashtags": []
-  },
-  "scoring": {
-    "virality_score": 0,
-    "audience_relevance_score": 0,
-    "content_audience_match_score": 0,
-    "research_confidence": ""
-  },
-  "validation": {
-    "trend_research": false,
-    "audience_research": false,
-    "persona_validation": false,
-    "pain_point_validation": false,
-    "content_audience_matching": false,
-    "content_accuracy": false,
-    "cooca_relevance": false,
-    "caption_quality": false,
-    "visual_relevance": false,
-    "originality": false
-  }
-}
-```
-
-Sesuaikan dengan schema aktual proyek.
-
-Jangan merusak integrasi image generation, database, deployment, dan automation lainnya.
-
----
-
-# 15. IMPLEMENTATION REQUIREMENTS
-
-Jangan hanya mengubah prompt.
-
-Lakukan audit implementasi aktual dalam project COOCA.
-
-Periksa:
-
-- `scripts/social-automation/deep_research_viral_engine.py`
-- Prompt riset tren TikTok.
-- Audience research engine.
-- Audience persona generation.
-- Content strategy.
-- Caption generation.
-- Visual generation.
-- JSON schema.
-- Quality control.
-- Database integration.
-- Deployment engine.
-- Riwayat publikasi.
-
-Pastikan data mengalir secara konsisten:
-
-**TREND RESEARCH → AUDIENCE RESEARCH → PERSONA → CONTENT STRATEGY → CAPTION GENERATION → VISUAL GENERATION → JSON → DEPLOYMENT**
-
-Jika audience research belum tersedia, implementasikan.
-
-Jika caption masih hanya menerima input berupa topik dan headline, ubah agar juga menerima:
-- Primary audience.
-- Audience persona.
-- Pain points.
-- Awareness level.
-- Content preferences.
-- Main message.
-
-Jika visual generation belum menerima informasi audiens, tambahkan visual direction berdasarkan jenis bisnis dan situasi audiens.
-
-Jangan membuat fungsi duplikat.
-
-Gunakan arsitektur yang sudah ada dan jangan merusak automation lain.
-
----
-
-# 16. EXECUTION COMMAND
-
-**Tahap 1. Jalankan riset**
-
+### Langkah 1: Riset tren
 ```bash
-python "C:\laragon\www\cooca_core\scripts\social-automation\deep_research_viral_engine.py" --automation-id cooca-feed-tiktok --output-json storage/app/public/content-assets/spec-cooca-feed-tiktok.json
+python scripts/social-automation/deep_research_viral_engine.py --automation-id cooca-feed-tiktok --output-json storage/app/public/content-assets/spec-cooca-feed-tiktok.json
 ```
+Spec JSON wajib memuat field berikut:
+- `sector` (sektor terpilih, harus ada di `sectors.json`)
+- `keywords` beserta `sources` (trending search, konten kompetitor, komunitas/forum UMKM)
+- `problem_pillar`
+- `cooca_feature`
+- `hook_title`
+- `caption` dan `caption_strategy`
+- `discussion_question` (satu pertanyaan ajakan komentar yang relevan dengan topik)
+- `tone` (isi: santai, akrab, tidak baku, sapaan kamu)
+- `canva_mcp_prompt_brief`
+- `slug` (huruf kecil, tanda minus, tanpa spasi, diturunkan dari keyword utama)
 
-**Tahap 2. Audit hasil**
+Jika ada field kosong atau sumber tren tidak tercantum, perlakukan sebagai gagal (bagian 5). Seluruh topik, keyword, pilar masalah, fitur, hook, caption, pertanyaan komentar, brief visual, dan nama file WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
 
-Pastikan:
-- Minimal 5 kandidat telah dianalisis.
-- Target audiens sudah ditentukan.
-- Persona memiliki dasar riset.
-- Pain points tervalidasi.
-- Materi sesuai target audiens.
-- Caption sesuai persona.
-- Visual relevan dengan jenis bisnis.
-- Skor minimal 85/100.
-- Tepat satu gambar statis 1080 × 1080 px.
-- Tidak ada klaim produk yang tidak terverifikasi.
-- Tidak ada pengulangan konten.
+### Langkah 2: Visual lewat Canva MCP (`canva_canva`)
+Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
-**Tahap 3. Deploy**
+1. Panggil `create-design` untuk satu gambar vertikal 9:16, 1080x1920 px. Gunakan ukuran kustom 1080x1920 jika tool mendukungnya, atau format vertikal bawaan Canva yang berukuran sama (misalnya format Story). Jangan memakai "Instagram Post (Square)". Jika tidak ada pilihan yang cocok, tetapkan ukuran lewat instruksi di `brief` dan catat di laporan akhir.
+2. `brief`: gunakan `canva_mcp_prompt_brief` dari spec JSON. Brief harus memuat semua aturan visual di bagian 4 (termasuk safe zone dan ambient glow cyan) dan instruksi bahwa semua teks di desain ditulis santai dengan sapaan "kamu".
+3. Pantau dengan `get-create-design-async-job` sampai status `completed`. Jika gagal atau timeout, coba ulang maksimal 2 kali, lalu berhenti sesuai bagian 5.
+4. Ekspor ke PNG resolusi tinggi dengan `export-design`.
+5. Cek ukuran hasil ekspor. Jika bukan 1080x1920, ubah ukuran atau ekspor ulang satu kali. Jika masih salah, berhenti sesuai bagian 5.
+6. Simpan ke `storage/app/public/admin/social-media-assets/feed/tiktok/feed-YYYY-MM-DD-{slug}-1080x1920.png`. Nama file diturunkan dari tanggal dan `slug` di spec JSON. Jangan memakai nama file tetap dan jangan menimpa file lama.
 
-Jika seluruh validasi berhasil:
+### Langkah 3: Validasi (wajib lolos sebelum deploy)
+- **File:** tepat 1 PNG baru, 1080x1920 px, nama file sesuai pola di atas, tidak menimpa file lama.
+- **Karakter terlarang:** caption, pertanyaan komentar, dan semua teks di gambar bebas em-dash (U+2014) dan en-dash (U+2013), dan bebas mojibake (lihat bagian 4).
+- **Domain:** caption dan teks gambar hanya memuat `cooca.id`, tanpa URL rute detail (misalnya /roles, /pos, /whatsapp) dan tanpa nama bisnis fiktif atau nama user tertentu.
+- **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
+- **Caption TikTok:** hook di baris pertama dan pendek, keyword utama muncul alami, tepat satu pertanyaan komentar, hashtag 3 sampai 5.
+- **Visual:** logo ada, tidak ada warna hijau, subjek foto sesuai sektor, semua teks penting berada di safe zone, satu pesan utama terbaca dalam sekali lihat.
+- **Spec JSON:** valid dan semua field wajib (termasuk `slug` dan `discussion_question`) terisi.
 
+### Langkah 4: Deploy ke database
 ```bash
 php artisan cooca:deploy-standalone-post --automation-id cooca-feed-tiktok --spec-json storage/app/public/content-assets/spec-cooca-feed-tiktok.json
 ```
+Pastikan perintah selesai tanpa error sebelum lanjut.
 
-**Tahap 4. Git**
-
+### Langkah 5: Commit dan push
+Hanya jika SEMUA gerbang di bagian 5 lolos:
 ```bash
 git add storage/app/public/content-assets/ storage/app/public/admin/social-media-assets/ database/data/social_content/
-
-git commit -m "feat(feed-tiktok): implement audience-driven content intelligence [$(date +%Y-%m-%d)]"
-
+git commit -m "feat(cooca-feed-tiktok): publish multi-industry trend-driven viral content [$(date +%Y-%m-%d)]"
 git push origin main
 ```
-
-Jangan melakukan deployment atau push jika validasi gagal.
-
-Jangan mengklaim berhasil apabila perintah belum benar-benar berhasil.
+Jangan menambahkan file lain ke commit. Jangan pernah memakai `--force`.
 
 ---
 
-# 17. FINAL EXECUTION PRINCIPLE
+## 3. ATURAN KONTEN
 
-Jangan hanya bertanya:
+### Anti-duplikasi (The Zero Reuse Rule)
+Setiap konten harus 100% unik dalam materi (topik edukasi, hook title, sudut masalah, keyword) dan dalam desain (template Canva baru untuk setiap konten). Definisi duplikat ada di Langkah 0. Tujuannya agar konten bervariasi dan seluruh 20 sektor terangkat bergantian.
 
-"Apa yang sedang viral di TikTok?"
+### Isi satu gambar (high-contrast POV)
+Audiens TikTok melihat sekilas, jadi satu gambar harus terbaca dalam sekali lihat dan membawa satu pesan utama:
+- satu headline kontras tinggi dari `hook_title`, satu kalimat pendek yang memuat keyword tren. Boleh berbentuk sudut pandang, misalnya diawali "POV:", asalkan tetap alami dan sesuai topik,
+- satu atau dua kartu metrik singkat (floating glassmorphism). Angka hanya dari spec JSON beserta sumbernya. Jangan mengarang klaim,
+- satu badge CTA.
 
-Tanyakan:
+Jangan menjejalkan alur masalah-solusi-bukti seperti di carousel. Teks di gambar sangat singkat dan berukuran besar.
 
-1. Apa yang sedang ramai dibicarakan?
-2. Siapa yang paling membutuhkan informasi tersebut?
-3. Apa masalah sebenarnya yang mereka alami?
-4. Mengapa mereka peduli?
-5. Apa yang ingin mereka pelajari?
-6. Bagaimana tingkat pemahaman mereka?
-7. Materi apa yang paling tepat?
-8. Bagaimana visual dapat menarik perhatian mereka?
-9. Bagaimana caption dapat membuat mereka merasa relate?
-10. Bagaimana COOCA dapat memberikan solusi yang relevan?
+### Caption TikTok (formula AIDA, inklusif multi-industri)
+Turunkan langsung dari `caption`, `caption_strategy`, dan `discussion_question` di spec JSON.
+- **Attention:** baris pertama adalah hook tajam berbasis keyword tren, karena hanya beberapa baris awal yang langsung terlihat.
+- **Interest:** masalah operasional harian yang relevan dengan tren, tanpa nada menyalahkan.
+- **Desire:** bagaimana fitur Cooca terpilih memberi solusi otomatis dan terukur untuk jenis usaha tersebut.
+- **Action:** ajakan ramah mendaftar Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id.
+- **Komentar:** tutup dengan satu pertanyaan yang gampang dijawab. Satu pertanyaan saja.
 
-## ULTIMATE OBJECTIVE
+Format: singkat, paragraf satu sampai dua kalimat, tidak mengulang isi gambar. Keyword utama muncul secara alami di teks gambar dan caption karena pencarian TikTok bergantung pada keyword.
 
-**DISCOVER THE TREND → IDENTIFY THE AUDIENCE → UNDERSTAND THEIR PROBLEM → PERSONALIZE THE CONTENT → OPTIMIZE THE CAPTION → GENERATE THE VISUAL → BUILD QUALITY ENGAGEMENT → STRENGTHEN COOCA BRAND AWARENESS.**
+Hashtag: 3 sampai 5, diambil dari keyword riset dan sektor terpilih, ditaruh di akhir caption.
 
-Jangan membuat konten untuk semua orang.
+Sapaan akrab dan inklusif sesuai aturan "Gaya bahasa": "kamu", "usahamu", "bisnismu", "timmu", "pemilik usaha". Tetap netral lintas sektor. Jangan memakai nama bisnis fiktif (misalnya "Toko Kamu") atau nama user tertentu.
 
-Jangan membuat caption hanya untuk melengkapi gambar.
+### Gaya bahasa (santai, human friendly, tidak baku)
+Semua teks yang dibaca audiens (caption, hook, pertanyaan komentar, teks di gambar, badge selain nama resmi) ditulis seperti ngobrol dengan sesama pemilik usaha, bukan seperti brosur atau surat resmi. Alasannya: pemilik UMKM lebih berhenti scroll dan lebih percaya pada bahasa yang terasa dekat dengan keseharian mereka.
 
-Jangan mengejar views dengan mengorbankan relevansi.
+Aturan:
+- Pakai bahasa Indonesia sehari-hari yang tidak baku: kalimat pendek, kata sehari-hari ("bikin", "nggak", "udah", "gimana", "banget", "tinggal", "biar"), sapaan "kamu", "usahamu", "bisnismu".
+- Audiens TikTok lebih muda sehingga nada boleh lebih ringan dan lincah, tapi tetap sopan dan mudah dipahami pemilik usaha di seluruh Indonesia. Hindari slang yang hanya dipahami satu daerah atau satu generasi (misalnya "gue/lo", "bestie", "sultan", istilah viral yang cepat basi).
+- Jangan menyalahkan. Tulis masalah sebagai hal yang wajar dialami banyak pemilik usaha.
+- Hindari kata kaku seperti "optimalisasi", "implementasi", "solusi terintegrasi", "mengakselerasi". Ganti dengan versi ngobrol, misalnya "bikin lebih rapi", "pakai", "bantu hitung otomatis".
+- Istilah bisnis yang umum (HPP, stok, omzet, kasir) tetap dipakai, tapi dijelaskan singkat jika kemungkinan belum dikenal.
+- Nama merek, nama paket, dan badge CTA tetap persis: "COOCA", "Paket Free", "Mulai Gratis Selamanya di cooca.id".
+- Satu kalimat satu ide. Hook maksimal satu kalimat pendek.
+- Emoji boleh sedikit (maksimal 2 sampai 3 di caption, tidak di badge CTA). Jangan jadikan emoji pengganti kata.
+- Larangan em-dash dan en-dash, larangan nama bisnis fiktif, dan aturan satu domain `cooca.id` tetap berlaku penuh.
 
-Buat konten yang tepat untuk audiens yang tepat.
-
-**Setiap konten COOCA wajib memiliki target audiens yang jelas, materi yang sesuai dengan kebutuhan mereka, visual yang menggambarkan dunia mereka, serta caption yang menggunakan bahasa dan pendekatan komunikasi yang tepat.**
-
----
-
-# MANDATORY CANVA MCP DESIGN WORKFLOW (GENERATE & REGENERATE)
-
-Untuk menghasilkan maupun memperbarui/meregenerasi seluruh aset visual grafis (baik Single Static Feed 1080x1080 px maupun Multi-Slide Carousel 1080x1080 / 1080x1350 px), agent **WAJIB menggunakan integrasi resmi Canva MCP (`canva_canva`)**:
-
-1. **Inisialisasi & Generate Desain (`create-design`):**
-   - Kirimkan brief visual komprehensif mencakup judul, subjudul, poin edukasi per slide/bagian, serta panduan tata letak.
-   - Untuk format carousel multi-halaman, sertakan outline terstruktur (`sections`) secara lengkap.
-   - Cantumkan instruksi penempatan **Logo Resmi COOCA PNG tanpa background**.
-
-2. **Pemantauan Status Job (`get-create-design-async-job`):**
-   - Pantau status job secara berkala menggunakan `continuation_token` hingga berstatus `completed` dan menghasilkan `design_id` serta tautan edit/view.
-
-3. **Mekanisme Regenerate / Revisi Desain (Wajib Canva MCP):**
-   - Jika hasil generate awal belum memenuhi skor kualitas visual (kontras rendah, tata letak terpotong, atau tidak sesuai brand identity), agent **WAJIB melakukan regenerate** melalui Canva MCP.
-   - Gunakan `start-editing-transaction` dan `perform-editing-operations` / `commit-editing-transaction` untuk revisi terarah, atau panggil kembali `create-design` dengan parameter prompt yang diperbaiki hingga standar kelayakan tercapai.
-   - Dilarang keras menggunakan engine grafis alternatif pihak ketiga di luar Canva MCP untuk generate maupun regenerate.
-
-4. **Ekspor Resolusi Tinggi Lossless (`export-design`):**
-   - Ekspor seluruh halaman desain ke berkas format PNG lossless beresolusi tinggi tanpa penurunan kualitas gambar.
-
-5. **Unduh & Penyimpanan Aset ke Path Proyek:**
-   - **Feed (Single Image):** Simpan ke direktori `storage/app/public/content-assets/{channel}-feed-...-1080x1080.png`
-   - **Carousel (Multi-Slide):** Simpan secara berurutan ke `storage/app/public/admin/social-media-assets/carousel/{channel}/slide-0{n}.png`
+Contoh:
+- Kaku: "Optimalkan pengelolaan stok bisnis Anda dengan sistem terintegrasi."
+- Santai: "Stok sering selisih dan bingung ngeceknya? Biar COOCA yang catat otomatis."
+- Kaku: "Daftarkan usaha Anda pada Paket Free di cooca.id."
+- Santai: "Mau coba? Daftar Paket Free di cooca.id, gratis selamanya buat Solo Owner."
+- Pertanyaan komentar: "Stok kamu biasanya dicek seminggu sekali atau tiap hari? Tulis di komentar, yuk."
 
 ---
 
-# COOCA BRAND IDENTITY & COLOR THEME RULES
+## 4. ATURAN VISUAL DAN KARAKTER
 
-Setiap desain grafis yang dibuat maupun diregenerate melalui Canva MCP atau canvas visual **WAJIB mengikuti standar identitas brand resmi COOCA**:
+**Aturan kritis (pelanggaran = gagal):**
+1. **Zero green:** tidak boleh ada warna hijau di desain mana pun.
+2. **Satu domain:** hanya `cooca.id` di visual, badge, dan caption. Tanpa URL rute detail.
+3. **Karakter terlarang:** tidak boleh ada em-dash (U+2014) dan en-dash (U+2013). Gunakan tanda minus (-) atau titik dua (:). Sebelum deploy, jalankan pengecekan otomatis. Script ini memeriksa nilai teks setelah JSON di-parse, jadi karakter yang tersimpan sebagai escape (`\u2014`) tetap terdeteksi:
+```bash
+   python - <<'PY'
+   import json, re, sys
+   p = "storage/app/public/content-assets/spec-cooca-feed-tiktok.json"
+   data = json.load(open(p, encoding="utf-8"))  # gagal di sini jika JSON tidak valid
+   t = json.dumps(data, ensure_ascii=False)
+   checks = {
+       "em/en-dash": r"[\u2014\u2013]",
+       "mojibake": r"â€|Ã.|Â.",
+       "route-url": r"cooca\.id/\S+",
+       "sapaan Anda": r"\bAnda\b",
+   }
+   bad = {k: re.findall(v, t) for k, v in checks.items() if re.search(v, t)}
+   print("OK" if not bad else bad)
+   sys.exit(1 if bad else 0)
+   PY
+```
+   Hasil harus `OK`. Jika ada temuan, perbaiki teksnya lalu jalankan ulang.
 
-1. **Penggunaan Logo Resmi COOCA Tanpa Background (Wajib):**
-   - Setiap aset visual (Feed 1 gambar atau setiap slide Carousel) **WAJIB mencantumkan Logo Resmi COOCA PNG tanpa background**:
-     `C:\laragon\www\cooca_core\public\assets\image\1785229034_logo_dark.png`
-   - Posisi: Bagian header atau sudut atas visual secara proporsional.
-   - Tampilan harus tajam, bersih, proporsional (tidak terdistorsi/tertarik), dan memiliki kontras tinggi di atas latar belakang Dark Blue.
-
-2. **Palet Warna Wajib (Dark Blue & White):**
-   - **Latar Belakang / Background:** Wajib **Dark Blue / Deep Navy** (`#070B19`, `#0A1128`, atau `#0F172A`). DILARANG KERAS menggunakan latar belakang putih polos murahan, abu-abu kusam, atau warna-warni yang merusak estetika premium dark-tech Cooca.
-   - **Tipografi & Konten Utama:** Wajib **White** (`#FFFFFF`, `#F8FAFC`). Kontras tinggi, tegas, tajam, dan mudah dibaca secara nyaman pada layar smartphone.
-   - **Aksen Visual Sekunder Resmi COOCA:**
-     - **Electric / Cyan Blue** (`#38BDF8`, `#2563EB`) untuk tombol, pill, dan penyorot konteks.
-     - **Cooca Blue / Electric Blue** (`#2563EB`, `#38BDF8`) untuk badge solusi terverifikasi, checklist keberhasilan, dan ROI positif (DILARANG HIJAU).
-     - **Crimson Alert** (`#EF4444`, `#F87171`) untuk indikator bahaya, titik celah kebocoran meja kasir, atau selisih stok.
+**Visual:**
+- Format: satu gambar statis vertikal 9:16, 1080x1920 px. Tanpa video, motion, animasi, atau Remotion.
+- Safe zone TikTok: biarkan sekitar 10% bagian atas, sekitar 25% bagian bawah, dan sekitar 12% sisi kanan bebas dari teks penting, karena tertutup caption, tombol, dan bar aplikasi. Headline dan logo berada di area tengah atas.
+- Logo resmi `public/assets/image/1785229034_logo_dark.png` wajib ada di bagian atas dan tidak menyentuh tepi atas yang tertutup bar aplikasi.
+- Palet: latar Deep Midnight Navy (#070B19 ke #162B68), aksen Electric Sapphire (#2563EB) dan Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal. Kontras teks terhadap latar harus tinggi.
+- Komposisi: Bento Grid ala Apple HIG, kartu metrik bisnis melayang (floating glassmorphism), ambient glow cyan (#38BDF8).
+- Fotografi realistis berkualitas tinggi (bukan kartun atau ilustrasi 2D flat). Subjek, objek kerja, suasana, dan model manusia menyesuaikan sektor dan keyword hasil riset, misalnya dapur/kafe untuk F&B, bengkel/salon/laundry untuk jasa, konveksi/ruang produksi untuk manufaktur dan HPP, rak gudang untuk inventori, meja packing untuk online shop, meja kasir untuk pembayaran, atau buku keuangan usaha. Jangan menyempit ke ritel, online seller, atau orang memegang tablet kasir.
+- Badge CTA: "Mulai Gratis Selamanya di cooca.id" (hanya domain, tanpa URL rute), diletakkan di atas safe zone bawah.
+- Teks di dalam visual mengikuti aturan "Gaya bahasa", dibuat sangat singkat, dan berukuran besar supaya terbaca sekilas di layar HP kecil.
 
 ---
 
-# ATURAN TIPOGRAFI & FONT RESMI COOCA (PLUS JAKARTA SANS)
+## 5. GERBANG KESELAMATAN (STOP, JANGAN PUSH)
 
-Seluruh pembuatan konten visual (baik via Canva MCP maupun canvas visual/CSS) WAJIB menggunakan font keluarga **Plus Jakarta Sans** sebagai tipografi resmi tunggal COOCA:
+Hentikan proses, JANGAN deploy dan JANGAN push, jika salah satu terjadi:
+- cek duplikasi gagal setelah 3 percobaan,
+- spec JSON kosong, tidak valid, atau field wajib (termasuk `slug` dan `discussion_question`) tidak lengkap,
+- job Canva tidak `completed` setelah 2 kali coba ulang,
+- file PNG tidak ada, ukuran bukan 1080x1920 (setelah satu kali perbaikan), atau nama file menimpa file lama,
+- cek karakter terlarang, warna hijau, atau URL rute menemukan pelanggaran yang tidak bisa diperbaiki,
+- `php artisan cooca:deploy-standalone-post` mengembalikan error,
+- `git commit` atau `git push` gagal (jangan ulangi dengan `--force`; laporkan).
 
-1. **Karakter & Alasan Pemilihan:**
-   - Modern, dinamis, dan profesional.
-   - Sangat nyaman dibaca dalam Bahasa Indonesia.
-   - Memiliki karakter teknologi tanpa terlihat kaku.
-   - Sangat cocok untuk headline, isi carousel, hingga nominal angka harga/keuntungan.
+Saat berhenti, tulis laporan kegagalan ke `storage/app/public/content-assets/failed-run-feed-tiktok-YYYY-MM-DD.json` dengan isi:
+```json
+{
+  "automation_id": "cooca-feed-tiktok",
+  "date": "YYYY-MM-DD",
+  "failed_stage": "nama tahap",
+  "reason": "alasan singkat",
+  "attempts": 0,
+  "suggested_next_step": "langkah lanjutan yang disarankan"
+}
+```
+Jangan membuat konten pengganti secara asal dan jangan melewati gerbang.
 
-2. **Hierarki Tipografi Wajib:**
-   - **Headline utama:** Plus Jakarta Sans (Bold / ExtraBold) - tegas, kuat, dan eye-catching.
-   - **Subheadline:** Plus Jakarta Sans (SemiBold) - memperjelas konteks dengan anggun.
-   - **Isi konten / body text:** Plus Jakarta Sans (Regular / Medium) - jarak baris proporsional (1.4-1.5) untuk kenyamanan baca di layar mobile.
-   - **Angka & statistik:** Plus Jakarta Sans (Bold / ExtraBold) - menonjolkan nominal rupiah, persentase margin, atau poin angka.
-   - **CTA (Call to Action):** Plus Jakarta Sans (Bold) - jelas dan mengarahkan aksi.
+---
 
-3. **Ketentuan Larangan:** Dilarang menggunakan font dekoratif murahan, script/handwriting, serif klasik kusam, atau font default generik yang tidak konsisten dengan brand identity COOCA.
-
-
-## ATURAN KETAT ANTI-DUPLIKASI & WAJIB TEMPLATE CANVA BARU (THE ZERO REUSE RULE)
-1. **DILARANG MENGGUNAKAN MATERI KONTEN YANG SAMA (100% UNIQUE & FRESH CONTENT):**
-   - Dilarang keras menggunakan materi konten, topik edukasi, hook title, sudut pandang masalah, maupun keyword yang sama dengan materi konten yang sudah ada / sudah pernah dipublikasikan sebelumnya di sistem atau media sosial Cooca.
-   - Wajib memeriksa riwayat konten terdahulu (`storage/app/public/content-assets/content_history.json` dan database post) sebelum mengeksekusi riset tren untuk memastikan materi konten yang dihasilkan setiap harinya 100% unik, segar, dan mengangkat pilar solusi yang berbeda lintas 20 sektor industri UMKM.
-2. **DILARANG MENGGUNAKAN DESAIN YANG SAMA (WAJIB GENERATE TEMPLATE CANVA BARU SETIAP KONTEN):**
-   - Dilarang keras mendaur ulang (reuse) template visual, tata letak, atau desain yang sudah ada sebelumnya.
-   - Wajib selalu men-generate template desain Canva baru melalui Canva MCP (`create-design`) untuk SETIAP materi konten baru, disesuaikan secara dinamis dengan materi konten, hook, dan keyword hasil analisa tren terbaru.
-   - Setiap template Canva baru wajib mematuhi panduan visual Cooca: Deep Midnight Navy (#070B19 ke #162B68), Sapphire Blue (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, strictly ZERO GREEN, subjek fotografi realistis adaptif, dan URL bersih tunggal `cooca.id`.
+## 6. LAPORAN AKHIR
+Setelah selesai (sukses atau berhenti), laporkan singkat:
+- sektor dan keyword terpilih beserta sumber tren,
+- hook title dan pertanyaan komentar,
+- hasil tiap gerbang (lolos/gagal),
+- hash commit (jika ada),
+- konflik antara dokumen ini dan file instruksi (jika ada),
+- pengingat: musik atau sound belum dipilih dan dipilih manual saat posting di TikTok,
+- catatan lain yang perlu ditinjau manusia (misalnya format Canva yang diganti).

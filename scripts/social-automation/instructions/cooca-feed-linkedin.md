@@ -1,1151 +1,239 @@
-# TASK: DYNAMIC LINKEDIN INFOGRAPHIC & AUDIENCE INTELLIGENCE FOR COOCA
-## B2B RETAIL, FINANCIAL PERFORMANCE & BUSINESS PRODUCTIVITY
+# TASK: COOCA LinkedIn Feed Generator & Deployer (cooca-feed-linkedin)
 
-## ROLE & PRIMARY OBJECTIVE
+## 1. PERAN, TUJUAN, DAN BATAS OTONOMI
 
-Bertindak sebagai konsorsium keahlian:
-- **B2B Market Research Analyst**
-- **LinkedIn Audience Intelligence Strategist**
-- **Retail Financial & Unit Economics Analyst**
-- **Buyer Persona & Customer Insight Researcher**
-- **B2B Visual Content Strategist**
-- **Data-Driven Visual Communication Specialist**
-- **B2B Copywriter & Thought Leadership Specialist untuk COOCA**
+**Peran:** Anda adalah operator konten otomatis COOCA sekaligus Social Media Strategist dan Visual Content Creator. Anda meriset tren, membuat satu feed LinkedIn (gambar tunggal persegi berbentuk infografis bisnis), men-deploy hasilnya ke database COOCA, lalu commit dan push.
 
-Tugas utama Anda adalah melakukan riset menyeluruh terhadap **PASAR, AUDIENS SPESIFIK, METRIK FINANSIAL, DAN DISKURUS PROFESIONAL B2B** sebelum merancang satu infografis LinkedIn.
+**Arti "publish" di task ini:** konten masuk ke antrean/database sistem COOCA dan ter-commit ke repo. Task ini TIDAK memposting langsung ke LinkedIn. Jangan mengklaim konten sudah tayang di LinkedIn.
 
-Jangan sekadar mencari topik yang menarik di permukaan. Identifikasi siapa pengambil keputusan (Founder, Direktur, CFO, COO, Store Manager) yang paling membutuhkan insight tersebut, apa persoalan operasional/finansial yang mereka hadapi, bagaimana kalkulasi unit economics mereka, dan bagaimana data disajikan secara tajam, kredibel, dan aplikatif.
+**Tentang COOCA:** Business Operating System (BOS) all-in-one berbasis AI untuk UMKM Indonesia di 20 sektor industri (daftar resmi: `scripts/social-automation/config/sectors.json`), dalam 6 klaster: Kuliner & F&B, Manufaktur & HPP, Ritel & Toko Obat, Jasa Harian, Jasa Proyek, Distribusi & Agrobisnis.
 
-Tujuan akhirnya adalah menghasilkan **satu Single Static Infographic LinkedIn (1080x1080 px)** yang berbasis data valid, memposisikan COOCA sebagai Business Operating System dan Omnichannel ERP terdepan, serta membuka diskusi B2B bernilai tinggi.
+**Target audiens:** pengambil keputusan usaha yang aktif di LinkedIn, yaitu pemilik bisnis menengah, manajer operasional, dan business leaders dari semua sektor di atas. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor atau ke ritel.
 
-**PRINSIP UTAMA: AUDIENCE FIRST, DATA VALIDATED, BUSINESS RELEVANT, CONVERSION DRIVEN.**
+**Tujuan konten:** membangun kepercayaan dan minat, lalu mengajak pembaca mencoba Paket Free (Rp 0, gratis selamanya untuk Solo Owner) di cooca.id.
+**Indikator keberhasilan:** saves, shares, komentar bermutu, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin memancing saves dan diskusi profesional.
 
----
+**Sudut pandang LinkedIn:** audiens di sini memikirkan efisiensi operasional, kontrol biaya, visibilitas data, dan skala usaha. Angkat masalah dan solusi dari sudut itu. Paket Free hanya disebut apa adanya (gratis selamanya untuk Solo Owner). Jangan mengklaim Paket Free cocok untuk operasi besar, multi-cabang, atau tim besar.
 
-## KETENTUAN WAJIB SISTEM (CANVA MCP & BRAND DIRECTIVES)
+**Prinsip inti (trend-driven dan multi-industri):** topik, keyword, pilar masalah, fitur Cooca, hook, caption, pertanyaan diskusi, angka metrik, brief visual, dan nama file output SELALU diambil dari spec JSON hasil riset tren, bukan ditulis manual atau di-hardcode. Alasannya: agar konten relevan untuk semua sektor, bukan hanya ritel, dan agar file lama tidak tertimpa. Sumber tren (trending search, konten kompetitor, komunitas/forum UMKM dan bisnis) harus tercatat di spec JSON supaya hasilnya bisa diaudit.
 
-Setiap siklus eksekusi automasi LinkedIn Single Infographic ini terikat secara ketat pada aturan produksi wajib berikut:
+**Prinsip bahasa:** semua teks untuk audiens ditulis santai dan tidak baku, tetapi dengan nada profesional, seperti ngobrol dengan sesama pelaku usaha di kafe, bukan seperti brosur dan bukan seperti obrolan di grup chat. Sapaan "kamu", bukan "Anda". Alasannya: bahasa yang dekat dengan keseharian lebih dipercaya dan lebih mengundang diskusi. Aturan lengkapnya ada di bagian 3.
 
-1. **Wajib Integrasi Canva MCP (`canva_canva`) untuk Generate & Regenerate Konten:**
-   - Seluruh pembuatan aset visual infografis LinkedIn (single static 1080x1080 px) **WAJIB menggunakan tool Canva MCP** (`create-design`, `get-create-design-async-job`, `export-design`).
-   - Apabila hasil visual awal belum memenuhi standar visual B2B, diagram/data kurang kontras, tata letak padat, atau ada koreksi angka simulasi, agent **WAJIB melakukan regenerasi konten visual (regenerate)** melalui Canva MCP (`start-editing-transaction` / `perform-editing-operations` atau memanggil kembali `create-design` dengan parameter prompt yang disempurnakan).
-   - Dilarang keras menggunakan generator grafis pihak ketiga di luar Canva MCP.
+**Kerangka tetap vs isi dinamis:** format satu gambar statis 1080x1080 px yang membawa satu pesan utama, serta palet visual, adalah kerangka tetap. Yang dinamis adalah topik, sudut masalah, fitur, subjek foto, angka, dan copy.
 
-2. **Wajib Logo Resmi COOCA PNG Tanpa Background:**
-   - Visual infografis **WAJIB mencantumkan Logo Resmi COOCA PNG transparan tanpa background**:
-     `C:\laragon\www\cooca_core\public\assets\image\1785229034_logo_dark.png`
-   - Logo harus diletakkan secara proporsional dan bersih pada bagian header atau sudut atas visual dengan kontras tinggi di atas latar belakang gelap.
+**Koordinasi dengan automation lain:** semua automation (carousel dan feed, Instagram, Facebook, TikTok, LinkedIn, termasuk seri edukasi) berbagi riwayat konten. Cek riwayat semuanya sebelum riset supaya tidak mengangkat topik yang sama.
 
-3. **Standar Identitas Visual Dark-Tech COOCA:**
-   - **Background Wajib:** Dark Blue / Deep Navy (`#070B19`, `#0A1128`, atau `#0F172A`). Dilarang latar belakang putih polos atau warna-warni yang merusak estetika premium dark-tech Cooca.
-   - **Tipografi Wajib:** White (`#FFFFFF`, `#F8FAFC`) untuk keterbacaan tajam dan optimal pada layar smartphone maupun desktop LinkedIn.
-   - **Aksen Sekunder Resmi:** Electric / Cyan Blue (`#38BDF8`, `#2563EB`) dan Crimson Alert (`#EF4444`, `#F87171`). Dilarang menggunakan aksen hijau untuk checklist/ROI.
-   - **Font Resmi Tunggal:** Wajib keluarga **Plus Jakarta Sans** (Bold/ExtraBold untuk headline, Medium/Regular untuk body).
+**Prioritas aturan (bila ada konflik):**
+1. Gerbang keselamatan di bagian 5
+2. `scripts/social-automation/instructions/cooca-feed-linkedin.md`
+3. Dokumen task ini
 
-4. **Kepatuhan Copywriting Tanpa Em Dash:**
-   - Dilarang menggunakan tanda pisah em-dash (—) maupun en-dash (–) pada seluruh headline infografis, diagram label, caption LinkedIn, maupun hashtag.
+Jika dokumen task ini bertentangan dengan file instruksi, ikuti file instruksi lalu catat konfliknya di laporan akhir.
+
+**Batas otonomi:** Anda boleh menjalankan script riset, memanggil Canva MCP, menjalankan perintah deploy, dan melakukan commit serta push, tetapi HANYA jika semua gerbang di bagian 5 lolos. Bila ada gerbang yang gagal, berhenti dan laporkan. Jangan membuat konten pengganti secara asal, jangan melewati gerbang, dan jangan pernah memakai `--force`.
 
 ---
 
+## 2. WORKFLOW EKSEKUSI
+
+### Langkah 0: Cek riwayat (sebelum riset)
+Kumpulkan riwayat konten dari:
+- `database/data/social_content/`
+- semua file `spec-cooca-*.json` di `storage/app/public/content-assets/` (mencakup semua automation, termasuk yang ditambahkan nanti)
+- postingan yang sudah ada di database
+
+Dari riwayat, hitung:
+- sektor yang dipakai dalam 10 konten terakhir (semua platform digabung). Hindari semuanya, prioritaskan sektor yang paling lama tidak diangkat.
+- daftar keyword, hook title, dan pasangan (pilar masalah + fitur) yang sudah pernah dipakai.
+
+Konten baru dinyatakan **DUPLIKAT** jika salah satu terpenuhi:
+- keyword utama sama,
+- hook title mirip secara makna,
+- pasangan (sektor + pilar masalah) sama,
+- pasangan (pilar masalah + fitur) sama.
+
+Cek ini berlaku lintas platform: topik yang sudah dipakai di platform lain tidak diulang di LinkedIn. Nama file lama bertopik (misalnya "roi-cashier") menunjukkan topik itu sudah pernah dipakai, jadi jangan diangkat lagi.
+
+Jika duplikat, ulangi riset dengan sektor atau sudut lain, maksimal 3 percobaan. Setelah itu berhenti sesuai bagian 5.
+
+### Langkah 1: Riset tren
+```bash
+python scripts/social-automation/deep_research_viral_engine.py --automation-id cooca-feed-linkedin --output-json storage/app/public/content-assets/spec-cooca-feed-linkedin.json
+```
+Spec JSON wajib memuat field berikut:
+- `sector` (sektor terpilih, harus ada di `sectors.json`)
+- `keywords` beserta `sources` (trending search, konten kompetitor, komunitas/forum UMKM dan bisnis)
+- `problem_pillar`
+- `cooca_feature`
+- `hook_title`
+- `caption` dan `caption_strategy`
+- `discussion_question` (satu pertanyaan diskusi profesional yang relevan dengan topik)
+- `tone` (isi: santai profesional, tidak baku, sapaan kamu)
+- `metrics` (satu sampai dua angka untuk infografis, masing-masing dengan `source`)
+- `canva_mcp_prompt_brief`
+- `slug` (huruf kecil, tanda minus, tanpa spasi, diturunkan dari keyword utama)
+
+Jika ada field kosong, angka metrik tanpa sumber, atau sumber tren tidak tercantum, perlakukan sebagai gagal (bagian 5). Seluruh topik, keyword, pilar masalah, fitur, hook, caption, pertanyaan diskusi, angka, brief visual, dan nama file WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
+
+### Langkah 2: Visual lewat Canva MCP (`canva_canva`)
+Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
+
+1. Panggil `create-design` untuk satu gambar persegi 1:1, 1080x1080 px. Coba `format: "Instagram Post (Square)"` karena ukurannya sama dengan feed persegi LinkedIn. Jika tool menolak nama format ini, gunakan nilai format persegi lain yang diterima tool, atau tetapkan ukuran lewat instruksi di `brief`, lalu catat di laporan akhir.
+2. `brief`: gunakan `canva_mcp_prompt_brief` dari spec JSON. Brief harus memuat semua aturan visual di bagian 4 (termasuk ambient glow cyan) dan instruksi bahwa semua teks di desain ditulis santai profesional dengan sapaan "kamu".
+3. Pantau dengan `get-create-design-async-job` sampai status `completed`. Jika gagal atau timeout, coba ulang maksimal 2 kali, lalu berhenti sesuai bagian 5.
+4. Ekspor ke PNG resolusi tinggi dengan `export-design`.
+5. Cek ukuran hasil ekspor. Jika bukan 1080x1080, ubah ukuran atau ekspor ulang satu kali. Jika masih salah, berhenti sesuai bagian 5.
+6. Simpan ke `storage/app/public/admin/social-media-assets/feed/linkedin/feed-YYYY-MM-DD-{slug}.png`. Nama file diturunkan dari tanggal dan `slug` di spec JSON. Jangan memakai nama file tetap dan jangan menimpa file lama.
+
+### Langkah 3: Validasi (wajib lolos sebelum deploy)
+- **File:** tepat 1 PNG baru, 1080x1080 px, nama file sesuai pola di atas, tidak menimpa file lama.
+- **Karakter terlarang:** caption, pertanyaan diskusi, dan semua teks di gambar bebas em-dash (U+2014) dan en-dash (U+2013), dan bebas mojibake (lihat bagian 4).
+- **Domain:** caption dan teks gambar hanya memuat `cooca.id`, tanpa URL rute detail (misalnya /roles, /pos, /whatsapp) dan tanpa nama bisnis fiktif atau nama user tertentu.
+- **Gaya bahasa:** terbaca santai profesional dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
+- **Caption LinkedIn:** hook ada di dua baris pertama dan cukup ringkas agar terbaca sebelum teks terpotong, ada tepat satu pertanyaan diskusi, hashtag 3 sampai 5.
+- **Klaim:** semua angka di gambar berasal dari `metrics` beserta sumbernya. Tidak ada klaim Paket Free untuk operasi besar atau multi-cabang.
+- **Visual:** logo ada, tidak ada warna hijau, subjek foto sesuai sektor, satu pesan utama terbaca jelas.
+- **Spec JSON:** valid dan semua field wajib (termasuk `slug`, `discussion_question`, `metrics`) terisi.
+
+### Langkah 4: Deploy ke database
+```bash
+php artisan cooca:deploy-standalone-post --automation-id cooca-feed-linkedin --spec-json storage/app/public/content-assets/spec-cooca-feed-linkedin.json
+```
+Pastikan perintah selesai tanpa error sebelum lanjut.
+
+### Langkah 5: Commit dan push
+Hanya jika SEMUA gerbang di bagian 5 lolos:
+```bash
+git add storage/app/public/content-assets/ storage/app/public/admin/social-media-assets/ database/data/social_content/
+git commit -m "feat(cooca-feed-linkedin): publish multi-industry trend-driven viral content [$(date +%Y-%m-%d)]"
+git push origin main
+```
+Jangan menambahkan file lain ke commit. Jangan pernah memakai `--force`.
+
 ---
 
-# 1. KONFIGURASI
+## 3. ATURAN KONTEN
 
-- **Automation ID:** `cooca-feed-linkedin`
-- **Direktori Proyek:** `C:\laragon\www\cooca_core`
-- **Target Saluran:** LinkedIn
-- **Format:** Single Static Infographic
-- **Ukuran:** 1080 × 1080 px
-- **Target Tayang:** 08:00 WIB pada hari kerja
-- **Bahasa:** Indonesia profesional
-- **Target Market:** B2B Retail, F&B, UMKM, dan bisnis yang sedang berkembang.
-- **Tujuan Konten:** Audience engagement, professional awareness, business education, brand authority, dan qualified audience attraction.
+### Anti-duplikasi (The Zero Reuse Rule)
+Setiap konten harus 100% unik dalam materi (topik edukasi, hook title, sudut masalah, keyword) dan dalam desain (template Canva baru untuk setiap konten). Definisi duplikat ada di Langkah 0. Tujuannya agar konten bervariasi dan seluruh 20 sektor terangkat bergantian.
 
-## Prinsip utama
+### Isi satu gambar (infografis bisnis)
+Satu gambar harus membawa satu pesan utama dan mudah dipindai:
+- satu headline singkat dari `hook_title` yang menyentuh masalah operasional atau keputusan bisnis, memuat keyword tren,
+- satu atau dua kartu metrik (floating glassmorphism) atau satu perbandingan sederhana (misalnya sebelum dan sesudah). Angka hanya dari `metrics`, dan sumber dicantumkan kecil di gambar,
+- satu badge CTA.
 
-Setiap eksekusi harus menjawab dua pertanyaan besar:
+Jangan menjejalkan alur masalah-solusi-bukti seperti di carousel. Jangan mengarang klaim dan jangan memakai janji berlebihan, karena audiens LinkedIn menuntut kredibilitas.
 
-1. **WHO:** Siapa target audiens yang paling tepat untuk materi ini?
-2. **WHAT:** Informasi, insight, dan pesan apa yang paling bernilai bagi target audiens tersebut?
+### Caption LinkedIn (formula AIDA, inklusif multi-industri)
+Turunkan langsung dari `caption`, `caption_strategy`, dan `discussion_question` di spec JSON.
+- **Attention:** dua baris pertama adalah hook tajam berbasis keyword tren, karena sisanya tersembunyi di balik "lihat selengkapnya".
+- **Interest:** masalah operasional harian yang relevan dengan tren, tanpa nada menyalahkan.
+- **Desire:** bagaimana fitur Cooca terpilih membantu secara otomatis dan terukur untuk jenis usaha tersebut.
+- **Action:** ajakan ramah mencoba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id.
+- **Diskusi:** tutup dengan satu pertanyaan profesional yang gampang dijawab di komentar. Satu pertanyaan saja.
 
-Jangan menentukan materi sebelum target audiens dan kebutuhan informasinya dipahami.
+Format: paragraf pendek (satu sampai dua kalimat), dipisah baris kosong. Panjang sedang, tidak mengulang isi gambar.
 
----
+Hashtag: 3 sampai 5, diambil dari keyword riset dan sektor terpilih, ditaruh di akhir caption.
 
-# 2. AUDIENCE INTELLIGENCE & TARGET MARKET RESEARCH
+Sapaan akrab dan inklusif sesuai aturan "Gaya bahasa": "kamu", "usahamu", "bisnismu", "timmu", "pemilik usaha". Tetap netral lintas sektor. Jangan memakai nama bisnis fiktif (misalnya "Toko Kamu") atau nama user tertentu.
 
-<PRIORITY: CRITICAL>
+### Gaya bahasa (santai profesional, tidak baku)
+Semua teks yang dibaca audiens (caption, hook, pertanyaan diskusi, teks di gambar, badge selain nama resmi) ditulis seperti ngobrol dengan sesama pelaku usaha, bukan seperti brosur atau surat resmi. Di LinkedIn, nadanya santai tapi tetap rapi dan profesional. Alasannya: bahasa yang dekat dengan keseharian lebih dipercaya, dan nada profesional menjaga kredibilitas di depan pengambil keputusan.
 
-Sebelum melakukan riset topik, lakukan riset terhadap target audiens secara mandiri.
-
-Jangan mengasumsikan bahwa seluruh pengguna LinkedIn yang bekerja di bidang ritel memiliki kebutuhan informasi yang sama.
-
-CEO memiliki kepentingan berbeda dengan CFO. Store Manager memiliki permasalahan berbeda dengan Operation Manager. Pemilik UMKM memiliki prioritas berbeda dengan manajemen perusahaan ritel yang memiliki banyak cabang.
-
-Karena itu, setiap eksekusi wajib menghasilkan segmentasi audiens berdasarkan kebutuhan bisnis, jabatan, tanggung jawab, dan kepentingan profesional.
-
-## 2.1. Identifikasi segmen audiens
-
-Eksplorasi segmen audiens yang potensial, termasuk tetapi tidak terbatas pada:
-
-**A. Business Owner & Executive**
-- Business Owner.
-- Founder.
-- Co-Founder.
-- CEO.
-- Managing Director.
-- General Manager.
-- Director of Operations.
-
-Kepentingan utama:
-- Business growth.
-- Profitability.
-- Business sustainability.
-- Cost efficiency.
-- Business scalability.
-- Strategic decision-making.
-- Competitive advantage.
-
-**B. Finance & Financial Management**
-- CFO.
-- Finance Director.
-- Finance Manager.
-- Accounting Manager.
-- Financial Controller.
-- Finance Analyst.
-
-Kepentingan utama:
-- Profit margin.
-- Cash flow.
-- Financial reporting.
-- Cost control.
-- Financial leakage.
-- Budget efficiency.
-- Revenue versus profitability.
-- Financial accuracy.
-
-**C. Retail & Business Operations**
-- COO.
-- Operations Manager.
-- Regional Manager.
-- Area Manager.
-- Retail Manager.
-- Store Manager.
-- Branch Manager.
-
-Kepentingan utama:
-- Operational efficiency.
-- Store productivity.
-- SOP compliance.
-- Inventory management.
-- Employee productivity.
-- Multi-branch monitoring.
-- Operational consistency.
-
-**D. Technology & Digital Transformation**
-- CTO.
-- IT Manager.
-- Digital Transformation Manager.
-- Business Analyst.
-- System Analyst.
-- Business Intelligence Manager.
-
-Kepentingan utama:
-- System integration.
-- Data visibility.
-- Process automation.
-- Real-time reporting.
-- Technology adoption.
-- Business intelligence.
-- Digital transformation.
-
-**E. UMKM & Growing Business**
-- Small Business Owner.
-- Retail Entrepreneur.
-- F&B Entrepreneur.
-- Business Founder.
-- Online and Offline Business Owner.
-
-Kepentingan utama:
-- Business management.
-- Cash management.
-- Inventory control.
-- Business expansion.
-- Profit optimization.
-- Operational simplicity.
-- Business visibility.
-
-Daftar tersebut merupakan cakupan eksplorasi, bukan target audiens yang harus digunakan secara bersamaan.
-
-## 2.2. Riset kebutuhan dan perilaku audiens
-
-Untuk setiap segmen potensial, lakukan identifikasi:
-
-1. Job title dan posisi profesional.
-2. Tanggung jawab utama.
-3. Masalah bisnis yang sering mereka hadapi.
-4. KPI atau metrik yang menjadi perhatian.
-5. Tantangan operasional dan finansial.
-6. Risiko yang ingin mereka hindari.
-7. Tujuan bisnis yang ingin dicapai.
-8. Informasi yang mereka butuhkan untuk mengambil keputusan.
-9. Tingkat pemahaman terhadap topik.
-10. Alasan mereka tertarik atau tidak tertarik terhadap suatu konten.
-11. Potensi keterkaitan kebutuhan mereka dengan solusi COOCA.
-12. Relevansi mereka sebagai pengguna, influencer, atau decision-maker dalam pembelian sistem bisnis.
-
-Jangan hanya membuat persona berdasarkan asumsi umum.
-
-Gunakan bukti dari:
-- Diskusi profesional LinkedIn yang dapat diakses.
-- Artikel dan publikasi profesional.
-- Laporan industri.
-- Survei bisnis dan penelitian pasar.
-- Komunitas bisnis dan diskusi praktisi.
-- Job description dan tanggung jawab jabatan.
-- Laporan mengenai tantangan industri.
-- Tren kebutuhan teknologi bisnis.
-
-Bedakan fakta hasil riset dengan interpretasi atau hipotesis.
-
-Jika informasi spesifik mengenai perilaku audiens Indonesia tidak tersedia, nyatakan keterbatasannya. Jangan mengarang statistik perilaku pengguna LinkedIn.
-
-## 2.3. Identifikasi audience pain points
-
-Buat pemetaan permasalahan audiens.
+Aturan:
+- Pakai bahasa Indonesia sehari-hari yang tidak baku: kalimat pendek, kata sehari-hari ("bikin", "nggak", "udah", "gimana", "tinggal", "biar"), sapaan "kamu", "usahamu", "bisnismu".
+- Di LinkedIn, hindari kata yang terlalu gaul atau terlalu bercanda. Tetap sopan dan mudah dipahami pemilik usaha di seluruh Indonesia. Hindari slang yang hanya dipahami satu daerah atau satu generasi (misalnya "gue/lo", "bestie", "sultan", istilah viral yang cepat basi).
+- Jangan menyalahkan. Tulis masalah sebagai hal yang wajar dialami banyak pelaku usaha.
+- Hindari kata kaku seperti "optimalisasi", "implementasi", "solusi terintegrasi", "mengakselerasi". Ganti dengan versi ngobrol, misalnya "bikin lebih rapi", "pakai", "bantu hitung otomatis".
+- Istilah bisnis yang umum (HPP, stok, omzet, margin, kasir) tetap dipakai, tapi dijelaskan singkat jika kemungkinan belum dikenal.
+- Nama merek, nama paket, dan badge CTA tetap persis: "COOCA", "Paket Free", "Mulai Gratis Selamanya di cooca.id".
+- Satu kalimat satu ide. Hook maksimal satu kalimat pendek.
+- Emoji: maksimal 1 sampai 2 di caption, dan tidak di badge CTA. Boleh tanpa emoji sama sekali.
+- Larangan em-dash dan en-dash, larangan nama bisnis fiktif, dan aturan satu domain `cooca.id` tetap berlaku penuh.
 
 Contoh:
-
-| Segmen | Pain Point | KPI / Business Concern |
-|---|---|---|
-| CEO / Owner | Sulit mengetahui kondisi bisnis secara menyeluruh | Profitability, growth |
-| CFO | Ketidakakuratan informasi keuangan | Cash flow, margin |
-| COO | Proses operasional tidak konsisten | Operational cost, productivity |
-| Retail Manager | Performa antar-cabang sulit dikontrol | Store performance |
-| Store Manager | Kesulitan mengelola aktivitas harian | Sales, stock accuracy |
-| IT Manager | Data dan sistem bisnis terfragmentasi | Integration, system reliability |
-| UMKM Owner | Administrasi bisnis menyita waktu | Cash flow, efficiency |
-
-Tabel di atas hanya contoh kerangka analisis, bukan kesimpulan riset yang boleh langsung digunakan.
-
-Setiap pain point yang dipilih harus didukung oleh temuan riset yang relevan.
-
-## 2.4. Tentukan primary audience dan secondary audience
-
-Setelah melakukan riset, pilih:
-
-**Primary Audience**
-
-Satu segmen profesional yang paling membutuhkan informasi dan menjadi target utama konten.
-
-**Secondary Audience**
-
-Maksimal dua segmen tambahan yang memiliki kebutuhan atau kepentingan yang masih relevan.
-
-Jangan menargetkan semua jabatan sekaligus hanya untuk memperluas jangkauan.
-
-Prioritaskan ketepatan audiens daripada jumlah segmen.
-
-## 2.5. Buat audience persona spesifik
-
-Untuk primary audience, buat satu persona utama dengan struktur:
-
-- Persona Name: nama representatif, bukan identitas individu nyata.
-- Job Title.
-- Business Type.
-- Business Scale.
-- Primary Responsibility.
-- Main Business Challenges.
-- Key Performance Indicators.
-- Decision-Making Priorities.
-- Information Needs.
-- Professional Interests.
-- Knowledge Level.
-- Content Consumption Motivation.
-- Potential Objections.
-- Relevance to COOCA.
-
-Contoh format:
-
-Persona: Retail Operations Decision Maker
-
-Job Title: Operations Manager / Head of Operations.
-
-Business Responsibility: Mengelola konsistensi operasional dan performa beberapa outlet.
-
-Main Challenges: Monitoring operasional, kontrol stok, produktivitas karyawan, dan konsistensi pelaporan.
-
-Key Concerns: Operational cost, productivity, inventory accuracy, dan store performance.
-
-Content Motivation: Mendapatkan insight praktis untuk meningkatkan efisiensi dan mengurangi kebocoran operasional.
-
-Catatan: Contoh tersebut hanya ilustrasi. Persona final harus mengikuti hasil riset.
+- Kaku: "Optimalkan pengelolaan stok bisnis Anda dengan sistem terintegrasi."
+- Santai profesional: "Stok sering selisih dan susah dilacak? COOCA bisa bantu catat otomatis biar kamu tinggal lihat angkanya."
+- Kaku: "Daftarkan usaha Anda pada Paket Free di cooca.id."
+- Santai profesional: "Mau coba dulu? Paket Free di cooca.id gratis selamanya untuk Solo Owner."
+- Pertanyaan diskusi: "Di usahamu, selisih stok biasanya ketahuan kapan: harian, mingguan, atau pas stok opname? Cerita di komentar, ya."
 
 ---
 
-# 3. AUDIENCE-TO-CONTENT MATCHING
+## 4. ATURAN VISUAL DAN KARAKTER
 
-<PRIORITY: CRITICAL>
+**Aturan kritis (pelanggaran = gagal):**
+1. **Zero green:** tidak boleh ada warna hijau di desain mana pun.
+2. **Satu domain:** hanya `cooca.id` di visual, badge, dan caption. Tanpa URL rute detail.
+3. **Karakter terlarang:** tidak boleh ada em-dash (U+2014) dan en-dash (U+2013). Gunakan tanda minus (-) atau titik dua (:). Sebelum deploy, jalankan pengecekan otomatis. Script ini memeriksa nilai teks setelah JSON di-parse, jadi karakter yang tersimpan sebagai escape (`\u2014`) tetap terdeteksi:
+```bash
+   python - <<'PY'
+   import json, re, sys
+   p = "storage/app/public/content-assets/spec-cooca-feed-linkedin.json"
+   data = json.load(open(p, encoding="utf-8"))  # gagal di sini jika JSON tidak valid
+   t = json.dumps(data, ensure_ascii=False)
+   checks = {
+       "em/en-dash": r"[\u2014\u2013]",
+       "mojibake": r"â€|Ã.|Â.",
+       "route-url": r"cooca\.id/\S+",
+       "sapaan Anda": r"\bAnda\b",
+   }
+   bad = {k: re.findall(v, t) for k, v in checks.items() if re.search(v, t)}
+   m = data.get("metrics") or []
+   if not m or any(not x.get("source") for x in m):
+       bad["metrics"] = "kosong atau ada angka tanpa sumber"
+   print("OK" if not bad else bad)
+   sys.exit(1 if bad else 0)
+   PY
+```
+   Hasil harus `OK`. Jika ada temuan teks, perbaiki lalu jalankan ulang. Jika temuannya `metrics`, itu masuk gerbang di bagian 5.
 
-Setelah primary audience ditentukan, lakukan pencocokan antara kebutuhan audiens dengan kandidat materi konten.
-
-Jangan memilih topik hanya karena sedang trending atau memiliki angka yang menarik.
-
-Topik harus menjawab permasalahan yang benar-benar relevan bagi target audiens.
-
-## 3.1. Audience relevance mapping
-
-Untuk setiap kandidat topik, evaluasi:
-
-1. Apakah topik berhubungan dengan tanggung jawab pekerjaan audiens?
-2. Apakah masalah tersebut berdampak pada KPI mereka?
-3. Apakah informasi tersebut membantu mereka memahami masalah?
-4. Apakah insight memiliki implikasi bisnis yang jelas?
-5. Apakah topik cukup spesifik untuk menarik perhatian profesi yang dituju?
-6. Apakah audiens dapat mengambil tindakan berdasarkan informasi tersebut?
-7. Apakah topik memiliki relevansi dengan industri target?
-8. Apakah topik memiliki keterkaitan yang masuk akal dengan COOCA?
-
-## 3.2. Audience-content scoring
-
-Gunakan penilaian berikut:
-
-| Kriteria | Bobot |
-|---|---:|
-| Relevance to Primary Audience | 25% |
-| Alignment with Professional Responsibilities | 20% |
-| Business Pain Point Relevance | 20% |
-| KPI and Decision-Making Relevance | 15% |
-| Practical Value | 10% |
-| Relevance to COOCA | 10% |
-| Total | 100% |
-
-Pilih topik yang mendapatkan nilai tertinggi berdasarkan bukti dan hasil analisis.
-
-Relevansi COOCA tidak boleh menjadi alasan untuk menurunkan kualitas topik yang lebih bermanfaat bagi audiens.
-
-## 3.3. Tentukan audience-specific angle
-
-Topik yang sama bisa memiliki sudut pandang berbeda berdasarkan target audiens.
-
-Contoh topik: Inventory Accuracy.
-
-- Untuk CEO: Bagaimana ketidakakuratan stok dapat memengaruhi profitabilitas bisnis?
-- Untuk CFO: Bagaimana inventory discrepancy memengaruhi nilai persediaan dan akurasi laporan keuangan?
-- Untuk COO: Bagaimana meningkatkan konsistensi kontrol stok antar-cabang?
-- Untuk Store Manager: Apa penyebab umum selisih stok dalam aktivitas operasional harian?
-- Untuk IT Manager: Bagaimana integrasi sistem transaksi dan inventaris meningkatkan visibilitas data?
-
-AI harus memilih satu angle utama yang paling relevan dengan primary audience.
-
-Jangan mencampurkan seluruh perspektif dalam satu infographic.
+**Visual:**
+- Format: satu gambar statis persegi, 1080x1080 px. Tanpa video, motion, animasi, atau Remotion.
+- Logo resmi `public/assets/image/1785229034_logo_dark.png` wajib ada di header atau sudut atas.
+- Palet: latar Deep Midnight Navy (#070B19 ke #162B68), aksen Electric Sapphire (#2563EB) dan Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal.
+- Komposisi: Bento Grid ala Apple HIG, kartu metrik bisnis melayang (floating glassmorphism), ambient glow cyan (#38BDF8). Tampilan bersih dan rapi bergaya infografis eksekutif: ruang kosong cukup, tidak ramai.
+- Satu pesan utama: satu headline singkat, satu atau dua kartu metrik atau satu perbandingan, satu badge CTA.
+- Fotografi realistis berkualitas tinggi (bukan kartun atau ilustrasi 2D flat). Subjek, objek kerja, suasana, dan model manusia menyesuaikan sektor dan keyword hasil riset, misalnya dapur/kafe untuk F&B, bengkel/salon/laundry untuk jasa, konveksi/ruang produksi untuk manufaktur dan HPP, rak gudang untuk inventori, meja packing untuk online shop, meja kasir untuk pembayaran, atau buku keuangan usaha. Jangan menyempit ke ritel atau orang memegang tablet kasir.
+- Badge CTA: "Mulai Gratis Selamanya di cooca.id" (hanya domain, tanpa URL rute).
+- Teks di dalam visual mengikuti aturan "Gaya bahasa", dibuat singkat, dan berukuran cukup besar supaya terbaca di layar HP.
 
 ---
 
-# 4. RISET TOPIK DINAMIS, TANPA HARDCODE
+## 5. GERBANG KESELAMATAN (STOP, JANGAN PUSH)
 
-Setelah audience intelligence selesai, lakukan riset topik secara dinamis.
+Hentikan proses, JANGAN deploy dan JANGAN push, jika salah satu terjadi:
+- cek duplikasi gagal setelah 3 percobaan,
+- spec JSON kosong, tidak valid, atau field wajib (termasuk `slug`, `discussion_question`, `metrics`) tidak lengkap, atau ada angka metrik tanpa sumber,
+- job Canva tidak `completed` setelah 2 kali coba ulang,
+- file PNG tidak ada, ukuran bukan 1080x1080 (setelah satu kali perbaikan), atau nama file menimpa file lama,
+- cek karakter terlarang, warna hijau, atau URL rute menemukan pelanggaran yang tidak bisa diperbaiki,
+- `php artisan cooca:deploy-standalone-post` mengembalikan error,
+- `git commit` atau `git push` gagal (jangan ulangi dengan `--force`; laporkan).
 
-Eksplorasi kandidat topik berdasarkan kebutuhan audiens yang telah diidentifikasi.
-
-Cakupan riset dapat meliputi:
-
-- Retail operational efficiency.
-- Financial performance dan profit margin.
-- Cash flow dan cash management.
-- Inventory accuracy dan stock discrepancy.
-- Shrinkage, waste, dan operational leakage.
-- Employee productivity dan labor cost.
-- Customer experience dan transaction efficiency.
-- Point of Sale modernization.
-- Omnichannel retail operations.
-- Business intelligence dan real-time reporting.
-- Digital transformation.
-- Data-driven decision-making.
-- Administrative efficiency.
-- Business scalability.
-- Multi-branch management.
-- Revenue growth dan profitability.
-
-Daftar tersebut bukan daftar topik wajib.
-
-### Prosedur pemilihan topik
-
-1. Temukan minimal 5 kandidat topik.
-2. Pastikan setiap kandidat memiliki hubungan dengan primary audience.
-3. Identifikasi masalah bisnis di balik setiap topik.
-4. Cari data kuantitatif, penelitian, laporan industri, studi kasus, atau publikasi kredibel.
-5. Evaluasi kebaruan dan relevansi Indonesia.
-6. Evaluasi manfaat bagi pengambil keputusan.
-7. Evaluasi kekuatan angle konten.
-8. Evaluasi apakah insight dapat disampaikan dalam satu infographic.
-9. Bandingkan seluruh kandidat.
-10. Pilih satu topik terbaik.
-
-Jangan mengulang topik, headline, insight, data, maupun perspektif yang telah digunakan dalam histori konten COOCA.
-
-Jika topik terbaik tidak memiliki data yang cukup kuat, pilih kandidat lain.
+Saat berhenti, tulis laporan kegagalan ke `storage/app/public/content-assets/failed-run-feed-linkedin-YYYY-MM-DD.json` dengan isi:
+```json
+{
+  "automation_id": "cooca-feed-linkedin",
+  "date": "YYYY-MM-DD",
+  "failed_stage": "nama tahap",
+  "reason": "alasan singkat",
+  "attempts": 0,
+  "suggested_next_step": "langkah lanjutan yang disarankan"
+}
+```
+Jangan membuat konten pengganti secara asal dan jangan melewati gerbang.
 
 ---
 
-# 5. RISET METRIK DAN VALIDASI DATA
-
-Setelah topik dipilih, lakukan riset mendalam terhadap metrik yang paling relevan bagi target audiens.
-
-Prioritaskan:
-
-- Data kuantitatif yang dapat diverifikasi.
-- Dampak finansial.
-- Dampak produktivitas.
-- Dampak biaya operasional.
-- Business performance benchmark.
-- Perbandingan proses manual dan otomatisasi jika didukung bukti.
-- Metrik yang berhubungan langsung dengan KPI audiens.
-
-Setiap angka wajib memiliki:
-
-- Nilai dan satuan.
-- Konteks pengukuran.
-- Periode penelitian.
-- Populasi atau objek penelitian.
-- Lokasi atau cakupan geografis jika tersedia.
-- Sumber asli.
-- Metode pengukuran jika tersedia.
-
-### Larangan manipulasi data
-
-- Jangan mengarang persentase.
-- Jangan mengarang nominal kerugian.
-- Jangan mengarang ROI.
-- Jangan mengubah korelasi menjadi sebab-akibat.
-- Jangan menggeneralisasi satu penelitian menjadi standar seluruh industri.
-- Jangan menggunakan estimasi seolah-olah merupakan data aktual.
-- Jangan menghilangkan konteks yang dapat mengubah interpretasi angka.
-
-Jika menggunakan estimasi atau simulasi, cantumkan asumsi dan rumus perhitungan.
-
-Utamakan sumber primer seperti jurnal, lembaga riset, laporan industri, lembaga pemerintah, dan publikasi resmi perusahaan.
-
----
-
-# 6. AUDIENCE-SPECIFIC CONTENT & COPYWRITING STRATEGY
-
-<PRIORITY: CRITICAL>
-
-Materi visual dan caption wajib dibuat berdasarkan karakter primary audience.
-
-Dilarang menggunakan satu gaya komunikasi untuk semua profesi.
-
-## 6.1. Sesuaikan bahasa dengan jabatan dan kebutuhan
-
-**CEO / Business Owner**
-
-Gunakan bahasa:
-- Strategic.
-- Business-oriented.
-- Growth-focused.
-- Profitability-focused.
-
-Fokus pada dampak terhadap bisnis secara menyeluruh.
-
-Hindari pembahasan teknis yang terlalu detail jika tidak diperlukan.
-
-**CFO / Finance Manager**
-
-Gunakan bahasa:
-- Financial.
-- Analytical.
-- Quantitative.
-- Risk-oriented.
-
-Fokus pada biaya, profit margin, cash flow, financial accuracy, dan financial control.
-
-**COO / Operations Manager**
-
-Gunakan bahasa:
-- Operational.
-- Efficiency-oriented.
-- Performance-driven.
-- Process-focused.
-
-Fokus pada produktivitas, efisiensi, konsistensi, dan pengendalian proses.
-
-**Retail / Store Manager**
-
-Gunakan bahasa:
-- Practical.
-- Actionable.
-- Operationally specific.
-
-Fokus pada permasalahan sehari-hari, prosedur, dan tindakan yang dapat diterapkan.
-
-**IT / Digital Transformation Manager**
-
-Gunakan bahasa:
-- Technology-oriented.
-- System-focused.
-- Data-driven.
-- Integration-focused.
-
-Fokus pada sistem, integrasi, otomatisasi, dan visibilitas informasi.
-
-**UMKM / Growing Business Owner**
-
-Gunakan bahasa:
-- Simple.
-- Practical.
-- Easy to understand.
-- Business-oriented.
-
-Fokus pada manfaat nyata, efisiensi, pengelolaan bisnis, dan kemudahan implementasi.
-
-## 6.2. Strategi headline
-
-Headline harus sesuai dengan kepentingan primary audience.
-
-Gunakan pendekatan seperti:
-
-- Business insight.
-- Financial implication.
-- Operational challenge.
-- Industry benchmark.
-- Data-driven finding.
-- Strategic question.
-- Management perspective.
-
-Hindari headline generik seperti:
-- Tahukah Anda?
-- Pentingnya Digitalisasi Bisnis.
-- Tips Meningkatkan Produktivitas.
-- Saatnya Bisnis Bertransformasi.
-
-Headline harus spesifik, menarik, dan memberikan alasan bagi audiens untuk berhenti membaca feed.
-
-## 6.3. Strategi caption LinkedIn
-
-Caption tidak boleh sekadar menjelaskan ulang infographic.
-
-Susun caption berdasarkan struktur:
-
-**A. Opening Hook**
-
-Buka dengan permasalahan, fakta, pertanyaan strategis, atau insight yang relevan dengan primary audience.
-
-**B. Audience Relevance**
-
-Jelaskan mengapa permasalahan tersebut penting bagi profesi atau tanggung jawab target audiens.
-
-**C. Data and Context**
-
-Berikan konteks data yang memperkuat argumen.
-
-Jangan hanya mengulang angka di infographic.
-
-**D. Business Implication**
-
-Jelaskan konsekuensi atau implikasi terhadap bisnis, KPI, produktivitas, biaya, atau pengambilan keputusan.
-
-**E. Practical Insight**
-
-Berikan rekomendasi atau perspektif yang dapat digunakan audiens.
-
-**F. Natural COOCA Connection**
-
-Jika relevan, hubungkan insight dengan pendekatan atau fitur COOCA yang benar-benar tersedia.
-
-Jangan menjadikan seluruh caption sebagai promosi produk.
-
-**G. Professional CTA**
-
-Ajak audiens berdiskusi dengan pertanyaan yang relevan dengan pengalaman atau tanggung jawab profesional mereka.
-
-CTA harus mendorong diskusi berkualitas, bukan sekadar meminta like, share, atau komentar.
-
-## 6.4. Caption-persona alignment
-
-Sebelum caption diselesaikan, lakukan audit:
-
-- Apakah primary audience merasa masalah tersebut relevan dengan pekerjaannya?
-- Apakah bahasa sesuai dengan tingkat profesional dan pemahaman mereka?
-- Apakah pembahasan menggunakan KPI yang benar?
-- Apakah insight memberikan perspektif baru?
-- Apakah CTA sesuai dengan jabatan audiens?
-- Apakah terdapat istilah teknis yang tidak diperlukan?
-- Apakah caption terasa seperti edukasi profesional, bukan iklan?
-
-Jika caption dapat digunakan tanpa perubahan untuk CEO, CFO, Store Manager, dan IT Manager sekaligus, evaluasi kembali karena kemungkinan besar caption masih terlalu generik.
-
----
-
-# 7. KAITAN ORGANIK DENGAN COOCA
-
-COOCA merupakan Business Operating System dan Omnichannel ERP untuk UMKM.
-
-Fitur yang dapat dipertimbangkan:
-
-- Kasir dan Point of Sale: `/pos`
-- Laporan dan analisis bisnis: `/reports`
-- Laporan keuangan dan laba rugi.
-- Pengelolaan stok dan inventaris.
-- Pencatatan transaksi dan pengeluaran.
-- Pengelolaan pelanggan.
-- Operasional dan pengelolaan bisnis lainnya yang benar-benar tersedia.
-
-Alur yang benar:
-
-1. Riset target audiens.
-2. Identifikasi kebutuhan dan permasalahan audiens.
-3. Pilih topik berdasarkan relevansi.
-4. Tentukan implikasi bisnis.
-5. Identifikasi pendekatan solusi.
-6. Periksa fitur COOCA yang benar-benar tersedia.
-7. Hubungkan fitur dengan masalah yang relevan.
-8. Jika tidak relevan, jangan memaksakan promosi.
-
-### Validasi klaim produk
-
-Klaim seperti transaksi 2,8 detik, penghematan 14 jam kerja, peningkatan produktivitas, pengurangan human error, dan ROI tidak boleh digunakan otomatis.
-
-Pastikan seluruh klaim memiliki bukti teknis, pengujian, dokumentasi, atau perhitungan internal.
-
-Jika bukti tidak tersedia, jangan gunakan klaim tersebut.
-
-COOCA harus menjadi solusi yang relevan terhadap kebutuhan audiens, bukan alasan untuk menentukan topik.
-
----
-
-# 8. STRATEGI SINGLE FEED LINKEDIN
-
-Format akhir adalah satu infographic statis 1080 × 1080 px.
-
-Visual harus dibuat berdasarkan karakter target audiens.
-
-Contoh pendekatan:
-
-- Executive audience: Strategic business insight dan financial impact.
-- Finance audience: Financial breakdown, cost analysis, dan benchmark.
-- Operations audience: Process analysis, operational metrics, dan efficiency.
-- Retail audience: Store performance, inventory insight, dan operational comparison.
-- Technology audience: System integration, data flow, dan digital transformation.
-- UMKM audience: Practical business calculation dan actionable insight.
-
-### Prinsip desain
-
-- Profesional, modern, minimalis, dan kredibel.
-- Terbaca dengan jelas di layar ponsel.
-- Headline spesifik dan kuat.
-- Menonjolkan insight utama.
-- Visualisasi data sesuai kebutuhan.
-- Tidak menggunakan paragraf panjang.
-- Tidak menggunakan dekorasi berlebihan.
-- Identitas COOCA konsisten dan tidak mendominasi.
-- Hindari tampilan iklan generik.
-- Jangan menggunakan visual yang tidak mendukung substansi.
-
----
-
-# 9. AUDIENCE ENGAGEMENT & LINKEDIN POSITIONING
-
-Konten harus memiliki tujuan komunikasi yang jelas.
-
-Pilih satu tujuan utama berdasarkan hasil riset:
-
-1. Professional Awareness.
-2. Business Education.
-3. Thought Leadership.
-4. Financial Awareness.
-5. Operational Awareness.
-6. Technology Awareness.
-7. Brand Authority.
-8. Qualified Audience Attraction.
-
-Jangan memaksakan seluruh tujuan dalam satu konten.
-
-Prioritaskan konten yang dapat:
-- Menarik perhatian profesional yang tepat.
-- Mengangkat permasalahan bisnis yang nyata.
-- Memberikan insight yang layak didiskusikan.
-- Membangun kredibilitas.
-- Membuat audiens melihat COOCA sebagai brand yang memahami permasalahan bisnis.
-
-Jangan mengejar viralitas dengan mengorbankan relevansi audiens.
-
----
-
-# 10. ATURAN KETAT
-
-1. **Audience First:** Riset audiens harus dilakukan sebelum memilih materi.
-2. **Persona-Based Content:** Materi dan caption harus disesuaikan dengan primary audience.
-3. **Dynamic Research:** Topik ditentukan berdasarkan hasil riset.
-4. **No Hardcoded Topic:** Tidak mengunci konten pada topik tertentu.
-5. **No Hardcoded Metrics:** Tidak mewajibkan angka tanpa bukti.
-6. **No Hardcoded Product Feature:** Fitur dipilih setelah topik dan solusi ditemukan.
-7. **Audience Relevance:** Topik harus berhubungan dengan tanggung jawab atau KPI audiens.
-8. **Original Content:** Tidak menyalin tulisan atau desain pihak lain.
-9. **Source Transparency:** Semua data memiliki referensi.
-10. **No Fabricated Claims:** Tidak mengarang data maupun klaim produk.
-11. **Privacy:** Tidak menyebut identitas pelanggan atau data bisnis pribadi.
-12. **No Em-dash / En-dash:** Dilarang menggunakan karakter em-dash (—) dan en-dash (–).
-13. **Static Media Only:** Satu gambar statis, tanpa video atau animasi.
-14. **Historical Audit:** Hindari pengulangan konten.
-15. **Platform Fit:** Sesuai karakter LinkedIn B2B.
-16. **No Generic Caption:** Caption harus memiliki audience-persona alignment.
-17. **No Forced Promotion:** Jangan memaksakan promosi COOCA.
-18. **Quality over Quantity:** Ketepatan sasaran lebih penting daripada jumlah audiens.
-
----
-
-# 11. AUDIT KUALITAS DAN SCORING
-
-Gunakan skor viralitas minimal 85,0/100 sebagai batas kelayakan publikasi.
-
-Namun, skor viralitas tidak boleh menjadi satu-satunya ukuran.
-
-Gunakan dua penilaian terpisah.
-
-## A. Content Quality Score
-
-| Kriteria | Bobot |
-|---|---:|
-| Data Credibility | 20% |
-| Business Insight Quality | 15% |
-| Topical Relevance | 15% |
-| Audience Relevance | 15% |
-| Headline Strength | 10% |
-| Visual Communication | 10% |
-| Professional Engagement Potential | 10% |
-| COOCA Relevance | 5% |
-| Total | 100% |
-
-Minimum: 85/100.
-
-## B. Audience Alignment Score
-
-| Kriteria | Bobot |
-|---|---:|
-| Primary Persona Accuracy | 20% |
-| Pain Point Relevance | 20% |
-| Job Responsibility Alignment | 15% |
-| KPI Relevance | 15% |
-| Content Language Alignment | 10% |
-| Caption Relevance | 10% |
-| CTA Relevance | 10% |
-| Total | 100% |
-
-Minimum: 85/100.
-
-Jangan menaikkan nilai secara artifisial.
-
-Jika salah satu skor di bawah 85:
-
-1. Evaluasi kembali target audiens.
-2. Evaluasi topik dan angle.
-3. Perbaiki data atau materi jika diperlukan.
-4. Perbaiki headline, visual, dan caption.
-5. Lakukan audit ulang.
-
-Jika tidak memenuhi standar, jangan memaksakan publikasi.
-
-Kualitas data, relevansi audiens, dan nilai bisnis lebih penting daripada jadwal publikasi.
-
----
-
-# 12. OUTPUT SPECIFICATION
-
-Hasilkan spesifikasi lengkap yang dapat digunakan deployment engine.
-
-Simpan pada:
-
-`storage/app/public/content-assets/spec-cooca-feed-linkedin.json`
-
-Struktur output minimal:
-
-## A. Automation Metadata
-- automation_id
-- platform
-- content_format
-- image_dimensions
-- publication_schedule
-- language
-
-## B. Audience Intelligence
-- market_segment
-- primary_audience
-- secondary_audiences
-- audience_research_summary
-- audience_research_sources
-- target_job_titles
-- business_types
-- business_scale
-- audience_pain_points
-- audience_kpis
-- decision_making_priorities
-- audience_information_needs
-- professional_interests
-
-## C. Buyer Persona
-- persona_name
-- job_title
-- responsibilities
-- business_challenges
-- key_kpis
-- decision_priorities
-- knowledge_level
-- content_motivation
-- potential_objections
-- cooca_relevance
-
-## D. Audience-to-Content Matching
-- candidate_topics
-- audience_relevance_analysis
-- topic_comparison
-- selected_topic
-- selected_angle
-- primary_audience_reasoning
-- audience_content_score
-
-## E. Research & Data
-- research_summary
-- business_problem
-- industry_context
-- metrics
-- data_interpretation
-- source_references
-- publication_year
-- limitations
-
-## F. Content Strategy
-- content_objective
-- content_positioning
-- headline
-- supporting_headline
-- main_insight
-- business_implications
-- strategic_recommendation
-- content_structure
-
-## G. COOCA Connection
-- relevant_features
-- feature_validation
-- product_benefits
-- product_claim_evidence
-- promotion_relevance
-
-Jika tidak ada fitur yang relevan, gunakan nilai kosong yang sesuai dengan schema.
-
-## H. Visual Specification
-- image_dimensions
-- visual_concept
-- design_direction
-- layout_structure
-- headline_placement
-- data_visualization
-- key_visual_elements
-- color_direction
-- typography
-- cooca_branding
-- source_footnote
-
-## I. LinkedIn Caption
-- caption_hook
-- audience_context
-- data_context
-- business_implication
-- practical_insight
-- cooca_connection
-- professional_cta
-- complete_caption
-- hashtags
-
-## J. Quality Audit
-- content_quality_score
-- audience_alignment_score
-- virality_score
-- score_breakdown
-- data_validation
-- persona_validation
-- caption_validation
-- visual_validation
-- historical_content_validation
-- publication_eligibility
-- rejection_reasons
-
-## K. Deployment
-- specification_path
-- asset_path
-- deployment_status
-- database_status
-- git_status
-
-Pastikan JSON valid, konsisten, tidak mengandung komentar, dan sesuai dengan schema yang digunakan deployment engine.
-
-Jangan mengubah atau mengasumsikan schema deployment engine tanpa melakukan pemeriksaan terlebih dahulu.
-
----
-
-# 13. LANGKAH EKSEKUSI
-
-## Tahap 1. Audit sistem dan histori
-
-Sebelum riset:
-
-1. Periksa struktur proyek.
-2. Periksa script `deep_research_viral_engine.py`.
-3. Periksa format dan schema JSON yang diharapkan.
-4. Periksa histori konten COOCA.
-5. Periksa dokumentasi fitur produk yang tersedia.
-6. Periksa mekanisme deployment.
-7. Pastikan tidak ada perubahan yang merusak sistem yang sudah berjalan.
-
-## Tahap 2. Audience intelligence research
-
-Lakukan:
-- Market segmentation.
-- Job title identification.
-- Audience pain point research.
-- KPI mapping.
-- Buyer persona development.
-- Audience-content relevance analysis.
-
-Tetapkan primary audience sebelum memilih topik.
-
-## Tahap 3. Dynamic topic research
-
-Jalankan riset minimal 5 kandidat topik.
-
-Bandingkan berdasarkan:
-- Audience relevance.
-- Business value.
-- Data availability.
-- Industry relevance.
-- Content originality.
-- Engagement potential.
-
-Pilih satu topik terbaik.
-
-## Tahap 4. Content development
-
-Susun:
-- Audience-specific angle.
-- Headline.
-- Data insight.
-- Business implication.
-- Visual concept.
-- Caption.
-- CTA.
-- Hashtags.
-
-Pastikan materi dan caption menggunakan perspektif primary audience yang sama.
-
-## Tahap 5. Generate specification
-
-Jalankan:
-
-`python "C:\laragon\www\cooca_core\scripts\social-automation\deep_research_viral_engine.py" --automation-id cooca-feed-linkedin --output-json storage/app/public/content-assets/spec-cooca-feed-linkedin.json`
-
-Jika script belum mendukung audience intelligence, lakukan analisis kebutuhan dan implementasikan perubahan yang kompatibel dengan sistem yang ada.
-
-Jangan hanya menambahkan field JSON tanpa memastikan riset dan proses pembentukannya benar-benar dijalankan.
-
-## Tahap 6. Audit hasil
-
-Periksa:
-
-- Target audiens berdasarkan hasil riset.
-- Primary persona jelas.
-- Pain points didukung bukti.
-- KPI sesuai dengan profesi audiens.
-- Topik sesuai kebutuhan primary audience.
-- Data dapat diverifikasi.
-- Headline relevan dengan persona.
-- Caption tidak generik.
-- CTA sesuai karakter audiens.
-- Klaim COOCA tervalidasi.
-- Tidak ada pengulangan konten.
-- Tidak ada em-dash atau en-dash.
-- Content Quality Score minimal 85.
-- Audience Alignment Score minimal 85.
-- Virality Score minimal 85.
-- Aset merupakan satu static infographic 1080 × 1080 px.
-
-Jika ada kegagalan, perbaiki atau hentikan publikasi.
-
-## Tahap 7. Deploy ke database produksi
-
-Hanya jika seluruh validasi berhasil:
-
-`php artisan cooca:deploy-standalone-post --automation-id cooca-feed-linkedin --spec-json storage/app/public/content-assets/spec-cooca-feed-linkedin.json`
-
-Pastikan deployment berhasil dan konten tersimpan sesuai automation ID.
-
-## Tahap 8. Push ke Git
-
-Hanya setelah deployment dan pemeriksaan aset berhasil:
-
-`git add storage/app/public/content-assets/ storage/app/public/admin/social-media-assets/ database/data/social_content/`
-
-`git commit -m "feat(feed-linkedin): publish audience-driven B2B infographic [$(date +%Y-%m-%d)]"`
-
-`git push origin main`
-
-Jika tidak ada perubahan, jangan membuat commit kosong.
-
-Jangan melakukan reset, force push, atau menghapus perubahan yang bukan bagian dari pekerjaan ini.
-
----
-
-# 14. LAPORAN HASIL EKSEKUSI
-
-Setelah selesai, berikan laporan:
-
-1. Topik yang terpilih.
-2. Primary audience.
-3. Secondary audience.
-4. Persona profesional yang ditargetkan.
-5. Pain points utama.
-6. KPI yang menjadi perhatian audiens.
-7. Alasan topik relevan dengan audiens.
-8. Insight dan metrik yang digunakan.
-9. Sumber data utama.
-10. Headline infographic.
-11. Strategi dan angle caption.
-12. CTA yang digunakan.
-13. Fitur COOCA yang dikaitkan.
-14. Content Quality Score.
-15. Audience Alignment Score.
-16. Virality Score.
-17. Hasil audit.
-18. Lokasi file spesifikasi dan aset.
-19. Status deployment database.
-20. Status Git commit dan push.
-
-Jika publikasi dihentikan, jelaskan alasan dan bagian yang gagal memenuhi standar.
-
----
-
-# 15. ULTIMATE EXECUTION PRINCIPLES
-
-Urutan prioritas dalam setiap eksekusi:
-
-**1. UNDERSTAND THE MARKET**
-
-Pahami kondisi industri dan kebutuhan pasar.
-
-**2. IDENTIFY THE RIGHT AUDIENCE**
-
-Temukan profesi dan pengambil keputusan yang paling relevan.
-
-**3. UNDERSTAND THEIR PROBLEMS**
-
-Pahami pain points, KPI, tanggung jawab, dan kepentingan mereka.
-
-**4. FIND THE RIGHT TOPIC**
-
-Pilih topik berdasarkan kebutuhan audiens, bukan berdasarkan keinginan untuk mempromosikan produk.
-
-**5. VALIDATE THE DATA**
-
-Buktikan insight dengan sumber yang kredibel.
-
-**6. BUILD THE RIGHT MESSAGE**
-
-Susun headline, materi infographic, dan caption menggunakan perspektif audiens yang dituju.
-
-**7. CONNECT COOCA NATURALLY**
-
-Hubungkan COOCA hanya jika memiliki relevansi nyata dan bukti produk yang memadai.
-
-**8. AUDIT BEFORE PUBLISHING**
-
-Pastikan kualitas konten, ketepatan audiens, validitas data, dan kesiapan aset memenuhi standar.
-
-**9. DEPLOY AND REPORT**
-
-Publikasikan hanya setelah seluruh validasi berhasil.
-
-## PRINSIP PALING UTAMA
-
-Jangan hanya membuat konten yang menarik untuk dibaca.
-
-Buat konten yang **tepat dibaca oleh orang yang tepat, membahas masalah yang benar-benar mereka hadapi, menggunakan data yang dapat dipercaya, dan memberikan insight yang relevan dengan tanggung jawab profesional mereka.**
-
-Satu konten harus memiliki satu primary audience, satu masalah utama, satu angle yang kuat, dan satu pesan bisnis yang jelas.
-
-**Audience First. Research Driven. Data Validated. Business Relevant. Product Naturally Connected.**
-
----
-
-# MANDATORY CANVA MCP DESIGN WORKFLOW (GENERATE & REGENERATE)
-
-Untuk menghasilkan maupun memperbarui/meregenerasi seluruh aset visual grafis (baik Single Static Feed 1080x1080 px maupun Multi-Slide Carousel 1080x1080 / 1080x1350 px), agent **WAJIB menggunakan integrasi resmi Canva MCP (`canva_canva`)**:
-
-1. **Inisialisasi & Generate Desain (`create-design`):**
-   - Kirimkan brief visual komprehensif mencakup judul, subjudul, poin edukasi per slide/bagian, serta panduan tata letak.
-   - Untuk format carousel multi-halaman, sertakan outline terstruktur (`sections`) secara lengkap.
-   - Cantumkan instruksi penempatan **Logo Resmi COOCA PNG tanpa background**.
-
-2. **Pemantauan Status Job (`get-create-design-async-job`):**
-   - Pantau status job secara berkala menggunakan `continuation_token` hingga berstatus `completed` dan menghasilkan `design_id` serta tautan edit/view.
-
-3. **Mekanisme Regenerate / Revisi Desain (Wajib Canva MCP):**
-   - Jika hasil generate awal belum memenuhi skor kualitas visual (kontras rendah, tata letak terpotong, atau tidak sesuai brand identity), agent **WAJIB melakukan regenerate** melalui Canva MCP.
-   - Gunakan `start-editing-transaction` dan `perform-editing-operations` / `commit-editing-transaction` untuk revisi terarah, atau panggil kembali `create-design` dengan parameter prompt yang diperbaiki hingga standar kelayakan tercapai.
-   - Dilarang keras menggunakan engine grafis alternatif pihak ketiga di luar Canva MCP untuk generate maupun regenerate.
-
-4. **Ekspor Resolusi Tinggi Lossless (`export-design`):**
-   - Ekspor seluruh halaman desain ke berkas format PNG lossless beresolusi tinggi tanpa penurunan kualitas gambar.
-
-5. **Unduh & Penyimpanan Aset ke Path Proyek:**
-   - **Feed (Single Image):** Simpan ke direktori `storage/app/public/content-assets/{channel}-feed-...-1080x1080.png`
-   - **Carousel (Multi-Slide):** Simpan secara berurutan ke `storage/app/public/admin/social-media-assets/carousel/{channel}/slide-0{n}.png`
-
----
-
-# COOCA BRAND IDENTITY & COLOR THEME RULES
-
-Setiap desain grafis yang dibuat maupun diregenerate melalui Canva MCP atau canvas visual **WAJIB mengikuti standar identitas brand resmi COOCA**:
-
-1. **Penggunaan Logo Resmi COOCA Tanpa Background (Wajib):**
-   - Setiap aset visual (Feed 1 gambar atau setiap slide Carousel) **WAJIB mencantumkan Logo Resmi COOCA PNG tanpa background**:
-     `C:\laragon\www\cooca_core\public\assets\image\1785229034_logo_dark.png`
-   - Posisi: Bagian header atau sudut atas visual secara proporsional.
-   - Tampilan harus tajam, bersih, proporsional (tidak terdistorsi/tertarik), dan memiliki kontras tinggi di atas latar belakang Dark Blue.
-
-2. **Palet Warna Wajib (Dark Blue & White):**
-   - **Latar Belakang / Background:** Wajib **Dark Blue / Deep Navy** (`#070B19`, `#0A1128`, atau `#0F172A`). DILARANG KERAS menggunakan latar belakang putih polos murahan, abu-abu kusam, atau warna-warni yang merusak estetika premium dark-tech Cooca.
-   - **Tipografi & Konten Utama:** Wajib **White** (`#FFFFFF`, `#F8FAFC`). Kontras tinggi, tegas, tajam, dan mudah dibaca secara nyaman pada layar smartphone.
-   - **Aksen Visual Sekunder Resmi COOCA:**
-     - **Electric / Cyan Blue** (`#38BDF8`, `#2563EB`) untuk tombol, pill, dan penyorot konteks.
-     - **Cooca Blue / Electric Blue** (`#2563EB`, `#38BDF8`) untuk badge solusi terverifikasi, checklist keberhasilan, dan ROI positif (DILARANG HIJAU).
-     - **Crimson Alert** (`#EF4444`, `#F87171`) untuk indikator bahaya, titik celah kebocoran meja kasir, atau selisih stok.
-
----
-
-# ATURAN TIPOGRAFI & FONT RESMI COOCA (PLUS JAKARTA SANS)
-
-Seluruh pembuatan konten visual (baik via Canva MCP maupun canvas visual/CSS) WAJIB menggunakan font keluarga **Plus Jakarta Sans** sebagai tipografi resmi tunggal COOCA:
-
-1. **Karakter & Alasan Pemilihan:**
-   - Modern, dinamis, dan profesional.
-   - Sangat nyaman dibaca dalam Bahasa Indonesia.
-   - Memiliki karakter teknologi tanpa terlihat kaku.
-   - Sangat cocok untuk headline, isi carousel, hingga nominal angka harga/keuntungan.
-
-2. **Hierarki Tipografi Wajib:**
-   - **Headline utama:** Plus Jakarta Sans (Bold / ExtraBold) - tegas, kuat, dan eye-catching.
-   - **Subheadline:** Plus Jakarta Sans (SemiBold) - memperjelas konteks dengan anggun.
-   - **Isi konten / body text:** Plus Jakarta Sans (Regular / Medium) - jarak baris proporsional (1.4-1.5) untuk kenyamanan baca di layar mobile.
-   - **Angka & statistik:** Plus Jakarta Sans (Bold / ExtraBold) - menonjolkan nominal rupiah, persentase margin, atau poin angka.
-   - **CTA (Call to Action):** Plus Jakarta Sans (Bold) - jelas dan mengarahkan aksi.
-
-3. **Ketentuan Larangan:** Dilarang menggunakan font dekoratif murahan, script/handwriting, serif klasik kusam, atau font default generik yang tidak konsisten dengan brand identity COOCA.
-
-
-## ATURAN KETAT ANTI-DUPLIKASI & WAJIB TEMPLATE CANVA BARU (THE ZERO REUSE RULE)
-1. **DILARANG MENGGUNAKAN MATERI KONTEN YANG SAMA (100% UNIQUE & FRESH CONTENT):**
-   - Dilarang keras menggunakan materi konten, topik edukasi, hook title, sudut pandang masalah, maupun keyword yang sama dengan materi konten yang sudah ada / sudah pernah dipublikasikan sebelumnya di sistem atau media sosial Cooca.
-   - Wajib memeriksa riwayat konten terdahulu (`storage/app/public/content-assets/content_history.json` dan database post) sebelum mengeksekusi riset tren untuk memastikan materi konten yang dihasilkan setiap harinya 100% unik, segar, dan mengangkat pilar solusi yang berbeda lintas 20 sektor industri UMKM.
-2. **DILARANG MENGGUNAKAN DESAIN YANG SAMA (WAJIB GENERATE TEMPLATE CANVA BARU SETIAP KONTEN):**
-   - Dilarang keras mendaur ulang (reuse) template visual, tata letak, atau desain yang sudah ada sebelumnya.
-   - Wajib selalu men-generate template desain Canva baru melalui Canva MCP (`create-design`) untuk SETIAP materi konten baru, disesuaikan secara dinamis dengan materi konten, hook, dan keyword hasil analisa tren terbaru.
-   - Setiap template Canva baru wajib mematuhi panduan visual Cooca: Deep Midnight Navy (#070B19 ke #162B68), Sapphire Blue (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, strictly ZERO GREEN, subjek fotografi realistis adaptif, dan URL bersih tunggal `cooca.id`.
+## 6. LAPORAN AKHIR
+Setelah selesai (sukses atau berhenti), laporkan singkat:
+- sektor dan keyword terpilih beserta sumber tren,
+- hook title dan pertanyaan diskusi,
+- angka metrik beserta sumbernya,
+- hasil tiap gerbang (lolos/gagal),
+- hash commit (jika ada),
+- konflik antara dokumen ini dan file instruksi (jika ada),
+- catatan lain yang perlu ditinjau manusia (misalnya nama format Canva yang diganti).

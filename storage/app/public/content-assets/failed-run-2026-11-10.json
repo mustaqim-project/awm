@@ -1,0 +1,32 @@
+{
+  "automation_id": "cooca-carousel-instagram",
+  "timestamp": "2026-11-10T09:18:30+07:00",
+  "failed_stage": "Langkah 2: Visual lewat Canva MCP (create-design)",
+  "reason": "Job pembuatan desain baru Canva MCP (create-design) tidak completed setelah 2 kali percobaan berturut-turut. Canva API mengembalikan respon error: 'quota_exceeded: User has exceeded their credit quota'. Sesuai aturan keselamatan di Bagian 5 (prioritas #1), proses dihentikan seketika. Sistem tidak melakukan deployment ke database dan tidak melakukan git commit/push.",
+  "retry_count": 2,
+  "canva_error_response": {
+    "status": "failed",
+    "failure": {
+      "code": "quota_exceeded",
+      "message": "User has exceeded their credit quota"
+    }
+  },
+  "content_research_state": {
+    "cluster": "Kuliner & F&B",
+    "sector": "Coffee Shop & Cafe",
+    "topic_name": "Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner",
+    "hook_title": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
+    "primary_feature": "inventory",
+    "feature_name": "Manajemen Stok & Low-Stock Alert (/inventory/stocks)",
+    "viral_score": 96.5,
+    "anti_duplication_check": "PASSED (Sektor Kuliner & F&B belum pernah digunakan dalam 10 konten terakhir)",
+    "spec_json_path": "storage/app/public/content-assets/spec-cooca-carousel-instagram.json"
+  },
+  "suggested_next_steps": [
+    "Lakukan top up atau penambahan credit quota pada akun Canva API (Tim Cooca Pos Indonesia - team_id: oBZc0i-r8B88qJZbdUQntQ).",
+    "Setelah kuota Canva tersedia, jalankan kembali permohonan create-design menggunakan parameter brief dan outline 5 slide yang telah tersimpan di spec-cooca-carousel-instagram.json.",
+    "Ekspor hasil desain Canva ke PNG resolusi tinggi (1080x1080 px) ke path storage/app/public/admin/social-media-assets/carousel/instagram/slide-0{n}.png (n = 1 sampai 5).",
+    "Lakukan validasi visual dan lanjutkan ke Langkah 4 (php artisan cooca:deploy-standalone-post) serta Langkah 5 (git commit & push)."
+  ]
+}
+
