@@ -138,6 +138,14 @@ final class ServiceWebController extends Controller implements HasMiddleware
                 break;
 
             case 'show_website':
+                $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+                if (! $hasActiveLandingPage) {
+                    $msg = 'Untuk menampilkan layanan di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.';
+                    if ($request->wantsJson() || $request->ajax()) {
+                        return response()->json(['success' => false, 'message' => $msg], 422);
+                    }
+                    return redirect()->back()->with('error', $msg);
+                }
                 $query->update(['show_in_website' => true]);
                 $message = "{$count} layanan berhasil diatur tampil di etalase web.";
                 break;
@@ -242,6 +250,15 @@ final class ServiceWebController extends Controller implements HasMiddleware
         }
 
         /** @var Product $service */
+        if ($request->boolean('show_in_website')) {
+            $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+            if (! $hasActiveLandingPage) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'show_in_website' => 'Untuk mengaktifkan etalase web pada layanan, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                ]);
+            }
+        }
+
         $service = Product::create([
             'business_id' => $business->id,
             'type' => Product::TYPE_SERVICE,
@@ -255,7 +272,7 @@ final class ServiceWebController extends Controller implements HasMiddleware
             'base_cost' => (float) ($validated['base_cost'] ?? 0),
             'min_stock' => 0,
             'is_active' => true,
-            'show_in_website' => $request->has('show_in_website') ? $request->boolean('show_in_website') : true,
+            'show_in_website' => $request->boolean('show_in_website', false),
             'show_in_pos' => $request->has('show_in_pos') ? $request->boolean('show_in_pos') : true,
             'show_in_sales_order' => $request->has('show_in_sales_order') ? $request->boolean('show_in_sales_order') : true,
             'show_price_on_web' => $request->has('show_price_on_web') ? $request->boolean('show_price_on_web') : true,
@@ -311,6 +328,15 @@ final class ServiceWebController extends Controller implements HasMiddleware
             $categoryId = $cat->id;
         }
 
+        if ($request->boolean('show_in_website')) {
+            $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+            if (! $hasActiveLandingPage) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'show_in_website' => 'Untuk mengaktifkan etalase web pada layanan, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                ]);
+            }
+        }
+
         $product->update([
             'name' => trim((string) $validated['name']),
             'category_id' => $categoryId,
@@ -320,7 +346,7 @@ final class ServiceWebController extends Controller implements HasMiddleware
             'selling_price' => (float) $validated['selling_price'],
             'base_cost' => (float) ($validated['base_cost'] ?? $product->base_cost),
             'is_active' => $request->has('is_active') ? $request->boolean('is_active') : $product->is_active,
-            'show_in_website' => $request->has('show_in_website') ? $request->boolean('show_in_website') : $product->show_in_website,
+            'show_in_website' => $request->boolean('show_in_website', false),
             'show_in_pos' => $request->has('show_in_pos') ? $request->boolean('show_in_pos') : $product->show_in_pos,
             'show_in_sales_order' => $request->has('show_in_sales_order') ? $request->boolean('show_in_sales_order') : $product->show_in_sales_order,
             'show_price_on_web' => $request->has('show_price_on_web') ? $request->boolean('show_price_on_web') : $product->show_price_on_web,

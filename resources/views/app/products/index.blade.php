@@ -480,7 +480,7 @@
                     'width' => $editProduct->width,
                     'height' => $editProduct->height,
                     'is_active' => (bool) $editProduct->is_active,
-                    'show_in_website' => (bool) ($editProduct->show_in_website ?? true),
+                    'show_in_website' => (bool) ($editProduct->show_in_website ?? false),
                     'show_in_pos' => (bool) ($editProduct->show_in_pos ?? true),
                     'show_in_sales_order' => (bool) ($editProduct->show_in_sales_order ?? true),
                     'show_price_on_web' => (bool) ($editProduct->show_price_on_web ?? true),
@@ -498,12 +498,14 @@
                 ],
                 JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE,
             )
-            : "{ id: '', slug: '', name: '', sku: '', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, wholesale_min_qty: '', wholesale_price: '', min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: true, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
+            : "{ id: '', slug: '', name: '', sku: '', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, wholesale_min_qty: '', wholesale_price: '', min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: false, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
     
+        hasActiveLandingPage: {{ $hasActiveLandingPage ? 'true' : 'false' }},
+
         productToggles: {
             @foreach($products as $p)
             '{{ $p->id }}': {
-                show_in_website: {{ $p->show_in_website ?? true ? 'true' : 'false' }},
+                show_in_website: {{ $p->show_in_website ? 'true' : 'false' }},
                 show_in_pos: {{ $p->show_in_pos ?? true ? 'true' : 'false' }},
                 show_in_sales_order: {{ $p->show_in_sales_order ?? true ? 'true' : 'false' }},
                 show_price_on_web: {{ $p->show_price_on_web ?? true ? 'true' : 'false' }},
@@ -517,7 +519,7 @@
         async toggleProductField(productId, field) {
             if (!this.productToggles[productId]) {
                 this.productToggles[productId] = {
-                    show_in_website: true,
+                    show_in_website: false,
                     show_in_pos: true,
                     show_in_sales_order: true,
                     show_price_on_web: true,
@@ -531,6 +533,26 @@
     
             const prevVal = Boolean(item[field]);
             const nextVal = !prevVal;
+
+            // Security & Business rule: Cannot activate website channel if landing page is not published
+            if (field === 'show_in_website' && nextVal && !this.hasActiveLandingPage) {
+                if (window.AppAlert) {
+                    AppAlert.warning(
+                        'Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                        'Landing Page Belum Aktif'
+                    );
+                } else if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Landing Page Belum Aktif',
+                        html: 'Untuk menampilkan produk di etalase web, Anda wajib mengaktifkan Landing Page usaha terlebih dahulu.<br><br><a href="{{ route('landing-page.edit') }}" class="text-[#007AFF] font-bold underline">Buka Pengaturan Landing Page</a>',
+                        confirmButtonText: 'Tutup'
+                    });
+                } else {
+                    alert('Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.');
+                }
+                return;
+            }
     
             // Optimistic UI update
             item[field] = nextVal;

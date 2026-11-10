@@ -68,7 +68,7 @@ class Product extends Model
         'type' => self::TYPE_GOODS,
         'weight' => 200.0,
         'is_active' => true,
-        'show_in_website' => true,
+        'show_in_website' => false,
         'show_in_pos' => true,
         'show_in_sales_order' => true,
         'show_price_on_web' => true,

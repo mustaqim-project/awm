@@ -122,6 +122,8 @@ final class ProductWebController extends Controller implements HasMiddleware
             }
         }
 
+        $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+
         return view('app.products.index', compact(
             'business',
             'products',
@@ -132,7 +134,8 @@ final class ProductWebController extends Controller implements HasMiddleware
             'allProducts',
             'marketplaceCategories',
             'isPharmacy',
-            'isServiceSector'
+            'isServiceSector',
+            'hasActiveLandingPage'
         ));
     }
 
@@ -181,6 +184,20 @@ final class ProductWebController extends Controller implements HasMiddleware
         $newValue = $request->has('value')
             ? $request->boolean('value')
             : ! (bool) $product->{$field};
+
+        if ($field === 'show_in_website' && $newValue) {
+            $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+            if (! $hasActiveLandingPage) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Untuk mengaktifkan etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                    'field' => 'show_in_website',
+                    'value' => false,
+                    'requires_landing_page' => true,
+                    'landing_page_url' => route('landing-page.edit'),
+                ], 422);
+            }
+        }
 
         $product->update([
             $field => $newValue,
@@ -252,6 +269,14 @@ final class ProductWebController extends Controller implements HasMiddleware
                 break;
 
             case 'show_website':
+                $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+                if (! $hasActiveLandingPage) {
+                    $msg = 'Untuk menampilkan produk di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.';
+                    if ($request->wantsJson() || $request->ajax()) {
+                        return response()->json(['success' => false, 'message' => $msg], 422);
+                    }
+                    return redirect()->back()->with('error', $msg);
+                }
                 $query->update(['show_in_website' => true]);
                 $message = "{$count} produk berhasil diatur tampil di etalase web.";
                 break;
@@ -376,6 +401,15 @@ final class ProductWebController extends Controller implements HasMiddleware
             'gallery_images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096', 'dimensions:max_width=2400,max_height=2400'],
         ]);
 
+        if ($request->boolean('show_in_website')) {
+            $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+            if (! $hasActiveLandingPage) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'show_in_website' => 'Untuk mengaktifkan etalase web pada produk, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                ]);
+            }
+        }
+
         /** @var Product $product */
         $product = Product::create([
             'business_id' => $business->id,
@@ -395,7 +429,7 @@ final class ProductWebController extends Controller implements HasMiddleware
             'length' => isset($validated['length']) ? (float) $validated['length'] : null,
             'width' => isset($validated['width']) ? (float) $validated['width'] : null,
             'height' => isset($validated['height']) ? (float) $validated['height'] : null,
-            'show_in_website' => $request->has('show_in_website') ? $request->boolean('show_in_website') : true,
+            'show_in_website' => $request->boolean('show_in_website', false),
             'show_in_pos' => $request->has('show_in_pos') ? $request->boolean('show_in_pos') : true,
             'show_in_sales_order' => $request->has('show_in_sales_order') ? $request->boolean('show_in_sales_order') : true,
             'show_price_on_web' => $request->has('show_price_on_web') ? $request->boolean('show_price_on_web') : true,
@@ -584,6 +618,15 @@ final class ProductWebController extends Controller implements HasMiddleware
             'is_active' => (bool) $product->is_active,
         ];
 
+        if ($request->boolean('show_in_website')) {
+            $hasActiveLandingPage = (bool) ($business->landingPage?->is_published ?? false);
+            if (! $hasActiveLandingPage) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'show_in_website' => 'Untuk mengaktifkan etalase web pada produk, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.',
+                ]);
+            }
+        }
+
         $product->update([
             'name' => $validated['name'],
             'category_id' => $validated['category_id'] ?? null,
@@ -599,7 +642,7 @@ final class ProductWebController extends Controller implements HasMiddleware
             'width' => isset($validated['width']) ? (float) $validated['width'] : $product->width,
             'height' => isset($validated['height']) ? (float) $validated['height'] : $product->height,
             'is_active' => $request->boolean('is_active'),
-            'show_in_website' => $request->boolean('show_in_website'),
+            'show_in_website' => $request->boolean('show_in_website', false),
             'show_in_pos' => $request->boolean('show_in_pos'),
             'show_in_sales_order' => $request->boolean('show_in_sales_order'),
             'show_price_on_web' => $request->boolean('show_price_on_web'),
