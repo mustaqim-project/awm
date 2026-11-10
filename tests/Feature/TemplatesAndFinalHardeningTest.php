@@ -77,7 +77,7 @@ final class TemplatesAndFinalHardeningTest extends TestCase
         $restoTemplate = BusinessTypeTemplate::where('code', 'fnb_resto')->firstOrFail();
 
         // 1. Apply first template
-        $this->templateService->apply($biz, $cafeTemplate);
+        $this->templateService->apply($biz, $cafeTemplate, seedProducts: true);
 
         $this->assertDatabaseHas('products', [
             'business_id' => $biz->id,
@@ -86,7 +86,7 @@ final class TemplatesAndFinalHardeningTest extends TestCase
 
         // 2. Switch/apply second template on the exact same business
         // Must succeed smoothly without SQLSTATE[23000] 1062 Duplicate entry
-        $result = $this->templateService->apply($biz, $restoTemplate);
+        $result = $this->templateService->apply($biz, $restoTemplate, seedProducts: true);
 
         $this->assertIsArray($result);
         $this->assertDatabaseHas('products', [
@@ -102,7 +102,7 @@ final class TemplatesAndFinalHardeningTest extends TestCase
         $cafeTemplate = BusinessTypeTemplate::where('code', 'fnb_cafe')->firstOrFail();
         $restoTemplate = BusinessTypeTemplate::where('code', 'fnb_resto')->firstOrFail();
 
-        $this->templateService->apply($biz, $cafeTemplate);
+        $this->templateService->apply($biz, $cafeTemplate, seedProducts: true);
 
         // Soft delete the seeded product & material
         $product = Product::where('business_id', $biz->id)->where('code', 'PRD-STD-01')->firstOrFail();
@@ -114,7 +114,7 @@ final class TemplatesAndFinalHardeningTest extends TestCase
         $this->assertTrue($material->trashed());
 
         // Reapply or apply another template - should restore and not crash on duplicate code
-        $result = $this->templateService->apply($biz, $restoTemplate);
+        $result = $this->templateService->apply($biz, $restoTemplate, seedProducts: true);
         $this->assertIsArray($result);
 
         $restoredProduct = Product::where('business_id', $biz->id)->where('code', 'PRD-STD-01')->first();

@@ -39,9 +39,9 @@ final class BusinessTemplateService
      *     components_created: int
      * }
      */
-    public function apply(Business $business, BusinessTypeTemplate $template): array
+    public function apply(Business $business, BusinessTypeTemplate $template, bool $seedProducts = false): array
     {
-        return DB::transaction(function () use ($business, $template): array {
+        return DB::transaction(function () use ($business, $template, $seedProducts): array {
             $categoriesCount = 0;
             $componentsCount = 0;
 
@@ -90,7 +90,7 @@ final class BusinessTemplateService
             }
 
             // 2. Auto Generate Tailored Master Data for the Industry Template
-            $this->seedIndustryMasterData($business, $template);
+            $this->seedIndustryMasterData($business, $template, $seedProducts);
 
             return [
                 'categories_created' => $categoriesCount,
@@ -103,7 +103,7 @@ final class BusinessTemplateService
      * Seed realistic units, categories, materials, labor, machines, and products
      * tailored to the chosen industry template (excluding suppliers).
      */
-    private function seedIndustryMasterData(Business $business, BusinessTypeTemplate $template): void
+    private function seedIndustryMasterData(Business $business, BusinessTypeTemplate $template, bool $seedProducts = false): void
     {
         $code = $template->code;
 
@@ -281,6 +281,12 @@ final class BusinessTemplateService
                 ]);
             }
             $machineMap[$mData['key']] = $m;
+        }
+
+        // If not seeding sample/demo products (default for registration & clean setups), stop here.
+        // New businesses start with an empty product and material catalog.
+        if (! $seedProducts) {
+            return;
         }
 
         // 5. Create Materials & Price History (No Supplier assigned per requirement)

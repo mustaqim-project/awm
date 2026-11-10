@@ -47,13 +47,25 @@ final class PublicMarketplaceController extends Controller
                             ->where('is_discoverable', true);
                     });
             })
-            ->with(['business', 'category'])
+            ->with(['business.storeSetting', 'category'])
             ->orderByDesc('selling_price')
-            ->take(12)
+            ->take(24)
             ->get();
 
         // Category aggregation
         $categories = $this->buildCategoryData();
+
+        // Popular search keywords suggestions (Shopee-style quick keywords under search)
+        $popularKeywords = [
+            'Kopi Arabika',
+            'Kaos Polos & Fashion',
+            'Snack & Keripik',
+            'Bahan Baku UMKM',
+            'Bengkel & Sparepart',
+            'Sabun & Skincare Lokal',
+            'Jasa Percetakan',
+            'Frozen Food Siap Masak',
+        ];
 
         // Statistics (Only counting public, verified, non-test stores and products)
         $totalStores = Business::publicListed()
@@ -72,6 +84,7 @@ final class PublicMarketplaceController extends Controller
             'featuredStores',
             'popularProducts',
             'categories',
+            'popularKeywords',
             'totalStores',
             'totalProducts'
         ));
@@ -221,6 +234,20 @@ final class PublicMarketplaceController extends Controller
                     ->where(fn($q) => $q->where('industry_category', 'retail')->orWhere('template_code', 'like', 'retail%'))
                     ->count(),
             ],
+            'fashion' => [
+                'label' => 'Pakaian & Fashion',
+                'icon'  => 'shirt',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'fashion')->orWhere('template_code', 'like', 'fashion%'))
+                    ->count(),
+            ],
+            'beauty' => [
+                'label' => 'Perawatan & Cantik',
+                'icon'  => 'sparkles',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'beauty')->orWhere('template_code', 'like', 'beauty%'))
+                    ->count(),
+            ],
             'service' => [
                 'label' => 'Jasa & Layanan',
                 'icon'  => 'briefcase',
@@ -235,9 +262,23 @@ final class PublicMarketplaceController extends Controller
                     ->where(fn($q) => $q->where('industry_category', 'workshop')->orWhere('template_code', 'like', 'workshop%')->orWhere('template_code', 'like', 'bengkel%'))
                     ->count(),
             ],
+            'electronics' => [
+                'label' => 'Gadget & Elektronik',
+                'icon'  => 'smartphone',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'electronics')->orWhere('template_code', 'like', 'elec%'))
+                    ->count(),
+            ],
+            'home' => [
+                'label' => 'Perabot & Rumah',
+                'icon'  => 'home',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'home')->orWhere('template_code', 'like', 'home%'))
+                    ->count(),
+            ],
             'laundry' => [
                 'label' => 'Laundry & Cuci',
-                'icon'  => 'sparkles',
+                'icon'  => 'droplet',
                 'count' => Business::where($baseScope)
                     ->where(fn($q) => $q->where('industry_category', 'laundry')->orWhere('template_code', 'like', 'laundry%'))
                     ->count(),
@@ -247,6 +288,20 @@ final class PublicMarketplaceController extends Controller
                 'icon'  => 'factory',
                 'count' => Business::where($baseScope)
                     ->where(fn($q) => $q->where('industry_category', 'manufacture')->orWhere('template_code', 'like', 'mfg%'))
+                    ->count(),
+            ],
+            'agriculture' => [
+                'label' => 'Pertanian & Ternak',
+                'icon'  => 'leaf',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'agriculture')->orWhere('template_code', 'like', 'agri%'))
+                    ->count(),
+            ],
+            'craft' => [
+                'label' => 'Hobi & Kerajinan',
+                'icon'  => 'palette',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'craft')->orWhere('template_code', 'like', 'craft%'))
                     ->count(),
             ],
         ];

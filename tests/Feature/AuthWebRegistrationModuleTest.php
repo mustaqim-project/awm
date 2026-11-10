@@ -40,7 +40,7 @@ final class AuthWebRegistrationModuleTest extends TestCase
         $response->assertSee('name="password_confirmation"', false);
         $response->assertSee('name="business_name"', false);
         $response->assertSee('name="phone"', false);
-        $response->assertSee('name="template_code"', false);
+        $response->assertDontSee('name="template_code"', false);
         $response->assertSee('name="business_scale"', false);
         // Public registration should not expose internal technical module switch toggles
         $response->assertDontSee('name="enabled_modules[]"', false);
@@ -166,5 +166,8 @@ final class AuthWebRegistrationModuleTest extends TestCase
         $this->assertTrue($business->isModuleEnabled(ModuleRegistry::MODULE_CRM_LOYALTY));
         $this->assertTrue($business->isModuleDisabled(ModuleRegistry::MODULE_POS_DINEIN));
         $this->assertTrue($business->isModuleDisabled(ModuleRegistry::MODULE_CUSTOMER_PO));
+
+        // Critical: Verify NO dummy products are seeded upon registration
+        $this->assertEquals(0, \App\Models\Product::where('business_id', $business->id)->count());
     }
 }

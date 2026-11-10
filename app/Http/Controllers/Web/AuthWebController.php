@@ -513,9 +513,9 @@ final class AuthWebController extends Controller
 
             $user->update(['active_business_id' => $business->id]);
 
-            // Apply preset template if selected
+            // Apply preset template if selected (NEVER seed dummy products during registration)
             if ($tmpl) {
-                $templateService->apply($business, $tmpl);
+                $templateService->apply($business, $tmpl, seedProducts: false);
             }
 
             return $user;
@@ -872,9 +872,9 @@ final class AuthWebController extends Controller
 
             $user->update(['active_business_id' => $business->id]);
 
-            // Apply preset template if selected
+            // Apply preset template if selected (NEVER seed dummy products during registration)
             if ($tmpl) {
-                $templateService->apply($business, $tmpl);
+                $templateService->apply($business, $tmpl, seedProducts: false);
             }
 
             return $business;

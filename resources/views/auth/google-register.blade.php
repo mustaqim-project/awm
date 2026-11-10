@@ -206,25 +206,6 @@
                         </p>
                     </div>
 
-                    <!-- Pilihan Kategori Bisnis (Preset Sederhana) -->
-                    <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="template_code" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
-                                {{ __('auth.register.category_label') }}
-                            </label>
-                            <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('auth.register.category_optional') }}</span>
-                        </div>
-                        <select name="template_code" id="template_code" x-model="selectedTemplate"
-                            class="w-full px-3.5 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-[16px] sm:text-sm font-medium text-slate-900 dark:text-white transition-all outline-none cursor-pointer">
-                            <option value="">{{ __('auth.register.category_default') }}</option>
-                            @foreach ($templates as $tmpl)
-                                <option value="{{ $tmpl->code }}" {{ old('template_code') == $tmpl->code ? 'selected' : '' }}>
-                                    {{ $tmpl->name }} ({{ strtoupper($tmpl->industry_category) }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
                     <!-- Skala & Model Operasional Bisnis (Grid Kiri Kanan Baik Mobile Maupun Desktop) -->
                     <div class="space-y-2 pt-1">
                         <label class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
@@ -319,7 +300,6 @@
                 businessName: @json(old('business_name', __('auth.google_register.default_business_name', ['name' => $pending['name'] ?? __('auth.google_register.default_owner_name')]))),
                 phone: @json(old('phone', '')),
                 businessScale: @json(old('business_scale', 'umkm')),
-                selectedTemplate: @json(old('template_code', '')),
 
                 businessStatus: 'idle', // 'idle' | 'checking' | 'available' | 'unavailable' | 'invalid'
                 businessMessage: '',
