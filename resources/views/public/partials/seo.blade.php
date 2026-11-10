@@ -24,10 +24,14 @@
     }
     $resolvedDesc = SeoMetadataService::cleanText((string) $rawDesc, 160);
 
-    // 2b. Resolve Meta Keywords (Dynamic from Admin SEO Settings for root/landing page https://cooca.id)
-    $rawKeywords = $isRootPath
-        ? ($adminCustomKeywords ?: \App\Models\SystemSetting::get('seo_meta_keywords'))
-        : null;
+    // 2b. Resolve Meta Keywords (Dynamic: Blade @section > passed $keywords param > Admin CMS for root)
+    $rawKeywords = View::hasSection('keywords')
+        ? trim((string) View::yieldContent('keywords'))
+        : ($keywords ?? null);
+
+    if (empty($rawKeywords) && $isRootPath) {
+        $rawKeywords = $adminCustomKeywords ?: \App\Models\SystemSetting::get('seo_meta_keywords');
+    }
 
     $resolvedKeywords = !empty($rawKeywords) ? trim(strip_tags((string) $rawKeywords)) : null;
 

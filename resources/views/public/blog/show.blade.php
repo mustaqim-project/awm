@@ -85,6 +85,13 @@
 @section('canonical', route('blog.show', $post->slug))
 @section('og_type', 'article')
 @section('og_image', $articleOgImage)
+@section('keywords', implode(', ', array_filter([
+    $post->category ?? null,
+    $post->cluster === 'tutorial' ? 'tutorial umkm' : 'edukasi bisnis',
+    $post->topic_cluster ?? null,
+    'blog umkm',
+    'cooca',
+])))
 @section('article_published_time', $post->published_at ? $post->published_at->toIso8601String() : $post->created_at->toIso8601String())
 @section('article_modified_time', $post->updated_at->toIso8601String())
 @section('article_author', $post->author_name ?? 'COOCA')
@@ -106,7 +113,7 @@
 @push('styles')
 <style>
     /* ══════════════════════════════════════════════════════════════════
-       ARTICLE READER — Editorial-grade reading experience
+       ARTICLE READER: Editorial-grade reading experience
        Compatible with Apple HIG Light & Dark Mode
     ══════════════════════════════════════════════════════════════════ */
 
@@ -382,7 +389,7 @@
 @push('late-styles')
 <style>
     /* ═══════════════════════════════════════════════════════════════════
-       ARTICLE PROSE — DUAL MODE LIGHT & DARK OVERRIDES GUARANTEE
+       ARTICLE PROSE: DUAL MODE LIGHT & DARK OVERRIDES GUARANTEE
        Loaded after cooca-typography-system to win specificity.
     ═══════════════════════════════════════════════════════════════════ */
 
@@ -446,7 +453,7 @@
         color: #E5E5EA !important;
     }
 
-    /* Headings in dark mode — high contrast pure white */
+    /* Headings in dark mode: high contrast pure white */
     html.dark .article-prose h1,
     html.dark .article-prose h2,
     html.dark .article-prose h3,

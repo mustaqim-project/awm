@@ -413,6 +413,20 @@ final class ImportUmkmArticlesCommand extends Command
                 }
             }
 
+            // Extract FAQ items from raw JSON-LD block if present before stripping
+            $faqItems = [];
+            if (preg_match('/```json\s*(\{.*?@context.*?\})\s*```\s*$/usi', $body, $jsonMatch)) {
+                $rawJson = json_decode($jsonMatch[1], true);
+                if (is_array($rawJson) && isset($rawJson['@graph'])) {
+                    foreach ($rawJson['@graph'] as $node) {
+                        if (($node['@type'] ?? '') === 'FAQPage' && !empty($node['mainEntity'])) {
+                            $faqItems = $node['mainEntity'];
+                            break;
+                        }
+                    }
+                }
+            }
+
             // Strip any editorial note / internal link planning / raw JSON-LD block from public article body
             $body = preg_replace('/\r?\n##\s*Rencana\s+internal\s+link.*$/usi', '', $body);
             $body = preg_replace('/```json\s*\{.*?@context.*?```\s*$/usi', '', $body);
@@ -424,7 +438,11 @@ final class ImportUmkmArticlesCommand extends Command
             $body = preg_replace('/^#\s+(.+)$/m', '## $1', $body);
 
             // Convert Markdown body to rich, semantic HTML
-            $data['content'] = Str::markdown($body);
+            $renderedHtml = Str::markdown($body);
+            if (!empty($faqItems)) {
+                $renderedHtml .= "\n" . '<div class="faq-schema-json" style="display:none;">' . htmlspecialchars(json_encode($faqItems, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') . '</div>';
+            }
+            $data['content'] = $renderedHtml;
 
             // Determine cluster (Tutorial / Edukasi)
             $isTutorial = Str::startsWith($data['title'], 'Cara ')
