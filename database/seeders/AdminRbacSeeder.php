@@ -32,6 +32,7 @@ final class AdminRbacSeeder extends Seeder
             'admin.businesses.view'                => ['Lihat Tenant Bisnis', 'admin_tenants', 'Melihat daftar seluruh tenant bisnis UMKM yang terdaftar di platform.'],
             'admin.businesses.toggle_status'       => ['Ubah Status Tenant', 'admin_tenants', 'Mengaktifkan atau membekukan (suspend) akses tenant bisnis.'],
             'admin.businesses.impersonate'         => ['Masuk ke Workspace Bisnis', 'admin_tenants', 'Masuk ke dalam workspace bisnis tenant (impersonasi) untuk investigasi bugs dan diagnosa sistem.'],
+            'admin.businesses.delete'              => ['Hapus Tenant Bisnis (Hard Delete)', 'admin_tenants', 'Menghapus tenant bisnis beserta seluruh data transaksi dan aset secara permanen dengan verifikasi 2FA.'],
 
             // ─── 3. Basis Pengguna Platform ───────────────────────────
             'admin.users.view'                     => ['Lihat Pengguna Platform', 'admin_tenants', 'Melihat seluruh akun pengguna dan owner bisnis terdaftar.'],

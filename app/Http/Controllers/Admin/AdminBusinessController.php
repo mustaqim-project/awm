@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Business\Services\BusinessPurgeService;
 use App\Domain\OperatingMode\OperatingModeResolver;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\AuditLog;
 use App\Mail\BusinessReactivatedMail;
 use App\Mail\BusinessSuspendedMail;
 use App\Models\Business;
 use App\Models\BusinessMembership;
 use App\Models\BusinessSubscription;
+use App\Services\Google2FAService;
 use App\Support\Context;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -32,6 +35,7 @@ final class AdminBusinessController extends Controller implements HasMiddleware
         return [
             new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show', 'impersonate']),
             new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus', 'bulkStatus']),
+            new Middleware('require.admin.permission:admin.businesses.delete', only: ['destroy']),
         ];
     }
     /**
@@ -378,5 +382,70 @@ final class AdminBusinessController extends Controller implements HasMiddleware
 
         return redirect()->route('admin.businesses.index')
             ->with('success', 'Sesi investigasi bugs telah diakhiri. Anda kembali ke Admin Console.');
+    }
+
+    /**
+     * Completely and permanently hard delete a tenant business with 2FA verification.
+     */
+    public function destroy(
+        Request $request,
+        Business $business,
+        BusinessPurgeService $purgeService,
+        Google2FAService $google2FAService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->with(
+                'error',
+                'Penghapusan permanen ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'confirm_name' => ['required', 'string'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'confirm_name.required' => 'Konfirmasi nama bisnis wajib diisi.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        $expectedName = trim((string) $business->name);
+        $expectedSlug = trim((string) $business->slug);
+        $enteredConfirm = trim((string) $validated['confirm_name']);
+
+        if (strcasecmp($enteredConfirm, $expectedName) !== 0 && strcasecmp($enteredConfirm, $expectedSlug) !== 0) {
+            return back()->with(
+                'error',
+                "Nama atau slug bisnis konfirmasi tidak sesuai. Ketik persis \"{$business->name}\" atau \"{$business->slug}\" untuk melanjutkan."
+            );
+        }
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        try {
+            $purgeResult = $purgeService->purge($business, $admin);
+
+            return redirect()->route('admin.businesses.index')->with(
+                'success',
+                "Tenant bisnis \"{$purgeResult['name']}\" beserta seluruh database relasi dan aset penyimpanan telah dihapus secara permanen dari sistem."
+            );
+        } catch (\Throwable $e) {
+            Log::error('Failed to execute hard delete on business: ' . $e->getMessage(), [
+                'business_id' => $business->id,
+                'admin_id' => $admin->id,
+            ]);
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan saat memproses penghapusan permanen bisnis: ' . $e->getMessage()
+            );
+        }
     }
 }

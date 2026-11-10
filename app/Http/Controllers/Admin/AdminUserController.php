@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\User\Services\UserPurgeService;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
+use App\Services\Google2FAService;
 use App\Support\Security\CsvSanitizer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -99,12 +104,66 @@ final class AdminUserController extends Controller implements HasMiddleware
     }
 
     /**
-     * Remove the specified user from system.
+     * Completely and permanently hard delete a user account with Google Authenticator 2FA verification.
      */
-    public function destroy(User $user): RedirectResponse
-    {
-        $user->delete();
+    public function destroy(
+        Request $request,
+        User $user,
+        UserPurgeService $purgeService,
+        Google2FAService $google2FAService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
 
-        return redirect()->route('admin.users.index')->with('success', "Pengguna {$user->name} berhasil dihapus.");
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->with(
+                'error',
+                'Penghapusan permanen ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'confirm_email' => ['required', 'string'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'confirm_email.required' => 'Konfirmasi email pengguna wajib diisi.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        $expectedEmail = trim((string) $user->email);
+        $enteredConfirm = trim((string) $validated['confirm_email']);
+
+        if (strcasecmp($enteredConfirm, $expectedEmail) !== 0) {
+            return back()->with(
+                'error',
+                "Email konfirmasi tidak sesuai. Ketik persis \"{$user->email}\" untuk melanjutkan."
+            );
+        }
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        try {
+            $purgeResult = $purgeService->purge($user, $admin);
+
+            return redirect()->route('admin.users.index')->with(
+                'success',
+                "Pengguna \"{$purgeResult['name']}\" ({$purgeResult['email']}) beserta sesi dan aset terkait telah dihapus secara permanen dari sistem."
+            );
+        } catch (\Throwable $e) {
+            Log::error('Failed to execute hard delete on user: ' . $e->getMessage(), [
+                'target_user_id' => $user->id,
+                'admin_id' => $admin->id,
+            ]);
+
+            return back()->with(
+                'error',
+                'Terjadi kesalahan saat memproses penghapusan permanen pengguna: ' . $e->getMessage()
+            );
+        }
     }
 }

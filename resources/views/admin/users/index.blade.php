@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6">
+    <div class="space-y-6" x-data="adminUsersManager()">
 
         <!-- Toolbar: Search + Export -->
         <div
@@ -60,7 +60,7 @@
                                         <span>{{ $user->name }}</span>
                                     </div>
                                 </td>
-                                <td class="px-4 py-3 text-black/60 dark:text-white/60">{{ $user->email }}</td>
+                                <td class="px-4 py-3 text-black/60 dark:text-white/60 font-mono text-[12px]">{{ $user->email }}</td>
                                 <td class="px-4 py-3 text-black/60 dark:text-white/60">
                                     @if ($user->activeBusiness)
                                         <span
@@ -86,16 +86,13 @@
                                     {{ $user->created_at?->format('d M Y, H:i') }}</td>
                                 <td class="px-4 py-3 text-right">
                                     @if (Auth::guard('admin')->user()?->hasPermission('admin.users.delete'))
-                                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}"
-                                            onsubmit="return AppAlert.confirmSubmit(event, this, {{ json_encode(__('admin.konfirmasi_hapus_pengguna_pesan', ['name' => $user->name])) }}, {{ json_encode(__('admin.konfirmasi_hapus_pengguna_judul')) }}, 'danger')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/8 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"
-                                                title="{{ __('admin.hapus_user') }}">
-                                                <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i> {{ __('common.delete') }}
-                                            </button>
-                                        </form>
+                                        <button type="button"
+                                            @click="openDeleteModal('{{ $user->id }}', '{{ addslashes($user->name) }}', '{{ addslashes($user->email) }}', '{{ route('admin.users.destroy', $user) }}')"
+                                            class="h-7 px-2 rounded-[6px] text-[12px] font-medium text-[#FF3B30] hover:bg-[#FF3B30]/10 active:scale-[0.97] transition-all inline-flex items-center gap-1 cursor-pointer"
+                                            title="Hapus Permanen Pengguna (Hard Delete dengan 2FA)">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="1.5"></i>
+                                            <span>{{ __('common.delete') }}</span>
+                                        </button>
                                     @else
                                         <span class="text-[12px] text-black/30 dark:text-white/30">-</span>
                                     @endif
@@ -121,5 +118,152 @@
                 </div>
             @endif
         </div>
+
+        <!-- Apple HIG Bento Hard Delete User Modal with 2FA Verification -->
+        <div x-show="showDeleteModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" @click="showDeleteModal = false"></div>
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div class="relative w-full max-w-lg rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-6 sm:p-7 shadow-2xl space-y-5">
+                    
+                    <!-- Header -->
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-[16px] bg-[#FF3B30]/10 text-[#FF3B30] flex items-center justify-center shrink-0">
+                            <i data-lucide="user-x" class="w-6 h-6" stroke-width="2"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="text-[17px] font-bold text-black dark:text-white">Hapus Permanen Pengguna Platform</h3>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 mt-0.5 leading-relaxed">
+                                Tindakan penghapusan permanen (hard delete) akun pengguna, keanggotaan, sesi, dan berkas terkait.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2FA Check Condition -->
+                    <template x-if="!adminHas2FA">
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[13px] text-black/80 dark:text-white/90 space-y-2">
+                                <div class="font-bold text-[#C93400] dark:text-[#FF9F0A] flex items-center gap-2">
+                                    <i data-lucide="shield-alert" class="w-4 h-4" stroke-width="2"></i>
+                                    <span>Google Authenticator (2FA) Wajib Diaktifkan</span>
+                                </div>
+                                <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
+                                    Demi mencegah penyalahgunaan hak akses atau kehilangan data pengguna yang fatal, fitur penghapusan pengguna wajib diverifikasi dengan 2FA Google Authenticator.
+                                </p>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-3 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showDeleteModal = false"
+                                    class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                    Tutup
+                                </button>
+                                <a href="{{ route('admin.profile.index') }}"
+                                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] transition inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="key" class="w-4 h-4"></i>
+                                    <span>Aktifkan 2FA di Profil</span>
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="adminHas2FA">
+                        <form method="POST" :action="deleteActionUrl" class="space-y-4">
+                            @csrf
+                            @method('DELETE')
+
+                            <!-- Danger Warning Banner -->
+                            <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[12px] text-black/75 dark:text-white/80 leading-relaxed space-y-1">
+                                <div class="font-bold text-[#FF3B30] dark:text-[#FF453A] flex items-center gap-1.5">
+                                    <i data-lucide="alert-octagon" class="w-4 h-4" stroke-width="2"></i>
+                                    <span>Peringatan Kritis: Penghapusan Tidak Dapat Dibatalkan</span>
+                                </div>
+                                <p class="text-black/60 dark:text-white/60">
+                                    Pengguna <strong class="text-black dark:text-white" x-text="deleteUserName"></strong> (<span class="font-mono" x-text="deleteUserEmail"></span>) beserta riwayat keanggotaan bisnis dan sesi akan dihapus secara permanen.
+                                </p>
+                            </div>
+
+                            <!-- Input 1: Confirmation Email -->
+                            <div>
+                                <label class="block text-[12.5px] font-semibold text-black/75 dark:text-white/75 mb-1.5">
+                                    Ketik alamat email pengguna <span class="font-bold text-[#FF3B30]" x-text="'\'' + deleteUserEmail + '\''"></span> untuk konfirmasi:
+                                </label>
+                                <input type="text" name="confirm_email" required x-model="deleteConfirmInput"
+                                    placeholder="Ketik email pengguna di sini"
+                                    class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[14px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                            </div>
+
+                            <!-- Input 2: 2FA Google Authenticator Code -->
+                            <div>
+                                <label class="block text-[12.5px] font-semibold text-black/75 dark:text-white/75 mb-1.5">
+                                    Kode 6 Digit Google Authenticator <span class="text-[#FF3B30]">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" name="totp_code" maxlength="6" pattern="[0-9]{6}" required x-model="deleteTotpCode"
+                                        placeholder="000000"
+                                        class="w-full h-11 px-4 text-center font-mono text-[18px] tracking-[0.3em] font-bold bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                                </div>
+                                <span class="text-[11px] text-black/45 dark:text-white/45 mt-1 block">
+                                    Buka aplikasi Google Authenticator di ponsel Anda dan masukkan kode 6-digit terkini.
+                                </span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showDeleteModal = false"
+                                    class="h-11 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
+                                <button type="submit"
+                                    :disabled="!isDeleteFormValid()"
+                                    :class="isDeleteFormValid() ? 'bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] cursor-pointer' : 'bg-black/20 dark:bg-white/20 text-black/40 dark:text-white/40 cursor-not-allowed'"
+                                    class="h-11 px-5 rounded-[12px] text-[13px] font-bold text-white transition-all inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    <span>Hapus Pengguna Sekarang</span>
+                                </button>
+                            </div>
+                        </form>
+                    </template>
+
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function adminUsersManager() {
+    return {
+        showDeleteModal: false,
+        deleteUserId: '',
+        deleteUserName: '',
+        deleteUserEmail: '',
+        deleteActionUrl: '',
+        deleteConfirmInput: '',
+        deleteTotpCode: '',
+        adminHas2FA: @js(Auth::guard('admin')->user()?->hasTwoFactorEnabled() ?? false),
+        openDeleteModal(id, name, email, url) {
+            this.deleteUserId = id;
+            this.deleteUserName = name;
+            this.deleteUserEmail = email;
+            this.deleteActionUrl = url;
+            this.deleteConfirmInput = '';
+            this.deleteTotpCode = '';
+            this.showDeleteModal = true;
+            this.$nextTick(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
+        },
+        isDeleteFormValid() {
+            if (!this.adminHas2FA) return false;
+            const confirm = this.deleteConfirmInput.trim().toLowerCase();
+            const expectedEmail = this.deleteUserEmail.trim().toLowerCase();
+            const isEmailValid = (confirm === expectedEmail);
+            const isTotpValid = (this.deleteTotpCode.trim().length === 6 && /^\d+$/.test(this.deleteTotpCode.trim()));
+            return isEmailValid && isTotpValid;
+        }
+    };
+}
+</script>
+@endpush

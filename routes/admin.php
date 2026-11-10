@@ -67,6 +67,8 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile.index');
         Route::put('/profile', [AdminProfileController::class, 'updateProfile'])->name('profile.update');
         Route::put('/profile/password', [AdminProfileController::class, 'updatePassword'])->name('profile.password');
+        Route::post('/profile/2fa/enable', [AdminProfileController::class, 'enableTwoFactor'])->name('profile.2fa.enable');
+        Route::post('/profile/2fa/disable', [AdminProfileController::class, 'disableTwoFactor'])->name('profile.2fa.disable');
 
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
@@ -77,6 +79,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         Route::post('/businesses/{business}/toggle-status', [AdminBusinessController::class, 'toggleStatus'])->name('businesses.toggle-status');
         Route::post('/businesses/{business}/impersonate', [AdminBusinessController::class, 'impersonate'])->name('businesses.impersonate');
         Route::match(['GET', 'POST'], '/businesses/leave-impersonation', [AdminBusinessController::class, 'leaveImpersonation'])->name('businesses.leave-impersonation');
+        Route::delete('/businesses/{business}', [AdminBusinessController::class, 'destroy'])->name('businesses.destroy');
 
         // User Management & CSV Export
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');

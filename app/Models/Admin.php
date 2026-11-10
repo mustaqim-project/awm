@@ -35,6 +35,8 @@ class Admin extends Authenticatable
         'password',
         'role',
         'is_active',
+        'two_factor_secret',
+        'two_factor_confirmed_at',
     ];
 
     /**
@@ -43,6 +45,7 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
     ];
 
     /**
@@ -53,7 +56,16 @@ class Admin extends Authenticatable
         return [
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'two_factor_confirmed_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Determine if admin has enabled and confirmed two-factor authentication.
+     */
+    public function hasTwoFactorEnabled(): bool
+    {
+        return ! empty($this->two_factor_secret) && $this->two_factor_confirmed_at !== null;
     }
 
     /**
