@@ -25,7 +25,7 @@ const htmlContent = `<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Cooca LinkedIn Feed Infographic</title>
+<title>Cooca LinkedIn Feed Infographic - GMROI Analysis</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -126,11 +126,11 @@ body {
 
 /* Title & Hook */
 .title-section {
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .overline {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -140,9 +140,9 @@ body {
 
 .headline {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 37px;
+  font-size: 35px;
   font-weight: 800;
-  line-height: 1.18;
+  line-height: 1.2;
   color: #F8FAFC;
   letter-spacing: -0.02em;
 }
@@ -157,13 +157,13 @@ body {
 .comparison-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin: 20px 0;
+  gap: 22px;
+  margin: 18px 0;
 }
 
 .card {
-  border-radius: 24px;
-  padding: 26px 28px;
+  border-radius: 22px;
+  padding: 24px 26px;
   position: relative;
   backdrop-filter: blur(16px);
   display: flex;
@@ -186,11 +186,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 
 .card-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -213,7 +213,7 @@ body {
 .metric-group {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .metric-item {
@@ -235,10 +235,11 @@ body {
   font-size: 13px;
   color: #94A3B8;
   font-weight: 500;
+  margin-bottom: 2px;
 }
 
 .metric-val {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: -0.01em;
@@ -271,13 +272,13 @@ body {
 }
 
 .banner-icon {
-  width: 52px;
-  height: 52px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
 }
 
 .banner-text-title {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   color: #F8FAFC;
   margin-bottom: 2px;
@@ -338,72 +339,72 @@ body {
     <div class="brand-wrapper">
       <img src="${logoBase64}" alt="COOCA" class="brand-logo">
     </div>
-    <div class="tag-badge">Riset Finansial Ritel 2026</div>
+    <div class="tag-badge">Riset Unit Economics 2026</div>
   </div>
 
   <!-- Title & Hook -->
   <div class="title-section">
-    <div class="overline">Analisis Biaya &amp; Efisiensi Operasional Kasir</div>
-    <h1 class="headline">Berapa Kerugian Toko Ritel Akibat <span>Human Error Kasir Manual?</span></h1>
+    <div class="overline">Evaluasi Profitabilitas Persediaan &amp; Margin Kotor</div>
+    <h1 class="headline">GMROI: Mengapa Produk Terlaris <span>Belum Tentu Paling Menguntungkan?</span></h1>
   </div>
 
   <!-- Comparison Bento -->
   <div class="comparison-grid">
     
-    <!-- Manual Cashier -->
+    <!-- Fast-Moving Low Margin -->
     <div class="card card-manual">
       <div>
         <div class="card-header">
-          <span class="card-label">Sistem Kasir Manual</span>
-          <span style="font-size: 12px; color: #F87171; font-weight: 600;">Potensi Risiko</span>
+          <span class="card-label">Produk Terlaris Margin Tipis</span>
+          <span style="font-size: 12px; color: #F87171; font-weight: 600;">Ilusi Omzet Kasir</span>
         </div>
         <div class="metric-group">
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Kebocoran Margin Kotor</span>
-              <span class="metric-val val-danger">1.8% s/d 3.2%</span>
+              <span class="metric-name">Gross Profit Margin</span>
+              <span class="metric-val val-danger">8% s/d 12%</span>
             </div>
           </div>
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Durasi Transaksi Kasir</span>
-              <span class="metric-val val-danger">45 - 90 Detik</span>
+              <span class="metric-name">Hari Persediaan (DIO)</span>
+              <span class="metric-val val-danger">45 - 60 Hari</span>
             </div>
           </div>
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Rekonsiliasi Tutup Shift</span>
-              <span class="metric-val val-danger">1.5 - 2 Jam/Hari</span>
+              <span class="metric-name">Skor Efisiensi Modal (GMROI)</span>
+              <span class="metric-val val-danger">0.75x s/d 0.95x</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Cooca POS -->
+    <!-- Healthy GMROI Portfolio -->
     <div class="card card-cooca">
       <div>
         <div class="card-header">
-          <span class="card-label">Kasir Modern COOCA</span>
-          <span style="font-size: 12px; color: #38BDF8; font-weight: 600;">Optimal &amp; Presisi</span>
+          <span class="card-label">Portofolio Optimal COOCA</span>
+          <span style="font-size: 12px; color: #38BDF8; font-weight: 600;">Arus Kas Sehat</span>
         </div>
         <div class="metric-group">
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Kecepatan Checkout POS</span>
-              <span class="metric-val val-success">2.8 Detik / Transaksi</span>
+              <span class="metric-name">Gross Profit Margin</span>
+              <span class="metric-val val-success">28% s/d 42%</span>
             </div>
           </div>
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Tutup Kasir Anti-Selisih</span>
-              <span class="metric-val val-success">3 Menit (100% Cocok)</span>
+              <span class="metric-name">Hari Persediaan (DIO)</span>
+              <span class="metric-val val-success">12 - 18 Hari</span>
             </div>
           </div>
           <div class="metric-item">
             <div class="metric-info">
-              <span class="metric-name">Efisiensi Jam Kerja Staf</span>
-              <span class="metric-val val-success">+14 Jam / Minggu</span>
+              <span class="metric-name">Skor Efisiensi Modal (GMROI)</span>
+              <span class="metric-val val-success">2.6x s/d 3.4x</span>
             </div>
           </div>
         </div>
@@ -417,11 +418,11 @@ body {
     <div class="banner-left">
       <img src="${iconGrowthBase64}" alt="Growth" class="banner-icon">
       <div>
-        <div class="banner-text-title">Modernisasi Kasir Merupakan Investasi Perlindungan Margin</div>
-        <div class="banner-text-desc">Eliminasi human error, percepat antrean, dan amankan arus kas secara real-time.</div>
+        <div class="banner-text-title">Rumus GMROI = Margin Kotor Tahunan (Rp) / Rata-rata Biaya Persediaan (Rp)</div>
+        <div class="banner-text-desc">Prioritaskan restock pada SKU dengan laba kotor riil tertinggi, bukan sekadar volume transaksi.</div>
       </div>
     </div>
-    <div class="banner-pill">Pelajari di cooca.id/pos</div>
+    <div class="banner-pill">cooca.id/reports</div>
   </div>
 
   <!-- Footer -->
@@ -431,7 +432,7 @@ body {
       <span class="footer-bullet"></span>
       <span>Omnichannel ERP UMKM Indonesia</span>
     </div>
-    <div class="footer-url">cooca.id/pos</div>
+    <div class="footer-url">cooca.id/reports</div>
   </div>
 
 </div>
@@ -439,7 +440,7 @@ body {
 </html>`;
 
 async function run() {
-  console.log('[Playwright] Launching browser to render 1080x1080 LinkedIn Feed Infographic...');
+  console.log('[Playwright] Launching browser to render 1080x1080 LinkedIn Feed Infographic (GMROI Analysis)...');
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: 1080, height: 1080 },
@@ -448,22 +449,27 @@ async function run() {
   const page = await context.newPage();
   
   await page.setContent(htmlContent, { waitUntil: 'networkidle' });
-  await page.waitForTimeout(1000); // Wait for fonts and CSS to settle
+  await page.waitForTimeout(1000);
   
   const outputDir = path.join(ROOT_DIR, 'storage/app/public/content-assets');
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
   
-  const outputPath = path.join(outputDir, 'linkedin-feed-roi-cashier-1080x1080.png');
+  const outputPath = path.join(outputDir, 'linkedin-feed-gmroi-analysis-1080x1080.png');
   await page.screenshot({ path: outputPath, type: 'png' });
   console.log(`[Success] Infographic rendered to: ${outputPath}`);
 
+  // Also maintain the compatibility filename
+  const legacyOutputPath = path.join(outputDir, 'linkedin-feed-roi-cashier-1080x1080.png');
+  fs.copyFileSync(outputPath, legacyOutputPath);
+
   const publicOutputDir = path.join(ROOT_DIR, 'public/storage/content-assets');
   if (!fs.existsSync(publicOutputDir)) fs.mkdirSync(publicOutputDir, { recursive: true });
+  fs.copyFileSync(outputPath, path.join(publicOutputDir, 'linkedin-feed-gmroi-analysis-1080x1080.png'));
   fs.copyFileSync(outputPath, path.join(publicOutputDir, 'linkedin-feed-roi-cashier-1080x1080.png'));
 
-  const artifactDir = 'C:/Users/Ulfah Ramadhani/.gemini/antigravity/brain/157547ee-aa68-4a61-9fc0-dc7cf3752b41';
+  const artifactDir = 'C:/Users/Ulfah Ramadhani/.gemini/antigravity/brain/31b087dd-1d13-45ba-bc91-4ed9c249aed1';
   if (fs.existsSync(artifactDir)) {
-    fs.copyFileSync(outputPath, path.join(artifactDir, 'linkedin-feed-roi-cashier-1080x1080.png'));
+    fs.copyFileSync(outputPath, path.join(artifactDir, 'linkedin-feed-gmroi-analysis-1080x1080.png'));
     console.log(`[Success] Copied to artifact directory: ${artifactDir}`);
   }
   

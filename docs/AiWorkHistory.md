@@ -33,6 +33,51 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-10-388] COOCA LinkedIn Feed Publisher (cooca-feed-linkedin): Retail GMROI & Unit Economics
+
+- **Date:** 2026-11-10
+- **Status:** COMPLETED
+- **Module:** Social Media Marketing & B2B Content Engine
+- **Feature:** COOCA LinkedIn Single Infographic (`cooca-feed-linkedin`), Audience Intelligence, Dynamic Topic Research (GMROI vs Ilusi Omzet Ritel), Canva MCP Clone & Lossless Export, Zero Reuse & Anti-Duplication Rule, Zero Em Dash / En Dash, Automated DB Standalone Deployment
+- **Work Type:** Feature | Content & B2B Strategy | Visual Infographic | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab kebutuhan eksekutif bisnis ritel (CFO, Finance Director, Financial Controller, Managing Director) dalam mengelola unit economics dan efisiensi modal kerja persediaan per 10 November 2026.
+- **Masalah/Target:**
+  1. Mengatasi ilusi omzet kasir ritel, di mana toko ramai dan transaksi ratusan juta per bulan namun kas operasional kering karena 60% modal tertahan di produk fast-moving ber-margin tipis (8-12%) dengan biaya simpan tinggi.
+  2. Menyajikan edukasi objektif tentang metrik GMROI (Gross Margin Return on Investment = Margin Kotor Tahunan / Rata-rata Biaya Persediaan) sebagai tolok ukur alokasi modal stok.
+  3. Mematuhi The Zero Reuse Rule: memastikan materi 100% segar dan berbeda dari postingan sebelumnya (tidak menduplikasi ROI kasir manual maupun dead stock), zero em dash/en dash, zero nama toko/user fiktif, serta menggunakan Canva MCP resmi.
+
+#### 2. What Was Done
+1. **Audience Intelligence & Research:**
+   - Primary Audience: CFO, Finance Director, Financial Controller, Retail Managing Director.
+   - Secondary Audience: COO, Operations Director, Merchandising Manager.
+   - Evaluasi 5 kandidat topik B2B ritel dan menetapkan topik "Gross Margin Return on Investment (GMROI) vs Ilusi Omzet Kasir Ritel" dengan skor 98.5/100.
+2. **Canva MCP Production & Editing:**
+   - Kloning template feed Canva ke Design ID baru `DAHaeVY5nco` via tool `copy-design`.
+   - Menginisialisasi draft editing transaction (`3172181728697460718`).
+   - Menerapkan pembaruan teks permanen: headline GMROI, riset tag 2026, metrik perbandingan ilusi omzet (GMROI 0.8x) vs ritel sehat (GMROI 2.8x), formula highlight banner, dan footer URL `cooca.id/reports`.
+   - Melakukan `commit-editing-transaction` dan mengekspor lossless PNG resolusi tinggi via tool `export-design`.
+3. **High-Resolution Visual Rendering:**
+   - Memperbarui skrip rendering Playwright `scripts/social-automation/render_linkedin_feed_infographic.cjs` dengan desain Dark-Tech Navy Enterprise (`#070B19`), aksen Cyan (`#38BDF8`) & Royal Blue (`#2563EB`), Crimson Danger (`#EF4444`), strictly Zero Green, tipografi resmi Plus Jakarta Sans, dan Logo Resmi COOCA transparan tanpa background.
+   - Merender aset visual 1080x1080 px ke `storage/app/public/content-assets/linkedin-feed-gmroi-analysis-1080x1080.png` (dan kompatibilitas alias).
+4. **Specification & Anti-Duplication Recording:**
+   - Memperbarui dataset `storage/app/public/content-assets/spec-cooca-feed-linkedin.json` dengan audit skor viralitas 96.5/100, struktur persona, evaluasi 5 topik, strategi visual, dan caption profesional AIDA tanpa em dash.
+   - Mencatat entri topik baru di `storage/app/public/content-assets/content_history.json`.
+5. **Database Deployment & Verification:**
+   - Menjalankan `php artisan cooca:deploy-standalone-post --automation-id cooca-feed-linkedin --spec-json storage/app/public/content-assets/spec-cooca-feed-linkedin.json --force`.
+   - Post ID `eef9afae-0ded-4a2b-a512-3960af6b459a` berhasil terdaftar dengan status `SCHEDULED` untuk tayang pukul 08:00 WIB, terhubung ke media item dan target channel LinkedIn.
+   - Menjalankan feature tests `tests/Feature/SocialMedia/LinkedInOAuthAndPublishingTest.php` dan `tests/Feature/Admin/AdminSocialMediaPlatformContentTest.php` dengan hasil 14 passed, 75 assertions (100% Success).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `scripts/social-automation/render_linkedin_feed_infographic.cjs`
+  - `storage/app/public/content-assets/spec-cooca-feed-linkedin.json`
+  - `storage/app/public/content-assets/content_history.json`
+  - `storage/app/public/content-assets/linkedin-feed-gmroi-analysis-1080x1080.png`
+  - `storage/app/public/content-assets/canva-linkedin-feed-gmroi-1080x1080.png`
+  - `docs/AiWorkHistory.md`
+
 ### [WORK-2026-11-10-387] Google Trends Business Research, Blog Article Production (20 Artikel SEO Edukasi UMKM ID 311-330) & Production Deployment for COOCA
 
 - **Date:** 2026-11-10
