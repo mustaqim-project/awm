@@ -75,6 +75,7 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
         // Business / Tenant Management
         Route::get('/businesses', [AdminBusinessController::class, 'index'])->name('businesses.index');
         Route::post('/businesses/bulk-status', [AdminBusinessController::class, 'bulkStatus'])->name('businesses.bulk-status');
+        Route::delete('/businesses/bulk-destroy', [AdminBusinessController::class, 'bulkDestroy'])->name('businesses.bulk-destroy');
         Route::get('/businesses/{business}', [AdminBusinessController::class, 'show'])->name('businesses.show');
         Route::post('/businesses/{business}/toggle-status', [AdminBusinessController::class, 'toggleStatus'])->name('businesses.toggle-status');
         Route::post('/businesses/{business}/impersonate', [AdminBusinessController::class, 'impersonate'])->name('businesses.impersonate');

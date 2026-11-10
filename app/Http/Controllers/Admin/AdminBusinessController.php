@@ -35,7 +35,7 @@ final class AdminBusinessController extends Controller implements HasMiddleware
         return [
             new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show', 'impersonate']),
             new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus', 'bulkStatus']),
-            new Middleware('require.admin.permission:admin.businesses.delete', only: ['destroy']),
+            new Middleware('require.admin.permission:admin.businesses.delete', only: ['destroy', 'bulkDestroy']),
         ];
     }
     /**
@@ -447,5 +447,81 @@ final class AdminBusinessController extends Controller implements HasMiddleware
                 'Terjadi kesalahan saat memproses penghapusan permanen bisnis: ' . $e->getMessage()
             );
         }
+    }
+
+    /**
+     * Completely and permanently hard delete multiple tenant businesses with 2FA verification.
+     */
+    public function bulkDestroy(
+        Request $request,
+        BusinessPurgeService $purgeService,
+        Google2FAService $google2FAService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->with(
+                'error',
+                'Penghapusan masal ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'string', 'exists:businesses,id'],
+            'confirm_text' => ['required', 'string'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'ids.required' => 'Pilih minimal satu bisnis untuk dihapus.',
+            'ids.min' => 'Pilih minimal satu bisnis untuk dihapus.',
+            'confirm_text.required' => 'Ketik teks konfirmasi "HAPUS MASAL" untuk melanjutkan.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        if (trim(strtoupper((string) $validated['confirm_text'])) !== 'HAPUS MASAL') {
+            return back()->with(
+                'error',
+                'Teks konfirmasi salah. Anda wajib mengetik "HAPUS MASAL" dengan tepat untuk mengonfirmasi penghapusan permanen.'
+            );
+        }
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        $ids = $validated['ids'];
+        $businesses = Business::whereIn('id', $ids)->get();
+
+        $successCount = 0;
+        $failedCount = 0;
+
+        foreach ($businesses as $business) {
+            try {
+                $purgeService->purge($business, $admin);
+                $successCount++;
+            } catch (\Throwable $e) {
+                $failedCount++;
+                Log::error("Failed to purge business ID {$business->id} in bulk delete: " . $e->getMessage(), [
+                    'business_id' => $business->id,
+                    'admin_id' => $admin->id,
+                ]);
+            }
+        }
+
+        if ($failedCount > 0) {
+            return redirect()->route('admin.businesses.index')->with(
+                'warning',
+                "Sebanyak {$successCount} bisnis berhasil dihapus secara permanen, namun terdapat {$failedCount} bisnis yang gagal diproses."
+            );
+        }
+
+        return redirect()->route('admin.businesses.index')->with(
+            'success',
+            "Sebanyak {$successCount} bisnis terpilih beserta seluruh data dan asetnya telah dihapus secara permanen dari sistem."
+        );
     }
 }

@@ -321,6 +321,15 @@
                     <span>Suspend Masal</span>
                 </button>
 
+                <!-- Bulk Hard Delete Button (Opens 2FA Modal) -->
+                <button type="button"
+                    @click="openBulkDeleteModal()"
+                    class="h-9 px-3.5 rounded-[12px] text-[12.5px] font-bold text-white bg-[#D70015] hover:bg-[#FF3B30] active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+                    title="Hapus permanen seluruh bisnis terpilih beserta database dan asetnya">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5" stroke-width="2"></i>
+                    <span>Hapus Masal</span>
+                </button>
+
                 <!-- Cancel Selection -->
                 <button type="button" @click="selectedIds = []"
                     class="h-9 px-3 rounded-[12px] text-[12.5px] font-medium text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/10 transition-colors">{{ __('common.cancel') }}</button>
@@ -371,6 +380,121 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Bulk Hard Delete Confirmation with 2FA -->
+        <div x-show="showBulkDeleteModal" x-cloak
+            class="fixed inset-0 z-50 overflow-y-auto bg-black/50 backdrop-blur-md flex items-center justify-center p-4">
+            <div class="relative w-full max-w-lg bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] rounded-[28px] shadow-2xl p-6 sm:p-7 overflow-hidden"
+                @click.outside="showBulkDeleteModal = false">
+                <div class="space-y-5">
+                    <!-- Modal Header -->
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-12 h-12 rounded-[16px] bg-[#FF3B30]/10 flex items-center justify-center text-[#FF3B30] shrink-0">
+                            <i data-lucide="trash-2" class="w-6 h-6" stroke-width="2"></i>
+                        </div>
+                        <div>
+                            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FF3B30]/10 text-[#FF3B30] text-[11px] font-bold uppercase tracking-wider mb-1">
+                                <span>Tindakan Berisiko Tinggi</span>
+                            </div>
+                            <h3 class="text-[17px] font-bold text-black dark:text-white leading-snug">
+                                Hapus Masal Permanen Tenant Bisnis
+                            </h3>
+                            <p class="text-[12.5px] text-black/50 dark:text-white/50 mt-0.5">
+                                Tindakan pemusnahan total (hard delete) pada database dan berkas aset fisik penyimpanan seluruh bisnis terpilih.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 2FA Check Condition -->
+                    <template x-if="!adminHas2FA">
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[13px] text-black/80 dark:text-white/90 space-y-2">
+                                <div class="font-bold text-[#C93400] dark:text-[#FF9F0A] flex items-center gap-2">
+                                    <i data-lucide="shield-alert" class="w-4 h-4" stroke-width="2"></i>
+                                    <span>Google Authenticator (2FA) Wajib Diaktifkan</span>
+                                </div>
+                                <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
+                                    Demi melindungi platform dari risiko kehilangan data fatal, fitur hard delete masal hanya dapat dieksekusi oleh administrator yang telah mengaktifkan 2FA Google Authenticator.
+                                </p>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-3 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showBulkDeleteModal = false"
+                                    class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                    Tutup
+                                </button>
+                                <a href="{{ route('admin.profile.index') }}"
+                                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] transition inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="key" class="w-4 h-4"></i>
+                                    <span>Aktifkan 2FA di Profil</span>
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="adminHas2FA">
+                        <form method="POST" action="{{ route('admin.businesses.bulk-destroy') }}" class="space-y-4" @submit="syncBulkInputs($el)">
+                            @csrf
+                            @method('DELETE')
+                            <template x-for="id in selectedIds" :key="'bulk-del-' + id">
+                                <input type="hidden" name="ids[]" :value="id">
+                            </template>
+
+                            <!-- Danger Warning Banner -->
+                            <div class="p-4 rounded-[16px] bg-[#FF3B30]/10 border border-[#FF3B30]/20 text-[12px] text-black/75 dark:text-white/80 leading-relaxed space-y-1">
+                                <div class="font-bold text-[#FF3B30] dark:text-[#FF453A] flex items-center gap-1.5">
+                                    <i data-lucide="alert-octagon" class="w-4 h-4" stroke-width="2"></i>
+                                    <span>Peringatan Kritis: Penghapusan Tidak Dapat Dibatalkan</span>
+                                </div>
+                                <p class="text-black/60 dark:text-white/60">
+                                    Sebanyak <strong class="text-black dark:text-white" x-text="`${selectedIds.length} bisnis`"></strong> beserta seluruh produk, transaksi POS, inventori, resep, akun WhatsApp, dan seluruh file storage akan dihapus selamanya dari server.
+                                </p>
+                            </div>
+
+                            <!-- Input 1: Confirmation Text -->
+                            <div>
+                                <label class="block text-[12.5px] font-semibold text-black/75 dark:text-white/75 mb-1.5">
+                                    Ketik <span class="font-bold text-[#FF3B30]">HAPUS MASAL</span> untuk konfirmasi:
+                                </label>
+                                <input type="text" name="confirm_text" required x-model="bulkDeleteConfirmInput"
+                                    placeholder="Ketik HAPUS MASAL di sini"
+                                    class="w-full h-11 px-4 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[14px] text-black dark:text-white placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                            </div>
+
+                            <!-- Input 2: 2FA Google Authenticator Code -->
+                            <div>
+                                <label class="block text-[12.5px] font-semibold text-black/75 dark:text-white/75 mb-1.5">
+                                    Kode 6 Digit Google Authenticator <span class="text-[#FF3B30]">*</span>
+                                </label>
+                                <div class="relative">
+                                    <input type="text" name="totp_code" maxlength="6" pattern="[0-9]{6}" required x-model="bulkDeleteTotpCode"
+                                        placeholder="000000"
+                                        class="w-full h-11 px-4 text-center font-mono text-[18px] tracking-[0.3em] font-bold bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]/50 transition">
+                                </div>
+                                <span class="text-[11px] text-black/45 dark:text-white/45 mt-1 block">
+                                    Buka aplikasi Google Authenticator di ponsel Anda dan masukkan kode 6-digit terkini.
+                                </span>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showBulkDeleteModal = false"
+                                    class="h-11 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
+                                <button type="submit"
+                                    :disabled="!isBulkDeleteFormValid()"
+                                    :class="isBulkDeleteFormValid() ? 'bg-[#D70015] hover:bg-[#FF3B30] active:scale-[0.98] cursor-pointer' : 'bg-black/20 dark:bg-white/20 text-black/40 dark:text-white/40 cursor-not-allowed'"
+                                    class="h-11 px-5 rounded-[12px] text-[13px] font-bold text-white transition-all inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                    <span>Hapus Masal Permanen</span>
+                                </button>
+                            </div>
+                        </form>
+                    </template>
                 </div>
             </div>
         </div>
@@ -542,6 +666,26 @@ function adminBusinessesManager() {
         pageBusinessIds: @js($businesses->pluck('id')->map(fn($id) => (string)$id)->values()),
         showBulkSuspendModal: false,
         bulkSuspendReason: '',
+        showBulkDeleteModal: false,
+        bulkDeleteConfirmInput: '',
+        bulkDeleteTotpCode: '',
+        openBulkDeleteModal() {
+            this.bulkDeleteConfirmInput = '';
+            this.bulkDeleteTotpCode = '';
+            this.showBulkDeleteModal = true;
+            this.$nextTick(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
+        },
+        isBulkDeleteFormValid() {
+            if (!this.adminHas2FA) return false;
+            const confirm = this.bulkDeleteConfirmInput.trim().toUpperCase();
+            const isTextValid = (confirm === 'HAPUS MASAL');
+            const isTotpValid = (this.bulkDeleteTotpCode.trim().length === 6 && /^\d+$/.test(this.bulkDeleteTotpCode.trim()));
+            return isTextValid && isTotpValid && this.selectedIds.length > 0;
+        },
         openDeleteModal(id, name, slug, url) {
             this.deleteBizId = id;
             this.deleteBizName = name;
