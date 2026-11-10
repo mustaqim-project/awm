@@ -863,6 +863,25 @@
         <!-- ===================================================== -->
         <x-module-tabs module="products" />
 
+        @if(! $hasActiveLandingPage)
+            <!-- Landing Page Inactive Advisory Banner (Apple HIG Bento) -->
+            <div class="rounded-[18px] bg-[#007AFF]/[0.05] dark:bg-[#007AFF]/[0.1] border border-[#007AFF]/15 p-4 sm:p-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[13px]">
+                <div class="flex items-start sm:items-center gap-3">
+                    <div class="w-9 h-9 rounded-[12px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                        <i data-lucide="globe" class="w-4 h-4" stroke-width="2"></i>
+                    </div>
+                    <div class="text-black/80 dark:text-white/80 leading-relaxed">
+                        <strong class="text-black dark:text-white">Etalase Web Dinonaktifkan Secara Default:</strong> Untuk menampilkan produk di website publik, Anda wajib mengaktifkan <a href="{{ route('landing-page.edit') }}" class="font-bold text-[#007AFF] underline hover:opacity-80">Landing Page</a> usaha Anda terlebih dahulu.
+                    </div>
+                </div>
+                <a href="{{ route('landing-page.edit') }}"
+                    class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-[12px] inline-flex items-center justify-center gap-1.5 shrink-0 transition shadow-sm self-start sm:self-auto cursor-pointer">
+                    <span>Kelola Landing Page</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5" stroke-width="2"></i>
+                </a>
+            </div>
+        @endif
+
         <!-- ===================================================== -->
         <!-- 2. KPI SUMMARY (Apple Bento Metric Cards)              -->
         <!-- ===================================================== -->
@@ -1940,14 +1959,25 @@
                                                 <span class="text-[12px] font-semibold text-black/80 dark:text-white/80">{{ __('products.cb_sales_order') }}</span>
                                             </label>
                                             <label
-                                                class="flex items-center gap-2 p-2.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] cursor-pointer hover:bg-black/[0.02] transition">
+                                                class="flex items-center gap-2 p-2.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] {{ ! $hasActiveLandingPage ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:bg-black/[0.02]' }} transition"
+                                                @click="{{ ! $hasActiveLandingPage ? 'if(window.AppAlert){AppAlert.warning(\'Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.\', \'Landing Page Belum Aktif\');}else{alert(\'Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page terlebih dahulu.\');}' : '' }}">
                                                 <input type="hidden" name="show_in_website" value="0">
-                                                <input type="checkbox" name="show_in_website" value="1" checked
-                                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                                <input type="checkbox" name="show_in_website" value="1"
+                                                    {{ ! $hasActiveLandingPage ? 'disabled' : '' }}
+                                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF] {{ ! $hasActiveLandingPage ? 'cursor-not-allowed' : '' }}">
                                                 <span
                                                     class="text-[12px] font-semibold text-black/80 dark:text-white/80">{{ __('products.cb_web_storefront') }}</span>
                                             </label>
                                         </div>
+
+                                        @if(! $hasActiveLandingPage)
+                                        <div class="mt-2 p-2.5 rounded-[10px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[11.5px] text-[#C93400] dark:text-[#FF9F0A] flex items-start gap-2">
+                                            <i data-lucide="info" class="w-3.5 h-3.5 mt-0.5 shrink-0" stroke-width="2"></i>
+                                            <div class="leading-relaxed">
+                                                Etalase web dinonaktifkan secara default. <a href="{{ route('landing-page.edit') }}" target="_blank" class="font-bold underline hover:text-[#007AFF]">Aktifkan Landing Page</a> terlebih dahulu jika ingin produk ini tampil di website publik.
+                                            </div>
+                                        </div>
+                                        @endif
 
                                         <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
                                             <label class="flex items-start gap-2.5 cursor-pointer">
@@ -2642,15 +2672,26 @@
                                                 <span class="text-[12px] font-semibold text-black/80 dark:text-white/80">{{ __('products.cb_sales_order') }}</span>
                                             </label>
                                             <label
-                                                class="flex items-center gap-2 p-2.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] cursor-pointer hover:bg-black/[0.02] transition">
+                                                class="flex items-center gap-2 p-2.5 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] {{ ! $hasActiveLandingPage ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer hover:bg-black/[0.02]' }} transition"
+                                                @click="{{ ! $hasActiveLandingPage ? 'if(window.AppAlert){AppAlert.warning(\'Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page (https://cooca.id/landing-page) terlebih dahulu.\', \'Landing Page Belum Aktif\');}else{alert(\'Untuk mengaktifkan produk di etalase web, Anda wajib mengaktifkan Landing Page terlebih dahulu.\');}' : '' }}">
                                                 <input type="hidden" name="show_in_website" value="0">
                                                 <input type="checkbox" name="show_in_website" value="1"
+                                                    {{ ! $hasActiveLandingPage ? 'disabled' : '' }}
                                                     x-model="editProduct.show_in_website"
-                                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF]">
+                                                    class="rounded-[4px] border-black/20 text-[#007AFF] focus:ring-[#007AFF] {{ ! $hasActiveLandingPage ? 'cursor-not-allowed' : '' }}">
                                                 <span
                                                     class="text-[12px] font-semibold text-black/80 dark:text-white/80">{{ __('products.cb_web_storefront') }}</span>
                                             </label>
                                         </div>
+
+                                        @if(! $hasActiveLandingPage)
+                                        <div class="mt-2 p-2.5 rounded-[10px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[11.5px] text-[#C93400] dark:text-[#FF9F0A] flex items-start gap-2">
+                                            <i data-lucide="info" class="w-3.5 h-3.5 mt-0.5 shrink-0" stroke-width="2"></i>
+                                            <div class="leading-relaxed">
+                                                Etalase web dinonaktifkan. <a href="{{ route('landing-page.edit') }}" target="_blank" class="font-bold underline hover:text-[#007AFF]">Aktifkan Landing Page</a> terlebih dahulu agar dapat menampilkan produk ini di website publik.
+                                            </div>
+                                        </div>
+                                        @endif
 
                                         <div class="pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
                                             <label class="flex items-start gap-2.5 cursor-pointer">

@@ -133,7 +133,7 @@ final class InventoryCreateProductTool implements McpToolInterface
                 'image_path' => $imageUrl,
                 'is_active' => true,
                 'show_in_pos' => true,
-                'show_in_website' => true,
+                'show_in_website' => (bool) ($business->landingPage?->is_published ?? false),
             ]);
 
             if ($initialStock > 0) {
