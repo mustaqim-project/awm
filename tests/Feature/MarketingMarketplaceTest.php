@@ -166,7 +166,7 @@ class MarketingMarketplaceTest extends TestCase
             'is_published' => true,
         ]);
 
-        $response = $this->get('/sitemap.xml');
+        $response = $this->get('/sitemap_marketplace.xml');
         $response->assertStatus(200);
         $response->assertSee('toko-resmi-nyata');
         $response->assertDontSee('meta-reviewer-store');

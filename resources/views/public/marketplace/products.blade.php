@@ -24,13 +24,14 @@
     $products = $products ?? \App\Models\Product::where('is_active', true)
         ->where('show_in_website', true)
         ->whereHas('business', function ($q): void {
-            $q->where('is_active', true)->whereHas('storeSetting', function ($sq): void {
-                $sq->where('is_storefront_enabled', true)->where('is_discoverable', true);
+            $q->publicListed()->where(function ($sub): void {
+                $sub->whereHas('landingPage', fn($lq) => $lq->where('is_published', true))
+                    ->orWhereHas('storeSetting', fn($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
             });
         })
-        ->with(['business.storeSetting', 'category'])
+        ->with(['business.storeSetting', 'business.landingPage', 'category'])
         ->latest()
-        ->paginate(24);
+        ->paginate(30);
 @endphp
 
 @section('content')
@@ -189,45 +190,81 @@
             </a>
         </div>
 
-        {{-- Products Grid --}}
+        {{-- Shopee-Style 6-Column Products Grid --}}
         @if ($products->isNotEmpty())
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
                 @foreach ($products as $product)
                     <a href="{{ url('/' . ($product->business->slug ?? 'toko') . '/produk/' . ($product->slug ?: $product->id)) }}"
-                        class="group bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden hover:border-[#007AFF]/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-200 shadow-sm flex flex-col justify-between text-[#1D1D1F] dark:text-[#F5F5F7]">
-                        <div>
-                            <div class="aspect-square bg-slate-100 dark:bg-[#2C2C2E] overflow-hidden flex items-center justify-center relative">
-                                @if ($product->image_url)
-                                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-500">
-                                        <i data-lucide="package" class="w-10 h-10" aria-hidden="true"></i>
-                                    </div>
-                                @endif
+                        class="group bg-white dark:bg-[#1C1C1E] border border-slate-200/90 dark:border-white/10 rounded-sm overflow-hidden hover:border-[#007AFF] hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between shadow-sm relative text-[#1D1D1F] dark:text-[#F5F5F7]">
 
-                                @if ($product->category)
-                                    <span class="absolute top-2 left-2 px-2.5 py-0.5 rounded-full bg-black/60 text-white text-[10px] font-semibold backdrop-blur-sm">
-                                        {{ $product->category->name }}
-                                    </span>
-                                @endif
+                        {{-- 1:1 Aspect Square Product Photo Container --}}
+                        <div class="aspect-square bg-slate-100 dark:bg-[#2C2C2E] overflow-hidden relative">
+                            @if ($product->image_url)
+                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-slate-400 dark:text-slate-500">
+                                    <i data-lucide="package" class="w-10 h-10" aria-hidden="true"></i>
+                                </div>
+                            @endif
+
+                            {{-- Shopee-Style Corner Discount Badge --}}
+                            <div class="absolute top-0 right-0 bg-amber-400 text-[#060B1E] font-extrabold text-[10px] px-1.5 py-0.5 shadow-sm text-center leading-tight">
+                                <span class="block text-red-600 font-black">-15%</span>
                             </div>
 
-                            <div class="p-4 space-y-1.5">
-                                <h3 class="font-bold text-sm text-[#1D1D1F] dark:text-[#F5F5F7] line-clamp-2 leading-snug group-hover:text-[#007AFF] transition-colors">
-                                    {{ $product->name }}
-                                </h3>
-                                <p class="text-xs text-[#86868B] line-clamp-1">
-                                    {{ $product->business->name ?? 'Toko Lokal' }}
-                                </p>
+                            {{-- Video Play Indicator --}}
+                            <div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-black/50 text-white flex items-center justify-center">
+                                <i data-lucide="play" class="w-2.5 h-2.5 fill-white ml-0.5"></i>
                             </div>
                         </div>
 
-                        <div class="p-4 pt-0 flex items-center justify-between">
-                            <span class="font-mono font-bold text-sm sm:text-base text-[#1D1D1F] dark:text-[#F5F5F7]">
-                                Rp {{ number_format((float) $product->selling_price, 0, ',', '.') }}
-                            </span>
-                            <span class="text-xs text-[#007AFF] font-semibold group-hover:underline">{{ __('public_marketplace.prod_btn_buy') }}</span>
+                        {{-- Card Details Body (Anatomi Persis Shopee Gambar 2) --}}
+                        <div class="p-2 space-y-1.5 flex-1 flex flex-col justify-between">
+                            <div class="space-y-1">
+                                {{-- Shopee-Style Promo Xtra / Cicilan Tag --}}
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span class="bg-amber-400 text-slate-900 text-[8px] font-black px-1 py-0.2 rounded-sm uppercase tracking-tight">
+                                        PROMO XTRA
+                                    </span>
+                                    <span class="bg-[#007AFF]/15 text-[#007AFF] text-[8px] font-bold px-1 py-0.2 rounded-sm uppercase tracking-tight">
+                                        FREE ONGKIR
+                                    </span>
+                                </div>
+
+                                {{-- Title with Shopee Star Badge --}}
+                                <h3 class="text-xs text-slate-800 dark:text-slate-100 font-normal leading-snug line-clamp-2 group-hover:text-[#007AFF] transition-colors">
+                                    <span class="inline-block bg-[#007AFF] text-white text-[9px] font-bold px-1 py-0.2 rounded-sm mr-1 align-baseline uppercase">
+                                        Star
+                                    </span>{{ $product->name }}
+                                </h3>
+
+                                {{-- Garansi Harga Terbaik Pill --}}
+                                <div>
+                                    <span class="inline-block border border-[#007AFF]/40 text-[#007AFF] text-[9px] font-medium px-1 rounded-sm">
+                                        Garansi UMKM
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="pt-1 space-y-1">
+                                {{-- Price: 'Rp' kecil + Angka Bold Besar --}}
+                                <div class="flex items-baseline gap-0.5 text-[#007AFF] dark:text-[#38bdf8]">
+                                    <span class="text-[11px] font-semibold">Rp</span>
+                                    <span class="font-extrabold text-sm sm:text-base font-mono leading-none">
+                                        {{ number_format((float) $product->selling_price, 0, ',', '.') }}
+                                    </span>
+                                    <i data-lucide="truck" class="w-3.5 h-3.5 ml-1 text-slate-400" title="Gratis Ongkir"></i>
+                                </div>
+
+                                {{-- Footer: Lokasi Kota Penjual --}}
+                                <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100 dark:border-white/5">
+                                    <span class="truncate max-w-[90px]">
+                                        {{ $product->business->storeSetting?->city ?: ($product->business->city ?: 'Indonesia') }}
+                                    </span>
+                                    <span class="shrink-0 text-slate-500 font-medium">Tersedia</span>
+                                </div>
+                            </div>
                         </div>
                     </a>
                 @endforeach

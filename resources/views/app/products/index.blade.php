@@ -545,7 +545,7 @@
                     Swal.fire({
                         icon: 'warning',
                         title: 'Landing Page Belum Aktif',
-                        html: 'Untuk menampilkan produk di etalase web, Anda wajib mengaktifkan Landing Page usaha terlebih dahulu.<br><br><a href="{{ route('landing-page.edit') }}" class="text-[#007AFF] font-bold underline">Buka Pengaturan Landing Page</a>',
+                        text: 'Untuk menampilkan produk di etalase web, Anda wajib mengaktifkan Landing Page usaha terlebih dahulu.',
                         confirmButtonText: 'Tutup'
                     });
                 } else {

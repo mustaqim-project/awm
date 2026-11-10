@@ -193,6 +193,24 @@ final class PublicMarketplaceSearchTest extends TestCase
             'show_in_website' => true,
         ]);
 
+        Product::create([
+            'business_id' => $this->discoverableBusiness->id,
+            'output_unit_id' => $this->unit->id,
+            'name' => 'Kopi Preview Dua',
+            'selling_price' => 30000,
+            'is_active' => true,
+            'show_in_website' => true,
+        ]);
+
+        Product::create([
+            'business_id' => $this->discoverableBusiness->id,
+            'output_unit_id' => $this->unit->id,
+            'name' => 'Kopi Preview Tiga',
+            'selling_price' => 32000,
+            'is_active' => true,
+            'show_in_website' => true,
+        ]);
+
         $hiddenProduct = Product::create([
             'business_id' => $this->discoverableBusiness->id,
             'output_unit_id' => $this->unit->id,
