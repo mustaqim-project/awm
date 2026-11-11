@@ -190,7 +190,7 @@
             </a>
         </div>
 
-        {{-- Shopee-Style 6-Column Products Grid --}}
+        {{-- 6-Column Real Products Grid --}}
         @if ($products->isNotEmpty())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
                 @foreach ($products as $product)
@@ -208,53 +208,49 @@
                                 </div>
                             @endif
 
-                            {{-- Shopee-Style Corner Discount Badge --}}
-                            <div class="absolute top-0 right-0 bg-amber-400 text-[#060B1E] font-extrabold text-[10px] px-1.5 py-0.5 shadow-sm text-center leading-tight">
-                                <span class="block text-red-600 font-black">-15%</span>
-                            </div>
-
-                            {{-- Video Play Indicator --}}
-                            <div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-black/50 text-white flex items-center justify-center">
-                                <i data-lucide="play" class="w-2.5 h-2.5 fill-white ml-0.5"></i>
+                            {{-- Real Product Status Badges --}}
+                            <div class="absolute top-1 right-1 flex flex-col items-end gap-1">
+                                @if ($product->is_preorder)
+                                    <span class="bg-amber-500 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">
+                                        Pre-Order
+                                    </span>
+                                @elseif ($product->type === 'service')
+                                    <span class="bg-sky-600 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">
+                                        Jasa
+                                    </span>
+                                @elseif ($product->category)
+                                    <span class="bg-[#060B1E]/80 backdrop-blur-sm text-white font-semibold text-[9px] px-1.5 py-0.5 rounded shadow-sm truncate max-w-[85px]">
+                                        {{ $product->category->name }}
+                                    </span>
+                                @endif
                             </div>
                         </div>
 
-                        {{-- Card Details Body (Anatomi Persis Shopee Gambar 2) --}}
+                        {{-- Card Details Body --}}
                         <div class="p-2 space-y-1.5 flex-1 flex flex-col justify-between">
                             <div class="space-y-1">
-                                {{-- Shopee-Style Promo Xtra / Cicilan Tag --}}
-                                <div class="flex items-center gap-1 flex-wrap">
-                                    <span class="bg-amber-400 text-slate-900 text-[8px] font-black px-1 py-0.2 rounded-sm uppercase tracking-tight">
-                                        PROMO XTRA
-                                    </span>
-                                    <span class="bg-[#007AFF]/15 text-[#007AFF] text-[8px] font-bold px-1 py-0.2 rounded-sm uppercase tracking-tight">
-                                        FREE ONGKIR
-                                    </span>
-                                </div>
-
-                                {{-- Title with Shopee Star Badge --}}
+                                {{-- Nama Produk & Merchant Resmi --}}
                                 <h3 class="text-xs text-slate-800 dark:text-slate-100 font-normal leading-snug line-clamp-2 group-hover:text-[#007AFF] transition-colors">
-                                    <span class="inline-block bg-[#007AFF] text-white text-[9px] font-bold px-1 py-0.2 rounded-sm mr-1 align-baseline uppercase">
-                                        Star
-                                    </span>{{ $product->name }}
+                                    @if ($product->business && $product->business->is_public_listed)
+                                        <span class="inline-block bg-[#007AFF] text-white text-[9px] font-bold px-1 py-0.2 rounded-sm mr-1 align-baseline uppercase">
+                                            Resmi
+                                        </span>
+                                    @endif
+                                    {{ $product->name }}
                                 </h3>
 
-                                {{-- Garansi Harga Terbaik Pill --}}
-                                <div>
-                                    <span class="inline-block border border-[#007AFF]/40 text-[#007AFF] text-[9px] font-medium px-1 rounded-sm">
-                                        Garansi UMKM
-                                    </span>
-                                </div>
+                                <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">
+                                    {{ $product->business->name ?? 'Toko Mitra' }}
+                                </p>
                             </div>
 
                             <div class="pt-1 space-y-1">
-                                {{-- Price: 'Rp' kecil + Angka Bold Besar --}}
+                                {{-- Price: 'Rp' kecil + Angka Bold --}}
                                 <div class="flex items-baseline gap-0.5 text-[#007AFF] dark:text-[#38bdf8]">
                                     <span class="text-[11px] font-semibold">Rp</span>
                                     <span class="font-extrabold text-sm sm:text-base font-mono leading-none">
                                         {{ number_format((float) $product->selling_price, 0, ',', '.') }}
                                     </span>
-                                    <i data-lucide="truck" class="w-3.5 h-3.5 ml-1 text-slate-400" title="Gratis Ongkir"></i>
                                 </div>
 
                                 {{-- Footer: Lokasi Kota Penjual --}}

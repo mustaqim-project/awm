@@ -1,0 +1,354 @@
+{
+  "date": "2026-11-11",
+  "batch": 8,
+  "geo": "ID",
+  "category": "3",
+  "category_name": "Bisnis, Keuangan, Operasional Kasir & Logistik Harbolnas UMKM",
+  "source": "Google Trends Indonesia 11.11, Regulasi SAK EMKM & BPOM 2026, Dinamika Puncak Harbolnas",
+  "total_topics": 20,
+  "topics": [
+    {
+      "id": 372,
+      "topic": "Manajemen Puncak Lonjakan Pesanan 11.11 dan Eksekusi Fulfillment Instan Same-Day",
+      "trending_query": "manajemen lonjakan pesanan 11.11 fulfillment same day umkm",
+      "primary_keyword": "manajemen lonjakan pesanan 11 11 fulfillment same day",
+      "secondary_keywords": "eksekusi pesanan instan same day toko online, mitigasi bottleneck packing 11 11, batas waktu handover kurir same day shopee tokopedia, penataan workstation gudang harbolnas, integrasi pos dan pesanan marketplace",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Tepat pada hari H 11.11, gelombang pesanan instan dan same-day delivery melonjak drastis dan menuntut batas waktu serah terima kurir maksimal 2 jam setelah checkout.",
+      "credible_sources": [
+        "Data Asosiasi E-Commerce Indonesia (idEA)",
+        "Benchmark Standar Logistik Pergudangan Ritel 2026"
+      ],
+      "msme_opportunity": "Menghindari penalti pembatalan otomatis kurir instan dan mempertahankan rating toko bintang lima di mata konsumen perkotaan.",
+      "article_angle": "Jalur pemrosesan prioritas fast-track untuk pesanan instan, alokasi picker khusus motor kurir, dan integrasi notifikasi kasir POS.",
+      "slug": "manajemen-lonjakan-pesanan-11-11-fulfillment-same-day",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 373,
+      "topic": "Cara Mengatasi Out of Stock dan Backorder Marketplace Saat Harbolnas",
+      "trending_query": "cara mengatasi out of stock backorder marketplace harbolnas",
+      "primary_keyword": "cara mengatasi out of stock dan backorder marketplace",
+      "secondary_keywords": "manajemen stok habis saat flash sale, komunikasi pembeli barang indent tempo, menghindari penalti poin seller shopee tiktok, buffer stok cadangan gudang, strategi alih varian produk",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Tingginya kecepatan transaksi saat tanggal kembar 11.11 sering membuat produk tertentu habis dalam hitungan menit sebelum sistem sempat memperbarui stok di saluran lain.",
+      "credible_sources": [
+        "Panduan Operasional Seller Marketplace Nasional 2026"
+      ],
+      "msme_opportunity": "Menyelamatkan transaksi dari pembatalan sepihak dan mengubah pembeli yang kecewa menjadi pelanggan setia dengan penanganan profesional.",
+      "article_angle": "SOP komunikasi ganti varian via WhatsApp dalam 1 jam, penyesuaian kuota etalase bertahap, dan aktivasi pre-order legal.",
+      "slug": "cara-mengatasi-out-of-stock-backorder-marketplace",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 374,
+      "topic": "SOP Penanganan Resi Tertahan dan Investigasi Paket Hilang di Hub Logistik",
+      "trending_query": "sop resi tertahan investigasi paket hilang hub ekspedisi kurir",
+      "primary_keyword": "sop penanganan resi tertahan dan paket hilang di hub",
+      "secondary_keywords": "paket marketplace macet di hub sortir, klaim asuransi barang hilang ekspedisi, surat berita acara kehilangan barang kurir, mitigasi komplain pembeli harbolnas, batas waktu eskalasi cs kurir",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Lonjakan puluhan juta paket di hub logistik ekspedisi pada puncak 11.11 selalu menimbulkan keterlambatan pelacakan resi dan risiko paket terselip.",
+      "credible_sources": [
+        "Ketentuan Asosiasi Perusahaan Jasa Pengiriman Ekspres Indonesia (Asperindo)"
+      ],
+      "msme_opportunity": "Mempercepat proses klaim ganti rugi 100 persen harga barang dari pihak logistik tanpa membebani kas toko.",
+      "article_angle": "Alur eskalasi 3 tahap ke customer support logistik, syarat dokumen bukti penyerahan barang asli, dan penenangan pembeli.",
+      "slug": "sop-penanganan-resi-tertahan-investigasi-paket-hilang",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 375,
+      "topic": "Strategi Up-selling dan Cross-selling Otomatis Kasir POS Saat Puncak Transaksi",
+      "trending_query": "strategi upselling cross selling kasir pos saat ramai pembeli",
+      "primary_keyword": "strategi upselling dan cross selling kasir pos",
+      "secondary_keywords": "menaikkan basket size belanja pembeli toko, penawaran menu tambahan kasir kafe, bundling produk sampingan meja kasir, skrip rekomendasi ramah kasir, kenaikan average order value umkm",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Saat toko fisik dipadati pengunjung festival belanja, kasir memiliki peluang emas menaikkan nilai rata-rata belanja per struk (Average Order Value).",
+      "credible_sources": [
+        "Retail Sales Psychology & Point of Sale Strategies 2026"
+      ],
+      "msme_opportunity": "Menaikkan total omzet harian 20 sampai 30 persen tanpa perlu menambah jumlah pengunjung baru.",
+      "article_angle": "Penempatan produk impulsif di samping layar display kasir Cooca dan skrip kasir 10 detik yang tidak memaksa.",
+      "slug": "strategi-upselling-cross-selling-kasir-pos",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 376,
+      "topic": "Cara Menghitung Biaya Kemasan Khusus Musim Hujan dan Packing Anti Bocor",
+      "trending_query": "cara hitung biaya kemasan musim hujan packing anti bocor hpp",
+      "primary_keyword": "biaya kemasan khusus musim hujan dan packing anti bocor",
+      "secondary_keywords": "kemasan kardus lapis plastik stretch film, pelindung air pengiriman kurir motor, pengaruh biaya packing pada food cost, perlindungan produk makanan dari rembesan air, perhitungan hpp kemasan tahan cuaca",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Bulan November bertepatan dengan musim hujan lebat di berbagai kota di Indonesia, sehingga paket belanja rentan basah dan rusak saat diantar kurir motor.",
+      "credible_sources": [
+        "Standardisasi Kemasan Pangan & Distribusi Cuaca Ekstrem 2026"
+      ],
+      "msme_opportunity": "Menghilangkan kerugian akibat klaim ganti rugi barang basah dan menjaga kepuasan konsumen saat cuaca buruk.",
+      "article_angle": "Kalkulasi biaya per meter plastik stretch film, kantong thermal pelindung makanan panas, dan integrasi biaya ke HPP.",
+      "slug": "cara-menghitung-biaya-kemasan-musim-hujan-anti-bocor",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 377,
+      "topic": "SOP Rekonsiliasi Saldo Escrow Marketplace dan Penagihan Selisih Payout",
+      "trending_query": "sop rekonsiliasi saldo escrow marketplace selisih payout rekening",
+      "primary_keyword": "sop rekonsiliasi saldo escrow marketplace dan payout",
+      "secondary_keywords": "pencocokan mutasi bank dengan rekening penampung e-commerce, selisih potongan promo subsidi shopee tokopedia, penarikan saldo dompet penjual, pembukuan piutang digital umkm, audit potongan komisi",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Omzet besar selama flash sale 11.11 tertahan di rekening escrow penampung marketplace dan sering kali mengalami selisih saat dicairkan ke bank toko.",
+      "credible_sources": [
+        "Prinsip Akuntansi Keuangan Ritel Digital Indonesia"
+      ],
+      "msme_opportunity": "Mendeteksi potongan komisi liar atau voucher promosi yang keliru dibebankan kepada penjual.",
+      "article_angle": "Lembar audit harian pencairan escrow, pencocokan kode settlement perbankan, dan penguncian buku kas.",
+      "slug": "sop-rekonsiliasi-saldo-escrow-marketplace-payout",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 378,
+      "topic": "Cara Menyusun Laporan Perubahan Modal Usaha Kecil SAK EMKM Tutup Tahun",
+      "trending_query": "cara menyusun laporan perubahan modal usaha kecil sak emkm",
+      "primary_keyword": "laporan perubahan modal usaha kecil sak emkm",
+      "secondary_keywords": "pencatatan prive pemilik toko, saldo laba ditahan operasional, format laporan ekuitas ikatan akuntan indonesia, syarat laporan keuangan bank umkm, persiapan pembukuan tahun buku 2027",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Sebagai bagian dari tiga laporan keuangan wajib menurut Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah (SAK EMKM), laporan perubahan modal kerap diabaikan pemilik toko.",
+      "credible_sources": [
+        "Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah (SAK EMKM) IAI"
+      ],
+      "msme_opportunity": "Mengetahui secara riil apakah kekayaan bersih modal usaha bertambah atau tergerus oleh penarikan pribadi pemilik.",
+      "article_angle": "Formula saldo awal modal, laba bersih tahun berjalan, mutasi prive, dan penyajian neraca modal akhir.",
+      "slug": "cara-menyusun-laporan-perubahan-modal-umkm-sak-emkm",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 379,
+      "topic": "Strategi Mengelola Jam Lembur Staf Gudang dan Batas Kelelahan Kerja",
+      "trending_query": "strategi mengelola jam lembur staf gudang batas kelelahan kerja",
+      "primary_keyword": "strategi mengelola jam lembur staf gudang toko",
+      "secondary_keywords": "manajemen shift kerja lembur 11 11, pencegahan human error packing lelah, aturan lembur uu ketenagakerjaan permenaker, insentif lembur dan asupan energi staf, pembagian 3 shift kerja non stop",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Bekerja lembur hingga larut malam saat pesanan menumpuk meningkatkan risiko kecelakaan kerja dan kesalahan fatal penempelan label resi barang.",
+      "credible_sources": [
+        "Kementerian Ketenagakerjaan RI",
+        "Pedoman Ergonomi dan Keselamatan Kerja Gudang"
+      ],
+      "msme_opportunity": "Menjaga produktivitas pengepakan tetap di atas 95 persen tanpa menimbulkan kejenuhan atau cedera fisik pada tim.",
+      "article_angle": "Rotasi kerja 4 jam, batas maksimal lembur mingguan 18 jam sesuai aturan permenaker, dan penyediaan ruang rehat layak.",
+      "slug": "strategi-mengelola-jam-lembur-staf-gudang",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 380,
+      "topic": "Panduan Menerapkan Dynamic Pricing Tanpa Merusak Kepercayaan Pelanggan",
+      "trending_query": "panduan menerapkan dynamic pricing toko umkm tanpa komplain",
+      "primary_keyword": "dynamic pricing toko umkm tanpa merusak reputasi",
+      "secondary_keywords": "penyesuaian harga dinamis jam sibuk dan sepi, strategi promo happy hour kedai kopi, penyesuaian tarif akhir pekan toko ritel, persepsi keadilan harga konsumen, transparansi perubahan harga kasir",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Pengusaha ritel dan kuliner mulai mengadopsi penetapan harga dinamis untuk meratakan antrean pembeli antara jam sepi dan jam sibuk.",
+      "credible_sources": [
+        "Behavioral Economics of Price Perception & Retail Strategy"
+      ],
+      "msme_opportunity": "Mendongkrak pendapatan saat jam sibuk sekaligus merangsang kunjungan pembeli pada jam-jam sepi.",
+      "article_angle": "Pemberian diskon happy hour alih-alih menaikkan harga dasar, komunikasi transparan, dan konfigurasi promo otomatis di kasir POS Cooca.",
+      "slug": "panduan-menerapkan-dynamic-pricing-toko-umkm",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 381,
+      "topic": "SOP Pemeliharaan Preventif Mesin Kasir POS dan Printer Thermal Toko Ritel",
+      "trending_query": "sop pemeliharaan mesin kasir pos printer thermal toko ritel",
+      "primary_keyword": "sop pemeliharaan mesin kasir pos dan printer thermal",
+      "secondary_keywords": "cara membersihkan printhead printer thermal struk, perawatan laci uang kasir macet, kalibrasi barcode scanner nirkabel, mencegah kasir error saat ramai pembeli, pembersihan debu tablet kasir",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Kerusakan printer struk atau layar tablet kasir yang hang saat antrean pembeli mengular di meja kasir adalah mimpi buruk operasional toko.",
+      "credible_sources": [
+        "Panduan Teknis Pemeliharaan Perangkat Kasir Retail Elektronik"
+      ],
+      "msme_opportunity": "Menghilangkan downtime kasir dan memperpanjang umur pakai perangkat keras hingga lebih dari 5 tahun.",
+      "article_angle": "Pembersihan printhead dengan alkohol isopropil berkala, backup daya UPS mini, dan SOP restart sistem mingguan.",
+      "slug": "sop-pemeliharaan-mesin-kasir-pos-printer-thermal",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 382,
+      "topic": "Cara Menghitung Titik Impas (BEP) Layanan Pesan Antar Mandiri Toko Kuliner",
+      "trending_query": "cara hitung bep layanan pesan antar mandiri kurir toko kuliner",
+      "primary_keyword": "cara menghitung bep layanan pesan antar kuliner",
+      "secondary_keywords": "pesan antar kurir internal vs ojek online komisi 20 persen, biaya bensin motor dan uang makan kurir toko, radius jarak antar hemat gratis ongkir, titik impas pesanan makanan harian, pemesanan langsung via whatsapp",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Komisi platform ojek online sebesar 20-25% mendorong banyak restoran dan kedai kopi membuka armada kurir pengantaran mandiri untuk pelanggan sekitar.",
+      "credible_sources": [
+        "Studi Efisiensi Logistik Kuliner Domestik Indonesia 2026"
+      ],
+      "msme_opportunity": "Mengamankan margin bersih utuh tanpa potongan komisi pihak ketiga dan membangun basis pelanggan loyal radius 3 km.",
+      "article_angle": "Kalkulasi titik impas jumlah pesanan minimal per hari, upah kurir internal, dan pesanan via WhatsApp Gateway Cooca.",
+      "slug": "cara-menghitung-bep-layanan-pesan-antar-kuliner",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 383,
+      "topic": "Strategi Mengurangi Ketergantungan Diskon Harga dengan Penawaran Berbasis Nilai",
+      "trending_query": "strategi mengurangi ketergantungan diskon harga umkm value based",
+      "primary_keyword": "strategi mengurangi ketergantungan diskon harga umkm",
+      "secondary_keywords": "keluar dari perang harga banting modal, value based pricing produk lokal, bonus produk eksklusif pengganti diskon tunai, storytelling brand kualitas terpercaya, mengamankan margin keuntungan toko",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Terlalu sering memberikan diskon potongan harga membuat konsumen hanya berbelanja saat ada obral, merusak reputasi brand dan menekan profitabilitas.",
+      "credible_sources": [
+        "Customer Value Proposition & Pricing Strategy Frameworks"
+      ],
+      "msme_opportunity": "Menjual produk dengan harga penuh yang stabil dan menguntungkan tanpa kehilangan antusiasme pembeli setia.",
+      "article_angle": "Penggantian diskon uang tunai dengan gift with purchase (GWP), garansi kepuasan, dan program keanggotaan loyalitas Cooca.",
+      "slug": "strategi-mengurangi-ketergantungan-diskon-harga-umkm",
+      "assigned_category": "HPP & Harga Jual"
+    },
+    {
+      "id": 384,
+      "topic": "SOP Penerimaan Retur Pembeli Toko Fisik dan Prosedur Tukar Barang Kasir",
+      "trending_query": "sop penerimaan retur pembeli toko fisik tukar barang kasir pos",
+      "primary_keyword": "sop penerimaan retur toko fisik dan tukar barang kasir",
+      "secondary_keywords": "kebijakan retur barang toko baju ritel, batas waktu tukar ukuran nota kasir, formulir berita acara retur konsumen, syarat struk belanja asli, mitigasi komplain pelanggan toko offline",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Banyak toko fisik mengalami perdebatan di meja kasir saat pembeli ingin menukar ukuran baju atau barang yang salah beli tanpa membawa struk resmi.",
+      "credible_sources": [
+        "Undang-Undang Nomor 8 Tahun 1999 tentang Perlindungan Konsumen"
+      ],
+      "msme_opportunity": "Menjaga kenyamanan pembeli sekaligus melindungi toko dari penipuan penukaran barang yang sudah dipakai atau bukan produk toko.",
+      "article_angle": "Klausul retur 3 hari kerja, pengecekan barcode struk kasir POS Cooca, dan alur tukar barang beda harga.",
+      "slug": "sop-penerimaan-retur-toko-fisik-tukar-barang-kasir",
+      "assigned_category": "Kasir & POS"
+    },
+    {
+      "id": 385,
+      "topic": "Cara Negosiasi Biaya Sewa Kios Mal dan Pusat Perbelanjaan Perpanjangan 2027",
+      "trending_query": "cara negosiasi biaya sewa kios mal ruko perpanjangan 2027 umkm",
+      "primary_keyword": "negosiasi biaya sewa kios mal dan ruko 2027",
+      "secondary_keywords": "skema revenue sharing bagi hasil sewa tempat, penundaan kenaikan uang sewa ruko tahunan, service charge mal dan listrik ac, data penjualan kasir untuk negosiasi pengelola gedung, klausul sewa komersial aman",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Menjelang akhir tahun, pengelola pusat perbelanjaan dan pemilik ruko mengirimkan surat tagihan perpanjangan sewa dengan kenaikan tarif 10-20% untuk tahun 2027.",
+      "credible_sources": [
+        "Asosiasi Pengelola Pusat Belanja Indonesia (APPBI)"
+      ],
+      "msme_opportunity": "Menahan kenaikan sewa atau beralih ke skema bagi hasil (revenue sharing) yang ramah arus kas usaha kecil.",
+      "article_angle": "Menyajikan data laporan perputaran kasir POS resmi, opsi perpanjangan multi-tahun dengan diskon, dan perundingan service charge.",
+      "slug": "cara-negosiasi-biaya-sewa-kios-perpanjangan-2027",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 386,
+      "topic": "Panduan Standarisasi Pelabelan Barcode SKU Standar GS1 bagi Produk Lokal UMKM",
+      "trending_query": "panduan standarisasi barcode sku gs1 produk lokal umkm ritel modern",
+      "primary_keyword": "standarisasi barcode sku standar gs1 produk umkm",
+      "secondary_keywords": "cara daftar barcode ean 13 resmi gs1 indonesia, syarat produk tembus minimarket indomaret alfamart, kode nomor identifikasi barang global gtin, cetak label barcode kemasan produk, manajemen penomoran sku toko",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Untuk menembus rak supermarket dan minimarket modern, produk UMKM wajib memiliki kode barcode EAN-13 berstandar internasional GS1.",
+      "credible_sources": [
+        "GS1 Indonesia Standarisasi Sistem Identifikasi Global"
+      ],
+      "msme_opportunity": "Membuka pintu pasar ritel modern nasional dan ekspor luar negeri dengan legalitas identifikasi barang yang sah.",
+      "article_angle": "Alur pendaftaran nomor induk GTIN di GS1 Indonesia, cara mendesain posisi barcode di kemasan, dan pemindaian di kasir Cooca.",
+      "slug": "panduan-standarisasi-barcode-sku-gs1-produk-umkm",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 387,
+      "topic": "Cara Mengelola Kasbon Karyawan dan Kebijakan Plafon Pinjaman Usaha Mikro",
+      "trending_query": "cara mengelola kasbon pinjaman karyawan toko umkm sop potongan",
+      "primary_keyword": "cara mengelola kasbon karyawan toko umkm",
+      "secondary_keywords": "aturan plafon pinjaman uang kasir staf toko, form permohonan kasbon karyawan tertulis, batas maksimal potongan gaji bulanan, menjaga keharmonisan finansial staf kerja, pembukuan piutang karyawan toko",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Menjelang akhir tahun, kebutuhan mendesak karyawan toko sering memicu permohonan pinjaman uang muka (kasbon) yang dapat mengganggu arus kas jika tidak dibatasi aturan formal.",
+      "credible_sources": [
+        "Pedoman Manajemen SDM Usaha Kecil dan Peraturan Pengupahan Kemenaker"
+      ],
+      "msme_opportunity": "Membantu kebutuhan darurat karyawan tanpa mengacaukan pembukuan uang tunai di meja kasir.",
+      "article_angle": "Batas plafon kasbon maksimal 30 persen dari gaji pokok, formulir tanda terima bermaterai, dan pemotongan otomatis pada slip gaji Cooca.",
+      "slug": "cara-mengelola-kasbon-karyawan-plafon-pinjaman-umkm",
+      "assigned_category": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 388,
+      "topic": "Strategi Reaktivasi Pelanggan Toko Fisik Pasca Event Belanja via Broadcast WA",
+      "trending_query": "strategi reaktivasi pelanggan toko fisik broadcast whatsapp pasca 11.11",
+      "primary_keyword": "reaktivasi pelanggan pasca event via whatsapp",
+      "secondary_keywords": "follow up pembeli toko offline setelah belanja, pesan broadcast wa personal nama pembeli, voucher terima kasih belanja kedua, menjaga repeat order toko ritel, database crm kasir pos",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Ratusan pembeli baru yang berbelanja saat puncak promo 11.11 berpotensi hilang begitu saja jika toko tidak segera melakukan follow-up dalam waktu 48 jam pertama.",
+      "credible_sources": [
+        "Customer Retention & Omnichannel Marketing Benchmarks 2026"
+      ],
+      "msme_opportunity": "Mengonversi 15 sampai 25 persen pembeli musiman menjadi pembeli setia dengan biaya akuisisi nol rupiah.",
+      "article_angle": "Kirim pesan terima kasih H+1, voucher diskon belanja kedua berlaku 7 hari, dan segmentasi nomor kontak via WhatsApp Gateway Cooca.",
+      "slug": "strategi-reaktivasi-pelanggan-pasca-event-via-whatsapp",
+      "assigned_category": "Marketing & WhatsApp"
+    },
+    {
+      "id": 389,
+      "topic": "SOP Penyusunan Purchase Order (PO) Bahan Baku Tambahan Menghadapi 12.12",
+      "trending_query": "sop purchase order bahan baku tambahan supplier belanja 12.12",
+      "primary_keyword": "sop penyusunan purchase order bahan baku 12 12",
+      "secondary_keywords": "order bahan baku supplier sebelum pabrik libur akhir tahun, lead time pengiriman barang awal desember, klausul penalti keterlambatan pengiriman vendor, dokumen po resmi komersial, estimasi kuota pesanan festival",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Setelah stok menipis terkuras pada festival 11.11, pengusaha manufaktur dan kuliner harus segera menerbitkan PO restock bahan baku sebelum supplier menutup order libur akhir tahun.",
+      "credible_sources": [
+        "Supply Chain Planning Standards for Festive Peak Season 2026"
+      ],
+      "msme_opportunity": "Mengamankan kuota dan harga bahan baku terbaik sebelum terjadi kelangkaan pasokan di pasar pada bulan Desember.",
+      "article_angle": "Kalkulasi safety stock 12.12, klausul batas waktu pengiriman maksimal akhir November, dan otomasi PO Cooca.",
+      "slug": "sop-penyusunan-purchase-order-bahan-baku-12-12",
+      "assigned_category": "Invoice, PO & SO"
+    },
+    {
+      "id": 390,
+      "topic": "Cara Menghitung Biaya Penanganan Barang Retur (Reverse Logistics Cost) Ritel",
+      "trending_query": "cara hitung biaya reverse logistics retur barang toko online ritel hpp",
+      "primary_keyword": "cara menghitung biaya reverse logistics retur ritel",
+      "secondary_keywords": "biaya sortir dan repackaging barang retur pembeli, persentase nilai susut barang rusak kembali gudang, cadangan kerugian retur di laporan laba rugi, penanganan komplain logistik terbalik, rumus dampak retur pada margin bersih",
+      "search_intent": "informational",
+      "search_interest": "Sedang",
+      "trending_reason": "Pasca pesta belanja 11.11, gelombang retur barang dari paket COD yang ditolak atau salah ukuran mulai berdatangan ke gudang, membebani biaya penanganan staf.",
+      "credible_sources": [
+        "Reverse Logistics Management & E-Commerce Cost Analysis"
+      ],
+      "msme_opportunity": "Mengendalikan kerugian finansial akibat barang retur dan menyelamatkan produk yang masih layak jual dengan cepat.",
+      "article_angle": "Komponen biaya logistik balik (ongkir bolak-balik, bubble wrap baru, waktu sortir), dan alokasi pos cadangan retur.",
+      "slug": "cara-menghitung-biaya-reverse-logistics-retur-ritel",
+      "assigned_category": "Inventori & Stok"
+    },
+    {
+      "id": 391,
+      "topic": "Panduan Mengurus Izin Edar Produk Kosmetik Notifikasi BPOM bagi Brand Lokal",
+      "trending_query": "panduan mengurus izin edar kosmetik notifikasi bpom umkm syarat biaya",
+      "primary_keyword": "panduan izin edar kosmetik notifikasi bpom umkm",
+      "secondary_keywords": "alur pendaftaran akun perusahaan oss bpom, uji stabilitas dan mikrobiologi kosmetik, perjanjian maklon kosmetik berstandar cpkb, nomor notifikasi na kemasan produk kecantikan, legalitas skincare lokal aman",
+      "search_intent": "informational",
+      "search_interest": "Tinggi",
+      "trending_reason": "Tingginya permintaan produk perawatan kulit (skincare) dan kosmetik lokal menuntut UMKM memiliki izin edar resmi BPOM agar tidak terjerat razia hukum atau penarikan barang.",
+      "credible_sources": [
+        "Badan Pengawas Obat dan Makanan (BPOM) RI",
+        "Peraturan BPOM No. 21 Tahun 2022"
+      ],
+      "msme_opportunity": "Menaikkan nilai jual brand produk kecantikan lokal hingga 10 kali lipat dan membuka peluang kerja sama dengan reseller modern.",
+      "article_angle": "Langkah pendaftaran sistem Notifkos BPOM, syarat sertifikat CPKB pabrik maklon, dan penulisan nomor NA di kemasan produk.",
+      "slug": "panduan-izin-edar-kosmetik-notifikasi-bpom-umkm",
+      "assigned_category": "Pajak & Legalitas"
+    }
+  ]
+}

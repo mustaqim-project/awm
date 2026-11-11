@@ -26,14 +26,14 @@
 @section('content')
 <div class="bg-[#F5F5F5] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors duration-300 min-h-screen pb-16 font-sans">
 
-    {{-- Shopee-Style Header & Search Hub (Mempertahankan Warna Cooca: Midnight Blue & Royal Blue) --}}
+    {{-- COOCA Marketplace Header & Search Hub (Warna Resmi: Midnight Blue & Royal Blue) --}}
     <section class="relative bg-gradient-to-b from-[#060B1E] via-[#0A1435] to-[#0A163B] text-white pt-2 pb-5 border-b border-white/10 shadow-md">
         {{-- Ambient Tech Glows --}}
         <div class="absolute top-0 right-1/4 w-96 h-96 bg-[#007AFF]/15 rounded-full blur-[140px] pointer-events-none"></div>
         <div class="absolute bottom-0 left-1/4 w-80 h-80 bg-[#00C4D8]/10 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div class="max-w-[1240px] mx-auto px-3 sm:px-4 lg:px-6 relative z-10 space-y-3">
-            {{-- Top Mini Utility Bar (Persis Shopee Top Navigation Bar) --}}
+            {{-- Top Mini Utility Bar --}}
             <div class="flex items-center justify-between text-[11px] sm:text-xs border-b border-white/10 pb-2 text-slate-300">
                 <div class="flex items-center gap-2.5 sm:gap-4 flex-wrap">
                     <a href="{{ route('login') }}" class="hover:text-white transition flex items-center gap-1.5 font-medium">
@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            {{-- Main Header: Logo + Shopee Central Search Bar + Shopping Cart (Persis Gambar 1) --}}
+            {{-- Main Header: Logo + Central Search Bar + Direktori & Produk --}}
             <div class="flex flex-col md:flex-row items-center justify-between gap-3 pt-1">
                 {{-- Logo & Cooca Market Identity --}}
                 <div class="flex items-center justify-between w-full md:w-auto shrink-0 gap-3">
@@ -118,11 +118,11 @@
                     </div>
                 </div>
 
-                {{-- Prominent Central Search Bar with Shopee Layout & Keywords Underneath --}}
+                {{-- Prominent Central Search Bar with Real-Time Dynamic Keywords --}}
                 <div class="w-full md:flex-1 md:max-w-3xl md:mx-4 space-y-1.5">
                     <form method="GET" action="{{ route('marketplace.search') }}" class="w-full">
                         <div class="relative flex items-center bg-white rounded-md shadow-lg p-1 focus-within:ring-2 focus-within:ring-[#007AFF] transition">
-                            <input type="text" name="q" placeholder="Cari produk, kategori, atau nama toko di COOCA Market..."
+                            <input type="text" name="q" placeholder="Cari produk, kategori UMKM, atau nama toko di COOCA Market..."
                                 value="{{ request('q') }}"
                                 class="w-full bg-transparent border-0 px-3 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none">
                             <button type="submit"
@@ -133,7 +133,7 @@
                         </div>
                     </form>
 
-                    {{-- Popular Keyword Text Links (Persis Shopee Di Bawah Search Bar) --}}
+                    {{-- Popular Keyword Text Links Dinamis dari Sektor Resmi COOCA --}}
                     <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-[11px] text-slate-300">
                         @foreach ($popularKeywords as $kw)
                             <a href="{{ route('marketplace.search', ['q' => $kw]) }}"
@@ -151,7 +151,7 @@
                 <div class="hidden md:flex items-center gap-3 shrink-0">
                     <a href="{{ route('marketplace.sub.products') }}"
                         class="relative p-2.5 rounded-lg bg-white/10 hover:bg-white/15 text-white transition flex items-center justify-center"
-                        title="Keranjang Belanja">
+                        title="Katalog Produk">
                         <i data-lucide="shopping-cart" class="w-6 h-6 text-white"></i>
                         <span class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#007AFF] text-white text-[10px] font-bold flex items-center justify-center border-2 border-[#0A1435]">
                             {{ $totalProducts > 0 ? min($totalProducts, 99) : 0 }}
@@ -168,10 +168,10 @@
         </div>
     </section>
 
-    {{-- Main Container (Lebar Max 1240px standar Shopee Grid) --}}
+    {{-- Main Container --}}
     <main class="max-w-[1240px] mx-auto px-2 sm:px-4 lg:px-6 pt-3 sm:pt-4 space-y-4">
 
-        {{-- Section 1: Shopee-Style Hero Banners (2/3 Carousel Utama + 1/3 Stacked Banners Kanan - Gambar 1) --}}
+        {{-- Section 1: Hero Banners Ekosistem Bisnis COOCA --}}
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-2.5">
             {{-- Left Banner: Carousel 2/3 Width (lg:col-span-8) --}}
             <div class="lg:col-span-8 relative rounded-lg bg-gradient-to-br from-[#0B1739] via-[#0E1E45] to-[#0A163B] text-white border border-white/10 p-5 sm:p-7 flex flex-col justify-between overflow-hidden shadow-sm group min-h-[220px] sm:min-h-[260px]">
@@ -182,15 +182,15 @@
                 <div class="relative z-10 space-y-2.5 max-w-lg">
                     <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#00C4D8]/15 border border-[#00C4D8]/30 text-[#00C4D8] text-[10px] font-bold tracking-wide uppercase">
                         <span class="w-1.5 h-1.5 rounded-full bg-[#00C4D8] animate-pulse"></span>
-                        <span>COOCA PILIH LOKAL</span>
+                        <span>SENTRA BISNIS & BELANJA UMKM</span>
                     </div>
 
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white tracking-tight leading-snug">
-                        Tempat Belanja Produk Lokal No. 1 di Indonesia
+                        Pusat Produk & Layanan UMKM Terverifikasi di Indonesia
                     </h1>
 
                     <p class="text-xs text-slate-300 leading-relaxed font-normal">
-                        Dukung pertumbuhan bisnis lokal bersama {{ number_format($totalStores) }} toko UMKM terverifikasi dan {{ number_format($totalProducts) }} produk siap kirim ke seluruh nusantara.
+                        Dukung pertumbuhan bisnis lokal bersama {{ number_format($totalStores) }} toko UMKM terverifikasi dan {{ number_format($totalProducts) }} produk siap transaksi ke seluruh nusantara.
                     </p>
                 </div>
 
@@ -368,37 +368,45 @@
             </div>
         </section>
 
-        {{-- Section 3: Shopee "KATEGORI" Section (Box Putih dengan 2 Baris Kategori Berlingkar - Gambar 1) --}}
+        {{-- Section 3: Kategori Sektor Usaha UMKM COOCA --}}
         <section class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 shadow-sm overflow-hidden">
-            {{-- Header KATEGORI --}}
+            {{-- Header Kategori Sektor Usaha --}}
             <div class="px-4 py-3 border-b border-slate-100 dark:border-white/10 flex items-center justify-between">
-                <h2 class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
-                    KATEGORI
-                </h2>
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-[#00C4D8]"></span>
+                    <h2 class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200 uppercase tracking-wider">
+                        KATEGORI & SEKTOR USAHA UMKM
+                    </h2>
+                </div>
                 <a href="{{ route('marketplace.sub.categories') }}" class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                    <span>Lihat Semua</span>
+                    <span>Lihat Semua Sektor</span>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                 </a>
             </div>
 
-            {{-- 2-Row Category Grid (Persis Seperti di Gambar 1: Lingkaran Abu-Abu + Teks Kategori Rapi) --}}
+            {{-- 2-Row Category Grid: Sektor Industri Resmi & Kategori Produk Riil --}}
             <div class="p-3 sm:p-4 relative">
-                <div id="category-scroll-container" class="grid grid-rows-2 grid-flow-col auto-cols-[100px] sm:auto-cols-[116px] gap-2 overflow-x-auto no-scrollbar scroll-smooth">
+                <div id="category-scroll-container" class="grid grid-rows-2 grid-flow-col auto-cols-[104px] sm:auto-cols-[124px] gap-2 overflow-x-auto no-scrollbar scroll-smooth">
                     @foreach ($categories as $key => $cat)
                         <a href="{{ route('marketplace.search', ['kategori' => $key]) }}"
-                            class="p-2 rounded border border-slate-100 dark:border-white/5 hover:border-[#007AFF] hover:shadow-sm transition-all text-center group flex flex-col items-center justify-start gap-1.5 bg-slate-50/50 dark:bg-white/[0.02]">
+                            class="p-2.5 rounded border border-slate-100 dark:border-white/5 hover:border-[#007AFF] hover:shadow-sm transition-all text-center group flex flex-col items-center justify-start gap-1.5 bg-slate-50/50 dark:bg-white/[0.02]">
                             {{-- Circular Thumbnail --}}
-                            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-[#007AFF]/10 group-hover:text-[#007AFF] transition-all">
-                                <i data-lucide="{{ $cat['icon'] }}" class="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.75]"></i>
+                            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-[#007AFF]/10 group-hover:text-[#007AFF] transition-all">
+                                <i data-lucide="{{ $cat['icon'] }}" class="w-5 h-5 sm:w-6 sm:h-6 stroke-[1.75]"></i>
                             </div>
                             <span class="text-[11px] sm:text-xs text-slate-700 dark:text-slate-200 group-hover:text-[#007AFF] text-center line-clamp-2 leading-tight transition-colors">
                                 {{ $cat['label'] }}
                             </span>
+                            @if (!empty($cat['count']) && $cat['count'] > 0)
+                                <span class="text-[9px] text-[#007AFF] font-medium block">
+                                    {{ $cat['count'] }} {{ !empty($cat['is_product_category']) ? 'Produk' : 'Toko' }}
+                                </span>
+                            @endif
                         </a>
                     @endforeach
                 </div>
 
-                {{-- Floating Next Arrow Button (Persis Gambar 1) --}}
+                {{-- Floating Next Arrow Button --}}
                 <button type="button"
                     onclick="document.getElementById('category-scroll-container').scrollBy({left: 240, behavior: 'smooth'})"
                     class="hidden md:flex absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white dark:bg-[#2C2C2E] border border-slate-200 dark:border-white/20 shadow-md items-center justify-center text-slate-600 dark:text-white hover:bg-slate-50 transition z-10"
@@ -585,7 +593,7 @@
             @endif
         </section>
 
-        {{-- Section 6: Official Stores (TOKO RESMI UMKM / COOCA MALL) --}}
+        {{-- Section 6: Toko Binaan & Merchant Resmi UMKM --}}
         @if ($featuredStores->isNotEmpty())
             <section class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 p-3 sm:p-4 shadow-sm space-y-3">
                 <div class="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-2.5">

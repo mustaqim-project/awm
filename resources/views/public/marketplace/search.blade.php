@@ -141,7 +141,7 @@
                     </p>
                 </div>
 
-                {{-- Tokopedia / Shopee Search Form --}}
+                {{-- Marketplace Search Form --}}
                 <div class="bg-[#0E1E45]/80 p-3 sm:p-4 rounded-[24px] border border-white/15 shadow-2xl backdrop-blur-md">
                     <form method="GET" action="{{ route('marketplace.search') }}"
                         class="relative flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -234,7 +234,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
                 {{-- ────────────────────────────────────────────────────────────────── --}}
-                {{-- DESKTOP SIDEBAR: SHOPEE & TOKOPEDIA FILTER NAVIGATION --}}
+                {{-- DESKTOP SIDEBAR: FILTER NAVIGATION --}}
                 {{-- ────────────────────────────────────────────────────────────────── --}}
                 <aside class="hidden lg:block lg:col-span-3 space-y-6 sticky top-24">
                     <div class="bg-white dark:bg-[#0E172F]/70 rounded-[24px] border border-slate-200/80 dark:border-white/10 p-5 shadow-sm space-y-6 text-slate-900 dark:text-white">
@@ -255,7 +255,7 @@
                             @endif
                         </div>
 
-                        {{-- 1. KATEGORI FILTER (Shopee / Tokopedia tree list) --}}
+                        {{-- 1. KATEGORI FILTER --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
                                 <span>{{ __('public_marketplace.srch_cat_title') }}</span>
@@ -305,7 +305,7 @@
                             </div>
                         </div>
 
-                        {{-- 2. BATAS HARGA (Shopee / Tokopedia price input + presets) --}}
+                        {{-- 2. BATAS HARGA --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 {{ __('public_marketplace.srch_price_title') }}
@@ -417,7 +417,7 @@
                 {{-- ────────────────────────────────────────────────────────────────── --}}
                 <main class="lg:col-span-9 space-y-6">
 
-                    {{-- ═══ TOP CONTROLS & SHOPEE-STYLE SORT BAR ═══ --}}
+                    {{-- ═══ TOP CONTROLS & SORT BAR ═══ --}}
                     <div class="bg-white dark:bg-[#0E172F]/70 rounded-[24px] border border-slate-200/80 dark:border-white/10 p-4 sm:p-5 shadow-sm space-y-4">
 
                         {{-- Header Summary & Sort Controls --}}
@@ -437,7 +437,7 @@
                                 </p>
                             </div>
 
-                            {{-- Shopee / Tokopedia Segmented Sort Tabs --}}
+                            {{-- Segmented Sort Tabs --}}
                             <div class="flex items-center gap-2 shrink-0">
                                 <span class="text-xs font-semibold text-slate-500 dark:text-slate-400 hidden md:inline-block">{{ __('public_marketplace.srch_sort_title') }}</span>
 
@@ -472,7 +472,7 @@
                             </div>
                         </div>
 
-                        {{-- Horizontal Quick Category Chips (Shopee-Style Quick Slider) --}}
+                        {{-- Horizontal Quick Category Chips --}}
                         <div class="pt-2 border-t border-slate-200/80 dark:border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
                             <a href="{{ route('marketplace.search', request()->except(['kategori', 'page'])) }}"
                                 class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition inline-flex items-center gap-1.5 {{ empty($category) || $category === 'semua' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-slate-100 dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/15' }}">
@@ -611,7 +611,7 @@
                                             </p>
                                         </div>
 
-                                        {{-- Store and Location Info (Shopee / Tokopedia Element) --}}
+                                        {{-- Store and Location Info --}}
                                         <div class="pt-2 border-t border-slate-100 dark:border-white/10 space-y-1">
                                             <div class="flex items-center gap-1 text-[11px] sm:text-xs text-slate-600 dark:text-slate-300">
                                                 <i data-lucide="store" class="w-3 h-3 text-[#007AFF] shrink-0"></i>

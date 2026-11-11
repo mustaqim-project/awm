@@ -1,0 +1,150 @@
+---
+title: "Panduan Izin Edar Kosmetik Notifikasi BPOM UMKM Lengkap Legalitas"
+meta_title: "Panduan Izin Edar Kosmetik Notifikasi BPOM UMKM Resmi"
+meta_description: "Langkah panduan izin edar kosmetik notifikasi bpom umkm, syarat sertifikat cpkb maklon, pendaftaran akun oss, dokumen dip, dan label kemasan aman."
+slug: "panduan-izin-edar-kosmetik-notifikasi-bpom-umkm"
+primary_keyword: "panduan izin edar kosmetik notifikasi bpom umkm"
+secondary_keywords: "syarat daftar nomor notifikasi bpom kosmetik lokal, alur kontrak kerjasama pabrik maklon cpkb golongan b, dokumen informasi produk dip kosmetik badan pom, aturan klaim khasiat dan penulisan label kemasan skincare, legalitas hukum izin edar produk kecantikan umkm"
+search_intent: "informational"
+category: "Pajak & Legalitas"
+reading_time: "9 menit"
+cover_image: "https://cooca.id/images/blog/photo-1522335789203-aabd1fc54bc9.jpg"
+published_at: "2026-11-11T09:00:00+07:00"
+---
+# Panduan Izin Edar Kosmetik Notifikasi BPOM UMKM Lengkap Legalitas
+
+Industri kecantikan dan perawatan kulit (skincare) di Indonesia mengalami ledakan pertumbuhan yang sangat pesat dalam beberapa tahun terakhir. Banyak pengusaha muda dan perintis jenama lokal berhasil meraih penjualan miliaran rupiah dalam hitungan bulan melalui pemasaran media sosial dan live streaming. Namun, di balik peluang keuntungan yang menggiurkan tersebut, industri kosmetik adalah salah satu sektor bisnis yang paling ketat diawasi oleh otoritas penegak hukum. Menjual produk kecantikan tanpa izin edar resmi dari Badan Pengawas Obat dan Makanan (BPOM) bukan sekadar pelanggaran administratif, melainkan tindak pidana yang diancam hukuman penjara hingga 15 tahun dan denda miliaran rupiah. Memahami panduan izin edar kosmetik notifikasi bpom umkm adalah benteng hukum mutlak untuk melindungi bisnis Anda dari jeratan hukum serta menjamin keselamatan kulit konsumen.
+
+Banyak perintis bisnis kecantikan pemula merasa gentar mengurus perizinan BPOM karena membayangkan harus mendirikan pabrik laboratorium yang mahal dengan investasi miliaran rupiah. Anggapan ini keliru. Berkat adanya skema industri maklon kosmetik berlisensi CPKB (Cara Pembuatan Kosmetika yang Baik), pemilik merek UMKM dapat memproduksi produk kecantikan berkualitas tinggi secara legal tanpa harus memiliki pabrik sendiri. Badan POM telah merancang sistem perizinan daring terpadu melalui mekanisme Notifikasi Kosmetik yang cepat dan transparan. Melalui panduan ini, kita akan membahas syarat legalitas usaha OSS, alur kontrak kerja sama maklon berlisensi, penyusunan Dokumen Informasi Produk (DIP), aturan penulisan label kemasan, dan masa berlaku izin edar.
+
+## Panduan Izin Edar Kosmetik Notifikasi BPOM UMKM dan Landasan Hukumnya
+
+Berdasarkan peraturan perundang-undangan di Indonesia (UU Kesehatan Nomor 17 Tahun 2023 dan Peraturan BPOM tentang Notifikasi Kosmetika), setiap kosmetik yang diedarkan di wilayah Republik Indonesia wajib memiliki izin edar berupa Nomor Notifikasi Kosmetik yang diterbitkan oleh Kepala Badan Pengawas Obat dan Makanan.
+
+Penerapan panduan izin edar kosmetik notifikasi bpom umkm melalui skema kontrak maklon melibatkan 4 pilar kepatuhan:
+1. Legalitas Badan Usaha Pemilik Merek: Pemilik merek wajib memiliki Nomor Induk Berusaha (NIB) berbasis risiko dari Online Single Submission (OSS) dengan Klasifikasi Baku Lapangan Usaha Indonesia (KBLI) Perdagangan Besar atau Eceran Kosmetik, serta memiliki NPWP perusahaan yang valid.
+2. Perjanjian Kerja Sama Maklon Notaris (Toll Manufacturing Agreement): Kontrak kerja sama resmi antara pemilik merek dengan industri farmasi/kosmetik bersertifikat CPKB minimal Golongan B yang dilegalisasi oleh notaris.
+3. Dokumen Informasi Produk (DIP): Berkas teknis komprehensif yang memuat formula kualitatif dan kuantitatif bahan baku, sertifikat analisis (Certificate of Analysis / CoA), uji stabilitas produk, dan bukti keamanan mikrobiologi.
+4. Kepatuhan Penandaan dan Klaim Khasiat (Labeling & Claims): Desain label kemasan wajib mencantumkan nama produk, nomor notifikasi BPOM (kode NA diikuti 11 digit angka), komposisi lengkap bahan (INCI Name), nama produsen dan pemilik merek, nomor batch produksi, tanggal kedaluwarsa, dan batas klaim kosmetik (bukan klaim medis obat).
+
+Dengan memenuhi keempat pilar ini, produk kecantikan Anda dijamin 100% legal dan siap didistribusikan ke klinik kecantikan, apotek, maupun marketplace nasional.
+
+Kewajiban perpajakan usaha diulas lengkap pada [kepatuhan setor pph final 15 november 2026 umkm](https://cooca.id/blog/kepatuhan-setor-pph-final-15-november-2026-umkm).
+
+## Tabel Matriks Alur Pendaftaran Notifikasi Kosmetik BPOM via Maklon
+
+Berikut adalah tabel tahapan waktu dan berkas yang diperlukan dalam mengurus notifikasi kosmetik BPOM bersama pabrik maklon:
+
+| Tahapan Prosedural | Waktu Proses Rata-rata | Instansi / Pihak Terlibat | Dokumen Output yang Diterbitkan |
+| :--- | :--- | :--- | :--- |
+| 1. Pembuatan NIB & Sertifikat Merek HKI | 3 - 7 Hari Kerja | Sistem OSS Kemeninvestasi & DJKI Kemenkumham | NIB KBLI Kosmetik & Bukti Pendaftaran Merek HKI |
+| 2. Perjanjian Maklon Notaris | 3 - 5 Hari Kerja | Kantor Notaris Resmi & Pabrik Maklon CPKB | Akta Perjanjian Kontrak Maklon Notaris Sah |
+| 3. Pendaftaran Akun Perusahaan di BPOM | 7 - 14 Hari Kerja | Sistem Notifkos Badan POM (notifkos.pom.go.id) | User ID & Kata Sandi Akun Pemohon BPOM |
+| 4. Pengujian Sampel & Penyusunan DIP | 14 - 30 Hari Kerja | Laboratorium Terakreditasi & Tim R&D Maklon | Berkas Dokumen Informasi Produk (DIP) Lengkap |
+| 5. Verifikasi Formula & Penerbitan Notifikasi | 3 - 14 Hari Kerja (SLA BPOM) | Evaluator Teknis Badan POM Pusat | Nomor Izin Edar Notifikasi BPOM (Contoh: NA18260100123) |
+
+Tabel alur di atas memperlihatkan bahwa mengurus izin edar BPOM melalui jalur maklon membutuhkan total waktu sekitar 2 hingga 3 bulan sejak perumusan sampel awal. Oleh karena itu, perencanaan peluncuran merek skincare baru harus dipersiapkan jauh-jauh hari sebelum kampanye pemasaran dimulai.
+
+Validasi perpajakan pengusaha dibahas di [panduan validasi nik npwp coretax djp umkm](https://cooca.id/blog/panduan-validasi-nik-npwp-coretax-djp-umkm).
+
+## 4 Aturan Emas Desain Kemasan dan Labeling Kosmetik Resmi BPOM
+
+Banyak nomor notifikasi BPOM yang ditolak atau produknya ditarik dari pasaran (recall) bukan karena bahan bakunya berbahaya, melainkan karena kesalahan fatal pada penulisan label kemasan. Patuhi 4 aturan wajib berikut:
+
+### 1. Cantumkan Nomor Notifikasi BPOM dengan Jelas
+Cetak nomor registrasi BPOM pada kemasan primer (botol/pot wadah langsung) dan kemasan sekunder (kotak kardus luar) dengan format baku: NA diikuti 11 digit angka (misalnya: POM NA18261205678). Kode NA menandakan produk kosmetik yang dinotifikasi untuk kawasan benua Asia.
+
+### 2. Penulisan Daftar Komposisi Menggunakan Standar INCI
+Seluruh bahan penyusun produk wajib dicantumkan berurutan mulai dari konsentrasi persentase tertinggi hingga terendah menggunakan nama baku internasional (International Nomenclature of Cosmetic Ingredients / INCI Name). Contoh: Water, Niacinamide, Glycerin, Centella Asiatica Extract.
+
+### 3. Batasan Klaim Khasiat Kosmetik (Cosmetic Claims Boundary)
+Kosmetik hanya berfungsi untuk membersihkan, mewangikan, mengubah penampilan, dan memelihara tubuh pada kondisi baik. Kosmetik dilarang keras mengklaim fungsi medis penyembuhan penyakit, seperti Menghilangkan jerawat dalam 24 jam permanen, Menyembuhkan infeksi kulit, atau Memutihkan kulit seketika. Gunakan klaim yang diizinkan seperti Membantu menyamarkan noda bekas jerawat atau Membantu mencerahkan kulit kusam.
+
+### 4. Pencantuman Nomor Batch dan Tanggal Kedaluwarsa
+Nomor batch produksi (Batch Number) dan tanggal kedaluwarsa (Expired Date) wajib dicetak dengan jelas menggunakan mesin cetak dot-matrix atau hot-stamping yang tidak mudah terhapus.
+
+Dasar perhitungan modal produksi kosmetik diulas di [activity-based costing umkm](https://cooca.id/blog/activity-based-costing-umkm).
+
+## Mengelola Masa Berlaku Izin Edar dan Uji Berkala Pasca Pasar
+
+Nomor Notifikasi BPOM untuk produk kosmetik memiliki masa berlaku selama 3 tahun sejak tanggal diterbitkan. Sebelum masa berlaku habis (minimal 6 bulan sebelum kedaluwarsa), pemilik merek wajib mengajukan perpanjangan notifikasi (renewal) jika produk masih ingin terus diedarkan di pasaran.
+
+Selain itu, Badan POM secara rutin melakukan pengawasan pasca-pasar (post-market surveillance) dengan cara mengambil sampel acak (sampling) produk yang beredar di toko dan marketplace untuk diuji di laboratorium pemerintah. Selalu pastikan pabrik maklon Anda konsisten menggunakan bahan baku berkualitas tinggi yang bebas dari zat berbahaya seperti merkuri, hidrokinon, dan asam retinoat agar bisnis Anda terbebas dari ancaman sanksi pencabutan izin edar.
+
+Manajemen beban usaha lainnya dibahas di [biaya overhead usaha kecil](https://cooca.id/blog/biaya-overhead-usaha-kecil).
+
+## Integrasi Inventori Kosmetik dan Pelaporan Batch dengan COOCA
+
+Menjual produk kecantikan yang memiliki nomor notifikasi BPOM dan masa kedaluwarsa menuntut ketelitian pencatatan inventori yang sangat tinggi. Mengedarkan kosmetik yang telah lewat masa kedaluwarsa berisiko memicu tuntutan ganti rugi dari konsumen dan sanksi dari pihak berwenang. Platform COOCA menyediakan modul inventori cerdas dengan sistem First Expired First Out (FEFO) dan pelacakan nomor batch (Batch Tracking).
+
+Saat produk kosmetik masuk ke gudang, staf menginput nomor batch dan tanggal kedaluwarsa ke sistem COOCA. Ketika kasir POS memindai produk saat penjualan, sistem secara otomatis memastikan batch yang lebih awal kedaluwarsa keluar lebih dulu. Pemilik usaha dapat memantau peringatan dini (early warning) stok yang mendekati masa expired 6 bulan sebelumnya secara otomatis. Bagi perintis jenama kecantikan lokal, manfaatkan kemudahan paket Solo Owner COOCA dengan biaya langganan Rp 0 gratis selamanya untuk mengamankan operasional bisnis kosmetik Anda secara legal dan profesional.
+
+## FAQ: Pertanyaan Seputar Notifikasi BPOM Kosmetik UMKM
+
+### Berapa biaya resmi penerimaan negara bukan pajak (PNBP) untuk pendaftaran notifikasi kosmetik di BPOM?
+Biaya resmi PNBP yang disetorkan langsung ke kas negara melalui sistem e-billing Badan POM adalah sebesar Rp 500.000 per varian produk untuk kosmetik yang diproduksi di dalam kawasan negara ASEAN (termasuk produk maklon lokal Indonesia), dan Rp 1.500.000 per produk untuk kosmetik impor dari luar kawasan ASEAN. Biaya ini belum termasuk biaya uji laboratorium dan jasa maklon.
+
+### Apakah sertifikat merek HKI dari Kemenkumham wajib dimiliki sebelum mengajukan notifikasi BPOM?
+Badan POM mewajibkan pemohon notifikasi menyertakan minimal Surat Bukti Penerimaan Permohonan Pendaftaran Merek dari Direktorat Jenderal Kekayaan Intelektual (DJKI) Kemenkumham. Hal ini penting untuk mencegah sengketa peniruan merek dagang di kemudian hari. Sangat disarankan untuk mendaftarkan merek HKI terlebih dahulu sebelum mulai memesan kemasan produk ke pabrik maklon.
+
+### Apa sanksi hukum bagi pengusaha yang nekat menjual kosmetik tanpa izin edar BPOM?
+Berdasarkan Pasal 435 Undang-Undang Nomor 17 Tahun 2023 tentang Kesehatan, setiap orang yang memproduksi atau mengedarkan sediaan farmasi (termasuk kosmetik) yang tidak memiliki izin edar diancam dengan pidana penjara paling lama 12 tahun atau pidana denda paling banyak Rp 5.000.000.000 (lima miliar rupiah). Selain sanksi pidana, seluruh produk ilegal akan disita dan dimusnahkan oleh pihak berwenang.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Panduan Izin Edar Kosmetik Notifikasi BPOM UMKM Lengkap Legalitas",
+      "description": "Langkah panduan izin edar kosmetik notifikasi bpom umkm, syarat sertifikat cpkb maklon, pendaftaran akun oss, dokumen dip, dan label kemasan aman.",
+      "image": "https://cooca.id/images/blog/photo-1522335789203-aabd1fc54bc9.jpg",
+      "datePublished": "2026-11-11T09:00:00+07:00",
+      "dateModified": "2026-11-11T09:00:00+07:00",
+      "url": "https://cooca.id/blog/panduan-izin-edar-kosmetik-notifikasi-bpom-umkm",
+      "mainEntityOfPage": "https://cooca.id/blog/panduan-izin-edar-kosmetik-notifikasi-bpom-umkm",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Berapa biaya resmi penerimaan negara bukan pajak (PNBP) untuk pendaftaran notifikasi kosmetik di BPOM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Biaya resmi PNBP yang disetorkan langsung ke kas negara melalui sistem e-billing Badan POM adalah sebesar Rp 500.000 per varian produk untuk kosmetik yang diproduksi di dalam kawasan negara ASEAN (termasuk produk maklon lokal Indonesia), dan Rp 1.500.000 per produk untuk kosmetik impor dari luar kawasan ASEAN. Biaya ini belum termasuk biaya uji laboratorium dan jasa maklon."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah sertifikat merek HKI dari Kemenkumham wajib dimiliki sebelum mengajukan notifikasi BPOM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Badan POM mewajibkan pemohon notifikasi menyertakan minimal Surat Bukti Penerimaan Permohonan Pendaftaran Merek dari Direktorat Jenderal Kekayaan Intelektual (DJKI) Kemenkumham. Hal ini penting untuk mencegah sengketa peniruan merek dagang di kemudian hari. Sangat disarankan untuk mendaftarkan merek HKI terlebih dahulu sebelum mulai memesan kemasan produk ke pabrik maklon."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa sanksi hukum bagi pengusaha yang nekat menjual kosmetik tanpa izin edar BPOM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Berdasarkan Pasal 435 Undang-Undang Nomor 17 Tahun 2023 tentang Kesehatan, setiap orang yang memproduksi atau mengedarkan sediaan farmasi (termasuk kosmetik) yang tidak memiliki izin edar diancam dengan pidana penjara paling lama 12 tahun atau pidana denda paling banyak Rp 5.000.000.000 (lima miliar rupiah). Selain sanksi pidana, seluruh produk ilegal akan disita dan dimusnahkan oleh pihak berwenang."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

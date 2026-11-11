@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Business;
+use App\Models\BusinessTypeTemplate;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
@@ -124,12 +125,17 @@ final class PublicMarketplaceController extends Controller
         // Category filter
         if ($category !== '' && $category !== 'semua') {
             $query->where(function ($q) use ($category): void {
-                $q->whereHas('business', function ($bq) use ($category): void {
-                    $bq->where('industry_category', $category)
-                        ->orWhere('template_code', 'like', "{$category}%");
-                })->orWhereHas('category', function ($cq) use ($category): void {
-                    $cq->where('name', 'like', "%{$category}%");
-                });
+                if (str_starts_with($category, 'pcat_')) {
+                    $slug = substr($category, 5);
+                    $q->whereHas('category', fn($cq) => $cq->where('slug', $slug));
+                } else {
+                    $q->whereHas('business', function ($bq) use ($category): void {
+                        $bq->where('industry_category', $category)
+                            ->orWhere('template_code', 'like', "{$category}%");
+                    })->orWhereHas('category', function ($cq) use ($category): void {
+                        $cq->where('name', 'like', "%{$category}%");
+                    });
+                }
             });
         }
 
@@ -208,7 +214,7 @@ final class PublicMarketplaceController extends Controller
 
     /**
      * Build category count data for filter pills and marketplace grid.
-     * Strictly based on COOCA's real 20 industry sectors and active product categories.
+     * Strictly based on COOCA's real database industry templates and active product categories.
      *
      * @return array<string, array<string, mixed>>
      */
@@ -220,149 +226,101 @@ final class PublicMarketplaceController extends Controller
                     ->orWhereHas('storeSetting', fn($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
             });
 
-        // 20 Official Sektor Industri UMKM COOCA
-        return [
-            'fnb_resto' => [
-                'label' => 'Restoran & Rumah Makan',
-                'icon'  => 'utensils',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'fnb')->orWhere('template_code', 'like', 'fnb_resto%'))
-                    ->count(),
-            ],
-            'fnb_cafe' => [
-                'label' => 'Coffee Shop & Cafe',
-                'icon'  => 'coffee',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_cafe%'))
-                    ->count(),
-            ],
-            'fnb_bakery' => [
-                'label' => 'Bakery & Toko Roti',
-                'icon'  => 'cake',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_bakery%'))
-                    ->count(),
-            ],
-            'fnb_frozen_food' => [
-                'label' => 'Makanan Olahan & Frozen',
-                'icon'  => 'snowflake',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_frozen%'))
-                    ->count(),
-            ],
-            'fnb_catering' => [
-                'label' => 'Katering & Prasmanan',
-                'icon'  => 'soup',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_catering%'))
-                    ->count(),
-            ],
-            'fashion' => [
-                'label' => 'Konveksi, Garment & Busana',
-                'icon'  => 'shirt',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'fashion')->orWhere('template_code', 'like', 'mfg_garment%'))
-                    ->count(),
-            ],
-            'printing' => [
-                'label' => 'Percetakan & Digital Printing',
-                'icon'  => 'printer',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_printing%'))
-                    ->count(),
-            ],
-            'furniture' => [
-                'label' => 'Mebel & Pengrajin Kayu',
-                'icon'  => 'hammer',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_furniture%'))
-                    ->count(),
-            ],
-            'craft' => [
-                'label' => 'Kerajinan Tangan & Kriya',
-                'icon'  => 'palette',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'craft')->orWhere('template_code', 'like', 'mfg_craft%'))
-                    ->count(),
-            ],
-            'retail' => [
-                'label' => 'Toko Ritel & Kelontong',
-                'icon'  => 'store',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'retail')->orWhere('template_code', 'like', 'retail_reseller%'))
-                    ->count(),
-            ],
-            'pharmacy' => [
-                'label' => 'Apotek & Toko Obat',
-                'icon'  => 'heart-pulse',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'health')->orWhere('template_code', 'like', 'retail_pharmacy%'))
-                    ->count(),
-            ],
-            'workshop' => [
-                'label' => 'Bengkel Motor & Mobil',
-                'icon'  => 'wrench',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'workshop')->orWhere('template_code', 'like', 'service_workshop%')->orWhere('template_code', 'like', 'bengkel%'))
-                    ->count(),
-            ],
-            'barbershop' => [
-                'label' => 'Barbershop & Salon Kecantikan',
-                'icon'  => 'scissors',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'beauty')->orWhere('template_code', 'like', 'service_barbershop%'))
-                    ->count(),
-            ],
-            'laundry' => [
-                'label' => 'Laundry Kiloan & Satuan',
-                'icon'  => 'droplets',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'laundry')->orWhere('template_code', 'like', 'service_laundry%'))
-                    ->count(),
-            ],
-            'agency' => [
-                'label' => 'Jasa, Studio & Agensi Kreatif',
-                'icon'  => 'briefcase',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'service')->orWhere('template_code', 'like', 'service_agency%'))
-                    ->count(),
-            ],
-            'contractor' => [
-                'label' => 'Kontraktor & Desain Interior',
-                'icon'  => 'hard-hat',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'service_contractor%'))
-                    ->count(),
-            ],
-            'event' => [
-                'label' => 'Event Organizer & Wedding',
-                'icon'  => 'calendar',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'service_event%'))
-                    ->count(),
-            ],
-            'agriculture' => [
-                'label' => 'Pertanian, Tani & Hidroponik',
-                'icon'  => 'wheat',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'agriculture')->orWhere('template_code', 'like', 'agri%'))
-                    ->count(),
-            ],
-            'precision' => [
-                'label' => 'Fabrikasi & Permesinan Logam',
-                'icon'  => 'cog',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_precision%'))
-                    ->count(),
-            ],
-            'distributor' => [
-                'label' => 'Distributor & Grosir Bahan',
-                'icon'  => 'truck',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('template_code', 'like', 'distributor%'))
-                    ->count(),
-            ],
+        $iconMap = [
+            'fnb_resto' => 'utensils',
+            'fnb_cafe' => 'coffee',
+            'fnb_bakery' => 'cake',
+            'fnb_frozen_food' => 'snowflake',
+            'fnb_catering' => 'soup',
+            'fnb_catering_diet' => 'salad',
+            'fnb_cloud_kitchen' => 'chef-hat',
+            'mfg_garment' => 'shirt',
+            'mfg_tailor_custom' => 'scissors',
+            'mfg_printing' => 'printer',
+            'mfg_furniture' => 'hammer',
+            'mfg_craft' => 'palette',
+            'mfg_cosmetics' => 'sparkles',
+            'mfg_precision' => 'cog',
+            'retail_reseller' => 'store',
+            'retail_pharmacy' => 'heart-pulse',
+            'service_workshop' => 'wrench',
+            'service_autodetailing' => 'car',
+            'service_barbershop' => 'scissors',
+            'service_laundry' => 'droplets',
+            'service_agency' => 'briefcase',
+            'service_contractor' => 'hard-hat',
+            'service_event' => 'calendar',
+            'agri_farming' => 'wheat',
+            'distributor_fmcg' => 'truck',
         ];
+
+        $categories = [];
+
+        // 1. Ambil dari template resmi COOCA di database (tabel business_type_templates)
+        $templates = BusinessTypeTemplate::orderBy('id')->get();
+        if ($templates->isNotEmpty()) {
+            foreach ($templates as $tmpl) {
+                $categories[$tmpl->code] = [
+                    'label' => $tmpl->name,
+                    'icon'  => $iconMap[$tmpl->code] ?? 'layers',
+                    'count' => Business::where($baseScope)
+                        ->where(fn($q) => $q->where('template_code', 'like', $tmpl->code . '%')
+                            ->orWhere('industry_category', $tmpl->industry_category))
+                        ->count(),
+                ];
+            }
+        }
+
+        // 2. Jika ada kategori produk nyata dari merchant dengan produk aktif di website
+        $realProductCategories = ProductCategory::whereHas('products', function ($q) use ($baseScope): void {
+            $q->where('is_active', true)
+                ->where('show_in_website', true)
+                ->whereHas('business', $baseScope);
+        })
+        ->withCount(['products' => function ($q) use ($baseScope): void {
+            $q->where('is_active', true)
+                ->where('show_in_website', true)
+                ->whereHas('business', $baseScope);
+        }])
+        ->orderByDesc('products_count')
+        ->take(10)
+        ->get();
+
+        foreach ($realProductCategories as $pCat) {
+            $key = 'pcat_' . $pCat->slug;
+            if (!isset($categories[$key])) {
+                $categories[$key] = [
+                    'label' => $pCat->name,
+                    'icon'  => 'package',
+                    'count' => $pCat->products_count,
+                    'is_product_category' => true,
+                ];
+            }
+        }
+
+        // Fallback jika database template belum di-seed
+        if (empty($categories)) {
+            $defaultSectors = [
+                'fnb_resto' => ['label' => 'Restoran & Rumah Makan', 'icon' => 'utensils'],
+                'fnb_cafe' => ['label' => 'Coffee Shop & Cafe', 'icon' => 'coffee'],
+                'mfg_garment' => ['label' => 'Konveksi & Garment', 'icon' => 'shirt'],
+                'retail_reseller' => ['label' => 'Toko Ritel & Kelontong', 'icon' => 'store'],
+                'service_workshop' => ['label' => 'Bengkel Mobil & Motor', 'icon' => 'wrench'],
+                'service_laundry' => ['label' => 'Laundry Kiloan & Satuan', 'icon' => 'droplets'],
+                'service_agency' => ['label' => 'Jasa & Studio Kreatif', 'icon' => 'briefcase'],
+                'agri_farming' => ['label' => 'Pertanian & Peternakan', 'icon' => 'wheat'],
+            ];
+
+            foreach ($defaultSectors as $code => $data) {
+                $categories[$code] = [
+                    'label' => $data['label'],
+                    'icon'  => $data['icon'],
+                    'count' => Business::where($baseScope)->where('template_code', 'like', $code . '%')->count(),
+                ];
+            }
+        }
+
+        return $categories;
     }
 
     /**
