@@ -147,18 +147,18 @@
         window.COOCA_BUSINESS_ID = @js($business->id);
     </script>
 
-    {{-- Authentic Bakery Dynamic CSS Tokens --}}
+    {{-- Authentic High-End Bakery Dynamic CSS Tokens --}}
     <style>
         [x-cloak] {
             display: none !important;
         }
 
         :root {
-            --theme-primary: {{ $activeTheme['primary_color'] ?? '#D97706' }};
+            --theme-primary: {{ $activeTheme['primary_color'] ?? '#C2671A' }};
             --theme-accent: {{ $activeTheme['accent_color'] ?? '#BE185D' }};
-            --theme-bg: {{ $activeTheme['bg_color'] ?? '#FFFDF5' }};
+            --theme-bg: {{ $activeTheme['bg_color'] ?? '#FAF8F5' }};
             --theme-card: {{ $activeTheme['card_bg'] ?? '#FFFFFF' }};
-            --theme-radius: {{ $activeTheme['border_radius'] ?? '18px' }};
+            --theme-radius: {{ $activeTheme['border_radius'] ?? '20px' }};
             --font-heading: '{{ $activeTheme['font_heading'] ?? 'Cormorant Garamond' }}', Georgia, serif;
             --font-body: '{{ $activeTheme['font_body'] ?? 'Plus Jakarta Sans' }}', sans-serif;
         }
@@ -170,8 +170,8 @@
         html.dark,
         .dark {
             color-scheme: dark;
-            --theme-bg: #18110B;
-            --theme-card: #221810;
+            --theme-bg: #14100E;
+            --theme-card: #1D1714;
         }
 
         body {
@@ -198,14 +198,14 @@
         .theme-surface {
             background-color: var(--theme-card);
             border-radius: var(--theme-radius);
-            box-shadow: 0 4px 20px -2px rgba(217, 119, 6, 0.05);
-            border: 1px solid rgba(217, 119, 6, 0.12);
+            box-shadow: 0 4px 20px -2px rgba(180, 90, 20, 0.04);
+            border: 1px solid rgba(180, 110, 50, 0.08);
         }
 
         .dark .theme-surface {
-            background-color: #221810;
-            border-color: rgba(245, 158, 11, 0.18);
-            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.55);
+            background-color: #1D1714;
+            border-color: rgba(217, 119, 6, 0.15);
+            box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.5);
         }
 
         .theme-btn-primary {
@@ -224,14 +224,9 @@
             transform: translateY(0) scale(0.98);
         }
 
-        /* Subtle Warm Hearth Pattern */
-        .bg-bakery-pattern {
-            background-image: radial-gradient(rgba(217, 119, 6, 0.06) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-        .dark .bg-bakery-pattern {
-            background-image: radial-gradient(rgba(245, 158, 11, 0.06) 1px, transparent 1px);
-            background-size: 24px 24px;
+        /* Subtle Ambient Glow for Luxury Culinary Feel */
+        .ambient-soft-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.04) 0%, transparent 70%);
         }
     </style>
 
@@ -241,7 +236,7 @@
     @stack('styles')
 </head>
 
-<body class="cooca-storefront min-h-screen flex flex-col text-neutral-900 dark:text-amber-50 transition-colors duration-300 antialiased selection:bg-amber-700 selection:text-white bg-bakery-pattern" data-theme-system="cooca-storefront"
+<body class="cooca-storefront min-h-screen flex flex-col text-stone-900 dark:text-amber-50 transition-colors duration-300 antialiased selection:bg-amber-700 selection:text-white bg-[#FAF8F5] dark:bg-[#14100E] ambient-soft-glow" data-theme-system="cooca-storefront"
     x-data="{
         mobileMenuOpen: false,
         toastOpen: false,
@@ -267,18 +262,18 @@
         x-transition:leave-start="opacity-100 translate-y-0 scale-100"
         x-transition:leave-end="opacity-0 -translate-y-4 scale-95"
         class="fixed top-20 sm:top-24 inset-x-4 sm:inset-x-auto sm:right-6 z-50 max-w-sm pointer-events-auto">
-        <div class="p-3.5 sm:p-4 rounded-2xl bg-[#18110B]/95 text-white backdrop-blur-2xl border border-amber-500/30 shadow-[0_12px_32px_rgba(24,17,11,0.55)] flex items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5 min-w-0">
-                <div class="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-[#14100E]/95 text-stone-100 backdrop-blur-2xl border border-stone-800 shadow-[0_16px_36px_rgba(0,0,0,0.35)] flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="w-8 h-8 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/30">
                     <i data-lucide="check" class="w-4 h-4"></i>
                 </div>
                 <div class="min-w-0">
-                    <p class="text-xs font-semibold text-amber-100 truncate" x-text="toastMessage"></p>
-                    <p class="text-[10px] text-amber-300/70">Segar dari oven &bull; Siap diproses</p>
+                    <p class="text-xs font-semibold text-stone-100 truncate" x-text="toastMessage"></p>
+                    <p class="text-[10px] text-amber-300/70 font-mono tracking-wide">Ditambahkan ke pesanan</p>
                 </div>
             </div>
             <a href="{{ url('/' . $business->slug . '/checkout') }}"
-                class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 text-xs font-bold transition shrink-0">
+                class="px-3 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 text-xs font-semibold transition shrink-0 border border-amber-500/20">
                 Lihat
             </a>
         </div>
@@ -297,14 +292,14 @@
         $announcement = $landingPage->announcement_badge ?: ($storeSetting?->announcement_text ?: null);
     @endphp
     @if ($announcement)
-        <div class="bg-gradient-to-r from-amber-950 via-amber-900 to-yellow-950 text-amber-100 text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2 border-b border-amber-700/30">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-300 shrink-0"></i>
+        <div class="bg-[#2D1B10] dark:bg-[#1C1410] text-amber-200/90 text-xs sm:text-[13px] font-medium py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-amber-900/30">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
             <span>{{ $announcement }}</span>
         </div>
     @else
-        <div class="bg-gradient-to-r from-[#2A180E] via-[#3D2314] to-[#2A180E] text-amber-100 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-amber-900/50">
-            <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>Batch Hangat Dari Oven &bull; Ragi Alami &amp; Mentega Murni &bull; Pre-Order Custom Cake &amp; Hampers</span>
+        <div class="bg-[#2D1B10] dark:bg-[#1C1410] text-amber-200/80 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wider uppercase flex items-center justify-center gap-2 border-b border-amber-900/30">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            <span>Dipanggang Segar Setiap Pagi &bull; Ragi Alami &amp; Mentega Murni &bull; Pre-Order Custom Cake</span>
         </div>
     @endif
 

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Domain\Billing\EntitlementService;
+use App\Domain\Community\CommunityEventNotificationService;
 use App\Domain\Community\ContentModerationService;
 use App\Domain\Community\EventCheckinService;
 use App\Domain\Community\EventTicketService;
@@ -509,6 +510,7 @@ final class CommunityWebController extends Controller implements HasMiddleware
             $gatewayDetail = $this->tripayService->getTransactionDetail($registration->gateway_reference);
             if ($gatewayDetail && in_array(strtoupper((string) ($gatewayDetail['status'] ?? '')), ['PAID', 'SETTLED', 'SUCCESS'], true)) {
                 $registration->markAsPaid();
+                app(CommunityEventNotificationService::class)->sendPaymentReceiptAndTicket($registration);
             }
         }
 
@@ -538,6 +540,7 @@ final class CommunityWebController extends Controller implements HasMiddleware
         );
 
         $registration->markAsPaid();
+        app(CommunityEventNotificationService::class)->sendPaymentReceiptAndTicket($registration);
 
         // Audit Log entry
         AuditLog::create([

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api\V1\Payment;
 
 use App\Domain\Accounting\AutoJournalService;
 use App\Domain\Billing\EntitlementService;
+use App\Domain\Community\CommunityEventNotificationService;
 use App\Domain\Inventory\StockService;
 use App\Domain\Payment\TripayService;
 use App\Domain\Pos\PosOrderService;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CashAccount;
 use App\Models\CashTransaction;
 use App\Models\CommerceOrder;
+use App\Models\CommunityEventRegistration;
 use App\Models\PaymentGatewayCallbackLog;
 use App\Models\PosOrder;
 use App\Models\PosOrderPayment;
@@ -34,7 +36,8 @@ final class TripayCallbackController extends Controller
         private readonly WhatsAppGatewayService $waGateway = new WhatsAppGatewayService(),
         private readonly EntitlementService $entitlementService = new EntitlementService(),
         private readonly AutoJournalService $journalService = new AutoJournalService(),
-        private readonly PosOrderService $orderService = new PosOrderService()
+        private readonly PosOrderService $orderService = new PosOrderService(),
+        private readonly CommunityEventNotificationService $eventNotificationService = new CommunityEventNotificationService()
     ) {}
 
     /**
@@ -145,10 +148,17 @@ final class TripayCallbackController extends Controller
             ], 400);
         }
 
-        // 2. Resolve Entity Type: CommerceOrder, PosOrder, or SubscriptionPayment
+        // 2. Resolve Entity Type: CommerceOrder, PosOrder, SubscriptionPayment, or CommunityEventRegistration
         $commerceOrder = CommerceOrder::where('order_number', $merchantRef)->first();
         $posOrder = PosOrder::where('order_number', $merchantRef)->first();
         $subscriptionPayment = SubscriptionPayment::where('order_number', $merchantRef)->first();
+
+        $eventTicketCode = str_starts_with($merchantRef, 'EVT-') ? substr($merchantRef, 4) : $merchantRef;
+        $eventRegistration = CommunityEventRegistration::where('ticket_code', $merchantRef)
+            ->orWhere('ticket_code', $eventTicketCode)
+            ->orWhere('id', $merchantRef)
+            ->orWhere('gateway_reference', $tripayReference)
+            ->first();
 
         $response = null;
         $businessId = null;
@@ -162,6 +172,9 @@ final class TripayCallbackController extends Controller
         } elseif ($subscriptionPayment) {
             $businessId = $subscriptionPayment->business_id;
             $response = $this->processSubscriptionPayment($subscriptionPayment, $status, $tripayReference, $totalFee, $payload);
+        } elseif ($eventRegistration) {
+            $businessId = $eventRegistration->business_id;
+            $response = $this->processCommunityEventRegistration($eventRegistration, $status, $tripayReference, $totalFee, $payload);
         }
 
         if ($response !== null) {
@@ -425,6 +438,51 @@ final class TripayCallbackController extends Controller
             return response()->json(['success' => true]);
         } catch (Throwable $e) {
             Log::error("[TripayCallback] Error processing SubscriptionPayment #{$payment->order_number}: " . $e->getMessage());
+
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Process Community Event Registration Ticket payment callback from TriPay.
+     */
+    private function processCommunityEventRegistration(
+        CommunityEventRegistration $registration,
+        string $status,
+        string $tripayReference,
+        float $totalFee,
+        array $payload
+    ): JsonResponse {
+        if ($registration->isPaid()) {
+            return response()->json([
+                'success' => true,
+                'message' => "Event Ticket #{$registration->ticket_code} already paid.",
+            ]);
+        }
+
+        try {
+            if ($status === 'PAID') {
+                $registration->update([
+                    'gateway_reference' => $tripayReference ?: $registration->gateway_reference,
+                    'gateway_fee' => $totalFee > 0 ? $totalFee : $registration->gateway_fee,
+                ]);
+
+                // Mark ticket as paid
+                $registration->markAsPaid();
+
+                // Dispatch automated payment receipt & e-ticket via WhatsApp and Email
+                $this->eventNotificationService->sendPaymentReceiptAndTicket($registration);
+
+                Log::info("[TripayCallback] Event Ticket #{$registration->ticket_code} successfully marked as PAID. Receipt dispatched.");
+            } elseif (in_array($status, ['EXPIRED', 'FAILED'], true)) {
+                $registration->update([
+                    'payment_status' => CommunityEventRegistration::PAYMENT_STATUS_PENDING,
+                ]);
+            }
+
+            return response()->json(['success' => true]);
+        } catch (Throwable $e) {
+            Log::error("[TripayCallback] Error processing CommunityEventRegistration #{$registration->ticket_code}: " . $e->getMessage());
 
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }

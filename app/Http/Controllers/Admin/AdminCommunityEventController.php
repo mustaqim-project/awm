@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Community\CommunityEventNotificationService;
 use App\Domain\Community\EventCheckinService;
 use App\Domain\Community\EventTicketService;
 use App\Domain\Storage\AdminStorage;
@@ -31,7 +32,7 @@ final class AdminCommunityEventController extends Controller implements HasMiddl
         return [
             new Middleware('require.admin.permission:admin.events.view', only: ['index', 'show']),
             new Middleware('require.admin.permission:admin.events.create', only: ['create', 'store']),
-            new Middleware('require.admin.permission:admin.events.edit', only: ['edit', 'update', 'destroy']),
+            new Middleware('require.admin.permission:admin.events.edit', only: ['edit', 'update', 'destroy', 'broadcastReminder', 'sendReceipt', 'sendRegistrationReminder']),
             new Middleware('require.admin.permission:admin.events.checkin', only: ['checkin']),
             new Middleware('require.admin.permission:admin.events.export', only: ['export']),
         ];
@@ -39,6 +40,7 @@ final class AdminCommunityEventController extends Controller implements HasMiddl
     public function __construct(
         private readonly EventCheckinService $checkinService = new EventCheckinService,
         private readonly EventTicketService $ticketService = new EventTicketService,
+        private readonly CommunityEventNotificationService $notificationService = new CommunityEventNotificationService,
     ) {}
 
     /**
@@ -354,5 +356,53 @@ final class AdminCommunityEventController extends Controller implements HasMiddl
             'Content-Type' => 'text/csv; charset=UTF-8',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ]);
+    }
+
+    /**
+     * Broadcast event reminder to all paid/active participants of an event.
+     */
+    public function broadcastReminder(Request $request, CommunityEvent $event): RedirectResponse|JsonResponse
+    {
+        $res = $this->notificationService->broadcastReminderToPaidParticipants($event);
+
+        $msg = "Pengingat event berhasil dikirim ke {$res['sent_count']} peserta (Gagal: {$res['failed_count']}).";
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'data' => $res,
+            ]);
+        }
+
+        return back()->with('success', $msg);
+    }
+
+    /**
+     * Resend official payment receipt and digital ticket to a specific participant.
+     */
+    public function sendReceipt(Request $request, CommunityEventRegistration $registration): RedirectResponse|JsonResponse
+    {
+        $res = $this->notificationService->sendPaymentReceiptAndTicket($registration);
+
+        if ($request->wantsJson()) {
+            return response()->json($res, $res['success'] ? 200 : 422);
+        }
+
+        return back()->with($res['success'] ? 'success' : 'error', $res['message']);
+    }
+
+    /**
+     * Send event reminder to a specific participant.
+     */
+    public function sendRegistrationReminder(Request $request, CommunityEventRegistration $registration): RedirectResponse|JsonResponse
+    {
+        $res = $this->notificationService->sendEventReminder($registration);
+
+        if ($request->wantsJson()) {
+            return response()->json($res, $res['success'] ? 200 : 422);
+        }
+
+        return back()->with($res['success'] ? 'success' : 'error', $res['message']);
     }
 }

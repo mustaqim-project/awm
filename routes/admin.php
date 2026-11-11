@@ -339,6 +339,9 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::delete('/{event}', [AdminCommunityEventController::class, 'destroy'])->name('destroy');
             Route::post('/{event}/checkin', [AdminCommunityEventController::class, 'checkin'])->name('checkin');
             Route::get('/{event}/export', [AdminCommunityEventController::class, 'export'])->name('export');
+            Route::post('/{event}/broadcast-reminder', [AdminCommunityEventController::class, 'broadcastReminder'])->name('broadcast-reminder');
+            Route::post('/registrations/{registration}/send-receipt', [AdminCommunityEventController::class, 'sendReceipt'])->name('registrations.send-receipt');
+            Route::post('/registrations/{registration}/send-reminder', [AdminCommunityEventController::class, 'sendRegistrationReminder'])->name('registrations.send-reminder');
         });
 
         // Community Word Filters & Moderation Rules (Judol, Scam, Kata Kasar, Pornografi)

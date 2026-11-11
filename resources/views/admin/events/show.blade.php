@@ -45,6 +45,15 @@
             <span>{{ __('admin.kembali_ke_daftar_event') }}</span>
         </a>
         <div class="flex items-center gap-2">
+            <form method="POST" action="{{ route('admin.events.broadcast-reminder', $event) }}" class="inline"
+                onsubmit="return confirm('Kirimkan broadcast pengingat jadwal event ini via WhatsApp & Email ke SEMUA peserta yang sudah lunas?')">
+                @csrf
+                <button type="submit"
+                    class="inline-flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-xs font-semibold bg-[#34C759]/10 text-[#34C759] hover:bg-[#34C759]/20 transition cursor-pointer">
+                    <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+                    <span>Broadcast Pengingat Peserta</span>
+                </button>
+            </form>
             <a href="{{ route('admin.events.export', $event) }}"
                 class="inline-flex items-center gap-1.5 px-3 py-2 rounded-[10px] text-xs font-semibold bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-black dark:text-white transition">
                 <i data-lucide="download" class="w-3.5 h-3.5"></i>
@@ -270,24 +279,46 @@
                                 @endif
                             </td>
                             <td class="py-3 px-4 text-right whitespace-nowrap">
-                                @if(Auth::guard('admin')->user()?->hasPermission('admin.events.checkin'))
-
-                                <form method="POST" action="{{ route('admin.events.checkin', $event) }}" class="inline">
-                                    @csrf
-                                    <input type="hidden" name="registration_id" value="{{ $reg->id }}">
-                                    @if($reg->isCheckedIn())
+                                <div class="inline-flex items-center gap-1.5 justify-end">
+                                    {{-- Kirim Bukti Bayar & Tiket --}}
+                                    <form method="POST" action="{{ route('admin.events.registrations.send-receipt', $reg) }}" class="inline"
+                                        onsubmit="return confirm('Kirim ulang Bukti Bayar & E-Tiket ke {{ $reg->user?->name ?? 'peserta' }} via WhatsApp & Email?')">
+                                        @csrf
                                         <button type="submit"
-                                            class="px-2.5 py-1 rounded-[7px] text-[11px] font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition cursor-pointer"
-                                            title="Batalkan kehadiran">{{ __('admin.batal_hadir') }}</button>
-                                    @else
-                                        <button type="submit"
-                                            class="px-2.5 py-1 rounded-[7px] text-[11px] font-semibold text-white bg-[#34C759] hover:bg-[#28A745] transition cursor-pointer shadow-2xs">
-                                            Check-in Manual
+                                            class="p-1.5 rounded-[7px] text-[#007AFF] hover:bg-[#007AFF]/10 transition cursor-pointer"
+                                            title="Kirim Bukti Bayar & E-Tiket">
+                                            <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                                         </button>
-                                    @endif
-                                </form>
+                                    </form>
 
-                                @endif
+                                    {{-- Kirim Pengingat Event Personal --}}
+                                    <form method="POST" action="{{ route('admin.events.registrations.send-reminder', $reg) }}" class="inline"
+                                        onsubmit="return confirm('Kirimkan Pengingat Jadwal Event ke {{ $reg->user?->name ?? 'peserta' }}?')">
+                                        @csrf
+                                        <button type="submit"
+                                            class="p-1.5 rounded-[7px] text-[#FF9500] hover:bg-[#FF9500]/10 transition cursor-pointer"
+                                            title="Kirim Pengingat Jadwal Event">
+                                            <i data-lucide="bell" class="w-3.5 h-3.5"></i>
+                                        </button>
+                                    </form>
+
+                                    @if(Auth::guard('admin')->user()?->hasPermission('admin.events.checkin'))
+                                    <form method="POST" action="{{ route('admin.events.checkin', $event) }}" class="inline">
+                                        @csrf
+                                        <input type="hidden" name="registration_id" value="{{ $reg->id }}">
+                                        @if($reg->isCheckedIn())
+                                            <button type="submit"
+                                                class="px-2.5 py-1 rounded-[7px] text-[11px] font-semibold text-[#FF3B30] hover:bg-[#FF3B30]/10 transition cursor-pointer"
+                                                title="Batalkan kehadiran">{{ __('admin.batal_hadir') }}</button>
+                                        @else
+                                            <button type="submit"
+                                                class="px-2.5 py-1 rounded-[7px] text-[11px] font-semibold text-white bg-[#34C759] hover:bg-[#28A745] transition cursor-pointer shadow-2xs">
+                                                Check-in Manual
+                                            </button>
+                                        @endif
+                                    </form>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                     @empty

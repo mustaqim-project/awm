@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\V1\Community;
 
 use App\Domain\Billing\EntitlementService;
+use App\Domain\Community\CommunityEventNotificationService;
 use App\Domain\Community\ContentModerationService;
 use App\Domain\Community\EventCheckinService;
 use App\Domain\Community\EventTicketService;
@@ -947,6 +948,7 @@ final class CommunityApiController extends Controller implements HasMiddleware
         abort_unless($user !== null, 403);
 
         $registration->markAsPaid();
+        app(CommunityEventNotificationService::class)->sendPaymentReceiptAndTicket($registration);
 
         AuditLog::create([
             'business_id' => $registration->business_id,
