@@ -29,12 +29,12 @@
                 </span>
                 <span class="text-[10px] sm:text-[11px] font-semibold text-emerald-800 dark:text-emerald-400/90 tracking-wider uppercase flex items-center gap-1.5 truncate mt-0.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Sentra Tani &amp; Kebun Organik</span>
+                    <span>{{ $landingPage->announcement_badge ?: ($activeTheme['industry'] ?? 'Sentra Tani &amp; Kebun Organik') }}</span>
                 </span>
             </div>
         </a>
 
-        {{-- 2. Desktop Navigation Menu --}}
+        {{-- 2. Desktop Navigation Menu (Fully Customizable via CMS getNavLabel) --}}
         <nav class="hidden lg:flex items-center gap-1 bg-emerald-950/[0.03] dark:bg-emerald-400/[0.04] p-1.5 rounded-2xl border border-emerald-900/[0.06] dark:border-emerald-400/[0.08]">
             {{-- Home --}}
             <a href="{{ url('/' . $business->slug) }}"
@@ -47,7 +47,7 @@
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 {{ request()->is($business->slug . '/katalog*') || request()->is($business->slug . '/produk*') ? 'bg-white dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-800 dark:hover:text-emerald-200' }}">
                     <i data-lucide="sprout" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-                    <span>Hasil Panen &amp; Bibit</span>
+                    <span>{{ $landingPage->getNavLabel('catalog', 'Hasil Panen & Bibit') }}</span>
                 </a>
             @endif
 
@@ -55,7 +55,7 @@
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-white dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-800 dark:hover:text-emerald-200' }}">
-                    Kebun &amp; Mitra Tani
+                    {{ $landingPage->getNavLabel('about', 'Kebun & Profil Tani') }}
                 </a>
             @endif
 
@@ -63,7 +63,7 @@
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/kontak*') ? 'bg-white dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-800 dark:hover:text-emerald-200' }}">
-                    Grosir &amp; Kerjasama
+                    {{ $landingPage->getNavLabel('contact', 'Grosir & Kerjasama') }}
                 </a>
             @endif
 
@@ -71,7 +71,16 @@
             @if ($landingPage->isPageActive('blog'))
                 <a href="{{ url('/' . $business->slug . '/artikel') }}"
                     class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/artikel*') ? 'bg-white dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-800 dark:hover:text-emerald-200' }}">
-                    Info Panen
+                    {{ $landingPage->getNavLabel('blog', 'Info Panen') }}
+                </a>
+            @endif
+
+            {{-- Kunjungan Kebun / Edufarm (Reservation) --}}
+            @if ($landingPage->isPageActive('reservation'))
+                <a href="{{ url('/' . $business->slug . '/reservasi') }}"
+                    class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 {{ request()->is($business->slug . '/reservasi*') ? 'bg-white dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-emerald-800 dark:hover:text-emerald-200' }}">
+                    <i data-lucide="calendar" class="w-3.5 h-3.5 text-amber-500"></i>
+                    <span>{{ $landingPage->getNavLabel('reservation', 'Kunjungan Edufarm') }}</span>
                 </a>
             @endif
         </nav>
@@ -143,30 +152,38 @@
 
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 {{ request()->is($business->slug . '/katalog*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                <i data-lucide="sprout" class="w-4 h-4 text-emerald-600"></i>
-                <span>Hasil Panen &amp; Bibit</span>
+                class="px-3.5 py-3 rounded-xl text-xs font-semibold flex items-center gap-2.5 min-h-[44px] {{ request()->is($business->slug . '/katalog*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                <i data-lucide="sprout" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                <span>{{ $landingPage->getNavLabel('catalog', 'Hasil Panen & Bibit') }}</span>
             </a>
         @endif
 
         @if ($landingPage->isPageActive('about'))
             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Kebun &amp; Mitra Tani
+                class="px-3.5 py-3 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('about', 'Kebun & Profil Tani') }}
             </a>
         @endif
 
         @if ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/kontak*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Grosir &amp; Kerjasama
+                class="px-3.5 py-3 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/kontak*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('contact', 'Grosir & Kerjasama') }}
             </a>
         @endif
 
         @if ($landingPage->isPageActive('blog'))
             <a href="{{ url('/' . $business->slug . '/artikel') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/artikel*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Info Panen &amp; Tips Berkebun
+                class="px-3.5 py-3 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/artikel*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('blog', 'Info Panen') }}
+            </a>
+        @endif
+
+        @if ($landingPage->isPageActive('reservation'))
+            <a href="{{ url('/' . $business->slug . '/reservasi') }}" @click="mobileMenuOpen = false"
+                class="px-3.5 py-3 rounded-xl text-xs font-semibold flex items-center gap-2.5 min-h-[44px] {{ request()->is($business->slug . '/reservasi*') ? 'bg-emerald-700/10 text-emerald-800 dark:text-emerald-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                <i data-lucide="calendar" class="w-4 h-4 text-amber-500"></i>
+                <span>{{ $landingPage->getNavLabel('reservation', 'Kunjungan Edufarm') }}</span>
             </a>
         @endif
 

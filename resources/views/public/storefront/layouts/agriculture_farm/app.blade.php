@@ -77,10 +77,14 @@
         <link rel="apple-touch-icon" href="{{ $defaultBrandImg }}">
     @endif
 
-    {{-- Dynamic Google Fonts: DM Serif Display & Plus Jakarta Sans --}}
+    {{-- Dynamic Google Fonts: DM Serif Display & Plus Jakarta Sans with CMS Font Support --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    @if (!empty($activeTheme['google_fonts']))
+        <link href="https://fonts.googleapis.com/css2?{{ $activeTheme['google_fonts'] }}&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    @else
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    @endif
 
     {{-- Tailwind CSS CDN & Agrarian Theme Tokens --}}
     <script src="https://cdn.tailwindcss.com"></script>
@@ -90,9 +94,9 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        heading: ['"DM Serif Display"', 'serif'],
-                        body: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        heading: ['"{{ $activeTheme['font_heading'] ?? 'DM Serif Display' }}"', 'serif'],
+                        body: ['"{{ $activeTheme['font_body'] ?? 'Plus Jakarta Sans' }}"', 'sans-serif'],
+                        sans: ['"{{ $activeTheme['font_body'] ?? 'Plus Jakarta Sans' }}"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
                     },
                     colors: {
@@ -153,8 +157,8 @@
             --theme-bg: {{ $activeTheme['bg_color'] ?? '#F7FAF4' }};
             --theme-card: {{ $activeTheme['card_bg'] ?? '#FFFFFF' }};
             --theme-radius: 18px;
-            --font-heading: 'DM Serif Display', Georgia, serif;
-            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: '{{ $activeTheme['font_heading'] ?? 'DM Serif Display' }}', Georgia, serif;
+            --font-body: '{{ $activeTheme['font_body'] ?? 'Plus Jakarta Sans' }}', sans-serif;
         }
 
         html {
@@ -237,10 +241,47 @@
 
 <body class="cooca-storefront min-h-screen flex flex-col text-neutral-900 dark:text-emerald-50 transition-colors duration-300 antialiased selection:bg-emerald-700 selection:text-white bg-agri-pattern" data-theme-system="cooca-storefront"
     x-data="{
-        mobileMenuOpen: false
-    }">
+        mobileMenuOpen: false,
+        toastOpen: false,
+        toastMessage: '',
+        toastTimeout: null,
+        showToast(msg) {
+            this.toastMessage = msg;
+            this.toastOpen = true;
+            if (this.toastTimeout) clearTimeout(this.toastTimeout);
+            this.toastTimeout = setTimeout(() => { this.toastOpen = false; }, 3200);
+        }
+    }"
+    @product-added-notification.window="showToast($event.detail.name ? $event.detail.name + ' berhasil ditambahkan ke keranjang panen' : 'Produk berhasil ditambahkan ke keranjang')">
 
     @include('public.storefront.components.demo_banner')
+
+    {{-- Global Harvest Toast Notification --}}
+    <div x-show="toastOpen" x-cloak
+        x-transition:enter="transition ease-out duration-300 transform"
+        x-transition:enter-start="opacity-0 -translate-y-4 scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+        x-transition:leave="transition ease-in duration-200 transform"
+        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+        x-transition:leave-end="opacity-0 -translate-y-4 scale-95"
+        class="fixed top-20 sm:top-24 inset-x-4 sm:inset-x-auto sm:right-6 z-50 max-w-sm pointer-events-auto">
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-[#07130A]/95 text-white backdrop-blur-2xl border border-emerald-500/30 shadow-[0_12px_32px_rgba(7,19,10,0.45)] flex items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <i data-lucide="check" class="w-4 h-4"></i>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-emerald-100 truncate" x-text="toastMessage"></p>
+                    <p class="text-[10px] text-emerald-300/70">Siap diproses &bull; Pesanan segar</p>
+                </div>
+            </div>
+            <a href="{{ url('/' . $business->slug . '/checkout') }}"
+                class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 text-xs font-bold transition shrink-0">
+                Lihat
+            </a>
+        </div>
+    </div>
+
     {{-- 1. Private Draft Preview Banner --}}
     @if (!$landingPage->is_published)
         <div class="sticky top-0 z-[100] w-full bg-[#FF9500] text-black font-semibold text-xs py-2 px-4 text-center flex items-center justify-center gap-2 shadow-sm">
@@ -249,20 +290,23 @@
         </div>
     @endif
 
-    {{-- 2. Agri Harvest Announcement Bar --}}
-    @if ($landingPage->announcement_badge)
-        <div class="bg-gradient-to-r from-emerald-900 via-emerald-800 to-green-950 text-white text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2 border-b border-emerald-700/30">
+    {{-- 2. Agri Harvest Announcement Bar (Customizable from CMS announcement_badge or storeSetting) --}}
+    @php
+        $announcement = $landingPage->announcement_badge ?: ($storeSetting?->announcement_text ?: null);
+    @endphp
+    @if ($announcement)
+        <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-green-950 text-emerald-50 text-xs sm:text-sm font-medium py-2 px-4 text-center tracking-wide shadow-xs flex items-center justify-center gap-2 border-b border-emerald-700/30">
             <i data-lucide="sprout" class="w-3.5 h-3.5 text-amber-300 shrink-0"></i>
-            <span>{{ $landingPage->announcement_badge }}</span>
+            <span>{{ $announcement }}</span>
         </div>
     @else
         <div class="bg-gradient-to-r from-emerald-950 via-emerald-900 to-green-950 text-emerald-100 text-[11px] sm:text-xs font-medium py-1.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 border-b border-emerald-800/40">
             <span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-            <span>Musim Panen Segar &bull; Pengiriman langsung dari kebun binaan mitra tani Nusantara &bull; Petik Pagi Hari</span>
+            <span>Musim Panen Segar &bull; Pengiriman langsung dari kebun binaan mitra tani &bull; Petik Pagi Subuh</span>
         </div>
     @endif
 
-    {{-- 3. Farm Operating Days Status Alert --}}
+    {{-- 3. Farm Operating Days Status Alert (from Storefront Settings) --}}
     @php
         $dayMap = [
             'monday' => 'Senin',
@@ -287,8 +331,8 @@
     {{-- 4. Agriculture Theme Navbar --}}
     @include('public.storefront.themes.agriculture_farm.navbar')
 
-    {{-- 5. Main Content Area (pb-24 for Apple mobile bottom tab bar comfort) --}}
-    <main class="flex-1 w-full pb-24 md:pb-0">
+    {{-- 5. Main Content Area (pb-28 for Apple mobile bottom tab bar comfort) --}}
+    <main class="flex-1 w-full pb-28 md:pb-12">
         @yield('content')
     </main>
 

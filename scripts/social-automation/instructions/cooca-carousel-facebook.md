@@ -12,9 +12,9 @@
 
 | Platform | Audience Utama | Tujuan | Jenis Konten |
 |---|---|---|---|
-| **Facebook** | Pemilik UMKM matang, 35–60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
+| **Facebook** | Pemilik UMKM matang, 35-60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
 
-**Target audiens:** Pemilik UMKM matang, 35–60+ lintas 20 sektor yang aktif di Facebook, termasuk anggota komunitas dan grup usaha, pemilik warung dan toko, pelaku jasa lokal (bengkel, laundry, salon), pengusaha kuliner, produsen, dan distributor. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Bahasa harus mudah dipahami dan relatable untuk audiens matang.
+**Target audiens:** Pemilik UMKM matang, 35-60+ lintas 20 sektor yang aktif di Facebook, termasuk anggota komunitas dan grup usaha, pemilik warung dan toko, pelaku jasa lokal (bengkel, laundry, salon), pengusaha kuliner, produsen, dan distributor. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Bahasa harus mudah dipahami dan relatable untuk audiens matang.
 
 **Tujuan konten:** Lead & konversi (mengajak pemilik UMKM mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
 **Jenis konten & indikator keberhasilan:** Masalah bisnis, edukasi, dan komunitas dalam format carousel 5 slide (album foto). Indikator keberhasilan meliputi shares, komentar, saves, klik ke cooca.id, dan signup Paket Free. Pilih tren yang paling mungkin memancing share dan komentar komunitas.
@@ -109,8 +109,7 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Caption Facebook:** hook ada di baris pertama dan cukup pendek agar terbaca sebelum teks terpotong, ada satu pertanyaan diskusi, hashtag 2 sampai 4.
 - **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
+- **Sumber Gambar (AI Saja):** Gambarnya dari AI (ChatGPT Image / DALL-E 3) saja, DILARANG merender dari tampilan website.
 - **Spec JSON:** valid dan semua field wajib terisi.
 
 ### Langkah 4: Deploy ke database
@@ -195,7 +194,7 @@ Contoh:
    t = json.dumps(data, ensure_ascii=False)
    checks = {
        "em/en-dash": r"[\u2014\u2013]",
-       "mojibake": r"â€|Ã.|Â.",
+       "mojibake": r"|Ã.|.",
        "route-url": r"cooca\.id/\S+",
        "sapaan Anda": r"\bAnda\b",
    }

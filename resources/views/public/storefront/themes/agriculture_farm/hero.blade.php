@@ -3,22 +3,30 @@
 {{-- Agrarian editorial dignity, farm-fresh harvest story & fair-trade pillars  --}}
 {{-- ========================================================================= --}}
 @php
-    $heroHeadline = $landingPage->headline ?: $business->name;
-    $heroSubheadline = $landingPage->subheadline ?: ($business->description ?: __('storefront.hero.tagline'));
-    $heroEyebrow = $landingPage->announcement_badge ?: ($activeTheme['industry'] ?? __('storefront.hero.verified_official'));
+    $heroHeadline = $landingPage->headline ?: ($business->name . ' — Sentra Panen & Tani Alami');
+    $heroSubheadline = $landingPage->subheadline ?: ($business->description ?: 'Hasil tani segar berkualitas, sayuran dan buah organik, bibit tanaman unggul, dan sarana pertanian ramah lingkungan langsung dari petani binaan Nusantara.');
+    $heroEyebrow = $landingPage->announcement_badge ?: ($activeTheme['industry'] ?? 'Pertanian, Peternakan, Perkebunan, Perikanan & Hasil Panen');
 
-    $primaryCtaText = $landingPage->cta_primary_text ?: __('storefront.hero.explore_catalog');
+    $primaryCtaText = $landingPage->cta_primary_text ?: 'Pesan Hasil Panen';
     $primaryCtaUrl  = $landingPage->cta_primary_url ?: url('/' . $business->slug . '/katalog');
-    $secondaryCtaText = $landingPage->cta_secondary_text ?: __('storefront.hero.contact_us');
+    $secondaryCtaText = $landingPage->cta_secondary_text ?: 'Konsultasi via WhatsApp';
     $secondaryCtaUrl  = $landingPage->cta_secondary_url ?: $landingPage->getWhatsAppUrl();
 
     $universalValues = $landingPage->getUniversalValues();
-    $badgePill1 = $universalValues[0]['title'];
-    $badgeIcon1 = $universalValues[0]['icon'];
-    $badgePill2 = $universalValues[1]['title'];
-    $badgeIcon2 = $universalValues[1]['icon'];
-    $badgePill3 = $universalValues[2]['title'];
-    $badgeIcon3 = $universalValues[2]['icon'];
+    $badgePill1 = $universalValues[0]['title'] ?? 'Dipetik Pagi Saat Segar';
+    $badgeIcon1 = $universalValues[0]['icon'] ?? 'sprout';
+    $badgePill2 = $universalValues[1]['title'] ?? 'Bebas Residu Kimia';
+    $badgeIcon2 = $universalValues[1]['icon'] ?? 'leaf';
+    $badgePill3 = $universalValues[2]['title'] ?? 'Petani Terverifikasi';
+    $badgeIcon3 = $universalValues[2]['icon'] ?? 'shield-check';
+
+    $stats = (array) ($landingPage->stats ?? []);
+    $stat1Value = !empty($stats['clients']) ? $stats['clients'] : '100%';
+    $stat1Label = !empty($stats['clients_label']) ? $stats['clients_label'] : 'Panen Alami Segar';
+    $stat2Value = !empty($stats['experience']) ? $stats['experience'] : 'Harian';
+    $stat2Label = !empty($stats['experience_label']) ? $stats['experience_label'] : 'Petik Pagi Subuh';
+    $stat3Value = !empty($stats['rating']) ? $stats['rating'] : 'Resmi';
+    $stat3Label = !empty($stats['rating_label']) ? $stats['rating_label'] : 'Mitra Poktan Teruji';
 
     $heroImage = $landingPage->hero_image_url ?: ($landingPage->about_image_url ?: null);
 @endphp
@@ -85,19 +93,19 @@
                     @endif
                 </div>
 
-                {{-- Transparency Metrics Strip --}}
+                {{-- Transparency & Credibility Metrics Strip (Customizable from CMS stats) --}}
                 <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t border-emerald-900/10 dark:border-emerald-500/15 max-w-lg">
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">100%</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight">{{ __('storefront.badges.quality_guaranteed') }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-xl sm:text-2xl md:text-3xl font-bold text-emerald-700 dark:text-emerald-400 font-mono tabular-nums leading-tight">{{ $stat1Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight block">{{ $stat1Label }}</span>
                     </div>
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400">24/7</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight">{{ __('storefront.hero.active_status') }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-xl sm:text-2xl md:text-3xl font-bold text-amber-600 dark:text-amber-400 font-mono tabular-nums leading-tight">{{ $stat2Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight block">{{ $stat2Label }}</span>
                     </div>
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-emerald-800 dark:text-emerald-200">Resmi</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight">{{ __('storefront.features.official_store') }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-xl sm:text-2xl md:text-3xl font-bold text-emerald-800 dark:text-emerald-200 font-mono tabular-nums leading-tight">{{ $stat3Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-emerald-300/70 font-medium leading-tight block">{{ $stat3Label }}</span>
                     </div>
                 </div>
 

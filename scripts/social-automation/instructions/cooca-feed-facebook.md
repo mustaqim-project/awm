@@ -12,9 +12,9 @@
 
 | Platform | Audience Utama | Tujuan | Jenis Konten |
 |---|---|---|---|
-| **Facebook** | Pemilik UMKM matang, 35–60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
+| **Facebook** | Pemilik UMKM matang, 35-60+ | Lead & konversi | Masalah bisnis, edukasi, komunitas |
 
-**Target audiens:** Pemilik UMKM matang, 35–60+ lintas 20 sektor yang aktif di Facebook, termasuk usaha mandiri, pemilik toko dan warung, pelaku jasa lokal, pengusaha kuliner, produsen, dan distributor, serta anggota komunitas dan grup usaha. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Audiens Facebook beragam usianya, jadi bahasa harus mudah dipahami semua kalangan dan relevan untuk audiens matang.
+**Target audiens:** Pemilik UMKM matang, 35-60+ lintas 20 sektor yang aktif di Facebook, termasuk usaha mandiri, pemilik toko dan warung, pelaku jasa lokal, pengusaha kuliner, produsen, dan distributor, serta anggota komunitas dan grup usaha. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor. Audiens Facebook beragam usianya, jadi bahasa harus mudah dipahami semua kalangan dan relevan untuk audiens matang.
 
 **Tujuan konten:** Lead & konversi (mengajak pemilik UMKM mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
 **Jenis konten & indikator keberhasilan:** Masalah bisnis, edukasi, dan komunitas dalam format satu feed Facebook (gambar tunggal persegi untuk diskusi komunitas). Indikator keberhasilan meliputi komentar, shares, saves, klik ke cooca.id, dan signup Paket Free. Pilih tren yang paling mungkin memancing komentar dan share, karena itu yang paling berpengaruh di Facebook.
@@ -78,24 +78,30 @@ Spec JSON wajib memuat field berikut:
 
 Jika ada field kosong atau sumber tren tidak tercantum, perlakukan sebagai gagal (bagian 5). Seluruh topik, keyword, pilar masalah, fitur, hook, caption, pertanyaan diskusi, brief visual, dan nama file WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
 
-### Langkah 2: Visual (Pilihan Utama: Canva MCP | Fallback Handal: render_universal_bento.cjs)
-Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
+### Langkah 2: Visual (Pilihan Utama: Canva MCP | ChatGPT Image & Live UI Bento)
+Selalu buat desain visual BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
-1. Panggil `create-design` dengan format gambar persegi 1:1, 1080x1080 px. Coba `format: "Instagram Post (Square)"` karena ukurannya sama dengan feed persegi Facebook. Jika tool menolak nama format ini, gunakan nilai format persegi lain yang diterima tool dan catat di laporan akhir.
-2. `brief`: gunakan `canva_mcp_prompt_brief` dari spec JSON. Brief harus memuat semua aturan visual di bagian 4 dan instruksi bahwa semua teks di desain ditulis santai dengan sapaan "kamu".
-3. Pantau dengan `get-create-design-async-job` sampai status `completed`. Jika gagal atau timeout, coba ulang maksimal 2 kali, lalu berhenti sesuai bagian 5.
-4. Ekspor ke PNG resolusi tinggi dengan `export-design`.
-5. Simpan ke `storage/app/public/admin/social-media-assets/feed/facebook/feed-YYYY-MM-DD-{slug}.png`. Nama file diturunkan dari tanggal dan `slug` di spec JSON. Jangan memakai nama file tetap dan jangan menimpa file lama.
+1. **Jalur Utama 1 (Canva MCP):**
+   - Panggil `create-design` dengan format gambar persegi 1:1, 1080x1080 px (`Instagram Post (Square)` atau format persegi Facebook).
+   - `brief`: gunakan `canva_mcp_prompt_brief` dari spec JSON dengan sapaan akrab "kamu" dan aturan visual di bagian 4.
+   - Pantau dengan `get-create-design-async-job` sampai status `completed`.
+   - Ekspor PNG dan simpan ke `storage/app/public/admin/social-media-assets/feed/facebook/feed-YYYY-MM-DD-{slug}.png`.
 
-
-2. **Jalur Fallback Otomatis (Saat Kuota Canva Habis / Error):**
-   Jika Canva API mengembalikan error kuota habis (`quota_exceeded`), otentikasi gagal, atau timeout setelah 2 kali coba:
-   **JANGAN BERHENTI DAN DILARANG MEN-DEPLOY GAMBAR CADANGAN LAMA YANG SALAH TOPIK!**
-   Segera jalankan skrip renderer visual lokal Playwright:
-   ```bash
-   node scripts/social-automation/render_universal_bento.cjs --spec-json storage/app/public/content-assets/spec-cooca-feed-facebook.json
-   ```
-   Skrip ini secara otomatis merender gambar berkualitas tinggi dengan tata letak Bento Grid Apple HIG, palet Deep Midnight Navy (#070B19 ke #162B68), Electric Sapphire (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, Strictly Zero Green, dan Logo Resmi Cooca Dark (`public/assets/image/1785229034_logo_dark.png`) langsung ke path target.
+2. **Jalur Utama 2 / Fallback Handal (ChatGPT Image + Live UI Playwright Bento):**
+   Jika Canva API tidak tersedia atau kuota habis:
+   - **Langkah 2a (Fotografi Riil via ChatGPT Image / DALL-E 3):**
+     Generate aset foto riil sektor UMKM lokal (tanpa teks/mockup software buatan AI):
+     ```bash
+     python scripts/social-automation/openai_image_generator.py --spec-json storage/app/public/content-assets/spec-cooca-feed-facebook.json
+     ```
+   - **Langkah 2b (Jika Membutuhkan Tampilan Fitur / Interface COOCA):**
+     Jika konten berfokus pada fitur software (Kasir POS, Rekonsiliasi Shift, Stok Bahan, Laporan Keuangan), **WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA** (`http://cooca_core.test` via Playwright screenshot di `storage/app/public/admin/social-media-assets/ui-screenshots/`). DILARANG menggunakan mockup atau ilustrasi software buatan AI.
+   - **Langkah 2c (Komposisi Grafis Bento Grid):**
+     Jalankan skrip renderer visual editorial lokal:
+     ```bash
+     node scripts/social-automation/render_universal_bento.cjs --spec-json storage/app/public/content-assets/spec-cooca-feed-facebook.json
+     ```
+     Skrip ini secara otomatis merangkai Logo Resmi Asli COOCA (`public/assets/image/1785229034_logo_dark.png`), foto riil sektor atau tangkapan layar UI asli COOCA, tipografi tebal Plus Jakarta Sans, metrik pertumbuhan, dan tombol CTA tanpa menyisakan elemen kosong.
 
 
 ### Langkah 3: Validasi (wajib lolos sebelum deploy)
@@ -105,8 +111,9 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Caption Facebook:** hook ada di baris pertama dan cukup pendek agar terbaca sebelum teks terpotong, ada tepat satu pertanyaan diskusi di akhir, hashtag 2 sampai 4.
 - **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
+  - **Logo Asli:** Menggunakan file resmi transparan `public/assets/image/1785229034_logo_dark.png`. DILARANG menggunakan logo teks polos atau logo buatan AI.
+  - **Sumber Gambar AI:** Gambar visual WAJIB dari AI (ChatGPT Image / DALL-E 3), DILARANG merender dari tampilan website.
+  - **Tanpa Elemen Kosong:** Desain bento tersusun padat dan rapi, tanpa ada badge atau kotak pill kosong.
 - **Spec JSON:** valid dan semua field wajib (termasuk `slug` dan `discussion_question`) terisi.
 
 ### Langkah 4: Deploy ke database
@@ -185,7 +192,7 @@ Contoh:
    t = json.dumps(data, ensure_ascii=False)
    checks = {
        "em/en-dash": r"[\u2014\u2013]",
-       "mojibake": r"â€|Ã.|Â.",
+       "mojibake": r"|.|.",
        "route-url": r"cooca\.id/\S+",
        "sapaan Anda": r"\bAnda\b",
    }
@@ -196,15 +203,15 @@ Contoh:
 ```
    Hasil harus `OK`. Jika ada temuan, perbaiki teksnya lalu jalankan ulang.
 
-**Visual:**
-- Format: satu gambar statis persegi, 1080x1080 px. Tanpa video, motion, animasi, atau Remotion.
-- Logo resmi `public/assets/image/1785229034_logo_dark.png` wajib ada di header atau sudut atas.
-- Palet: latar Deep Midnight Navy (#070B19 ke #162B68), aksen Electric Sapphire (#2563EB) dan Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal.
-- Komposisi: Bento Grid ala Apple HIG, kartu metrik bisnis melayang (floating glassmorphism), ambient glow cyan (#38BDF8).
-- Satu pesan utama: satu headline singkat (hook atau pertanyaan pemicu diskusi), satu atau dua kartu metrik, satu badge CTA.
-- Fotografi realistis berkualitas tinggi (bukan kartun atau ilustrasi 2D flat). Subjek, objek kerja, suasana, dan model manusia menyesuaikan sektor dan keyword hasil riset, misalnya dapur/kafe untuk F&B, bengkel/salon/laundry untuk jasa, konveksi/ruang produksi untuk manufaktur dan HPP, rak gudang untuk inventori, meja packing untuk online shop, meja kasir untuk pembayaran, atau buku keuangan usaha. Jangan menyempit ke sektor ritel atau orang memegang tablet kasir.
-- Badge CTA: "Mulai Gratis Selamanya di cooca.id" (hanya domain, tanpa URL rute).
-- Teks di dalam visual mengikuti aturan "Gaya bahasa", dibuat singkat, dan cukup besar supaya terbaca di layar HP kecil.
+**Visual & Branding:**
+- **Format:** satu gambar statis persegi, 1080x1080 px. Tanpa video, motion, animasi, atau Remotion.
+- **Logo Resmi Asli:** Logo resmi `public/assets/image/1785229034_logo_dark.png` wajib disematkan di header atas. DILARANG diganti dengan teks polos biasa atau logo buatan AI.
+- **Palet:** latar Deep Midnight Navy (#070B19 ke #162B68), aksen Electric Sapphire (#2563EB) dan Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal. STRICTLY ZERO GREEN.
+- **Tampilan Antarmuka Langsung dari UI COOCA:** Jika visual memerlukan tampilan software/interface (Kasir POS, Rekonsiliasi Shift, Manajemen Stok/Bahan, Laporan Laba Rugi/Keuangan, Kalkulasi HPP, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA yang sedang aktif di `http://cooca_core.test` (tersimpan di `storage/app/public/admin/social-media-assets/ui-screenshots/`). DILARANG menggunakan mockup atau ilustrasi software buatan AI (AI slop) yang sering menghasilkan glitch, kotak kosong, atau layout rusak.
+- **Peran ChatGPT Image (DALL-E 3):** Digunakan KHUSUS untuk aset fotografi realistis manusia dan suasana operasional sektor UMKM riil (bengkel mobil/motor, barista/kafe, koki dapur, penjahit garment, pengrajin mebel, dsb.). AI DILARANG digunakan untuk menggambar poster lengkap, logo, teks, atau software UI.
+- **Komposisi Bento Grid:** Tata letak Bento Grid presisi ala Apple HIG dengan double-bezel window, kartu metrik melayang (floating glassmorphism), step alur terstruktur, dan TIDAK ADA elemen/pill kosong.
+- **Badge CTA:** "Mulai Gratis Selamanya di cooca.id" (hanya domain, tanpa URL rute).
+- **Teks di dalam visual:** mengikuti aturan "Gaya bahasa", dibuat singkat, dan cukup besar supaya terbaca di layar HP kecil.
 
 ---
 

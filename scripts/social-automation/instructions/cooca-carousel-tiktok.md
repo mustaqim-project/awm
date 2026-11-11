@@ -12,9 +12,9 @@
 
 | Platform | Audience Utama | Tujuan | Jenis Konten |
 |---|---|---|---|
-| **TikTok** | Calon pengusaha & UMKM modern, 20–45 | Awareness & discovery | Video pendek, problem-solution |
+| **TikTok** | Calon pengusaha & UMKM modern, 20-45 | Awareness & discovery | Video pendek, problem-solution |
 
-**Target audiens:** Calon pengusaha & UMKM modern, 20–45 lintas 20 sektor yang aktif di TikTok, termasuk pengusaha muda, online seller dan creator commerce, owner F&B, pelaku jasa, produsen, dan admin toko. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke online seller, F&B, atau ritel.
+**Target audiens:** Calon pengusaha & UMKM modern, 20-45 lintas 20 sektor yang aktif di TikTok, termasuk pengusaha muda, online seller dan creator commerce, owner F&B, pelaku jasa, produsen, dan admin toko. Semuanya dibaca sebagai profil pemilik atau pengelola usaha, bukan segmen terpisah, dan tidak boleh menyempit ke online seller, F&B, atau ritel.
 
 **Tujuan konten:** Awareness & discovery (mengajak pemilik UMKM mengenal Cooca dan mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
 **Jenis konten & indikator keberhasilan:** Carousel foto vertikal (photo-mode) 5 slide mengangkat problem-solution. Indikator keberhasilan meliputi saves, shares, komentar, penayangan hingga slide terakhir, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
@@ -112,8 +112,7 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Caption TikTok:** hook di baris pertama dan pendek, keyword utama muncul alami di caption, tepat satu pertanyaan komentar, hashtag 3 sampai 5.
 - **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
+- **Sumber Gambar (AI Saja):** Gambarnya dari AI (ChatGPT Image / DALL-E 3) saja, DILARANG merender dari tampilan website.
 - **Spec JSON:** valid dan semua field wajib terisi.
 
 ### Langkah 4: Deploy ke database
@@ -199,7 +198,7 @@ Contoh:
    t = json.dumps(data, ensure_ascii=False)
    checks = {
        "em/en-dash": r"[\u2014\u2013]",
-       "mojibake": r"â€|Ã.|Â.",
+       "mojibake": r"|Ã.|.",
        "route-url": r"cooca\.id/\S+",
        "sapaan Anda": r"\bAnda\b",
    }

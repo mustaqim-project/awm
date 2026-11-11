@@ -23,14 +23,14 @@
         <a href="{{ url('/' . $bSlug) }}"
             class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isHome ? 'text-emerald-700 dark:text-emerald-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-emerald-600' }}">
             <i data-lucide="home" class="w-5 h-5 {{ $isHome ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span>{{ __('storefront.nav_home') }}</span>
+            <span>{{ $landingPage->getNavLabel('home', 'Beranda') }}</span>
         </a>
 
         {{-- Catalog / Panen Tab --}}
         <a href="{{ url('/' . $bSlug . '/katalog') }}"
             class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isCatalog ? 'text-emerald-700 dark:text-emerald-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-emerald-600' }}">
             <i data-lucide="sprout" class="w-5 h-5 {{ $isCatalog ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span>Panen &amp; Bibit</span>
+            <span>{{ $landingPage->getNavLabel('catalog', 'Hasil Panen') }}</span>
         </a>
 
         {{-- Cart Tab --}}

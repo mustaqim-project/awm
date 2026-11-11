@@ -143,48 +143,11 @@ async function renderUniversalBento() {
     const isFirstSlide = idx === 0;
     const isLastSlide = idx === totalSlides - 1;
 
-    // Slide-specific image resolution to guarantee NO repeated photos in carousels
+    // Slide-specific image resolution: strictly AI-generated photographic assets (NO website screenshots)
     let slidePhotoBase64 = '';
-    let isLiveUiScreenshot = false;
-    let liveUiLabel = isCarousel ? `SLIDE 0${slideNumber}` : 'FOKUS OPERASIONAL NYATA';
+    const liveUiLabel = isCarousel ? `SLIDE 0${slideNumber}` : 'FOKUS OPERASIONAL NYATA';
 
-    const topicText = `${slideTitle} ${slideDesc} ${rawHook} ${spec.feature_name || ''}`.toLowerCase();
-
-    // Check if this slide needs a Live COOCA UI screenshot directly from COOCA application
-    let matchedUiPath = '';
-    if (isCarousel && slideNumber === 3) {
-      // In carousels, slide 3 is ALWAYS the live COOCA software interface solution!
-      if (topicText.includes('kasir') || topicText.includes('pos') || topicText.includes('meja') || topicText.includes('struk')) {
-        matchedUiPath = path.join(UI_DIR, 'pos.png');
-        liveUiLabel = 'ANTARMUKA ASLI • KASIR POS';
-      } else if (topicText.includes('laba') || topicText.includes('laporan') || topicText.includes('keuangan') || topicText.includes('margin') || topicText.includes('boncos')) {
-        matchedUiPath = path.join(UI_DIR, 'reports.png');
-        liveUiLabel = 'ANTARMUKA ASLI • LAPORAN LABA RUGI';
-      } else if (topicText.includes('shift') || topicText.includes('kas ') || topicText.includes('selisih')) {
-        matchedUiPath = path.join(UI_DIR, 'pos_shifts.png');
-        liveUiLabel = 'ANTARMUKA ASLI • REKONSILIASI SHIFT';
-      } else {
-        matchedUiPath = path.join(UI_DIR, 'inventory.png');
-        liveUiLabel = 'ANTARMUKA ASLI • KONTROL STOK';
-      }
-    } else if (!isCarousel && (topicText.includes('kasir') || topicText.includes('pos') || topicText.includes('stok') || topicText.includes('laporan') || topicText.includes('shift') || topicText.includes('bahan'))) {
-      if (topicText.includes('kasir') || topicText.includes('pos')) {
-        matchedUiPath = path.join(UI_DIR, 'pos.png');
-        liveUiLabel = 'ANTARMUKA ASLI • KASIR POS';
-      } else if (topicText.includes('laporan') || topicText.includes('laba') || topicText.includes('rugi')) {
-        matchedUiPath = path.join(UI_DIR, 'reports.png');
-        liveUiLabel = 'ANTARMUKA ASLI • LAPORAN KEUANGAN';
-      } else {
-        matchedUiPath = path.join(UI_DIR, 'inventory.png');
-        liveUiLabel = 'ANTARMUKA ASLI • KONTROL STOK';
-      }
-    }
-
-    if (matchedUiPath && fs.existsSync(matchedUiPath)) {
-      slidePhotoBase64 = getBase64Image(matchedUiPath);
-      isLiveUiScreenshot = true;
-      console.log(`[Universal Bento] Using authentic COOCA UI screenshot: ${matchedUiPath}`);
-    } else if (isCarousel) {
+    if (isCarousel) {
       const slideNumPad = String(slideNumber).padStart(2, '0');
       const slidePhotoCandidates = [
         path.join(ROOT_DIR, `storage/app/public/admin/social-media-assets/carousel/${channel}/photo-slide-${slideNumPad}.jpg`),
@@ -195,6 +158,7 @@ async function renderUniversalBento() {
       for (const sp of slidePhotoCandidates) {
         if (fs.existsSync(sp)) {
           slidePhotoBase64 = getBase64Image(sp);
+          console.log(`[Universal Bento] Found AI sector photo for slide ${slideNumber}: ${sp}`);
           break;
         }
       }
@@ -752,9 +716,10 @@ body {
       
       <!-- Left: Double-Bezel Real Visual (Unique per slide in carousel) -->
       <div class="visual-bezel-outer">
-        <div class="visual-bezel-inner">
+                <div class="visual-bezel-inner">
           ${slidePhotoBase64 ? `
             <img class="hero-photo" src="${slidePhotoBase64}" alt="${escapeHtml(sectorName)}">
+            <div class="photo-vignette"></div>
           ` : `
             <div style="width:100%; height:100%; background: radial-gradient(circle at 50% 35%, rgba(37,99,235,0.35) 0%, #070B19 80%); display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 24px; position:relative;">
               ${current3DBase64 ? `
@@ -763,9 +728,9 @@ body {
               <div style="font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: #38BDF8; letter-spacing: 0.15em; text-transform: uppercase;">${escapeHtml(slideTag)}</div>
               <div style="font-size: 20px; font-weight: 900; color: #FFFFFF; margin-top: 6px; text-align: center;">${isCarousel ? `Langkah ${slideNumber} dari ${totalSlides}` : escapeHtml(sectorName)}</div>
             </div>
+            <div class="photo-vignette"></div>
           `}
-          <div class="photo-vignette"></div>
-          <div class="photo-badge-top">${isCarousel ? `SLIDE 0${slideNumber}` : 'FOKUS OPERASIONAL NYATA'}</div>
+          <div class="photo-badge-top">${escapeHtml(liveUiLabel)}</div>
           
           <div class="photo-content-bottom">
             <div class="stat-island">

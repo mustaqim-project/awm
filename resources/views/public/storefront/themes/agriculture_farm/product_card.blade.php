@@ -34,17 +34,20 @@
     ];
 @endphp
 
-<div class="group flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-white dark:bg-[#0D1F12] border border-emerald-900/10 dark:border-emerald-500/15 shadow-[0_4px_16px_rgba(21,128,61,0.04)] hover:shadow-[0_16px_36px_rgba(21,128,61,0.12)] hover:-translate-y-1 transition-all duration-300">
+<div x-data="{ added: false }"
+    class="group flex flex-col rounded-2xl sm:rounded-3xl overflow-hidden bg-white dark:bg-[#0D1F12] border border-emerald-900/10 dark:border-emerald-500/15 shadow-[0_4px_16px_rgba(21,128,61,0.04)] hover:shadow-[0_16px_36px_rgba(21,128,61,0.12)] hover:-translate-y-1 transition-all duration-300">
     
     {{-- 1. Media Visual & Freshness Badges --}}
-    <a href="{{ $pdpUrl }}" class="relative aspect-[4/3] overflow-hidden bg-emerald-50/50 dark:bg-emerald-950/40 block focus:outline-none">
+    <a href="{{ $pdpUrl }}" class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-emerald-50/70 via-emerald-100/40 to-green-50/60 dark:from-[#07130A] dark:via-[#0D1F12] dark:to-[#07130A] block focus:outline-none">
         @if ($prod->image_url)
             <img src="{{ $prod->image_url }}" alt="{{ $prod->name }}"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" loading="lazy">
         @else
-            <div class="w-full h-full flex flex-col items-center justify-center text-emerald-400 dark:text-emerald-600 p-4">
-                <i data-lucide="sprout" class="w-12 h-12 stroke-[1.25] mb-1"></i>
-                <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-800 dark:text-emerald-400">Komoditas Segar</span>
+            <div class="w-full h-full flex flex-col items-center justify-center text-emerald-600 dark:text-emerald-400 p-4">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 dark:bg-emerald-400/10 flex items-center justify-center mb-1">
+                    <i data-lucide="sprout" class="w-6 h-6 stroke-[1.5]"></i>
+                </div>
+                <span class="text-[10px] uppercase font-bold tracking-widest text-emerald-800 dark:text-emerald-300">Panen Segar</span>
             </div>
         @endif
 
@@ -110,23 +113,34 @@
                 @endif
             </div>
 
-            {{-- Buy / Add to Cart Action --}}
+            {{-- Buy / Add to Cart Action with Instant Micro-feedback --}}
             @if ($isOutOfStock)
                 <button type="button" disabled
-                    class="px-3 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 text-xs font-semibold cursor-not-allowed min-h-[40px]">
+                    class="px-3.5 py-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 text-xs font-semibold cursor-not-allowed min-h-[44px]">
                     Habis
                 </button>
             @elseif ($hasPrice)
                 <button type="button"
-                    @click="$store.cart.add(@js($productPayload), 1); $dispatch('product-added-notification', { name: @js($prod->name) })"
-                    class="px-3.5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white text-xs font-bold shadow-xs transition flex items-center gap-1.5 shrink-0 min-h-[40px]"
+                    @click="added = true; $store.cart.add(@js($productPayload), 1); $dispatch('product-added-notification', { name: @js($prod->name) }); setTimeout(() => added = false, 1500)"
+                    :class="added ? 'bg-[#34C759] text-white' : 'bg-emerald-700 hover:bg-emerald-800 text-white'"
+                    class="px-4 py-2.5 rounded-xl active:scale-95 text-xs font-bold shadow-xs transition-all flex items-center gap-1.5 shrink-0 min-h-[44px] cursor-pointer"
                     title="{{ __('storefront.add_harvest_to_cart') }}">
-                    <i data-lucide="shopping-basket" class="w-3.5 h-3.5"></i>
-                    <span>Pesan</span>
+                    <template x-if="!added">
+                        <span class="flex items-center gap-1.5">
+                            <i data-lucide="shopping-basket" class="w-4 h-4"></i>
+                            <span>Pesan</span>
+                        </span>
+                    </template>
+                    <template x-if="added">
+                        <span class="flex items-center gap-1.5 font-bold animate-pulse">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Masuk</span>
+                        </span>
+                    </template>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-2 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-200 transition min-h-[40px] flex items-center justify-center">{{ __('storefront.btn_detail') }}</a>
+                    class="px-3.5 py-2.5 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-200 transition min-h-[44px] flex items-center justify-center">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>

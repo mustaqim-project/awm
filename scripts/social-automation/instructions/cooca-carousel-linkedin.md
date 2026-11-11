@@ -134,8 +134,7 @@ Jika Pillow tidak tersedia, gunakan alat lain yang tersedia di server (misalnya 
 - **Caption LinkedIn:** hook ada di dua baris pertama dan cukup ringkas agar terbaca sebelum teks terpotong, ada tepat satu pertanyaan diskusi, hashtag 3 sampai 5.
 - **Klaim:** semua angka di slide berasal dari `metrics` beserta sumbernya. Tidak ada klaim Paket Free untuk multi-cabang.
 - **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
+- **Sumber Gambar (AI Saja):** Gambarnya dari AI (ChatGPT Image / DALL-E 3) saja, DILARANG merender dari tampilan website.
 - **Spec JSON:** valid dan semua field wajib terisi.
 
 ### Langkah 4: Deploy ke database
@@ -221,7 +220,7 @@ Contoh:
    t = json.dumps(data, ensure_ascii=False)
    checks = {
        "em/en-dash": r"[\u2014\u2013]",
-       "mojibake": r"â€|Ã.|Â.",
+       "mojibake": r"|Ã.|.",
        "route-url": r"cooca\.id/\S+",
        "sapaan Anda": r"\bAnda\b",
    }

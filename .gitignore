@@ -136,3 +136,5 @@ routes.json
 scan_report*.txt
 scratch_*.py
 temp_mcp_render.html
+
+storage/app/public/admin/social-media-assets/ui-screenshots/

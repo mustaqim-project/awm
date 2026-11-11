@@ -39,7 +39,7 @@
                 @endif
             </div>
 
-            {{-- Col 2: Komoditas & Navigasi Panen --}}
+            {{-- Col 2: Komoditas & Navigasi Panen (Dynamic via CMS) --}}
             <div class="space-y-3">
                 <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-emerald-100">
                     Navigasi Panen &amp; Bibit
@@ -48,14 +48,14 @@
                     <li>
                         <a href="{{ url('/' . $business->slug) }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                            <span>{{ __('storefront.home_main') }}</span>
+                            <span>{{ $landingPage->getNavLabel('home', 'Beranda') }}</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li>
                             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                <span>Katalog Komoditas &amp; Bibit</span>
+                                <span>{{ $landingPage->getNavLabel('catalog', 'Katalog Panen & Bibit') }}</span>
                             </a>
                         </li>
                     @endif
@@ -63,7 +63,7 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                <span>{{ __('storefront.profil_kebun_mitra_tani') }}</span>
+                                <span>{{ $landingPage->getNavLabel('about', 'Kebun & Profil Mitra Tani') }}</span>
                             </a>
                         </li>
                     @endif
@@ -71,7 +71,15 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-500"></i>
-                                <span>Pemesanan Partai Besar / B2B</span>
+                                <span>{{ $landingPage->getNavLabel('contact', 'Pemesanan Partai Besar / B2B') }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($landingPage->isPageActive('reservation'))
+                        <li>
+                            <a href="{{ url('/' . $business->slug . '/reservasi') }}" class="hover:text-emerald-300 transition-colors flex items-center gap-1.5">
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
+                                <span>{{ $landingPage->getNavLabel('reservation', 'Kunjungan Edufarm') }}</span>
                             </a>
                         </li>
                     @endif
@@ -107,9 +115,25 @@
                         </div>
                     @endif
 
+                    @php
+                        $dayMapIndo = [
+                            'monday' => 'Senin',
+                            'tuesday' => 'Selasa',
+                            'wednesday' => 'Rabu',
+                            'thursday' => 'Kamis',
+                            'friday' => 'Jumat',
+                            'saturday' => 'Sabtu',
+                            'sunday' => 'Minggu',
+                        ];
+                        $opDays = (array) ($storeSetting?->operating_days ?? []);
+                        $formattedDays = !empty($opDays)
+                            ? implode(', ', array_map(fn($d) => $dayMapIndo[strtolower($d)] ?? ucfirst($d), array_slice($opDays, 0, 4))) . (count($opDays) > 4 ? ' dkk.' : '')
+                            : 'Senin – Sabtu';
+                        $cutOff = $storeSetting?->cut_off_time ? ' (Cut-off: ' . substr($storeSetting->cut_off_time, 0, 5) . ' WIB)' : ' (Kondisi Segar Embun Pagi)';
+                    @endphp
                     <div class="p-3 rounded-2xl bg-black/40 border border-emerald-900/40 text-[11px] text-emerald-300/80 space-y-1">
                         <span class="font-bold text-emerald-100 block">Jadwal Petik &amp; Kirim:</span>
-                        <p class="leading-relaxed">Senin &ndash; Sabtu: Mulai 05:00 WIB (Kondisi Segar Embun Pagi)</p>
+                        <p class="leading-relaxed">{{ $formattedDays }}{{ $cutOff }}</p>
                     </div>
                 </div>
             </div>

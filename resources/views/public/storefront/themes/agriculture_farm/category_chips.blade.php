@@ -11,10 +11,10 @@
                     <span>{{ $activeTheme['industry'] ?? __('storefront.kategori_pilihan') }}</span>
                 </div>
                 <h2 class="font-heading font-normal text-2xl sm:text-3xl text-neutral-900 dark:text-emerald-50 leading-tight">
-                    {{ $landingPage->services_title ?: __('storefront.kategori_pilihan') }}
+                    {{ $landingPage->services_title ?: 'Kategori Hasil Panen &amp; Bibit' }}
                 </h2>
                 <p class="text-xs text-neutral-600 dark:text-emerald-200/70 mt-1">
-                    {{ __('storefront.pilih_kategori_filter') }}
+                    {{ $landingPage->services_subtitle ?: __('storefront.pilih_kategori_filter') }}
                 </p>
             </div>
 

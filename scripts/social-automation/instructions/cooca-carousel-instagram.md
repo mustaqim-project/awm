@@ -14,9 +14,9 @@
 
 | Platform | Audience Utama | Tujuan | Jenis Konten |
 |---|---|---|---|
-| **Instagram** | Pemilik bisnis modern, 25–45 | Brand trust & consideration | Carousel, Reels, visual edukatif |
+| **Instagram** | Pemilik bisnis modern, 25-45 | Brand trust & consideration | Carousel, Reels, visual edukatif |
 
-**Target audiens:** Pemilik bisnis modern, 25–45 lintas 20 sektor di atas, termasuk pengusaha kuliner/F&B, pelaku usaha jasa, dan pemilik toko modern. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor.
+**Target audiens:** Pemilik bisnis modern, 25-45 lintas 20 sektor di atas, termasuk pengusaha kuliner/F&B, pelaku usaha jasa, dan pemilik toko modern. Semuanya dibaca sebagai profil pemilik usaha, bukan segmen terpisah, dan tidak boleh menyempit ke satu sektor.
 
 **Tujuan konten:** Brand trust & consideration (membangun kepercayaan merek dan mengajak pemilik UMKM mendaftar Paket Free Rp 0, gratis selamanya untuk Solo Owner di cooca.id).
 **Jenis konten & indikator keberhasilan:** Carousel 5 slide visual edukatif. Indikator keberhasilan meliputi saves, shares, klik profil, dan signup Paket Free. Pilih tren yang paling mungkin mendorong saves dan shares.
@@ -111,8 +111,7 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Domain:** caption dan teks slide hanya memuat `cooca.id`, tanpa URL rute detail (misalnya /roles, /pos, /whatsapp) dan tanpa nama bisnis fiktif.
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
+- **Sumber Gambar (AI Saja):** Gambarnya dari AI (ChatGPT Image / DALL-E 3) saja, DILARANG merender dari tampilan website.
 - **Spec JSON:** valid dan semua field wajib terisi.
 
 ### Langkah 4: Deploy ke database
@@ -193,7 +192,7 @@ Contoh:
    json.loads(t)  # pastikan JSON valid
    checks = {
        "em/en-dash": r"[\u2014\u2013]",
-       "mojibake": r"â€|Ã.|Â.",
+       "mojibake": r"|Ã.|.",
        "route-url": r"cooca\.id/\S+",
        "sapaan Anda": r"\bAnda\b",
    }

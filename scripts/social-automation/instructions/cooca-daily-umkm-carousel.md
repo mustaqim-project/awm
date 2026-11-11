@@ -110,7 +110,7 @@ t = open(p, encoding='utf-8').read()
 data = json.loads(t)
 checks = {
     'em/en-dash': r'[\u2014\u2013]',
-    'mojibake': r'Ã¢â‚¬|Ãƒ.|Ã‚.',
+    'mojibake': r'|.|.',
     'route-url': r'cooca\.id/\S+',
     'sapaan Anda': r'\bAnda\b',
     'kata kaku': r'\b(optimalisasi|implementasi|solusi terintegrasi|mengakselerasi)\b',
@@ -179,10 +179,7 @@ Semua teks yang dibaca audiens (caption, hook, teks di slide, badge selain nama 
 2. **Satu domain:** hanya `cooca.id` di visual, badge, dan caption. Tanpa URL rute detail.
 3. **Karakter terlarang:** tidak boleh ada em-dash (U+2014) dan en-dash (U+2013). Gunakan tanda minus (-) atau titik dua (:).
 4. **Visual:**
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
-5. **Hanya Media Statis:** Dilarang video motion, animasi, atau Remotion.
-
+- **Sumber Gambar (AI Saja):** Gambarnya dari AI (ChatGPT Image / DALL-E 3) saja, DILARANG merender dari tampilan website.
 ---
 
 ## 5. GERBANG KESELAMATAN (STOP, JANGAN PUSH)
