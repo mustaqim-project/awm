@@ -29,7 +29,7 @@ final class AdminUserController extends Controller implements HasMiddleware
         return [
             new Middleware('require.admin.permission:admin.users.view', only: ['index']),
             new Middleware('require.admin.permission:admin.users.export', only: ['export']),
-            new Middleware('require.admin.permission:admin.users.delete', only: ['destroy']),
+            new Middleware('require.admin.permission:admin.users.delete', only: ['destroy', 'bulkDestroy']),
         ];
     }
     /**
@@ -150,9 +150,13 @@ final class AdminUserController extends Controller implements HasMiddleware
         try {
             $purgeResult = $purgeService->purge($user, $admin);
 
+            $bizMsg = ($purgeResult['purged_businesses_count'] ?? 0) > 0
+                ? " dan {$purgeResult['purged_businesses_count']} bisnis terdaftar miliknya"
+                : '';
+
             return redirect()->route('admin.users.index')->with(
                 'success',
-                "Pengguna \"{$purgeResult['name']}\" ({$purgeResult['email']}) beserta sesi dan aset terkait telah dihapus secara permanen dari sistem."
+                "Pengguna \"{$purgeResult['name']}\" ({$purgeResult['email']}){$bizMsg} beserta sesi dan aset terkait telah dihapus secara permanen dari sistem."
             );
         } catch (\Throwable $e) {
             Log::error('Failed to execute hard delete on user: ' . $e->getMessage(), [
@@ -165,5 +169,84 @@ final class AdminUserController extends Controller implements HasMiddleware
                 'Terjadi kesalahan saat memproses penghapusan permanen pengguna: ' . $e->getMessage()
             );
         }
+    }
+
+    /**
+     * Completely and permanently hard delete multiple user accounts with Google Authenticator 2FA verification.
+     * Cascadingly deletes any registered businesses owned by these users.
+     */
+    public function bulkDestroy(
+        Request $request,
+        UserPurgeService $purgeService,
+        Google2FAService $google2FAService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->with(
+                'error',
+                'Penghapusan masal ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'ids' => ['required', 'array', 'min:1'],
+            'ids.*' => ['required', 'string', 'exists:users,id'],
+            'confirm_text' => ['required', 'string'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'ids.required' => 'Pilih minimal satu pengguna untuk dihapus.',
+            'ids.min' => 'Pilih minimal satu pengguna untuk dihapus.',
+            'confirm_text.required' => 'Ketik teks konfirmasi "HAPUS MASAL" untuk melanjutkan.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        if (trim(strtoupper((string) $validated['confirm_text'])) !== 'HAPUS MASAL') {
+            return back()->with(
+                'error',
+                'Teks konfirmasi salah. Anda wajib mengetik "HAPUS MASAL" dengan tepat untuk mengonfirmasi penghapusan permanen.'
+            );
+        }
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        $ids = $validated['ids'];
+        $users = User::whereIn('id', $ids)->get();
+
+        $successCount = 0;
+        $failedCount = 0;
+        $totalBusinessesPurged = 0;
+
+        foreach ($users as $user) {
+            try {
+                $purgeResult = $purgeService->purge($user, $admin);
+                $successCount++;
+                $totalBusinessesPurged += ($purgeResult['purged_businesses_count'] ?? 0);
+            } catch (\Throwable $e) {
+                $failedCount++;
+                Log::error("Failed to purge user ID {$user->id} in bulk delete: " . $e->getMessage(), [
+                    'user_id' => $user->id,
+                    'admin_id' => $admin->id,
+                ]);
+            }
+        }
+
+        if ($failedCount > 0) {
+            return redirect()->route('admin.users.index')->with(
+                'warning',
+                "Sebanyak {$successCount} pengguna berhasil dihapus secara permanen (termasuk {$totalBusinessesPurged} bisnis terdaftar), namun terdapat {$failedCount} pengguna yang gagal diproses."
+            );
+        }
+
+        return redirect()->route('admin.users.index')->with(
+            'success',
+            "Sebanyak {$successCount} pengguna berhasil dihapus secara permanen dari sistem beserta {$totalBusinessesPurged} bisnis terdaftar yang dimiliki."
+        );
     }
 }

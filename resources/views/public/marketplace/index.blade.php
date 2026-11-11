@@ -122,7 +122,7 @@
                 <div class="w-full md:flex-1 md:max-w-3xl md:mx-4 space-y-1.5">
                     <form method="GET" action="{{ route('marketplace.search') }}" class="w-full">
                         <div class="relative flex items-center bg-white rounded-md shadow-lg p-1 focus-within:ring-2 focus-within:ring-[#007AFF] transition">
-                            <input type="text" name="q" placeholder="Daftar & Dapatkan Akses Langsung ke Ratusan Produk UMKM Nusantara"
+                            <input type="text" name="q" placeholder="Cari produk, kategori, atau nama toko di COOCA Market..."
                                 value="{{ request('q') }}"
                                 class="w-full bg-transparent border-0 px-3 py-2 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none">
                             <button type="submit"
@@ -217,152 +217,152 @@
                 </div>
             </div>
 
-            {{-- Right Stacked Banners: 1/3 Width (lg:col-span-4 - Gambar 1) --}}
+            {{-- Right Stacked Banners: 1/3 Width (lg:col-span-4) --}}
             <div class="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5">
-                {{-- Banner 1: Cooca Mall 100% ORI --}}
+                {{-- Banner 1: Direktori Toko Resmi UMKM --}}
                 <a href="{{ route('marketplace.sub.businesses') }}"
                     class="rounded-lg bg-gradient-to-r from-[#0E1E45] to-[#14295D] border border-white/10 p-4 text-white flex flex-col justify-between relative overflow-hidden shadow-sm group hover:border-[#007AFF]/50 transition min-h-[120px]">
                     <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-[#007AFF]/20 rounded-full blur-[30px] pointer-events-none"></div>
                     <div class="space-y-1 relative z-10">
                         <span class="text-[9px] font-bold text-[#00C4D8] tracking-wider uppercase block">
-                            COOCA MALL
+                            DIREKTORI RESMI
                         </span>
                         <h2 class="text-sm font-bold text-white group-hover:text-[#00C4D8] transition leading-snug">
-                            100% ORI Toko Resmi UMKM
+                            Toko Binaan UMKM Nusantara
                         </h2>
                         <p class="text-[11px] text-slate-300 line-clamp-1">
-                            Garansi produk asli langsung dari produsen & perajin Indonesia.
+                            Jelajahi {{ number_format($totalStores) }} merchant terverifikasi dengan profil usaha resmi.
                         </p>
                     </div>
                     <div class="pt-1.5 flex items-center justify-between text-xs font-semibold text-[#00C4D8] relative z-10">
-                        <span>Belanja Sekarang</span>
+                        <span>Lihat Semua Toko</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </a>
 
-                {{-- Banner 2: Gratis Ongkir & 0% Komisi --}}
+                {{-- Banner 2: Integrasi Kasir POS & Toko Online --}}
                 <a href="{{ route('register') }}"
                     class="rounded-lg bg-gradient-to-r from-[#082238] to-[#0A3254] border border-white/10 p-4 text-white flex flex-col justify-between relative overflow-hidden shadow-sm group hover:border-emerald-500/50 transition min-h-[120px]">
                     <div class="absolute -right-6 -bottom-6 w-28 h-28 bg-emerald-500/20 rounded-full blur-[30px] pointer-events-none"></div>
                     <div class="space-y-1 relative z-10">
                         <span class="text-[9px] font-bold text-emerald-400 tracking-wider uppercase block">
-                            GRATIS ONGKIR & VOUCHER
+                            EKOSISTEM BISNIS COOCA
                         </span>
                         <h2 class="text-sm font-bold text-white group-hover:text-emerald-300 transition leading-snug">
-                            Buka Toko Online 1 Menit
+                            Kasir POS & Toko Online 0% Komisi
                         </h2>
                         <p class="text-[11px] text-slate-300 line-clamp-1">
-                            Kelola produk, kasir POS & pesanan web tanpa potongan komisi.
+                            Kelola produk, kasir POS, dan pesanan web tanpa biaya potongan per transaksi.
                         </p>
                     </div>
                     <div class="pt-1.5 flex items-center justify-between text-xs font-semibold text-emerald-400 relative z-10">
-                        <span>Daftar Gratis</span>
+                        <span>Daftar Bisnis Baru</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </a>
             </div>
         </section>
 
-        {{-- Section 2: Shopee-Style Quick Features Icons Row (10 Menu Melingkar dengan Label Teks - Gambar 1) --}}
+        {{-- Section 2: Quick Features Icons Row (10 Menu Riil Fitur & Sektor Bisnis COOCA) --}}
         <section class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 p-3 sm:p-4 shadow-sm">
             <div class="grid grid-cols-5 md:grid-cols-10 gap-2 sm:gap-3 text-center">
-                {{-- 1. Shopee Pilih Lokal -> Cooca Pilih Lokal --}}
+                {{-- 1. Katalog Produk --}}
                 <a href="{{ route('marketplace.sub.products') }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-[#007AFF]/10 dark:bg-[#007AFF]/20 text-[#007AFF] flex items-center justify-center group-hover:scale-105 group-hover:bg-[#007AFF] group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <i data-lucide="package" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-[#007AFF] line-clamp-2 leading-tight">
-                        Cooca Pilih Lokal
+                        Katalog Produk
                     </span>
                 </a>
 
-                {{-- 2. Shopee Mall -> Mall Resmi UMKM --}}
+                {{-- 2. Direktori Toko --}}
                 <a href="{{ route('marketplace.sub.businesses') }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-[#00C4D8]/10 dark:bg-[#00C4D8]/20 text-[#00C4D8] flex items-center justify-center group-hover:scale-105 group-hover:bg-[#00C4D8] group-hover:text-slate-900 transition-all shadow-sm">
-                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                        <i data-lucide="store" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-[#007AFF] line-clamp-2 leading-tight">
-                        Mall Resmi UMKM
+                        Direktori Toko
                     </span>
                 </a>
 
-                {{-- 3. Pulsa & Tagihan --}}
-                <a href="{{ route('landing') }}#pos" class="group flex flex-col items-center gap-1.5">
+                {{-- 3. Sentra Wilayah --}}
+                <a href="{{ route('marketplace.sub.locations') }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-sky-500/10 dark:bg-sky-500/20 text-sky-600 dark:text-sky-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-sky-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="smartphone" class="w-5 h-5"></i>
+                        <i data-lucide="map-pin" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-sky-600 line-clamp-2 leading-tight">
-                        Pulsa & Tagihan
+                        Sentra Wilayah
                     </span>
                 </a>
 
-                {{-- 4. Flash Sale --}}
-                <a href="#flash-sale" class="group flex flex-col items-center gap-1.5">
+                {{-- 4. 20 Sektor UMKM --}}
+                <a href="{{ route('marketplace.sub.categories') }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="zap" class="w-5 h-5"></i>
+                        <i data-lucide="layers" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-amber-600 line-clamp-2 leading-tight">
-                        Flash Sale
+                        20 Sektor UMKM
                     </span>
                 </a>
 
-                {{-- 5. Shopee Supermarket -> Grosir & Mart --}}
-                <a href="{{ route('marketplace.search', ['kategori' => 'retail']) }}" class="group flex flex-col items-center gap-1.5">
-                    <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                {{-- 5. Kuliner & Resto --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'fnb_resto']) }}" class="group flex flex-col items-center gap-1.5">
+                    <div class="w-11 h-11 rounded-2xl bg-orange-500/10 dark:bg-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-orange-500 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="utensils" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-emerald-600 line-clamp-2 leading-tight">
-                        Grosir Mart
+                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-orange-600 line-clamp-2 leading-tight">
+                        Kuliner & Resto
                     </span>
                 </a>
 
-                {{-- 6. Dikelola Shopee -> Sentra Logistik --}}
-                <a href="{{ route('marketplace.sub.locations') }}" class="group flex flex-col items-center gap-1.5">
-                    <div class="w-11 h-11 rounded-2xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-purple-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="truck" class="w-5 h-5"></i>
+                {{-- 6. Coffee & Cafe --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'fnb_cafe']) }}" class="group flex flex-col items-center gap-1.5">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-700/10 dark:bg-amber-700/20 text-amber-700 dark:text-amber-300 flex items-center justify-center group-hover:scale-105 group-hover:bg-amber-700 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="coffee" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-purple-600 line-clamp-2 leading-tight">
-                        Sentra Logistik
+                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-amber-700 line-clamp-2 leading-tight">
+                        Coffee & Cafe
                     </span>
                 </a>
 
-                {{-- 7. Diskon Spesial --}}
-                <a href="{{ route('marketplace.search', ['harga' => 'murah']) }}" class="group flex flex-col items-center gap-1.5">
+                {{-- 7. Fashion & Garment --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'fashion']) }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-rose-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="tag" class="w-5 h-5"></i>
+                        <i data-lucide="shirt" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-rose-600 line-clamp-2 leading-tight">
-                        Diskon Spesial
+                        Fashion & Busana
                     </span>
                 </a>
 
-                {{-- 8. Gratis Ongkir & Voucher --}}
-                <a href="{{ route('marketplace.sub.products') }}" class="group flex flex-col items-center gap-1.5">
-                    <div class="w-11 h-11 rounded-2xl bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-teal-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="ticket" class="w-5 h-5"></i>
+                {{-- 8. Toko Ritel & Kelontong --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'retail']) }}" class="group flex flex-col items-center gap-1.5">
+                    <div class="w-11 h-11 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-sm">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-teal-600 line-clamp-2 leading-tight">
-                        Gratis Ongkir
+                    <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-emerald-600 line-clamp-2 leading-tight">
+                        Ritel & Toko
                     </span>
                 </a>
 
-                {{-- 9. Shopee Barokah -> Sentra Halal --}}
-                <a href="{{ route('marketplace.search', ['kategori' => 'fnb']) }}" class="group flex flex-col items-center gap-1.5">
+                {{-- 9. Bengkel & Otomotif --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'workshop']) }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-indigo-500 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="award" class="w-5 h-5"></i>
+                        <i data-lucide="wrench" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-indigo-600 line-clamp-2 leading-tight">
-                        UMKM Halal
+                        Bengkel & Servis
                     </span>
                 </a>
 
-                {{-- 10. Semua Promo -> Semua Kategori --}}
-                <a href="{{ route('marketplace.sub.categories') }}" class="group flex flex-col items-center gap-1.5">
+                {{-- 10. Jasa & Layanan Bisnis --}}
+                <a href="{{ route('marketplace.search', ['kategori' => 'agency']) }}" class="group flex flex-col items-center gap-1.5">
                     <div class="w-11 h-11 rounded-2xl bg-slate-500/10 dark:bg-slate-500/20 text-slate-600 dark:text-slate-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-slate-700 group-hover:text-white transition-all shadow-sm">
-                        <i data-lucide="grid" class="w-5 h-5"></i>
+                        <i data-lucide="briefcase" class="w-5 h-5"></i>
                     </div>
                     <span class="text-[11px] font-medium text-slate-700 dark:text-slate-300 group-hover:text-slate-900 line-clamp-2 leading-tight">
-                        Semua Menu
+                        Jasa & Layanan
                     </span>
                 </a>
             </div>
@@ -408,35 +408,26 @@
             </div>
         </section>
 
-        {{-- Section 4: Shopee "FLASH SALE" Bar with Countdown Timer (Gambar 1) --}}
+        {{-- Section 4: Produk Pilihan & Terbaru UMKM --}}
         @if ($popularProducts->isNotEmpty())
-            <section id="flash-sale" class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 p-3 sm:p-4 shadow-sm space-y-3">
+            <section class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 p-3 sm:p-4 shadow-sm space-y-3">
                 <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-white/10 pb-2.5">
-                    <div class="flex items-center gap-3">
-                        <span class="text-sm sm:text-base font-black tracking-wide text-[#007AFF] uppercase flex items-center gap-1.5">
-                            <i data-lucide="zap" class="w-4 h-4 fill-[#007AFF] text-[#007AFF]"></i>
-                            <span>FLASH SALE</span>
-                        </span>
-
-                        {{-- Shopee-Style Countdown Badges --}}
-                        <div class="flex items-center gap-1 text-xs font-bold font-mono">
-                            <span id="timer-hours" class="px-1.5 py-0.5 rounded bg-[#060B1E] text-white">06</span>
-                            <span class="text-slate-400">:</span>
-                            <span id="timer-minutes" class="px-1.5 py-0.5 rounded bg-[#060B1E] text-white">29</span>
-                            <span class="text-slate-400">:</span>
-                            <span id="timer-seconds" class="px-1.5 py-0.5 rounded bg-[#060B1E] text-white">54</span>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#007AFF]"></span>
+                        <h2 class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
+                            PRODUK TERBARU UMKM
+                        </h2>
                     </div>
 
                     <a href="{{ route('marketplace.sub.products') }}" class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
-                        <span>Lihat Semua</span>
+                        <span>Lihat Semua Produk</span>
                         <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
                     </a>
                 </div>
 
-                {{-- Flash Sale 6-Column Grid (Data Real) --}}
+                {{-- Product Grid 6 Kolom --}}
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
-                    @foreach ($popularProducts->take(6) as $index => $item)
+                    @foreach ($popularProducts->take(6) as $item)
                         <a href="{{ url('/' . $item->business->slug . '/produk/' . ($item->slug ?: $item->id)) }}"
                             class="group rounded border border-slate-100 dark:border-white/10 bg-white dark:bg-[#1C1C1E] overflow-hidden hover:border-[#007AFF] hover:shadow-md transition-all flex flex-col justify-between">
                             <div class="aspect-square bg-slate-100 dark:bg-[#2C2C2E] overflow-hidden relative">
@@ -448,9 +439,15 @@
                                         <i data-lucide="package" class="w-8 h-8"></i>
                                     </div>
                                 @endif
-                                <span class="absolute top-1 right-1 bg-amber-500 text-white font-bold text-[9px] px-1 py-0.5 rounded shadow-sm">
-                                    PROMO
-                                </span>
+                                @if ($item->is_preorder)
+                                    <span class="absolute top-1 right-1 bg-amber-500 text-white font-bold text-[9px] px-1 py-0.5 rounded shadow-sm">
+                                        Pre-Order
+                                    </span>
+                                @elseif ($item->category)
+                                    <span class="absolute top-1 right-1 bg-[#060B1E]/80 backdrop-blur-sm text-white font-semibold text-[9px] px-1.5 py-0.5 rounded shadow-sm truncate max-w-[90px]">
+                                        {{ $item->category->name }}
+                                    </span>
+                                @endif
                             </div>
 
                             <div class="p-2 space-y-1.5">
@@ -460,10 +457,9 @@
                                 <p class="text-sm font-bold text-[#007AFF] dark:text-[#38bdf8] font-mono leading-none">
                                     Rp {{ number_format($item->selling_price, 0, ',', '.') }}
                                 </p>
-                                <div class="w-full bg-slate-100 dark:bg-white/10 h-1.5 rounded-full overflow-hidden mt-1">
-                                    <div class="bg-gradient-to-r from-amber-500 to-[#007AFF] h-full rounded-full" style="width: 80%"></div>
+                                <div class="text-[10px] text-slate-500 truncate pt-1 border-t border-slate-100 dark:border-white/5">
+                                    {{ $item->business->name }}
                                 </div>
-                                <span class="text-[9px] font-semibold text-amber-600 block text-center uppercase">Stok Terbatas</span>
                             </div>
                         </a>
                     @endforeach
@@ -471,16 +467,16 @@
             </section>
         @endif
 
-        {{-- Section 5: Shopee "REKOMENDASI" Product Feed (Persis Gambar 2: 6 Kolom Card Grid + Detail Shopee) --}}
+        {{-- Section 5: Rekomendasi Produk UMKM (6 Kolom Grid Responsif - 100% Data Riil COOCA) --}}
         <section class="space-y-3">
-            {{-- Shopee-Style Section Header with Active Color Underline (Gambar 2) --}}
+            {{-- Header Tab Rekomendasi --}}
             <div class="bg-white dark:bg-[#1C1C1E] rounded-sm sm:rounded-md border border-slate-200/80 dark:border-white/10 shadow-sm flex items-center justify-center">
                 <div class="border-b-4 border-[#007AFF] text-[#007AFF] font-extrabold text-sm sm:text-base tracking-wider uppercase py-3.5 px-6 inline-flex items-center gap-2">
-                    <span>REKOMENDASI</span>
+                    <span>REKOMENDASI PRODUK UMKM</span>
                 </div>
             </div>
 
-            {{-- 6-Column Responsive Product Cards Grid (Persis Gambar 2 - Skema Data Real Otomatis) --}}
+            {{-- 6-Column Responsive Product Cards Grid (Data Real Skema Dinamis) --}}
             @if ($popularProducts->isNotEmpty())
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
                     @foreach ($popularProducts as $idx => $product)
@@ -498,56 +494,52 @@
                                     </div>
                                 @endif
 
-                                {{-- Shopee-Style Corner Discount Badge (Pojok Kanan Atas - Gambar 2) --}}
-                                <div class="absolute top-0 right-0 bg-amber-400 text-[#060B1E] font-extrabold text-[10px] px-1.5 py-0.5 shadow-sm text-center leading-tight">
-                                    <span class="block text-red-600 font-black">-15%</span>
-                                </div>
-
-                                {{-- Video Play Indicator (Pojok Kanan Bawah - Gambar 2) --}}
-                                <div class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-black/50 text-white flex items-center justify-center">
-                                    <i data-lucide="play" class="w-2.5 h-2.5 fill-white ml-0.5"></i>
+                                {{-- Real Status Badges (Pre-Order / Kategori / Jasa) --}}
+                                <div class="absolute top-1 right-1 flex flex-col items-end gap-1">
+                                    @if ($product->is_preorder)
+                                        <span class="bg-amber-500 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">
+                                            Pre-Order
+                                        </span>
+                                    @elseif ($product->type === 'service')
+                                        <span class="bg-sky-600 text-white font-bold text-[9px] px-1.5 py-0.5 rounded shadow-sm">
+                                            Jasa
+                                        </span>
+                                    @elseif ($product->category)
+                                        <span class="bg-[#060B1E]/80 backdrop-blur-sm text-white font-semibold text-[9px] px-1.5 py-0.5 rounded shadow-sm truncate max-w-[85px]">
+                                            {{ $product->category->name }}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 
-                            {{-- Card Details Body (Anatomi Persis Shopee Gambar 2) --}}
+                            {{-- Card Details Body --}}
                             <div class="p-2 space-y-1.5 flex-1 flex flex-col justify-between">
                                 <div class="space-y-1">
-                                    {{-- Shopee-Style Promo Xtra / Cicilan Tag (Gambar 2) --}}
-                                    <div class="flex items-center gap-1 flex-wrap">
-                                        <span class="bg-amber-400 text-slate-900 text-[8px] font-black px-1 py-0.2 rounded-sm uppercase tracking-tight">
-                                            PROMO XTRA
-                                        </span>
-                                        <span class="bg-[#007AFF]/15 text-[#007AFF] text-[8px] font-bold px-1 py-0.2 rounded-sm uppercase tracking-tight">
-                                            FREE ONGKIR
-                                        </span>
-                                    </div>
-
-                                    {{-- Title with Shopee Star / Star+ / Mall Badge (Gambar 2) --}}
+                                    {{-- Toko & Nama Produk --}}
                                     <h3 class="text-xs text-slate-800 dark:text-slate-100 font-normal leading-snug line-clamp-2 group-hover:text-[#007AFF] transition-colors">
-                                        <span class="inline-block bg-[#007AFF] text-white text-[9px] font-bold px-1 py-0.2 rounded-sm mr-1 align-baseline uppercase">
-                                            Star
-                                        </span>{{ $product->name }}
+                                        @if ($product->business->is_public_listed)
+                                            <span class="inline-block bg-[#007AFF] text-white text-[9px] font-bold px-1 py-0.2 rounded-sm mr-1 align-baseline uppercase">
+                                                Resmi
+                                            </span>
+                                        @endif
+                                        {{ $product->name }}
                                     </h3>
 
-                                    {{-- Garansi Harga Terbaik Pill (Gambar 2) --}}
-                                    <div>
-                                        <span class="inline-block border border-[#007AFF]/40 text-[#007AFF] text-[9px] font-medium px-1 rounded-sm">
-                                            Garansi UMKM
-                                        </span>
-                                    </div>
+                                    <p class="text-[10px] text-slate-500 dark:text-slate-400 truncate">
+                                        {{ $product->business->name }}
+                                    </p>
                                 </div>
 
                                 <div class="pt-1 space-y-1">
-                                    {{-- Price: 'Rp' kecil + Angka Bold Besar (Gambar 2) --}}
+                                    {{-- Price: 'Rp' kecil + Angka Bold --}}
                                     <div class="flex items-baseline gap-0.5 text-[#007AFF] dark:text-[#38bdf8]">
                                         <span class="text-[11px] font-semibold">Rp</span>
                                         <span class="font-extrabold text-sm sm:text-base font-mono leading-none">
                                             {{ number_format($product->selling_price, 0, ',', '.') }}
                                         </span>
-                                        <i data-lucide="truck" class="w-3.5 h-3.5 ml-1 text-slate-400" title="Gratis Ongkir"></i>
                                     </div>
 
-                                    {{-- Footer: Lokasi Kota Penjual (Pojok Kiri Bawah - Gambar 2) --}}
+                                    {{-- Footer: Lokasi Kota Penjual --}}
                                     <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1 border-t border-slate-100 dark:border-white/5">
                                         <span class="truncate max-w-[90px]">
                                             {{ $product->business->storeSetting?->city ?: ($product->business->city ?: 'Indonesia') }}
@@ -560,11 +552,11 @@
                     @endforeach
                 </div>
 
-                {{-- Shopee-Style "Lihat Lebih Banyak" Button (Gambar 2) --}}
+                {{-- Tombol Lihat Lebih Banyak --}}
                 <div class="pt-4 text-center">
                     <a href="{{ route('marketplace.sub.products') }}"
                         class="inline-flex items-center justify-center gap-2 h-10 px-8 rounded bg-white dark:bg-[#1C1C1E] border border-slate-300 dark:border-white/15 hover:border-[#007AFF] text-slate-700 dark:text-slate-200 hover:text-[#007AFF] text-xs sm:text-sm font-semibold shadow-sm transition active:scale-95">
-                        <span>Lihat Lebih Banyak</span>
+                        <span>Lihat Semua Produk</span>
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </a>
                 </div>
@@ -679,42 +671,9 @@
     </main>
 </div>
 
-{{-- Real-Time Countdown Timer Simulation Script (Shopee Flash Sale Style) --}}
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        let hours = 6;
-        let minutes = 29;
-        let seconds = 54;
-
-        const elH = document.getElementById('timer-hours');
-        const elM = document.getElementById('timer-minutes');
-        const elS = document.getElementById('timer-seconds');
-
-        if (elH && elM && elS) {
-            setInterval(function () {
-                if (seconds > 0) {
-                    seconds--;
-                } else {
-                    seconds = 59;
-                    if (minutes > 0) {
-                        minutes--;
-                    } else {
-                        minutes = 59;
-                        if (hours > 0) {
-                            hours--;
-                        } else {
-                            hours = 23;
-                        }
-                    }
-                }
-                elH.textContent = String(hours).padStart(2, '0');
-                elM.textContent = String(minutes).padStart(2, '0');
-                elS.textContent = String(seconds).padStart(2, '0');
-            }, 1000);
-        }
-
-        // Re-init lucide icons if available
         if (typeof lucide !== 'undefined' && typeof lucide.createIcons === 'function') {
             lucide.createIcons();
         }

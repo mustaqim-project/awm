@@ -239,4 +239,60 @@ class AdminSocialMediaPlatformContentTest extends TestCase
             'is_platform'         => true,
         ]);
     }
+
+    public function test_admin_can_publish_carousel_multi_photo_to_facebook(): void
+    {
+        $admin = $this->makeAdmin();
+
+        SystemSetting::set('social_media_page_id', '123456789012345', 'social_media');
+        SystemSetting::set('social_media_page_token', 'EAAB_mock_fb_token_secret', 'social_media', true);
+
+        Http::fake([
+            'https://graph.facebook.com/*/123456789012345/photos*' => Http::sequence()
+                ->push(['id' => 'fb_photo_id_101'], 200)
+                ->push(['id' => 'fb_photo_id_102'], 200),
+            'https://graph.facebook.com/*/123456789012345/feed*' => Http::response([
+                'id' => '123456789012345_feed_post_9999',
+            ], 200),
+        ]);
+
+        $post = SocialMediaPost::create([
+            'admin_id'    => $admin->id,
+            'business_id' => null,
+            'is_platform' => true,
+            'platform'    => 'facebook',
+            'media_type'  => 'carousel',
+            'media_urls'  => [
+                'https://images.unsplash.com/photo-1',
+                'https://images.unsplash.com/photo-2',
+            ],
+            'content'     => 'Kompilasi Carousel Fitur Baru Cooca POS!',
+            'status'      => 'draft',
+        ]);
+
+        $target = \App\Models\SocialPostTarget::create([
+            'social_media_post_id' => $post->id,
+            'provider'             => 'meta',
+            'channel'              => 'facebook',
+            'custom_caption'       => null,
+            'status'               => 'queued',
+        ]);
+
+        $service = app(\App\Domain\SocialMedia\AdminSocialMediaService::class);
+        $resultTarget = $service->executePlatformPublishTarget($target);
+
+        $this->assertNull($resultTarget->error_message, 'Error: ' . $resultTarget->error_message);
+        $this->assertEquals('published', $resultTarget->status);
+        $this->assertEquals('123456789012345_feed_post_9999', $resultTarget->platform_post_id);
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), '123456789012345/photos') &&
+                   $request['published'] === 'false';
+        });
+
+        Http::assertSent(function ($request) {
+            return str_contains($request->url(), '123456789012345/feed') &&
+                   $request['message'] === 'Kompilasi Carousel Fitur Baru Cooca POS!';
+        });
+    }
 }

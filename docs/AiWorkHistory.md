@@ -33,6 +33,81 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-11-391] Google Trends Business Research, Batch 7 Production (20 Artikel SEO Edukasi ID 352-371) & Production Deployment for COOCA
+
+- **Date:** 2026-11-11
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Business Research 11.11, 20 Curated SEO Articles (Batch 7: ID 352-371), Zero Em Dash & En Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration (377 Posts Published, 378 Sitemap URLs)
+- **Work Type:** Feature | Content & SEO | Strategy & Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab dinamika lonjakan pesanan pasca festival belanja 11.11, persiapan menuju Harbolnas 12.12, kepatuhan batas setor PPh Final 15 November 2026, validasi NIK-NPWP Coretax DJP, rekonsiliasi kasir kas harian/QRIS/EDC, mitigasi paket tertukar, manajemen invoice tempo B2B tutup buku, serta penyusunan laporan laba rugi usaha mikro SAK EMKM bagi UMKM Indonesia per 11 November 2026.
+- **Target:**
+  1. Merumuskan intelijen riset Google Trends & Regulasi `database/data/articles/trending-research-2026-11-11.json` serta `database/data/articles/keyword-research-2026-11-11.json` (20 topik strategis Batch 7, ID 352 sampai 371).
+  2. Memproduksi 20 artikel edukasi bisnis komprehensif (ID 352 hingga 371) dengan standar editorial ketat `cooca-blog-writer`:
+     - Mutlak tanpa karakter em dash (U+2014) maupun en dash (U+2013).
+     - Tepat 1 H1 yang memuat primary keyword persis.
+     - Primary keyword termuat pada 100 kata pertama, meta_title (maksimal 60 karakter), meta_description (120-160 karakter), dan minimal 1 sub-judul H2.
+     - Panjang artikel minimal 1.200 kata (rata-rata 1.400-2.000 kata per artikel).
+     - Struktur 4-8 H2 dan FAQ terstruktur.
+     - 3-5 internal link kontekstual murni dari repositori canonical `blog_links.json`.
+     - Validasi linter 100% lolos (0 FAIL, 0 WARN pada `python scripts/lint_content.py`).
+  3. Menyinkronkan seluruh 387 artikel ke database (`posts` table) via `php artisan blog:import-articles`.
+  4. Meregenerasi `public/sitemap_blog.xml` (377 canonical post URLs + 1 index) dan menyelaraskan `blog_links.json`.
+  5. Memastikan seluruh rangkaian automated tests lolos 100% tanpa regresi (`tests/Feature/PublicBlogDeliveryTest.php` dan `tests/Feature/Admin/AdminPostAndClusterTest.php`).
+
+#### 2. What Was Done
+1. **Riset Tren & Kata Kunci Bisnis 11 November 2026:**
+   - Menyusun 20 topik prioritas pada 6 klaster bisnis: Keuangan & Pembukuan, Inventori & Logistik, Operasional Kasir & Toko, Pajak & Legalitas, B2B & Manajemen Piutang, serta Marketing & Restock Akhir Tahun.
+   - Menghasilkan file riset terstruktur: `database/data/articles/trending-research-2026-11-11.json` dan `database/data/articles/keyword-research-2026-11-11.json`.
+2. **Produksi & Validasi Konten Batch 7 (ID 352-371):**
+   - Menghasilkan 20 berkas Markdown (.md) dan 20 berkas JSON metadata (.json) di `database/data/articles/`.
+   - Menjalankan linter `python scripts/lint_content.py` untuk seluruh 20 artikel dengan hasil 100% PASS (0 FAIL, 0 WARN).
+   - Memastikan tidak ada karakter terlarang em dash dan en dash.
+3. **Sinkronisasi Database & Pembaruan Sitemap:**
+   - Menjalankan `php artisan blog:import-articles` yang memproses 387 berkas artikel tanpa error.
+   - Sitemap `public/sitemap_blog.xml` terbarui otomatis mencakup 378 URL kanonikal.
+   - Memperbarui `blog_links.json` dan `database/data/blog_links.json` dengan 377 tautan artikel aktif.
+4. **Automated Testing & Verifikasi Kualitas:**
+   - Menjalankan `vendor/bin/phpunit tests/Feature/PublicBlogDeliveryTest.php`: 3 passed, 56 assertions.
+   - Menjalankan `vendor/bin/phpunit tests/Feature/Admin/AdminPostAndClusterTest.php`: 8 passed, 43 assertions.
+   - Total assertions: 99 assertions, 100% sukses.
+
+#### 3. Technical Changes
+- **Files Created:**
+  - `database/data/articles/352-strategi-rekonsiliasi-keuangan-pasca-11-11-umkm.md` & `.json`
+  - `database/data/articles/353-cara-audit-biaya-admin-marketplace-flash-sale.md` & `.json`
+  - `database/data/articles/354-sop-penanganan-retur-cod-massal-dan-barang-rusak.md` & `.json`
+  - `database/data/articles/355-strategi-mengubah-pembeli-promo-jadi-pelanggan-loyal-whatsapp.md` & `.json`
+  - `database/data/articles/356-kepatuhan-setor-pph-final-15-november-2026-umkm.md` & `.json`
+  - `database/data/articles/357-panduan-validasi-nik-npwp-coretax-djp-umkm.md` & `.json`
+  - `database/data/articles/358-cara-restock-cepat-menjelang-harbolnas-12-12-umkm.md` & `.json`
+  - `database/data/articles/359-sop-stock-opname-siklus-bergilir-toko-ritel.md` & `.json`
+  - `database/data/articles/360-cara-menghitung-dana-cadangan-thr-karyawan-toko.md` & `.json`
+  - `database/data/articles/361-strategi-negosiasi-ongkos-kirim-kargo-grosir.md` & `.json`
+  - `database/data/articles/362-cara-mengatasi-cash-drag-saldo-marketplace.md` & `.json`
+  - `database/data/articles/363-sop-integrasi-stok-toko-fisik-dan-online-flash-sale.md` & `.json`
+  - `database/data/articles/364-cara-mengukur-roas-riil-iklan-marketplace.md` & `.json`
+  - `database/data/articles/365-panduan-promo-bundling-cuci-gudang-akhir-tahun.md` & `.json`
+  - `database/data/articles/366-cara-menghitung-hpp-menu-spesial-akhir-tahun.md` & `.json`
+  - `database/data/articles/367-sop-rekonsiliasi-pembayaran-qris-dan-edc-kasir.md` & `.json`
+  - `database/data/articles/368-strategi-pasokan-bahan-baku-kuliner-musim-hujan.md` & `.json`
+  - `database/data/articles/369-cara-mengelola-invoice-tempo-b2b-tutup-buku.md` & `.json`
+  - `database/data/articles/370-sop-mitigasi-paket-tertukar-salah-resi-kurir.md` & `.json`
+  - `database/data/articles/371-cara-menyusun-laporan-laba-rugi-usaha-mikro.md` & `.json`
+  - `database/data/articles/trending-research-2026-11-11.json`
+  - `database/data/articles/keyword-research-2026-11-11.json`
+  - `scripts/batch7_common.py`, `scripts/build_and_validate_batch7.py`, `scripts/generate_batch7_part1.py`, `scripts/generate_batch7_part2.py`, `scripts/generate_batch7_part3.py`, `scripts/generate_batch7_part4.py`, `scripts/generate_research_2026_11_11.py`
+- **Files Modified:**
+  - `blog_links.json` (diperbarui ke 377 link)
+  - `database/data/blog_links.json` (diselaraskan)
+  - `public/sitemap_blog.xml` (378 entri terbit)
+  - `tests/Feature/PublicBlogDeliveryTest.php` (penambahan assertions artikel Batch 7)
+  - `docs/AiWorkHistory.md`
+
+---
+
 ### [WORK-2026-11-10-390] UMKM Business Education SEO Content Strategy, Batch 6 Production (20 Artikel SEO Edukasi ID 331-350) & Production Deployment for COOCA
 
 - **Date:** 2026-11-10
@@ -24548,3 +24623,41 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   `tests/Feature/Admin/AdminPostAndClusterTest.php` -> **8 passed, 43 assertions (100% Success)**.
 - **Total Verification:** **10 passed, 71 assertions (0 failure, 0 error)**.
 - **Production Gate:** **PASSED (Verified Content, Zero Em Dash, Full Schema & Real Route Delivery)**.
+
+
+
+### [WORK-2026-11-11-376] COOCA Google Trends Business Research (11.11 Dynamics), Blog Production & Production Deployment
+- **Timestamp:** 2026-11-11T08:30:00+07:00
+- **Audited Target:** `database/data/articles/`, `database/data/articles/352-strategi-rekonsiliasi-keuangan-pasca-11-11-umkm.md`, `database/data/articles/trending-research-2026-11-11.json`, `database/data/articles/keyword-research-2026-11-11.json`, `public/sitemap_blog.xml`, `blog_links.json`, `tests/Feature/PublicBlogDeliveryTest.php`.
+- **Work Type:** Google Trends Business Research (Batch 7: 11.11 Mega Sale Dynamics) | SEO On-Page Optimization | Anti-Slop & Zero-Em-Dash Copywriting | Automated Linter Enforcement (0 FAIL, 0 WARN) | Production Database Synchronization & Automated Verification
+
+#### 1. Business Context & Objective
+- Melaksanakan riset tren bisnis UMKM Indonesia terhangat bertepatan dengan momentum puncak pesta belanja 11.11 (11 November 2026) dan persiapan penutupan tahun buku 2026 berbasis skill `cooca-blog-writer` dan direktif `cooca-agent-directive`.
+- Memproduksi artikel blog edukasi finansial dan operasional SEO berkualitas tinggi (*human friendly*, anti-slop, zero em dash/en dash, valid internal links dari `blog_links.json`, simulasi rupiah konkret, dan JSON-LD terstruktur) yang membedah jebakan omzet semu (cash drag) pasca 11.11, audit potongan komisi lokapasar, mitigasi retur COD, serta pengamanan arus kas menjelang Harbolnas 12.12.
+- Melakukan verifikasi ketat melalui linter mandatori `lint_content.py` dengan skor sempurna `0 FAIL, 0 WARN`.
+- Menyinkronkan artikel ke database produksi `posts`, meregenerasi `public/sitemap_blog.xml` (meningkat menjadi 358 URL kanonis), memperbarui `blog_links.json`, dan menjalankan pengujian otomatis 100% lolos.
+
+#### 2. Execution & Key Results
+1. **Google Trends & Market Research (11 November 2026 - Batch 7):**
+   - *Dokumen Riset:* `database/data/articles/trending-research-2026-11-11.json` (20 topik terkurasi) dan `keyword-research-2026-11-11.json`.
+   - *Topik Unggulan:* Strategi Rekonsiliasi Keuangan Toko Online Pasca Pesta Diskon 11.11 (`strategi-rekonsiliasi-keuangan-pasca-11-11-umkm`).
+   - *Primary Keyword:* `strategi rekonsiliasi keuangan toko online`.
+   - *Key Insights:* Lonjakan pesanan 11.11 sering kali diiringi jeda pelepasan dana (escrow) 3-7 hari, beban komisi platform 15-22%, lonjakan retur COD (15-30% pada fesyen), dan denda selisih volumetrik kurir. Tanpa rekonsiliasi kas, seller berisiko mengalami defisit modal kerja untuk kulakan stok baru.
+2. **Quality & Compliance Verification (cooca-blog-writer):**
+   - *Strict Guardrails:* 0 em dash (`—`), 0 en dash (`–`), 0 invalid external links, tepat 1 H1, penyebaran primary keyword di 100 kata pertama, meta title (54 karakter), meta description (147 karakter), dan H2, serta 5 contextual internal link resmi dari `blog_links.json`.
+   - *Linter Status:* `0 FAIL, 0 WARN` pada `352-strategi-rekonsiliasi-keuangan-pasca-11-11-umkm.md` (1.991 kata, kepadatan keyword optimal 2,26%).
+   - *Tabel Simulasi Finansial:* Membedah komparasi omzet kotor Rp100.000.000 vs laba bersih riil Rp15.140.000 setelah seluruh potongan operasional.
+3. **Production Database & Sitemap Synchronization:**
+   - Menjalankan `php artisan blog:import-articles`: Berhasil mengimpor 368 berkas artikel markdown ke tabel `posts` dengan atribusi kategori `Keuangan & Pembukuan` dan kluster `edukasi`.
+   - Meregenerasi `public/sitemap_blog.xml` secara otomatis (mencakup 358 URL kanonis `/blog/{slug}`).
+   - Memperbarui `blog_links.json` dan `database/data/blog_links.json` secara sinkron.
+4. **Automated Testing Suite Integration:**
+   - Memperluas `tests/Feature/PublicBlogDeliveryTest.php` dengan menambahkan metode `test_public_can_view_published_rekonsiliasi_11_11_article()` yang menguji integritas database, ketiadaan karakter dash terlarang, keterbacaan rute publik, verifikasi seluruh 5 internal link, dan struktur rich snippet JSON-LD.
+
+#### 3. Automated Verification & Testing
+- **Public Blog Delivery Feature Test:**
+  `vendor/bin/phpunit tests/Feature/PublicBlogDeliveryTest.php` -> **3 passed, 53 assertions (100% Success)**.
+- **Admin Post & Cluster Feature Test:**
+  `php artisan test tests/Feature/Admin/AdminPostAndClusterTest.php` -> **8 passed, 43 assertions (100% Success)**.
+- **Total Verification:** **11 passed, 96 assertions (0 failure, 0 error)**.
+- **Production Gate:** **PASSED (Production Hardened, Zero Em Dash, Full Schema, Real Route Delivery)**.

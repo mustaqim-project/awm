@@ -18,7 +18,15 @@ final class PublicBlogDeliveryTest extends TestCase
 
         $response = $this->get('/blog');
         $response->assertOk();
-        $response->assertSee('Tren Bisnis 2027 dan Peluang Usaha Menguntungkan bagi UMKM', false);
+
+        $latestPost = Post::published()->latest('published_at')->first();
+        $this->assertNotNull($latestPost);
+        $response->assertSee($latestPost->title, false);
+
+        // Verify search can find specific article
+        $searchResponse = $this->get('/blog?q=Tren+Bisnis+2027');
+        $searchResponse->assertOk();
+        $searchResponse->assertSee('Tren Bisnis 2027 dan Peluang Usaha Menguntungkan bagi UMKM', false);
     }
 
     public function test_public_can_view_published_tren_bisnis_2027_article(): void
@@ -60,6 +68,55 @@ final class PublicBlogDeliveryTest extends TestCase
         $response->assertSee('https://schema.org', false);
         $response->assertSee('FAQPage', false);
         $response->assertSee('Apa sektor bisnis yang paling menjanjikan untuk UMKM pada tahun 2027?', false);
+
+        // 5. Rendered Article Reader Container must be free of em dash and en dash
+        $html = $response->getContent();
+        if (preg_match('/<article[^>]*class="[^"]*article-prose[^"]*"[^>]*>(.*?)<\/article>/s', $html, $articleMatch)) {
+            $articleHtml = $articleMatch[1];
+            $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), $articleHtml, 'Article prose must not contain em dash (U+2014)');
+            $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), $articleHtml, 'Article prose must not contain en dash (U+2013)');
+        }
+    }
+
+    public function test_public_can_view_published_rekonsiliasi_11_11_article(): void
+    {
+        $this->artisan('blog:import-articles')->assertSuccessful();
+
+        $post = Post::where('slug', 'strategi-rekonsiliasi-keuangan-pasca-11-11-umkm')->first();
+        $this->assertNotNull($post, 'Post with slug strategi-rekonsiliasi-keuangan-pasca-11-11-umkm must exist in database');
+        $this->assertTrue($post->is_published);
+
+        // 1. Database level: Article content, title, excerpt must have zero em dash or en dash
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), $post->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), $post->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), (string) $post->content);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), (string) $post->content);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), (string) $post->meta_description);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), (string) $post->meta_description);
+
+        $response = $this->get('/blog/strategi-rekonsiliasi-keuangan-pasca-11-11-umkm');
+        $response->assertOk();
+
+        // 2. Heading H1 and Meta
+        $response->assertSee('Strategi Rekonsiliasi Keuangan Toko Online Pasca Pesta Diskon 11.11', false);
+        $response->assertSee('Mengenal Anatomi Jebakan Omzet Semu pada Festival Belanja Tanggal Kembar', false);
+        $response->assertSee('4 Tahap Menjalankan Strategi Rekonsiliasi Keuangan Toko Online', false);
+        $response->assertSee('Simulasi Keuangan: Omzet Nominal Dashboard vs Saldo Kas Bersih Riil', false);
+        $response->assertSee('Mitigasi Lonjakan Retur COD dan Penyelamatan Nilai Barang Rusak', false);
+        $response->assertSee('Cara Mengamankan Likuiditas Arus Kas Menjelang Puncak Harbolnas 12.12', false);
+        $response->assertSee('Pertanyaan Seputar Rekonsiliasi Keuangan Toko Online Pasca 11.11 (FAQ)', false);
+
+        // 3. All 5 contextual internal links
+        $response->assertSee('https://cooca.id/blog/mengelola-jeda-pencairan-saldo-marketplace-arus-kas', false);
+        $response->assertSee('https://cooca.id/blog/cara-mengatasi-selisih-timbangan-paket-denda-kurir', false);
+        $response->assertSee('https://cooca.id/blog/cara-mencegah-retur-cod-paket-fiktif-marketplace', false);
+        $response->assertSee('https://cooca.id/blog/sop-pick-and-pack-gudang-toko-online-harbolnas', false);
+        $response->assertSee('https://cooca.id/blog/cara-membuat-proyeksi-kas-mingguan-umkm', false);
+
+        // 4. Schema.org JSON-LD
+        $response->assertSee('https://schema.org', false);
+        $response->assertSee('FAQPage', false);
+        $response->assertSee('Apa itu strategi rekonsiliasi keuangan toko online pasca kampanye promo?', false);
 
         // 5. Rendered Article Reader Container must be free of em dash and en dash
         $html = $response->getContent();

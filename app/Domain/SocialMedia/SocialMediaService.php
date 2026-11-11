@@ -219,6 +219,15 @@ class SocialMediaService
                         $firstMediaUrl
                     );
                     $platformPostId = (string) ($res['id'] ?? '');
+                } elseif ($mediaType === 'carousel' || count($mediaItems) > 1) {
+                    $mediaUrls = array_values(array_filter(array_column($mediaItems, 'media_url')));
+                    $res = $this->client->publishFacebookMultiPhoto(
+                        $account->account_id,
+                        $account->access_token,
+                        $effectiveCaption,
+                        $mediaUrls
+                    );
+                    $platformPostId = (string) ($res['id'] ?? $res['post_id'] ?? '');
                 } else {
                     $res = $this->client->publishFacebookPost(
                         $account->account_id,

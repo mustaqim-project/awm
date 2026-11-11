@@ -223,6 +223,96 @@ class MetaSocialMediaClient
     }
 
     /**
+     * Publish multi-photo post (carousel / album style) to Facebook Page feed.
+     * Uploads each photo as unpublished, then attaches them to a single Page feed post.
+     *
+     * @param  list<string|array<string, mixed>>  $mediaUrls
+     * @return array<string, mixed>
+     */
+    public function publishFacebookMultiPhoto(string $pageId, string $pageToken, string $message, array $mediaUrls): array
+    {
+        $urls = [];
+        foreach ($mediaUrls as $item) {
+            $url = is_array($item) ? ($item['media_url'] ?? $item['url'] ?? '') : (string) $item;
+            $url = trim($url);
+            if (! empty($url)) {
+                $urls[] = $url;
+            }
+        }
+
+        if (empty($urls)) {
+            return $this->publishPageFeed($pageId, $pageToken, $message);
+        }
+
+        if (count($urls) === 1) {
+            return $this->publishPagePhoto($pageId, $pageToken, $message, $urls[0]);
+        }
+
+        $attachedMedia = [];
+
+        // 1. Upload each photo as unpublished (published=false, temporary=true)
+        foreach ($urls as $idx => $photoUrl) {
+            $uploadPayload = [
+                'url'          => $photoUrl,
+                'published'    => 'false',
+                'temporary'    => 'true',
+                'access_token' => $pageToken,
+            ];
+
+            $photoRes = Http::asForm()->post($this->endpoint("{$pageId}/photos"), $uploadPayload);
+
+            if (! $photoRes->successful() || empty($photoRes->json('id'))) {
+                Log::error('Meta publishFacebookMultiPhoto item upload failed', [
+                    'page_id' => $pageId,
+                    'index'   => $idx,
+                    'url'     => $photoUrl,
+                    'body'    => $photoRes->body(),
+                ]);
+                throw new \RuntimeException($photoRes->json('error.message') ?? 'Gagal mengunggah foto ke-'.($idx + 1).' untuk carousel Facebook.');
+            }
+
+            $photoId = (string) $photoRes->json('id');
+            $attachedMedia[] = ['media_fbid' => $photoId];
+        }
+
+        // 2. Publish post to Page feed with attached_media
+        $feedPayload = [
+            'message'        => $message,
+            'attached_media' => $attachedMedia,
+            'access_token'   => $pageToken,
+        ];
+
+        $feedRes = Http::asForm()->post($this->endpoint("{$pageId}/feed"), $feedPayload);
+
+        // Fallback retry with json_encode if Graph API form parsing expects JSON string
+        if (! $feedRes->successful()) {
+            $feedPayload['attached_media'] = json_encode($attachedMedia);
+            $feedRes = Http::asForm()->post($this->endpoint("{$pageId}/feed"), $feedPayload);
+        }
+
+        if (! $feedRes->successful()) {
+            Log::error('Meta publishFacebookMultiPhoto feed post failed', [
+                'page_id' => $pageId,
+                'body'    => $feedRes->body(),
+            ]);
+            throw new \RuntimeException($feedRes->json('error.message') ?? 'Gagal mempublikasikan postingan multi-foto carousel ke Facebook Page.');
+        }
+
+        return $feedRes->json();
+    }
+
+    /**
+     * Alias for publishFacebookMultiPhoto.
+     *
+     * @param  list<string|array<string, mixed>>  $mediaUrls
+     * @return array<string, mixed>
+     */
+    public function publishFacebookCarousel(string $pageId, string $pageToken, string $message, array $mediaUrls): array
+    {
+        return $this->publishFacebookMultiPhoto($pageId, $pageToken, $message, $mediaUrls);
+    }
+
+    /**
      * Wait for an Instagram media container to finish processing before publishing.
      */
     public function waitForMediaContainerReady(string $containerId, string $pageToken, int $maxAttempts = 15, int $sleepSeconds = 2): void

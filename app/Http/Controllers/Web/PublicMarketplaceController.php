@@ -207,7 +207,8 @@ final class PublicMarketplaceController extends Controller
     }
 
     /**
-     * Build category count data for filter pills and sidebar tree (20 Shopee-style categories).
+     * Build category count data for filter pills and marketplace grid.
+     * Strictly based on COOCA's real 20 industry sectors and active product categories.
      *
      * @return array<string, array<string, mixed>>
      */
@@ -219,145 +220,146 @@ final class PublicMarketplaceController extends Controller
                     ->orWhereHas('storeSetting', fn($sq) => $sq->where('is_storefront_enabled', true)->where('is_discoverable', true));
             });
 
+        // 20 Official Sektor Industri UMKM COOCA
         return [
-            'fnb' => [
-                'label' => 'Makanan & Minuman',
+            'fnb_resto' => [
+                'label' => 'Restoran & Rumah Makan',
                 'icon'  => 'utensils',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'fnb')->orWhere('template_code', 'like', 'fnb%'))
+                    ->where(fn($q) => $q->where('industry_category', 'fnb')->orWhere('template_code', 'like', 'fnb_resto%'))
+                    ->count(),
+            ],
+            'fnb_cafe' => [
+                'label' => 'Coffee Shop & Cafe',
+                'icon'  => 'coffee',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_cafe%'))
+                    ->count(),
+            ],
+            'fnb_bakery' => [
+                'label' => 'Bakery & Toko Roti',
+                'icon'  => 'cake',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_bakery%'))
+                    ->count(),
+            ],
+            'fnb_frozen_food' => [
+                'label' => 'Makanan Olahan & Frozen',
+                'icon'  => 'snowflake',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_frozen%'))
+                    ->count(),
+            ],
+            'fnb_catering' => [
+                'label' => 'Katering & Prasmanan',
+                'icon'  => 'soup',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'fnb_catering%'))
                     ->count(),
             ],
             'fashion' => [
-                'label' => 'Pakaian & Fashion',
+                'label' => 'Konveksi, Garment & Busana',
                 'icon'  => 'shirt',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'fashion')->orWhere('template_code', 'like', 'fashion%'))
+                    ->where(fn($q) => $q->where('industry_category', 'fashion')->orWhere('template_code', 'like', 'mfg_garment%'))
                     ->count(),
             ],
-            'beauty' => [
-                'label' => 'Perawatan & Kecantikan',
-                'icon'  => 'sparkles',
+            'printing' => [
+                'label' => 'Percetakan & Digital Printing',
+                'icon'  => 'printer',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'beauty')->orWhere('template_code', 'like', 'beauty%'))
+                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_printing%'))
+                    ->count(),
+            ],
+            'furniture' => [
+                'label' => 'Mebel & Pengrajin Kayu',
+                'icon'  => 'hammer',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_furniture%'))
+                    ->count(),
+            ],
+            'craft' => [
+                'label' => 'Kerajinan Tangan & Kriya',
+                'icon'  => 'palette',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('industry_category', 'craft')->orWhere('template_code', 'like', 'mfg_craft%'))
                     ->count(),
             ],
             'retail' => [
-                'label' => 'Ritel & Kelontong',
+                'label' => 'Toko Ritel & Kelontong',
                 'icon'  => 'store',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'retail')->orWhere('template_code', 'like', 'retail%'))
+                    ->where(fn($q) => $q->where('industry_category', 'retail')->orWhere('template_code', 'like', 'retail_reseller%'))
                     ->count(),
             ],
-            'electronics' => [
-                'label' => 'Elektronik & Gadget',
-                'icon'  => 'tv',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'electronics')->orWhere('template_code', 'like', 'elec%'))
-                    ->count(),
-            ],
-            'computer' => [
-                'label' => 'Komputer & Aksesoris',
-                'icon'  => 'laptop',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'computer')->orWhere('template_code', 'like', 'comp%'))
-                    ->count(),
-            ],
-            'handphone' => [
-                'label' => 'Handphone & Gadget',
-                'icon'  => 'smartphone',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'gadget')->orWhere('template_code', 'like', 'phone%'))
-                    ->count(),
-            ],
-            'shoes' => [
-                'label' => 'Sepatu & Sandal',
-                'icon'  => 'footprints',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'shoes')->orWhere('template_code', 'like', 'shoes%'))
-                    ->count(),
-            ],
-            'bags' => [
-                'label' => 'Tas & Dompet',
-                'icon'  => 'shopping-bag',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'bags')->orWhere('template_code', 'like', 'bag%'))
-                    ->count(),
-            ],
-            'accessories' => [
-                'label' => 'Aksesoris & Jam',
-                'icon'  => 'watch',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'accessories')->orWhere('template_code', 'like', 'acc%'))
-                    ->count(),
-            ],
-            'health' => [
-                'label' => 'Kesehatan & Apotek',
+            'pharmacy' => [
+                'label' => 'Apotek & Toko Obat',
                 'icon'  => 'heart-pulse',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'health')->orWhere('template_code', 'like', 'health%')->orWhere('template_code', 'like', 'pharma%'))
-                    ->count(),
-            ],
-            'home' => [
-                'label' => 'Perlengkapan Rumah',
-                'icon'  => 'home',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'home')->orWhere('template_code', 'like', 'home%'))
+                    ->where(fn($q) => $q->where('industry_category', 'health')->orWhere('template_code', 'like', 'retail_pharmacy%'))
                     ->count(),
             ],
             'workshop' => [
-                'label' => 'Bengkel & Otomotif',
+                'label' => 'Bengkel Motor & Mobil',
                 'icon'  => 'wrench',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'workshop')->orWhere('template_code', 'like', 'workshop%')->orWhere('template_code', 'like', 'bengkel%'))
+                    ->where(fn($q) => $q->where('industry_category', 'workshop')->orWhere('template_code', 'like', 'service_workshop%')->orWhere('template_code', 'like', 'bengkel%'))
                     ->count(),
             ],
-            'hobby' => [
-                'label' => 'Hobi & Olahraga',
-                'icon'  => 'trophy',
+            'barbershop' => [
+                'label' => 'Barbershop & Salon Kecantikan',
+                'icon'  => 'scissors',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'hobby')->orWhere('template_code', 'like', 'hobby%'))
+                    ->where(fn($q) => $q->where('industry_category', 'beauty')->orWhere('template_code', 'like', 'service_barbershop%'))
                     ->count(),
             ],
-            'baby' => [
-                'label' => 'Ibu & Bayi',
-                'icon'  => 'baby',
+            'laundry' => [
+                'label' => 'Laundry Kiloan & Satuan',
+                'icon'  => 'droplets',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'baby')->orWhere('template_code', 'like', 'baby%'))
+                    ->where(fn($q) => $q->where('industry_category', 'laundry')->orWhere('template_code', 'like', 'service_laundry%'))
                     ->count(),
             ],
-            'service' => [
-                'label' => 'Jasa & Layanan',
+            'agency' => [
+                'label' => 'Jasa, Studio & Agensi Kreatif',
                 'icon'  => 'briefcase',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'service')->orWhere('template_code', 'like', 'service%'))
+                    ->where(fn($q) => $q->where('industry_category', 'service')->orWhere('template_code', 'like', 'service_agency%'))
+                    ->count(),
+            ],
+            'contractor' => [
+                'label' => 'Kontraktor & Desain Interior',
+                'icon'  => 'hard-hat',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'service_contractor%'))
+                    ->count(),
+            ],
+            'event' => [
+                'label' => 'Event Organizer & Wedding',
+                'icon'  => 'calendar',
+                'count' => Business::where($baseScope)
+                    ->where(fn($q) => $q->where('template_code', 'like', 'service_event%'))
                     ->count(),
             ],
             'agriculture' => [
-                'label' => 'Pertanian & Ternak',
+                'label' => 'Pertanian, Tani & Hidroponik',
                 'icon'  => 'wheat',
                 'count' => Business::where($baseScope)
                     ->where(fn($q) => $q->where('industry_category', 'agriculture')->orWhere('template_code', 'like', 'agri%'))
                     ->count(),
             ],
-            'craft' => [
-                'label' => 'Kriya & Kerajinan',
-                'icon'  => 'palette',
+            'precision' => [
+                'label' => 'Fabrikasi & Permesinan Logam',
+                'icon'  => 'cog',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'craft')->orWhere('template_code', 'like', 'craft%'))
+                    ->where(fn($q) => $q->where('template_code', 'like', 'mfg_precision%'))
                     ->count(),
             ],
-            'laundry' => [
-                'label' => 'Laundry & Cuci',
-                'icon'  => 'droplets',
+            'distributor' => [
+                'label' => 'Distributor & Grosir Bahan',
+                'icon'  => 'truck',
                 'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'laundry')->orWhere('template_code', 'like', 'laundry%'))
-                    ->count(),
-            ],
-            'manufacture' => [
-                'label' => 'Percetakan & Produksi',
-                'icon'  => 'printer',
-                'count' => Business::where($baseScope)
-                    ->where(fn($q) => $q->where('industry_category', 'manufacture')->orWhere('template_code', 'like', 'mfg%')->orWhere('template_code', 'like', 'print%'))
+                    ->where(fn($q) => $q->where('template_code', 'like', 'distributor%'))
                     ->count(),
             ],
         ];

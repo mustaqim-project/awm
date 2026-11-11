@@ -84,7 +84,9 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
         // User Management & CSV Export
         Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::redirect('/user', '/admin/users');
         Route::get('/users/export', [AdminUserController::class, 'export'])->name('users.export');
+        Route::delete('/users/bulk-destroy', [AdminUserController::class, 'bulkDestroy'])->name('users.bulk-destroy');
         Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 
         // Account Recovery Verification & Approval

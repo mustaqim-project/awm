@@ -1,0 +1,218 @@
+---
+title: "Cara Menyusun Laporan Laba Rugi Usaha Mikro untuk Evaluasi Akhir Tahun"
+meta_title: "Cara Menyusun Laporan Laba Rugi Usaha Mikro"
+meta_description: "Pelajari cara menyusun laporan laba rugi usaha mikro berbasis SAK EMKM untuk evaluasi akhir tahun, menghitung HPP, beban operasional, dan margin laba bersih."
+slug: "cara-menyusun-laporan-laba-rugi-usaha-mikro"
+primary_keyword: "cara menyusun laporan laba rugi usaha mikro"
+secondary_keywords: "format laporan keuangan sederhana sak emkm, pemisahan pendapatan operasional dan non-operasional, penghitungan beban pokok penjualan barang dagang, evaluasi persentase margin laba bersih toko, persiapan laporan tahunan spt pajak"
+search_intent: "informational"
+category: "Keuangan & Pembukuan"
+reading_time: "9 menit"
+cover_image: "https://cooca.id/images/blog/photo-1554224154-26032ffc0d07.jpg"
+published_at: "2026-11-11T08:00:00+07:00"
+---
+# Cara Menyusun Laporan Laba Rugi Usaha Mikro untuk Evaluasi Akhir Tahun
+
+Menjelang pergantian tahun kalender, setiap pemilik usaha mikro, toko kelontong, kedai kopi, salon, bengkel, dan industri rumahan dihadapkan pada pertanyaan mendasar yang paling penting: Apakah bisnis yang dijalankan selama setahun ini benar-benar menghasilkan keuntungan bersih yang memadai? Menguasai cara menyusun laporan laba rugi usaha mikro adalah keterampilan fundamental agar pengusaha tidak lagi terjebak dalam ilusi saldo rekening bank yang tampak banyak namun ternyata menyembunyikan beban utang dan penyusutan aset yang belum dibayar.
+
+Banyak wirausahawan pemula melakukan kekeliruan fatal dengan menyamakan pergerakan arus kas tunai masuk dengan keuntungan usaha. Mereka merasa toko sedang sangat untung hanya karena laci kasir penuh dengan lembaran uang kertas setiap malam. Padahal, uang tersebut sebagian besar adalah modal dasar untuk membeli kembali barang dagangan (HPP), titipan uang sewa tempat, dan kewajiban pajak yang belum disetorkan. Ketika tagihan supplier datang serentak di akhir bulan, kas toko tiba-tiba kering dan pemilik usaha bingung ke mana perginya seluruh keuntungan penjualan.
+
+Melalui panduan ini, kita akan membahas struktur laporan laba rugi sederhana sesuai Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah (SAK EMKM), formula menghitung Harga Pokok Penjualan (HPP) barang dagangan, pemisahan beban operasional dan non-operasional, serta teknik membaca rasio profitabilitas untuk menetapkan target pertumbuhan bisnis tahun 2027, didukung rujukan [cara menyusun anggaran operasional toko umkm](https://cooca.id/blog/cara-menyusun-anggaran-operasional-toko-umkm).
+
+## Mengapa Laporan Laba Rugi Sangat Vital bagi Kelangsungan Usaha Kecil?
+
+Laporan laba rugi (income statement) adalah kompas navigasi keuangan yang memperlihatkan kinerja operasional usaha dalam suatu periode waktu tertentu (bulanan, triwulanan, atau tahunan).
+
+Empat manfaat strategis menyusun laporan laba rugi secara tertib:
+1. Mengetahui Angka Laba Bersih yang Sebenarnya (Real Net Profit). Anda dapat membedakan secara tegas antara laba kotor hasil perniagaan dengan laba bersih yang benar-benar menjadi hak pemilik usaha setelah seluruh beban operasional dan pajak dilunasi.
+2. Mengidentifikasi Pos Pemborosan Biaya Operasional. Dengan melihat rincian pos pengeluaran dalam persentase terhadap omzet, Anda dapat mendeteksi pos biaya mana yang membengkak tidak wajar (misalnya biaya listrik, kemasan kardus, atau biaya iklan).
+3. Syarat Utama Pengajuan Pembiayaan Modal Kerja Perbankan. Ketika Anda mengajukan pinjaman Kredit Usaha Rakyat (KUR) atau pembiayaan ekspansi bisnis ke perbankan, analis kredit mewajibkan lampiran laporan laba rugi minimal 6 bulan terakhir untuk mengukur kemampuan bayar cicilan usaha Anda.
+4. Dasar Perhitungan dan Pelaporan Pajak Penghasilan Resmi. Laporan laba rugi adalah dasar pengisian formulir Surat Pemberitahuan (SPT) Tahunan Pajak Penghasilan Badan maupun Orang Pribadi ke Direktorat Jenderal Pajak.
+
+Menyusun laporan laba rugi tidak memerlukan keahlian akuntansi tingkat tinggi, asalkan Anda memahami empat blok pembangun utamanya.
+
+## 4 Struktur Utama Cara Menyusun Laporan Laba Rugi Usaha Mikro
+
+Ikatan Akuntan Indonesia (IAI) merancang standar SAK EMKM agar sangat sederhana dan mudah diterapkan oleh pelaku usaha mikro. Format laporan laba rugi terdiri dari empat bagian berurutan:
+
+### Blok 1: Pendapatan Usaha Bruto (Revenues)
+Catat seluruh penerimaan hasil penjualan barang dagangan atau penyerahan jasa selama periode satu tahun. Kurangi dengan retur penjualan dan potongan diskon promosi untuk mendapatkan angka **Pendapatan Bersih (Net Sales)**.
+
+### Blok 2: Beban Pokok Penjualan / HPP (Cost of Goods Sold)
+Bagi toko ritel dan dagang, HPP dihitung menggunakan rumus baku persediaan:
+- HPP = Persediaan Awal Barang Dagang ditambah Pembelian Bersih Bahan / Kulakan dikurangi Persediaan Akhir Barang Dagang.
+- Pendapatan Bersih dikurangi Beban Pokok Penjualan menghasilkan **Laba Kotor (Gross Profit)**.
+
+### Blok 3: Beban Operasional dan Administrasi (Operating Expenses)
+Rinci seluruh pengeluaran rutin yang dikeluarkan untuk menjalankan aktivitas toko sehari-hari:
+- Beban Gaji Karyawan dan Upah Lembur Staf Toko.
+- Beban Sewa Tempat Kios atau Ruko.
+- Beban Utilitas Operasional: Tagihan listrik PLN, air PDAM, pulsa internet kasir, dan bensin kurir.
+- Beban Pemasaran dan Iklan Media Sosial / Lokapasar.
+- Beban Perlengkapan Toko: Kardus packing, lakban, plastik kresek, dan kertas printer struk.
+- Beban Penyusutan Aset Tetap: Penyusutan mesin kasir, kulkas pendingin, dan rak toko.
+- Laba Kotor dikurangi Total Beban Operasional menghasilkan **Laba Operasional Usaha (Operating Income)**.
+
+### Blok 4: Pendapatan / Beban Non-Operasional dan Beban Pajak
+Tambahkan pendapatan di luar usaha utama (misalnya bunga tabungan bank atau penjualan barang bekas) dan kurangi dengan biaya bunga pinjaman bank serta setoran PPh Final 0,5 persen. Hasil akhir inilah yang disebut sebagai **Laba Bersih Tahun Berjalan (Net Income)**.
+
+## Format Standar dan Contoh Simulasi Laporan Laba Rugi Toko Sembako Modern
+
+Mari kita pelajari contoh simulasi laporan laba rugi tahun buku 2026 pada Toko Kelontong Berkah yang membukukan peredaran bruto sebesar Rp360.000.000 selama setahun (rata-rata omzet Rp30.000.000 per bulan).
+
+Keterangan: Seluruh angka pada tabel di bawah ini merupakan data simulasi perhitungan keuangan sesuai standar pembukuan usaha mikro.
+
+```
+                    TOKO KELONTONG BERKAH
+                     LAPORAN LABA RUGI
+               Untuk Periode Berakhir 31 Desember 2026
+-----------------------------------------------------------------
+1. PENDAPATAN USAHA
+   Penjualan Kotor Barang Dagang            Rp360.000.000
+   Dikurangi: Retur dan Diskon Penjualan   (Rp  7.200.000)
+   --------------------------------------------------------------
+   TOTAL PENDAPATAN BERSIH                                Rp352.800.000
+
+2. BEBAN POKOK PENJUALAN (HPP)
+   Persediaan Awal Barang (1 Jan 2026)      Rp 35.000.000
+   Pembelian Bersih Barang Kulakan          Rp265.000.000
+   Barang Tersedia untuk Dijual             Rp300.000.000
+   Dikurangi: Persediaan Akhir (31 Des)    (Rp 42.000.000)
+   --------------------------------------------------------------
+   TOTAL BEBAN POKOK PENJUALAN (HPP)                     (Rp258.000.000)
+   --------------------------------------------------------------
+   LABA KOTOR USAHA (GROSS PROFIT)                        Rp 94.800.000
+
+3. BEBAN OPERASIONAL DAN ADMINISTRASI
+   Beban Gaji 2 Karyawan Toko               Rp 48.000.000
+   Beban Sewa Tempat Usaha Tahunan          Rp 12.000.000
+   Beban Listrik, Air, dan Internet Toko    Rp  4.800.000
+   Beban Plastik, Kardus, dan Perlengkapan  Rp  2.400.000
+   Beban Transportasi dan Bahan Bakar       Rp  3.600.000
+   Beban Penyusutan Komputer dan Rak Toko   Rp  2.500.000
+   --------------------------------------------------------------
+   TOTAL BEBAN OPERASIONAL                               (Rp 73.300.000)
+   --------------------------------------------------------------
+   LABA OPERASIONAL (OPERATING INCOME)                    Rp 21.500.000
+
+4. BEBAN PAJAK PENGHASILAN (PPH FINAL 0,5%)
+   Beban Pajak PPh Final (Omzet < 500 Juta) Rp          0 (Bebas Pajak)
+   --------------------------------------------------------------
+   LABA BERSIH TAHUN BERJALAN (NET PROFIT)                Rp 21.500.000
+=================================================================
+```
+
+Dari simulasi laporan di atas, pemilik toko dapat melihat dengan sangat transparan bahwa dari total penjualan kotor Rp360.000.000, laba bersih riil yang tersisa untuk pemilik adalah Rp21.500.000 (margin laba bersih 6,1 persen). Toko tidak dikenakan PPh Final karena total omzet perorangan masih di bawah ambang batas Rp500 juta.
+
+## 3 Rasio Keuangan Kunci untuk Mengevaluasi Performa Bisnis
+
+Setelah menyusun laporan laba rugi, hitung tiga indikator kesehatan finansial berikut:
+1. Margin Laba Kotor (Gross Profit Margin) = (Laba Kotor / Pendapatan Bersih) x 100%. Pada contoh Toko Berkah: (Rp94.800.000 / Rp352.800.000) x 100% = **26,9%**. Angka ini menunjukkan efisiensi penetapan harga markup jual dan negosiasi kulakan supplier.
+2. Margin Laba Bersih (Net Profit Margin) = (Laba Bersih / Pendapatan Bersih) x 100%. Pada contoh Toko Berkah: (Rp21.500.000 / Rp352.800.000) x 100% = **6,1%**. Untuk bisnis toko sembako ritel barang kebutuhan pokok, margin bersih 5 sampai 10 persen tergolong sehat.
+3. Rasio Beban Operasional terhadap Omzet = (Total Beban Operasional / Pendapatan Bersih) x 100%. Pada contoh Toko Berkah: (Rp73.300.000 / Rp352.800.000) x 100% = **20,8%**. Jika rasio ini melampaui 25 persen, toko wajib melakukan efisiensi pengeluaran.
+
+Anda dapat menyelaraskan laporan laba rugi ini dengan rekening koran perbankan menggunakan rujukan [prosedur rekonsiliasi bank dan tutup buku umkm 2026](https://cooca.id/blog/prosedur-rekonsiliasi-bank-dan-tutup-buku-umkm-2026), serta memperkirakan arus kas mendatang lewat [cara membuat proyeksi kas mingguan umkm](https://cooca.id/blog/cara-membuat-proyeksi-kas-mingguan-umkm).
+
+## Otomasi Pembukuan Laba Rugi Bersama Platform Cooca
+
+Mengumpulkan ratusan kuitansi nota kertas dan menghitung ulang HPP secara manual di akhir tahun sering kali membuat pemilik usaha kewalahan dan menunda evaluasi bisnis.
+
+Cooca hadir sebagai Business Operating System all-in-one yang mengotomasi seluruh siklus pembukuan UMKM Indonesia. Melalui aplikasi kasir POS cloud Cooca, setiap transaksi penjualan langsung terhubung dengan pemotongan kartu stok dan pencatatan kas harian. Cooca menghitung Harga Pokok Penjualan (HPP) secara otomatis untuk setiap barang yang keluar, mencatat pos pengeluaran operasional secara rapi, serta menyajikan Laporan Laba Rugi dan Neraca Keuangan standar SAK EMKM secara instan yang siap diunduh dalam format PDF atau Excel kapan saja Anda butuhkan.
+
+## Pertanyaan Seputar Laporan Laba Rugi Usaha Mikro (FAQ)
+
+Berikut adalah beberapa pertanyaan praktis seputar penyusunan laporan keuangan usaha kecil:
+
+### Apakah gaji untuk pemilik usaha boleh dimasukkan ke dalam beban operasional toko?
+Boleh dan sangat dianjurkan. Tetapkan gaji bulanan yang wajar untuk diri Anda sendiri sebagai pengelola toko (misalnya Rp3.500.000 per bulan) dan masukkan ke dalam pos beban gaji operasional, agar pengeluaran pribadi rumah tangga tidak bercampur dengan laba bersih usaha.
+
+### Apa perbedaan mendasar antara Laporan Laba Rugi dengan Laporan Arus Kas (Cash Flow)?
+Laporan Laba Rugi mengukur profitabilitas usaha (apakah bisnis menghasilkan keuntungan atau kerugian dalam penjualan). Sedangkan Laporan Arus Kas mengukur likuiditas uang tunai riil (kapan uang kas masuk ke rekening dan kapan uang kas keluar untuk membayar kewajiban).
+
+### Bagaimana cara menentukan nilai persediaan akhir barang dagang di tanggal 31 Desember?
+Lakukan stok opname fisik di rak toko dan gudang pada penutupan toko tanggal 31 Desember, lalu kalikan jumlah fisik masing-masing barang dengan harga beli terakhir dari supplier untuk mendapatkan total nilai persediaan akhir.
+
+### Apakah usaha mikro yang belum berbadan hukum wajib menyusun laporan laba rugi?
+Meskipun tidak diwajibkan secara hukum pidana, menyusun laporan laba rugi adalah keharusan mutlak bagi setiap pengusaha yang ingin usahanya bertahan hidup, mengendalikan kebocoran uang kas, dan siap mengajukan permodalan kredit usaha ke perbankan.
+
+### Bagaimana jika hasil akhir laporan laba rugi menunjukkan angka minus (rugi)?
+Angka rugi adalah sinyal peringatan dini bahwa harga jual Anda terlalu murah, persentase Food Cost atau HPP terlalu tinggi, atau beban operasional toko terlalu boros. Evaluasi kembali pos biaya terbesar dan sesuaikan harga jual produk sebelum memasuki tahun buku baru.
+
+## Kesimpulan: Kejujuran Angka Kunci Sukses Masa Depan
+
+Keberhasilan sejati dalam membangun kerajaan bisnis bukanlah tentang seberapa ramai antrean pengunjung di meja kasir, melainkan tentang apa yang tertulis secara jujur di baris paling bawah laporan laba rugi Anda. Jangan biarkan kerja keras Anda sepanjang tahun terbuang sia-sia tanpa kejelasan angka keuntungan. Dengan menerapkan tata kelola laporan keuangan usaha mikro secara disiplin, membaca indikator finansial secara cerdas, dan memanfaatkan software pembukuan modern, Anda memiliki kompas bisnis yang terang benderang untuk memimpin usaha Anda melompat lebih tinggi dan memanen kesuksesan yang berlimpah di tahun-tahun mendatang.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Cara Menyusun Laporan Laba Rugi Usaha Mikro untuk Evaluasi Akhir Tahun",
+      "description": "Pelajari cara menyusun laporan laba rugi usaha mikro berbasis SAK EMKM untuk evaluasi akhir tahun, menghitung HPP, beban operasional, dan margin laba bersih.",
+      "image": "https://cooca.id/images/blog/photo-1554224154-26032ffc0d07.jpg",
+      "datePublished": "2026-11-11T08:00:00+07:00",
+      "dateModified": "2026-11-11T08:00:00+07:00",
+      "url": "https://cooca.id/blog/cara-menyusun-laporan-laba-rugi-usaha-mikro",
+      "mainEntityOfPage": "https://cooca.id/blog/cara-menyusun-laporan-laba-rugi-usaha-mikro",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah gaji untuk pemilik usaha boleh dimasukkan ke dalam beban operasional toko?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Boleh dan sangat dianjurkan. Tetapkan gaji bulanan yang wajar untuk diri Anda sendiri sebagai pengelola toko (misalnya Rp3.500.000 per bulan) dan masukkan ke dalam pos beban gaji operasional, agar pengeluaran pribadi rumah tangga tidak bercampur dengan laba bersih usaha."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa perbedaan mendasar antara Laporan Laba Rugi dengan Laporan Arus Kas (Cash Flow)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Laporan Laba Rugi mengukur profitabilitas usaha (apakah bisnis menghasilkan keuntungan atau kerugian dalam penjualan). Sedangkan Laporan Arus Kas mengukur likuiditas uang tunai riil (kapan uang kas masuk ke rekening dan kapan uang kas keluar untuk membayar kewajiban)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara menentukan nilai persediaan akhir barang dagang di tanggal 31 Desember?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lakukan stok opname fisik di rak toko dan gudang pada penutupan toko tanggal 31 Desember, lalu kalikan jumlah fisik masing-masing barang dengan harga beli terakhir dari supplier untuk mendapatkan total nilai persediaan akhir."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah usaha mikro yang belum berbadan hukum wajib menyusun laporan laba rugi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Meskipun tidak diwajibkan secara hukum pidana, menyusun laporan laba rugi adalah keharusan mutlak bagi setiap pengusaha yang ingin usahanya bertahan hidup, mengendalikan kebocoran uang kas, dan siap mengajukan permodalan kredit usaha ke perbankan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika hasil akhir laporan laba rugi menunjukkan angka minus (rugi)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Angka rugi adalah sinyal peringatan dini bahwa harga jual Anda terlalu murah, persentase Food Cost atau HPP terlalu tinggi, atau beban operasional toko terlalu boros. Evaluasi kembali pos biaya terbesar dan sesuaikan harga jual produk sebelum memasuki tahun buku baru. ## Kesimpulan: Kejujuran Angka Kunci Sukses Masa Depan Keberhasilan sejati dalam membangun kerajaan bisnis bukanlah tentang seberapa ramai antrean pengunjung di meja kasir, melainkan tentang apa yang tertulis secara jujur di baris paling bawah laporan laba rugi Anda. Jangan biarkan kerja keras Anda sepanjang tahun terbuang sia-sia tanpa kejelasan angka keuntungan. Dengan menerapkan tata kelola laporan keuangan usaha mikro secara disiplin, membaca indikator finansial secara cerdas, dan memanfaatkan software pembukuan modern, Anda memiliki kompas bisnis yang terang benderang untuk memimpin usaha Anda melompat lebih tinggi dan memanen kesuksesan yang berlimpah di tahun-tahun mendatang."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

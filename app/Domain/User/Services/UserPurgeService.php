@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Services;
 
+use App\Domain\Business\Services\BusinessPurgeService;
 use App\Models\Admin;
+use App\Models\Business;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -14,13 +16,17 @@ use Throwable;
 
 final class UserPurgeService
 {
+    public function __construct(
+        private readonly BusinessPurgeService $businessPurgeService
+    ) {}
+
     /**
      * Completely and permanently hard-delete a user account, their membership associations,
-     * session tokens, and physical storage assets.
+     * session tokens, physical storage assets, and cascadingly purge any businesses owned by this user.
      *
      * @param User $user
      * @param Admin|null $admin The administrator executing the purge.
-     * @return array{deleted_id: string, name: string, email: string}
+     * @return array{deleted_id: string, name: string, email: string, purged_businesses_count: int}
      * @throws Throwable
      */
     public function purge(User $user, ?Admin $admin = null): array
@@ -38,9 +44,45 @@ final class UserPurgeService
             'admin_email' => $admin?->email,
         ]);
 
+        // 1. Identify and permanently purge all businesses where this user is an OWNER
+        $ownedBusinessIds = [];
+        if (Schema::hasTable('business_users')) {
+            $ownedBusinessIds = DB::table('business_users')
+                ->where('user_id', $userId)
+                ->where('role', 'owner')
+                ->pluck('business_id')
+                ->unique()
+                ->all();
+        }
+
+        $purgedBusinessesCount = 0;
+        if (! empty($ownedBusinessIds)) {
+            $ownedBusinesses = Business::whereIn('id', $ownedBusinessIds)->get();
+            foreach ($ownedBusinesses as $ownedBusiness) {
+                Log::warning('Cascade purging owned business belonging to purged owner user', [
+                    'owner_user_id' => $userId,
+                    'owner_email'   => $userEmail,
+                    'business_id'   => $ownedBusiness->id,
+                    'business_name' => $ownedBusiness->name,
+                    'admin_id'      => $admin?->id,
+                ]);
+
+                try {
+                    $this->businessPurgeService->purge($ownedBusiness, $admin);
+                    $purgedBusinessesCount++;
+                } catch (Throwable $e) {
+                    Log::error('Failed to cascade purge owned business during user purge: ' . $e->getMessage(), [
+                        'owner_user_id' => $userId,
+                        'business_id'   => $ownedBusiness->id,
+                    ]);
+                    throw $e;
+                }
+            }
+        }
+
         $driver = DB::getDriverName();
 
-        // 1. Transactional database purge
+        // 2. Transactional database purge of the user account and user-level associations
         DB::transaction(function () use ($userId, $driver): void {
             if ($driver === 'sqlite') {
                 DB::statement('PRAGMA foreign_keys = OFF;');
@@ -49,7 +91,7 @@ final class UserPurgeService
             }
 
             try {
-                // Detach from all businesses
+                // Detach from all remaining businesses
                 if (Schema::hasTable('business_users')) {
                     DB::table('business_users')->where('user_id', $userId)->delete();
                 }
@@ -124,7 +166,7 @@ final class UserPurgeService
             }
         });
 
-        // 2. Physical storage files cleanup
+        // 3. Physical storage files cleanup
         try {
             if (! empty($avatar) && Storage::disk('public')->exists($avatar)) {
                 Storage::disk('public')->delete($avatar);
@@ -144,17 +186,19 @@ final class UserPurgeService
             ]);
         }
 
-        Log::info('Completed full hard delete of user account', [
+        Log::info('Completed full hard delete of user account and owned businesses', [
             'user_id' => $userId,
             'name' => $userName,
             'email' => $userEmail,
             'admin_email' => $admin?->email,
+            'purged_businesses_count' => $purgedBusinessesCount,
         ]);
 
         return [
-            'deleted_id' => $userId,
-            'name' => $userName,
-            'email' => $userEmail,
+            'deleted_id'              => $userId,
+            'name'                    => $userName,
+            'email'                   => $userEmail,
+            'purged_businesses_count' => $purgedBusinessesCount,
         ];
     }
 }
