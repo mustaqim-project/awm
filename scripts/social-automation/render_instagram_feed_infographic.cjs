@@ -90,10 +90,10 @@ body {
 }
 
 .brand-logo {
-  background: #FFFFFF;
-  padding: 4px 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  background: transparent;
+  
+  
+  
   height: 38px;
   width: auto;
   object-fit: contain;

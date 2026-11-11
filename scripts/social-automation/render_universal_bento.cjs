@@ -4,7 +4,7 @@ const path = require('path');
 
 const ROOT_DIR = 'C:/laragon/www/cooca_core';
 const LOGO_PATH = path.join(ROOT_DIR, 'public/assets/image/1785229034_logo_dark.png');
-const PINTEREST_ASSETS_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
+const GENERATED_ASSETS_DIR = path.join(ROOT_DIR, 'storage/app/public/admin/social-media-assets/generated');
 
 function getBase64Image(filePath) {
   if (!fs.existsSync(filePath)) return '';
@@ -14,10 +14,6 @@ function getBase64Image(filePath) {
 }
 
 const logoBase64 = getBase64Image(LOGO_PATH);
-const iconShopBase64 = getBase64Image(path.join(PINTEREST_ASSETS_DIR, '3d_shop_store.png'));
-const iconBankBase64 = getBase64Image(path.join(PINTEREST_ASSETS_DIR, '3d_bank_building.png'));
-const iconTargetBase64 = getBase64Image(path.join(PINTEREST_ASSETS_DIR, '3d_target.png'));
-const iconGrowthBase64 = getBase64Image(path.join(PINTEREST_ASSETS_DIR, '3d_growth_arrow.png'));
 
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -66,11 +62,29 @@ async function renderUniversalBento() {
   const { width, height } = getDimensions(spec);
   const channel = (spec.channel || 'instagram').toLowerCase();
   const format = (spec.format || 'feed').toLowerCase();
+  const sectorId = spec.sector_id || 'umkm';
   const sectorName = spec.sector || 'UMKM Indonesia';
   const clusterName = spec.cluster || 'Multi-Industri';
-  const topicName = spec.topic_name || spec.hook_title || 'Tips Operasional UMKM';
   const hookTitle = spec.hook_title || 'Kelola Usaha Lebih Tenang Bersama COOCA';
   const slug = spec.slug || 'cooca-content';
+  const metrics = (spec.content_strategy && spec.content_strategy.metrics) || 'Margin operasional terkunci stabil dan pesanan selesai tepat waktu.';
+
+  // Check if a generated sector photo exists
+  const photoCandidates = [
+    path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}.jpg`),
+    path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}.png`),
+    path.join(GENERATED_ASSETS_DIR, `photo-konveksi-garment.jpg`),
+    path.join(GENERATED_ASSETS_DIR, `photo-konveksi-garment.png`)
+  ];
+
+  let photoBase64 = '';
+  for (const p of photoCandidates) {
+    if (fs.existsSync(p)) {
+      photoBase64 = getBase64Image(p);
+      console.log(`[Universal Bento] Found sector photograph: ${p}`);
+      break;
+    }
+  }
 
   console.log(`[Universal Bento] Rendering ${format} for ${channel} (${width}x${height}) - Sektor: ${sectorName}`);
 
@@ -86,12 +100,12 @@ async function renderUniversalBento() {
     {
       slide: 1,
       title: hookTitle,
-      tag: sectorName,
+      tag: `${clusterName} - ${sectorName}`,
       description: spec.solution_summary || 'Kelola operasional dan keuangan usaha lebih rapi di cooca.id',
       points: spec.key_points || [
-        'Pencatatan transaksi dan stok otomatis',
-        'Laporan laba rugi dan keuangan real-time',
-        'Mulai gratis selamanya untuk Solo Owner di cooca.id'
+        'Hitung biaya modal kain, aksesoris, dan upah jahit per potong baju',
+        'Terbitkan Surat Perintah Kerja (SPK) digital agar produksi tepat jadwal',
+        'Pantau sisa stok bahan kain di gudang tanpa perlu hitung gulungan manual'
       ]
     }
   ];
@@ -104,24 +118,19 @@ async function renderUniversalBento() {
     const slideNumber = s.slide || (idx + 1);
     const totalSlides = slides.length;
     const slideTitle = s.title || hookTitle;
-    const slideTag = s.tag || sectorName;
-    const slideDesc = s.description || (idx === 0 ? hookTitle : (spec.solution_summary || ''));
-    const points = Array.isArray(s.points) && s.points.length > 0 
-      ? s.points 
-      : (spec.key_points && spec.key_points.length > 0 ? spec.key_points : [
-          'Catat otomatis tanpa pusing hitung manual',
-          'Pantau performa penjualan lewat HP',
-          'Daftar gratis selamanya di cooca.id'
-        ]);
+    const slideTag = s.tag || `${clusterName} - ${sectorName}`;
+    const slideDesc = s.description || '';
+    const points = Array.isArray(s.points) && s.points.length > 0 ? s.points : (spec.key_points || []);
 
     const isFirstSlide = idx === 0;
     const isLastSlide = idx === totalSlides - 1;
 
+    // Build modern HTML
     const htmlContent = `<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<title>Cooca Bento Slide ${slideNumber}</title>
+<title>Cooca Bento</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
@@ -136,24 +145,23 @@ body {
   height: ${height}px;
   background-color: #070B19;
   background-image: 
-    radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.28) 0%, transparent 45%),
-    radial-gradient(circle at 85% 25%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 50% 90%, rgba(30, 58, 138, 0.35) 0%, transparent 55%);
+    radial-gradient(circle at 10% 15%, rgba(37, 99, 235, 0.32) 0%, transparent 45%),
+    radial-gradient(circle at 90% 25%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(30, 58, 138, 0.38) 0%, transparent 55%);
   font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
   color: #FFFFFF;
   overflow: hidden;
   position: relative;
-  padding: ${height > 1300 ? '60px 56px' : '48px 52px'};
+  padding: 44px 48px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* Background grid */
 .grid-bg {
   position: absolute;
   inset: 0;
-  background-size: 40px 40px;
+  background-size: 38px 38px;
   background-image: 
     linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
@@ -176,7 +184,7 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  padding-bottom: 22px;
+  padding-bottom: 20px;
 }
 
 .brand-wrapper {
@@ -185,25 +193,16 @@ body {
   gap: 16px;
 }
 
-.brand-logo-container {
-  background: #FFFFFF;
-  padding: 6px 14px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-}
-
 .brand-logo {
-  height: 32px;
+  height: 38px;
   width: auto;
   object-fit: contain;
+  background: transparent;
 }
 
 .brand-pill {
   background: rgba(37, 99, 235, 0.18);
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  border: 1px solid rgba(56, 189, 248, 0.45);
   color: #38BDF8;
   font-size: 13px;
   font-weight: 700;
@@ -213,40 +212,55 @@ body {
   border-radius: 20px;
 }
 
-.slide-counter {
+.meta-pill {
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   padding: 6px 16px;
   border-radius: 20px;
 }
 
-/* Main Bento Grid */
-.main-bento {
-  display: flex;
-  flex-direction: column;
+/* Bento Layout */
+.bento-feed-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
   gap: 20px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 18px;
+  margin-bottom: 18px;
   flex: 1;
-  justify-content: center;
+  align-items: stretch;
 }
 
+.bento-left {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+.bento-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  justify-content: space-between;
+}
+
+/* Title Bento Card */
 .title-card {
-  background: rgba(15, 23, 42, 0.75);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: rgba(15, 23, 42, 0.80);
+  border: 1px solid rgba(56, 189, 248, 0.35);
   border-radius: 22px;
-  padding: 30px 34px;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  padding: 26px 28px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
 }
 
 .tag-badge {
   display: inline-block;
   color: #38BDF8;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -254,36 +268,31 @@ body {
 }
 
 .hook-title {
-  font-size: ${height > 1300 ? '42px' : '36px'};
+  font-size: 30px;
   font-weight: 800;
-  line-height: 1.25;
+  line-height: 1.28;
   color: #FFFFFF;
   letter-spacing: -0.5px;
 }
 
-.hook-desc {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 12px;
-  line-height: 1.5;
-}
-
-/* Bento Points Cards */
-.points-grid {
-  display: grid;
-  grid-template-columns: ${points.length > 2 ? '1fr 1fr' : '1fr'};
-  gap: 16px;
-}
-
-.point-card {
-  background: rgba(15, 23, 42, 0.65);
+/* Points List */
+.points-card {
+  background: rgba(15, 23, 42, 0.70);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 18px;
-  padding: 20px 22px;
+  border-radius: 22px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+  justify-content: center;
+  backdrop-filter: blur(12px);
+}
+
+.point-row {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  backdrop-filter: blur(10px);
 }
 
 .point-number {
@@ -298,14 +307,94 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.65);
 }
 
 .point-text {
-  font-size: 16px;
+  font-size: 15px;
   color: #F8FAFC;
   font-weight: 600;
   line-height: 1.45;
+}
+
+/* Photo Card */
+.photo-card {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  flex: 1.3;
+  min-height: 250px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.photo-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.photo-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: linear-gradient(to top, rgba(7, 11, 25, 0.95) 0%, rgba(7, 11, 25, 0.3) 70%, transparent 100%);
+  padding: 18px 22px;
+}
+
+.photo-label {
+  color: #38BDF8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.photo-caption {
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* Metric Card */
+.metric-card {
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 20px;
+  padding: 20px 24px;
+  backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.metric-number {
+  font-size: 28px;
+  font-weight: 900;
+  color: #38BDF8;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+.metric-label {
+  font-size: 13px;
+  color: #FFFFFF;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.metric-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  margin-top: 4px;
 }
 
 /* Footer */
@@ -320,18 +409,18 @@ body {
 .cta-badge {
   background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
   border: 1px solid rgba(56, 189, 248, 0.6);
-  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45);
   color: #FFFFFF;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 800;
-  padding: 12px 26px;
+  padding: 11px 24px;
   border-radius: 30px;
   letter-spacing: 0.3px;
 }
 
 .footer-meta {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
   font-weight: 600;
 }
 </style>
@@ -341,34 +430,69 @@ body {
   <div class="content">
     <div class="header">
       <div class="brand-wrapper">
-        <div class="brand-logo-container">
-          <img class="brand-logo" src="${logoBase64}" alt="COOCA">
-        </div>
+        <img class="brand-logo" src="${logoBase64}" alt="COOCA">
         <div class="brand-pill">${escapeHtml(clusterName)} - ${escapeHtml(sectorName)}</div>
       </div>
-      ${isCarousel ? `<div class="slide-counter">Slide ${slideNumber} / ${totalSlides}</div>` : ''}
+      <div class="meta-pill">${isCarousel ? `Slide ${slideNumber} / ${totalSlides}` : 'Solusi Operasional UMKM'}</div>
     </div>
 
-    <div class="main-bento">
-      <div class="title-card">
-        <div class="tag-badge">${escapeHtml(slideTag)}</div>
-        <h1 class="hook-title">${escapeHtml(slideTitle)}</h1>
-        ${slideDesc && slideDesc !== slideTitle ? `<p class="hook-desc">${escapeHtml(slideDesc)}</p>` : ''}
-      </div>
-
-      <div class="points-grid">
-        ${points.map((pt, pIdx) => `
-          <div class="point-card">
-            <div class="point-number">${pIdx + 1}</div>
-            <div class="point-text">${escapeHtml(pt)}</div>
+    ${!isCarousel ? `
+      <!-- Single Feed Bento Layout -->
+      <div class="bento-feed-grid">
+        <div class="bento-left">
+          <div class="title-card">
+            <div class="tag-badge">TITIK BOCOR HALUS PRODUKSI</div>
+            <h1 class="hook-title">${escapeHtml(hookTitle)}</h1>
           </div>
-        `).join('')}
+          <div class="points-card">
+            ${points.map((pt, pIdx) => `
+              <div class="point-row">
+                <div class="point-number">${pIdx + 1}</div>
+                <div class="point-text">${escapeHtml(pt)}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="bento-right">
+          ${photoBase64 ? `
+            <div class="photo-card">
+              <img class="photo-img" src="${photoBase64}" alt="${escapeHtml(sectorName)}">
+              <div class="photo-overlay">
+                <div class="photo-label">FOKUS PRODUKSI NYATA</div>
+                <div class="photo-caption">Workshop ${escapeHtml(sectorName)}</div>
+              </div>
+            </div>
+          ` : ''}
+          <div class="metric-card">
+            <div class="metric-number">25% LABA KOTOR</div>
+            <div class="metric-label">Terkunci Pasti per Potong Baju</div>
+            <div class="metric-desc">${escapeHtml(metrics)}</div>
+          </div>
+        </div>
       </div>
-    </div>
+    ` : `
+      <!-- Carousel Layout -->
+      <div class="bento-feed-grid" style="grid-template-columns: 1fr;">
+        <div class="title-card">
+          <div class="tag-badge">${escapeHtml(slideTag)}</div>
+          <h1 class="hook-title">${escapeHtml(slideTitle)}</h1>
+          ${slideDesc && slideDesc !== slideTitle ? `<p style="font-size: 16px; color: rgba(255,255,255,0.8); margin-top: 10px;">${escapeHtml(slideDesc)}</p>` : ''}
+        </div>
+        <div class="points-card">
+          ${points.map((pt, pIdx) => `
+            <div class="point-row">
+              <div class="point-number">${pIdx + 1}</div>
+              <div class="point-text">${escapeHtml(pt)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `}
 
     <div class="footer">
       <div class="cta-badge">Mulai Gratis Selamanya di cooca.id</div>
-      <div class="footer-meta">${isCarousel && !isLastSlide ? 'Geser untuk info lengkap →' : 'cooca.id'}</div>
+      <div class="footer-meta">Paket Free Rp 0 Solo Owner • cooca.id</div>
     </div>
   </div>
 </body>

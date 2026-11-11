@@ -237,9 +237,9 @@ body::before {
   justify-content: center;
   padding: 6px 14px;
   border-radius: 12px;
-  background: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  background: transparent;
+  
+  
 }
 
 .brand-logo {

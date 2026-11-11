@@ -842,7 +842,7 @@ def main():
         f"Format: {'Multi-page presentation carousel' if content_format == 'carousel' else 'Single high-contrast image feed'} ({dimensions} px) for COOCA Indonesia (cooca.id).\n"
         f"Visual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\n"
         f"Color Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\n"
-        f"Branding: Official COOCA Dark logo on white header pill. Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\n"
+        f"Branding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\n"
         f"Photography Subject: High-realism, authentic professional photography showcasing {photo_subject}. No 2D flat cartoon or generic AI slop.\n"
         f"Content Topic: {hook_cleaned} - {sector_name} ({cluster_name})."
     )

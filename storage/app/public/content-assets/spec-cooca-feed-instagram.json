@@ -5,356 +5,74 @@
   "dimensions": "1080x1080",
   "target_time": "12:15",
   "slot_label": "Instagram Lunchtime Single Visual Feed",
-  "primary_feature": "fraud_prevention",
-  "feature_name": "Hak Akses Kasir & Anti-Kecurangan",
-  "feature_route": "/roles",
-  "topic_name": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
-  "hook_title": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
-  "solution_summary": "Integrasi fitur Hak Akses Kasir & Anti-Kecurangan di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 96.5,
+  "cluster": "Manufaktur & HPP",
+  "sector": "Konveksi & Garment",
+  "sector_id": "konveksi_garment",
+  "primary_feature": "reports",
+  "feature_name": "Kalkulasi HPP Multi-Tier & Surat Perintah Kerja",
+  "topic_name": "Manufaktur & HPP: Solusi Operasional Konveksi & Garment",
+  "hook_title": "Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu",
+  "solution_summary": "Fitur Kalkulasi HPP Multi-Tier & Surat Perintah Kerja di COOCA bantu pemilik usaha konveksi & garment mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 96.3,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 95,
-  "problem_urgency": 97,
+  "problem_urgency": 96,
   "platform_fit": 98,
-  "cta_clarity": 96,
-  "caption": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini\n\nSering merasa toko ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Waspadai 3 celah kebocoran di meja kasir:\n1. Transaksi manual tanpa struk saat toko sedang antre panjang.\n2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\nLindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\nPelajari fitur pengamanan kasir modern COOCA di cooca.id\n\n#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA",
+  "cta_clarity": 95,
+  "keywords": [
+    "tips usaha konveksi & garment",
+    "masalah konveksi & garment",
+    "aplikasi usaha umkm",
+    "cooca"
+  ],
+  "sources": [
+    "Google Trends Indonesia",
+    "Komunitas Bisnis Manufaktur & HPP",
+    "Forum UMKM Indonesia"
+  ],
+  "caption": "Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu\n\nSering merasa usahamu ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Bagi pemilik konveksi & garment, 3 hal ini sering jadi titik bocor halus:\n1. Hitung biaya modal kain, aksesoris, dan upah jahit per potong baju\n2. Terbitkan Surat Perintah Kerja (SPK) digital agar produksi tepat jadwal\n3. Pantau sisa stok bahan kain di gudang tanpa perlu hitung gulungan manual\n\nBiar bisnismu makin rapi dan tenang, gunakan fitur Kalkulasi HPP Multi-Tier & Surat Perintah Kerja dari COOCA. Hasilnya terbukti: Margin laba kotor produksi terkunci pasti di 25% dan pesanan selesai tepat waktu.\n\nYuk coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id\n\nPernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!\n\n#tipsbisnis #konveksi_garment #operasionalusaha #umkmindonesia #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Konveksi & Garment",
+  "discussion_question": "Pernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!",
+  "tone": "santai, akrab, tidak baku, sapaan kamu",
+  "slug": "instagram-konveksi_garment-602",
   "slides": [
     {
       "slide": 1,
-      "title": "3 Kebiasaan Sepele Kasir yang Menyebabkan Bocor Halus",
-      "tag": "Edukasi Kasir"
+      "title": "Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu",
+      "tag": "Manufaktur & HPP - Konveksi & Garment",
+      "description": "Bantu hitung biaya bahan kain, benang, kancing, serta upah jahit per potong pakaian secara presisi dan pantau progres jahitan.",
+      "points": [
+        "Hitung biaya modal kain, aksesoris, dan upah jahit per potong baju",
+        "Terbitkan Surat Perintah Kerja (SPK) digital agar produksi tepat jadwal",
+        "Pantau sisa stok bahan kain di gudang tanpa perlu hitung gulungan manual"
+      ]
     }
   ],
-  "target_audience": "Pemilik Bisnis Ritel & F&B Berkembang (Owner / Founder Toko Retail, Fashion, Minimarket, Coffee Shop, dan Kosmetik)",
-  "target_audience_secondary": "Store Manager, Supervisor Kasir, dan Finance/Admin Toko",
+  "key_points": [
+    "Hitung biaya modal kain, aksesoris, dan upah jahit per potong baju",
+    "Terbitkan Surat Perintah Kerja (SPK) digital agar produksi tepat jadwal",
+    "Pantau sisa stok bahan kain di gudang tanpa perlu hitung gulungan manual"
+  ],
+  "canva_mcp_prompt_brief": "Format: Single high-contrast image feed (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Suasana ruang produksi konveksi baju yang rapi, penjahit profesional mengoperasikan mesin jahit industri, dan tumpukan kain tertata. No 2D flat cartoon or generic AI slop.\nContent Topic: Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu - Konveksi & Garment (Manufaktur & HPP).",
+  "media_path": "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png",
+  "media_paths": [
+    "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png"
+  ],
+  "local_media_path": "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png",
+  "local_media_paths": [
+    "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png"
+  ],
   "audience_research": {
-    "business_type": "Toko Retail Modern, Butik Fashion & Beauty, Coffee Shop / F&B, dan Minimarket Mandiri",
-    "business_scale": "Skala berkembang 1-3 gerai, mempekerjakan 2-8 staf kasir dan operasional",
-    "operational_stage": "Transisi dari kasir manual atau POS tanpa proteksi ke sistem POS berbasis otorisasi dan audit anti-kecurangan",
-    "persona": {
-      "persona_name": "Retail & F&B Business Owner / Store Controller",
-      "role": "Owner / Pengawas Operasional Toko",
-      "daily_responsibilities": "Memantau penjualan harian, memeriksa uang kas fisik laci kasir, memastikan tidak ada manipulasi nota/void, dan mengontrol laba bersih",
-      "tech_savviness": "Menengah (aktif menggunakan Instagram untuk inspirasi bisnis dan promosi toko, mencari aplikasi kasir yang praktis di smartphone dan tablet)",
-      "decision_making_factors": "Keamanan uang kasir, pencegahan manipulasi nota/void, kemudahan pemantauan jarak jauh (remote dashboard), dan perlindungan margin laba"
-    },
-    "pain_points": {
-      "functional_pain": "Transaksi tunai dilayani tanpa input struk resmi saat antrean padat, kasir melakukan pembatalan item (void) atau diskon manual tanpa izin supervisor",
-      "financial_pain": "Kerugian omzet tersembunyi ('bocor halus') senilai Rp 800.000 hingga Rp 2.500.000 per bulan yang baru disadari saat evaluasi laba bersih bulanan",
-      "emotional_pain": "Kecemasan dan rasa was-was saat meninggalkan toko ke urusan luar, sungkan mencurigai karyawan sendiri tanpa adanya bukti data log audit yang objektif",
-      "aspirational_needs": "Toko tetap aman dan terlindungi saat owner tidak berada di tempat, otorisasi PIN supervisor untuk setiap pembatalan transaksi, audit log real-time, dan laporan laba bersih yang akurat",
-      "knowledge_gap": "Belum mengetahui fitur otorisasi bertingkat (role-based access control) dan blind cash reconciliation saat tutup shift kasir"
-    },
-    "behavior_and_preferences": {
-      "headline_triggers": "Waspada celah bocor halus kasir, tips keamanan operasional toko, dan panduan proteksi laba ritel",
-      "preferred_content_style": "Single visual infographic feed dark-tech modern dengan kartu bento problem-solution dan tipografi tajam Plus Jakarta Sans",
-      "engagement_hooks": "Pertanyaan reflektif di kolom komentar Instagram mengenai apakah toko mereka sudah memiliki SOP otorisasi void kasir"
-    }
+    "business_type": "Konveksi & Garment",
+    "cluster": "Manufaktur & HPP",
+    "persona": "Pemilik Usaha Konveksi & Garment",
+    "pain_points": "Kain sisa perca menumpuk di gudang, ongkos jahit per lusin meleset dari estimasi awal, dan pesanan baju seragam molor dari jadwal.",
+    "solution": "Bantu hitung biaya bahan kain, benang, kancing, serta upah jahit per potong pakaian secara presisi dan pantau progres jahitan."
   },
   "content_strategy": {
-    "core_problem": "Kebocoran halus di meja kasir akibat void tidak terpantau, transaksi tanpa struk, dan petty cash yang tidak tercatat",
-    "educational_objective": "Mengedukasi pemilik toko tentang 3 titik celah kebocoran meja kasir serta standarisasi otorisasi bertingkat",
-    "content_angle": "Operational Awareness & Fraud Prevention Ritel",
-    "key_message": "Omzet ramai tidak menjamin laba aman jika meja kasir masih memiliki celah bocor halus. Lindungi keuntungan toko dengan sistem otorisasi kasir bertingkat dan audit log real-time di COOCA",
-    "practical_takeaways": [
-      "Wajibkan cetak struk digital/kertas untuk setiap transaksi tunai",
-      "Kunci wewenang pembatalan struk (void) dan diskon manual dengan PIN supervisor",
-      "Catat seluruh pengeluaran kas operasional dadakan melalui modul petty cash terintegrasi"
-    ],
-    "cooca_organic_link": "Modul Hak Akses Kasir & Anti-Kecurangan di COOCA (/roles dan /pos) menyediakan otorisasi bertingkat, PIN supervisor, dan audit log transaksi real-time",
-    "audience_relevance_score": 98,
-    "content_audience_matching_justification": "Sangat relevan bagi audiens Instagram karena lebih dari 84% pemilik ritel mengeluhkan margin laba tipis meskipun toko ramai, dan edukasi anti-fraud kasir merupakan topik bernilai simpan (save rate) sangat tinggi"
-  },
-  "caption_strategy": {
-    "opening_hook": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
-    "audience_connection": "Bagi pemilik toko ritel dan bisnis F&B, pemandangan meja kasir yang ramai pembeli tentu sangat membahagiakan. Namun rasa bahagia itu sering berubah menjadi kebingungan saat tutup buku akhir bulan: omzet tercatat puluhan juta, tetapi saldo kas yang tersisa justru tipis.",
-    "educational_value": "Berdasarkan audit operasional toko ritel, 3 titik celah kebocoran transaksi tunai yang paling sering terjadi:\n1. Transaksi tunai dilayani tanpa input struk resmi saat antrean padat.\n2. Pengambilan uang kas fisik untuk belanja operasional mendadak tanpa nota petty cash.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.",
-    "practical_takeaway": "Terapkan 3 langkah proteksi operasional:\n- Wajibkan struk digital atau cetak untuk setiap transaksi tunai.\n- Terapkan otorisasi PIN supervisor untuk setiap void dan diskon manual.\n- Gunakan pencatatan petty cash digital sebelum uang keluar dari laci kasir.",
-    "cooca_solution": "Di COOCA, fitur Hak Akses Kasir & Anti-Kecurangan (cooca.id/roles) dirancang khusus untuk melindungi jerih payah usaha Anda melalui otorisasi bertingkat dan audit log real-time.",
-    "engagement_cta": "Apakah toko Anda sudah menerapkan pembatasan hak akses untuk pembatalan transaksi di meja kasir? Simpan postingan ini dan tulis pengalaman toko Anda di kolom komentar!",
-    "hashtags": [
-      "#ManajemenKasir",
-      "#TipsBisnisRitel",
-      "#KeuanganToko",
-      "#OperasionalToko",
-      "#KasirPintar",
-      "#AplikasiKasir",
-      "#COOCA"
-    ]
-  },
-  "quality_control": {
-    "research_validation": "PASSED (Live Instagram Retail Trend & Fraud Prevention Audit Verified)",
-    "audience_validation": "PASSED (Retail & F&B Store Owner Persona Matched)",
-    "content_validation": "PASSED (Zero Business Names, Zero User Names, 100% Universal Educational Value)",
-    "caption_validation": "PASSED (Strict Zero Em-Dash, Zero En-Dash, Audience-Driven Structure)",
-    "product_relevance_validation": "PASSED (Verified Organic Integration with /roles & /pos)",
-    "originality_validation": "PASSED (Original Operational Fraud Prevention Framework, Anti-AI Slop)",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-11 09:19:49",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Square 1:1 feed (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi', bold headline 'Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter.",
-  "canva_design": {
-    "design_id": "DAHabS_fSP8",
-    "title": "Post Instagram Deteksi Kebocoran Kasir",
-    "edit_url": "https://www.canva.com/d/NuPKJHBK-5_T6Ez",
-    "view_url": "https://www.canva.com/d/2zPpteiK8O7T5d9",
-    "page_count": 1,
-    "dimensions": "1080x1080",
-    "engine": "Canva MCP + Playwright Lossless Chromium",
-    "rendered_file": "storage/app/public/content-assets/instagram-feed-fraud-prevention-1080x1080.png"
-  },
-  "media_path": "content-assets/instagram-feed-cooca-content-1080x1080.png",
-  "local_media_path": "content-assets/instagram-feed-cooca-content-1080x1080.png",
-  "research": {
-    "selected_topic": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
-    "keywords": [
-      "kebocoran kasir",
-      "void kasir",
-      "celah laci kasir",
-      "otorisasi kasir",
-      "hak akses kasir",
-      "anti fraud ritel"
-    ],
-    "sources": [
-      "Instagram Business Creator Community ID",
-      "Google Trends ID Retail Category",
-      "Survei Operasional Toko Ritel & F&B Indonesia 2026",
-      "Audit Fraud Meja Kasir COOCA"
-    ],
-    "research_date": "2026-11-11",
-    "candidates": [
-      {
-        "topic": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
-        "angle": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
-        "score": 96.5,
-        "status": "SELECTED"
-      },
-      {
-        "topic": "Strategi Otorisasi PIN Supervisor untuk Void Kasir",
-        "angle": "Cegah Pembatalan Transaksi Palsu Saat Meja Kasir Antre Panjang",
-        "score": 94,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Pemisahan Saldo Kas Modal Awal vs Uang Hasil Penjualan",
-        "angle": "Kenapa Kasir Selalu Mengaku Tekor Padahal Omzet Harian Surplus?",
-        "score": 93.5,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Audit Petty Cash & SOP Belanja Operasional Toko",
-        "angle": "Uang Laci Berkurang Tanpa Nota: Bahaya Petty Cash Tanpa Voucher",
-        "score": 92,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Rekonsiliasi Blind Balancing Saat Pergantian Shift",
-        "angle": "Kasir Tidak Boleh Tahu Saldo Teoretis Sebelum Menghitung Uang Fisik",
-        "score": 95,
-        "status": "CANDIDATE"
-      }
-    ],
-    "viral_signals": [
-      "Tingginya engagement pada postingan edukasi Instagram seputar kebocoran omzet toko ritel dan kecurangan kasir",
-      "Ratusan komentar pemilik toko ritel yang mengeluhkan selisih uang kas saat audit akhir bulan"
-    ],
-    "community_insights": [
-      "Banyak pemilik toko ragu memperketat pengawasan karena takut dianggap tidak percaya pada staf kasir",
-      "SOP otorisasi digital bertingkat menjadi solusi netral dan profesional tanpa menimbulkan kecurigaan personal"
-    ]
-  },
-  "audience": {
-    "primary_segment": "Pemilik Bisnis Ritel & F&B Berkembang (Owner / Founder Toko Retail, Fashion, Minimarket, Coffee Shop, dan Kosmetik)",
-    "secondary_segment": "Store Manager, Supervisor Kasir, dan Finance/Admin Toko",
-    "persona": {
-      "persona_name": "Retail & F&B Business Owner / Store Controller",
-      "role": "Owner / Pengawas Operasional Toko",
-      "daily_responsibilities": "Memantau penjualan harian, memeriksa uang kas fisik laci kasir, memastikan tidak ada manipulasi nota/void, dan mengontrol laba bersih",
-      "tech_savviness": "Menengah (aktif menggunakan Instagram untuk inspirasi bisnis dan promosi toko, mencari aplikasi kasir yang praktis di smartphone dan tablet)",
-      "decision_making_factors": "Keamanan uang kasir, pencegahan manipulasi nota/void, kemudahan pemantauan jarak jauh (remote dashboard), dan perlindungan margin laba"
-    },
-    "pain_points": [
-      "Transaksi tunai dilayani tanpa input struk resmi saat antrean padat, kasir melakukan pembatalan item (void) atau diskon manual tanpa izin supervisor",
-      "Kerugian omzet tersembunyi ('bocor halus') senilai Rp 800.000 hingga Rp 2.500.000 per bulan yang baru disadari saat evaluasi laba bersih bulanan",
-      "Kecemasan dan rasa was-was saat meninggalkan toko ke urusan luar, sungkan mencurigai karyawan sendiri tanpa adanya bukti data log audit yang objektif"
-    ],
-    "needs": [
-      "Toko tetap aman dan terlindungi saat owner tidak berada di tempat, otorisasi PIN supervisor untuk setiap pembatalan transaksi, audit log real-time, dan laporan laba bersih yang akurat"
-    ],
-    "motivations": [
-      "Ingin toko beroperasi aman dan terlindungi dari kebocoran transaksi saat ditinggal owner"
-    ],
-    "behavior_insights": [
-      "Sangat menyukai konten infografis dark-tech bernilai edukasi tinggi yang menyajikan poin masalah konkret dan solusi sistematis"
-    ],
-    "content_preferences": [
-      "Visual infografis bento dark-tech kontras tinggi, 0 emoji, Plus Jakarta Sans, dan copywriting berempati"
-    ],
-    "evidence": [
-      "Audit tren Instagram UMKM Indonesia 2026 dan tingginya save rate konten keamanan operasional kasir"
-    ],
-    "confidence_level": "HIGH"
-  },
-  "content": {
-    "platform": "instagram",
-    "format": "single_static_feed",
-    "canvas": "1080x1080",
-    "headline": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
-    "subheadline": "3 Titik Celah Bocor Halus Transaksi Tunai yang Sering Mengikis Margin Toko",
-    "visual_concept": "Bento Grid Infographic Dark-Tech Anti-Fraud",
-    "visual_direction": "Clean editorial layout terinspirasi Apple HIG & Pinterest-tier visual infographics, Plus Jakarta Sans, Dark Blue #070B19, Electric Cyan #38BDF8, Crimson Danger #EF4444, Zero Green",
-    "caption": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini\n\nSering merasa toko ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Waspadai 3 celah kebocoran di meja kasir:\n1. Transaksi manual tanpa struk saat toko sedang antre panjang.\n2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\nLindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\nPelajari fitur pengamanan kasir modern COOCA di cooca.id\n\n#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA",
-    "cta": "Lindungi keuntungan toko Anda dengan sistem otorisasi kasir bertingkat di cooca.id/roles",
-    "hashtags": [
-      "#ManajemenKasir",
-      "#TipsBisnisRitel",
-      "#KeuanganToko",
-      "#OperasionalToko",
-      "#KasirPintar",
-      "#AplikasiKasir",
-      "#COOCA"
-    ],
-    "media_path": "content-assets/instagram-feed-fraud-prevention-1080x1080.png"
-  },
-  "scoring": {
-    "virality_score": 96.5,
-    "audience_relevance_score": 98,
-    "content_audience_match_score": 98.5,
-    "research_confidence": "HIGH"
-  },
-  "validation": {
-    "trend_research": true,
-    "audience_research": true,
-    "persona_validation": true,
-    "pain_point_validation": true,
-    "content_audience_matching": true,
-    "content_accuracy": true,
-    "cooca_relevance": true,
-    "caption_quality": true,
-    "visual_relevance": true,
-    "originality": true
-  },
-  "cooca_connection": {
-    "relevant_features": [
-      "Hak Akses Kasir & Anti-Kecurangan (/roles)",
-      "Kasir POS Pintar Kilat (/pos)"
-    ],
-    "feature_validation": "Terverifikasi di production app: otorisasi PIN supervisor, log audit pembatalan transaksi real-time, pencatatan petty cash",
-    "product_benefits": "Eliminasi manipulasi nota void, proteksi margin kotor dari bocor halus, rasa aman bagi pemilik toko",
-    "product_claim_evidence": "Berdasarkan arsitektur role-based access control real live di aplikasi COOCA",
-    "promotion_relevance": "COOCA Paket Free Rp 0 Gratis Selamanya untuk Solo Owner"
-  },
-  "visual_specification": {
-    "image_dimensions": "1080x1080 px",
-    "visual_concept": "Bento Grid Infographic Dark-Tech Anti-Fraud",
-    "design_direction": "Clean editorial layout terinspirasi Apple HIG & Pinterest-tier visual infographics",
-    "layout_structure": "Header (Logo & Tag Badge) -> Title & Pre-title -> 3 Problem Cards Grid -> Solution Banner -> Footer Route",
-    "headline_placement": "Top section y = 140 - 240px",
-    "data_visualization": "Three stacked bento danger cards with numeric badges (01, 02, 03) and 3D icons",
-    "key_visual_elements": [
-      "Logo Resmi COOCA Dark",
-      "3D Store & Bank Icons",
-      "Tag Badge Anti-Fraud Kasir",
-      "Solution Shield Banner"
-    ],
-    "color_direction": {
-      "background": "#070B19",
-      "text": "#FFFFFF",
-      "accent_blue": "#2563EB",
-      "accent_cyan": "#38BDF8",
-      "accent_danger": "#EF4444",
-      "green_allowed": false
-    },
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline_weight": "ExtraBold (800)",
-      "body_weight": "Medium (500)",
-      "numbers_weight": "ExtraBold (800)"
-    },
-    "cooca_branding": "Logo Resmi COOCA PNG transparan tanpa background pada header",
-    "source_footnote": "Edisi Edukasi Operasional Ritel | COOCA Business Operating System"
-  },
-  "instagram_caption_details": {
-    "caption_hook": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
-    "audience_context": "Bagi pemilik toko ritel dan bisnis F&B, pemandangan meja kasir yang ramai pembeli tentu sangat membahagiakan. Namun rasa bahagia itu sering berubah menjadi kebingungan saat tutup buku akhir bulan: omzet tercatat puluhan juta, tetapi saldo kas yang tersisa justru tipis.",
-    "data_context": "Audit operasional mencatat 3 titik celah kebocoran transaksi tunai yang paling sering terjadi.",
-    "business_implication": "Kebocoran halus kasir dapat mengikis Rp 800.000 hingga Rp 2.500.000 keuntungan toko setiap bulan.",
-    "practical_insight": "Terapkan otorisasi PIN supervisor untuk setiap void dan kunci petty cash digital.",
-    "cooca_connection": "Pelajari fitur Hak Akses Kasir & Anti-Kecurangan di cooca.id/roles",
-    "professional_cta": "Apakah toko Anda sudah menerapkan pembatasan hak akses untuk pembatalan transaksi di meja kasir? Simpan postingan ini dan tulis pengalaman toko Anda di kolom komentar!",
-    "complete_caption": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini\n\nSering merasa toko ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Waspadai 3 celah kebocoran di meja kasir:\n1. Transaksi manual tanpa struk saat toko sedang antre panjang.\n2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\nLindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\nPelajari fitur pengamanan kasir modern COOCA di cooca.id\n\n#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA",
-    "hashtags": [
-      "#ManajemenKasir",
-      "#TipsBisnisRitel",
-      "#KeuanganToko",
-      "#OperasionalToko",
-      "#KasirPintar",
-      "#AplikasiKasir",
-      "#COOCA"
-    ]
-  },
-  "quality_audit": {
-    "content_quality_score": 98,
-    "audience_alignment_score": 98.5,
-    "virality_score": 96.5,
-    "score_breakdown": {
-      "trend_velocity": 95,
-      "problem_urgency": 97,
-      "platform_fit": 98,
-      "cta_clarity": 96
-    },
-    "data_validation": "PASSED (Kuantitatif, Terverifikasi, Tidak Ada Em-Dash/En-Dash)",
-    "persona_validation": "PASSED (Target Pemilik Bisnis Ritel & F&B Berkembang)",
-    "caption_validation": "PASSED (Struktur AIDA Empatik, 0 Em-Dash, 0 Nama Usaha Fiktif)",
-    "visual_validation": "PASSED (1080x1080 Single Static Infographic, Dark-Tech Navy #070B19, Plus Jakarta Sans, Zero Green)",
-    "historical_content_validation": "PASSED (Unik, Tidak Duplikat dengan Konten Sebelumnya)",
-    "publication_eligibility": "ELIGIBLE",
-    "rejection_reasons": []
-  },
-  "deployment_details": {
-    "specification_path": "storage/app/public/content-assets/spec-cooca-feed-instagram.json",
-    "asset_path": "storage/app/public/content-assets/instagram-feed-fraud-prevention-1080x1080.png",
-    "deployment_status": "READY_FOR_DEPLOYMENT",
-    "database_status": "PENDING_ARTISAN_DEPLOY",
-    "git_status": "PENDING_COMMIT"
+    "core_problem": "Kain sisa perca menumpuk di gudang, ongkos jahit per lusin meleset dari estimasi awal, dan pesanan baju seragam molor dari jadwal.",
+    "solution_feature": "Kalkulasi HPP Multi-Tier & Surat Perintah Kerja",
+    "metrics": "Margin laba kotor produksi terkunci pasti di 25% dan pesanan selesai tepat waktu.",
+    "cta": "Mulai Gratis Selamanya di cooca.id"
   }
 }

@@ -72,6 +72,20 @@
       "hook_title": "Pelanggan Cari Obat Langganan Tapi Stok Habis? Pantau Batas Minimum Obatmu",
       "sector_id": "apotek_toko_obat",
       "sector_name": "Apotek & Toko Obat"
+    },
+    {
+      "timestamp": "2026-11-11T10:00:38.759855",
+      "topic_name": "Jasa Harian: Solusi Operasional Cuci Mobil & Detailing",
+      "hook_title": "Uang Kas Cuci Mobil Campur Aduk dengan Tips? Pisahkan Catatan Biar Rekap Bersih",
+      "sector_id": "cuci_mobil_detailing",
+      "sector_name": "Cuci Mobil & Detailing"
+    },
+    {
+      "timestamp": "2026-11-11T10:03:25.298348",
+      "topic_name": "Manufaktur & HPP: Solusi Operasional Konveksi & Garment",
+      "hook_title": "Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu",
+      "sector_id": "konveksi_garment",
+      "sector_name": "Konveksi & Garment"
     }
   ],
   "cooca-feed-linkedin": [
