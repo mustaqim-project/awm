@@ -1,7 +1,7 @@
 @extends('layouts.admin', ['title' => __('admin.pencairan_saldo_merchant_upload_bukti_bayar')])
 
 @section('content')
-<div class="space-y-6 pb-16" x-data="adminSettlementHub()">
+<div class="space-y-6 pb-28 lg:pb-10" x-data="adminSettlementHub()">
 
     {{-- ========================================================== --}}
     {{-- TOOLBAR / HEADER                                           --}}

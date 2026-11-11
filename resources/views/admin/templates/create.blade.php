@@ -171,12 +171,12 @@
                 <a href="{{ route('admin.templates.index') }}"
                     class="h-11 sm:h-10 px-5 rounded-[12px] bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 text-black/70 dark:text-white/70 text-[13px] font-medium flex items-center justify-center transition-colors active:scale-[0.98]">{{ __('common.cancel') }}</a>
                 @if(Auth::guard('admin')->user()?->hasPermission('admin.templates.create'))
-<button type="submit"
-                    class="h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all">
-                    <i data-lucide="upload" class="w-4 h-4" stroke-width="1.8"></i>
+                <button type="submit"
+                    class="h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0062CC] text-white text-[13px] font-semibold flex items-center justify-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.25)] active:scale-[0.98] transition-all cursor-pointer">
+                    <i data-lucide="check" class="w-4 h-4" stroke-width="1.8"></i>
                     <span>{{ __('common.save') }}</span>
                 </button>
-@endif
+                @endif
             </div>
         </form>
 

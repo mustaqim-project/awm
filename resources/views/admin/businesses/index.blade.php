@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="adminBusinessesManager()">
+    <div class="space-y-6 pb-28 lg:pb-10" x-data="adminBusinessesManager()">
 
         <!-- Bento KPI Summary Grid (Adaptive 2-Column Micro-Bento Mobile, 4-Column Desktop) -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">

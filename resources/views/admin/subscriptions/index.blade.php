@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="{
+    <div class="space-y-6 pb-28 lg:pb-10" x-data="{
         imageModalOpen: false,
         modalImageUrl: '',
         modalTitle: ''
@@ -256,7 +256,7 @@
                                     </td>
                                     <td class="px-5 py-3 text-right">
                                         <a href="{{ route('admin.businesses.show', $t) }}"
-                                            class="h-8 px-3 rounded-[8px] text-[12px] font-semibold bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"><span>{{ __('admin.kelola_bisnis') }}</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"
+                                            class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1"><span>{{ __('admin.kelola_bisnis') }}</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"
                                                 stroke-width="1.5"></i></a>
                                     </td>
                                 </tr>
@@ -643,7 +643,7 @@
                                     <td class="px-5 py-3 text-right">
                                         @if(Auth::guard('admin')->user()?->hasPermission('admin.subscriptions.view'))
 <a href="{{ route('admin.subscriptions.show', $p) }}"
-                                            class="h-8 px-3.5 rounded-[8px] text-[12px] font-semibold {{ $p->isAwaitingApproval() ? 'bg-[#FF9500] hover:bg-[#E68A00] text-white' : 'bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12]' }} active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><span>{{ $p->isAwaitingApproval() ? 'Verifikasi' : 'Detail' }}</span><i
+                                            class="min-h-[36px] px-3.5 rounded-[9px] text-[12px] font-semibold {{ $p->isAwaitingApproval() ? 'bg-[#FF9500] hover:bg-[#E68A00] text-white' : 'bg-black/[0.06] dark:bg-white/[0.08] text-black/80 dark:text-white/80 hover:bg-black/[0.09] dark:hover:bg-white/[0.12]' }} active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><span>{{ $p->isAwaitingApproval() ? 'Verifikasi' : 'Detail' }}</span><i
                                                 data-lucide="arrow-right" class="w-3.5 h-3.5" stroke-width="1.5"></i></a>
 @endif
                                     </td>

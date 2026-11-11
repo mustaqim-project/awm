@@ -122,11 +122,12 @@ async function renderUniversalBento() {
   let outputRelPaths = [];
 
   const PINTEREST_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
+  const UI_DIR = path.join(ROOT_DIR, 'storage/app/public/admin/social-media-assets/ui-screenshots');
   const carousel3DIcons = [
     '3d_target.png',        // Slide 1: Focus & Hook
     '3d_shop_store.png',     // Slide 2: Real Operations / Problem
     '3d_rocket.png',         // Slide 3: Cooca Digital Solution
-    '3d_growth_arrow.png',   // Slide 4: Metric Growth & Margin
+    '3d_bank_building.png',  // Slide 4: Finance / Margin (ZERO GREEN)
     '3d_trophy.png'          // Slide 5: Victory & CTA
   ];
 
@@ -144,7 +145,46 @@ async function renderUniversalBento() {
 
     // Slide-specific image resolution to guarantee NO repeated photos in carousels
     let slidePhotoBase64 = '';
-    if (isCarousel) {
+    let isLiveUiScreenshot = false;
+    let liveUiLabel = isCarousel ? `SLIDE 0${slideNumber}` : 'FOKUS OPERASIONAL NYATA';
+
+    const topicText = `${slideTitle} ${slideDesc} ${rawHook} ${spec.feature_name || ''}`.toLowerCase();
+
+    // Check if this slide needs a Live COOCA UI screenshot directly from COOCA application
+    let matchedUiPath = '';
+    if (isCarousel && slideNumber === 3) {
+      // In carousels, slide 3 is ALWAYS the live COOCA software interface solution!
+      if (topicText.includes('kasir') || topicText.includes('pos') || topicText.includes('meja') || topicText.includes('struk')) {
+        matchedUiPath = path.join(UI_DIR, 'pos.png');
+        liveUiLabel = 'ANTARMUKA ASLI • KASIR POS';
+      } else if (topicText.includes('laba') || topicText.includes('laporan') || topicText.includes('keuangan') || topicText.includes('margin') || topicText.includes('boncos')) {
+        matchedUiPath = path.join(UI_DIR, 'reports.png');
+        liveUiLabel = 'ANTARMUKA ASLI • LAPORAN LABA RUGI';
+      } else if (topicText.includes('shift') || topicText.includes('kas ') || topicText.includes('selisih')) {
+        matchedUiPath = path.join(UI_DIR, 'pos_shifts.png');
+        liveUiLabel = 'ANTARMUKA ASLI • REKONSILIASI SHIFT';
+      } else {
+        matchedUiPath = path.join(UI_DIR, 'inventory.png');
+        liveUiLabel = 'ANTARMUKA ASLI • KONTROL STOK';
+      }
+    } else if (!isCarousel && (topicText.includes('kasir') || topicText.includes('pos') || topicText.includes('stok') || topicText.includes('laporan') || topicText.includes('shift') || topicText.includes('bahan'))) {
+      if (topicText.includes('kasir') || topicText.includes('pos')) {
+        matchedUiPath = path.join(UI_DIR, 'pos.png');
+        liveUiLabel = 'ANTARMUKA ASLI • KASIR POS';
+      } else if (topicText.includes('laporan') || topicText.includes('laba') || topicText.includes('rugi')) {
+        matchedUiPath = path.join(UI_DIR, 'reports.png');
+        liveUiLabel = 'ANTARMUKA ASLI • LAPORAN KEUANGAN';
+      } else {
+        matchedUiPath = path.join(UI_DIR, 'inventory.png');
+        liveUiLabel = 'ANTARMUKA ASLI • KONTROL STOK';
+      }
+    }
+
+    if (matchedUiPath && fs.existsSync(matchedUiPath)) {
+      slidePhotoBase64 = getBase64Image(matchedUiPath);
+      isLiveUiScreenshot = true;
+      console.log(`[Universal Bento] Using authentic COOCA UI screenshot: ${matchedUiPath}`);
+    } else if (isCarousel) {
       const slideNumPad = String(slideNumber).padStart(2, '0');
       const slidePhotoCandidates = [
         path.join(ROOT_DIR, `storage/app/public/admin/social-media-assets/carousel/${channel}/photo-slide-${slideNumPad}.jpg`),
@@ -162,10 +202,10 @@ async function renderUniversalBento() {
       slidePhotoBase64 = photoBase64;
     }
 
-    // Dynamic 3D asset per slide or cluster fallback
+    // Dynamic 3D asset per slide (strictly zero green icons)
     const current3DFileName = isCarousel 
       ? carousel3DIcons[idx % carousel3DIcons.length]
-      : '3d_growth_arrow.png';
+      : '3d_shop_store.png';
     const current3DBase64 = getBase64Image(path.join(PINTEREST_DIR, current3DFileName));
 
     // Build award-winning editorial graphic HTML

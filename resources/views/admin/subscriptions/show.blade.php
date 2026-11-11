@@ -9,7 +9,7 @@
         $badge = $payment->getStatusBadge();
         $methodDetails = $payment->getPaymentMethodDetails();
     @endphp
-    <div class="max-w-5xl mx-auto space-y-6" x-data="{
+    <div class="max-w-5xl mx-auto space-y-6 pb-28 lg:pb-10" x-data="{
         approveModalOpen: false,
         rejectModalOpen: false,
         imagePreviewOpen: false
@@ -203,12 +203,12 @@
                 <div class="flex items-center gap-3 shrink-0">
                     @if ($canRejectSub)
                     <button type="button" @click="rejectModalOpen = true"
-                        class="h-9 px-4 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><i
+                        class="min-h-[40px] px-4 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] dark:text-[#FF453A] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5"><i
                             data-lucide="x" class="w-4 h-4" stroke-width="1.5"></i><span>{{ __('admin.tolak_pembayaran') }}</span></button>
                     @endif
                     @if ($canApproveSub)
                     <button type="button" @click="approveModalOpen = true"
-                        class="h-9 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]"><i
+                        class="min-h-[40px] px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 shadow-[0_1px_2px_rgba(0,122,255,0.25)]"><i
                             data-lucide="check" class="w-4 h-4" stroke-width="1.5"></i><span>{{ __('admin.setujui_aktifkan_paket_core') }}</span></button>
                     @endif
                 </div>
@@ -258,8 +258,10 @@
                                 <button type="button" @click="approveModalOpen = false"
                                     class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)]">Ya,
-                                    Setujui &amp; Aktifkan</button>
+                                    class="min-h-[44px] px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] active:opacity-80 transition-all shadow-[0_1px_2px_rgba(0,122,255,0.25)] inline-flex items-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <span>Ya, Setujui &amp; Aktifkan</span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -309,7 +311,10 @@
                                 <button type="button" @click="rejectModalOpen = false"
                                     class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.09] dark:hover:bg-white/[0.12] transition">{{ __('common.cancel') }}</button>
                                 <button type="submit"
-                                    class="min-h-[44px] px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all">{{ __('admin.tolak_pembayaran_2') }}</button>
+                                    class="min-h-[44px] px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#E0352B] active:scale-[0.97] active:opacity-80 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                    <span>{{ __('admin.tolak_pembayaran_2') }}</span>
+                                </button>
                             </div>
                         </form>
                     </div>

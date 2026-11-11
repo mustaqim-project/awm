@@ -1,7 +1,7 @@
 @extends('layouts.admin', ['title' => __('admin.detail_pencairan_settlement') . $settlement->settlement_number])
 
 @section('content')
-<div class="max-w-4xl mx-auto space-y-6 pb-16">
+<div class="max-w-4xl mx-auto space-y-6 pb-28 lg:pb-10">
 
     {{-- Header --}}
     <div class="flex items-center justify-between p-5 sm:p-6 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.04] dark:border-white/[0.06] shadow-sm">
@@ -27,7 +27,7 @@
             <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Toko: <strong>{{ $settlement->business?->name }}</strong> • Tanggal: {{ \Carbon\Carbon::parse($settlement->settlement_date)->format('d F Y') }}</p>
         </div>
         <a href="{{ route('admin.settlements.index') }}"
-            class="h-9 px-4 rounded-[10px] text-xs font-medium text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/10 hover:bg-black/10 transition flex items-center gap-1.5">
+            class="min-h-[38px] px-4 rounded-[10px] text-xs font-medium text-black/70 dark:text-white/70 bg-black/5 dark:bg-white/10 hover:bg-black/10 transition inline-flex items-center gap-1.5 active:scale-[0.98]">
             <i data-lucide="arrow-left" class="w-4 h-4"></i>
             <span>{{ __('common.back') }}</span>
         </a>
@@ -171,8 +171,8 @@
                             Notifikasi WhatsApp akan otomatis terkirim ke pemilik bisnis.
                         </span>
                         <button type="submit"
-                            class="h-10 px-6 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold transition active:scale-[0.98] flex items-center gap-2 shadow-sm">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i>
+                            class="min-h-[44px] px-6 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] text-white text-xs font-bold transition active:scale-[0.98] inline-flex items-center gap-2 shadow-sm">
+                            <i data-lucide="check" class="w-4 h-4"></i>
                             {{ __('admin.approve_and_send_proof') }}
                         </button>
                     </div>
@@ -195,8 +195,8 @@
                             Transaksi yang teralokasi akan dikembalikan ke saldo mengendap merchant.
                         </span>
                         <button type="submit"
-                            class="h-10 px-6 rounded-[10px] bg-[#FF3B30] hover:bg-[#D70015] text-white text-xs font-bold transition active:scale-[0.98] flex items-center gap-2 shadow-sm">
-                            <i data-lucide="x-circle" class="w-4 h-4"></i>
+                            class="min-h-[44px] px-6 rounded-[10px] bg-[#FF3B30] hover:bg-[#D70015] text-white text-xs font-bold transition active:scale-[0.98] inline-flex items-center gap-2 shadow-sm">
+                            <i data-lucide="x" class="w-4 h-4"></i>
                             Tolak Pencairan
                         </button>
                     </div>
@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 <a href="{{ $settlement->proof_image_url }}" target="_blank" download
-                    class="h-8 px-3 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] text-xs font-semibold hover:bg-[#007AFF]/20 transition flex items-center gap-1.5">
+                    class="min-h-[36px] px-3.5 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] text-xs font-semibold hover:bg-[#007AFF]/20 transition inline-flex items-center gap-1.5 active:scale-[0.98]">
                     <i data-lucide="download" class="w-3.5 h-3.5"></i>
                     <span>{{ __('admin.unduh_bukti') }}</span>
                 </a>

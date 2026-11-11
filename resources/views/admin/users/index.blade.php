@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="adminUsersManager()">
+    <div class="space-y-6 pb-28 lg:pb-10" x-data="adminUsersManager()">
 
         <!-- Toolbar: Search + Export -->
         <div
