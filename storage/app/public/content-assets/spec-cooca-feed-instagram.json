@@ -13,10 +13,10 @@
   "solution_summary": "Integrasi fitur Hak Akses Kasir & Anti-Kecurangan di COOCA untuk optimalisasi operasional bisnis UMKM.",
   "viral_score": 96.5,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 95.0,
-  "problem_urgency": 97.0,
-  "platform_fit": 98.0,
-  "cta_clarity": 96.0,
+  "trend_velocity": 95,
+  "problem_urgency": 97,
+  "platform_fit": 98,
+  "cta_clarity": 96,
   "caption": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini\n\nSering merasa toko ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Waspadai 3 celah kebocoran di meja kasir:\n1. Transaksi manual tanpa struk saat toko sedang antre panjang.\n2. Pengambilan uang kasir untuk kebutuhan operasional tanpa pencatatan petty cash resmi.\n3. Pembatalan transaksi (void) atau pemberian diskon manual tanpa supervisi.\n\nLindungi hak dan jerih payah usaha dengan sistem otorisasi kasir pintar yang transparan dan aman.\nPelajari fitur pengamanan kasir modern COOCA di cooca.id\n\n#kasirpintar #tipstoko #keuangantoko #operasionaltoko #keamanantoko #COOCA",
   "slides": [
     {
@@ -62,7 +62,7 @@
       "Catat seluruh pengeluaran kas operasional dadakan melalui modul petty cash terintegrasi"
     ],
     "cooca_organic_link": "Modul Hak Akses Kasir & Anti-Kecurangan di COOCA (/roles dan /pos) menyediakan otorisasi bertingkat, PIN supervisor, dan audit log transaksi real-time",
-    "audience_relevance_score": 98.0,
+    "audience_relevance_score": 98,
     "content_audience_matching_justification": "Sangat relevan bagi audiens Instagram karena lebih dari 84% pemilik ritel mengeluhkan margin laba tipis meskipun toko ramai, dan edukasi anti-fraud kasir merupakan topik bernilai simpan (save rate) sangat tinggi"
   },
   "caption_strategy": {
@@ -142,8 +142,8 @@
     "engine": "Canva MCP + Playwright Lossless Chromium",
     "rendered_file": "storage/app/public/content-assets/instagram-feed-fraud-prevention-1080x1080.png"
   },
-  "media_path": "content-assets/instagram-feed-fraud-prevention-1080x1080.png",
-  "local_media_path": "content-assets/instagram-feed-fraud-prevention-1080x1080.png",
+  "media_path": "content-assets/instagram-feed-cooca-content-1080x1080.png",
+  "local_media_path": "content-assets/instagram-feed-cooca-content-1080x1080.png",
   "research": {
     "selected_topic": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
     "keywords": [
@@ -171,7 +171,7 @@
       {
         "topic": "Strategi Otorisasi PIN Supervisor untuk Void Kasir",
         "angle": "Cegah Pembatalan Transaksi Palsu Saat Meja Kasir Antre Panjang",
-        "score": 94.0,
+        "score": 94,
         "status": "CANDIDATE"
       },
       {
@@ -183,13 +183,13 @@
       {
         "topic": "Audit Petty Cash & SOP Belanja Operasional Toko",
         "angle": "Uang Laci Berkurang Tanpa Nota: Bahaya Petty Cash Tanpa Voucher",
-        "score": 92.0,
+        "score": 92,
         "status": "CANDIDATE"
       },
       {
         "topic": "Rekonsiliasi Blind Balancing Saat Pergantian Shift",
         "angle": "Kasir Tidak Boleh Tahu Saldo Teoretis Sebelum Menghitung Uang Fisik",
-        "score": 95.0,
+        "score": 95,
         "status": "CANDIDATE"
       }
     ],
@@ -257,7 +257,7 @@
   },
   "scoring": {
     "virality_score": 96.5,
-    "audience_relevance_score": 98.0,
+    "audience_relevance_score": 98,
     "content_audience_match_score": 98.5,
     "research_confidence": "HIGH"
   },
@@ -333,14 +333,14 @@
     ]
   },
   "quality_audit": {
-    "content_quality_score": 98.0,
+    "content_quality_score": 98,
     "audience_alignment_score": 98.5,
     "virality_score": 96.5,
     "score_breakdown": {
-      "trend_velocity": 95.0,
-      "problem_urgency": 97.0,
-      "platform_fit": 98.0,
-      "cta_clarity": 96.0
+      "trend_velocity": 95,
+      "problem_urgency": 97,
+      "platform_fit": 98,
+      "cta_clarity": 96
     },
     "data_validation": "PASSED (Kuantitatif, Terverifikasi, Tidak Ada Em-Dash/En-Dash)",
     "persona_validation": "PASSED (Target Pemilik Bisnis Ritel & F&B Berkembang)",

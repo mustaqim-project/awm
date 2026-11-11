@@ -88,6 +88,17 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 5. Cek ukuran hasil ekspor. Jika bukan 1080x1920, ubah ukuran atau ekspor ulang satu kali. Jika masih salah, berhenti sesuai bagian 5.
 6. Simpan ke `storage/app/public/admin/social-media-assets/feed/tiktok/feed-YYYY-MM-DD-{slug}-1080x1920.png`. Nama file diturunkan dari tanggal dan `slug` di spec JSON. Jangan memakai nama file tetap dan jangan menimpa file lama.
 
+
+2. **Jalur Fallback Otomatis (Saat Kuota Canva Habis / Error):**
+   Jika Canva API mengembalikan error kuota habis (`quota_exceeded`), otentikasi gagal, atau timeout setelah 2 kali coba:
+   **JANGAN BERHENTI DAN DILARANG MEN-DEPLOY GAMBAR CADANGAN LAMA YANG SALAH TOPIK!**
+   Segera jalankan skrip renderer visual lokal Playwright:
+   ```bash
+   node scripts/social-automation/render_universal_bento.cjs --spec-json storage/app/public/content-assets/spec-cooca-feed-tiktok.json
+   ```
+   Skrip ini secara otomatis merender gambar berkualitas tinggi dengan tata letak Bento Grid Apple HIG, palet Deep Midnight Navy (#070B19 ke #162B68), Electric Sapphire (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, Strictly Zero Green, dan Logo Resmi Cooca Dark (`public/assets/image/1785229034_logo_dark.png`) langsung ke path target.
+
+
 ### Langkah 3: Validasi (wajib lolos sebelum deploy)
 - **File:** tepat 1 PNG baru, 1080x1920 px, nama file sesuai pola di atas, tidak menimpa file lama.
 - **Karakter terlarang:** caption, pertanyaan komentar, dan semua teks di gambar bebas em-dash (U+2014) dan en-dash (U+2013), dan bebas mojibake (lihat bagian 4).

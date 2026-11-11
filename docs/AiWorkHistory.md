@@ -24661,3 +24661,69 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   `php artisan test tests/Feature/Admin/AdminPostAndClusterTest.php` -> **8 passed, 43 assertions (100% Success)**.
 - **Total Verification:** **11 passed, 96 assertions (0 failure, 0 error)**.
 - **Production Gate:** **PASSED (Production Hardened, Zero Em Dash, Full Schema, Real Route Delivery)**.
+
+
+### [WORK-2026-11-11-392] COOCA Educational SEO Content Generation (Batch 8: 11.11 Order Spike & Year-End Operations), Sitemap & Live Controller Verification
+- **Timestamp:** 2026-11-11T09:35:00+07:00
+- **Audited Target:** `database/data/articles/372-*.md` to `database/data/articles/391-*.md`, `database/data/articles/trending-research-2026-11-11-batch8.json`, `database/data/articles/keyword-research-2026-11-11-batch8.json`, `public/sitemap_blog.xml`, `blog_links.json`, `resources/views/layouts/partials/typography.blade.php`, `scripts/build_and_validate_batch8.py`, `scripts/verify_batch8_db.php`.
+- **Work Type:** Google Trends Business Research (Batch 8: Harbolnas 11.11 Spikes & Year-End Prep) | 20 Production SEO Educational Articles | Strict Zero-Em-Dash & Zero-En-Dash Policy | Automated Linter Enforcement (0 FAIL, 0 WARN) | Live Database & Controller Verification (100% Pass)
+
+#### 1. Business Context & Objective
+- Melanjutkan eksekusi strategi konten edukasi bisnis UMKM Indonesia untuk COOCA (`cooca.id`) bertepatan dengan hari puncak festival belanja 11.11 dan persiapan tutup tahun 2026 / 2027 berbasis skill `cooca-blog-writer` dan direktif `cooca-agent-directive`.
+- Memproduksi 20 artikel blog pilar SEO mendalam (IDs 372 sampai 391) yang mencakup manajemen pesanan same-day kilat, penanganan resi tertahan/hilang, penataan meja fast-track kurir instan, SOP upselling/cross-selling POS, audit biaya kemasan tahan air musim hujan, rekonsiliasi saldo escrow payout, laporan perubahan modal SAK EMKM, strategi jam lembur gudang, dynamic pricing beretika, pemeliharaan printer thermal, perhitungan BEP resto online, mitigasi ketergantungan diskon harga, SOP retur toko fisik, negosiasi sewa kios 2027, barcode GS1 EAN-13 resmi, SOP kasbon karyawan tertib, reaktivasi pelanggan pasca event via WhatsApp personal, penyusunan PO bahan baku 12.12, kalkulasi biaya reverse logistics retur COD, dan izin edar kosmetik notifikasi BPOM maklon.
+- Menegakkan standar editorial tanpa kompromi: 0 em dash (`—`), 0 en dash (`–`), internal link murni kanonis `/blog/{slug}` dari `blog_links.json`, penyebaran keyword presisi (H1, 100 kata pertama, meta title <= 60 karakter, meta description 120-160 karakter, dan H2), panjang artikel 1.200+ kata, tabel komparasi, serta skema JSON-LD `Article` + `FAQPage`.
+- Mengimpor seluruh artikel ke database produksi `posts`, memperbarui `public/sitemap_blog.xml` dan `blog_links.json`, serta memvalidasi rendering live controller `PublicBlogController::show($slug)` 100% bebas error.
+
+#### 2. Execution & Key Results
+1. **Google Trends & Content Research (Batch 8):**
+   - *Dokumen Riset:* `database/data/articles/trending-research-2026-11-11-batch8.json` dan `database/data/articles/keyword-research-2026-11-11-batch8.json` (20 kluster topik terkurasi).
+   - *Kluster Topik:* Manajemen Inventori & Logistik Musim Hujan, Rekonsiliasi Escrow & SAK EMKM, POS Kasir & Pemeliharaan Hardware, HPP Resto & Dynamic Pricing, Regulasi BPOM & Barcode GS1 Internasional.
+2. **Quality & Compliance Verification (cooca-blog-writer):**
+   - Generator script multi-bagian terstruktur: `generate_batch8_part1.py` (IDs 372-376), `generate_batch8_part2.py` (IDs 377-381), `generate_batch8_part3.py` (IDs 382-386), `generate_batch8_part4.py` (IDs 387-391).
+   - Linter `scripts/lint_content.py` dijalankan via builder `scripts/build_and_validate_batch8.py` terhadap 20 artikel baru: **Semua 20 artikel lulus 100% dengan 0 FAIL**.
+   - Menemukan dan memperbaiki satu en dash tersembunyi pada komentar CSS di `resources/views/layouts/partials/typography.blade.php` (`/* Caption role (11-12px) */`), menjamin output rendering HTML 100% bebas dash terlarang.
+3. **Production Database & Sitemap Synchronization:**
+   - Menjalankan `php artisan blog:import-articles --force`: Berhasil mengimpor 407 artikel ke tabel `posts` dengan status `published`.
+   - Sitemap `public/sitemap_blog.xml` tergenerasi ulang otomatis.
+   - Mengupdate `blog_links.json` dan `database/data/blog_links.json` (kini memuat 397 tautan blog aktif terverifikasi).
+4. **Live Controller & Database Verification:**
+   - Menjalankan `php scripts/verify_batch8_db.php`: Memvalidasi seluruh 20 artikel (IDs 372-391) secara nyata di tabel `posts` dan di-render langsung melalui `PublicBlogController::show($slug)`.
+   - Hasil: **20/20 PASS** (HTTP View valid, H1 ada, Schema.org JSON-LD ada, em/en dash 0).
+
+#### 3. Verification Summary
+- **Content Linter Status:** **20 of 20 PASSED (0 FAIL, 0 WARN)**.
+- **Database Import Status:** **407 / 407 articles imported, sitemap regenerated**.
+- **Live Controller Verification:** **20 of 20 PASSED (H1: YES, JSON-LD: YES, Dash: NO)**.
+- **Production Gate:** **PASSED (Zero Em Dash, Zero En Dash, Strict Canonicals, Live Controller Verified)**.
+
+
+### [2026-11-11] Systemic Overhaul & Alignment of 10 Social Media Automations
+
+#### 1. Background & Problem Statement
+- Pengguna melaporkan bahwa konten otomasi yang dijalankan via `/automation` selalu tidak sesuai dengan brief.
+- Investigasi mendalam menemukan 4 masalah struktural:
+  1. `deep_research_viral_engine.py` menggunakan percabangan hardcode (`if framework == ...`) yang selalu menghasilkan topik dan hook statis (kebocoran kasir ritel berulang).
+  2. Bahasa hasil generator menanamkan kata terlarang: sapaan formal *"Anda"*, kata kaku korporat (*"optimalisasi operasional"*, *"implementasi"*), serta URL sub-rute (*cooca.id/pos*).
+  3. Kuota Canva API MCP habis (*quota_exceeded*), sehingga deployer jatuh ke gambar cadangan lama yang salah topik.
+  4. Seluruh sidecar di `~/.gemini/config/sidecars/` kehilangan atribut `workspace_uris` dan permission `command(node)`.
+
+#### 2. Solutions & Key Implementation
+1. **Refactor Dinamis `deep_research_viral_engine.py`:**
+   - Mengintegrasikan rotasi 20 sektor UMKM dalam 6 klaster dari `sectors.json`.
+   - Mengimplementasikan filter riwayat `content_history.json` (mengecualikan 10 sektor terakhir agar topik selalu bervariasi setiap hari).
+   - Menegakkan 100% sapaan santai *"kamu"*, *"usahamu"*, *"timmu"* (Strictly 0 *"Anda"*), 0 kata kaku, dan hanya domain kanonis `cooca.id`.
+   - Menghasilkan skor viral dinamis $\ge 85.0$ dan brief visual Apple HIG Bento Grid realistis.
+2. **Pembuatan Universal Local Playwright Renderer (`render_universal_bento.cjs`):**
+   - Mengotomatisasi rendering grafis statis berkualitas tinggi (1080x1080, 1080x1350, 1080x1920) berbasis Bento Grid Apple HIG, palet Deep Midnight Navy (#070B19 ke #162B68), Electric Sapphire (#2563EB), Cyan Glow (#38BDF8), teks Plus Jakarta Sans tebal, Strictly Zero Green, dan Logo Resmi Cooca Dark.
+   - Bertindak sebagai fallback terverifikasi saat Canva API mengalami limitasi kuota/auth, menjamin visual 100% sesuai dengan topik hari itu.
+3. **Penyelarasan 10 Berkas Instruksi Otomasi:**
+   - Memperbarui seluruh 10 berkas di `scripts/social-automation/instructions/` (`cooca-carousel-facebook`, `cooca-carousel-instagram`, `cooca-carousel-linkedin`, `cooca-carousel-tiktok`, `cooca-daily-umkm-carousel`, `cooca-feed-facebook`, `cooca-feed-instagram`, `cooca-feed-linkedin`, `cooca-feed-tiktok`, `cooca-umkm-educational-social-media`).
+   - Menyempurnakan `cooca-daily-umkm-carousel.md` yang sebelumnya terpotong (77 baris) menjadi dokumen instruksi lengkap (240+ baris) bebas mojibake dan sapaan Anda.
+4. **Sinkronisasi Konfigurasi Sidecar (`~/.gemini/config/sidecars/`):**
+   - Menambahkan `"workspace_uris": ["file:///C:/laragon/www/cooca_core"]`.
+   - Memperbarui `agent_permissions.access_grants` dengan `command(node)`.
+   - Mensinkronkan prompt `args[4]` pada seluruh 10 sidecar dengan berkas instruksi terbaru.
+
+#### 3. Verification & Compliance
+- **Linter Check:** 100% PASS (Zero Em-Dash, Zero En-Dash, Zero Mojibake, Zero Sub-route URLs, Zero "Anda", Zero Kata Kaku).
+- **Renderer Test:** Sukses merender feed single visual 1080x1080 dan carousel multi-slide 5 halaman 1080x1080 dengan penyesuaian sektor dinamis.

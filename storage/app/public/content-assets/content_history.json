@@ -12,6 +12,13 @@
       "topic_name": "Studi Kasus: Selisih Stok Gudang vs Buku dan Solusi Audit Barcode",
       "hook_title": "Studi Kasus: Stok di Buku 50 Pcs Tapi di Rak Cuma Ada 38 Pcs? Ke Mana Selisihnya?",
       "visual_style": "Photorealistic high-end photography of organized modern retail store inventory shelves, warehouse logistics, or a merchant conducting a barcode stock check matching the inventory topic"
+    },
+    {
+      "timestamp": "2026-11-11T09:50:05.530830",
+      "topic_name": "Manufaktur & HPP: Solusi Operasional Mebel & Furniture Kayu",
+      "hook_title": "Kayu dan Cat Finishing Menguap Tanpa Catatan? Rapikan Stok Bahan Bengkel Mebel",
+      "sector_id": "mebel_furniture",
+      "sector_name": "Mebel & Furniture Kayu"
     }
   ],
   "cooca-carousel-instagram": [
@@ -58,6 +65,13 @@
       "topic_name": "Deteksi Kebocoran Kasir & Aturan Emas Keamanan Transaksi",
       "hook_title": "Omzet Ramai Tapi Laba Tipis? Waspadai 3 Titik Kebocoran Meja Kasir Ini",
       "visual_style": "Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security"
+    },
+    {
+      "timestamp": "2026-11-11T09:49:05.606764",
+      "topic_name": "Ritel & Toko Obat: Solusi Operasional Apotek & Toko Obat",
+      "hook_title": "Pelanggan Cari Obat Langganan Tapi Stok Habis? Pantau Batas Minimum Obatmu",
+      "sector_id": "apotek_toko_obat",
+      "sector_name": "Apotek & Toko Obat"
     }
   ],
   "cooca-feed-linkedin": [

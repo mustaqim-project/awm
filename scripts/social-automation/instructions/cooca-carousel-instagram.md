@@ -94,6 +94,17 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 5. Ekspor semua halaman ke PNG resolusi tinggi dengan `export-design`.
 6. Simpan ke `storage/app/public/admin/social-media-assets/carousel/instagram/slide-0{n}.png` (n = 1 sampai 5). Jika file lama ada di folder ini, arsipkan dulu ke subfolder bertanggal (`archive/YYYY-MM-DD/`) agar riwayat visual tidak hilang.
 
+
+2. **Jalur Fallback Otomatis (Saat Kuota Canva Habis / Error):**
+   Jika Canva API mengembalikan error kuota habis (`quota_exceeded`), otentikasi gagal, atau timeout setelah 2 kali coba:
+   **JANGAN BERHENTI DAN DILARANG MEN-DEPLOY GAMBAR CADANGAN LAMA YANG SALAH TOPIK!**
+   Segera jalankan skrip renderer visual lokal Playwright:
+   ```bash
+   node scripts/social-automation/render_universal_bento.cjs --spec-json storage/app/public/content-assets/spec-cooca-carousel-instagram.json
+   ```
+   Skrip ini secara otomatis merender gambar berkualitas tinggi dengan tata letak Bento Grid Apple HIG, palet Deep Midnight Navy (#070B19 ke #162B68), Electric Sapphire (#2563EB), Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal, Strictly Zero Green, dan Logo Resmi Cooca Dark (`public/assets/image/1785229034_logo_dark.png`) langsung ke path target.
+
+
 ### Langkah 3: Validasi (wajib lolos sebelum deploy)
 - **File:** tepat 5 PNG, masing-masing 1080x1080 px, urutan slide-01 sampai slide-05 benar.
 - **Karakter terlarang:** caption dan semua teks slide bebas em-dash (U+2014) dan en-dash (U+2013), dan bebas mojibake (lihat bagian 4).
