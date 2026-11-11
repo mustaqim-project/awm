@@ -29,7 +29,7 @@
 
         {{-- Direct Checkout CTA --}}
         <a href="{{ url('/' . $business->slug . '/checkout') }}"
-            class="px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white bg-amber-600 hover:bg-amber-500 shadow-xs flex items-center gap-2 active:scale-95 transition-all duration-150 shrink-0 min-h-[40px]">
+            class="px-4 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-white bg-amber-600 hover:bg-amber-500 shadow-xs flex items-center gap-2 active:scale-95 transition-all duration-150 shrink-0 min-h-[44px]">
             <span>{{ __('storefront.checkout.pay_now') }}</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>

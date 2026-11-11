@@ -48,14 +48,14 @@
                     <li>
                         <a href="{{ url('/' . $business->slug) }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                            <span>{{ __('storefront.home_main') }}</span>
+                            <span>{{ $landingPage->getNavLabel('home', 'Beranda Utama') }}</span>
                         </a>
                     </li>
                     @if ($landingPage->isPageActive('catalog'))
                         <li>
                             <a href="{{ url('/' . $business->slug . '/katalog') }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                                <span>Katalog Roti &amp; Pastry</span>
+                                <span>{{ $landingPage->getNavLabel('catalog', 'Katalog Roti & Pastry') }}</span>
                             </a>
                         </li>
                     @endif
@@ -63,7 +63,7 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                                <span>{{ __('storefront.dapur_pembuat_resep') }}</span>
+                                <span>{{ $landingPage->getNavLabel('about', 'Dapur Pembuat & Kisah') }}</span>
                             </a>
                         </li>
                     @endif
@@ -71,7 +71,15 @@
                         <li>
                             <a href="{{ url('/' . $business->slug . '/kontak') }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
                                 <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
-                                <span>Custom Cake &amp; Outlet</span>
+                                <span>{{ $landingPage->getNavLabel('contact', 'Custom Cake & Outlet') }}</span>
+                            </a>
+                        </li>
+                    @endif
+                    @if ($landingPage->isPageActive('reservation'))
+                        <li>
+                            <a href="{{ url('/' . $business->slug . '/reservasi') }}" class="hover:text-amber-300 transition-colors flex items-center gap-1.5">
+                                <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-amber-500"></i>
+                                <span>{{ $landingPage->getNavLabel('reservation', 'Reservasi Acara') }}</span>
                             </a>
                         </li>
                     @endif
@@ -95,7 +103,7 @@
                             <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                                 class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-800/40 text-amber-200 font-bold hover:bg-amber-800/60 transition border border-amber-600/30">
                                 <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-                                <span>WhatsApp Admin Toko</span>
+                                <span>{{ $landingPage->cta_secondary_text ?: 'WhatsApp Admin Toko' }}</span>
                             </a>
                         </div>
                     @endif
@@ -107,31 +115,44 @@
                         </div>
                     @endif
 
+                    @php
+                        $dayMapIndo = [
+                            'monday' => 'Senin',
+                            'tuesday' => 'Selasa',
+                            'wednesday' => 'Rabu',
+                            'thursday' => 'Kamis',
+                            'friday' => 'Jumat',
+                            'saturday' => 'Sabtu',
+                            'sunday' => 'Minggu',
+                        ];
+                        $opDays = (array) ($storeSetting?->operating_days ?? []);
+                        $formattedDays = !empty($opDays)
+                            ? implode(', ', array_map(fn($d) => $dayMapIndo[strtolower($d)] ?? ucfirst($d), array_slice($opDays, 0, 4))) . (count($opDays) > 4 ? ' dkk.' : '')
+                            : 'Setiap Hari';
+                        $cutOff = $storeSetting?->cut_off_time ? ' (Batas Order: ' . substr($storeSetting->cut_off_time, 0, 5) . ' WIB)' : ' (Batch Pagi Siap 06:30 WIB)';
+                    @endphp
                     <div class="p-3 rounded-2xl bg-black/40 border border-amber-900/40 text-[11px] text-amber-300/80 space-y-1">
                         <span class="font-bold text-amber-100 block">Jadwal Panggang &amp; Buka:</span>
-                        <p class="leading-relaxed">Setiap Hari: 07:00 &ndash; 21:00 WIB (Batch Pagi Siap 06:30 WIB)</p>
+                        <p class="leading-relaxed">{{ $formattedDays }}{{ $cutOff }}</p>
                     </div>
                 </div>
             </div>
 
             {{-- Col 4: Standar Mutu Patisserie --}}
+            @php
+                $universalValues = $landingPage->getUniversalValues();
+            @endphp
             <div class="space-y-3">
                 <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-amber-100">
                     Standar Mutu Bakery
                 </h4>
                 <div class="space-y-2 text-xs text-amber-200/70">
-                    <div class="p-2.5 rounded-xl bg-black/40 border border-amber-900/40 flex items-center gap-2.5">
-                        <i data-lucide="sun" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                        <span>Fresh Baked Setiap Pagi Hari</span>
-                    </div>
-                    <div class="p-2.5 rounded-xl bg-black/40 border border-amber-900/40 flex items-center gap-2.5">
-                        <i data-lucide="award" class="w-4 h-4 text-rose-400 shrink-0"></i>
-                        <span>100% Pure Butter Tanpa Pengawet</span>
-                    </div>
-                    <div class="p-2.5 rounded-xl bg-black/40 border border-amber-900/40 flex items-center gap-2.5">
-                        <i data-lucide="package" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                        <span>Box Kemasan Khusus Anti-Guncang</span>
-                    </div>
+                    @foreach ($universalValues as $val)
+                        <div class="p-2.5 rounded-xl bg-black/40 border border-amber-900/40 flex items-center gap-2.5">
+                            <i data-lucide="{{ $val['icon'] ?? 'award' }}" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                            <span><strong>{{ $val['title'] }}</strong> &ndash; {{ $val['desc'] }}</span>
+                        </div>
+                    @endforeach
                 </div>
             </div>
 

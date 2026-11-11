@@ -30,7 +30,7 @@
         <a href="{{ url('/' . $bSlug . '/katalog') }}"
             class="flex flex-col items-center justify-center gap-1 transition-all duration-150 active:scale-95 min-h-[48px] {{ $isCatalog ? 'text-amber-700 dark:text-amber-400 font-bold' : 'text-neutral-500 dark:text-neutral-400 hover:text-amber-600' }}">
             <i data-lucide="cake-slice" class="w-5 h-5 {{ $isCatalog ? 'stroke-[2.2]' : 'stroke-[1.6]' }}"></i>
-            <span>Roti &amp; Kue</span>
+            <span>{{ $landingPage->getNavLabel('catalog', 'Roti & Kue') }}</span>
         </a>
 
         {{-- Cart Tab --}}

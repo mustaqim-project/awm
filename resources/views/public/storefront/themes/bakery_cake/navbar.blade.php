@@ -29,7 +29,7 @@
                 </span>
                 <span class="text-[10px] sm:text-[11px] font-semibold text-amber-800 dark:text-amber-400 tracking-wider uppercase flex items-center gap-1.5 truncate mt-0.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                    <span>Artisan Bakery &amp; Patisserie</span>
+                    <span>{{ $landingPage->subheadline ? \Illuminate\Support\Str::limit($landingPage->subheadline, 28) : ($activeTheme['industry'] ?? 'Artisan Bakery & Patisserie') }}</span>
                 </span>
             </div>
         </a>
@@ -38,40 +38,48 @@
         <nav class="hidden lg:flex items-center gap-1 bg-amber-950/[0.03] dark:bg-amber-400/[0.04] p-1.5 rounded-2xl border border-amber-900/[0.06] dark:border-amber-400/[0.08]">
             {{-- Home --}}
             <a href="{{ url('/' . $business->slug) }}"
-                class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug) ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] flex items-center {{ request()->is($business->slug) ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
                 {{ $landingPage->getNavLabel('home', 'Beranda') }}
             </a>
 
             {{-- Catalog / Etalase Roti & Kue --}}
             @if ($landingPage->isPageActive('catalog'))
                 <a href="{{ url('/' . $business->slug . '/katalog') }}"
-                    class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 {{ request()->is($business->slug . '/katalog*') || request()->is($business->slug . '/produk*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                    class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 flex items-center gap-1.5 min-h-[44px] {{ request()->is($business->slug . '/katalog*') || request()->is($business->slug . '/produk*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
                     <i data-lucide="cake-slice" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
-                    <span>Etalase Roti &amp; Cake</span>
+                    <span>{{ $landingPage->getNavLabel('catalog', 'Etalase Roti & Cake') }}</span>
                 </a>
             @endif
 
-            {{-- {{ __('storefront.dapur_pembuat') }} / About --}}
+            {{-- Dapur Pembuat / About --}}
             @if ($landingPage->isPageActive('about'))
                 <a href="{{ url('/' . $business->slug . '/tentang-kami') }}"
-                    class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
-                    {{ __('storefront.dapur_pembuat') }}
+                    class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] flex items-center {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                    {{ $landingPage->getNavLabel('about', 'Dapur Pembuat') }}
                 </a>
             @endif
 
             {{-- Custom Cake & Pre-Order / Contact --}}
             @if ($landingPage->isPageActive('contact'))
                 <a href="{{ url('/' . $business->slug . '/kontak') }}"
-                    class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/kontak*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
-                    Custom Cake &amp; Outlet
+                    class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] flex items-center {{ request()->is($business->slug . '/kontak*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                    {{ $landingPage->getNavLabel('contact', 'Custom Cake & Outlet') }}
+                </a>
+            @endif
+
+            {{-- Reservation / Pemesanan Meja / Acara --}}
+            @if ($landingPage->isPageActive('reservation'))
+                <a href="{{ url('/' . $business->slug . '/reservasi') }}"
+                    class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] flex items-center {{ request()->is($business->slug . '/reservasi*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                    {{ $landingPage->getNavLabel('reservation', 'Reservasi Acara') }}
                 </a>
             @endif
 
             {{-- Resep & Info Oven / Blog --}}
             @if ($landingPage->isPageActive('blog'))
                 <a href="{{ url('/' . $business->slug . '/artikel') }}"
-                    class="px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 {{ request()->is($business->slug . '/artikel*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
-                    Kisah Dapur
+                    class="px-3.5 py-2 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] flex items-center {{ request()->is($business->slug . '/artikel*') ? 'bg-white dark:bg-amber-900/60 text-amber-900 dark:text-amber-100 shadow-xs' : 'text-neutral-700 dark:text-neutral-300 hover:text-amber-800 dark:hover:text-amber-200' }}">
+                    {{ $landingPage->getNavLabel('blog', 'Kisah Dapur') }}
                 </a>
             @endif
         </nav>
@@ -81,15 +89,15 @@
 
             {{-- Status Pre-Order (Desktop) --}}
             <button type="button" @click="$dispatch('open-order-track-modal')"
-                class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-xs font-semibold text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition min-h-[40px]"
+                class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-xs font-semibold text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition min-h-[44px]"
                 title="{{ __('storefront.track_preorder_delivery') }}">
-                <i data-lucide="clock" class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400"></i>
+                <i data-lucide="clock" class="w-4 h-4 text-amber-600 dark:text-amber-400"></i>
                 <span class="hidden md:inline">{{ __('storefront.check_order') }}</span>
             </button>
 
             {{-- Dark Mode Toggle --}}
             <button type="button" @click="toggleDarkMode()"
-                class="p-2 sm:p-2.5 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition flex items-center justify-center min-h-[40px] min-w-[40px]"
+                class="p-2.5 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-amber-900 dark:text-amber-200 hover:bg-amber-900/[0.08] dark:hover:bg-amber-400/[0.1] transition flex items-center justify-center min-h-[44px] min-w-[44px]"
                 aria-label="{{ __('storefront.toggle_display_mode') }}"
                 title="Mode Terang / Gelap">
                 <i data-lucide="sun" class="w-4 h-4 hidden dark:inline text-amber-400"></i>
@@ -98,7 +106,7 @@
 
             {{-- Keranjang Bakery Trigger --}}
             <a href="{{ url('/' . $business->slug . '/checkout') }}"
-                class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs shadow-md shadow-amber-700/20 transition active:scale-95 min-h-[40px]"
+                class="relative inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs shadow-md shadow-amber-700/20 transition active:scale-95 min-h-[44px]"
                 title="{{ __('storefront.bakery_order_box') }}">
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i>
                 <span class="hidden md:inline">{{ __('storefront.nav_orders') }}</span>
@@ -110,15 +118,15 @@
             {{-- WhatsApp Hotline Toko (Desktop) --}}
             @if (!empty($hasWhatsapp))
                 <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
-                    class="hidden xl:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-rose-600/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-900 dark:text-rose-300 font-semibold text-xs transition active:scale-95 min-h-[40px]">
-                    <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>
-                    <span>Pesan Custom Cake</span>
+                    class="hidden xl:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-rose-600/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-900 dark:text-rose-300 font-semibold text-xs transition active:scale-95 min-h-[44px]">
+                    <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                    <span>{{ $landingPage->cta_secondary_text ?: 'Pesan Custom Cake' }}</span>
                 </a>
             @endif
 
             {{-- Mobile Drawer Trigger --}}
             <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
-                class="lg:hidden p-2 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-neutral-800 dark:text-neutral-200 transition min-h-[40px] min-w-[40px] flex items-center justify-center"
+                class="lg:hidden p-2 rounded-xl border border-amber-900/10 dark:border-amber-400/20 bg-amber-900/[0.03] dark:bg-amber-400/[0.05] text-neutral-800 dark:text-neutral-200 transition min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label="Menu Navigasi">
                 <i data-lucide="menu" class="w-5 h-5" x-show="!mobileMenuOpen"></i>
                 <i data-lucide="x" class="w-5 h-5" x-show="mobileMenuOpen" x-cloak></i>
@@ -137,36 +145,43 @@
         class="lg:hidden border-t border-amber-200/70 dark:border-amber-950/70 bg-[#FFFDF5]/95 dark:bg-[#18110B]/95 backdrop-blur-2xl px-4 py-4 space-y-1">
 
         <a href="{{ url('/' . $business->slug) }}" @click="mobileMenuOpen = false"
-            class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug) ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+            class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug) ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
             {{ $landingPage->getNavLabel('home', 'Beranda') }}
         </a>
 
         @if ($landingPage->isPageActive('catalog'))
             <a href="{{ url('/' . $business->slug . '/katalog') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 {{ request()->is($business->slug . '/katalog*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 min-h-[44px] {{ request()->is($business->slug . '/katalog*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
                 <i data-lucide="cake-slice" class="w-4 h-4 text-amber-600"></i>
-                <span>Etalase Roti &amp; Cake</span>
+                <span>{{ $landingPage->getNavLabel('catalog', 'Etalase Roti & Cake') }}</span>
             </a>
         @endif
 
         @if ($landingPage->isPageActive('about'))
             <a href="{{ url('/' . $business->slug . '/tentang-kami') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                {{ __('storefront.dapur_pembuat') }}
+                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/tentang-kami*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('about', 'Dapur Pembuat') }}
             </a>
         @endif
 
         @if ($landingPage->isPageActive('contact'))
             <a href="{{ url('/' . $business->slug . '/kontak') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/kontak*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Custom Cake &amp; Outlet
+                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/kontak*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('contact', 'Custom Cake & Outlet') }}
+            </a>
+        @endif
+
+        @if ($landingPage->isPageActive('reservation'))
+            <a href="{{ url('/' . $business->slug . '/reservasi') }}" @click="mobileMenuOpen = false"
+                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/reservasi*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('reservation', 'Reservasi Acara') }}
             </a>
         @endif
 
         @if ($landingPage->isPageActive('blog'))
             <a href="{{ url('/' . $business->slug . '/artikel') }}" @click="mobileMenuOpen = false"
-                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold {{ request()->is($business->slug . '/artikel*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
-                Kisah Dapur &amp; Resep
+                class="block px-3.5 py-2.5 rounded-xl text-xs font-semibold min-h-[44px] flex items-center {{ request()->is($business->slug . '/artikel*') ? 'bg-amber-600/10 text-amber-800 dark:text-amber-300 font-bold' : 'text-neutral-700 dark:text-neutral-300' }}">
+                {{ $landingPage->getNavLabel('blog', 'Kisah Dapur') }}
             </a>
         @endif
 
@@ -181,7 +196,7 @@
                 <a href="{{ $landingPage->getWhatsAppUrl() }}" target="_blank" rel="noopener"
                     class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-xs bg-amber-600 text-white shadow-xs min-h-[44px]">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
-                    <span>Konsultasi Custom Cake via WhatsApp</span>
+                    <span>{{ $landingPage->cta_secondary_text ?: 'Konsultasi Custom Cake via WhatsApp' }}</span>
                 </a>
             @endif
         </div>

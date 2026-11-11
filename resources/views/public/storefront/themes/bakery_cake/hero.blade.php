@@ -13,12 +13,20 @@
     $secondaryCtaUrl  = $landingPage->cta_secondary_url ?: $landingPage->getWhatsAppUrl();
 
     $universalValues = $landingPage->getUniversalValues();
-    $badgePill1 = $universalValues[0]['title'];
-    $badgeIcon1 = $universalValues[0]['icon'];
-    $badgePill2 = $universalValues[1]['title'];
-    $badgeIcon2 = $universalValues[1]['icon'];
-    $badgePill3 = $universalValues[2]['title'];
-    $badgeIcon3 = $universalValues[2]['icon'];
+    $badgePill1 = $universalValues[0]['title'] ?? 'Resep Artisan Asli';
+    $badgeIcon1 = $universalValues[0]['icon'] ?? 'sparkles';
+    $badgePill2 = $universalValues[1]['title'] ?? 'Bahan Alami & Halal';
+    $badgeIcon2 = $universalValues[1]['icon'] ?? 'shield-check';
+    $badgePill3 = $universalValues[2]['title'] ?? 'Dipanggang Segar Tiap Hari';
+    $badgeIcon3 = $universalValues[2]['icon'] ?? 'flame';
+
+    $stats = $landingPage->stats ?? [];
+    $stat1Value = $stats['clients'] ?? '100%';
+    $stat1Label = $stats['clients_label'] ?? $badgePill1;
+    $stat2Value = $stats['experience'] ?? 'Fresh';
+    $stat2Label = $stats['experience_label'] ?? $badgePill2;
+    $stat3Value = $stats['rating'] ?? '4.9★';
+    $stat3Label = $stats['rating_label'] ?? $badgePill3;
 
     $heroImage = $landingPage->hero_image_url ?: ($landingPage->about_image_url ?: null);
 @endphp
@@ -85,19 +93,19 @@
                     @endif
                 </div>
 
-                {{-- Transparency Metrics Strip --}}
+                {{-- Transparency Metrics Strip (Configurable via Landing Page CMS Stats) --}}
                 <div class="grid grid-cols-3 gap-3 sm:gap-4 pt-6 border-t border-amber-900/10 dark:border-amber-500/15 max-w-lg">
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-amber-700 dark:text-amber-400">100%</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight">{{ $badgePill1 }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-amber-700 dark:text-amber-400 tabular-nums">{{ $stat1Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight block">{{ $stat1Label }}</span>
                     </div>
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400">24/7</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight">{{ $badgePill2 }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-amber-600 dark:text-amber-400 tabular-nums">{{ $stat2Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight block">{{ $stat2Label }}</span>
                     </div>
-                    <div>
-                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-rose-700 dark:text-rose-400">Top</span>
-                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight">{{ $badgePill3 }}</span>
+                    <div class="space-y-0.5">
+                        <span class="block font-heading text-2xl sm:text-3xl font-bold text-rose-700 dark:text-rose-400 tabular-nums">{{ $stat3Value }}</span>
+                        <span class="text-[11px] text-neutral-500 dark:text-amber-300/70 font-medium leading-tight block">{{ $stat3Label }}</span>
                     </div>
                 </div>
 

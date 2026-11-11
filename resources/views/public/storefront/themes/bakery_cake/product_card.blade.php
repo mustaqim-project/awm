@@ -110,23 +110,35 @@
                 @endif
             </div>
 
-            {{-- Buy / Add to Cart Action --}}
+            {{-- Buy / Add to Cart Action with Micro-Interactions --}}
             @if ($isOutOfStock)
                 <button type="button" disabled
-                    class="px-3 py-2 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 text-xs font-semibold cursor-not-allowed min-h-[40px]">
+                    class="px-3.5 py-2.5 rounded-xl bg-neutral-100 dark:bg-neutral-800 text-neutral-400 text-xs font-semibold cursor-not-allowed min-h-[44px]">
                     Habis
                 </button>
             @elseif ($hasPrice)
                 <button type="button"
-                    @click="$store.cart.add(@js($productPayload), 1); $dispatch('product-added-notification', { name: @js($prod->name) })"
-                    class="px-3.5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 active:scale-95 text-white text-xs font-bold shadow-xs transition flex items-center gap-1.5 shrink-0 min-h-[40px]"
+                    x-data="{ added: false }"
+                    @click="$store.cart.add(@js($productPayload), 1); $dispatch('product-added-notification', { name: @js($prod->name) }); added = true; setTimeout(() => added = false, 1200)"
+                    :class="added ? 'bg-emerald-600 hover:bg-emerald-700 text-white scale-95' : 'bg-amber-600 hover:bg-amber-700 text-white'"
+                    class="px-3.5 py-2.5 rounded-xl active:scale-95 text-xs font-bold shadow-xs transition-all duration-200 flex items-center gap-1.5 shrink-0 min-h-[44px]"
                     title="{{ __('storefront.add_bakery_to_cart') }}">
-                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
-                    <span>Pesan</span>
+                    <template x-if="!added">
+                        <span class="inline-flex items-center gap-1.5">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>Pesan</span>
+                        </span>
+                    </template>
+                    <template x-if="added">
+                        <span class="inline-flex items-center gap-1.5 animate-fadeIn">
+                            <i data-lucide="check" class="w-4 h-4"></i>
+                            <span>Masuk!</span>
+                        </span>
+                    </template>
                 </button>
             @else
                 <a href="{{ $pdpUrl }}"
-                    class="px-3 py-2 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-bold hover:bg-amber-200 transition min-h-[40px] flex items-center justify-center">{{ __('storefront.btn_detail') }}</a>
+                    class="px-3.5 py-2.5 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-bold hover:bg-amber-200 transition min-h-[44px] flex items-center justify-center">{{ __('storefront.btn_detail') }}</a>
             @endif
         </div>
     </div>
