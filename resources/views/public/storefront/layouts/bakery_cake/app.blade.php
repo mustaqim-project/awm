@@ -328,8 +328,8 @@
     {{-- 4. Bakery Theme Navbar --}}
     @include('public.storefront.themes.bakery_cake.navbar')
 
-    {{-- 5. Main Content Area (pb-28 md:pb-12 for Apple mobile bottom tab bar comfort) --}}
-    <main class="flex-1 w-full pb-28 md:pb-12">
+    {{-- 5. Main Content Area (pb-36 md:pb-16 for Apple mobile bottom tab bar comfort & zero overlap) --}}
+    <main class="flex-1 w-full pb-36 md:pb-16">
         @yield('content')
     </main>
 

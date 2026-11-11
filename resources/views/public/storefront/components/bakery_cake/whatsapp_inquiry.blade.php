@@ -43,17 +43,17 @@
                  x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                  x-transition:leave-end="opacity-0 translate-y-4 scale-95"
                  @click.outside="waChatOpen = false"
-                 class="mb-3.5 w-84 p-4.5 rounded-3xl bg-[#FFFDF5]/95 dark:bg-[#18110B]/95 backdrop-blur-xl shadow-[0_24px_50px_rgba(217,119,6,0.18)] dark:shadow-[0_24px_50px_rgba(0,0,0,0.6)] border border-amber-200/80 dark:border-amber-900/50 text-xs space-y-3.5">
+                 class="mb-3.5 w-84 p-4.5 rounded-3xl bg-[#FAF8F5]/95 dark:bg-[#1D1714]/95 backdrop-blur-xl shadow-[0_24px_50px_rgba(20,16,14,0.14)] dark:shadow-[0_24px_50px_rgba(0,0,0,0.6)] border border-stone-200/90 dark:border-stone-800 text-xs space-y-3.5">
                 
                 {{-- Header --}}
-                <div class="flex items-center justify-between gap-3 border-b border-amber-100 dark:border-amber-950/60 pb-3">
+                <div class="flex items-center justify-between gap-3 border-b border-stone-200/70 dark:border-stone-800 pb-3">
                     <div class="flex items-center gap-2.5">
                         <div class="relative w-9 h-9 rounded-2xl bg-amber-500/15 dark:bg-amber-500/20 text-amber-700 dark:text-amber-400 flex items-center justify-center font-bold shadow-xs">
                             <i data-lucide="cake-slice" class="w-4.5 h-4.5"></i>
-                            <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#18110B]"></span>
+                            <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-[#FAF8F5] dark:ring-[#1D1714]"></span>
                         </div>
                         <div>
-                            <div class="font-serif font-bold text-neutral-900 dark:text-amber-100 text-sm leading-tight">
+                            <div class="font-serif font-bold text-stone-900 dark:text-amber-100 text-sm leading-tight">
                                 {{ $business->name ?? 'Artisan Patisserie' }}
                             </div>
                             <div class="text-[10.5px] text-emerald-700 dark:text-emerald-400 font-medium flex items-center gap-1.5 mt-0.5">
@@ -64,19 +64,19 @@
                     </div>
                     <button type="button" 
                             @click="waChatOpen = false"
-                            class="w-7 h-7 rounded-full flex items-center justify-center text-neutral-400 hover:text-neutral-700 dark:hover:text-amber-200 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
+                            class="w-7 h-7 rounded-full flex items-center justify-center text-stone-400 hover:text-stone-700 dark:hover:text-amber-200 hover:bg-stone-100 dark:hover:bg-stone-800/60 transition cursor-pointer"
                             aria-label="{{ __('storefront.close_chat_window') }}">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>
 
                 {{-- Baker Greeting Note --}}
-                <div class="p-3 rounded-2xl bg-amber-500/8 dark:bg-amber-500/10 border border-amber-500/15 text-neutral-700 dark:text-neutral-300 leading-relaxed text-[11.5px]">
-                    <p class="font-medium text-amber-900 dark:text-amber-200 mb-1 flex items-center gap-1">
+                <div class="p-3.5 rounded-2xl bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/20 text-stone-700 dark:text-stone-300 leading-relaxed text-[11.5px]">
+                    <p class="font-medium text-stone-900 dark:text-amber-200 mb-1 flex items-center gap-1.5">
                         <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-600"></i>
                         <span>Butuh Custom Cake atau Pesanan Khusus?</span>
                     </p>
-                    <p>
+                    <p class="text-stone-600 dark:text-stone-400">
                         {{ $landingPage->whatsapp_welcome_message ?: 'Tim pastry chef kami siap membantu konsultasi desain tart, request rasa, atau jadwal baking sourdough hangat.' }}
                     </p>
                 </div>
@@ -95,7 +95,7 @@
             {{-- Floating Pill Trigger --}}
             <button type="button" 
                     @click="waChatOpen = !waChatOpen"
-                    class="group flex items-center gap-2.5 h-12 px-4 rounded-full bg-[#18110B] dark:bg-[#22160E] text-amber-100 hover:text-white border border-amber-500/30 shadow-[0_12px_30px_rgba(24,17,11,0.35)] hover:shadow-[0_16px_36px_rgba(217,119,6,0.3)] transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:scale-95"
+                    class="group flex items-center gap-2.5 h-12 px-4 rounded-full bg-[#14100E] dark:bg-[#1D1714] text-amber-100 hover:text-white border border-amber-500/30 shadow-[0_12px_30px_rgba(20,16,14,0.35)] hover:shadow-[0_16px_36px_rgba(217,119,6,0.3)] transition-all duration-200 cursor-pointer hover:-translate-y-0.5 active:scale-95"
                     aria-label="{{ __('storefront.consult_cake_order_label') }}">
                 <span class="w-7 h-7 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-xs">
                     <i data-lucide="message-circle" class="w-4 h-4"></i>

@@ -1012,6 +1012,12 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             // Promotional Pop-Up Modal CMS
             Route::get('/popup', [\App\Http\Controllers\Web\Storefront\StorefrontPopupWebController::class, 'edit'])->name('popup.edit');
             Route::put('/popup', [\App\Http\Controllers\Web\Storefront\StorefrontPopupWebController::class, 'update'])->name('popup.update');
+
+            // Storefront Theme Code Editor & Custom Coding
+            Route::get('/theme-editor', [\App\Http\Controllers\Web\Storefront\StorefrontThemeEditorWebController::class, 'edit'])->name('theme-editor.edit');
+            Route::post('/theme-editor/draft', [\App\Http\Controllers\Web\Storefront\StorefrontThemeEditorWebController::class, 'saveDraft'])->name('theme-editor.draft');
+            Route::post('/theme-editor/submit-review', [\App\Http\Controllers\Web\Storefront\StorefrontThemeEditorWebController::class, 'submitReview'])->name('theme-editor.submit-review');
+            Route::post('/theme-editor/reset-default', [\App\Http\Controllers\Web\Storefront\StorefrontThemeEditorWebController::class, 'resetDefault'])->name('theme-editor.reset-default');
         });
 
         // Omnichannel Storefront & Order Management

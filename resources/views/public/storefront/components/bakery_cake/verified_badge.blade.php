@@ -10,60 +10,60 @@
     @if ($type === 'all')
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {{-- Badge 1 --}}
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#221810] border border-amber-900/10 dark:border-amber-500/15 shadow-2xs flex items-center gap-3">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#1D1714] border border-stone-200/80 dark:border-stone-800 shadow-2xs flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-amber-600/10 dark:bg-amber-400/10 text-amber-700 dark:text-amber-400 border border-amber-600/20 dark:border-amber-400/20">
                     <i data-lucide="cake" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-bold text-neutral-900 dark:text-amber-50 block leading-tight font-heading">
+                    <span class="text-xs font-bold text-stone-900 dark:text-amber-50 block leading-tight font-heading">
                         Dapur Terverifikasi
                     </span>
-                    <span class="text-[10px] text-neutral-500 dark:text-amber-300/70">
+                    <span class="text-[10px] text-stone-500 dark:text-stone-400">
                         Resep Klasik &amp; Higienis
                     </span>
                 </div>
             </div>
 
             {{-- Badge 2 --}}
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#221810] border border-amber-900/10 dark:border-amber-500/15 shadow-2xs flex items-center gap-3">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#1D1714] border border-stone-200/80 dark:border-stone-800 shadow-2xs flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 dark:border-amber-400/20">
                     <i data-lucide="sun" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-bold text-neutral-900 dark:text-amber-50 block leading-tight font-heading">
+                    <span class="text-xs font-bold text-stone-900 dark:text-amber-50 block leading-tight font-heading">
                         Fresh Baked Subuh
                     </span>
-                    <span class="text-[10px] text-neutral-500 dark:text-amber-300/70">
+                    <span class="text-[10px] text-stone-500 dark:text-stone-400">
                         Batch Baru Tiap Pagi
                     </span>
                 </div>
             </div>
 
             {{-- Badge 3 --}}
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#221810] border border-amber-900/10 dark:border-amber-500/15 shadow-2xs flex items-center gap-3">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#1D1714] border border-stone-200/80 dark:border-stone-800 shadow-2xs flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-rose-500/10 dark:bg-rose-400/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 dark:border-rose-400/20">
                     <i data-lucide="award" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-bold text-neutral-900 dark:text-amber-50 block leading-tight font-heading">
+                    <span class="text-xs font-bold text-stone-900 dark:text-amber-50 block leading-tight font-heading">
                         100% Pure Butter
                     </span>
-                    <span class="text-[10px] text-neutral-500 dark:text-amber-300/70">
+                    <span class="text-[10px] text-stone-500 dark:text-stone-400">
                         Mentega Alami Murni
                     </span>
                 </div>
             </div>
 
             {{-- Badge 4 --}}
-            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#221810] border border-amber-900/10 dark:border-amber-500/15 shadow-2xs flex items-center gap-3">
+            <div class="p-3.5 rounded-2xl bg-white dark:bg-[#1D1714] border border-stone-200/80 dark:border-stone-800 shadow-2xs flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-amber-600/10 dark:bg-amber-400/10 text-amber-700 dark:text-amber-400 border border-amber-600/20 dark:border-amber-400/20">
                     <i data-lucide="package" class="w-4.5 h-4.5"></i>
                 </div>
                 <div>
-                    <span class="text-xs font-bold text-neutral-900 dark:text-amber-50 block leading-tight font-heading">
+                    <span class="text-xs font-bold text-stone-900 dark:text-amber-50 block leading-tight font-heading">
                         Box Anti-Guncang
                     </span>
-                    <span class="text-[10px] text-neutral-500 dark:text-amber-300/70">
+                    <span class="text-[10px] text-stone-500 dark:text-stone-400">
                         Dekorasi Kue Utuh Indah
                     </span>
                 </div>

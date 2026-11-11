@@ -375,6 +375,14 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
             Route::post('/{legalPage}/toggle', [AdminLegalPageController::class, 'toggle'])->name('toggle');
         });
 
+        // Storefront Custom Theme Review & Production Approval
+        Route::prefix('theme-reviews')->name('theme-reviews.')->group(function (): void {
+            Route::get('/', [\App\Http\Controllers\Admin\AdminStorefrontThemeReviewController::class, 'index'])->name('index');
+            Route::get('/{theme}', [\App\Http\Controllers\Admin\AdminStorefrontThemeReviewController::class, 'show'])->name('show');
+            Route::post('/{theme}/approve', [\App\Http\Controllers\Admin\AdminStorefrontThemeReviewController::class, 'approve'])->name('approve');
+            Route::post('/{theme}/reject', [\App\Http\Controllers\Admin\AdminStorefrontThemeReviewController::class, 'reject'])->name('reject');
+        });
+
         // WhatsApp Admin Center (Meta Official Platform Gateway, Reminders & Blast)
         Route::prefix('whatsapp')->name('whatsapp.')->group(function (): void {
             Route::get('/', [AdminWhatsAppController::class, 'index'])->name('index');

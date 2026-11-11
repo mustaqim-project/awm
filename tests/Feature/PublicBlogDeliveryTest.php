@@ -126,4 +126,45 @@ final class PublicBlogDeliveryTest extends TestCase
             $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), $articleHtml, 'Article prose must not contain en dash (U+2013)');
         }
     }
+
+    public function test_public_can_view_published_batch9_articles_without_dashes(): void
+    {
+        $this->artisan('blog:import-articles')->assertSuccessful();
+
+        // Test Article 392
+        $post392 = Post::where('slug', 'evaluasi-net-profit-margin-pasca-11-11-umkm')->first();
+        $this->assertNotNull($post392, 'Post with slug evaluasi-net-profit-margin-pasca-11-11-umkm must exist');
+        $this->assertTrue($post392->is_published);
+
+        // Zero em dash / en dash in database
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), $post392->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), $post392->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), (string) $post392->content);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), (string) $post392->content);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), (string) $post392->meta_description);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), (string) $post392->meta_description);
+
+        $response392 = $this->get('/blog/evaluasi-net-profit-margin-pasca-11-11-umkm');
+        $response392->assertOk();
+        $response392->assertSee('Evaluasi Net Profit Margin Pasca 11 11 untuk UMKM: Cara Bedakan Omzet dan Laba Riil', false);
+        $response392->assertSee('Evaluasi Net Profit Margin Pasca 11 11 Sangat Krusial bagi Bisnis', false);
+        $response392->assertSee('https://cooca.id/blog/evaluasi-margin-keuntungan-kategori-produk', false);
+        $response392->assertSee('https://schema.org', false);
+        $response392->assertSee('FAQPage', false);
+
+        // Test Article 395 (Tax deadline)
+        $post395 = Post::where('slug', 'batas-akhir-setor-pph-final-15-november-2026-umkm')->first();
+        $this->assertNotNull($post395, 'Post with slug batas-akhir-setor-pph-final-15-november-2026-umkm must exist');
+        $this->assertTrue($post395->is_published);
+
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), $post395->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), $post395->title);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x94), (string) $post395->content);
+        $this->assertStringNotContainsString(chr(0xE2) . chr(0x80) . chr(0x93), (string) $post395->content);
+
+        $response395 = $this->get('/blog/batas-akhir-setor-pph-final-15-november-2026-umkm');
+        $response395->assertOk();
+        $response395->assertSee('Batas Akhir Setor PPh Final 15 November 2026 dan Panduan Bayar Pajak UMKM 0,5 Persen', false);
+        $response395->assertSee('https://cooca.id/blog/panduan-lengkap-pph-final-umkm-setengah-persen', false);
+    }
 }

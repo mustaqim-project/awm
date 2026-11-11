@@ -1,0 +1,159 @@
+---
+title: "Batas Akhir Setor PPh Final 15 November 2026: Panduan Lengkap Pajak UMKM"
+meta_title: "Batas Akhir Setor PPh Final 15 November 2026"
+meta_description: "Pahami batas akhir setor pph final 15 november 2026 bagi pelaku usaha UMKM lengkap dengan cara buat kode billing dan tips terhindar dari denda."
+slug: "batas-akhir-setor-pph-final-15-november-2026-umkm"
+primary_keyword: "batas akhir setor pph final 15 november 2026"
+secondary_keywords: "cara bayar pph final umkm 0 koma 5 persen, kode billing pajak e billing djp, sanksi denda terlambat setor pajak 15 november, batas omzet 500 juta bebas pajak pp 55, panduan ebilling pajak online"
+search_intent: "informational"
+category: "Pajak & Legalitas"
+reading_time: "7 menit"
+cover_image: "https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg"
+published_at: "2026-11-12T06:00:00+07:00"
+---
+# Batas Akhir Setor PPh Final 15 November 2026: Panduan Lengkap Pajak UMKM
+
+Memperhatikan batas akhir setor pph final 15 november 2026 adalah kewajiban mutlak bagi setiap pelaku usaha mikro, kecil, dan menengah di Indonesia yang taat aturan. Menjelang pertengahan bulan November, kesibukan mengelola penjualan toko sering kali membuat pemilik usaha melupakan tanggal jatuh tempo pembayaran pajak penghasilan bulanan. Keterlambatan penyetoran pajak bukan hanya menimbulkan rasa cemas, tetapi juga mendatangkan sanksi denda bunga administratif yang tidak perlu.
+
+Berdasarkan ketentuan perpajakan nasional, penyetoran PPh Final dengan tarif 0,5 persen untuk Masa Pajak Oktober wajib diselesaikan paling lambat pada tanggal 15 bulan berikutnya. Mengingat batas waktu tersebut sudah di depan mata, artikel mengenai batas akhir setor pph final 15 november 2026 ini hadir untuk memandu Anda memahami perhitungan omzet kena pajak, pembuatan kode e-billing resmi, hingga tata cara pembayaran praktis lewat perbankan digital.
+
+## Mengapa Kepatuhan Setor PPh Final Tepat Waktu Sangat Menguntungkan
+
+Bagi sebagian pelaku usaha kecil, urusan perpajakan sering kali dianggap sebagai beban rumit yang menakutkan. Padahal, membayar PPh Final 0,5 persen secara tertib justru memberikan perlindungan legal yang sangat kuat bagi keberlangsungan bisnis Anda. Rekam jejak kepatuhan pajak yang bersih menjadi salah satu syarat utama saat Anda mengajukan pinjaman modal usaha Kredit Usaha Rakyat (KUR) di bank, mengikuti tender pengadaan barang pemerintah, atau mengajukan sertifikasi usaha resmi.
+
+Anda dapat meninjau kepatuhan fiskal secara menyeluruh lewat panduan [kepatuhan setor pph final 15 november 2026 umkm](https://cooca.id/blog/kepatuhan-setor-pph-final-15-november-2026-umkm) agar memahami hak dan kewajiban perpajakan bisnis Anda.
+
+Selain itu, jika Anda menyetor tepat sebelum tanggal 15, Anda bebas dari ancaman surat tagihan pajak (STP) dan denda keterlambatan yang diterbitkan oleh kantor pelayanan pajak (KPP) setempat.
+
+## Ketentuan Batas Omzet Rp 500 Juta Bebas Pajak bagi Wajib Pajak Orang Pribadi
+
+Salah satu kemudahan terbesar yang diberikan pemerintah melalui Peraturan Pemerintah Nomor 55 Tahun 2022 adalah fasilitas batas peredaran bruto tidak kena pajak bagi wajib pajak orang pribadi UMKM.
+
+Ketentuan pokok fasilitas ini meliputi:
+
+1. **Pembebasan Pajak hingga Rp 500 Juta Pertama:** Bagi wajib pajak orang pribadi yang menggunakan skema PPh Final 0,5 persen, omzet kumulatif dari bulan Januari hingga mencapai Rp 500.000.000 dalam satu tahun pajak sama sekali tidak dikenakan pajak (PPh Final terutang Rp 0).
+2. **Hanya Membayar Selisih Kelebihan Omzet:** Anda baru mulai menyetor pajak 0,5 persen pada bulan di mana omzet kumulatif tahun berjalan Anda telah menembus angka Rp 500.000.000.
+3. **Wajib Pajak Badan Tidak Mendapat Pembebasan:** Perlu dicatat bahwa fasilitas pembebasan Rp 500 juta ini tidak berlaku bagi wajib pajak badan (seperti CV atau PT). Badan usaha wajib membayar 0,5 persen dari seluruh omzet bruto sejak bulan pertama beroperasi.
+
+Untuk memahami perhitungan pembebasan ini secara lebih rinci, Anda dapat membaca ulasan [omzet 500 juta bebas pajak](https://cooca.id/blog/omzet-500-juta-bebas-pajak) dan aturan resmi pada [aturan baru pajak umkm 2026 pph final permanen](https://cooca.id/blog/aturan-baru-pajak-umkm-2026-pph-final-permanen).
+
+Tabel simulasi berikut memperlihatkan contoh perhitungan kewajiban setor pajak untuk pengusaha toko ritel perorangan di bulan Oktober (disetor November):
+
+| Bulan Transaksi | Omzet Bruto Bulanan | Omzet Kumulatif Tahun Ini | Dasar Pengenaan Pajak (DPP) | Nilai PPh Final 0,5% Wajib Setor |
+| --- | --- | --- | --- | --- |
+| Januari - Agustus | Rp 420.000.000 | Rp 420.000.000 | Rp 0 (masih di bawah batas) | Rp 0 (Nihil) |
+| September | Rp 70.000.000 | Rp 490.000.000 | Rp 0 (masih di bawah batas) | Rp 0 (Nihil) |
+| Oktober | Rp 60.000.000 | Rp 550.000.000 | Rp 50.000.000 (selisih > 500 jt) | Rp 250.000 (Setor 15 Nov) |
+| November | Rp 80.000.000 | Rp 630.000.000 | Rp 80.000.000 (seluruh omzet) | Rp 400.000 (Setor 15 Des) |
+
+## Alur 5 Langkah Pembuatan Kode Billing dan Pembayaran Pajak
+
+Menyetor pajak kini tidak lagi memerlukan antrean panjang di kantor pajak atau bank persepsi. Anda dapat menyelesaikan seluruh proses dalam hitungan menit dari layar komputer atau ponsel pintar Anda:
+
+```
+[Rekap Omzet Bulanan] -> [Login DJP Online / Portal Coretax] -> [Pilih Kode Akun Pajak]
+                                                                          |
+[Simpan Bukti Penerimaan Negara] <- [Bayar via M-Banking / ATM] <- [Buat Kode Billing]
+```
+
+Berikut panduan langkah demi langkah pelaksanaannya:
+
+1. **Rekap Total Peredaran Bruto:** Jumlahkan seluruh uang kas masuk dari hasil penjualan toko fisik, marketplace, dan pesanan WhatsApp selama tanggal 1 sampai 31 Oktober.
+2. **Login ke Portal Pajak Resmi:** Masuk ke akun portal perpajakan Anda menggunakan Nomor Pokok Wajib Pajak (NPWP 16 digit atau NIK yang telah divalidasi).
+3. **Pilih Menu Pembuatan Kode Billing:** Masukkan Kode Akun Pajak (KAP) **411128** (PPh Final) dan Kode Jenis Setoran (KJS) **420** (PPh Final Masa UMKM PP 55/2022).
+4. **Isi Masa Pajak dan Nominal Pembayaran:** Pilih Masa Pajak Oktober, Tahun Pajak 2026, lalu ketikkan nominal pajak yang harus disetor sesuai hasil perhitungan.
+5. **Lakukan Pembayaran Instan:** Salin 15 digit kode billing yang diterbitkan sistem, lalu bayar melalui menu pembayaran pajak di aplikasi m-banking (seperti Livin Mandiri, BCA Mobile, BRImo, atau BNI Mobile), mesin ATM, kantor pos, atau minimarket terdekat.
+6. **Arsipkan Bukti Pembayaran:** Simpan Bukti Penerimaan Negara (BPN) yang memuat Nomor Transaksi Penerimaan Negara (NTPN) sebagai bukti setor yang sah. Untuk menghindari denda, pelajari [strategi menghindari denda spt masa pph final umkm](https://cooca.id/blog/strategi-menghindari-denda-spt-masa-pph-final-umkm).
+
+## Risiko Sanksi Jika Terlambat Menyetor Lewat dari 15 November
+
+Berdasarkan Undang-Undang Ketentuan Umum dan Tata Cara Perpajakan (UU KUP) yang diperbarui melalui UU Harmonisasi Peraturan Perpajakan (UU HPP), keterlambatan pembayaran pajak dikenakan sanksi bunga per bulan sesuai suku bunga acuan Kementerian Keuangan yang berlaku.
+
+Selain itu, jika Anda tidak menyetor pajak tepat waktu secara berulang, sistem pengawasan DJP akan mengirimkan Surat Permintaan Penjelasan atas Data dan/atau Keterangan (SP2DK). Mengabaikan surat ini berisiko memicu pemeriksaan pajak menyeluruh terhadap rekening bank pribadi dan usaha Anda. Oleh karena itu, menyelesaikan pembayaran sebelum tanggal 15 November adalah langkah bijak untuk menjaga ketenangan berbisnis.
+
+## Kemudahan Rekap Omzet Pajak Otomatis Bersama Cooca
+
+Bagi pemilik UMKM yang sibuk melayani pembeli setiap hari, merekap omzet dari berbagai saluran penjualan sering kali menjadi pekerjaan yang melelahkan dan rawan salah input. Cooca hadir untuk menyederhanakan seluruh kerumitan tersebut.
+
+Cooca adalah Business Operating System all-in-one untuk UMKM Indonesia yang mengintegrasikan kasir POS, stok inventori multi-gudang, dan pembukuan finansial dalam satu ekosistem cerdas. Setiap kali transaksi terjadi di meja kasir toko maupun pesanan online tercatat, Cooca langsung merekapitulasi total peredaran bruto harian dan bulanan secara otomatis. Di akhir bulan, Anda cukup membuka laporan rekap omzet pajak di dashboard Cooca untuk melihat angka pasti yang menjadi dasar pembayaran kode billing Anda. Tidak perlu lagi menghitung struk manual berlembar-lembar. Cooca menyediakan paket Solo Owner Rp 0 yang dapat digunakan gratis selamanya untuk pemilik usaha mandiri.
+
+## Pertanyaan Seputar Batas Akhir Setor PPh Final 15 November 2026 (FAQ)
+
+### Apa yang harus dilakukan jika tanggal 15 November jatuh pada hari libur atau akhir pekan?
+Jika tanggal 15 jatuh pada hari Sabtu, Minggu, atau hari libur nasional, batas waktu penyetoran secara otomatis diundur ke hari kerja berikutnya sesuai ketentuan peraturan perundang-undangan perpajakan. Namun, pembayaran melalui perbankan elektronik (m-banking) tetap dapat dilakukan setiap hari selama 24 jam.
+
+### Apakah pemilik usaha yang omzetnya masih di bawah Rp 500 juta tetap wajib lapor setiap tanggal 15?
+Wajib pajak orang pribadi UMKM yang omzet kumulatifnya masih di bawah Rp 500 juta dalam setahun tidak memiliki kewajiban menyetor pajak (PPh Final terutang nihil). Pelaporan realisasi pembebasan omzet ini cukup disampaikan sekali dalam pelaporan SPT Tahunan di awal tahun berikutnya.
+
+### Apa sanksi jika saya terlambat membayar PPh Final lewat dari tanggal 15?
+Sanksi yang dikenakan adalah denda bunga administratif per bulan yang dihitung berdasarkan suku bunga acuan pasar ditambah uplift fee Kementerian Keuangan, dihitung sejak tanggal jatuh tempo hingga tanggal pembayaran dilakukan.
+
+### Bagaimana cara memverifikasi bahwa pembayaran pajak saya sudah berhasil masuk ke kas negara?
+Setelah pembayaran berhasil, Anda akan menerima Bukti Penerimaan Negara (BPN) yang memuat Nomor Transaksi Penerimaan Negara (NTPN). Kode NTPN 16 digit ini merupakan bukti sah dan tidak terbantahkan bahwa dana pajak Anda telah masuk ke kas negara.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Batas Akhir Setor PPh Final 15 November 2026: Panduan Lengkap Pajak UMKM",
+      "description": "Pahami batas akhir setor pph final 15 november 2026 bagi pelaku usaha UMKM lengkap dengan cara buat kode billing dan tips terhindar dari denda.",
+      "image": "https://cooca.id/images/blog/photo-1486406146926-c627a92ad1ab.jpg",
+      "datePublished": "2026-11-12T06:00:00+07:00",
+      "dateModified": "2026-11-12T06:00:00+07:00",
+      "url": "https://cooca.id/blog/batas-akhir-setor-pph-final-15-november-2026-umkm",
+      "mainEntityOfPage": "https://cooca.id/blog/batas-akhir-setor-pph-final-15-november-2026-umkm",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa yang harus dilakukan jika tanggal 15 November jatuh pada hari libur atau akhir pekan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Jika tanggal 15 jatuh pada hari Sabtu, Minggu, atau hari libur nasional, batas waktu penyetoran secara otomatis diundur ke hari kerja berikutnya sesuai ketentuan peraturan perundang-undangan perpajakan. Namun, pembayaran melalui perbankan elektronik (m-banking) tetap dapat dilakukan setiap hari selama 24 jam."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah pemilik usaha yang omzetnya masih di bawah Rp 500 juta tetap wajib lapor setiap tanggal 15?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Wajib pajak orang pribadi UMKM yang omzet kumulatifnya masih di bawah Rp 500 juta dalam setahun tidak memiliki kewajiban menyetor pajak (PPh Final terutang nihil). Pelaporan realisasi pembebasan omzet ini cukup disampaikan sekali dalam pelaporan SPT Tahunan di awal tahun berikutnya."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa sanksi jika saya terlambat membayar PPh Final lewat dari tanggal 15?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sanksi yang dikenakan adalah denda bunga administratif per bulan yang dihitung berdasarkan suku bunga acuan pasar ditambah uplift fee Kementerian Keuangan, dihitung sejak tanggal jatuh tempo hingga tanggal pembayaran dilakukan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara memverifikasi bahwa pembayaran pajak saya sudah berhasil masuk ke kas negara?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Setelah pembayaran berhasil, Anda akan menerima Bukti Penerimaan Negara (BPN) yang memuat Nomor Transaksi Penerimaan Negara (NTPN). Kode NTPN 16 digit ini merupakan bukti sah dan tidak terbantahkan bahwa dana pajak Anda telah masuk ke kas negara."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

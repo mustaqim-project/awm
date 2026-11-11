@@ -1,0 +1,368 @@
+{
+  "date": "2026-11-12",
+  "batch": 9,
+  "market": "Indonesia (UMKM / Ritel / F&B / Grosir)",
+  "total_keywords": 20,
+  "keywords": [
+    {
+      "id": 392,
+      "topic": "Evaluasi Net Profit Margin Usaha Pasca 11.11: Cara Membedakan Omzet Semu dan Laba Riil",
+      "primary_keyword": "evaluasi net profit margin pasca 11 11",
+      "slug": "evaluasi-net-profit-margin-pasca-11-11-umkm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "cara membedakan omzet dan laba bersih umkm",
+        "margin laba bersih toko pasca promo harbolnas",
+        "rumus net profit margin ritel",
+        "biaya tersembunyi admin marketplace",
+        "kalkulasi laba riil penjualan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Audit terperinci komponen HPP, biaya komisi marketplace, biaya kemasan, dan pemanfaatan sistem akuntansi terpadu.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 393,
+      "topic": "SOP Audit Potongan Komisi dan Biaya Layanan Marketplace Ritel Pasca Promo Puncak",
+      "primary_keyword": "sop audit potongan komisi dan biaya marketplace",
+      "slug": "sop-audit-potongan-komisi-dan-biaya-marketplace",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara cek rincian potongan shopee tokopedia tiktok shop",
+        "biaya administrasi seller marketplace",
+        "selisih saldo escrow dan penarikan dana",
+        "audit komisi program gratis ongkir xtra",
+        "rekonsiliasi biaya layanan penjual"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Langkah demi langkah mencocokkan laporan settlement marketplace dengan nilai tagihan pesanan asli.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 394,
+      "topic": "Manajemen Klaim Paket Rusak dan Asuransi Pengiriman Ekspedisi bagi Seller Ritel",
+      "primary_keyword": "manajemen klaim paket rusak asuransi ekspedisi",
+      "slug": "manajemen-klaim-paket-rusak-asuransi-ekspedisi",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara klaim ganti rugi paket pecah kurir",
+        "syarat klaim asuransi barang marketplace",
+        "dokumen berita acara kerusakan paket",
+        "batas waktu pengajuan klaim ekspedisi",
+        "bukti rekaman video unboxing packing"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Standar operasional dokumentasi penyerahan paket, bukti video packing CCTV, dan draft surat klaim resmi ke customer service logistik.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 395,
+      "topic": "Batas Akhir Setor PPh Final 0,5 Persen 15 November 2026: Panduan Kepatuhan Pajak UMKM",
+      "primary_keyword": "batas akhir setor pph final 15 november 2026",
+      "slug": "batas-akhir-setor-pph-final-15-november-2026-umkm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "cara bayar pph final umkm 0 koma 5 persen",
+        "kode billing pajak e billing djp",
+        "sanksi denda terlambat setor pajak 15 november",
+        "batas omzet 500 juta bebas pajak pp 55",
+        "panduan ebilling pajak online"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Simulasi penghitungan omzet bruto bulanan, pembuatan kode billing KAP KJS 411128-420, dan mekanisme setor instan.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 396,
+      "topic": "Panduan Penerbitan Faktur Pajak Elektronik Coretax DJP bagi Pelaku Usaha Toko Ritel",
+      "primary_keyword": "faktur pajak elektronik coretax djp ritel",
+      "slug": "panduan-penerbitan-faktur-pajak-coretax-djp-ritel",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara buat faktur pajak di portal coretax",
+        "format faktur pajak gabungan ritel",
+        "validasi nik npwp 16 digit pembeli",
+        "ketentuan faktur pajak pedagang eceran",
+        "integrasi sistem kasir pos coretax"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Panduan login portal Coretax, input data faktur eceran, dan sinkronisasi otomatis dari ringkasan transaksi kasir POS.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 397,
+      "topic": "Cara Memperpanjang Sertifikat Standar Usaha dan Izin Edar PIRT Sebelum Tutup Tahun",
+      "primary_keyword": "cara memperpanjang izin edar pirt tutup tahun",
+      "slug": "cara-memperpanjang-izin-edar-pirt-tutup-tahun",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "syarat perpanjangan sp pirt dinkes",
+        "masa berlaku izin pirt makanan olahan",
+        "pendaftaran sertifikat standar oss rba",
+        "audit higienis sanitasi dapur produksi",
+        "integrasi nib dan pirt online"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Cek masa berlaku nomor izin 15 digit, syarat uji laboratorium pangan, dan alur permohonan digital via SPPIRT BPOM terhubung OSS.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 398,
+      "topic": "Strategi Perencanaan Cash Flow 4 Pekan Menuju Puncak Harbolnas 12.12",
+      "primary_keyword": "strategi perencanaan cash flow harbolnas 12 12",
+      "slug": "strategi-perencanaan-cash-flow-menuju-harbolnas-12-12",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "manajemen arus kas persiapan harbolnas 12 12",
+        "dana cadangan modal kerja kulakan barang",
+        "alokasi kas stok bahan baku akhir tahun",
+        "proyeksi penerimaan kas tempo invoice",
+        "menjaga likuiditas usaha ritel"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Matriks arus kas 4 pekan, penentuan batas minimum saldo aman, dan mitigasi penahanan dana payout marketplace.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 399,
+      "topic": "SOP Penataan Ulang Tata Letak Etalase Toko Ritel Menyambut Belanja Akhir Tahun",
+      "primary_keyword": "sop penataan ulang tata letak etalase ritel",
+      "slug": "sop-penataan-ulang-tata-letak-etalase-toko-ritel",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "visual merchandising toko ritel akhir tahun",
+        "jalur lalu lintas pembeli toko fisik",
+        "penempatan produk fast moving eye level",
+        "display rak kasir impulse buying",
+        "penataan pencahayaan etalase produk"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Panduan golden zone rak pajang, penataan meja display promo depan pintu masuk, dan zonasi area antrean kasir.",
+      "cooca_feature_alignment": "Strategi & Operasional"
+    },
+    {
+      "id": 400,
+      "topic": "Cara Menentukan Anggaran Bonus Prestasi dan Insentif Karyawan Toko UMKM",
+      "primary_keyword": "cara menentukan anggaran bonus insentif karyawan toko",
+      "slug": "cara-menentukan-anggaran-bonus-insentif-karyawan-toko",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang Menuju Tinggi",
+      "secondary_keywords": [
+        "skema bonus penjualan staf kasir pramuniaga",
+        "rumus bagi hasil omzet toko untuk karyawan",
+        "insentif target akhir tahun toko ritel",
+        "alokasi dana apresiasi tim operasional",
+        "motivasi produktivitas kerja karyawan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Tiga model perhitungan insentif berbasis KPI, simulasi persentase laba kotor, dan transparansi laporan dashboard kasir.",
+      "cooca_feature_alignment": "Strategi & Operasional"
+    },
+    {
+      "id": 401,
+      "topic": "SOP Kasir Pencegahan Modus Bukti Transfer Palsu dan Penipuan QRIS Statis",
+      "primary_keyword": "sop kasir pencegahan bukti transfer palsu qris",
+      "slug": "sop-kasir-pencegahan-bukti-transfer-palsu-qris",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "modus penipuan bukti struk transfer m banking palsu",
+        "cek stiker barcode qris meja kasir",
+        "verifikasi notifikasi real time pembayaran pos",
+        "sop kasir verifikasi dana masuk rekening",
+        "mitigasi kerugian toko kasir ritel"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Aturan pantang lepas barang sebelum notifikasi kasir berbunyi, penggunaan QRIS dinamis di layar POS, dan inspeksi fisik barcode harian.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 402,
+      "topic": "Cara Integrasi Pembayaran QRIS Cross Border Wisatawan Mancanegara bagi UMKM",
+      "primary_keyword": "cara integrasi pembayaran qris cross border umkm",
+      "slug": "cara-integrasi-pembayaran-qris-cross-border-umkm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "terima pembayaran turis singapura malaysia thailand",
+        "qris antarnegara merchant umkm",
+        "biaya kurs dan fee transaksi qris luar negeri",
+        "aplikasi kasir support qris cross border",
+        "meningkatkan omzet toko wisata oleh oleh"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Aktivasi fitur cross-border di aplikasi merchant, transparansi kurs valas otomatis, dan panduan edukasi staf kasir saat melayani turis.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 403,
+      "topic": "Panduan SOP Penutupan Kasir Shift Malam dan Serah Terima Uang Modal Toko",
+      "primary_keyword": "sop penutupan kasir shift malam toko",
+      "slug": "panduan-sop-penutupan-kasir-shift-malam-toko",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara closing mesin kasir pos",
+        "rekonsiliasi uang laci kasir dan laporan transaksi",
+        "formulir serah terima shift kasir",
+        "penanganan selisih kas kasir malam",
+        "penyimpanan uang tunai brankas aman"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Checklist 7 langkah closing POS, pemisahan uang modal kembalian esok hari, dan pencetakan bukti rekap harian.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 404,
+      "topic": "Strategi Manajemen Stok Bahan Baku Kuliner Mengantisipasi Lonjakan Harga Akhir Tahun",
+      "primary_keyword": "strategi stok bahan baku kuliner akhir tahun",
+      "slug": "strategi-manajemen-stok-bahan-baku-kuliner-akhir-tahun",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "antisipasi kenaikan harga cabai telur daging minyak",
+        "kontrak pasokan bahan baku supplier kuliner",
+        "metode penyimpanan frozen bahan segar",
+        "pengendalian food cost resto kafe",
+        "menjaga margin keuntungan kuliner"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Analisis buffer stock bahan kering, negosiasi PO tempo berjangka dengan distributor, dan penyesuaian resep standar tanpa menurunkan kualitas rasa.",
+      "cooca_feature_alignment": "HPP & Harga Jual"
+    },
+    {
+      "id": 405,
+      "topic": "Cara Menghitung Biaya Penyimpanan Gudang Holding Cost dan Mengeliminasi Dead Stock",
+      "primary_keyword": "cara menghitung biaya penyimpanan gudang holding cost",
+      "slug": "cara-menghitung-biaya-penyimpanan-gudang-holding-cost",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "rumus carrying cost persediaan barang gudang",
+        "dampak dead stock terhadap modal kerja",
+        "biaya sewa listrik asuransi susut barang",
+        "strategi perputaran persediaan inventory turnover",
+        "mengosongkan rak gudang untuk barang laku"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Rumus praktis menghitung holding cost per SKU per bulan, identifikasi barang non-aktif lebih dari 60 hari, dan program likuidasi cepat.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 406,
+      "topic": "SOP Pengadaan Barang Konsinyasi dengan Pemasok Lokal Tanpa Risiko Modal Mengendap",
+      "primary_keyword": "sop pengadaan barang konsinyasi pemasok lokal",
+      "slug": "sop-pengadaan-barang-konsinyasi-pemasok-lokal",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "sistem bagi hasil konsinyasi toko oleh oleh",
+        "pencatatan barang titipan di kasir pos",
+        "periode pembayaran retur barang konsinyasi",
+        "surat bukti tanda terima penitipan barang",
+        "variasi produk tanpa belanja modal"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Alur pencatatan terpisah barang milik sendiri vs titipan, sistem bagi hasil otomatis saat kasir scan barcode, dan jadwal settlement mingguan.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 407,
+      "topic": "Strategi Menagih Piutang Usaha Macet Menjelang Tutup Buku Akhir Tahun 2026",
+      "primary_keyword": "strategi menagih piutang usaha macet tutup buku",
+      "slug": "strategi-menagih-piutang-usaha-macet-tutup-buku",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "cara menagih invoice jatuh tempo pelanggan b2b",
+        "surat peringatan somasi tagihan usaha sopan",
+        "diskon pelunasan cepat early payment",
+        "mitigasi bad debts piutang tak tertagih",
+        "penagihan lewat whatsapp resmi profesional"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Jadwal penagihan bertahap H-7 sebelum tempo hingga H+14, tawaran insentif diskon pelunasan cepat 2 persen, dan pengiriman invoice digital berterima sah.",
+      "cooca_feature_alignment": "Invoice, PO & SO"
+    },
+    {
+      "id": 408,
+      "topic": "SOP Pembuatan Surat Perjanjian Kerjasama Konsinyasi Ritel Legal bagi UMKM",
+      "primary_keyword": "sop surat perjanjian kerjasama konsinyasi ritel",
+      "slug": "sop-surat-perjanjian-kerjasama-konsinyasi-ritel",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "contoh draf surat kontrak konsinyasi toko",
+        "klausul ganti rugi barang hilang rusak konsinyasi",
+        "penetapan margin bagi hasil pemilik toko dan supplier",
+        "batas waktu penarikan produk kedaluwarsa",
+        "kepastian hukum mitra dagang"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Klausul wajib hak dan kewajiban, ketentuan tanggung jawab susut barang, jangka waktu pembayaran, dan contoh template perjanjian.",
+      "cooca_feature_alignment": "Invoice, PO & SO"
+    },
+    {
+      "id": 409,
+      "topic": "Strategi Kampanye Reaktivasi Member Toko Pasca 11.11 Melalui WhatsApp Broadcast",
+      "primary_keyword": "strategi reaktivasi member toko whatsapp broadcast",
+      "slug": "strategi-reaktivasi-member-toko-whatsapp-broadcast",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "copywriting pesan whatsapp broadcast pelanggan loyal",
+        "promosi eksklusif voucher terima kasih pembeli 11 11",
+        "segmentasi database pelanggan kasir pos",
+        "menghindari blokir nomor whatsapp bisnis",
+        "penawaran early bird harbolnas 12 12"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Pesan ucapan terima kasih personal 24 jam pasca transaksi, penawaran voucher belanja khusus repeat order, dan integrasi WhatsApp Gateway resmi.",
+      "cooca_feature_alignment": "Marketing & WhatsApp"
+    },
+    {
+      "id": 410,
+      "topic": "Cara Menyusun Paket Hampers Akhir Tahun dengan Kalkulasi HPP dan Margin Sehat",
+      "primary_keyword": "cara menyusun paket hampers akhir tahun hpp margin",
+      "slug": "cara-menyusun-paket-hampers-akhir-tahun-hpp-margin",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "hitung modal paket parcel natal tahun baru",
+        "biaya kemasan box pita kartu ucapan hampers",
+        "strategi bundling produk laris dan slow moving",
+        "penetapan harga jual paket kado akhir tahun",
+        "target omzet bisnis hampers rumahan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Perhitungan HPP berbasis aktivitas mencakup aksesoris dan tenaga perakitan, teknik penetapan tiering harga (Ekonomis, Premium, Eksklusif), dan pre-order terpadu.",
+      "cooca_feature_alignment": "HPP & Harga Jual"
+    },
+    {
+      "id": 411,
+      "topic": "Panduan Penyusunan Laporan Neraca Sederhana SAK EMKM untuk Evaluasi Bisnis Tahunan",
+      "primary_keyword": "laporan neraca sederhana sak emkm evaluasi tahunan",
+      "slug": "panduan-penyusunan-laporan-neraca-sak-emkm-tahunan",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara membuat neraca keuangan usaha kecil",
+        "format neraca aset kewajiban modal sak emkm",
+        "membaca posisi kas piutang persediaan utang toko",
+        "laporan keuangan syarat pengajuan pinjaman kur bank",
+        "tutup buku tahunan bisnis"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Tiga elemen neraca (Aset, Liabilitas, Ekuitas), contoh angka riil warung dan toko ritel, serta otomasi pembentukan neraca dari sistem pembukuan terpadu.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    }
+  ]
+}

@@ -21,6 +21,10 @@
     $stat3Label = $stats['rating_label'] ?? 'Kepuasan Rasa';
 
     $heroImage = $landingPage->hero_image_url ?: ($landingPage->about_image_url ?: null);
+
+    $universalValues = $landingPage->getUniversalValues();
+    $uv1 = $universalValues[0] ?? ['title' => '100% Pure Butter Recipe', 'desc' => 'Tanpa margarin buatan atau pewarna sintetis', 'icon' => 'sparkles'];
+    $uv2 = $universalValues[1] ?? ['title' => 'Fresh Morning Batch', 'desc' => 'Dipanggang bertahap setiap jam operasional', 'icon' => 'clock'];
 @endphp
 
 <section class="relative overflow-hidden bg-[#FAF8F5] dark:bg-[#14100E] border-b border-stone-200/70 dark:border-stone-800/80 transition-colors duration-300">
@@ -139,24 +143,24 @@
                                     </p>
                                 </div>
 
-                                {{-- 3 Pillars Pill Minimalist --}}
+                                {{-- 2 Pillars Pill Minimalist (Dynamic from CMS getUniversalValues) --}}
                                 <div class="grid grid-cols-1 gap-2.5 pt-1 text-xs">
                                     <div class="flex items-center gap-3 p-3 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-sm">
                                         <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
-                                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                            <i data-lucide="{{ $uv1['icon'] ?? 'sparkles' }}" class="w-4 h-4"></i>
                                         </div>
                                         <div class="min-w-0">
-                                            <p class="font-semibold text-stone-100 text-xs">100% Pure Butter Recipe</p>
-                                            <p class="text-[11px] text-stone-400">Tanpa margarin buatan atau pewarna sintetis</p>
+                                            <p class="font-semibold text-stone-100 text-xs">{{ $uv1['title'] }}</p>
+                                            <p class="text-[11px] text-stone-400 truncate">{{ $uv1['desc'] }}</p>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-3 p-3 rounded-xl bg-white/[0.05] border border-white/[0.08] backdrop-blur-sm">
                                         <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center shrink-0">
-                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                            <i data-lucide="{{ $uv2['icon'] ?? 'clock' }}" class="w-4 h-4"></i>
                                         </div>
                                         <div class="min-w-0">
-                                            <p class="font-semibold text-stone-100 text-xs">Fresh Morning Batch</p>
-                                            <p class="text-[11px] text-stone-400">Dipanggang bertahap setiap jam operasional</p>
+                                            <p class="font-semibold text-stone-100 text-xs">{{ $uv2['title'] }}</p>
+                                            <p class="text-[11px] text-stone-400 truncate">{{ $uv2['desc'] }}</p>
                                         </div>
                                     </div>
                                 </div>

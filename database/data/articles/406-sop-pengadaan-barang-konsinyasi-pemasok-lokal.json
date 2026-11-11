@@ -1,0 +1,97 @@
+{
+  "id": 406,
+  "title": "SOP Pengadaan Barang Konsinyasi Pemasok Lokal bagi Toko Ritel",
+  "slug": "sop-pengadaan-barang-konsinyasi-pemasok-lokal",
+  "meta_title": "SOP Pengadaan Barang Konsinyasi Pemasok Lokal",
+  "meta_description": "Terapkan sop pengadaan barang konsinyasi pemasok lokal untuk memperkaya variasi etalase toko ritel tanpa risiko modal mengendap di gudang.",
+  "primary_keyword": "sop pengadaan barang konsinyasi pemasok lokal",
+  "secondary_keywords": "sistem bagi hasil konsinyasi toko oleh oleh, pencatatan barang titipan di kasir pos, periode pembayaran retur barang konsinyasi, surat bukti tanda terima penitipan barang, variasi produk tanpa belanja modal",
+  "search_intent": "informational",
+  "category": "Inventori & Stok",
+  "reading_time": "7 menit",
+  "cover_image": "https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg",
+  "published_at": "2026-11-12T06:00:00+07:00",
+  "faqs": [
+    {
+      "q": "Berapa persentase bagi hasil standar yang biasa diambil toko ritel dari barang konsinyasi?",
+      "a": "Persentase komisi bagi hasil toko umumnya berkisar antara 15 sampai 30 persen dari harga jual eceran konsumen, tergantung pada kategori produk, kecepatan perputaran barang, dan posisi ruang display yang diberikan di dalam toko."
+    },
+    {
+      "q": "Siapa yang menentukan harga jual eceran produk konsinyasi di toko?",
+      "a": "Harga jual eceran biasanya disepakati bersama antara pemilik toko dan pemasok untuk memastikan harga tersebut seragam dengan harga pasar umum dan tidak merusak harga resmi produk dari produsen."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika pemasok tidak mengambil barang retur yang kedaluwarsa?",
+      "a": "SOP perjanjian kemitraan harus mencantumkan klausul bahwa jika barang retur tidak diambil oleh pemasok dalam waktu 14 sampai 30 hari setelah pemberitahuan resmi, pihak toko berhak memusnahkan barang tersebut demi menjaga kebersihan gudang tanpa kewajiban ganti rugi."
+    },
+    {
+      "q": "Apakah barang konsinyasi wajib memiliki surat perjanjian tertulis?",
+      "a": "Sangat wajib. Surat perjanjian kerja sama konsinyasi tertulis bermaterai melindungi kedua belah pihak dari risiko wanprestasi, ketidakjelasan perhitungan bagi hasil, dan kepastian tanggung jawab atas barang yang rusak atau hilang."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "SOP Pengadaan Barang Konsinyasi Pemasok Lokal bagi Toko Ritel",
+        "description": "Terapkan sop pengadaan barang konsinyasi pemasok lokal untuk memperkaya variasi etalase toko ritel tanpa risiko modal mengendap di gudang.",
+        "image": "https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg",
+        "datePublished": "2026-11-12T06:00:00+07:00",
+        "dateModified": "2026-11-12T06:00:00+07:00",
+        "url": "https://cooca.id/blog/sop-pengadaan-barang-konsinyasi-pemasok-lokal",
+        "mainEntityOfPage": "https://cooca.id/blog/sop-pengadaan-barang-konsinyasi-pemasok-lokal",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Berapa persentase bagi hasil standar yang biasa diambil toko ritel dari barang konsinyasi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Persentase komisi bagi hasil toko umumnya berkisar antara 15 sampai 30 persen dari harga jual eceran konsumen, tergantung pada kategori produk, kecepatan perputaran barang, dan posisi ruang display yang diberikan di dalam toko."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Siapa yang menentukan harga jual eceran produk konsinyasi di toko?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Harga jual eceran biasanya disepakati bersama antara pemilik toko dan pemasok untuk memastikan harga tersebut seragam dengan harga pasar umum dan tidak merusak harga resmi produk dari produsen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa yang harus dilakukan jika pemasok tidak mengambil barang retur yang kedaluwarsa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SOP perjanjian kemitraan harus mencantumkan klausul bahwa jika barang retur tidak diambil oleh pemasok dalam waktu 14 sampai 30 hari setelah pemberitahuan resmi, pihak toko berhak memusnahkan barang tersebut demi menjaga kebersihan gudang tanpa kewajiban ganti rugi."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah barang konsinyasi wajib memiliki surat perjanjian tertulis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sangat wajib. Surat perjanjian kerja sama konsinyasi tertulis bermaterai melindungi kedua belah pihak dari risiko wanprestasi, ketidakjelasan perhitungan bagi hasil, dan kepastian tanggung jawab atas barang yang rusak atau hilang."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"SOP Pengadaan Barang Konsinyasi Pemasok Lokal bagi Toko Ritel\"\nmeta_title: \"SOP Pengadaan Barang Konsinyasi Pemasok Lokal\"\nmeta_description: \"Terapkan sop pengadaan barang konsinyasi pemasok lokal untuk memperkaya variasi etalase toko ritel tanpa risiko modal mengendap di gudang.\"\nslug: \"sop-pengadaan-barang-konsinyasi-pemasok-lokal\"\nprimary_keyword: \"sop pengadaan barang konsinyasi pemasok lokal\"\nsecondary_keywords: \"sistem bagi hasil konsinyasi toko oleh oleh, pencatatan barang titipan di kasir pos, periode pembayaran retur barang konsinyasi, surat bukti tanda terima penitipan barang, variasi produk tanpa belanja modal\"\nsearch_intent: \"informational\"\ncategory: \"Inventori & Stok\"\nreading_time: \"7 menit\"\ncover_image: \"https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg\"\npublished_at: \"2026-11-12T06:00:00+07:00\"\n---\n# SOP Pengadaan Barang Konsinyasi Pemasok Lokal bagi Toko Ritel\n\nMenjalankan sop pengadaan barang konsinyasi pemasok lokal adalah salah satu strategi paling efektif bagi pemilik toko ritel, gerai oleh-oleh, minimarket mandiri, apotek, butik fashion, hingga kafe untuk melipatgandakan variasi produk dagangan tanpa perlu mengeluarkan modal tunai sepeser pun. Menjelang musim belanja liburan akhir tahun, etalase toko yang penuh dengan ratusan pilihan produk unik akan memikat pengunjung untuk berbelanja lebih banyak.\n\nNamun, membeli seluruh barang dagangan secara putus (cash purchase) tentu menuntut ketersediaan modal kerja yang sangat besar dan membawa risiko kerugian jika barang tersebut tidak laku terjual. Di sinilah model perdagangan konsinyasi (titip jual) menjadi solusi kolaboratif yang saling menguntungkan antara pemilik toko fisik dan produsen lokal. Agar kerja sama ini berjalan mulus tanpa memicu sengketa barang hilang atau selisih nota, panduan sop pengadaan barang konsinyasi pemasok lokal ini akan menyajikan alur operasional standar dari penerimaan hingga pembayaran bagi hasil secara profesional.\n\n## Keuntungan Model Konsinyasi bagi Toko Ritel dan Produsen Lokal\n\nSistem konsinyasi adalah perjanjian kemitraan di mana pemasok (consignor) menitipkan produknya di toko ritel Anda (consignee), dan pembayaran baru dilakukan setelah produk tersebut berhasil terjual ke tangan pembeli akhir.\n\nKeuntungan strategis yang didapatkan pemilik toko ritel meliputi:\n\n1. **Ekspansi Etalase dengan Risiko Finansial Nol Rupiah:** Anda dapat mengisi puluhan meter rak display dengan aneka variasi camilan khas daerah, kerajinan tangan, atau aksesoris tanpa menyentuh uang kas modal kerja toko.\n2. **Bebas dari Risiko Barang Rusak atau Kedaluwarsa:** Barang yang tidak terjual dalam batas waktu yang disepakati dapat diretur kembali kepada pemasok tanpa membebani pembukuan rugi toko Anda.\n3. **Peluang Pendapatan Margin Pasif yang Terukur:** Toko berhak memotong komisi bagi hasil penjualan (misalnya 15 persen sampai 30 persen dari harga jual konsumen) secara otomatis setiap kali transaksi terjadi di kasir.\n\nUntuk memperkuat kemitraan dengan para pemasok, Anda dapat menerapkan strategi pada [cara negosiasi dengan supplier](https://cooca.id/blog/cara-negosiasi-dengan-supplier) dan mengatur prosedur pengembalian barang lewat [cara mengelola retur barang](https://cooca.id/blog/cara-mengelola-retur-barang).\n\n## 6 Langkah Standar Operasional Prosedur Pengadaan Konsinyasi\n\nTerapkan alur operasional baku berikut setiap kali ada produsen atau UMKM lokal yang ingin menitipkan produknya di toko Anda:\n\n```\n[Seleksi Mutu & Kurasi Produk] -> [Penerbitan Surat Tanda Terima] -> [Pemberian Label Barcode Khusus]\n                                                                                |\n[Pencairan Dana Settlement]     <- [Rekapitulasi Penjualan POS]   <- [Pajang di Rak Konsinyasi]\n```\n\nBerikut rincian tindakan pada setiap tahap:\n\n1. **Kurasi dan Uji Kelayakan Produk (Product Curation):** Pastikan produk titipan memenuhi standar mutu higienis, kemasan rapi tidak mudah bocor, memiliki label komposisi bahan, tanggal kedaluwarsa jelas, dan mengantongi izin edar resmi (seperti PIRT atau BPOM dan sertifikat Halal).\n2. **Terbitkan Dokumen Bukti Tanda Terima Barang Titipan (BTTB):** Hitung fisik barang bersama pemasok, catat jumlah unit yang diterima, tanggal masuk, dan tanda tangani surat tanda terima rangkap dua.\n3. **Kelola Stok Konsinyasi di Gudang Terpisah:** Pisahkan pencatatan stok milik sendiri dan stok konsinyasi dengan panduan [manajemen stok multi gudang](https://cooca.id/blog/manajemen-stok-multi-gudang).\n4. **Tempelkan Stiker Barcode dan Kode SKU Khusus:** Setiap produk konsinyasi wajib memiliki kode barcode tersendiri pada sistem POS toko untuk membedakannya dari barang beli putus.\n5. **Buat Dokumen Pemesanan Resmi:** Jika pasokan titipan habis dan perlu ditambah, gunakan prosedur baku pada [cara membuat purchase order](https://cooca.id/blog/cara-membuat-purchase-order).\n6. **Lakukan Rekonsiliasi Penjualan Periodik:** Jadwalkan pencocokan data penjualan setiap akhir bulan kalender dan cairkan bagi hasil hak pemasok secara tepat waktu.\n\nTabel contoh formulir penerimaan barang konsinyasi berikut dapat diterapkan oleh tim gudang toko Anda:\n\n| Kode SKU Toko | Nama Produk Titipan | Pemasok Lokal | Jumlah Masuk | Harga Jual Toko | Bagi Hasil Pemasok | Komisi Toko (Margin) |\n| --- | --- | --- | --- | --- | --- | --- |\n| KONS-01 | Keripik Pisang Cokelat 150g | Bu Ratna Kuliner | 50 bungkus | Rp 20.000 | Rp 15.000 (75%) | Rp 5.000 (25%) |\n| KONS-02 | Kopi Bubuk Arabika 200g | Kopi Lereng Jaya | 30 bungkus | Rp 45.000 | Rp 36.000 (80%) | Rp 9.000 (20%) |\n| KONS-03 | Sambal Bawang Botol 180g | Dapur Bu Hendra | 40 botol | Rp 28.000 | Rp 21.000 (75%) | Rp 7.000 (25%) |\n| KONS-04 | Abon Sapi Asli 250g | Sumber Pangan Sejahtera | 20 toples | Rp 60.000 | Rp 48.000 (80%) | Rp 12.000 (20%) |\n\n## Aturan Pengembalian Barang Kedaluwarsa dan Rusak (Retur)\n\nSalah satu titik kritis dalam kemitraan titip jual adalah penanganan barang yang tidak laku atau mengalami kerusakan saat dipajang di rak toko. SOP konsinyasi yang sehat harus memuat ketentuan tegas:\n\n1. **Pemeriksaan Batas Tanggal Kedaluwarsa (Aging Check):** Staf toko wajib menyisir rak pajang setiap pekan. Barang yang sisa masa kedaluwarsanya tinggal 30 hari harus ditarik dari rak dan dipindahkan ke area karantina retur.\n2. **Pemberitahuan Penarikan ke Pemasok:** Pihak toko mengirimkan pesan WhatsApp resmi atau email kepada pemasok untuk mengambil barang retur dalam waktu maksimal 7 hari kerja.\n3. **Ketentuan Tanggung Jawab Kerusakan:** Kerusakan produk akibat pembeli atau kelalaian staf toko menjadi tanggung jawab pihak toko, sedangkan kerusakan akibat cacat kemasan produksi dari awal (seperti segel bocor atau bau tengik) menjadi tanggung jawab penuh pihak pemasok.\n\n## Tata Kelola Pencairan Bagi Hasil Penjualan (Settlement)\n\nKepercayaan pemasok lokal adalah modal reputasi jangka panjang toko Anda. Untuk menjaga hubungan kemitraan yang harmonis, terapkan sistem pembayaran bagi hasil yang transparan:\n\n1. **Jadwal Settlement Rutin yang Pasti:** Tetapkan tanggal pencairan dana yang konsisten setiap bulan (misalnya setiap tanggal 5 atau 10 di awal bulan berikutnya).\n2. **Lampirkan Rekapitulasi Struk POS Resmi:** Setiap kali mengirimkan bukti transfer pembayaran bagi hasil, lampirkan lembar laporan penjualan POS yang memuat rincian berapa unit barang yang berhasil terjual dan berapa sisa stok fisik di toko.\n3. **Potong Biaya Retur atau Kerusakan Secara Transparan:** Jika ada penyesuaian nominal akibat barang cacat, cantumkan foto bukti dan berita acara secara terbuka.\n\n## Otomasi Pengelolaan Konsinyasi Bersama Kasir POS Cooca\n\nMencatat ratusan produk titipan dari puluhan produsen lokal yang berbeda secara manual menggunakan buku tulis rentan salah hitung komisi dan memicu perselisihan nota. Di sinilah Cooca hadir memberikan solusi digital yang terintegrasi bagi para pengusaha ritel di Indonesia.\n\nCooca adalah Business Operating System all-in-one untuk UMKM yang dilengkapi dengan sistem Point of Sale (POS) dan manajemen stok konsinyasi modern. Di dalam Cooca, Anda dapat mendaftarkan nama pemasok lokal, menentukan persentase komisi bagi hasil toko per produk, dan secara otomatis memisahkan pendapatan toko dengan utang bagi hasil pemasok setiap kali kasir memindai barcode belanjaan. Di akhir bulan, Cooca secara otomatis menghasilkan laporan settlement per supplier lengkap dengan rincian unit terjual dan nilai rupiah yang wajib dibayarkan hanya dalam satu klik. Tidak ada lagi kerumitan hitung nota manual. Untuk pemilik usaha mandiri, Cooca menyediakan paket Solo Owner Rp 0 yang dapat digunakan gratis selamanya.\n\n## Pertanyaan Seputar SOP Pengadaan Barang Konsinyasi Pemasok Lokal (FAQ)\n\n### Berapa persentase bagi hasil standar yang biasa diambil toko ritel dari barang konsinyasi?\nPersentase komisi bagi hasil toko umumnya berkisar antara 15 sampai 30 persen dari harga jual eceran konsumen, tergantung pada kategori produk, kecepatan perputaran barang, dan posisi ruang display yang diberikan di dalam toko.\n\n### Siapa yang menentukan harga jual eceran produk konsinyasi di toko?\nHarga jual eceran biasanya disepakati bersama antara pemilik toko dan pemasok untuk memastikan harga tersebut seragam dengan harga pasar umum dan tidak merusak harga resmi produk dari produsen.\n\n### Apa yang harus dilakukan jika pemasok tidak mengambil barang retur yang kedaluwarsa?\nSOP perjanjian kemitraan harus mencantumkan klausul bahwa jika barang retur tidak diambil oleh pemasok dalam waktu 14 sampai 30 hari setelah pemberitahuan resmi, pihak toko berhak memusnahkan barang tersebut demi menjaga kebersihan gudang tanpa kewajiban ganti rugi.\n\n### Apakah barang konsinyasi wajib memiliki surat perjanjian tertulis?\nSangat wajib. Surat perjanjian kerja sama konsinyasi tertulis bermaterai melindungi kedua belah pihak dari risiko wanprestasi, ketidakjelasan perhitungan bagi hasil, dan kepastian tanggung jawab atas barang yang rusak atau hilang.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"SOP Pengadaan Barang Konsinyasi Pemasok Lokal bagi Toko Ritel\",\n      \"description\": \"Terapkan sop pengadaan barang konsinyasi pemasok lokal untuk memperkaya variasi etalase toko ritel tanpa risiko modal mengendap di gudang.\",\n      \"image\": \"https://cooca.id/images/blog/photo-1553413077-190dd305871c.jpg\",\n      \"datePublished\": \"2026-11-12T06:00:00+07:00\",\n      \"dateModified\": \"2026-11-12T06:00:00+07:00\",\n      \"url\": \"https://cooca.id/blog/sop-pengadaan-barang-konsinyasi-pemasok-lokal\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/sop-pengadaan-barang-konsinyasi-pemasok-lokal\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Berapa persentase bagi hasil standar yang biasa diambil toko ritel dari barang konsinyasi?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Persentase komisi bagi hasil toko umumnya berkisar antara 15 sampai 30 persen dari harga jual eceran konsumen, tergantung pada kategori produk, kecepatan perputaran barang, dan posisi ruang display yang diberikan di dalam toko.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Siapa yang menentukan harga jual eceran produk konsinyasi di toko?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Harga jual eceran biasanya disepakati bersama antara pemilik toko dan pemasok untuk memastikan harga tersebut seragam dengan harga pasar umum dan tidak merusak harga resmi produk dari produsen.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apa yang harus dilakukan jika pemasok tidak mengambil barang retur yang kedaluwarsa?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"SOP perjanjian kemitraan harus mencantumkan klausul bahwa jika barang retur tidak diambil oleh pemasok dalam waktu 14 sampai 30 hari setelah pemberitahuan resmi, pihak toko berhak memusnahkan barang tersebut demi menjaga kebersihan gudang tanpa kewajiban ganti rugi.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah barang konsinyasi wajib memiliki surat perjanjian tertulis?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Sangat wajib. Surat perjanjian kerja sama konsinyasi tertulis bermaterai melindungi kedua belah pihak dari risiko wanprestasi, ketidakjelasan perhitungan bagi hasil, dan kepastian tanggung jawab atas barang yang rusak atau hilang.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}
