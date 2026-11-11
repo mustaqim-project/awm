@@ -60,6 +60,7 @@ async function renderUniversalBento() {
 
   const spec = JSON.parse(fs.readFileSync(resolvedSpecPath, 'utf8'));
   const { width, height } = getDimensions(spec);
+  const isPortrait = height > width * 1.2;
   const channel = (spec.channel || 'instagram').toLowerCase();
   const format = (spec.format || 'feed').toLowerCase();
   const sectorId = spec.sector_id || 'umkm';
@@ -161,7 +162,7 @@ body {
   color: #FFFFFF;
   overflow: hidden;
   position: relative;
-  padding: 48px 52px;
+  padding: ${isPortrait ? '56px 48px' : '48px 52px'};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -299,9 +300,9 @@ body {
 }
 
 .master-headline {
-  font-size: 36px;
+  font-size: ${isPortrait ? '44px' : '36px'};
   font-weight: 900;
-  line-height: 1.16;
+  line-height: 1.15;
   letter-spacing: -0.035em;
   color: #FFFFFF;
   text-wrap: balance;
@@ -315,11 +316,12 @@ body {
   display: inline;
 }
 
-/* Asymmetric Bento Body */
+/* Asymmetric Bento Body (Responsive to Aspect Ratio) */
 .bento-body {
   display: grid;
-  grid-template-columns: 1.05fr 1.15fr;
-  gap: 22px;
+  grid-template-columns: ${isPortrait ? '1fr' : '1.05fr 1.15fr'};
+  ${isPortrait ? 'grid-template-rows: 560px 1fr;' : ''}
+  gap: ${isPortrait ? '26px' : '22px'};
   flex: 1;
   margin-top: 14px;
   margin-bottom: 18px;
