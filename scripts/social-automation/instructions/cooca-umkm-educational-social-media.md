@@ -80,7 +80,7 @@ Spec JSON wajib memuat field berikut:
 
 Seluruh topik, keyword, pilar masalah, fitur, hook, poin edukasi, caption, brief visual, dan nama file WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
 
-### Langkah 2: Visual lewat Canva MCP (`canva_canva`)
+### Langkah 2: Visual (Pilihan Utama: Canva MCP | Fallback Handal: render_universal_bento.cjs)
 Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
 1. Panggil `create-design` untuk satu gambar portrait 4:5, 1080x1350 px. Coba format Instagram portrait bawaan tool. Jika tidak tersedia atau ditolak, gunakan ukuran kustom 1080x1350 px dan catat di laporan akhir.

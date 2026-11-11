@@ -82,7 +82,7 @@ Spec JSON wajib memuat field berikut:
 
 Jika ada field kosong, angka metrik tanpa sumber, atau sumber tren tidak tercantum, perlakukan sebagai gagal (bagian 5). Seluruh topik, keyword, pilar masalah, fitur, hook, caption, pertanyaan diskusi, angka, dan brief visual WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
 
-### Langkah 2: Visual lewat Canva MCP (`canva_canva`)
+### Langkah 2: Visual (Pilihan Utama: Canva MCP | Fallback Handal: render_universal_bento.cjs)
 Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
 1. Panggil `create-design` dengan `format: "Presentation"` dan tetapkan ukuran halaman persegi 1080x1080 px lewat parameter ukuran kustom atau lewat instruksi di `brief`. Format "Presentation" bawaan biasanya landscape 16:9, jadi jangan mengandalkan default. Jika tool tidak bisa mengatur ukuran, gunakan format persegi bawaan Canva yang berukuran 1080x1080, lalu catat di laporan akhir.

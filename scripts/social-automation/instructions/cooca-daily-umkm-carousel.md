@@ -75,7 +75,7 @@ Spec JSON wajib memuat field berikut:
 - `slides` (outline 5 slide)
 - `canva_mcp_prompt_brief`
 
-### Langkah 2: Visual (Canva MCP Utama & Playwright Fallback Handal)
+### Langkah 2: Visual (Pilihan Utama: Canva MCP | Fallback Handal: render_universal_bento.cjs)
 Selalu buat desain BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
 1. **Jalur Utama (Canva MCP `canva_canva`):**

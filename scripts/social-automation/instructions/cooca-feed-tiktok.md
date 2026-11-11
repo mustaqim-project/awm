@@ -78,7 +78,7 @@ Spec JSON wajib memuat field berikut:
 
 Jika ada field kosong atau sumber tren tidak tercantum, perlakukan sebagai gagal (bagian 5). Seluruh topik, keyword, pilar masalah, fitur, hook, caption, pertanyaan komentar, brief visual, dan nama file WAJIB diekstrak langsung dari spec JSON ini, bukan dari asumsi.
 
-### Langkah 2: Visual lewat Canva MCP (`canva_canva`)
+### Langkah 2: Visual (Pilihan Utama: Canva MCP | Fallback Handal: render_universal_bento.cjs)
 Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang template, layout, atau desain lama.
 
 1. Panggil `create-design` untuk satu gambar vertikal 9:16, 1080x1920 px. Gunakan ukuran kustom 1080x1920 jika tool mendukungnya, atau format vertikal bawaan Canva yang berukuran sama (misalnya format Story). Jangan memakai "Instagram Post (Square)". Jika tidak ada pilihan yang cocok, tetapkan ukuran lewat instruksi di `brief` dan catat di laporan akhir.
