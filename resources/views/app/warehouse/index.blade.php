@@ -518,7 +518,7 @@ function warehouseIndexHub() {
                 </span>
             </div>
             {{-- Tab Filter: Semua | Cabang & Toko | Gudang Logistik --}}
-            <div class="inline-flex p-1 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.07] border border-black/5 dark:border-white/10 text-xs font-medium">
+            <div class="inline-flex p-1 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.07] border border-black/5 dark:border-white/10 text-xs font-medium max-w-full overflow-x-auto no-scrollbar">
                 <button @click="setFilter('all')"
                         :class="filterTab === 'all' ? 'bg-white dark:bg-[#3A3A3C] text-black dark:text-white shadow-[0_1px_2px_rgba(0,0,0,0.08)] font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'"
                         class="px-3 py-1.5 rounded-[8px] transition-all flex items-center gap-1.5 cursor-pointer">
@@ -689,21 +689,21 @@ function warehouseIndexHub() {
 
                 {{-- Stats Strip --}}
                 <div class="pt-3.5 border-t border-black/[0.04] dark:border-white/[0.06]">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-center">
+                    <div class="grid grid-cols-3 gap-2 text-center">
                         <div class="rounded-[10px] bg-slate-50 dark:bg-[#2C2C2E] p-2">
-                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase">SKU</span>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase tracking-wider">SKU</span>
                             <span class="text-xs sm:text-sm font-bold tabular-nums text-slate-900 dark:text-white">
                                 {{ $loc->stocks_count ?? 0 }}
                             </span>
                         </div>
                         <div class="rounded-[10px] bg-slate-50 dark:bg-[#2C2C2E] p-2">
-                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase">{{ __('warehouse.kpis.total_qty') }}</span>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase tracking-wider truncate">{{ __('warehouse.kpis.total_qty') }}</span>
                             <span class="text-xs sm:text-sm font-bold tabular-nums text-slate-900 dark:text-white">
                                 {{ number_format($loc->total_stock_units ?? 0, 0, ',', '.') }}
                             </span>
                         </div>
                         <div class="rounded-[10px] bg-slate-50 dark:bg-[#2C2C2E] p-2">
-                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase">{{ __('warehouse.kpis.stock_asset_value') }}</span>
+                            <span class="text-[10px] text-slate-400 dark:text-slate-500 block font-semibold uppercase tracking-wider truncate">{{ __('warehouse.kpis.stock_asset_value') }}</span>
                             <span class="text-xs sm:text-sm font-bold tabular-nums text-[#34C759] dark:text-[#30D158] truncate block" title="{{ __('warehouse.rp_number_format_loc_total_valuation') }}">
                                 {{ ($loc->total_valuation ?? 0) >= 1000000 ? number_format(($loc->total_valuation ?? 0) / 1000000, 1) . 'jt' : number_format(($loc->total_valuation ?? 0) / 1000, 0) . 'rb' }}
                             </span>
@@ -721,10 +721,10 @@ function warehouseIndexHub() {
                         @if(\App\Support\Context::hasPermission('inventory.manage') || \App\Support\Context::isAdminOrOwner() || \App\Support\Context::hasPermission('warehouse.manage'))
                         <div class="flex items-center gap-1.5 shrink-0">
                             <button type="button" @click="openEdit(@js($loc))"
-                                    class="min-h-[44px] h-11 px-3.5 rounded-[10px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-[0.98] transition-all flex items-center gap-1 cursor-pointer"
+                                    class="min-h-[44px] h-11 px-3 sm:px-3.5 rounded-[10px] text-xs font-semibold text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-[0.98] transition-all flex items-center gap-1.5 cursor-pointer"
                                     title="{{ __('warehouse.actions.edit_location') }}">
-                                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                                <span>{{ __('warehouse.actions.edit_location') }}</span>
+                                <i data-lucide="pencil" class="w-3.5 h-3.5 text-slate-500 dark:text-slate-400"></i>
+                                <span>{{ __('warehouse.actions.edit') ?? 'Edit' }}</span>
                             </button>
 
                             <button type="button" @click="openDelete(@js($loc->id), @js($loc->name))"
@@ -1329,7 +1329,7 @@ function warehouseIndexHub() {
                             </svg>
                         </template>
                         <template x-if="!submitting">
-                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <i data-lucide="check" class="w-4 h-4"></i>
                         </template>
                         <span x-text="submitting ? '{{ __('warehouse.actions.submitting') }}' : '{{ __('warehouse.actions.save') }}'"></span>
                     </button>

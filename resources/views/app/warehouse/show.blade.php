@@ -587,7 +587,7 @@
                                                         'quantity' => $stock->quantity,
                                                         'last_cost' => $stock->last_cost,
                                                     ]))"
-                                                    class="w-8 h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
+                                                    class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 w-9 h-9 sm:w-8 sm:h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                                                     title="{{ __('warehouse.actions.quick_adjust') }}"
                                                     aria-label="{{ __('warehouse.actions.quick_adjust') }}">
                                                     <i data-lucide="sliders-horizontal" class="w-4 h-4"></i>

@@ -23,11 +23,11 @@
             title="{{ __('whatsapp.logs_title') }}"
             subtitle="{{ __('whatsapp.logs_subtitle') }}">
             <x-slot:actions>
-                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                <div class="flex items-center gap-2 w-full sm:w-auto">
                     @can('whatsapp.view')
                         @can('reports.export')
                             <a href="{{ route('whatsapp.logs.export', request()->query()) }}"
-                                class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                                class="flex-1 sm:flex-initial min-h-[44px] px-3.5 sm:px-4 rounded-[12px] text-[13px] font-semibold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
                                 <i data-lucide="download" class="w-4 h-4"></i>
                                 <span>{{ __('whatsapp.export_excel') }}</span>
                             </a>
@@ -35,7 +35,7 @@
                     @endcan
                     @can('whatsapp.manage')
                         <button type="button" @click="openPruneModal = true"
-                            class="min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
+                            class="flex-1 sm:flex-initial min-h-[44px] px-3.5 sm:px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer">
                             <i data-lucide="database-zap" class="w-4 h-4 text-[#FF9500]"></i>
                             <span>{{ __('whatsapp.storage_pruning_btn') }}</span>
                         </button>

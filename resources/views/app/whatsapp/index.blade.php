@@ -11,50 +11,60 @@
             :title="__('whatsapp.title')"
             :subtitle="__('whatsapp.subtitle', ['business' => $business->name])">
             <x-slot:actions>
-                <a href="{{ route('whatsapp.inbox.index') }}"
-                    class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
-                    <i data-lucide="message-square" class="w-4 h-4 text-[#007AFF]"></i>
-                    <span>{{ __('social_media.tab_inbox') }}</span>
-                </a>
-                <a href="{{ route('whatsapp.logs.index') }}"
-                    class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
-                    <i data-lucide="history" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
-                    <span>{{ __('whatsapp.tab_logs') }}</span>
-                </a>
-                @can('pos.terminal')
-                    <a href="{{ route('pos.terminal') }}"
-                        class="flex-1 sm:flex-initial min-h-[44px] px-4 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
-                        <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span>{{ __('whatsapp.open_pos') }}</span>
+                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
+                    <a href="{{ route('whatsapp.inbox.index') }}"
+                        class="flex-1 sm:flex-initial min-h-[44px] px-3.5 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="message-square" class="w-4 h-4 text-[#007AFF]"></i>
+                        <span>{{ __('social_media.tab_inbox') }}</span>
                     </a>
-                @endcan
+                    <a href="{{ route('whatsapp.logs.index') }}"
+                        class="flex-1 sm:flex-initial min-h-[44px] px-3.5 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="history" class="w-4 h-4 text-black/60 dark:text-white/60"></i>
+                        <span>{{ __('whatsapp.tab_logs') }}</span>
+                    </a>
+                    @can('pos.terminal')
+                        <a href="{{ route('pos.terminal') }}"
+                            class="flex-1 sm:flex-initial min-h-[44px] px-3.5 rounded-[12px] text-[13px] font-semibold text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="calculator" class="w-4 h-4 text-[#007AFF]"></i>
+                            <span>{{ __('whatsapp.open_pos') }}</span>
+                        </a>
+                    @endcan
+                </div>
             </x-slot:actions>
         </x-module-header>
 
         <x-module-tabs module="communication" />
 
-        {{-- UNIFIED SETTINGS HUB MIGRATION NOTICE BANNER (Cluster 4 Standard) --}}
-        <div class="rounded-[18px] bg-gradient-to-r from-[#007AFF]/[0.08] via-[#34C759]/[0.06] to-transparent border border-[#007AFF]/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
-            <div class="flex items-center gap-3.5">
+        {{-- UNIFIED SETTINGS HUB MIGRATION NOTICE BANNER (Cluster 4 Standard - Dismissible) --}}
+        <div x-data="{ showNotice: true }" x-show="showNotice" x-cloak
+             class="rounded-[18px] bg-gradient-to-r from-[#007AFF]/[0.08] via-[#34C759]/[0.06] to-transparent border border-[#007AFF]/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs relative">
+            <div class="flex items-center gap-3.5 pr-8 sm:pr-0">
                 <div class="w-10 h-10 rounded-[12px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm shadow-[#007AFF]/25">
                     <i data-lucide="sliders" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <h3 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2">
+                    <h3 class="text-[14px] font-bold text-black dark:text-white flex items-center gap-2 flex-wrap">
                         <span>Pusat Pengaturan &amp; Konfigurasi WhatsApp Terpadu</span>
                         <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/15 text-[#007AFF] border border-[#007AFF]/25">Settings Hub</span>
                     </h3>
-                    <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5">
+                    <p class="text-[12px] text-black/60 dark:text-white/60 mt-0.5 leading-relaxed">
                         Konfigurasi WABA, nomor pengirim, kredensial Meta Cloud API, dan template struk kasir kini dapat dikelola langsung dari menu <strong>Pengaturan Usaha</strong>.
                     </p>
                 </div>
             </div>
-            <a href="{{ route('settings.index', ['tab' => 'whatsapp']) }}"
-                class="min-h-[38px] px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 shadow-sm">
-                <i data-lucide="settings" class="w-4 h-4"></i>
-                <span>{{ __('whatsapp.buka_pengaturan_whatsapp') }}</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-            </a>
+            <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+                <a href="{{ route('settings.index', ['tab' => 'whatsapp']) }}"
+                    class="min-h-[38px] px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 shadow-sm">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span>{{ __('whatsapp.buka_pengaturan_whatsapp') }}</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+                <button type="button" @click="showNotice = false"
+                    class="p-1.5 rounded-full text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer"
+                    title="{{ __('warehouse.tutup') ?? 'Tutup' }}">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
         </div>
 
         <!-- ===================================================== -->
@@ -381,7 +391,7 @@
             </div>
 
             {{-- Category Filter Pills (Apple HIG Segmented Control) --}}
-            <div class="flex items-center gap-2 p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[13px] w-fit">
+            <div class="flex items-center gap-2 p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[13px] w-fit max-w-full overflow-x-auto no-scrollbar">
                 <button type="button" @click="tplFilter = 'all'"
                     class="px-3 py-1.5 rounded-[10px] text-[12px] font-semibold transition-all cursor-pointer"
                     :class="tplFilter === 'all' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">

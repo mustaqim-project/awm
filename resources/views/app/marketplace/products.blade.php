@@ -990,23 +990,32 @@ document.addEventListener('alpine:init', () => {
             </button>
         </div>
 
-        <div x-show="expanded" x-collapse class="mt-4 pt-4 border-t border-black/5 dark:border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4 text-[12.5px]">
+        <div x-show="expanded" x-collapse class="mt-4 pt-4 border-t border-black/5 dark:border-white/10 grid grid-cols-1 md:grid-cols-3 gap-3.5 text-[12.5px]">
             <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
                 <div class="flex items-center gap-2 font-bold text-black dark:text-white">
-                    <span class="w-5 h-5 rounded-full bg-[#34C759] text-white text-[11px] flex items-center justify-center">1</span>
-                    <span>{{ __('marketplace.pull_guide_option_1_title') }}</span>
+                    <span class="w-5 h-5 rounded-full bg-[#34C759] text-white text-[11px] flex items-center justify-center font-bold">1</span>
+                    <span>Tarik Katalog (Hanya-Baca)</span>
                 </div>
-                <p class="text-black/60 dark:text-white/60">
-                    {!! __('marketplace.pull_guide_option_1_desc') !!}
+                <p class="text-black/60 dark:text-white/60 leading-relaxed">
+                    Klik tombol hijau <strong>"Tarik dari MP"</strong> di atas. COOCA membaca seluruh produk aktif di Seller Center Anda ke COOCA tanpa risiko mengubah etalase toko online Anda.
                 </p>
             </div>
             <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
                 <div class="flex items-center gap-2 font-bold text-black dark:text-white">
-                    <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[11px] flex items-center justify-center">2</span>
-                    <span>{{ __('marketplace.pull_guide_option_2_title') }}</span>
+                    <span class="w-5 h-5 rounded-full bg-[#007AFF] text-white text-[11px] flex items-center justify-center font-bold">2</span>
+                    <span>Penyelarasan SKU &amp; Stok</span>
                 </div>
-                <p class="text-black/60 dark:text-white/60">
-                    {!! __('marketplace.pull_guide_option_2_desc', ['url' => route('import.index')]) !!}
+                <p class="text-black/60 dark:text-white/60 leading-relaxed">
+                    SKU otomatis dipetakan ke produk COOCA. Jika produk di COOCA belum memiliki stok fisik, saldo awal gudang diisi dari stok marketplace.
+                </p>
+            </div>
+            <div class="p-3.5 rounded-[14px] bg-white/60 dark:bg-black/20 border border-black/5 dark:border-white/5 space-y-1.5">
+                <div class="flex items-center gap-2 font-bold text-black dark:text-white">
+                    <span class="w-5 h-5 rounded-full bg-[#5856D6] text-white text-[11px] flex items-center justify-center font-bold">3</span>
+                    <span>Aktivasi Push Bertahap</span>
+                </div>
+                <p class="text-black/60 dark:text-white/60 leading-relaxed">
+                    Auto-push dimatikan secara default demi keselamatan. Anda bebas mengaktifkan auto-sync harga/stok per produk atau massal setelah meninjau data.
                 </p>
             </div>
         </div>

@@ -42,6 +42,26 @@ class MarketplaceSyncService
         $adapter = $this->manager->driver($mapping->channel);
         $price   = $mapping->getEffectivePrice();
 
+        // Safety Guard 1: Never push zero or negative price to marketplace
+        if ($price <= 0) {
+            $mapping->last_sync_error = 'Sinkronisasi harga dibatalkan: Harga Rp 0 tidak boleh di-push ke marketplace.';
+            $mapping->sync_status     = MarketplaceProductMapping::STATUS_FAILED;
+            $mapping->save();
+
+            Log::warning("Zero price push blocked for product mapping {$mapping->id} to {$mapping->channel}");
+            return false;
+        }
+
+        // Safety Guard 2: Never push below base cost (HPP) unless explicitly authorized
+        if ($mapping->isBelowCost() && ! ($mapping->raw_metadata['allow_below_cost'] ?? false)) {
+            $mapping->last_sync_error = 'Sinkronisasi harga dibatalkan: Harga jual di bawah HPP tanpa otorisasi rugi.';
+            $mapping->sync_status     = MarketplaceProductMapping::STATUS_FAILED;
+            $mapping->save();
+
+            Log::warning("Below cost price push blocked for product mapping {$mapping->id} to {$mapping->channel}");
+            return false;
+        }
+
         try {
             $ok = $adapter->pushPrice($account, $mapping, $price);
 
@@ -143,6 +163,20 @@ class MarketplaceSyncService
 
         $adapter = $this->manager->driver($mapping->channel);
         $stockToPush = $this->resolveEffectiveStock($product, $mapping);
+
+        // Safety Guard: Protect live marketplace stock from accidental zero overwrite if Cooca stock is not initialized
+        $hasInventoryRecord = InventoryStock::where('business_id', $product->business_id)
+            ->where('product_id', $product->id)
+            ->exists();
+
+        if ($stockToPush === 0 && ! $hasInventoryRecord && ($mapping->channel_stock ?? 0) > 0 && ! ($mapping->raw_metadata['allow_zero_stock_override'] ?? false)) {
+            $mapping->last_sync_error = 'Sinkronisasi stok ditahan demi keamanan: Stok gudang COOCA belum diatur, sementara di marketplace masih ada ' . $mapping->channel_stock . ' unit. Perbarui stok gudang COOCA terlebih dahulu.';
+            $mapping->sync_status     = MarketplaceProductMapping::STATUS_FAILED;
+            $mapping->save();
+
+            Log::warning("Zero stock overwrite blocked for product mapping {$mapping->id} to {$mapping->channel} (live channel has {$mapping->channel_stock})");
+            return false;
+        }
 
         try {
             $ok = $adapter->pushStock($account, $mapping, $stockToPush);
@@ -874,9 +908,36 @@ class MarketplaceSyncService
                 $importedNew++;
             } else {
                 $linkedExisting++;
+
+                // Safety Inbound: If existing product in COOCA has 0 inventory record, initialize it from marketplace stock
+                if ($primaryLocation && $stock > 0) {
+                    $hasExistingStock = InventoryStock::where('business_id', $businessId)
+                        ->where('product_id', $product->id)
+                        ->where('quantity', '>', 0)
+                        ->exists();
+
+                    if (! $hasExistingStock) {
+                        InventoryStock::updateOrCreate(
+                            [
+                                'business_id' => $businessId,
+                                'location_id' => $primaryLocation->id,
+                                'product_id'  => $product->id,
+                            ],
+                            [
+                                'quantity'          => $stock,
+                                'reserved_quantity' => 0,
+                                'avg_purchase_cost' => $product->base_cost ?: (float) round($price * 0.7),
+                                'last_cost'         => $product->base_cost ?: (float) round($price * 0.7),
+                            ]
+                        );
+                        $product->stock = $stock;
+                        $product->save();
+                    }
+                }
             }
 
-            // 3. Create or update mapping
+            // 3. Create or update mapping with SAFE INBOUND DEFAULTS
+            // Auto-push is set to FALSE so live seller listings on marketplace are NOT overwritten
             MarketplaceProductMapping::updateOrCreate(
                 [
                     'business_id' => $businessId,
@@ -886,10 +947,12 @@ class MarketplaceSyncService
                 [
                     'marketplace_account_id' => $account->id,
                     'external_product_id'    => $externalId,
+                    'external_product_name'  => $name,
+                    'external_sku_code'      => $sku,
                     'channel_price'          => $price,
                     'channel_stock'          => $stock,
-                    'sync_price_auto'        => true,
-                    'sync_stock_auto'        => true,
+                    'sync_price_auto'        => false, // SAFE INBOUND DEFAULT: do NOT auto-push to MP
+                    'sync_stock_auto'        => false, // SAFE INBOUND DEFAULT: do NOT auto-push to MP
                     'is_active'              => true,
                     'sync_status'            => MarketplaceProductMapping::STATUS_SYNCED,
                     'last_price_synced_at'   => now(),

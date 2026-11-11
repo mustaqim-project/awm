@@ -10,7 +10,7 @@
         <!-- ========================================== -->
         <!-- 0. BREADCRUMB BAR (APPLE MINIMALIST)       -->
         <!-- ========================================== -->
-        <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 py-0.5 whitespace-nowrap print:hidden"
+        <nav class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 py-0.5 whitespace-nowrap print:hidden max-w-full overflow-x-auto no-scrollbar"
             aria-label="Breadcrumb">
             <a href="{{ route('dashboard') }}" class="hover:text-[#007AFF] transition-colors font-medium">{{ __('navigation.dashboard') }}</a>
             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-black/30 dark:text-white/30"></i>
