@@ -79,12 +79,10 @@ async function renderUniversalBento() {
     subHook = parts.slice(1).join('?').trim();
   }
 
-  // Check if a generated sector photo exists
+  // Check if a generated sector photo exists strictly for this sector
   const photoCandidates = [
     path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}.jpg`),
-    path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}.png`),
-    path.join(GENERATED_ASSETS_DIR, `photo-konveksi-garment.jpg`),
-    path.join(GENERATED_ASSETS_DIR, `photo-konveksi-garment.png`)
+    path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}.png`)
   ];
 
   let photoBase64 = '';
@@ -658,23 +656,29 @@ body {
     <!-- Dynamic Asymmetric Bento Body -->
     <div class="bento-body">
       
-      <!-- Left: Double-Bezel Real Visual -->
+      <!-- Left: Double-Bezel Real Visual (Unique per slide in carousel) -->
       <div class="visual-bezel-outer">
         <div class="visual-bezel-inner">
-          ${photoBase64 ? `
-            <img class="hero-photo" src="${photoBase64}" alt="${escapeHtml(sectorName)}">
+          ${slidePhotoBase64 ? `
+            <img class="hero-photo" src="${slidePhotoBase64}" alt="${escapeHtml(sectorName)}">
           ` : `
-            <div style="width:100%; height:100%; background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);"></div>
+            <div style="width:100%; height:100%; background: radial-gradient(circle at 50% 35%, rgba(37,99,235,0.35) 0%, #070B19 80%); display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 24px; position:relative;">
+              ${current3DBase64 ? `
+                <img src="${current3DBase64}" style="width: 170px; height: 170px; object-fit: contain; filter: drop-shadow(0 14px 28px rgba(37,99,235,0.45)); margin-bottom: 16px;">
+              ` : ''}
+              <div style="font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: #38BDF8; letter-spacing: 0.15em; text-transform: uppercase;">${escapeHtml(slideTag)}</div>
+              <div style="font-size: 20px; font-weight: 900; color: #FFFFFF; margin-top: 6px; text-align: center;">${isCarousel ? `Langkah ${slideNumber} dari ${totalSlides}` : escapeHtml(sectorName)}</div>
+            </div>
           `}
           <div class="photo-vignette"></div>
-          <div class="photo-badge-top">FOKUS OPERASIONAL NYATA</div>
+          <div class="photo-badge-top">${isCarousel ? `SLIDE 0${slideNumber}` : 'FOKUS OPERASIONAL NYATA'}</div>
           
           <div class="photo-content-bottom">
             <div class="stat-island">
-              <div class="stat-number">25%</div>
+              <div class="stat-number">100%</div>
               <div class="stat-text">
-                Target Margin Laba Kotor<br>
-                <span style="color:#94A3B8; font-weight:500;">Terkunci Pasti per Potong Baju</span>
+                Kontrol Operasional ${escapeHtml(sectorName)}<br>
+                <span style="color:#94A3B8; font-weight:500;">${escapeHtml(metrics)}</span>
               </div>
             </div>
           </div>
@@ -684,19 +688,36 @@ body {
       <!-- Right: Solutions & Workflow Cards -->
       <div class="solutions-stack">
         ${points.slice(0, 3).map((pt, pIdx) => {
-          const stepMeta = [
-            { category: '01 / MODAL & BAHAN', title: 'Hitung HPP Otomatis per Baju' },
-            { category: '02 / SURAT KERJA (SPK)', title: 'SPK Digital Setiap Penjahit' },
-            { category: '03 / STOK GUDANG', title: 'Pantau Sisa Gulungan Kain' }
+          const stepCategories = [
+            '01 / KONTROL MODAL & HPP',
+            '02 / ALUR KERJA & SPK DIGITAL',
+            '03 / PENGAWASAN & STOK REAL-TIME'
           ];
-          const meta = stepMeta[pIdx] || { category: `LANGKAH 0${pIdx + 1}`, title: `Langkah Terarah 0${pIdx + 1}` };
+          const cat = stepCategories[pIdx] || `LANGKAH 0${pIdx + 1}`;
+          
+          let title = '';
+          let desc = pt;
+          if (pt.includes(':')) {
+            const parts = pt.split(':');
+            title = parts[0].trim();
+            desc = parts.slice(1).join(':').trim();
+          } else {
+            const words = pt.split(' ');
+            if (words.length > 5) {
+              title = words.slice(0, 4).join(' ');
+              desc = words.slice(4).join(' ');
+            } else {
+              title = pt;
+              desc = `Optimalkan ${sectorName} bersama sistem COOCA`;
+            }
+          }
           return `
             <div class="solution-bezel">
               <div class="step-pill">0${pIdx + 1}</div>
               <div class="solution-content">
-                <div class="solution-header">${meta.category}</div>
-                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px; letter-spacing: -0.01em;">${meta.title}</div>
-                <div class="solution-desc">${escapeHtml(pt)}</div>
+                <div class="solution-header">${cat}</div>
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px; letter-spacing: -0.01em; text-transform: capitalize;">${escapeHtml(title)}</div>
+                <div class="solution-desc">${escapeHtml(desc)}</div>
               </div>
             </div>
           `;
@@ -704,8 +725,8 @@ body {
 
         <div class="feature-callout-card">
           <div>
-            <div class="callout-title">Fitur HPP & SPK Digital COOCA</div>
-            <div class="callout-sub">Otomatisasi pencatatan pesanan & laba rugi</div>
+            <div class="callout-title">Fitur ${escapeHtml(spec.feature_name || 'Sistem Operasi COOCA')}</div>
+            <div class="callout-sub">${escapeHtml(spec.solution_summary || 'Otomatisasi pencatatan usaha & keuangan rapi')}</div>
           </div>
           <div class="callout-pill">AKTIF</div>
         </div>

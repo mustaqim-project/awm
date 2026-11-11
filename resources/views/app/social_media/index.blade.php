@@ -22,8 +22,9 @@
         <x-module-tabs module="communication" />
 
         {{-- UNIFIED SETTINGS HUB MIGRATION NOTICE BANNER (Cluster 4 Standard) --}}
-        <div class="rounded-[18px] bg-gradient-to-r from-[#1877F2]/[0.08] via-[#E1306C]/[0.06] to-transparent border border-[#1877F2]/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
-            <div class="flex items-center gap-3.5">
+        <div x-data="{ showNotice: true }" x-show="showNotice" x-cloak
+            class="rounded-[18px] bg-gradient-to-r from-[#1877F2]/[0.08] via-[#E1306C]/[0.06] to-transparent border border-[#1877F2]/20 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs relative">
+            <div class="flex items-center gap-3.5 pr-8 sm:pr-0">
                 <div class="w-10 h-10 rounded-[12px] bg-gradient-to-br from-[#1877F2] to-[#E1306C] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <i data-lucide="sliders" class="w-5 h-5"></i>
                 </div>
@@ -37,12 +38,19 @@
                     </p>
                 </div>
             </div>
-            <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
-                class="min-h-[38px] px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shrink-0 shadow-sm">
-                <i data-lucide="settings" class="w-4 h-4"></i>
-                <span>{{ __('social_media.buka_pengaturan_saluran') }}</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-            </a>
+            <div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+                <a href="{{ route('settings.index', ['tab' => 'social_media']) }}"
+                    class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[12.5px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-2 flex-1 sm:flex-initial shadow-sm">
+                    <i data-lucide="settings" class="w-4 h-4"></i>
+                    <span>{{ __('social_media.buka_pengaturan_saluran') }}</span>
+                    <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </a>
+                <button type="button" @click="showNotice = false"
+                    class="w-8 h-8 rounded-full text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition flex items-center justify-center cursor-pointer shrink-0"
+                    title="{{ __('common.close') ?? 'Tutup' }}" aria-label="{{ __('common.close') ?? 'Tutup' }}">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
         </div>
 
         {{-- 3. MAIN COCKPIT GRID --}}
