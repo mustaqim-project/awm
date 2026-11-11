@@ -6,22 +6,22 @@
   "target_time": "16:30",
   "slot_label": "Facebook Afternoon Single Community Discussion Feed",
   "cluster": "Jasa Harian",
-  "sector": "Bengkel Mobil & Motor",
-  "sector_id": "bengkel_motor_mobil",
+  "sector": "Laundry Kiloan & Satuan",
+  "sector_id": "laundry_kiloan",
   "primary_feature": "whatsapp",
-  "feature_name": "SPK Nopol Digital & Notifikasi Servis WhatsApp",
-  "topic_name": "Jasa Harian: Solusi Operasional Bengkel Mobil & Motor",
-  "hook_title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
-  "solution_summary": "Fitur SPK Nopol Digital & Notifikasi Servis WhatsApp di COOCA bantu pemilik usaha bengkel mobil & motor mengelola operasional dan keuangan lebih rapi.",
-  "viral_score": 93.7,
+  "feature_name": "Manajemen Loker Rak & WhatsApp Siap Ambil",
+  "topic_name": "Jasa Harian: Solusi Operasional Laundry Kiloan & Satuan",
+  "hook_title": "Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas",
+  "solution_summary": "Fitur Manajemen Loker Rak & WhatsApp Siap Ambil di COOCA bantu pemilik usaha laundry kiloan & satuan mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 93.6,
   "gate_status": "PASSED (>= 85.0)",
   "trend_velocity": 95,
   "problem_urgency": 96,
   "platform_fit": 98,
   "cta_clarity": 95,
   "keywords": [
-    "tips usaha bengkel mobil & motor",
-    "masalah bengkel mobil & motor",
+    "tips usaha laundry kiloan & satuan",
+    "masalah laundry kiloan & satuan",
     "aplikasi usaha umkm",
     "cooca"
   ],
@@ -30,49 +30,49 @@
     "Komunitas Bisnis Jasa Harian",
     "Forum UMKM Indonesia"
   ],
-  "caption": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK\n\nBagi kamu yang menjalankan usaha di bidang bengkel mobil & motor, situasi ini pasti terasa akrab. Pekerjaan menumpuk dari pagi sampai malam, pelanggan silih berganti, tetapi pas tutup buku akhir bulan uang kas rasanya tidak terkumpul.\n\nMasalah ini wajar banget dialami banyak pemilik usaha, terutama karena:\n1. Input nomor polisi kendaraan dan rekam riwayat servis pelanggan\n2. Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan\n3. Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala\n\nKabar baiknya, kamu bisa bikin operasional usahamu jauh lebih rapi dan tenang menggunakan fitur SPK Nopol Digital & Notifikasi Servis WhatsApp di COOCA. Semua transaksi, stok, dan laporan keuangan tercatat otomatis tanpa perlu kamu hitung manual pakai kalkulator.\n\nMau coba? Daftar Paket Free di cooca.id, gratis selamanya buat Solo Owner.\n\nBagaimana pengalaman rekan-rekan pemilik usaha bengkel mobil & motor dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!\n\n#umkmindonesia #bengkel_motor_mobil #tipsbisnis #COOCA",
-  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Bengkel Mobil & Motor",
-  "discussion_question": "Bagaimana pengalaman rekan-rekan pemilik usaha bengkel mobil & motor dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!",
+  "caption": "Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas\n\nBagi kamu yang menjalankan usaha di bidang laundry kiloan & satuan, situasi ini pasti terasa akrab. Pekerjaan menumpuk dari pagi sampai malam, pelanggan silih berganti, tetapi pas tutup buku akhir bulan uang kas rasanya tidak terkumpul.\n\nMasalah ini wajar banget dialami banyak pemilik usaha, terutama karena:\n1. Input berat timbangan kg dan alokasikan nomor loker rak penyimpanan\n2. Kirim pesan WhatsApp otomatis ke pelanggan saat cucian sudah selesai\n3. Pelanggan bisa cek status cucian online tanpa perlu telepon kasir\n\nKabar baiknya, kamu bisa bikin operasional usahamu jauh lebih rapi dan tenang menggunakan fitur Manajemen Loker Rak & WhatsApp Siap Ambil di COOCA. Semua transaksi, stok, dan laporan keuangan tercatat otomatis tanpa perlu kamu hitung manual pakai kalkulator.\n\nMau coba? Daftar Paket Free di cooca.id, gratis selamanya buat Solo Owner.\n\nBagaimana pengalaman rekan-rekan pemilik usaha laundry kiloan & satuan dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!\n\n#umkmindonesia #laundry_kiloan #tipsbisnis #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Laundry Kiloan & Satuan",
+  "discussion_question": "Bagaimana pengalaman rekan-rekan pemilik usaha laundry kiloan & satuan dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!",
   "tone": "santai, akrab, tidak baku, sapaan kamu",
-  "slug": "facebook-bengkel_motor_mobil-225",
+  "slug": "facebook-laundry_kiloan-935",
   "slides": [
     {
       "slide": 1,
-      "title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
-      "tag": "Jasa Harian - Bengkel Mobil & Motor",
-      "description": "Bantu buat form SPK berdasarkan nopol kendaraan, hitung komisi mekanik otomatis, dan kirim pengingat servis via WhatsApp.",
+      "title": "Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas",
+      "tag": "Jasa Harian - Laundry Kiloan & Satuan",
+      "description": "Bantu catat timbangan kiloan dan nomor loker rak, lalu kirim pesan WhatsApp otomatis saat cucian wangi dan siap diambil.",
       "points": [
-        "Input nomor polisi kendaraan dan rekam riwayat servis pelanggan",
-        "Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan",
-        "Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala"
+        "Input berat timbangan kg dan alokasikan nomor loker rak penyimpanan",
+        "Kirim pesan WhatsApp otomatis ke pelanggan saat cucian sudah selesai",
+        "Pelanggan bisa cek status cucian online tanpa perlu telepon kasir"
       ]
     }
   ],
   "key_points": [
-    "Input nomor polisi kendaraan dan rekam riwayat servis pelanggan",
-    "Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan",
-    "Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala"
+    "Input berat timbangan kg dan alokasikan nomor loker rak penyimpanan",
+    "Kirim pesan WhatsApp otomatis ke pelanggan saat cucian sudah selesai",
+    "Pelanggan bisa cek status cucian online tanpa perlu telepon kasir"
   ],
-  "canva_mcp_prompt_brief": "Format: Single high-contrast image feed (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Bengkel mobil dan motor modern yang bersih dan tertata, mekanik handal sedang menyervis kendaraan pelanggan dengan peralatan canggih. No 2D flat cartoon or generic AI slop.\nContent Topic: Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK - Bengkel Mobil & Motor (Jasa Harian).",
-  "media_path": "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png",
+  "canva_mcp_prompt_brief": "Format: Single high-contrast image feed (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Toko laundry modern yang rapi dan wangi, deretan mesin cuci stainless steel beroperasi dan tumpukan pakaian rapi terbungkus plastik. No 2D flat cartoon or generic AI slop.\nContent Topic: Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas - Laundry Kiloan & Satuan (Jasa Harian).",
+  "media_path": "content-assets/facebook-feed-facebook-laundry_kiloan-935-1080x1080.png",
   "media_paths": [
-    "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png"
+    "content-assets/facebook-feed-facebook-laundry_kiloan-935-1080x1080.png"
   ],
-  "local_media_path": "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png",
+  "local_media_path": "content-assets/facebook-feed-facebook-laundry_kiloan-935-1080x1080.png",
   "local_media_paths": [
-    "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png"
+    "content-assets/facebook-feed-facebook-laundry_kiloan-935-1080x1080.png"
   ],
   "audience_research": {
-    "business_type": "Bengkel Mobil & Motor",
+    "business_type": "Laundry Kiloan & Satuan",
     "cluster": "Jasa Harian",
-    "persona": "Pemilik Usaha Bengkel Mobil & Motor",
-    "pain_points": "Pelanggan lupa jadwal servis berkala ganti oli, sparepart di gudang selisih fisik, dan bagi hasil komisi mekanik ribut di akhir bulan.",
-    "solution": "Bantu buat form SPK berdasarkan nopol kendaraan, hitung komisi mekanik otomatis, dan kirim pengingat servis via WhatsApp."
+    "persona": "Pemilik Usaha Laundry Kiloan & Satuan",
+    "pain_points": "Pakaian pelanggan tertukar di rak loker, pelanggan bolak-balik telepon tanya baju sudah selesai belum, dan nota kertas laundry basah.",
+    "solution": "Bantu catat timbangan kiloan dan nomor loker rak, lalu kirim pesan WhatsApp otomatis saat cucian wangi dan siap diambil."
   },
   "content_strategy": {
-    "core_problem": "Pelanggan lupa jadwal servis berkala ganti oli, sparepart di gudang selisih fisik, dan bagi hasil komisi mekanik ribut di akhir bulan.",
-    "solution_feature": "SPK Nopol Digital & Notifikasi Servis WhatsApp",
-    "metrics": "Pelanggan kembali servis naik 35% dan hitung komisi mekanik selesai dalam 5 menit.",
+    "core_problem": "Pakaian pelanggan tertukar di rak loker, pelanggan bolak-balik telepon tanya baju sudah selesai belum, dan nota kertas laundry basah.",
+    "solution_feature": "Manajemen Loker Rak & WhatsApp Siap Ambil",
+    "metrics": "Komplain pakaian tertukar nol persen dan hemat waktu melayani tanya-jawab chat 2 jam sehari.",
     "cta": "Mulai Gratis Selamanya di cooca.id"
   }
 }

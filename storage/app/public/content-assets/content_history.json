@@ -224,6 +224,20 @@
       "hook_title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
       "sector_id": "bengkel_motor_mobil",
       "sector_name": "Bengkel Mobil & Motor"
+    },
+    {
+      "timestamp": "2026-11-11T14:49:35.114151",
+      "topic_name": "Jasa Harian: Solusi Operasional Barbershop & Salon",
+      "hook_title": "Paket Creambath dan Potong Rambut Bocor? Rapikan Kasir Salon Biar Cuan Tenang",
+      "sector_id": "barbershop_salon",
+      "sector_name": "Barbershop & Salon"
+    },
+    {
+      "timestamp": "2026-11-11T14:59:33.636527",
+      "topic_name": "Jasa Harian: Solusi Operasional Laundry Kiloan & Satuan",
+      "hook_title": "Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas",
+      "sector_id": "laundry_kiloan",
+      "sector_name": "Laundry Kiloan & Satuan"
     }
   ],
   "cooca-feed-tiktok": [
