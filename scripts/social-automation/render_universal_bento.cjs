@@ -123,6 +123,15 @@ async function renderUniversalBento() {
   let outputPaths = [];
   let outputRelPaths = [];
 
+  const PINTEREST_DIR = path.join(ROOT_DIR, 'public/admin/social-media-assets/pinterest-showcase');
+  const carousel3DIcons = [
+    '3d_target.png',        // Slide 1: Focus & Hook
+    '3d_shop_store.png',     // Slide 2: Real Operations / Problem
+    '3d_rocket.png',         // Slide 3: Cooca Digital Solution
+    '3d_growth_arrow.png',   // Slide 4: Metric Growth & Margin
+    '3d_trophy.png'          // Slide 5: Victory & CTA
+  ];
+
   for (let idx = 0; idx < slides.length; idx++) {
     const s = slides[idx];
     const slideNumber = s.slide || (idx + 1);
@@ -134,6 +143,32 @@ async function renderUniversalBento() {
 
     const isFirstSlide = idx === 0;
     const isLastSlide = idx === totalSlides - 1;
+
+    // Slide-specific image resolution to guarantee NO repeated photos in carousels
+    let slidePhotoBase64 = '';
+    if (isCarousel) {
+      const slideNumPad = String(slideNumber).padStart(2, '0');
+      const slidePhotoCandidates = [
+        path.join(ROOT_DIR, `storage/app/public/admin/social-media-assets/carousel/${channel}/photo-slide-${slideNumPad}.jpg`),
+        path.join(ROOT_DIR, `storage/app/public/admin/social-media-assets/carousel/${channel}/photo-slide-${slideNumPad}.png`),
+        path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}-slide-${slideNumPad}.jpg`),
+        path.join(GENERATED_ASSETS_DIR, `photo-${sectorId.replace(/_/g, '-')}-slide-${slideNumPad}.png`)
+      ];
+      for (const sp of slidePhotoCandidates) {
+        if (fs.existsSync(sp)) {
+          slidePhotoBase64 = getBase64Image(sp);
+          break;
+        }
+      }
+    } else {
+      slidePhotoBase64 = photoBase64;
+    }
+
+    // Dynamic 3D asset per slide or cluster fallback
+    const current3DFileName = isCarousel 
+      ? carousel3DIcons[idx % carousel3DIcons.length]
+      : '3d_growth_arrow.png';
+    const current3DBase64 = getBase64Image(path.join(PINTEREST_DIR, current3DFileName));
 
     // Build award-winning editorial graphic HTML
     const htmlContent = `<!DOCTYPE html>

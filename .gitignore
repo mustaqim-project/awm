@@ -48,6 +48,11 @@ node_modules/
 !/public/payment-proofs/.gitkeep
 /public/admin/*
 !/public/admin/.gitkeep
+
+# --- Local Automation & Image Generators (Strictly Local - Do Not Push) ---
+scripts/social-automation/openai_*.py
+scripts/social-automation/openai_*.cjs
+scripts/social-automation/local_generators/
 /public/carousel/
 /public/sitemap*.xml
 npm-debug.log*

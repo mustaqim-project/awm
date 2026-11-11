@@ -815,7 +815,7 @@
                                 </svg>
                             </template>
                             <template x-if="!submitting">
-                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <i data-lucide="check" class="w-4 h-4"></i>
                             </template>
                             <span x-text="submitting ? '{{ __('purchasing.supplier.actions.submitting') }}' : '{{ __('purchasing.supplier.actions.save') }}'"></span>
                         </button>
