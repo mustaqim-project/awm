@@ -33,6 +33,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 SECTORS_FILE = os.path.join(BASE_DIR, "scripts/social-automation/config/sectors.json")
 FEATURES_CATALOG_PATH = os.path.join(BASE_DIR, "scripts/social-automation/features-catalog.json")
 CONTENT_HISTORY_PATH = os.path.join(BASE_DIR, "storage/app/public/content-assets/content_history.json")
+BATCH_RESERVATIONS_PATH = os.path.join(BASE_DIR, "storage/app/public/content-assets/batch_reservations.json")
 
 # Channel specifications
 AUTOMATION_SPECS = {
@@ -610,14 +611,87 @@ def get_recently_used_sectors() -> set:
             recent_sectors.append(sid)
     return set(recent_sectors)
 
-def pick_next_sector() -> tuple:
+def load_batch_reservations() -> dict:
+    if os.path.exists(BATCH_RESERVATIONS_PATH):
+        try:
+            with open(BATCH_RESERVATIONS_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                now = datetime.now()
+                valid = {}
+                for aid, res in data.items():
+                    ts = res.get("timestamp")
+                    if ts:
+                        try:
+                            dt = datetime.fromisoformat(ts)
+                            # Keep active reservations within 2 hours
+                            if (now - dt).total_seconds() < 7200:
+                                valid[aid] = res
+                        except Exception:
+                            pass
+                return valid
+        except Exception:
+            return {}
+    return {}
+
+def save_batch_reservation(automation_id: str, sector_id: str):
+    reservations = load_batch_reservations()
+    reservations[automation_id] = {
+        "sector_id": sector_id,
+        "timestamp": datetime.now().isoformat()
+    }
+    try:
+        os.makedirs(os.path.dirname(BATCH_RESERVATIONS_PATH), exist_ok=True)
+        with open(BATCH_RESERVATIONS_PATH, "w", encoding="utf-8") as f:
+            json.dump(reservations, f, indent=2)
+    except Exception:
+        pass
+
+def pick_next_sector(automation_id: str = "") -> tuple:
     all_keys = list(SECTOR_KNOWLEDGE.keys())
     recent = get_recently_used_sectors()
-    available = [k for k in all_keys if k not in recent]
-    if not available:
-        available = all_keys # Reset if all 20 have been cycled
+    active_reservations = load_batch_reservations()
     
-    selected_key = random.choice(available)
+    # Exclude sectors currently reserved by other automations in concurrent runs
+    currently_reserved = {
+        res["sector_id"] for aid, res in active_reservations.items() 
+        if aid != automation_id and "sector_id" in res
+    }
+    
+    # Exclude both recent runs and active concurrent reservations
+    available = [k for k in all_keys if k not in recent and k not in currently_reserved]
+    
+    # If exhausted, allow non-reserved keys from all_keys
+    if not available:
+        available = [k for k in all_keys if k not in currently_reserved]
+        
+    if not available:
+        available = all_keys # Fallback if all 20 are simultaneously active
+        
+    # Prefer cluster matching automation personality to maximize differentiation
+    preferred_clusters = {
+        "cooca-carousel-facebook": ["Kuliner & F&B", "Jasa Harian"],
+        "cooca-carousel-instagram": ["Kuliner & F&B", "Manufaktur & HPP"],
+        "cooca-carousel-linkedin": ["Jasa Proyek", "Distribusi & Agrobisnis"],
+        "cooca-carousel-tiktok": ["Jasa Harian", "Kuliner & F&B"],
+        "cooca-daily-umkm-carousel": ["Ritel & Toko Obat", "Manufaktur & HPP"],
+        "cooca-feed-facebook": ["Jasa Harian", "Ritel & Toko Obat"],
+        "cooca-feed-instagram": ["Manufaktur & HPP", "Kuliner & F&B"],
+        "cooca-feed-linkedin": ["Distribusi & Agrobisnis", "Jasa Proyek"],
+        "cooca-feed-tiktok": ["Kuliner & F&B", "Jasa Harian"],
+        "cooca-umkm-educational-social-media": ["Manufaktur & HPP", "Ritel & Toko Obat", "Jasa Proyek"]
+    }
+    
+    candidates = available
+    prefs = preferred_clusters.get(automation_id, [])
+    if prefs:
+        matching = [k for k in available if SECTOR_KNOWLEDGE[k].get("cluster") in prefs]
+        if matching:
+            candidates = matching
+
+    selected_key = random.choice(candidates)
+    if automation_id:
+        save_batch_reservation(automation_id, selected_key)
+        
     return selected_key, SECTOR_KNOWLEDGE[selected_key]
 
 def clean_text_strictly(text: str) -> str:
@@ -681,7 +755,7 @@ def main():
     slides_count = spec_config.get("slides_count", 1)
 
     # 1. Pick non-repetitive sector across 20 UMKM industries
-    sector_id, sector_info = pick_next_sector()
+    sector_id, sector_info = pick_next_sector(args.automation_id)
     cluster_name = sector_info["cluster"]
     sector_name = sector_info["name"]
     pain_point = sector_info["pain"]
