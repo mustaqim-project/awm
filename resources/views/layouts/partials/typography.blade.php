@@ -192,7 +192,7 @@
         color: var(--text-2, var(--apple-text-muted, rgba(235, 235, 245, 0.6)));
     }
 
-    /* Caption role (11–12px) */
+    /* Caption role (11-12px) */
     .caption-sm {
         font-size: 0.75rem;
         line-height: 1.2;
