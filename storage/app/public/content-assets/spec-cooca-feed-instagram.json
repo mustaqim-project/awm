@@ -54,11 +54,11 @@
     "Pantau sisa stok bahan kain di gudang tanpa perlu hitung gulungan manual"
   ],
   "canva_mcp_prompt_brief": "Format: Single high-contrast image feed (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Suasana ruang produksi konveksi baju yang rapi, penjahit profesional mengoperasikan mesin jahit industri, dan tumpukan kain tertata. No 2D flat cartoon or generic AI slop.\nContent Topic: Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu - Konveksi & Garment (Manufaktur & HPP).",
-  "media_path": "content-assets/instagram-feed-konveksi-graphic-design-1080x1080.png",
+  "media_path": "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png",
   "media_paths": [
     "content-assets/instagram-feed-konveksi-graphic-design-1080x1080.png"
   ],
-  "local_media_path": "content-assets/instagram-feed-konveksi-graphic-design-1080x1080.png",
+  "local_media_path": "content-assets/instagram-feed-instagram-konveksi_garment-602-1080x1080.png",
   "local_media_paths": [
     "content-assets/instagram-feed-konveksi-graphic-design-1080x1080.png"
   ],

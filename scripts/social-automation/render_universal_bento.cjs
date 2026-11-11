@@ -418,22 +418,22 @@ body {
 .solutions-stack {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
   justify-content: space-between;
 }
 
 .solution-bezel {
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  padding: 18px 22px;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(30, 41, 59, 0.45) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.20);
+  border-radius: 18px;
+  padding: 16px 20px;
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  backdrop-filter: blur(14px);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(16px);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .solution-bezel::before {
@@ -647,12 +647,18 @@ body {
       <!-- Right: Solutions & Workflow Cards -->
       <div class="solutions-stack">
         ${points.slice(0, 3).map((pt, pIdx) => {
-          const stepLabels = ['01 / MODAL & BAHAN', '02 / SURAT KERJA (SPK)', '03 / STOK GUDANG'];
+          const stepMeta = [
+            { category: '01 / MODAL & BAHAN', title: 'Hitung HPP Otomatis per Baju' },
+            { category: '02 / SURAT KERJA (SPK)', title: 'SPK Digital Setiap Penjahit' },
+            { category: '03 / STOK GUDANG', title: 'Pantau Sisa Gulungan Kain' }
+          ];
+          const meta = stepMeta[pIdx] || { category: `LANGKAH 0${pIdx + 1}`, title: `Langkah Terarah 0${pIdx + 1}` };
           return `
             <div class="solution-bezel">
               <div class="step-pill">0${pIdx + 1}</div>
               <div class="solution-content">
-                <div class="solution-header">${stepLabels[pIdx] || `LANGKAH 0${pIdx + 1}`}</div>
+                <div class="solution-header">${meta.category}</div>
+                <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 4px; letter-spacing: -0.01em;">${meta.title}</div>
                 <div class="solution-desc">${escapeHtml(pt)}</div>
               </div>
             </div>
