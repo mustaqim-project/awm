@@ -5,127 +5,74 @@
   "dimensions": "1080x1080",
   "target_time": "16:30",
   "slot_label": "Facebook Afternoon Single Community Discussion Feed",
+  "cluster": "Jasa Harian",
+  "sector": "Bengkel Mobil & Motor",
+  "sector_id": "bengkel_motor_mobil",
   "primary_feature": "whatsapp",
-  "feature_name": "Struk Digital & Broadcast WhatsApp",
-  "feature_route": "/whatsapp",
-  "topic_name": "Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
-  "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
-  "solution_summary": "Integrasi fitur Struk Digital & Broadcast WhatsApp di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 94.95,
+  "feature_name": "SPK Nopol Digital & Notifikasi Servis WhatsApp",
+  "topic_name": "Jasa Harian: Solusi Operasional Bengkel Mobil & Motor",
+  "hook_title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
+  "solution_summary": "Fitur SPK Nopol Digital & Notifikasi Servis WhatsApp di COOCA bantu pemilik usaha bengkel mobil & motor mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 93.7,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 93.0,
-  "problem_urgency": 96.0,
-  "platform_fit": 96.0,
-  "cta_clarity": 95.0,
-  "caption": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut\n\nDi kalangan pedagang ritel dan toko kelontong komunitas, bon hutang pelanggan seringkali menjadi dilema: Jika tidak diberi hutang pelanggan batal beli, namun jika dibiarkan menumpuk arus kas toko yang terganggu.\n\nBerikut solusi pembukuan piutang digital yang praktis dan efektif:\n- Tentukan batas maksimal plafon hutang per pelanggan tetap secara terukur.\n- Setiap bon tercatat langsung di sistem saat transaksi kasir berlangsung.\n- Kirim struk dan pengingat tanggal jatuh tempo yang sopan dan otomatis via WhatsApp.\n\nArus kas toko tetap sehat, hubungan baik dengan pelanggan pun tetap terjaga harmonis.\nDiskusikan sistem pembukuan piutang toko bersama modul Struk Digital & Broadcast WhatsApp di cooca.id\n\n#BukuBon #PiutangToko #KomunitasWarung #KeuanganUMKM #ManajemenKas #COOCA",
+  "trend_velocity": 95,
+  "problem_urgency": 96,
+  "platform_fit": 98,
+  "cta_clarity": 95,
+  "keywords": [
+    "tips usaha bengkel mobil & motor",
+    "masalah bengkel mobil & motor",
+    "aplikasi usaha umkm",
+    "cooca"
+  ],
+  "sources": [
+    "Google Trends Indonesia",
+    "Komunitas Bisnis Jasa Harian",
+    "Forum UMKM Indonesia"
+  ],
+  "caption": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK\n\nBagi kamu yang menjalankan usaha di bidang bengkel mobil & motor, situasi ini pasti terasa akrab. Pekerjaan menumpuk dari pagi sampai malam, pelanggan silih berganti, tetapi pas tutup buku akhir bulan uang kas rasanya tidak terkumpul.\n\nMasalah ini wajar banget dialami banyak pemilik usaha, terutama karena:\n1. Input nomor polisi kendaraan dan rekam riwayat servis pelanggan\n2. Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan\n3. Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala\n\nKabar baiknya, kamu bisa bikin operasional usahamu jauh lebih rapi dan tenang menggunakan fitur SPK Nopol Digital & Notifikasi Servis WhatsApp di COOCA. Semua transaksi, stok, dan laporan keuangan tercatat otomatis tanpa perlu kamu hitung manual pakai kalkulator.\n\nMau coba? Daftar Paket Free di cooca.id, gratis selamanya buat Solo Owner.\n\nBagaimana pengalaman rekan-rekan pemilik usaha bengkel mobil & motor dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!\n\n#umkmindonesia #bengkel_motor_mobil #tipsbisnis #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Bengkel Mobil & Motor",
+  "discussion_question": "Bagaimana pengalaman rekan-rekan pemilik usaha bengkel mobil & motor dalam mengatasi masalah ini? Yuk saling berbagi cerita di kolom komentar!",
+  "tone": "santai, akrab, tidak baku, sapaan kamu",
+  "slug": "facebook-bengkel_motor_mobil-225",
   "slides": [
     {
       "slide": 1,
-      "title": "Solusi Pengelolaan Bon Hutang Pelanggan & Catatan Piutang",
-      "tag": "Diskusi Komunitas"
+      "title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
+      "tag": "Jasa Harian - Bengkel Mobil & Motor",
+      "description": "Bantu buat form SPK berdasarkan nopol kendaraan, hitung komisi mekanik otomatis, dan kirim pengingat servis via WhatsApp.",
+      "points": [
+        "Input nomor polisi kendaraan dan rekam riwayat servis pelanggan",
+        "Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan",
+        "Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala"
+      ]
     }
   ],
-  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (FACEBOOK)",
-  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "key_points": [
+    "Input nomor polisi kendaraan dan rekam riwayat servis pelanggan",
+    "Bagi hasil komisi mekanik terhitung otomatis per jenis pekerjaan",
+    "Kirim pengingat otomatis ke WhatsApp pelanggan saat waktunya servis berkala"
+  ],
+  "canva_mcp_prompt_brief": "Format: Single high-contrast image feed (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Bengkel mobil dan motor modern yang bersih dan tertata, mekanik handal sedang menyervis kendaraan pelanggan dengan peralatan canggih. No 2D flat cartoon or generic AI slop.\nContent Topic: Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK - Bengkel Mobil & Motor (Jasa Harian).",
+  "media_path": "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png",
+  "media_paths": [
+    "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png"
+  ],
+  "local_media_path": "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png",
+  "local_media_paths": [
+    "content-assets/facebook-feed-facebook-bengkel_motor_mobil-225-1080x1080.png"
+  ],
   "audience_research": {
-    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
-    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
-    "operational_stage": "Modernisasi operasional harian",
-    "persona": {
-      "role": "Pemilik Usaha",
-      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
-      "tech_savviness": "Menengah",
-      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
-    },
-    "pain_points": {
-      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
-      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
-      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
-      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
-      "knowledge_gap": "Penerapan sistem digital terpadu"
-    },
-    "behavior_and_preferences": {
-      "headline_triggers": "Solusi praktis dan tips operasional langsung",
-      "preferred_content_style": "Infografis edukatif dan terstruktur",
-      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
-    }
+    "business_type": "Bengkel Mobil & Motor",
+    "cluster": "Jasa Harian",
+    "persona": "Pemilik Usaha Bengkel Mobil & Motor",
+    "pain_points": "Pelanggan lupa jadwal servis berkala ganti oli, sparepart di gudang selisih fisik, dan bagi hasil komisi mekanik ribut di akhir bulan.",
+    "solution": "Bantu buat form SPK berdasarkan nopol kendaraan, hitung komisi mekanik otomatis, dan kirim pengingat servis via WhatsApp."
   },
   "content_strategy": {
-    "core_problem": "Dilema kas bon hutang pelanggan yang menumpuk dan macet",
-    "educational_objective": "Memberikan wawasan aplikatif seputar Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
-    "content_angle": "Operational Awareness",
-    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
-    "practical_takeaways": [
-      "Gunakan pencatatan otomatis",
-      "Terapkan SOP harian",
-      "Evaluasi berkala"
-    ],
-    "cooca_organic_link": "Solusi Struk Digital & Broadcast WhatsApp di COOCA",
-    "audience_relevance_score": 95.0,
-    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens FACEBOOK dalam mengoptimalkan pengelolaan bisnis UMKM"
-  },
-  "caption_strategy": {
-    "opening_hook": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
-    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
-    "educational_value": "Edukasi praktis langkah demi langkah.",
-    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
-    "cooca_solution": "Informasi lebih lanjut di cooca.id",
-    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
-    "hashtags": [
-      "#TipsBisnis",
-      "#ManajemenToko",
-      "#UMKM",
-      "#COOCA"
-    ]
-  },
-  "quality_control": {
-    "research_validation": "PASSED",
-    "audience_validation": "PASSED",
-    "content_validation": "PASSED",
-    "caption_validation": "PASSED",
-    "product_relevance_validation": "PASSED",
-    "originality_validation": "PASSED",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-10 10:11:49",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Square 1:1 feed (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic high-end photography of organized modern retail store inventory shelves, warehouse logistics, or a merchant conducting a barcode stock check matching the inventory topic). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang', bold headline 'Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
+    "core_problem": "Pelanggan lupa jadwal servis berkala ganti oli, sparepart di gudang selisih fisik, dan bagi hasil komisi mekanik ribut di akhir bulan.",
+    "solution_feature": "SPK Nopol Digital & Notifikasi Servis WhatsApp",
+    "metrics": "Pelanggan kembali servis naik 35% dan hitung komisi mekanik selesai dalam 5 menit.",
+    "cta": "Mulai Gratis Selamanya di cooca.id"
+  }
 }

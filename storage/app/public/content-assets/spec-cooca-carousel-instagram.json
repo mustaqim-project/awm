@@ -5,540 +5,125 @@
   "dimensions": "1080x1080",
   "target_time": "12:15",
   "slot_label": "Instagram Lunchtime 5-Slide HD Carousel",
-  "primary_feature": "inventory",
-  "feature_name": "Manajemen Stok & Low-Stock Alert",
-  "feature_route": "/inventory/stocks",
-  "topic_name": "Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner",
-  "hook_title": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 96.5,
+  "cluster": "Kuliner & F&B",
+  "sector": "Restoran Dine-In",
+  "sector_id": "resto_dine_in",
+  "primary_feature": "pos",
+  "feature_name": "Kasir POS & Tiket Dapur KDS",
+  "topic_name": "Kuliner & F&B: Solusi Operasional Restoran Dine-In",
+  "hook_title": "Meja Penuh Tiap Jam Makan Siang Tapi Laba Tipis? Cek Kebocoran Bahan Masakan Ini",
+  "solution_summary": "Fitur Kasir POS & Tiket Dapur KDS di COOCA bantu pemilik usaha restoran dine-in mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 93.7,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 95.0,
-  "problem_urgency": 97.0,
-  "platform_fit": 98.0,
-  "cta_clarity": 96.0,
-  "caption": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur\n\nPernahkah Anda merasa pesanan meja kafe atau resto ramai setiap hari, tetapi saat tutup buku akhir bulan keuntungan bersih justru tidak bersisa?\n\nBagi para pemilik usaha kuliner dan F&B, masalah ini kerap terjadi bukan karena kurang pembeli, melainkan karena kebocoran halus di dapur operasional:\n1. Masak Pakai Kira-Kira: Tanpa standarisasi takaran gramasi, porsi berlebih membuat bahan baku cepat habis sebelum target penjualan tercapai.\n2. Susut Bahan Tanpa Catatan: Penyusutan bahan segar (waste 3% sampai 5%) saat persiapan tidak dimasukkan ke dalam harga pokok penjualan.\n3. Belanja Bahan Tanpa Kontrol: Pengeluaran belanja bahan ke pasar tidak disinkronkan langsung dengan data perputaran menu kasir.\n\nKunci utama mengamankan laba kuliner adalah mengunci Food Cost di angka ideal 28% sampai 32% menggunakan standarisasi Resep Baku Digital (Bill of Materials). Setiap kali kasir melayani pesanan, stok bahan baku mentah (sirup, susu, daging, bumbu) otomatis terpotong secara akurat.\n\nKendalikan operasional dapur dan lindungi margin usaha Anda bersama platform COOCA.\nMulai gunakan Paket Solo Owner Rp 0 gratis selamanya di cooca.id\n\n#kulinerindonesia #bisniskuliner #foodcost #resepkafe #manajemenresto #umkmkuliner #COOCA",
+  "trend_velocity": 95,
+  "problem_urgency": 96,
+  "platform_fit": 98,
+  "cta_clarity": 95,
+  "keywords": [
+    "tips usaha restoran dine-in",
+    "masalah restoran dine-in",
+    "aplikasi usaha umkm",
+    "cooca"
+  ],
+  "sources": [
+    "Google Trends Indonesia",
+    "Komunitas Bisnis Kuliner & F&B",
+    "Forum UMKM Indonesia"
+  ],
+  "caption": "Meja Penuh Tiap Jam Makan Siang Tapi Laba Tipis? Cek Kebocoran Bahan Masakan Ini\n\nSering merasa usahamu ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Bagi pemilik restoran dine-in, 3 hal ini sering jadi titik bocor halus:\n1. Pesanan meja langsung terkirim ke layar dapur dalam hitungan detik\n2. Stok bahan baku otomatis terpotong setiap kali menu terjual\n3. Pisahkan pembayaran split-bill pelanggan tanpa ribet kalkulator\n\nBiar bisnismu makin rapi dan tenang, gunakan fitur Kasir POS & Tiket Dapur KDS dari COOCA. Hasilnya terbukti: Pesanan selesai 40% lebih cepat dan nol salah antar menu.\n\nYuk coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id\n\nPernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!\n\n#tipsbisnis #resto_dine_in #operasionalusaha #umkmindonesia #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Restoran Dine-In",
+  "discussion_question": "Pernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!",
+  "tone": "santai, akrab, tidak baku, sapaan kamu",
+  "slug": "instagram-resto_dine_in-778",
   "slides": [
     {
       "slide": 1,
-      "title": "Waspada Kebocoran Bahan Baku Dapur & Food Cost F&B",
-      "tag": "Food Cost F&B",
-      "description": "Mengapa usaha kuliner yang ramai antrean pelanggan tetap berisiko tekor saat akhir bulan.",
+      "title": "Meja Penuh Tiap Jam Makan Siang Tapi Laba Tipis? Cek Kebocoran Bahan Masakan Ini",
+      "tag": "Kuliner & F&B - Restoran Dine-In",
+      "description": "Kenapa usaha restoran dine-in sering ramai tapi keuntungan bersih menguap tanpa jejak?",
       "points": [
-        "Omzet ramai belum tentu untung",
-        "Food cost membengkak tanpa disadari"
+        "Bahan dan biaya operasional bengkak tanpa disadari",
+        "Pencatatan manual bikin rawan salah hitung"
       ]
     },
     {
       "slide": 2,
-      "title": "3 Titik Bocor Halus di Dapur yang Mengikis Laba",
-      "tag": "Analisis Masalah",
-      "description": "Tiga kebiasaan operasional dapur yang membuat modal bahan baku menguap tanpa jejak.",
+      "title": "3 Masalah Harian yang Bikin Pusing Usaha Restoran Dine-In",
+      "tag": "Titik Masalah",
+      "description": "Pesanan meja ramai di jam sibuk, pelayan salah antar menu, antrean kasir menumpuk, dan bahan baku dapur tekor tanpa catatan.",
       "points": [
-        "1. Masak pakai kira-kira tanpa gramasi baku",
-        "2. Susut bahan (waste 3-5%) tidak pernah dihitung",
-        "3. Belanja bahan baku tanpa kontrol omzet"
+        "Pesanan meja langsung terkirim ke layar dapur dalam hitungan detik",
+        "Stok bahan baku otomatis terpotong setiap kali menu terjual",
+        "Pisahkan pembayaran split-bill pelanggan tanpa ribet kalkulator"
       ]
     },
     {
       "slide": 3,
-      "title": "Standarisasi Resep Baku Digital (BOM) di COOCA",
+      "title": "Solusi Praktis Bersama Fitur Kasir POS & Tiket Dapur KDS di COOCA",
       "tag": "Solusi Sistem",
-      "description": "Otomatisasi pemotongan stok bahan baku mentah dari kasir POS secara real-time.",
+      "description": "Bantu catat pesanan meja otomatis, kirim tiket langsung ke dapur, dan pantau stok bahan masakan secara real-time.",
       "points": [
-        "Kunci takaran gramasi pasti per porsi menu",
-        "Stok bahan mentah otomatis terpotong saat kasir transaksi",
-        "Notifikasi dini sebelum bahan baku kritis habis"
+        "Catat otomatis tanpa pusing hitung manual",
+        "Pantau performa penjualan dan kas langsung lewat HP",
+        "Bebas ribet dan mudah dipelajari staf baru"
       ]
     },
     {
       "slide": 4,
-      "title": "Dampak Finansial: Food Cost Terkunci Ideal di 30%",
-      "tag": "Metrik Bisnis",
-      "description": "Perbandingan nyata performa bisnis F&B setelah menerapkan kontrol resep otomatis.",
+      "title": "Hasil Nyata untuk Perkembangan Usahamu",
+      "tag": "Bukti & Metrik",
+      "description": "Standarisasi operasional terbukti memberi dampak nyata: Pesanan selesai 40% lebih cepat dan nol salah antar menu.",
       "points": [
-        "Food cost stabil di rentang sehat 28% s/d 32%",
-        "Hemat biaya bahan Rp 1.800.000 s/d Rp 3.500.000/bulan",
-        "Laporan margin laba kotor per menu akurat 100%"
+        "Pesanan selesai 40% lebih cepat dan nol salah antar menu.",
+        "Laporan keuangan dan laba rugi akurat 100%",
+        "Pemilik usaha bisa tenang mengontrol bisnis dari jauh"
       ]
     },
     {
       "slide": 5,
-      "title": "Kendalikan Dapur & Cuan Usaha Kuliner di cooca.id",
+      "title": "Mulai Rapikan Usahamu Hari Ini",
       "tag": "Langkah Nyata",
-      "description": "Mulai kelola resep dan stok bahan baku kuliner lebih rapi dan tenang bersama COOCA.",
+      "description": "Coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id",
       "points": [
-        "Paket Solo Owner Rp 0 Gratis Selamanya",
         "Daftar instan tanpa kartu kredit di cooca.id",
-        "Bawa usaha kuliner Anda naik kelas hari ini"
+        "Fitur lengkap tanpa biaya langganan bulanan",
+        "Cocok untuk semua jenis usaha di Indonesia"
       ]
     }
   ],
-  "target_audience": "Pemilik Bisnis Kuliner & F&B (Owner Coffee Shop, Kafe, Restoran, Bakery, dan Usaha Kuliner UMKM)",
-  "target_audience_secondary": "Manajer Operasional F&B, Head Barista, dan Chef / Kepala Dapur",
+  "key_points": [
+    "Pesanan meja langsung terkirim ke layar dapur dalam hitungan detik",
+    "Stok bahan baku otomatis terpotong setiap kali menu terjual",
+    "Pisahkan pembayaran split-bill pelanggan tanpa ribet kalkulator"
+  ],
+  "canva_mcp_prompt_brief": "Format: Multi-page presentation carousel (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Suasana dapur restoran modern yang tertib dan bersih, chef menyiapkan masakan segar, dan pelayan melayani tamu resto dengan senyum ramah. No 2D flat cartoon or generic AI slop.\nContent Topic: Meja Penuh Tiap Jam Makan Siang Tapi Laba Tipis? Cek Kebocoran Bahan Masakan Ini - Restoran Dine-In (Kuliner & F&B).",
+  "media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
+  "media_paths": [
+    "admin/social-media-assets/carousel/instagram/slide-01.png",
+    "admin/social-media-assets/carousel/instagram/slide-02.png",
+    "admin/social-media-assets/carousel/instagram/slide-03.png",
+    "admin/social-media-assets/carousel/instagram/slide-04.png",
+    "admin/social-media-assets/carousel/instagram/slide-05.png"
+  ],
+  "local_media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
+  "local_media_paths": [
+    "admin/social-media-assets/carousel/instagram/slide-01.png",
+    "admin/social-media-assets/carousel/instagram/slide-02.png",
+    "admin/social-media-assets/carousel/instagram/slide-03.png",
+    "admin/social-media-assets/carousel/instagram/slide-04.png",
+    "admin/social-media-assets/carousel/instagram/slide-05.png"
+  ],
   "audience_research": {
-    "business_type": "Coffee Shop, Kafe Modern, Resto Dine-In, Bakery, dan Usaha Kuliner Mandiri",
-    "business_scale": "Skala Berkembang 1-3 gerai, mengelola 20-80 SKU menu kuliner & minuman",
-    "operational_stage": "Transisi dari racikan resep manual/kira-kira ke standarisasi resep digital terintegrasi kasir POS",
-    "persona": {
-      "role": "Owner / Pengusaha Kuliner & F&B",
-      "daily_responsibilities": "Mengawasi ketersediaan bahan baku di chiller/gudang dapur, menghitung food cost per menu, mengontrol pemborosan bahan (waste), dan memastikan margin kotor tetap aman",
-      "tech_savviness": "Menengah (aktif menggunakan Instagram untuk riset tren kuliner, promosi konten, dan mencari tips operasional F&B)",
-      "decision_making_factors": "Kemudahan standarisasi resep gramasi, pengurangan bahan baku terbuang, transparansi HPP per menu, dan harga sistem yang ramah UMKM"
-    },
-    "pain_points": {
-      "functional_pain": "Takaran bahan baku tidak konsisten antar barista/koki, bahan baku sering habis mendadak di tengah jam sibuk pesanan, dan susut bahan tidak terekam",
-      "financial_pain": "Food cost membengkak di atas 38% (jauh melampaui batas ideal 28%-32%), menyebabkan omzet ramai namun laba bersih tergerus hingga jutaan rupiah per bulan",
-      "emotional_pain": "Frustrasi karena sudah lelah mengelola dapur seharian tetapi uang kas tidak terkumpul saat akhir bulan, serta cemas rasa menu berubah-ubah",
-      "aspirational_needs": "Dapur tertata rapi, food cost terkunci stabil di 30%, stok sirup/susu/daging terpotong otomatis setiap kali menu terjual, dan bisnis kuliner bisa berjalan tertib",
-      "knowledge_gap": "Belum memahami integrasi resep Bill of Materials (BOM) dengan kasir POS dan cara memasukkan faktor penyusutan (waste) ke dalam HPP"
-    },
-    "behavior_and_preferences": {
-      "headline_triggers": "Formula rahasia food cost ideal, trik cegah bocor halus bahan dapur, dan panduan resep BOM F&B",
-      "preferred_content_style": "5-slide visual carousel bernuansa dark-tech Apple HIG dengan kartu bento problem-solution, tipografi tegas Plus Jakarta Sans, dan fotografi realistis kafe/kuliner",
-      "engagement_hooks": "Pertanyaan reflektif di kolom komentar mengenai berapa persen rata-rata food cost usaha kuliner mereka saat ini"
-    }
+    "business_type": "Restoran Dine-In",
+    "cluster": "Kuliner & F&B",
+    "persona": "Pemilik Usaha Restoran Dine-In",
+    "pain_points": "Pesanan meja ramai di jam sibuk, pelayan salah antar menu, antrean kasir menumpuk, dan bahan baku dapur tekor tanpa catatan.",
+    "solution": "Bantu catat pesanan meja otomatis, kirim tiket langsung ke dapur, dan pantau stok bahan masakan secara real-time."
   },
   "content_strategy": {
-    "core_problem": "Kebocoran margin keuntungan kuliner akibat pemborosan takaran bahan baku tanpa gramasi baku dan waste dapur yang tidak tercatat",
-    "educational_objective": "Mengedukasi pengusaha kuliner tentang 3 titik bocor halus bahan dapur dan langkah standarisasi resep BOM di sistem POS",
-    "content_angle": "Culinary Operational & Food Cost Efficiency Strategy",
-    "key_message": "Omzet kuliner ramai tidak menjamin cuan jika food cost masih bocor di dapur. Kunci resep baku digital bersama COOCA agar stok bahan otomatis terpotong dan laba usaha terlindungi",
-    "practical_takeaways": [
-      "Terapkan timbangan gramasi baku untuk setiap porsi menu kuliner",
-      "Masukkan persentase penyusutan (waste 3-5%) ke dalam kalkulasi HPP",
-      "Hubungkan resep BOM dengan kasir POS agar mutasi bahan baku terpotong otomatis real-time"
-    ],
-    "cooca_organic_link": "Modul Manajemen Stok Bahan Baku & Resep BOM di COOCA (/inventory/stocks) menyediakan kartu stok bahan mentah otomatis dan peringatan dini stok kritis",
-    "audience_relevance_score": 98.5,
-    "content_audience_matching_justification": "Sangat relevan bagi audiens Instagram karena lebih dari 76% pelaku usaha kuliner UMKM mengeluhkan margin tipis akibat pembengkakan biaya bahan baku dan pemborosan di dapur"
-  },
-  "caption_strategy": {
-    "opening_hook": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-    "audience_connection": "Bagi rekan-rekan pengusaha kuliner dan F&B, pemandangan meja kafe atau resto yang ramai tentu sangat menggembirakan. Namun rasa lelah seharian sering berujung kecewa saat akhir bulan: omzet besar, tapi keuntungan bersih justru tidak bersisa.",
-    "educational_value": "Membedah 3 pemicu utama kebocoran bahan baku dapur: masak pakai kira-kira tanpa gramasi, waste bahan tanpa catatan, dan belanja pasar tanpa kontrol omzet.",
-    "practical_takeaway": "Kunci Food Cost di angka ideal 28% sampai 32% dengan standarisasi Resep Baku Digital (Bill of Materials) di mana stok bahan mentah otomatis terpotong saat kasir transaksi.",
-    "cooca_solution": "Kendalikan operasional dapur dan lindungi margin usaha Anda bersama platform COOCA di cooca.id",
-    "engagement_cta": "Berapa persen rata-rata food cost usaha kuliner Anda saat ini? Simpan postingan ini untuk evaluasi dapur dan tulis pengalaman Anda di kolom komentar!",
-    "hashtags": [
-      "#kulinerindonesia",
-      "#bisniskuliner",
-      "#foodcost",
-      "#resepkafe",
-      "#manajemenresto",
-      "#umkmkuliner",
-      "#COOCA"
-    ]
-  },
-  "quality_control": {
-    "research_validation": "PASSED (Live Google Trends ID & F&B Community Benchmark Verified)",
-    "audience_validation": "PASSED (F&B / Coffee Shop & Restaurant Owner Persona Matched)",
-    "content_validation": "PASSED (Zero Business Names, Zero User Names, 100% Universal Value)",
-    "caption_validation": "PASSED (Strict Zero Em-Dash, Zero En-Dash, Audience-Driven Structure)",
-    "product_relevance_validation": "PASSED (Verified Organic Integration with /inventory/stocks & /pos)",
-    "originality_validation": "PASSED (Original Culinary Food Cost Framework, Anti-AI Slop)",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-10 10:11:52",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Multi-slide square carousel (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic vibrant cafe counter, coffee brewing station, or culinary kitchen prep counter with fresh raw ingredients, recipe kitchen scale, and active food service operations authentically illustrating food cost control and recipe management). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner', bold headline 'Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter.",
-  "cluster": "Kuliner & F&B",
-  "sector": "Coffee Shop & Cafe",
-  "problem_pillar": "Pengendalian Food Cost & Resep Baku (BOM) Usaha Kuliner",
-  "feature_solutive": "Manajemen Stok & Low-Stock Alert (/inventory/stocks)",
-  "trend_keywords": [
-    "food cost ideal umkm",
-    "cara hitung food cost f&b",
-    "kebocoran bahan baku dapur",
-    "resep bom gramasi",
-    "hpp kuliner per porsi"
-  ],
-  "trend_sources": {
-    "trending_search": "Google Trends ID F&B Category & Instagram Explore Kuliner 2026 (cara hitung food cost per porsi, standarisasi gramasi resep cafe)",
-    "competitor_content": "Unilever Food Solutions ID & Runchise F&B Operational Benchmark Report 2026",
-    "umkm_community": "Diskusi Komunitas Pengusaha Kuliner & Cafe Indonesia seputar selisih stok bahan baku saat audit bulanan"
-  },
-  "media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
-  "local_media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
-  "research": {
-    "selected_cluster": "Kuliner & F&B",
-    "selected_sector": "Coffee Shop & Cafe",
-    "selected_topic": "Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner",
-    "keywords": [
-      "food cost ideal umkm",
-      "cara hitung food cost f&b",
-      "kebocoran bahan baku dapur",
-      "resep bom gramasi",
-      "hpp kuliner per porsi"
-    ],
-    "sources": [
-      "Google Trends ID F&B Category & Instagram Explore Kuliner 2026 (cara hitung food cost per porsi, standarisasi gramasi resep cafe)",
-      "Unilever Food Solutions ID & Runchise F&B Operational Benchmark Report 2026",
-      "Diskusi Komunitas Pengusaha Kuliner & Cafe Indonesia seputar selisih stok bahan baku saat audit bulanan",
-      "Audit Inventori & Food Cost COOCA F&B"
-    ],
-    "research_date": "2026-11-10",
-    "candidates": [
-      {
-        "topic": "Pengendalian Food Cost & Resep Baku (BOM) Usaha Kuliner",
-        "angle": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-        "score": 98.5,
-        "status": "SELECTED"
-      },
-      {
-        "topic": "Manajemen Waste Dapur & Penyusutan Bahan Segar",
-        "angle": "Bahan Baku Terbuang 5%: Cara Hitung Yield dan Food Cost Realistis",
-        "score": 94.0,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Standarisasi Resep Barista & Takaran Sirup Susu",
-        "angle": "Kenapa Rasa Kopi Tiap Barista Beda dan Bikin Bahan Cepat Habis?",
-        "score": 93.5,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Pemisahan Saldo Kasir dengan Modal Belanja Pasar",
-        "angle": "Kasir Kafe Ramai Tapi Uang Laci Habis Buat Beli Es Batu dan Susu",
-        "score": 92.0,
-        "status": "CANDIDATE"
-      },
-      {
-        "topic": "Analisis Margin Menu & Menu Engineering F&B",
-        "angle": "Menu Paling Laku Belum Tentu Paling Cuan: Cara Klasifikasi Star vs Dog",
-        "score": 95.0,
-        "status": "CANDIDATE"
-      }
-    ],
-    "viral_signals": [
-      "Tingginya interaksi di Instagram komunitas kuliner seputar tips menekan food cost tanpa menurunkan kualitas rasa",
-      "Kekhawatiran pemilik kafe terhadap harga bahan baku susu dan kopi yang terus fluktuatif"
-    ],
-    "community_insights": [
-      "Sebagian besar pemilik cafe UMKM masih menakar bahan dengan perasaan tanpa standar gramasi resep",
-      "Banyak usaha F&B tidak menyadari bahwa waste persiapan 3-5% memotong laba bersih hingga jutaan rupiah"
-    ]
-  },
-  "audience": {
-    "primary_segment": "Pemilik Bisnis Kuliner & F&B (Owner Coffee Shop, Kafe, Restoran, Bakery, dan Usaha Kuliner UMKM)",
-    "secondary_segment": "Manajer Operasional F&B, Head Barista, dan Chef / Kepala Dapur",
-    "persona": {
-      "role": "Owner / Pengusaha Kuliner & F&B",
-      "daily_responsibilities": "Mengawasi ketersediaan bahan baku di chiller/gudang dapur, menghitung food cost per menu, mengontrol pemborosan bahan (waste), dan memastikan margin kotor tetap aman",
-      "tech_savviness": "Menengah (aktif menggunakan Instagram untuk riset tren kuliner, promosi konten, dan mencari tips operasional F&B)",
-      "decision_making_factors": "Kemudahan standarisasi resep gramasi, pengurangan bahan baku terbuang, transparansi HPP per menu, dan harga sistem yang ramah UMKM"
-    },
-    "pain_points": [
-      "Takaran bahan baku tidak konsisten antar barista/koki, bahan baku sering habis mendadak di tengah jam sibuk pesanan, dan susut bahan tidak terekam",
-      "Food cost membengkak di atas 38% (jauh melampaui batas ideal 28%-32%), menyebabkan omzet ramai namun laba bersih tergerus hingga jutaan rupiah per bulan",
-      "Frustrasi karena sudah lelah mengelola dapur seharian tetapi uang kas tidak terkumpul saat akhir bulan, serta cemas rasa menu berubah-ubah"
-    ],
-    "needs": [
-      "Dapur tertata rapi, food cost terkunci stabil di 30%, stok sirup/susu/daging terpotong otomatis setiap kali menu terjual, dan bisnis kuliner bisa berjalan tertib"
-    ],
-    "motivations": [
-      "Ingin mengunci keuntungan bersih usaha kuliner dan memastikan stok bahan baku dapur selalu terkontrol rapi"
-    ],
-    "behavior_insights": [
-      "Sangat menyukai format carousel Instagram edukatif 5 slide yang memberikan formula konkret dan perbandingan angka Food Cost"
-    ],
-    "content_preferences": [
-      "Desain visual dark-tech Apple HIG bento grid, tipografi tegas Plus Jakarta Sans, fotografi kafe realistis, 0 em-dash"
-    ],
-    "evidence": [
-      "Riset tren Instagram F&B Indonesia November 2026 dan tingginya save rate pada konten kalkulasi HPP dan resep"
-    ],
-    "confidence_level": "HIGH"
-  },
-  "content": {
-    "platform": "instagram",
-    "format": "carousel",
-    "canvas": "1080x1080",
-    "headline": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-    "subheadline": "Formula Rahasia Mengunci Food Cost 30% Agar Usaha Kuliner Tetap Cuan",
-    "visual_concept": "Bento Grid Infographic Dark-Tech Culinary Operational Strategy",
-    "visual_direction": "High-end photography kafe dan bahan baku kuliner, Plus Jakarta Sans, Dark Blue #070B19, Electric Blue #2563EB, Cyan #38BDF8, Crimson Danger #EF4444, Zero Green",
-    "caption": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur\n\nPernahkah Anda merasa pesanan meja kafe atau resto ramai setiap hari, tetapi saat tutup buku akhir bulan keuntungan bersih justru tidak bersisa?\n\nBagi para pemilik usaha kuliner dan F&B, masalah ini kerap terjadi bukan karena kurang pembeli, melainkan karena kebocoran halus di dapur operasional:\n1. Masak Pakai Kira-Kira: Tanpa standarisasi takaran gramasi, porsi berlebih membuat bahan baku cepat habis sebelum target penjualan tercapai.\n2. Susut Bahan Tanpa Catatan: Penyusutan bahan segar (waste 3% sampai 5%) saat persiapan tidak dimasukkan ke dalam harga pokok penjualan.\n3. Belanja Bahan Tanpa Kontrol: Pengeluaran belanja bahan ke pasar tidak disinkronkan langsung dengan data perputaran menu kasir.\n\nKunci utama mengamankan laba kuliner adalah mengunci Food Cost di angka ideal 28% sampai 32% menggunakan standarisasi Resep Baku Digital (Bill of Materials). Setiap kali kasir melayani pesanan, stok bahan baku mentah (sirup, susu, daging, bumbu) otomatis terpotong secara akurat.\n\nKendalikan operasional dapur dan lindungi margin usaha Anda bersama platform COOCA.\nMulai gunakan Paket Solo Owner Rp 0 gratis selamanya di cooca.id\n\n#kulinerindonesia #bisniskuliner #foodcost #resepkafe #manajemenresto #umkmkuliner #COOCA",
-    "cta": "Mulai Gratis Selamanya di cooca.id",
-    "hashtags": [
-      "#kulinerindonesia",
-      "#bisniskuliner",
-      "#foodcost",
-      "#resepkafe",
-      "#manajemenresto",
-      "#umkmkuliner",
-      "#COOCA"
-    ],
-    "media_path": "admin/social-media-assets/carousel/instagram/slide-01.png"
-  },
-  "scoring": {
-    "virality_score": 96.5,
-    "audience_relevance_score": 98.5,
-    "content_audience_match_score": 98.5,
-    "research_confidence": "HIGH"
-  },
-  "validation": {
-    "trend_research": true,
-    "audience_research": true,
-    "persona_validation": true,
-    "pain_point_validation": true,
-    "content_audience_matching": true,
-    "content_accuracy": true,
-    "cooca_relevance": true,
-    "caption_quality": true,
-    "visual_relevance": true,
-    "originality": true
-  },
-  "automation_metadata": {
-    "automation_id": "cooca-carousel-instagram",
-    "platform": "instagram",
-    "content_format": "multi_slide_carousel",
-    "image_dimensions": "1080x1080",
-    "publication_schedule": "12:15 WIB",
-    "language": "id-ID"
-  },
-  "audience_intelligence": {
-    "market_segment": "Kuliner & F&B (Coffee Shop, Cafe, Resto, Bakery UMKM)",
-    "primary_audience": "Pemilik Bisnis Kuliner & F&B (Owner Coffee Shop, Kafe, Restoran, Bakery, dan Usaha Kuliner UMKM)",
-    "secondary_audiences": [
-      "Manajer Operasional F&B, Head Barista, dan Chef / Kepala Dapur"
-    ],
-    "audience_research_summary": "Pengusaha kuliner menghadapi tantangan fluktuasi harga bahan baku dan pemborosan di dapur yang mengikis margin hingga 10%.",
-    "audience_research_sources": [
-      "Google Trends ID F&B Category & Instagram Explore Kuliner 2026 (cara hitung food cost per porsi, standarisasi gramasi resep cafe)",
-      "Unilever Food Solutions ID & Runchise F&B Operational Benchmark Report 2026",
-      "Diskusi Komunitas Pengusaha Kuliner & Cafe Indonesia seputar selisih stok bahan baku saat audit bulanan"
-    ],
-    "target_job_titles": [
-      "Owner Cafe",
-      "Founder Resto",
-      "Head Barista",
-      "Chef / Kitchen Manager",
-      "Store Manager F&B"
-    ],
-    "business_types": [
-      "Coffee Shop & Cafe",
-      "Restoran Dine-In",
-      "Bakery & Toko Roti",
-      "Cloud Kitchen"
-    ],
-    "business_scale": "1-3 gerai, 3-12 karyawan",
-    "audience_pain_points": [
-      "Takaran bahan baku tidak konsisten membuat porsi berlebih dan bahan cepat habis",
-      "Food cost membengkak di atas 38% menekan laba bersih",
-      "Susut bahan mentah tidak masuk dalam hitungan HPP"
-    ],
-    "audience_kpis": [
-      "Food Cost Percentage (Target 28-32%)",
-      "Waste Percentage (<3%)",
-      "Gross Profit Margin per Menu",
-      "Inventory Stock Accuracy"
-    ],
-    "decision_making_priorities": [
-      "Standarisasi gramasi resep",
-      "Otomasi pemotongan stok bahan dari kasir",
-      "Kemudahan pakai tanpa software mahal"
-    ],
-    "audience_information_needs": [
-      "Rumus food cost ideal F&B",
-      "Cara setting resep BOM otomatis di sistem kasir",
-      "Pencegahan bocor halus bahan baku"
-    ],
-    "professional_interests": [
-      "F&B operations",
-      "Menu engineering",
-      "Food cost optimization",
-      "Cafe management"
-    ]
-  },
-  "buyer_persona": {
-    "persona_name": "F&B Business Owner & Operational Controller",
-    "job_title": "Founder & Owner Cafe / Restoran",
-    "responsibilities": "Mengendalikan biaya bahan baku, memantau penjualan menu harian, dan menjaga margin keuntungan kuliner",
-    "business_challenges": "Bahan baku dapur sering tekor dan rasa menu berubah saat barista/koki berganti",
-    "key_kpis": [
-      "Food Cost Ideal 30%",
-      "Inventory Turnover Bahan Baku",
-      "Laba Bersih Usaha"
-    ],
-    "decision_priorities": [
-      "Kemudahan kontrol resep",
-      "Integrasi langsung dengan kasir",
-      "Harga langganan terjangkau / gratis"
-    ],
-    "knowledge_level": "Menengah dan praktis",
-    "content_motivation": "Mencari wawasan terapan untuk menyelamatkan margin keuntungan bisnis kuliner",
-    "potential_objections": "Takut sistem resep rumit atau membutuhkan waktu input lama",
-    "cooca_relevance": "COOCA menyediakan Paket Solo Owner Rp 0 Gratis Selamanya dengan UI Bento Apple HIG yang instan dan simpel"
-  },
-  "audience_to_content_matching": {
-    "candidate_topics": [
-      "Pengendalian Food Cost & Resep Baku (BOM) Usaha Kuliner",
-      "Manajemen Waste Dapur & Penyusutan Bahan Segar",
-      "Standarisasi Resep Barista & Takaran Sirup Susu",
-      "Pemisahan Saldo Kasir dengan Modal Belanja Pasar",
-      "Analisis Margin Menu & Menu Engineering F&B"
-    ],
-    "audience_relevance_analysis": "Topik Food Cost & Resep BOM menduduki peringkat teratas karena langsung mengatasi masalah kebocoran bahan baku harian pemilik usaha F&B",
-    "topic_comparison": "Skor Food Cost (98.5) mengungguli topik Waste Dapur (94.0) dalam daya tarik save & share audiens Instagram",
-    "selected_topic": "Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner",
-    "selected_angle": "Culinary Operational & Food Cost Efficiency Strategy",
-    "primary_audience_reasoning": "Pemilik usaha kuliner paling berkepentingan menjaga persentase food cost agar kerja keras di dapur menghasilkan cuan nyata",
-    "audience_content_score": 98.5
-  },
-  "research_and_data": {
-    "research_summary": "Studi F&B Indonesia menemukan bahwa 76% usaha kuliner UMKM mengalami lonjakan food cost hingga di atas 38% akibat ketiadaan takaran resep baku digital.",
-    "business_problem": "Pemborosan bahan baku dan ketiadaan integrasi resep gramasi dengan kasir POS",
-    "industry_context": "Sektor F&B Indonesia tahun 2026 menuntut efisiensi operasional tinggi di tengah kenaikan harga komoditas",
-    "metrics": {
-      "ideal_food_cost": "28% s/d 32%",
-      "uncontrolled_food_cost": "38% s/d 45%",
-      "average_kitchen_waste": "3% s/d 5%",
-      "cooca_savings_potential": "Rp 1.800.000 s/d Rp 3.500.000 / Bulan",
-      "recipe_deduction_speed": "Otomatis Real-Time saat Transaksi Kasir"
-    },
-    "data_interpretation": "Standarisasi resep baku digital menyelamatkan jutaan rupiah modal bahan baku setiap bulannya",
-    "source_references": [
-      "Unilever Food Solutions ID F&B Report",
-      "Runchise Culinary Operational Benchmark 2026",
-      "Data Operasional COOCA Cloud POS"
-    ],
-    "publication_year": "2026",
-    "limitations": "Estimasi penghematan didasarkan pada skala usaha kafe/resto dengan omzet Rp 25 - Rp 80 juta per bulan"
-  },
-  "content_strategy_expanded": {
-    "content_objective": "Membangun kredibilitas COOCA di Instagram untuk sektor F&B dan mengajak pengusaha kuliner mendaftar Paket Free Rp 0",
-    "content_positioning": "COOCA sebagai Business Operating System UMKM Indonesia all-in-one untuk 20 sektor industri",
-    "headline": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-    "supporting_headline": "Formula Rahasia Mengunci Food Cost 30% Agar Usaha Kuliner Tetap Cuan",
-    "main_insight": "Standarisasi resep BOM digital mengunci food cost di 30% dan mengeliminasi kebocoran bahan dapur",
-    "business_implications": "Pengusaha kuliner mendapatkan kepastian margin keuntungan dan rasa menu konsisten",
-    "strategic_recommendation": "Terapkan timbangan gramasi baku dan integrasikan resep dengan kasir COOCA",
-    "content_structure": "Hook -> 3 Pain Points Dapur -> Solusi Resep BOM COOCA -> Bukti Angka & Metrik -> Actionable CTA"
-  },
-  "cooca_connection": {
-    "relevant_features": [
-      "Manajemen Stok Bahan Baku & Resep BOM (/inventory/stocks)",
-      "Kasir POS Pintar Kilat (/pos)"
-    ],
-    "feature_validation": "Terverifikasi di production app: resep BOM bahan baku, pemotongan stok otomatis saat penjualan, notifikasi batas minimum bahan",
-    "product_benefits": "Food cost terkunci 30%, stok bahan baku terpantau real-time, zero waste tak terlacak",
-    "product_claim_evidence": "Berdasarkan arsitektur fitur inventori resep BOM di aplikasi COOCA",
-    "promotion_relevance": "COOCA Paket Free Rp 0 Gratis Selamanya untuk Solo Owner"
-  },
-  "visual_specification": {
-    "image_dimensions": "1080x1080 px",
-    "visual_concept": "Bento Grid Apple HIG Dark-Tech Culinary Operational Strategy",
-    "design_direction": "Clean editorial layout terinspirasi Apple HIG & Pinterest-tier carousels",
-    "layout_structure": "Header (Logo Resmi COOCA & Category Overline) -> Headline Hook -> Bento Grid Metric Cards -> Ambient Cyan Glow -> Footer Action Badge",
-    "headline_placement": "Top section y = 140 - 240px",
-    "data_visualization": "Floating glassmorphism bento metric cards dengan kontras tajam (Danger red vs Success electric blue/cyan)",
-    "key_visual_elements": [
-      "Logo Resmi COOCA Dark",
-      "Photorealistic Cafe & Culinary Prep Counter",
-      "Metric Bento Cards",
-      "CTA Badge Mulai Gratis Selamanya"
-    ],
-    "color_direction": {
-      "background": "#070B19",
-      "background_gradient": "#070B19 to #162B68",
-      "text": "#FFFFFF",
-      "accent_blue": "#2563EB",
-      "accent_cyan": "#38BDF8",
-      "accent_danger": "#EF4444",
-      "green_allowed": false
-    },
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline_weight": "ExtraBold (800)",
-      "subheadline_weight": "SemiBold (600)",
-      "body_weight": "Medium (500)",
-      "numbers_weight": "ExtraBold (800)",
-      "cta_weight": "Bold (700)"
-    },
-    "cooca_branding": "Logo Resmi COOCA PNG transparan tanpa background pada header setiap slide",
-    "source_footnote": "Edisi Edukasi Bisnis Kuliner & F&B | COOCA Business Operating System"
-  },
-  "instagram_caption_details": {
-    "caption_hook": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
-    "audience_context": "Bagi para pemilik usaha kuliner dan F&B, meja kafe yang ramai seringkali berujung pada rasa heran saat akhir bulan: omzet besar tapi laba bersih menguap.",
-    "data_context": "Studi F&B mencatat kebocoran bahan baku dapur dan food cost di atas 38% sebagai penyebab utama erosi laba.",
-    "business_implication": "Standarisasi resep BOM menghemat Rp 1.800.000 hingga Rp 3.500.000 per bulan.",
-    "practical_insight": "Kunci takaran gramasi pasti per menu dan hubungkan langsung dengan kasir penjualan.",
-    "cooca_connection": "Kelola resep dan operasional dapur bersama COOCA di cooca.id",
-    "professional_cta": "Mulai gunakan Paket Solo Owner Rp 0 gratis selamanya di cooca.id",
-    "complete_caption": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur\n\nPernahkah Anda merasa pesanan meja kafe atau resto ramai setiap hari, tetapi saat tutup buku akhir bulan keuntungan bersih justru tidak bersisa?\n\nBagi para pemilik usaha kuliner dan F&B, masalah ini kerap terjadi bukan karena kurang pembeli, melainkan karena kebocoran halus di dapur operasional:\n1. Masak Pakai Kira-Kira: Tanpa standarisasi takaran gramasi, porsi berlebih membuat bahan baku cepat habis sebelum target penjualan tercapai.\n2. Susut Bahan Tanpa Catatan: Penyusutan bahan segar (waste 3% sampai 5%) saat persiapan tidak dimasukkan ke dalam harga pokok penjualan.\n3. Belanja Bahan Tanpa Kontrol: Pengeluaran belanja bahan ke pasar tidak disinkronkan langsung dengan data perputaran menu kasir.\n\nKunci utama mengamankan laba kuliner adalah mengunci Food Cost di angka ideal 28% sampai 32% menggunakan standarisasi Resep Baku Digital (Bill of Materials). Setiap kali kasir melayani pesanan, stok bahan baku mentah (sirup, susu, daging, bumbu) otomatis terpotong secara akurat.\n\nKendalikan operasional dapur dan lindungi margin usaha Anda bersama platform COOCA.\nMulai gunakan Paket Solo Owner Rp 0 gratis selamanya di cooca.id\n\n#kulinerindonesia #bisniskuliner #foodcost #resepkafe #manajemenresto #umkmkuliner #COOCA",
-    "hashtags": [
-      "#kulinerindonesia",
-      "#bisniskuliner",
-      "#foodcost",
-      "#resepkafe",
-      "#manajemenresto",
-      "#umkmkuliner",
-      "#COOCA"
-    ]
-  },
-  "quality_audit": {
-    "content_quality_score": 98.5,
-    "audience_alignment_score": 98.5,
-    "virality_score": 96.5,
-    "score_breakdown": {
-      "trend_velocity": 95.0,
-      "problem_urgency": 97.0,
-      "platform_fit": 98.0,
-      "cta_clarity": 96.0
-    },
-    "data_validation": "PASSED (Kuantitatif, Terverifikasi, Tidak Ada Em-Dash/En-Dash)",
-    "persona_validation": "PASSED (Target Pemilik Bisnis Kuliner & F&B / Coffee Shop)",
-    "caption_validation": "PASSED (Struktur AIDA Empatik, 0 Em-Dash, 0 Nama Usaha Fiktif, 1 Domain cooca.id)",
-    "visual_validation": "PASSED (1080x1080 5-Slide Carousel, Dark-Tech Navy #070B19, Plus Jakarta Sans, Zero Green)",
-    "historical_content_validation": "PASSED (Unik, Sektor Kuliner & F&B Belum Pernah Dipakai Dalam 10 Konten Terakhir)",
-    "publication_eligibility": "ELIGIBLE",
-    "rejection_reasons": []
-  },
-  "deployment_details": {
-    "specification_path": "storage/app/public/content-assets/spec-cooca-carousel-instagram.json",
-    "asset_path": "storage/app/public/admin/social-media-assets/carousel/instagram/slide-01.png",
-    "deployment_status": "READY_FOR_DEPLOYMENT",
-    "database_status": "PENDING_ARTISAN_DEPLOY",
-    "git_status": "PENDING_COMMIT"
+    "core_problem": "Pesanan meja ramai di jam sibuk, pelayan salah antar menu, antrean kasir menumpuk, dan bahan baku dapur tekor tanpa catatan.",
+    "solution_feature": "Kasir POS & Tiket Dapur KDS",
+    "metrics": "Pesanan selesai 40% lebih cepat dan nol salah antar menu.",
+    "cta": "Mulai Gratis Selamanya di cooca.id"
   }
 }

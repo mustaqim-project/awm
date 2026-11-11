@@ -19,6 +19,20 @@
       "hook_title": "Kayu dan Cat Finishing Menguap Tanpa Catatan? Rapikan Stok Bahan Bengkel Mebel",
       "sector_id": "mebel_furniture",
       "sector_name": "Mebel & Furniture Kayu"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:41.148226",
+      "topic_name": "Jasa Harian: Solusi Operasional Laundry Kiloan & Satuan",
+      "hook_title": "Nota Kertas Laundry Sering Sobek atau Basah? Beralih ke Struk Digital Tanpa Biaya Kertas",
+      "sector_id": "laundry_kiloan",
+      "sector_name": "Laundry Kiloan & Satuan"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:35.851714",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Katering Prasmanan",
+      "hook_title": "Tagihan Katering Sering Molor? Pasang Pengingat Pelunasan Otomatis ke WhatsApp Klien",
+      "sector_id": "catering",
+      "sector_name": "Katering Prasmanan"
     }
   ],
   "cooca-carousel-instagram": [
@@ -45,6 +59,20 @@
       "topic_name": "Manajemen Food Cost & Resep Baku (BOM) Usaha Kuliner",
       "hook_title": "Menu Laris Tiap Hari Tapi Laba Menguap? Waspadai 3 Kebocoran Bahan Baku Dapur",
       "visual_style": "Photorealistic vibrant cafe counter, coffee brewing station, or culinary kitchen prep counter with fresh raw ingredients, recipe kitchen scale, and active food service operations authentically illustrating food cost control and recipe management"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:41.725854",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Coffee Shop & Cafe",
+      "hook_title": "Food Cost Kafe Tembus di Atas 35%? Ini Trik Kunci Takaran Bahan Baku Tetap Aman",
+      "sector_id": "coffee_shop",
+      "sector_name": "Coffee Shop & Cafe"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:37.615957",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Restoran Dine-In",
+      "hook_title": "Meja Penuh Tiap Jam Makan Siang Tapi Laba Tipis? Cek Kebocoran Bahan Masakan Ini",
+      "sector_id": "resto_dine_in",
+      "sector_name": "Restoran Dine-In"
     }
   ],
   "cooca-feed-instagram": [
@@ -86,6 +114,20 @@
       "hook_title": "Usaha Konveksi Ramai Orderan Tapi Uang Kas Tipis? Cek Hitungan Ongkos Jahit Kamu",
       "sector_id": "konveksi_garment",
       "sector_name": "Konveksi & Garment"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:44.778693",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Cloud Kitchen Online",
+      "hook_title": "Pegang Multi-Brand di Cloud Kitchen Bikin Pusing? Satukan Pesanan Biar Dapur Rapi",
+      "sector_id": "cloud_kitchen",
+      "sector_name": "Cloud Kitchen Online"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:45.686017",
+      "topic_name": "Manufaktur & HPP: Solusi Operasional Mebel & Furniture Kayu",
+      "hook_title": "Upah Tukang Kayu Bikin Modal Boncos? Hitung Ongkos Kerja per Unit Pesanan",
+      "sector_id": "mebel_furniture",
+      "sector_name": "Mebel & Furniture Kayu"
     }
   ],
   "cooca-feed-linkedin": [
@@ -106,6 +148,20 @@
       "topic_name": "Analisis ROI & Metrik Efisiensi Sistem Kasir Modern",
       "hook_title": "Berapa Kerugian Toko Ritel Akibat Human Error Kasir Manual? Analisis ROI 2026",
       "visual_style": "Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:45.662055",
+      "topic_name": "Jasa Proyek: Solusi Operasional Digital IT & Creative Agency",
+      "hook_title": "Klien Ambil Hasil Proyek Tapi Invoice Macet? Pasang Termin Milestone Wajib DP",
+      "sector_id": "creative_agency",
+      "sector_name": "Digital IT & Creative Agency"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:47.363117",
+      "topic_name": "Jasa Proyek: Solusi Operasional Kontraktor & Renovasi",
+      "hook_title": "Termin Penagihan Proyek Sering Mandek? Kirim Invoice Progres Lapangan via WhatsApp",
+      "sector_id": "kontraktor_renovasi",
+      "sector_name": "Kontraktor & Renovasi"
     }
   ],
   "cooca-carousel-linkedin": [
@@ -126,6 +182,20 @@
       "topic_name": "Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
       "hook_title": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
       "visual_style": "Photorealistic corporate retail management photography, modern store supervision, or multi-outlet operations analytics vividly representing business expansion"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:42.386012",
+      "topic_name": "Distribusi & Agrobisnis: Solusi Operasional Distributor Grosir B2B & Agrobisnis",
+      "hook_title": "Piutang Toko Mitra Menumpuk Jatuh Tempo? Pasang Pengingat Otomatis Biar Kas Lancar",
+      "sector_id": "distributor_b2b_agro",
+      "sector_name": "Distributor Grosir B2B & Agrobisnis"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:38.642634",
+      "topic_name": "Jasa Proyek: Solusi Operasional Event / Wedding Organizer",
+      "hook_title": "Pelunasan Klien EO Kerap Mundur Setelah Acara Beres? Pasang Aturan Termin Tegas",
+      "sector_id": "event_organizer",
+      "sector_name": "Event / Wedding Organizer"
     }
   ],
   "cooca-feed-facebook": [
@@ -140,6 +210,20 @@
       "topic_name": "Solusi Praktis Mengelola Bon Hutang Pelanggan & Catatan Piutang",
       "hook_title": "Pusing Menagih Bon Hutang Pelanggan? Begini Cara Praktis Mengatur Piutang Tanpa Ribut",
       "visual_style": "Photorealistic high-end photography of organized modern retail store inventory shelves, warehouse logistics, or a merchant conducting a barcode stock check matching the inventory topic"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:44.187853",
+      "topic_name": "Jasa Harian: Solusi Operasional Barbershop & Salon",
+      "hook_title": "Hitung Komisi Kapster Masih Pakai Kertas? Beralih ke Perhitungan Otomatis Adil",
+      "sector_id": "barbershop_salon",
+      "sector_name": "Barbershop & Salon"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:43.912852",
+      "topic_name": "Jasa Harian: Solusi Operasional Bengkel Mobil & Motor",
+      "hook_title": "Sparepart Bengkel Sering Selisih? Kunci Pengambilan Suku Cadang Pakai Nota SPK",
+      "sector_id": "bengkel_motor_mobil",
+      "sector_name": "Bengkel Mobil & Motor"
     }
   ],
   "cooca-feed-tiktok": [
@@ -148,6 +232,20 @@
       "topic_name": "Rekonsiliasi Kasir & SOP Tutup Shift Anti-Selisih",
       "hook_title": "Laci Kasir Sering Selisih Saat Tutup Shift? Waspadai 3 Kebocoran Halus Ini",
       "visual_style": "Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:47.517812",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Bakery & Toko Roti",
+      "hook_title": "Bahan Roti Kadaluarsa di Rak Belakang? Atur Pengingat Stok Biar Bebas Tekor",
+      "sector_id": "bakery",
+      "sector_name": "Bakery & Toko Roti"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:49.662589",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Cloud Kitchen Online",
+      "hook_title": "Stok Bahan Baku Rebutan Antar Brand Makanan? Rapikan Catatan Biar Dapur Tenang",
+      "sector_id": "cloud_kitchen",
+      "sector_name": "Cloud Kitchen Online"
     }
   ],
   "cooca-umkm-educational-social-media": [
@@ -156,6 +254,20 @@
       "topic_name": "Edukasi Fundamental: Rumus Menghitung Margin Bersih vs Kotor Ritel",
       "hook_title": "Jangan Tertipu Omzet Ratusan Juta! Ini Rumus Margin Bersih Bisnis yang Sebenarnya",
       "visual_style": "Photorealistic modern retail finance workspace with profit-loss analytics, financial ledger, calculator, and revenue metrics representing business profitability"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:48.127003",
+      "topic_name": "Manufaktur & HPP: Solusi Operasional Kerajinan Tangan / Craft",
+      "hook_title": "Barang Titipan Konsinyasi Sering Selisih Jumlah? Atur Laporan Mitra Penjualan",
+      "sector_id": "craft_handmade",
+      "sector_name": "Kerajinan Tangan / Craft"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:50.540461",
+      "topic_name": "Jasa Proyek: Solusi Operasional Digital IT & Creative Agency",
+      "hook_title": "Revisi Klien Nggak Kelar-kelar Bikin Jam Kerja Boncos? Batasi Scope dengan SPK Jelas",
+      "sector_id": "creative_agency",
+      "sector_name": "Digital IT & Creative Agency"
     }
   ],
   "cooca-carousel-tiktok": [
@@ -164,6 +276,20 @@
       "topic_name": "3 Fitur Rahasia Mesin Kasir yang Bikin Antrean Toko Bebas Macet",
       "hook_title": "3 Trik Rahasia Mesin Kasir Toko Ramai yang Bikin Antrean Bebas Macet! Geser Foto",
       "visual_style": "Photorealistic editorial photography of an active modern store checkout counter, cash drawer, or POS station authentically illustrating cashier operations and transaction security"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:42.965079",
+      "topic_name": "Jasa Harian: Solusi Operasional Bengkel Mobil & Motor",
+      "hook_title": "Bagi Komisi Mekanik Sering Bikin Salah Paham? Atur Hitungan Transparan Otomatis",
+      "sector_id": "bengkel_motor_mobil",
+      "sector_name": "Bengkel Mobil & Motor"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:39.488545",
+      "topic_name": "Kuliner & F&B: Solusi Operasional Coffee Shop & Cafe",
+      "hook_title": "Barista Ganti Rasa Kopi Berubah? Kunci Resep Gramasi Biar Cuan Kafe Kamu Terjaga",
+      "sector_id": "coffee_shop",
+      "sector_name": "Coffee Shop & Cafe"
     }
   ],
   "cooca-daily-umkm-carousel": [
@@ -172,6 +298,20 @@
       "topic_name": "Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
       "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
       "visual_style": "Photorealistic high-end photography authentically visualizing the core theme and keyword: 'Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern'"
+    },
+    {
+      "timestamp": "2026-11-11T11:17:43.571308",
+      "topic_name": "Manufaktur & HPP: Solusi Operasional Percetakan & Offset Digital",
+      "hook_title": "Pelanggan Ambil Cetakan Tapi Belum Lunas? Pasang Pembayaran Uang Muka Wajib",
+      "sector_id": "percetakan_offset",
+      "sector_name": "Percetakan & Offset Digital"
+    },
+    {
+      "timestamp": "2026-11-11T11:26:43.147704",
+      "topic_name": "Ritel & Toko Obat: Solusi Operasional Minimarket & Kelontong",
+      "hook_title": "Stok Minyak dan Beras di Rak Habis Mendadak? Pasang Alarm Pengingat Restock",
+      "sector_id": "minimarket_kelontong",
+      "sector_name": "Minimarket & Kelontong"
     }
   ]
 }

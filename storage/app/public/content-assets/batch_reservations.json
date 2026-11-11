@@ -1,0 +1,42 @@
+{
+  "cooca-carousel-facebook": {
+    "sector_id": "catering",
+    "timestamp": "2026-11-11T11:26:32.877630"
+  },
+  "cooca-carousel-instagram": {
+    "sector_id": "resto_dine_in",
+    "timestamp": "2026-11-11T11:26:36.176155"
+  },
+  "cooca-carousel-linkedin": {
+    "sector_id": "event_organizer",
+    "timestamp": "2026-11-11T11:26:37.939118"
+  },
+  "cooca-carousel-tiktok": {
+    "sector_id": "coffee_shop",
+    "timestamp": "2026-11-11T11:26:38.988427"
+  },
+  "cooca-daily-umkm-carousel": {
+    "sector_id": "minimarket_kelontong",
+    "timestamp": "2026-11-11T11:26:39.841610"
+  },
+  "cooca-feed-facebook": {
+    "sector_id": "bengkel_motor_mobil",
+    "timestamp": "2026-11-11T11:26:43.482073"
+  },
+  "cooca-feed-instagram": {
+    "sector_id": "mebel_furniture",
+    "timestamp": "2026-11-11T11:26:44.250620"
+  },
+  "cooca-feed-linkedin": {
+    "sector_id": "kontraktor_renovasi",
+    "timestamp": "2026-11-11T11:26:46.017326"
+  },
+  "cooca-feed-tiktok": {
+    "sector_id": "cloud_kitchen",
+    "timestamp": "2026-11-11T11:26:47.691445"
+  },
+  "cooca-umkm-educational-social-media": {
+    "sector_id": "creative_agency",
+    "timestamp": "2026-11-11T11:26:50.035092"
+  }
+}

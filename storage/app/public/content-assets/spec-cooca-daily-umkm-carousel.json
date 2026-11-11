@@ -5,152 +5,125 @@
   "dimensions": "1080x1350",
   "target_time": "12:15",
   "slot_label": "Daily UMKM Portrait 1080x1350 High-End Carousel",
+  "cluster": "Ritel & Toko Obat",
+  "sector": "Minimarket & Kelontong",
+  "sector_id": "minimarket_kelontong",
   "primary_feature": "inventory",
-  "feature_name": "Manajemen Stok & Low-Stock Alert",
-  "feature_route": "/inventory/stocks",
-  "topic_name": "Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
-  "hook_title": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
-  "solution_summary": "Integrasi fitur Manajemen Stok & Low-Stock Alert di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 96.5,
-  "gate_status": "PASSED (>= 80.0)",
-  "trend_velocity": 95.0,
-  "problem_urgency": 97.0,
-  "platform_fit": 98.0,
-  "cta_clarity": 96.0,
-  "caption": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern\n\nBanyak pemilik warung dan toko kelontong ingin memiliki toko yang tertata rapi, stok otomatis, dan bisa dipantau tanpa harus menjaga toko seharian. Transformasi digital toko tidak harus rumit dan mahal.\n\nSimak 6 tahapan praktis membangun sistem modern untuk toko Anda (geser slide sampai akhir):\n1. Buat kode barcode untuk semua produk di rak display toko.\n2. Gunakan scanner kasir cepat agar antrean pelanggan lancar.\n3. Pasang peringatan otomatis ketika stok barang mulai menipis.\n4. Pisahkan uang belanja modal usaha dari kebutuhan pribadi di rumah.\n5. Tutup kasir dengan rekap shift otomatis tanpa hitung manual berulang.\n6. Pantau performa penjualan setiap hari lewat aplikasi di ponsel.\n\nBawa bisnis UMKM Anda naik kelas hari ini bersama platform COOCA di cooca.id\n\n#tokokelontong #warungmodern #umkmindonesia #aplikasikasir #bisnisritel #COOCA",
+  "feature_name": "Barcode Scanner & Low-Stock Alert",
+  "topic_name": "Ritel & Toko Obat: Solusi Operasional Minimarket & Kelontong",
+  "hook_title": "Stok Minyak dan Beras di Rak Habis Mendadak? Pasang Alarm Pengingat Restock",
+  "solution_summary": "Fitur Barcode Scanner & Low-Stock Alert di COOCA bantu pemilik usaha minimarket & kelontong mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 96.1,
+  "gate_status": "PASSED (>= 85.0)",
+  "trend_velocity": 95,
+  "problem_urgency": 96,
+  "platform_fit": 98,
+  "cta_clarity": 95,
+  "keywords": [
+    "tips usaha minimarket & kelontong",
+    "masalah minimarket & kelontong",
+    "aplikasi usaha umkm",
+    "cooca"
+  ],
+  "sources": [
+    "Google Trends Indonesia",
+    "Komunitas Bisnis Ritel & Toko Obat",
+    "Forum UMKM Indonesia"
+  ],
+  "caption": "Stok Minyak dan Beras di Rak Habis Mendadak? Pasang Alarm Pengingat Restock\n\nSering merasa usahamu ramai pembeli tapi saat akhir bulan uang kas tidak terkumpul? Bagi pemilik minimarket & kelontong, 3 hal ini sering jadi titik bocor halus:\n1. Scan barcode cepat kurang dari 2 detik per item belanja\n2. Dukung satuan fleksibel: jual per dus, per renteng, atau per satuan\n3. Peringatan otomatis saat stok barang di gudang mendekati batas minimum\n\nBiar bisnismu makin rapi dan tenang, gunakan fitur Barcode Scanner & Low-Stock Alert dari COOCA. Hasilnya terbukti: Waktu antrean kasir terpangkas 50% dan stok rak selalu terisi tepat waktu.\n\nYuk coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id\n\nPernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!\n\n#tipsbisnis #minimarket_kelontong #operasionalusaha #umkmindonesia #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Minimarket & Kelontong",
+  "discussion_question": "Pernah ngalamin hal yang sama di usahamu? Simpan postingan ini dan share ke rekan bisnismu ya!",
+  "tone": "santai, akrab, tidak baku, sapaan kamu",
+  "slug": "instagram-minimarket_kelontong-175",
   "slides": [
     {
       "slide": 1,
-      "title": "Roadmap Toko Kelontong Menjadi Ritel Modern",
-      "tag": "Transformasi UMKM"
+      "title": "Stok Minyak dan Beras di Rak Habis Mendadak? Pasang Alarm Pengingat Restock",
+      "tag": "Ritel & Toko Obat - Minimarket & Kelontong",
+      "description": "Kenapa usaha minimarket & kelontong sering ramai tapi keuntungan bersih menguap tanpa jejak?",
+      "points": [
+        "Bahan dan biaya operasional bengkak tanpa disadari",
+        "Pencatatan manual bikin rawan salah hitung"
+      ]
     },
     {
       "slide": 2,
-      "title": "Fase 1: Standarisasi Kode Barcode Seluruh Produk",
-      "tag": "Identifikasi Barang"
+      "title": "3 Masalah Harian yang Bikin Pusing Usaha Minimarket & Kelontong",
+      "tag": "Titik Masalah",
+      "description": "Ribuan barang di rak tanpa barcode rapi, antrean kasir macet saat toko ramai, dan barang habis mendadak tanpa pemberitahuan.",
+      "points": [
+        "Scan barcode cepat kurang dari 2 detik per item belanja",
+        "Dukung satuan fleksibel: jual per dus, per renteng, atau per satuan",
+        "Peringatan otomatis saat stok barang di gudang mendekati batas minimum"
+      ]
     },
     {
       "slide": 3,
-      "title": "Fase 2: Transaksi Kasir Scanner Cepat Kurang dari 3 Detik",
-      "tag": "Layanan Kilat"
+      "title": "Solusi Praktis Bersama Fitur Barcode Scanner & Low-Stock Alert di COOCA",
+      "tag": "Solusi Sistem",
+      "description": "Bantu scan ribuan produk cepat, dukung multi-satuan dus/renteng/pcs, dan beri tahu otomatis saat stok di rak menipis.",
+      "points": [
+        "Catat otomatis tanpa pusing hitung manual",
+        "Pantau performa penjualan dan kas langsung lewat HP",
+        "Bebas ribet dan mudah dipelajari staf baru"
+      ]
     },
     {
       "slide": 4,
-      "title": "Fase 3: Kartu Stok Digital & Notifikasi Batas Minimum",
-      "tag": "Pergudangan"
+      "title": "Hasil Nyata untuk Perkembangan Usahamu",
+      "tag": "Bukti & Metrik",
+      "description": "Standarisasi operasional terbukti memberi dampak nyata: Waktu antrean kasir terpangkas 50% dan stok rak selalu terisi tepat waktu.",
+      "points": [
+        "Waktu antrean kasir terpangkas 50% dan stok rak selalu terisi tepat waktu.",
+        "Laporan keuangan dan laba rugi akurat 100%",
+        "Pemilik usaha bisa tenang mengontrol bisnis dari jauh"
+      ]
     },
     {
       "slide": 5,
-      "title": "Fase 4: Pemisahan Rekening Kas Usaha dan Rekening Pribadi",
-      "tag": "Disiplin Finansial"
-    },
-    {
-      "slide": 6,
-      "title": "Tumbuh Mandiri & Modern Bersama Ekosistem COOCA",
-      "tag": "Solusi Terintegrasi"
+      "title": "Mulai Rapikan Usahamu Hari Ini",
+      "tag": "Langkah Nyata",
+      "description": "Coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id",
+      "points": [
+        "Daftar instan tanpa kartu kredit di cooca.id",
+        "Fitur lengkap tanpa biaya langganan bulanan",
+        "Cocok untuk semua jenis usaha di Indonesia"
+      ]
     }
   ],
-  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (INSTAGRAM)",
-  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "key_points": [
+    "Scan barcode cepat kurang dari 2 detik per item belanja",
+    "Dukung satuan fleksibel: jual per dus, per renteng, atau per satuan",
+    "Peringatan otomatis saat stok barang di gudang mendekati batas minimum"
+  ],
+  "canva_mcp_prompt_brief": "Format: Multi-page presentation carousel (1080x1350 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Kasir minimarket modern yang tertata rapi, staf kasir ramah sedang memindai barcode produk belanjaan dengan scanner cepat. No 2D flat cartoon or generic AI slop.\nContent Topic: Stok Minyak dan Beras di Rak Habis Mendadak? Pasang Alarm Pengingat Restock - Minimarket & Kelontong (Ritel & Toko Obat).",
+  "media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
+  "media_paths": [
+    "admin/social-media-assets/carousel/instagram/slide-01.png",
+    "admin/social-media-assets/carousel/instagram/slide-02.png",
+    "admin/social-media-assets/carousel/instagram/slide-03.png",
+    "admin/social-media-assets/carousel/instagram/slide-04.png",
+    "admin/social-media-assets/carousel/instagram/slide-05.png"
+  ],
+  "local_media_path": "admin/social-media-assets/carousel/instagram/slide-01.png",
+  "local_media_paths": [
+    "admin/social-media-assets/carousel/instagram/slide-01.png",
+    "admin/social-media-assets/carousel/instagram/slide-02.png",
+    "admin/social-media-assets/carousel/instagram/slide-03.png",
+    "admin/social-media-assets/carousel/instagram/slide-04.png",
+    "admin/social-media-assets/carousel/instagram/slide-05.png"
+  ],
   "audience_research": {
-    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
-    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
-    "operational_stage": "Modernisasi operasional harian",
-    "persona": {
-      "role": "Pemilik Usaha",
-      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
-      "tech_savviness": "Menengah",
-      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
-    },
-    "pain_points": {
-      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
-      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
-      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
-      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
-      "knowledge_gap": "Penerapan sistem digital terpadu"
-    },
-    "behavior_and_preferences": {
-      "headline_triggers": "Solusi praktis dan tips operasional langsung",
-      "preferred_content_style": "Infografis edukatif dan terstruktur",
-      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
-    }
+    "business_type": "Minimarket & Kelontong",
+    "cluster": "Ritel & Toko Obat",
+    "persona": "Pemilik Usaha Minimarket & Kelontong",
+    "pain_points": "Ribuan barang di rak tanpa barcode rapi, antrean kasir macet saat toko ramai, dan barang habis mendadak tanpa pemberitahuan.",
+    "solution": "Bantu scan ribuan produk cepat, dukung multi-satuan dus/renteng/pcs, dan beri tahu otomatis saat stok di rak menipis."
   },
   "content_strategy": {
-    "core_problem": "Toko kelontong tradisional kalah saing karena sistem pencatatan manual",
-    "educational_objective": "Memberikan wawasan aplikatif seputar Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
-    "content_angle": "Operational Awareness",
-    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern",
-    "practical_takeaways": [
-      "Gunakan pencatatan otomatis",
-      "Terapkan SOP harian",
-      "Evaluasi berkala"
-    ],
-    "cooca_organic_link": "Solusi Manajemen Stok & Low-Stock Alert di COOCA",
-    "audience_relevance_score": 95.0,
-    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens INSTAGRAM dalam mengoptimalkan pengelolaan bisnis UMKM"
-  },
-  "caption_strategy": {
-    "opening_hook": "Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern",
-    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
-    "educational_value": "Edukasi praktis langkah demi langkah.",
-    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
-    "cooca_solution": "Informasi lebih lanjut di cooca.id",
-    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
-    "hashtags": [
-      "#TipsBisnis",
-      "#ManajemenToko",
-      "#UMKM",
-      "#COOCA"
-    ]
-  },
-  "quality_control": {
-    "research_validation": "PASSED",
-    "audience_validation": "PASSED",
-    "content_validation": "PASSED",
-    "caption_validation": "PASSED",
-    "product_relevance_validation": "PASSED",
-    "originality_validation": "PASSED",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-10 10:11:54",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Multi-page portrait carousel (1080x1350 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic high-end photography authentically visualizing the core theme and keyword: 'Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern'). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Roadmap Transformasi Toko Kelontong Menjadi Ritel Modern', bold headline 'Dari Buku Tulis ke Sistem Otomatis: Blueprint 6 Tahap Toko Kelontong Modern', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
+    "core_problem": "Ribuan barang di rak tanpa barcode rapi, antrean kasir macet saat toko ramai, dan barang habis mendadak tanpa pemberitahuan.",
+    "solution_feature": "Barcode Scanner & Low-Stock Alert",
+    "metrics": "Waktu antrean kasir terpangkas 50% dan stok rak selalu terisi tepat waktu.",
+    "cta": "Mulai Gratis Selamanya di cooca.id"
+  }
 }

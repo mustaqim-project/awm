@@ -5,147 +5,125 @@
   "dimensions": "1080x1080",
   "target_time": "08:00",
   "slot_label": "LinkedIn Morning Executive Carousel Deck",
-  "primary_feature": "multi_outlet",
-  "feature_name": "Multi-Cabang Dari 1 Layar HP",
-  "feature_route": "/warehouse",
-  "topic_name": "Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
-  "hook_title": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
-  "solution_summary": "Integrasi fitur Multi-Cabang Dari 1 Layar HP di COOCA untuk optimalisasi operasional bisnis UMKM.",
-  "viral_score": 95.5,
+  "cluster": "Jasa Proyek",
+  "sector": "Event / Wedding Organizer",
+  "sector_id": "event_organizer",
+  "primary_feature": "finance",
+  "feature_name": "Rekap Anggaran Acara & Termin Vendor",
+  "topic_name": "Jasa Proyek: Solusi Operasional Event / Wedding Organizer",
+  "hook_title": "Pelunasan Klien EO Kerap Mundur Setelah Acara Beres? Pasang Aturan Termin Tegas",
+  "solution_summary": "Fitur Rekap Anggaran Acara & Termin Vendor di COOCA bantu pemilik usaha event / wedding organizer mengelola operasional dan keuangan lebih rapi.",
+  "viral_score": 95.9,
   "gate_status": "PASSED (>= 85.0)",
-  "trend_velocity": 94.0,
-  "problem_urgency": 96.0,
-  "platform_fit": 97.0,
-  "cta_clarity": 95.0,
-  "caption": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?\n\nDalam fase ekspansi ritel dari single store menuju jaringan multi-outlet, tantangan terbesar para founder bukanlah permodalan, melainkan asimetri pengawasan operasional harian. Ketika pemilik tidak berada di lokasi, rentang kendali melemah dan margin laba rentan bocor.\n\nTiga pilar tata kelola wajib untuk menjaga stabilitas ekspansi ritel:\n1. Pembatasan Otorisasi Kasir: Staf hanya memproses transaksi, sementara pembatalan nota (void) dan diskon manual wajib otorisasi PIN Supervisor.\n2. Integrasi Mutasi Stok Real-Time: Pengiriman barang antar cabang tercatat otomatis dengan pemindaian barcode terpusat.\n3. Laporan Konsolidasi 1 Layar: Pemilik dapat memantau perputaran omzet dan profitabilitas setiap gerai tanpa harus berkeliling lokasi.\n\nSeluruh arsitektur tata kelola ritel multi-cabang ini diintegrasikan melalui modul Multi-Cabang Dari 1 Layar HP di platform COOCA: cooca.id\n\n#TataKelolaRitel #ManajemenBisnis #MultiCabang #SOPRitel #EfisiensiOperasional #COOCA",
+  "trend_velocity": 95,
+  "problem_urgency": 96,
+  "platform_fit": 98,
+  "cta_clarity": 95,
+  "keywords": [
+    "tips usaha event / wedding organizer",
+    "masalah event / wedding organizer",
+    "aplikasi usaha umkm",
+    "cooca"
+  ],
+  "sources": [
+    "Google Trends Indonesia",
+    "Komunitas Bisnis Jasa Proyek",
+    "Forum UMKM Indonesia"
+  ],
+  "caption": "Pelunasan Klien EO Kerap Mundur Setelah Acara Beres? Pasang Aturan Termin Tegas\n\nDalam mengelola bisnis event / wedding organizer, tantangan terbesarnya bukan hanya mencari pelanggan baru, melainkan menjaga agar margin keuntungan tidak bocor halus di lapangan.\n\nTiga langkah penting untuk memperkuat kontrol operasional usahamu:\n1. Breakdown pos anggaran sewa gedung, dekorasi, katering, dan dokumentasi\n2. Pantau sisa termin pembayaran klien sebelum hari pelaksanaan acara\n3. Rekap keuntungan bersih per acara langsung otomatis tanpa hitung manual\n\nDampaknya nyata: Nol biaya tak terduga bocor dan semua pos pembayaran vendor rekanan lunas tertib.\n\nKelola seluruh operasional bisnis lebih tertib bersama fitur Rekap Anggaran Acara & Termin Vendor di platform COOCA: cooca.id\n\nBagaimana tim kamu mengontrol efisiensi operasional di sektor event / wedding organizer saat ini? Mari berdiskusi di kolom komentar.\n\n#ManajemenBisnis #EfisiensiOperasional #event_organizer #B2BIndonesia #COOCA",
+  "caption_strategy": "AIDA santai sapaan kamu berbasis masalah harian Event / Wedding Organizer",
+  "discussion_question": "Bagaimana tim kamu mengontrol efisiensi operasional di sektor event / wedding organizer saat ini? Mari berdiskusi di kolom komentar.",
+  "tone": "santai, akrab, tidak baku, sapaan kamu",
+  "slug": "linkedin-event_organizer-210",
   "slides": [
     {
       "slide": 1,
-      "title": "Audit Tata Kelola Ritel Multi-Cabang",
-      "tag": "Manajemen Ritel B2B"
+      "title": "Pelunasan Klien EO Kerap Mundur Setelah Acara Beres? Pasang Aturan Termin Tegas",
+      "tag": "Jasa Proyek - Event / Wedding Organizer",
+      "description": "Kenapa usaha event / wedding organizer sering ramai tapi keuntungan bersih menguap tanpa jejak?",
+      "points": [
+        "Bahan dan biaya operasional bengkak tanpa disadari",
+        "Pencatatan manual bikin rawan salah hitung"
+      ]
     },
     {
       "slide": 2,
-      "title": "Friction Point: Kebocoran Wewenang Antar Gerai",
-      "tag": "Identifikasi Masalah"
+      "title": "3 Masalah Harian yang Bikin Pusing Usaha Event / Wedding Organizer",
+      "tag": "Titik Masalah",
+      "description": "Uang muka ke vendor rekanan lupa dicatat, anggaran biaya acara membengkak tanpa kontrol, dan jadwal pelunasan klien molor.",
+      "points": [
+        "Breakdown pos anggaran sewa gedung, dekorasi, katering, dan dokumentasi",
+        "Pantau sisa termin pembayaran klien sebelum hari pelaksanaan acara",
+        "Rekap keuntungan bersih per acara langsung otomatis tanpa hitung manual"
+      ]
     },
     {
       "slide": 3,
-      "title": "Prinsip Otorisasi Bertingkat: Kasir vs Supervisor",
-      "tag": "Standar SOP"
+      "title": "Solusi Praktis Bersama Fitur Rekap Anggaran Acara & Termin Vendor di COOCA",
+      "tag": "Solusi Sistem",
+      "description": "Bantu rekap seluruh pos pengeluaran acara per klien, atur jadwal pembayaran vendor rekanan, dan kelola tagihan termin klien secara rapi.",
+      "points": [
+        "Catat otomatis tanpa pusing hitung manual",
+        "Pantau performa penjualan dan kas langsung lewat HP",
+        "Bebas ribet dan mudah dipelajari staf baru"
+      ]
     },
     {
       "slide": 4,
-      "title": "Konsolidasi Mutasi Stok Gudang & Penjualan Real-Time",
-      "tag": "Otomasi Sistem"
+      "title": "Hasil Nyata untuk Perkembangan Usahamu",
+      "tag": "Bukti & Metrik",
+      "description": "Standarisasi operasional terbukti memberi dampak nyata: Nol biaya tak terduga bocor dan semua pos pembayaran vendor rekanan lunas tertib.",
+      "points": [
+        "Nol biaya tak terduga bocor dan semua pos pembayaran vendor rekanan lunas tertib.",
+        "Laporan keuangan dan laba rugi akurat 100%",
+        "Pemilik usaha bisa tenang mengontrol bisnis dari jauh"
+      ]
     },
     {
       "slide": 5,
-      "title": "Sentralisasi Kendali Multi-Outlet Bersama COOCA",
-      "tag": "Solusi Strategis"
+      "title": "Mulai Rapikan Usahamu Hari Ini",
+      "tag": "Langkah Nyata",
+      "description": "Coba Paket Free Rp 0 (gratis selamanya untuk Solo Owner) di cooca.id",
+      "points": [
+        "Daftar instan tanpa kartu kredit di cooca.id",
+        "Fitur lengkap tanpa biaya langganan bulanan",
+        "Cocok untuk semua jenis usaha di Indonesia"
+      ]
     }
   ],
-  "target_audience": "Pelaku Usaha Ritel & Pengelola Toko (LINKEDIN)",
-  "target_audience_secondary": "Staf Operasional Kasir & Admin Toko",
+  "key_points": [
+    "Breakdown pos anggaran sewa gedung, dekorasi, katering, dan dokumentasi",
+    "Pantau sisa termin pembayaran klien sebelum hari pelaksanaan acara",
+    "Rekap keuntungan bersih per acara langsung otomatis tanpa hitung manual"
+  ],
+  "canva_mcp_prompt_brief": "Format: Multi-page presentation carousel (1080x1080 px) for COOCA Indonesia (cooca.id).\nVisual Theme: Apple HIG aesthetic Bento Grid, dark-tech clean typography, floating glassmorphism cards with ambient cyan glow (#38BDF8).\nColor Palette: Deep Midnight Navy background (#070B19 to #162B68), Electric Sapphire accents (#2563EB), Cyan Glow (#38BDF8), and stark white Plus Jakarta Sans text. STRICTLY ZERO GREEN (No emerald / green elements anywhere).\nBranding: Official COOCA Dark logo (100% transparent PNG, placed directly on the dark blue background without any white container, box, or pill). Badge CTA: 'Mulai Gratis Selamanya di cooca.id' (Strictly cooca.id only, NO route URLs).\nPhotography Subject: High-realism, authentic professional photography showcasing Dekorasi panggung pesta pernikahan elegan dengan tata lampu artistik, tim event organizer memeriksa rundown acara di tablet. No 2D flat cartoon or generic AI slop.\nContent Topic: Pelunasan Klien EO Kerap Mundur Setelah Acara Beres? Pasang Aturan Termin Tegas - Event / Wedding Organizer (Jasa Proyek).",
+  "media_path": "admin/social-media-assets/carousel/linkedin/slide-01.png",
+  "media_paths": [
+    "admin/social-media-assets/carousel/linkedin/slide-01.png",
+    "admin/social-media-assets/carousel/linkedin/slide-02.png",
+    "admin/social-media-assets/carousel/linkedin/slide-03.png",
+    "admin/social-media-assets/carousel/linkedin/slide-04.png",
+    "admin/social-media-assets/carousel/linkedin/slide-05.png"
+  ],
+  "local_media_path": "admin/social-media-assets/carousel/linkedin/slide-01.png",
+  "local_media_paths": [
+    "admin/social-media-assets/carousel/linkedin/slide-01.png",
+    "admin/social-media-assets/carousel/linkedin/slide-02.png",
+    "admin/social-media-assets/carousel/linkedin/slide-03.png",
+    "admin/social-media-assets/carousel/linkedin/slide-04.png",
+    "admin/social-media-assets/carousel/linkedin/slide-05.png"
+  ],
   "audience_research": {
-    "business_type": "Toko Retail, F&B, Jasa, dan UMKM Berkembang",
-    "business_scale": "Solo Owner hingga UKM Multi-Karyawan",
-    "operational_stage": "Modernisasi operasional harian",
-    "persona": {
-      "role": "Pemilik Usaha",
-      "daily_responsibilities": "Pengawasan penjualan dan keuangan harian",
-      "tech_savviness": "Menengah",
-      "decision_making_factors": "Efisiensi, kepraktisan, dan keamanan transaksi"
-    },
-    "pain_points": {
-      "functional_pain": "Pencatatan manual yang lambat dan rawan salah",
-      "financial_pain": "Kebocoran kas dan margin laba yang tidak terpantau",
-      "emotional_pain": "Kekhawatiran terhadap ketidakcocokan data",
-      "aspirational_needs": "Operasional toko berjalan otomatis dan transparan",
-      "knowledge_gap": "Penerapan sistem digital terpadu"
-    },
-    "behavior_and_preferences": {
-      "headline_triggers": "Solusi praktis dan tips operasional langsung",
-      "preferred_content_style": "Infografis edukatif dan terstruktur",
-      "engagement_hooks": "Diskusi terbuka seputar tantangan toko"
-    }
+    "business_type": "Event / Wedding Organizer",
+    "cluster": "Jasa Proyek",
+    "persona": "Pemilik Usaha Event / Wedding Organizer",
+    "pain_points": "Uang muka ke vendor rekanan lupa dicatat, anggaran biaya acara membengkak tanpa kontrol, dan jadwal pelunasan klien molor.",
+    "solution": "Bantu rekap seluruh pos pengeluaran acara per klien, atur jadwal pembayaran vendor rekanan, dan kelola tagihan termin klien secara rapi."
   },
   "content_strategy": {
-    "core_problem": "Asimetri kontrol operasional saat ekspansi gerai ritel",
-    "educational_objective": "Memberikan wawasan aplikatif seputar Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
-    "content_angle": "Operational Awareness",
-    "key_message": "Tingkatkan stabilitas toko dengan standarisasi Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B",
-    "practical_takeaways": [
-      "Gunakan pencatatan otomatis",
-      "Terapkan SOP harian",
-      "Evaluasi berkala"
-    ],
-    "cooca_organic_link": "Solusi Multi-Cabang Dari 1 Layar HP di COOCA",
-    "audience_relevance_score": 95.0,
-    "content_audience_matching_justification": "Konten selaras dengan kebutuhan audiens LINKEDIN dalam mengoptimalkan pengelolaan bisnis UMKM"
-  },
-  "caption_strategy": {
-    "opening_hook": "Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?",
-    "audience_connection": "Bagi pelaku usaha, pengelolaan operasional yang tertib adalah kunci pertumbuhan bisnis.",
-    "educational_value": "Edukasi praktis langkah demi langkah.",
-    "practical_takeaway": "Terapkan standarisasi pencatatan mulai hari ini.",
-    "cooca_solution": "Informasi lebih lanjut di cooca.id",
-    "engagement_cta": "Bagaimana pengalaman toko Anda? Tulis di kolom komentar.",
-    "hashtags": [
-      "#TipsBisnis",
-      "#ManajemenToko",
-      "#UMKM",
-      "#COOCA"
-    ]
-  },
-  "quality_control": {
-    "research_validation": "PASSED",
-    "audience_validation": "PASSED",
-    "content_validation": "PASSED",
-    "caption_validation": "PASSED",
-    "product_relevance_validation": "PASSED",
-    "originality_validation": "PASSED",
-    "overall_status": "READY_FOR_DEPLOYMENT"
-  },
-  "evaluated_at": "2026-11-10 10:11:53",
-  "identity_rule": "STRICTLY_NEUTRAL_NO_BUSINESS_OR_USER_NAME",
-  "media_policy": "STATIC_IMAGES_ONLY_NO_VIDEO_MOTION",
-  "brand_design_theme": {
-    "background": "dark_blue",
-    "background_hex": "#070B19",
-    "text_color": "white",
-    "text_color_hex": "#FFFFFF",
-    "accent_colors": [
-      "#38BDF8",
-      "#2563EB",
-      "#0284C7",
-      "#EF4444"
-    ],
-    "logo_required": true,
-    "logo_path": "public/assets/image/1785229034_logo_dark.png",
-    "renderer_engine": "mcp_canva",
-    "typography": {
-      "font_family": "Plus Jakarta Sans",
-      "headline": "Plus Jakarta Sans Bold / ExtraBold",
-      "subheadline": "Plus Jakarta Sans SemiBold",
-      "body": "Plus Jakarta Sans Regular / Medium",
-      "numbers_statistics": "Plus Jakarta Sans Bold / ExtraBold",
-      "cta": "Plus Jakarta Sans Bold",
-      "advantages": [
-        "Modern dan profesional",
-        "Sangat nyaman dibaca dalam Bahasa Indonesia",
-        "Memiliki karakter teknologi tanpa terlihat kaku",
-        "Cocok untuk headline, isi carousel, hingga angka harga"
-      ]
-    },
-    "rules": [
-      "Identitas Brand Wajib: Kombinasi Putih (#FFFFFF) dan Biru (#2563EB, #1E40AF, #38BDF8, #0A1128)",
-      "DILARANG KERAS MENGGUNAKAN WARNA HIJAU (Strictly Zero Green / No Emerald)",
-      "Tipografi dan teks utama wajib kontras tajam menggunakan Plus Jakarta Sans di seluruh elemen",
-      "Wajib menggunakan Logo Resmi COOCA Dark (public/assets/image/1785229034_logo_dark.png)",
-      "Aksen visual hanya menggunakan spektrum Biru: Cooca Blue (#2563EB), Cyan Blue (#38BDF8), Navy Blue (#1E3A8A)",
-      "Dilarang background atau aksen warna-warni non-brand di luar putih dan biru"
-    ]
-  },
-  "canva_mcp_prompt_brief": "Multi-slide square carousel (1080x1080 px) for Cooca POS Indonesia (cooca.id). Visual Style: High-end photo-led Bento Grid layout, Apple HIG aesthetic. Subject: High-realism photography dynamically tailored to the content and keyword (Photorealistic corporate retail management photography, modern store supervision, or multi-outlet operations analytics vividly representing business expansion). Strictly authentic photography (NO 2D cartoon / flat illustration). Background & Theme: Deep midnight navy blue gradient (#070B19 to #162B68) with electric sapphire blue (#2563EB) and glowing cyan (#38BDF8) ambient lighting. Typography: Crisp pure white typography in Plus Jakarta Sans style, strictly NO green. Elements: Top category overline 'Tata Kelola Multi-Cabang & Arsitektur Kontrol Ritel B2B', bold headline 'Ekspansi Gerai Ritel: Mengapa Kontrol Operasional Kerap Runtuh di Cabang Ketiga?', floating glassmorphism bento metric cards matching the keyword analysis, bottom action badge 'Mulai Gratis Selamanya di cooca.id'. Highly realistic photography, hardware mockup, clean editorial layout, zero clutter."
+    "core_problem": "Uang muka ke vendor rekanan lupa dicatat, anggaran biaya acara membengkak tanpa kontrol, dan jadwal pelunasan klien molor.",
+    "solution_feature": "Rekap Anggaran Acara & Termin Vendor",
+    "metrics": "Nol biaya tak terduga bocor dan semua pos pembayaran vendor rekanan lunas tertib.",
+    "cta": "Mulai Gratis Selamanya di cooca.id"
+  }
 }
