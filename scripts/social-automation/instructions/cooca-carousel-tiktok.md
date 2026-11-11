@@ -111,7 +111,8 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Domain:** caption dan teks slide hanya memuat `cooca.id`, tanpa URL rute detail (misalnya /roles, /pos, /whatsapp) dan tanpa nama bisnis fiktif.
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Caption TikTok:** hook di baris pertama dan pendek, keyword utama muncul alami di caption, tepat satu pertanyaan komentar, hashtag 3 sampai 5.
-- **Visual:** logo ada, tidak ada warna hijau, subjek foto sesuai sektor, semua teks penting berada di safe zone, tiap slide membawa satu ide dan terbaca dalam sekali lihat.
+- **Visual:**
+- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
 - **Spec JSON:** valid dan semua field wajib terisi.
 
 ### Langkah 4: Deploy ke database

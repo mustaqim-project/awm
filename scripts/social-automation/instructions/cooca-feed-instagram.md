@@ -100,7 +100,8 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Karakter terlarang:** caption dan semua teks di gambar bebas em-dash (U+2014) dan en-dash (U+2013), dan bebas mojibake (lihat bagian 4).
 - **Domain:** caption dan teks gambar hanya memuat `cooca.id`, tanpa URL rute detail (misalnya /roles, /pos, /whatsapp) dan tanpa nama bisnis fiktif.
 - **Gaya bahasa:** terbaca santai dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang yang terlalu spesifik daerah. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
-- **Visual:** logo ada, tidak ada warna hijau, subjek foto sesuai sektor, satu pesan utama terbaca jelas.
+- **Visual:**
+- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
 - **Spec JSON:** valid dan semua field wajib (termasuk `slug`) terisi.
 
 ### Langkah 4: Deploy ke database

@@ -178,7 +178,8 @@ Semua teks yang dibaca audiens (caption, hook, teks di slide, badge selain nama 
 1. **Zero green:** tidak boleh ada warna hijau di desain mana pun.
 2. **Satu domain:** hanya `cooca.id` di visual, badge, dan caption. Tanpa URL rute detail.
 3. **Karakter terlarang:** tidak boleh ada em-dash (U+2014) dan en-dash (U+2013). Gunakan tanda minus (-) atau titik dua (:).
-4. **Visual:** format 5 slide portrait 1080x1350 px. Palet Deep Midnight Navy (#070B19 ke #162B68), aksen Electric Sapphire (#2563EB) dan Cyan Glow (#38BDF8), teks putih Plus Jakarta Sans tebal. Logo resmi COOCA Dark wajib ada di header.
+4. **Visual:**
+- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
 5. **Hanya Media Statis:** Dilarang video motion, animasi, atau Remotion.
 
 ---

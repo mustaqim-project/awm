@@ -109,7 +109,8 @@ Selalu buat desain Canva BARU untuk setiap konten. Dilarang mendaur ulang templa
 - **Gaya bahasa:** terbaca santai profesional dan tidak baku sesuai aturan "Gaya bahasa". Tidak ada sapaan "Anda", tidak ada kata kaku dari daftar hindari, tidak ada slang. Jika ada yang kaku, tulis ulang sebelum deploy (ini diperbaiki langsung, bukan alasan berhenti).
 - **Caption LinkedIn:** hook ada di dua baris pertama dan cukup ringkas agar terbaca sebelum teks terpotong, ada tepat satu pertanyaan diskusi, hashtag 3 sampai 5.
 - **Klaim:** semua angka di gambar berasal dari `metrics` beserta sumbernya. Tidak ada klaim Paket Free untuk operasi besar atau multi-cabang.
-- **Visual:** logo ada, tidak ada warna hijau, subjek foto sesuai sektor, satu pesan utama terbaca jelas.
+- **Visual:**
+- **Tampilan Antarmuka (UI Asli):** Jika visual atau slide memerlukan tampilan software/interface COOCA (misal: Kasir POS, Manajemen Stok, Laporan Keuangan, SPK Digital, atau Pengaturan Peran), WAJIB merender tangkapan layar antarmuka asli langsung dari UI COOCA (via live route screenshot Playwright). DILARANG menggunakan mockup UI ilustrasi palsu atau gambar AI slop yang tidak mencerminkan antarmuka asli COOCA.
 - **Spec JSON:** valid dan semua field wajib (termasuk `slug`, `discussion_question`, `metrics`) terisi.
 
 ### Langkah 4: Deploy ke database
