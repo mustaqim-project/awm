@@ -431,10 +431,64 @@ body {
   display: block;
 }
 
+.hero-photo.ui-screenshot {
+  object-fit: cover;
+  object-position: top left;
+  filter: contrast(1.05) brightness(1.02);
+}
+
+.window-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  position: relative;
+  z-index: 3;
+}
+
+.window-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.w-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.w-dot.red { background: #EF4444; }
+.w-dot.yellow { background: #F59E0B; }
+.w-dot.blue { background: #38BDF8; }
+
+.window-title {
+  color: #94A3B8;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.window-badge {
+  background: rgba(37, 99, 235, 0.3);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38BDF8;
+  font-weight: 800;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
 .photo-vignette {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(5, 8, 20, 0.95) 0%, rgba(5, 8, 20, 0.2) 55%, transparent 100%);
+}
+
+.photo-vignette.ui-mode {
+  background: linear-gradient(to top, rgba(5, 8, 20, 0.92) 0%, rgba(5, 8, 20, 0.05) 45%, transparent 100%);
 }
 
 .photo-badge-top {
