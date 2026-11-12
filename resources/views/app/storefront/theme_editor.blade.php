@@ -406,8 +406,8 @@
 @endsection
 
 @push('scripts')
-{{-- Monaco Editor CDN Loader Script --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+{{-- Monaco Editor CDN Loader Script (uses jsdelivr which is verified & allowed in CSP style-src and script-src) --}}
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.min.js"></script>
 
 <script>
 document.addEventListener('alpine:init', () => {
@@ -470,8 +470,24 @@ document.addEventListener('alpine:init', () => {
             }, 300);
         },
 
-        initMonaco() {
-            require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
+        initMonaco(attempt = 0) {
+            if (typeof require === 'undefined') {
+                if (attempt < 20) {
+                    setTimeout(() => this.initMonaco(attempt + 1), 150);
+                }
+                return;
+            }
+
+            window.MonacoEnvironment = {
+                getWorkerUrl: function (workerId, label) {
+                    return URL.createObjectURL(new Blob([
+                        "self.MonacoEnvironment = { baseUrl: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/' };" +
+                        "importScripts('https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/base/worker/workerMain.js');"
+                    ], { type: 'text/javascript' }));
+                }
+            };
+
+            require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
             
             const self = this;
             require(['vs/editor/editor.main'], function () {

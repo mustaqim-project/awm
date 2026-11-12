@@ -437,6 +437,24 @@
                     return this.items.reduce((acc, item) => acc + ((parseFloat(item.price) || 0) * (parseInt(item.quantity) || 1)), 0);
                 }
             });
+
+            Alpine.store('orderTracking', {
+                isOpen: false,
+                identifier: '',
+                loading: false,
+
+                open() {
+                    this.isOpen = true;
+                },
+                close() {
+                    this.isOpen = false;
+                },
+                submit(slug) {
+                    if (!this.identifier.trim()) return;
+                    this.loading = true;
+                    window.location.href = '/' + slug + '/order/' + encodeURIComponent(this.identifier.trim());
+                }
+            });
         });
 
         document.addEventListener('DOMContentLoaded', () => {
