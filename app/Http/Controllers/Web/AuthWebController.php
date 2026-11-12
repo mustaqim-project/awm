@@ -943,22 +943,15 @@ final class AuthWebController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'max:50'],
             'business_name' => ['required', 'string', 'max:255', 'unique:businesses,name,' . optional($business)->id],
-            'address' => ['required', 'string', 'max:500'],
-            'province' => ['required', 'string', 'max:100'],
-            'city' => ['required', 'string', 'max:100'],
-            'district' => ['required', 'string', 'max:100'],
-            'village' => ['required', 'string', 'max:100'],
-            'postal_code' => ['required', 'string', 'max:10'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'province' => ['nullable', 'string', 'max:100'],
+            'city' => ['nullable', 'string', 'max:100'],
+            'district' => ['nullable', 'string', 'max:100'],
+            'village' => ['nullable', 'string', 'max:100'],
+            'postal_code' => ['nullable', 'string', 'max:10'],
             'latitude' => ['nullable', 'numeric', 'between:-90,90'],
             'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'biteship_area_id' => ['nullable', 'string', 'max:100'],
-        ], [
-            'address.required' => 'Detail alamat usaha (nama jalan / nomor toko) wajib diisi.',
-            'province.required' => 'Nama provinsi wajib diisi (pilih dari pencarian atau ketik langsung).',
-            'city.required' => 'Nama kota/kabupaten wajib diisi (pilih dari pencarian atau ketik langsung).',
-            'district.required' => 'Nama kecamatan wajib diisi (pilih dari pencarian atau ketik langsung).',
-            'village.required' => 'Nama kelurahan / desa wajib diisi (pilih dari pencarian atau ketik langsung).',
-            'postal_code.required' => 'Kode pos wilayah usaha wajib diisi.',
         ]);
 
         /** @var User $user */

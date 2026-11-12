@@ -3283,7 +3283,26 @@
                             }
                         });
                         const data = await response.json();
-                        if (!response.ok) throw new Error(data.message || 'Status publikasi gagal diubah.');
+                        if (!response.ok) {
+                            if (data.require_location && typeof Swal !== 'undefined') {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'Titik Lokasi Diperlukan',
+                                    text: data.message || 'Lengkapi alamat dan titik lokasi usaha Anda sebelum mempublikasikan website toko online.',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#007AFF',
+                                    cancelButtonColor: '#6B7280',
+                                    confirmButtonText: 'Lengkapi Lokasi Sekarang',
+                                    cancelButtonText: 'Nanti Saja'
+                                }).then((result) => {
+                                    if (result.isConfirmed && data.redirect_url) {
+                                        window.location.href = data.redirect_url;
+                                    }
+                                });
+                                return;
+                            }
+                            throw new Error(data.message || 'Status publikasi gagal diubah.');
+                        }
                         this.isPublished = Boolean(data.is_published);
                         this.saveMessage = data.message || 'Status publikasi diperbarui.';
                         if (typeof Swal !== 'undefined') {

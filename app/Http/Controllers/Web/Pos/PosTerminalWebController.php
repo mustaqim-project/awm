@@ -147,6 +147,11 @@ final class PosTerminalWebController extends Controller
             }
         }
 
+        // Active Product Quota Enforcement (Free / Expired tier lock policy: only top 10 products unlocked)
+        $entitlementService = app(\App\Domain\Billing\EntitlementService::class);
+        $allowedProductIds = $entitlementService->getActivePosProductIds($business);
+        $isCatalogLimited = $allowedProductIds !== null;
+
         try {
             $products = Product::where('business_id', $business->id)
                 ->forPos()
@@ -155,7 +160,7 @@ final class PosTerminalWebController extends Controller
                 })
                 ->with(['category', 'outputUnit', 'costModels.costingRuns.result', 'channelPrices'])
                 ->get()
-                ->map(function ($p) use ($selectedLocationId, $branchPrices, $business) {
+                ->map(function ($p) use ($selectedLocationId, $branchPrices, $business, $allowedProductIds, $isCatalogLimited) {
                     if (isset($branchPrices[$p->id])) {
                         $p->price = (float) $branchPrices[$p->id];
                         $p->selling_price = (float) $branchPrices[$p->id];
@@ -191,6 +196,10 @@ final class PosTerminalWebController extends Controller
                     $p->is_bundle = (bool) ($p->is_bundle ?? false);
                     $p->wholesale_min_qty = $p->wholesale_min_qty !== null ? (float) $p->wholesale_min_qty : null;
                     $p->wholesale_price = $p->wholesale_price !== null ? (float) $p->wholesale_price : null;
+
+                    // Dynamic Lock State: If catalog is limited & item is beyond top 10 active products
+                    $isLocked = $isCatalogLimited && ! in_array($p->id, $allowedProductIds, true);
+                    $p->is_locked = $isLocked;
 
                     return $p;
                 })
@@ -345,6 +354,8 @@ final class PosTerminalWebController extends Controller
             'activeShift',
             'categories',
             'products',
+            'isCatalogLimited',
+            'allowedProductIds',
             'customers',
             'heldOrders',
             'vouchers',
@@ -604,6 +615,22 @@ final class PosTerminalWebController extends Controller
                 'success' => false,
                 'message' => 'Shift kasir belum dibuka. Buka shift terlebih dahulu sebelum melakukan transaksi POS.',
             ], 403);
+        }
+
+        // Active Product Quota Enforcement (Anti-Bypass Lock Check)
+        $entitlementService = app(\App\Domain\Billing\EntitlementService::class);
+        $allowedProductIds = $entitlementService->getActivePosProductIds($business);
+        if ($allowedProductIds !== null) {
+            $checkoutProductIds = collect($validated['items'])->pluck('product_id')->filter()->unique();
+            $lockedItems = $checkoutProductIds->filter(fn ($id) => ! in_array($id, $allowedProductIds, true));
+            if ($lockedItems->isNotEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'code' => 'PRODUCT_CATALOG_LOCKED',
+                    'message' => 'Terdapat produk yang terkunci dalam pesanan. Pada paket Free, hanya 10 produk teratas yang dapat ditransaksikan. Silakan perpanjang langganan toko Anda.',
+                    'upgrade_url' => route('billing.limits'),
+                ], 403);
+            }
         }
 
         // Validasi ketersediaan produk di cabang yang bersangkutan (Anti-Fraud / Anti-IDOR)

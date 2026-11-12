@@ -39,15 +39,13 @@ final class EnsureOwnerProfileComplete
             $isOwner = $business->users()->wherePivot('user_id', $user->id)->wherePivot('role', 'owner')->exists();
 
             // If user is owner and phone or name or business name is missing, redirect to complete-profile
+            // NOTE (Progressive Profiling): Detail lokasi GPS, kelurahan & kode pos dipindahkan ke aktivasi Landing Page / Toko Online
             if ($isOwner) {
                 $userPhoneMissing = empty(trim((string) ($user->phone ?? '')));
                 $userNameMissing = empty(trim((string) ($user->name ?? '')));
                 $businessNameMissing = empty(trim((string) ($business->name ?? ''))) || str_starts_with($business->name, 'Usaha Saya') || str_starts_with($business->name, 'Usaha Pengguna');
 
-                $primaryLocation = $business->locations()->where('is_primary', true)->first() ?? $business->locations()->first();
-                $locationMissing = ! $primaryLocation || empty($primaryLocation->address) || empty($primaryLocation->postal_code);
-
-                if ($userPhoneMissing || $userNameMissing || $businessNameMissing || $locationMissing) {
+                if ($userPhoneMissing || $userNameMissing || $businessNameMissing) {
                     return redirect()->route('profile.complete');
                 }
             }

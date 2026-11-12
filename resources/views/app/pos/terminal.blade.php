@@ -1303,18 +1303,33 @@
                             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3.5">
                                 <template x-for="product in paginatedProducts" :key="product.id">
                                     <div @click="handleProductClick(product)"
-                                        class="rounded-[14px] sm:rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/10 hover:border-[#007AFF]/40 hover:shadow-md active:scale-[0.98] transition-all p-2.5 sm:p-3 cursor-pointer flex flex-col justify-between group select-none min-w-0">
+                                        class="rounded-[14px] sm:rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/10 hover:border-[#007AFF]/40 hover:shadow-md active:scale-[0.98] transition-all p-2.5 sm:p-3 cursor-pointer flex flex-col justify-between group select-none min-w-0 relative"
+                                        :class="product.is_locked ? 'border-amber-500/40 dark:border-amber-500/30 bg-amber-500/[0.02] dark:bg-amber-500/[0.03]' : ''">
                                         <div>
                                             @if ($posShowProductImages)
                                                 <!-- Thumbnail Image with 16/10 Aspect Ratio -->
                                                 <div
                                                     class="relative w-full aspect-[16/10] rounded-[10px] sm:rounded-[12px] bg-black/[0.03] dark:bg-black/40 border border-black/[0.04] dark:border-white/5 mb-2 overflow-hidden items-center justify-center flex shrink-0">
-                                                    <template x-if="product.image_url">
+                                                    
+                                                    <!-- VISUAL LOCK OVERLAY: Shown when product is locked on Free / Expired plan -->
+                                                    <template x-if="product.is_locked">
+                                                        <div class="w-full h-full bg-[#18110B]/90 flex flex-col items-center justify-center text-amber-400 p-2 text-center select-none">
+                                                            <div class="w-8 h-8 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center mb-1 shadow-inner">
+                                                                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                                                </svg>
+                                                            </div>
+                                                            <span class="text-[9.5px] font-bold tracking-tight text-amber-200 uppercase">Terkunci</span>
+                                                        </div>
+                                                    </template>
+
+                                                    <!-- NORMAL PRODUCT IMAGE: Shown when product is unlocked -->
+                                                    <template x-if="!product.is_locked && product.image_url">
                                                         <img :src="product.image_url" :alt="product.name" loading="lazy"
                                                             class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                                                             x-on:error="product.image_url = null">
                                                     </template>
-                                                    <template x-if="!product.image_url">
+                                                    <template x-if="!product.is_locked && !product.image_url">
                                                         <div
                                                             class="w-full h-full flex flex-col items-center justify-center text-black/20 dark:text-white/20">
                                                             <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor"
@@ -1326,13 +1341,18 @@
                                                     </template>
 
                                                     <!-- Stock Badge Pill (Top-Right) -->
-                                                    <template x-if="product.type === 'service'">
+                                                    <template x-if="product.is_locked">
+                                                        <span class="absolute top-1.5 right-1.5 text-[8.5px] font-bold px-1.5 py-0.5 rounded-full bg-amber-500 text-black shadow-xs">
+                                                            Limit Free
+                                                        </span>
+                                                    </template>
+                                                    <template x-if="!product.is_locked && product.type === 'service'">
                                                         <span
                                                             class="absolute top-1.5 right-1.5 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#AF52DE] text-white shadow-xs">
                                                             {{ __('pos.services_label') }}
                                                         </span>
                                                     </template>
-                                                    <template x-if="product.type !== 'service'">
+                                                    <template x-if="!product.is_locked && product.type !== 'service'">
                                                         <span
                                                             class="absolute top-1.5 right-1.5 text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-white/95 dark:bg-black/90 shadow-xs tabular-nums"
                                                             :class="product.current_stock > 0 ?
@@ -1345,19 +1365,28 @@
                                             @endif
 
                                             <!-- Product Name (2 lines clamped) -->
-                                            <h4 class="font-bold text-[12px] sm:text-[14px] text-black dark:text-white line-clamp-2 leading-snug group-hover:text-[#007AFF] transition-colors"
+                                            <h4 class="font-bold text-[12px] sm:text-[14px] line-clamp-2 leading-snug transition-colors"
+                                                :class="product.is_locked ? 'text-black/60 dark:text-white/60' : 'text-black dark:text-white group-hover:text-[#007AFF]'"
                                                 x-text="product.name"></h4>
                                             
                                             <!-- SKU / Code & Badges -->
                                             <div class="flex items-center gap-1 flex-wrap mt-0.5 sm:mt-1">
                                                 <span class="text-[10px] sm:text-[11px] font-medium text-black/45 dark:text-white/45 tabular-nums truncate"
                                                     x-text="product.code || '-'"></span>
-                                                <template x-if="product.type === 'service'">
+                                                <template x-if="product.is_locked">
+                                                    <span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[8.5px] sm:text-[9px] font-bold bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                                                        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                                        </svg>
+                                                        <span>Kunci Paket Free</span>
+                                                    </span>
+                                                </template>
+                                                <template x-if="!product.is_locked && product.type === 'service'">
                                                     <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[8.5px] sm:text-[9px] font-bold bg-[#AF52DE]/15 text-[#AF52DE]">
                                                         {{ __('pos.services_label') }}
                                                     </span>
                                                 </template>
-                                                <template x-if="product.modifier_groups && product.modifier_groups.length > 0">
+                                                <template x-if="!product.is_locked && product.modifier_groups && product.modifier_groups.length > 0">
                                                     <span class="inline-flex items-center px-1.5 py-0.2 rounded text-[8.5px] sm:text-[9px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
                                                         {{ __('pos.plus_variant') }}
                                                     </span>
@@ -1371,24 +1400,32 @@
                                                 <span class="font-bold text-[12.5px] sm:text-[15px] text-black dark:text-white tabular-nums truncate"
                                                     x-text="formatRupiah(getProductPrice(product))"></span>
                                                 @feature('pos.wholesale_tiered_pricing')
-                                                <template x-if="product.wholesale_min_qty > 0 && product.wholesale_price > 0">
+                                                <template x-if="!product.is_locked && product.wholesale_min_qty > 0 && product.wholesale_price > 0">
                                                     <span class="text-[9.5px] font-bold text-[#34C759] dark:text-[#30D158]"
                                                         x-text="'≥' + product.wholesale_min_qty + ' ' + formatRupiah(product.wholesale_price)"></span>
                                                 </template>
                                                 @endfeature
                                                 @if ($business && $business->isFoodIndustry())
-                                                <span x-show="product.channel_prices && salesChannel !== 'dine_in' && Number(product.channel_prices[salesChannel]) !== Number(product.selling_price)"
+                                                <span x-show="!product.is_locked && product.channel_prices && salesChannel !== 'dine_in' && Number(product.channel_prices[salesChannel]) !== Number(product.selling_price)"
                                                     class="text-[9.5px] font-black uppercase tracking-wider rounded px-1 w-max"
                                                     :class="salesChannel === 'gofood' ? 'bg-[#00AA13]/15 text-[#00AA13]' : (salesChannel === 'grabfood' ? 'bg-[#00B14F]/15 text-[#00B14F]' : (salesChannel === 'shopeefood' ? 'bg-[#EE4D2D]/15 text-[#EE4D2D]' : 'bg-[#FF9500]/15 text-[#FF9500]'))"
                                                     x-text="salesChannel"></span>
                                                 @endif
                                             </div>
                                             <button type="button" @click.stop="handleProductClick(product)"
-                                                class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#007AFF] hover:bg-[#0062CC] text-white flex items-center justify-center font-bold text-sm sm:text-base shadow-sm shrink-0 active:scale-90 transition-all"
-                                                title="{{ __('pos.add_to_cart') }}">
-                                                <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                                </svg>
+                                                class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold text-sm sm:text-base shadow-sm shrink-0 active:scale-90 transition-all cursor-pointer"
+                                                :class="product.is_locked ? 'bg-amber-500 hover:bg-amber-600 text-black' : 'bg-[#007AFF] hover:bg-[#0062CC] text-white'"
+                                                :title="product.is_locked ? 'Produk Terkunci - Klik untuk Buka' : '{{ __('pos.add_to_cart') }}'">
+                                                <template x-if="product.is_locked">
+                                                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                                                    </svg>
+                                                </template>
+                                                <template x-if="!product.is_locked">
+                                                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                    </svg>
+                                                </template>
                                             </button>
                                         </div>
                                     </div>
@@ -2153,6 +2190,7 @@
     @include('app.pos.modals.scanner-permission-modal')
     @include('app.pos.modals.barcode-scanner-modal')
     @include('app.pos.modals.modifier-modal')
+    @include('app.pos.modals.product-paywall-modal')
 
     @if ($isWorkshop || $isLaundry || (!$isFnB && !$isRetail && !$isPharmacy))
         @include('app.pos.modals.service-vertical-modal')
@@ -2214,6 +2252,12 @@
                 mobileMenuOpen: false,
                 isFullscreen: false,
                 isOnline: typeof navigator !== 'undefined' ? navigator.onLine : true,
+
+                // Visual Paywall State (Free/Expired tier limit enforcement)
+                isCatalogLimited: {{ ($isCatalogLimited ?? false) ? 'true' : 'false' }},
+                showProductPaywallModal: false,
+                lockedProductCandidate: null,
+                billingUpgradeUrl: '{{ route('billing.limits') }}',
 
                 // Cart state
                 hasDineIn: {{ ($business && $business->hasDineInFeature()) ? 'true' : 'false' }},
@@ -3951,11 +3995,22 @@
                 // F&B METHODS: PRODUCT MODIFIERS, QR & TABLES
                 // =====================================================
                 handleProductClick(product) {
+                    // Visual Paywall Lock Check: Trigger Payment Pop-up when locked item clicked
+                    if (product.is_locked) {
+                        this.openProductPaywallModal(product);
+                        return;
+                    }
+
                     if (product.modifier_groups && product.modifier_groups.length > 0) {
                         this.openModifierModal(product);
                     } else {
                         this.addToCart(product);
                     }
+                },
+
+                openProductPaywallModal(product) {
+                    this.lockedProductCandidate = product;
+                    this.showProductPaywallModal = true;
                 },
 
                 openModifierModal(product) {

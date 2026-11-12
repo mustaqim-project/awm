@@ -667,6 +667,47 @@ final class EntitlementService
     }
 
     /**
+     * Determine active (unlocked) product IDs allowed for POS cashier transactions.
+     * If business is on active paid tier with unlimited/high limit, returns null (meaning ALL products are unlocked).
+     * If business is on Free/Expired tier, returns array of top N allowed product IDs (default: 10).
+     *
+     * @return array<int|string>|null Null if unlimited, array of IDs if locked to top N
+     */
+    public function getActivePosProductIds(Business $business, int $fallbackLimit = self::FREE_PRODUCT_LIMIT): ?array
+    {
+        $sub = $this->getSubscription($business);
+        
+        // Paid operational plans have full catalog access
+        if ($sub->isOperational() && $sub->isCorePlan()) {
+            return null;
+        }
+
+        // On Free / Expired tier, restrict active selling items to top 10 products
+        $limit = $this->getProductLimit($business) ?? $fallbackLimit;
+
+        return Product::where('business_id', $business->id)
+            ->forPos()
+            ->orderByDesc('is_active')
+            ->orderBy('name')
+            ->take($limit)
+            ->pluck('id')
+            ->toArray();
+    }
+
+    /**
+     * Check if a specific product is locked in POS due to Free/Expired plan limitation.
+     */
+    public function isPosProductLocked(Business $business, string $productId): bool
+    {
+        $allowedIds = $this->getActivePosProductIds($business);
+        if ($allowedIds === null) {
+            return false;
+        }
+
+        return ! in_array($productId, $allowedIds, true);
+    }
+
+    /**
      * Get Recipe limit for business. Null means unlimited.
      */
     public function getRecipeLimit(Business $business): ?int

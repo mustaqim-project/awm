@@ -123,6 +123,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="w-6 h-6 rounded-full bg-[#34C759]/15 text-[#34C759] text-xs font-bold flex items-center justify-center">2</span>
                                 <h3 class="text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('auth.complete_profile.section_2_title') }}</h3>
+                                <span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full uppercase">Opsional (Dapat Diatur Nanti)</span>
                             </div>
                             <span class="text-[11px] font-medium text-black/45 dark:text-white/45">{{ __('auth.complete_profile.level_village_badge') }}</span>
                         </div>
@@ -186,18 +187,18 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label for="province" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        {{ __('auth.complete_profile.province_label') }} <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.province_label') }}
                                     </label>
-                                    <input type="text" name="province" id="province" x-model="selectedArea.province" required
+                                    <input type="text" name="province" id="province" x-model="selectedArea.province"
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
                                         placeholder="{{ __('auth.complete_profile.province_placeholder') }}">
                                 </div>
 
                                 <div>
                                     <label for="city" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        {{ __('auth.complete_profile.city_label') }} <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.city_label') }}
                                     </label>
-                                    <input type="text" name="city" id="city" x-model="selectedArea.city" required
+                                    <input type="text" name="city" id="city" x-model="selectedArea.city"
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
                                         placeholder="{{ __('auth.complete_profile.city_placeholder') }}">
                                 </div>
@@ -206,18 +207,18 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                 <div>
                                     <label for="district" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        {{ __('auth.complete_profile.district_label') }} <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.district_label') }}
                                     </label>
-                                    <input type="text" name="district" id="district" x-model="selectedArea.district" required
+                                    <input type="text" name="district" id="district" x-model="selectedArea.district"
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
                                         placeholder="{{ __('auth.complete_profile.district_placeholder') }}">
                                 </div>
 
                                 <div>
                                     <label for="village" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                        {{ __('auth.complete_profile.village_label') }} <span class="text-[#FF3B30]">*</span>
+                                        {{ __('auth.complete_profile.village_label') }}
                                     </label>
-                                    <input type="text" name="village" id="village" x-model="selectedArea.village" required
+                                    <input type="text" name="village" id="village" x-model="selectedArea.village"
                                         class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none"
                                         placeholder="{{ __('auth.complete_profile.village_placeholder') }}">
                                 </div>
@@ -225,9 +226,9 @@
 
                             <div>
                                 <label for="postal_code" class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1">
-                                    {{ __('auth.complete_profile.postal_code_label') }} <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.postal_code_label') }}
                                 </label>
-                                <input type="text" name="postal_code" id="postal_code" x-model="selectedArea.postal_code" required
+                                <input type="text" name="postal_code" id="postal_code" x-model="selectedArea.postal_code"
                                     class="w-full sm:w-1/2 px-3.5 py-2.5 bg-white dark:bg-[#1E2538] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[14px] outline-none font-mono"
                                     placeholder="{{ __('auth.complete_profile.postal_code_placeholder') }}">
                             </div>
@@ -242,9 +243,9 @@
                         <div>
                             <label for="address"
                                 class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm mb-1.5">
-                                {{ __('auth.complete_profile.address_detail_label') }} <span class="text-[#FF3B30]">*</span>
+                                {{ __('auth.complete_profile.address_detail_label') }}
                             </label>
-                            <textarea name="address" id="address" rows="2" required x-model="address"
+                            <textarea name="address" id="address" rows="2" x-model="address"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-[16px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-[15px] sm:text-sm outline-none resize-none"
                                 placeholder="{{ __('auth.complete_profile.address_detail_placeholder') }}"></textarea>
                         </div>
@@ -253,7 +254,7 @@
                         <div class="space-y-2">
                             <div class="flex items-center justify-between">
                                 <label class="block font-semibold text-black/80 dark:text-white/85 text-xs sm:text-sm">
-                                    {{ __('auth.complete_profile.gps_coordinates_label') }} <span class="text-[#FF3B30]">*</span>
+                                    {{ __('auth.complete_profile.gps_coordinates_label') }}
                                 </label>
                                 <button type="button"
                                     @click="useCurrentGps()"

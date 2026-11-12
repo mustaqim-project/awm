@@ -473,6 +473,31 @@ class BusinessLandingPageWebController extends Controller
         $business    = Context::requireBusiness();
         $landingPage = BusinessLandingPage::firstOrCreate(['business_id' => $business->id]);
 
+        // Jika akan dipublikasikan (dari draft -> published), wajib pastikan alamat dan titik lokasi usaha telah diisi
+        if (! $landingPage->is_published) {
+            $primaryLocation = $business->locations()->where('is_primary', true)->first()
+                ?? $business->locations()->first();
+
+            $isLocationIncomplete = ! $primaryLocation
+                || empty(trim((string) ($primaryLocation->address ?? '')))
+                || empty(trim((string) ($primaryLocation->postal_code ?? '')));
+
+            if ($isLocationIncomplete) {
+                $errorMsg = 'Untuk mempublikasikan Landing Page & Toko Online, mohon lengkapi alamat dan titik lokasi usaha Anda terlebih dahulu agar kalkulasi ongkir kurir (Biteship) dan informasi toko berfungsi dengan baik.';
+
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'success' => false,
+                        'require_location' => true,
+                        'message' => $errorMsg,
+                        'redirect_url' => route('storefront.shipping.index'),
+                    ], 422);
+                }
+
+                return back()->with('error', $errorMsg);
+            }
+        }
+
         $landingPage->is_published = ! $landingPage->is_published;
         $landingPage->save();
 
