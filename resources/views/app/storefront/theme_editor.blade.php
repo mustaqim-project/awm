@@ -37,17 +37,22 @@
 @endpush
 
 @section('content')
+{{-- Safe JSON Data Container to avoid HTML attribute breaking --}}
+<script id="theme-editor-config" type="application/json">
+{!! json_encode([
+    'currentPreset'   => $currentPreset,
+    'activeFileKey'   => $activeFileKey,
+    'files'           => $files,
+    'csrfToken'       => csrf_token(),
+    'saveDraftUrl'    => route('landing-page.theme-editor.draft'),
+    'submitReviewUrl' => route('landing-page.theme-editor.submit-review'),
+    'resetDefaultUrl' => route('landing-page.theme-editor.reset-default'),
+    'previewBaseUrl'  => $previewUrl,
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES) !!}
+</script>
+
 <div class="max-w-[1680px] mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5"
-     x-data="themeEditorApp({
-         currentPreset: @json($currentPreset),
-         activeFileKey: @json($activeFileKey),
-         files: @json($files),
-         csrfToken: '{{ csrf_token() }}',
-         saveDraftUrl: '{{ route('landing-page.theme-editor.draft') }}',
-         submitReviewUrl: '{{ route('landing-page.theme-editor.submit-review') }}',
-         resetDefaultUrl: '{{ route('landing-page.theme-editor.reset-default') }}',
-         previewBaseUrl: '{{ $previewUrl }}'
-     })"
+     x-data="themeEditorApp()"
      @keydown.window.escape="isFullscreen = false">
 
     {{-- Breadcrumb & Header --}}
@@ -406,24 +411,35 @@
 
 <script>
 document.addEventListener('alpine:init', () => {
-    Alpine.data('themeEditorApp', (config) => ({
-        currentPreset: config.currentPreset,
-        activeFileKey: config.activeFileKey,
-        files: config.files,
-        saveDraftUrl: config.saveDraftUrl,
-        submitReviewUrl: config.submitReviewUrl,
-        resetDefaultUrl: config.resetDefaultUrl,
-        previewBaseUrl: config.previewBaseUrl,
-        csrfToken: config.csrfToken,
+    Alpine.data('themeEditorApp', () => {
+        let config = {};
+        const configEl = document.getElementById('theme-editor-config');
+        if (configEl) {
+            try {
+                config = JSON.parse(configEl.textContent || '{}');
+            } catch (e) {
+                console.error('Failed to parse theme-editor-config JSON', e);
+            }
+        }
 
-        viewMode: 'split', // 'editor', 'split', 'preview'
-        deviceViewport: 'desktop', // 'mobile', 'tablet', 'desktop'
-        isFullscreen: false,
-        hasUnsavedChanges: false,
-        editor: null,
-        isSaving: false,
-        isSubmitting: false,
-        isFrameRefreshing: false,
+        return {
+            currentPreset: config.currentPreset || '',
+            activeFileKey: config.activeFileKey || 'hero',
+            files: config.files || {},
+            saveDraftUrl: config.saveDraftUrl || '',
+            submitReviewUrl: config.submitReviewUrl || '',
+            resetDefaultUrl: config.resetDefaultUrl || '',
+            previewBaseUrl: config.previewBaseUrl || '',
+            csrfToken: config.csrfToken || '',
+
+            viewMode: 'split', // 'editor', 'split', 'preview'
+            deviceViewport: 'desktop', // 'mobile', 'tablet', 'desktop'
+            isFullscreen: false,
+            hasUnsavedChanges: false,
+            editor: null,
+            isSaving: false,
+            isSubmitting: false,
+            isFrameRefreshing: false,
 
         supportedMeta: @json(App\Models\BusinessStorefrontCustomTheme::SUPPORTED_FILES),
 
@@ -707,7 +723,8 @@ document.addEventListener('alpine:init', () => {
                 setTimeout(() => { this.isFrameRefreshing = false; }, 800);
             }
         }
-    }));
+        };
+    });
 });
 </script>
 @endpush
