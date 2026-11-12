@@ -33,6 +33,61 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-12-392] Google Trends Business Research, Batch 9 Production (20 Artikel SEO Edukasi ID 392-411) & Production Deployment for COOCA
+
+- **Date:** 2026-11-12
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Business Research 12 November 2026, 20 Curated SEO Articles (Batch 9: ID 392-411), Zero Em Dash & En Dash Compliance, Pure `/blog/(slug)` Internal Linking, Automated DB Import & Public Sitemap Regeneration (458 Posts Published, 458 Sitemap URLs)
+- **Work Type:** Feature | Content & SEO | Strategy & Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab kebutuhan mendesak UMKM Indonesia pasca festival belanja 11.11 dan persiapan menuju Harbolnas 12.12 pada tanggal 12 November 2026: evaluasi margin laba bersih riil pasca diskon besar, audit potongan komisi dan biaya marketplace, mitigasi lonjakan retur/klaim paket rusak asuransi ekspedisi, kepatuhan batas setor PPh Final 0,5% 15 November 2026, penerbitan e-faktur Coretax DJP ritel, perpanjangan izin edar P-IRT tutup tahun, perencanaan arus kas menuju Harbolnas 12.12, SOP penataan etalase dan penutupan kasir shift malam, penentuan bonus insentif karyawan toko, integrasi QRIS Cross-Border dan pencegahan bukti transfer palsu, strategi stok bahan baku kuliner akhir tahun, kalkulasi holding cost gudang dan SOP konsinyasi pemasok lokal, penagihan piutang macet tutup buku, strategi reaktivasi member WhatsApp broadcast, penyusunan paket hampers akhir tahun untung, serta panduan penyusunan neraca SAK EMKM tahunan.
+- **Target:**
+  1. Merumuskan berkas riset intelijen Google Trends & Regulasi 12 November 2026: `database/data/articles/trending-research-2026-11-12-batch9.json` dan `database/data/articles/keyword-research-2026-11-12-batch9.json`.
+  2. Memproduksi 20 artikel edukasi bisnis komprehensif (ID 392 sampai 411) dengan standar editorial ketat `cooca-blog-writer`:
+     - Mutlak tanpa karakter em dash (U+2014) maupun en dash (U+2013).
+     - Tepat 1 H1 yang memuat primary keyword persis.
+     - Penempatan primary keyword di 100 kata pertama, meta_title (<= 60 karakter), meta_description (120-160 karakter), dan minimal 1 H2.
+     - Panjang artikel minimal 1.200 kata per artikel (rata-rata 1.250-1.400 kata).
+     - Minimal 3-5 internal link kontekstual per artikel murni bersumber dari sitemap kanonikal `/blog/(slug)` di `blog_links.json`.
+     - FAQ terstruktur dengan schema JSON-LD valid (`Article` dan `FAQPage`).
+  3. Mengimpor seluruh 20 artikel ke database MySQL produksi via `php artisan blog:import-articles`.
+  4. Meregenerasi `public/sitemap_blog.xml` (meningkat dari 438 menjadi 458 tautan publik).
+  5. Memperbarui dataset kanonikal `blog_links.json` dan `database/data/blog_links.json` menjadi 458 tautan terverifikasi.
+  6. Memutakhirkan `tests/Feature/PublicBlogDeliveryTest.php` dan memverifikasi pengujian otomatis dengan hasil 100% PASS (4/4 tests, 80 assertions).
+
+#### 2. What Was Done
+- **Intelijen Riset Pasar:**
+  - Melakukan penelusuran tren terkini (Google Trends, regulasi DJP, SE BI QRIS, Harbolnas, margin ritel) per 12 November 2026.
+  - Memetakan 20 topik prioritas ke dalam berkas `trending-research-2026-11-12-batch9.json` dan `keyword-research-2026-11-12-batch9.json`.
+- **Produksi & Validasi Batch 9 (ID 392–411):**
+  - Mengembangkan arsitektur generator modular: `scripts/batch9_common.py`, `scripts/generate_batch9_part1.py` (392–396), `scripts/generate_batch9_part2.py` (397–401), `scripts/generate_batch9_part3.py` (402–406), `scripts/generate_batch9_part4.py` (407–411), serta `scripts/build_and_validate_batch9.py`.
+  - Mengintegrasikan linter ketat yang menguji 0 em dash, 0 en dash, validasi kanonikal internal link dari `blog_links.json`, kepatuhan SEO (H1, H2, meta title/description, panjang konten > 1.200 kata), dan validitas JSON-LD schema.
+  - Menghasilkan 20 berkas `.md` dan 20 berkas `.json` di `database/data/articles/`. Seluruh 20 artikel lulus 100% tanpa error linter.
+- **Database Import & Sitemap Regeneration:**
+  - Menjalankan perintah artisan `php artisan blog:import-articles`, berhasil mengimpor 468 file artikel (458 post aktif terbit dengan tanggal `published_at: 2026-11-12T06:00:00+07:00`).
+  - Meregenerasi berkas `public/sitemap_blog.xml` secara otomatis dengan total 458 entri URL kanonikal.
+  - Mengekstraksi dan menyinkronkan 458 tautan blog ke `blog_links.json` dan `database/data/blog_links.json` via `python scripts/fetch_blog_links.py`.
+- **Automated Testing:**
+  - Memperbarui `tests/Feature/PublicBlogDeliveryTest.php` dengan penambahan metode pengujian `test_public_can_view_published_batch9_articles_without_dashes` untuk memverifikasi slug artikel Batch 9 (`evaluasi-net-profit-margin-pasca-11-11-umkm` dan `batas-akhir-setor-pph-final-15-november-2026-umkm`), ketiadaan karakter em dash / en dash pada database dan rendered HTML, serta keabsahan JSON-LD schema.
+  - Menjalankan `php artisan test tests/Feature/PublicBlogDeliveryTest.php` dengan hasil 100% lolos (4 passed, 80 assertions).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - `database/data/articles/trending-research-2026-11-12-batch9.json` (New)
+  - `database/data/articles/keyword-research-2026-11-12-batch9.json` (New)
+  - `database/data/articles/392-*` s/d `database/data/articles/411-*` (.md & .json, 40 files New)
+  - `scripts/batch9_common.py`, `scripts/generate_batch9_part1.py` s/d `part4.py`, `scripts/build_and_validate_batch9.py` (New scripts)
+  - `blog_links.json` (Updated to 458 URLs)
+  - `database/data/blog_links.json` (Updated to 458 URLs)
+  - `public/sitemap_blog.xml` (Regenerated to 458 URLs)
+  - `tests/Feature/PublicBlogDeliveryTest.php` (Updated test assertions for Batch 9)
+  - `docs/AiWorkHistory.md` (Updated Layer 1 history)
+- **Database Changes:**
+  - 20 baris baru pada tabel `posts` (ID slug 392 s/d 411) dengan relasi kategori, tag, SEO meta, dan status `is_published = true`.
+
+
 ### [WORK-2026-11-11-391] Google Trends Business Research, Batch 7 Production (20 Artikel SEO Edukasi ID 352-371) & Production Deployment for COOCA
 
 - **Date:** 2026-11-11
@@ -24727,3 +24782,29 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 #### 3. Verification & Compliance
 - **Linter Check:** 100% PASS (Zero Em-Dash, Zero En-Dash, Zero Mojibake, Zero Sub-route URLs, Zero "Anda", Zero Kata Kaku).
 - **Renderer Test:** Sukses merender feed single visual 1080x1080 dan carousel multi-slide 5 halaman 1080x1080 dengan penyesuaian sektor dinamis.
+
+
+### [2026-11-12] Batch 100 UMKM Educational SEO Articles Generation & Production Deployment
+
+#### 1. Background & Scope
+- User Request: `generate 100 konten dengan keyword tersebut, dan pastikan memiliki 100 gambar berbeda untuk setiap konten /cooca-blog-writer`
+- Target: 100 artikel edukasi bisnis UMKM untuk 100 kata kunci bervolume tinggi di Google yang terbagi ke dalam 8 klaster bisnis (Kasir & POS, Inventori & Stok, Keuangan & Pembukuan, HPP & Harga Jual, Invoice & B2B, Pajak & Legalitas, Marketing & WhatsApp, serta Operasional & SDM).
+- Nomor ID Artikel: **412 sampai 511** (100 pasang berkas `.md` dan `.json` di `database/data/articles/`).
+
+#### 2. Strict Compliance & Implementation Highlights
+- **100 Unique Cover Images:** Menggunakan 100 ID foto Unsplash komersial terverifikasi yang 100% berbeda satu sama lain (zero image reuse).
+- **Zero Em Dash & En Dash:** 100% patuh aturan larangan tanda baca em dash (`\u2014`) dan en dash (`\u2013`) di seluruh judul, deskripsi meta, badan teks, tabel markdown, FAQ, dan skema JSON-LD.
+- **Strict Canonical Internal Linking:** Setiap artikel menyematkan 4 internal link unik kontekstual yang bersumber murni dari `blog_links.json` (canonical URLs `/blog/(slug)`).
+- **On-Page SEO Specs:**
+  - Single H1 identik dengan primary keyword.
+  - Primary keyword muncul di 100 kata pertama, meta title ($\le 60$ karakter), meta description (120-160 karakter), dan setidaknya satu H2.
+  - Word count: $\ge 1200$ kata per artikel (rata-rata 1210-1280 kata).
+  - Skema terstruktur Schema.org `@graph` (`Article` + `FAQPage` 3 Q&A).
+- **Fakta Produk Terverifikasi:** Menonjolkan keunggulan Cooca (Paket Solo Owner Rp 0 gratis selamanya, POS multi-platform, Activity-Based Costing HPP, multi-gudang, dan WhatsApp Gateway resmi).
+
+#### 3. Verification & Deployment Pipeline
+- **Linter Verification:** Seluruh 100 artikel diaudit dengan `scripts/lint_content.py --links blog_links.json`. Hasil: **100 / 100 PASSED dengan 0 FAIL**.
+- **Database Import:** Menjalankan `php artisan blog:import-articles --force` -> 568 total artikel terimpor ke tabel `posts`.
+- **Sitemap Index Regeneration:** Menjalankan `php artisan sitemap:generate` -> `public/sitemap_blog.xml` meregenerasi 559 URLs (1 hub + 558 artikel).
+- **Blog Links Synchronized:** Menjalankan `python scripts/fetch_blog_links.py` -> 558 artikel terindeks di `blog_links.json` dan `database/data/blog_links.json`.
+- **Live Blade Render Verification:** Menjalankan `php scripts/verify_100_live.php` -> 100/100 artikel ditemukan di database, 0 pelanggaran em/en dash, dan 10/10 sampel render controller via `PublicBlogController::show()` berhasil 100%.

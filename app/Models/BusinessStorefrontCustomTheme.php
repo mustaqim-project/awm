@@ -128,3 +128,4 @@ class BusinessStorefrontCustomTheme extends Model
         return $this->status === self::STATUS_PUBLISHED && ! empty($this->published_content);
     }
 }
+

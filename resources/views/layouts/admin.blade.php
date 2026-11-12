@@ -813,6 +813,26 @@
                         </a>
                     @endif
 
+                    {{-- Review Kustomisasi Tema Storefront --}}
+                    @php 
+                        $isActive = request()->routeIs('admin.theme-reviews.*'); 
+                        $pendingThemesCount = \App\Models\BusinessStorefrontCustomTheme::where('status', 'under_review')->count();
+                    @endphp
+                    <a href="{{ route('admin.theme-reviews.index') }}"
+                        class="group flex items-center justify-between px-2.5 h-[38px] rounded-[11px] transition-all duration-150 {{ $isActive ? 'bg-[#007AFF] text-white shadow-sm shadow-[#007AFF]/25 font-semibold' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                            <div class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $isActive ? 'bg-white/20 text-white' : 'bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400 group-hover:bg-amber-500/15 group-hover:scale-105' }}">
+                                <i data-lucide="code-2" class="w-4 h-4 shrink-0 {{ $isActive ? 'text-white' : 'text-amber-600 dark:text-amber-400' }}" stroke-width="2"></i>
+                            </div>
+                            <span class="whitespace-nowrap truncate min-w-0 flex-1 text-[13px] tracking-tight">Review Kode Tema</span>
+                        </div>
+                        @if ($pendingThemesCount > 0)
+                            <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-white shadow-xs">
+                                {{ $pendingThemesCount }}
+                            </span>
+                        @endif
+                    </a>
+
                     @if ($currentAdmin?->hasPermission('admin.word_filters.view'))
                         @php $isActive = request()->routeIs('admin.word-filters.*'); @endphp
                         <a href="{{ route('admin.word-filters.index') }}"

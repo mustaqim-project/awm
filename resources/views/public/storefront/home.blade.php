@@ -48,24 +48,14 @@
         {{-- HERO SECTION (Theme Hero Preset Architecture per 42 Universal Themes)     --}}
         {{-- ========================================================================= --}}
         @if ($landingPage->isSectionVisible('hero'))
-            @if (view()->exists("public.storefront.themes.{$bundleDir}.hero"))
-                @include("public.storefront.themes.{$bundleDir}.hero")
-            @elseif (view()->exists("public.storefront.themes.modern_umkm.hero"))
-                @include("public.storefront.themes.modern_umkm.hero")
-            @elseif (view()->exists("public.storefront.themes.universal_storefront.hero"))
-                @include("public.storefront.themes.universal_storefront.hero")
-            @endif
+            @storefrontSection('hero', $bundleDir, $business, get_defined_vars(), $isAuthorizedPreview ?? false)
         @endif
 
         {{-- ========================================================================= --}}
         {{-- SECTOR FEATURES BANNER (Universal Value Pillars per 42 Themes)            --}}
         {{-- ========================================================================= --}}
         @if ($landingPage->isSectionVisible('features_banner'))
-            @if (view()->exists("public.storefront.themes.{$bundleDir}.features_banner"))
-                @include("public.storefront.themes.{$bundleDir}.features_banner")
-            @elseif (view()->exists("public.storefront.themes.modern_umkm.features_banner"))
-                @include("public.storefront.themes.modern_umkm.features_banner")
-            @endif
+            @storefrontSection('features_banner', $bundleDir, $business, get_defined_vars(), $isAuthorizedPreview ?? false)
         @endif
 
         {{-- ========================================================================= --}}

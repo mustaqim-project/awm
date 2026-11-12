@@ -448,6 +448,11 @@
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-2 shrink-0">
+                                        <a href="{{ route('landing-page.theme-editor.edit') }}"
+                                            class="h-9 px-3.5 rounded-[10px] bg-amber-500/10 dark:bg-amber-500/15 border border-amber-500/30 text-[12px] font-semibold text-amber-800 dark:text-amber-200 hover:bg-amber-500/20 shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                            <i data-lucide="code-2" class="w-3.5 h-3.5 text-amber-600"></i>
+                                            <span>Kustomisasi Coding (Editor)</span>
+                                        </a>
                                         <button type="button" @click="openThemeModal(form.theme_preset)"
                                             class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:border-black/20 text-[12px] font-semibold text-black dark:text-white shadow-xs transition flex items-center gap-1.5 cursor-pointer">
                                             <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>

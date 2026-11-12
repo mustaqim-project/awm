@@ -263,6 +263,16 @@
         }
     </style>
 
+    {{-- Custom Theme Injected CSS (from Merchant Draft Preview or Admin Approved Production) --}}
+    @php
+        $customCss = app(\App\Domain\Storefront\StorefrontCustomThemeService::class)->getCustomCss($business, $bundleDir, $isAuthorizedPreview ?? false);
+    @endphp
+    @if (!empty($customCss))
+        <style id="cooca-storefront-custom-css">
+            {!! $customCss !!}
+        </style>
+    @endif
+
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
 
@@ -314,15 +324,11 @@
         </div>
     @endif
 
-    {{-- 4. Dynamic Theme-Specific Navbar with Global Fallback --}}
+    {{-- 4. Dynamic Theme-Specific Navbar with Global Fallback & Custom Code Hook --}}
     @php
         $bundleDir = $activeTheme['bundle_dir'] ?? 'modern_umkm';
     @endphp
-    @if (view()->exists("public.storefront.themes.{$bundleDir}.navbar"))
-        @include("public.storefront.themes.{$bundleDir}.navbar")
-    @else
-        @include('public.storefront.layouts.navbar')
-    @endif
+    @storefrontSection('navbar', $bundleDir, $business, get_defined_vars(), $isAuthorizedPreview ?? false)
 
     {{-- 5. Main Content Area (pb-20 for mobile bottom tab bar safe space) --}}
     <main class="flex-1 w-full pb-20 md:pb-0">
@@ -351,12 +357,8 @@
         'hasWhatsapp' => $hasWhatsapp ?? false,
     ])
 
-    {{-- 7. Dynamic Theme-Specific Footer with Global Fallback --}}
-    @if (view()->exists("public.storefront.themes.{$bundleDir}.footer"))
-        @include("public.storefront.themes.{$bundleDir}.footer")
-    @else
-        @include('public.storefront.layouts.footer')
-    @endif
+    {{-- 7. Dynamic Theme-Specific Footer with Global Fallback & Custom Code Hook --}}
+    @storefrontSection('footer', $bundleDir, $business, get_defined_vars(), $isAuthorizedPreview ?? false)
 
     {{-- 8. Alpine.js Global Cart Store --}}
     <script>

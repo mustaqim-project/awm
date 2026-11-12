@@ -103,3 +103,4 @@ final class AdminStorefrontThemeReviewController extends Controller
         return redirect()->route('admin.theme-reviews.index')->with('warning', $msg);
     }
 }
+

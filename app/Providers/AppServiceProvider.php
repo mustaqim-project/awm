@@ -59,6 +59,12 @@ class AppServiceProvider extends ServiceProvider
             return $business ? $business->isFeatureEnabled($featureKey, $default) : (bool) $default;
         });
 
+        // Storefront Custom Theme Section Directive
+        // Usage: @storefrontSection('hero', $bundleDir, $business, get_defined_vars(), $isAuthorizedPreview ?? false)
+        \Illuminate\Support\Facades\Blade::directive('storefrontSection', function ($expression) {
+            return "<?php echo app(\\App\\Domain\\Storefront\\StorefrontCustomThemeService::class)->renderSection({$expression}); ?>";
+        });
+
         // Global View Composer for Public & Marketing Views (Single Source of Truth)
         \Illuminate\Support\Facades\View::composer(['public.*', 'layouts.public_marketing', 'landing'], function ($view) {
             // Strictly isolate: Do not execute public marketing view composer on storefront views

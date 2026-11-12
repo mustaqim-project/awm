@@ -1,0 +1,27 @@
+{
+  "id": 444,
+  "title": "Pembukuan Sederhana Usaha Mikro",
+  "slug": "pembukuan-sederhana-usaha-mikro-harian",
+  "meta_title": "Pembukuan Sederhana Usaha Mikro: Catatan Kas Harian Toko",
+  "meta_description": "Langkah pembukuan sederhana usaha mikro tanpa ribet, buku kas masuk dan keluar, pencatatan nota pembelian barang, pemisahan kas pribadi, dan rekap bulanan.",
+  "primary_keyword": "pembukuan sederhana usaha mikro",
+  "category": "Keuangan & Pembukuan",
+  "reading_time": "9 menit",
+  "cover_image": "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+  "published_at": "2026-11-12T07:00:00+07:00",
+  "created_at": "2026-11-12T07:00:00+07:00",
+  "faq": [
+    {
+      "question": "Apakah penerapan pembukuan sederhana usaha mikro membutuhkan biaya perangkat keras yang mahal?",
+      "answer": "Sama sekali tidak. Anda tidak perlu membeli mesin kasir khusus berharga puluhan juta rupiah. Dengan software berbasis cloud modern seperti COOCA, Anda dapat memanfaatkan smartphone atau tablet yang sudah ada, dipadukan dengan printer thermal mini berharga terjangkau untuk mulai mencetak struk resmi dan memproses pembayaran nontunai QRIS."
+    },
+    {
+      "question": "Bagaimana cara mengatasi penolakan staf kasir saat sistem baru diterapkan?",
+      "answer": "Lakukan sosialisasi dengan menjelaskan bahwa sistem digital bertujuan melindungi mereka dari tuduhan selisih uang kas yang tidak adil. Berikan sesi simulasi penggunaan sistem selama 2 sampai 3 hari kerja sebelum peluncuran resmi. Ketika staf menyadari bahwa pekerjaan tutup kasir menjadi jauh lebih cepat dari 2 jam menjadi 5 menit, mereka akan menyambut sistem baru dengan antusias."
+    },
+    {
+      "question": "Berapa lama waktu yang dibutuhkan untuk melihat dampak efisiensi dari implementasi ini?",
+      "answer": "Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama penerapan. Indikator awal meliputi berkurangnya selisih stok saat opname mingguan, antrean kasir yang bergerak lebih cepat, serta ketersediaan laporan keuangan harian yang rapi setiap malam."
+    }
+  ]
+}

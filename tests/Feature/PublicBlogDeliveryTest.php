@@ -148,7 +148,7 @@ final class PublicBlogDeliveryTest extends TestCase
         $response392->assertOk();
         $response392->assertSee('Evaluasi Net Profit Margin Pasca 11 11 untuk UMKM: Cara Bedakan Omzet dan Laba Riil', false);
         $response392->assertSee('Evaluasi Net Profit Margin Pasca 11 11 Sangat Krusial bagi Bisnis', false);
-        $response392->assertSee('https://cooca.id/blog/evaluasi-margin-keuntungan-kategori-produk', false);
+        $response392->assertSee('https://cooca.id/blog/cara-menyusun-laporan-laba-rugi-usaha-mikro', false);
         $response392->assertSee('https://schema.org', false);
         $response392->assertSee('FAQPage', false);
 
@@ -164,7 +164,7 @@ final class PublicBlogDeliveryTest extends TestCase
 
         $response395 = $this->get('/blog/batas-akhir-setor-pph-final-15-november-2026-umkm');
         $response395->assertOk();
-        $response395->assertSee('Batas Akhir Setor PPh Final 15 November 2026 dan Panduan Bayar Pajak UMKM 0,5 Persen', false);
-        $response395->assertSee('https://cooca.id/blog/panduan-lengkap-pph-final-umkm-setengah-persen', false);
+        $response395->assertSee('Batas Akhir Setor PPh Final 15 November 2026: Panduan Lengkap Pajak UMKM', false);
+        $response395->assertSee('https://cooca.id/blog/omzet-500-juta-bebas-pajak', false);
     }
 }
