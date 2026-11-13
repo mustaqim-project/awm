@@ -5,7 +5,7 @@ meta_description: "Langkah SOP rekonsiliasi saldo escrow marketplace toko online
 slug: "sop-rekonsiliasi-saldo-escrow-marketplace-toko"
 primary_keyword: "sop rekonsiliasi saldo escrow marketplace"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Sop Rekonsiliasi Saldo Escrow Marketplace",
       "description": "Langkah SOP rekonsiliasi saldo escrow marketplace toko online, pelacakan dana penjualan tertahan, audit potongan biaya promo kampanye, dan penarikan bank.",
-      "image": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/sop-rekonsiliasi-saldo-escrow-marketplace-toko",

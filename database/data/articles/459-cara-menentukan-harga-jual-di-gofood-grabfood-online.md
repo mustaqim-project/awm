@@ -5,7 +5,7 @@ meta_description: "Formula cara menentukan harga jual di gofood grabfood shopeef
 slug: "cara-menentukan-harga-jual-di-gofood-grabfood-online"
 primary_keyword: "cara menentukan harga jual di gofood grabfood"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Menentukan Harga Jual Di Gofood Grabfood",
       "description": "Formula cara menentukan harga jual di gofood grabfood shopeefood, perhitungan komisi bagi hasil 20 persen, biaya kemasan take away, dan margin aman resto.",
-      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-menentukan-harga-jual-di-gofood-grabfood-online",

@@ -5,7 +5,7 @@ meta_description: "Rumus cara menghitung bep usaha kuliner resto kafe, biaya tet
 slug: "cara-menghitung-bep-usaha-kuliner-resto"
 primary_keyword: "cara menghitung bep usaha kuliner"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Menghitung Bep Usaha Kuliner",
       "description": "Rumus cara menghitung bep usaha kuliner resto kafe, biaya tetap sewa tempat gaji juru masak, margin kontribusi per porsi, dan target omzet balik modal.",
-      "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-menghitung-bep-usaha-kuliner-resto",

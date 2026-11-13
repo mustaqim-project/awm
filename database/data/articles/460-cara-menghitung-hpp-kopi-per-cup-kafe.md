@@ -5,7 +5,7 @@ meta_description: "Langkah cara menghitung hpp kopi per cup espresso susu gula a
 slug: "cara-menghitung-hpp-kopi-per-cup-kafe"
 primary_keyword: "cara menghitung hpp kopi per cup"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Menghitung Hpp Kopi Per Cup",
       "description": "Langkah cara menghitung hpp kopi per cup espresso susu gula aren, gramasi biji kopi, cup sablon plastik, sedotan, es batu, dan penentuan margin laba kafe.",
-      "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-menghitung-hpp-kopi-per-cup-kafe",

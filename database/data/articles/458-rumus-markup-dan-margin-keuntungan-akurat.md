@@ -5,7 +5,7 @@ meta_description: "Pelajari rumus markup dan margin keuntungan penetapan harga j
 slug: "rumus-markup-dan-margin-keuntungan-akurat"
 primary_keyword: "rumus markup dan margin keuntungan"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Rumus Markup Dan Margin Keuntungan",
       "description": "Pelajari rumus markup dan margin keuntungan penetapan harga jual barang ritel dan kuliner, tabel konversi persentase laba, dan pencegahan salah hitung.",
-      "image": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/rumus-markup-dan-margin-keuntungan-akurat",

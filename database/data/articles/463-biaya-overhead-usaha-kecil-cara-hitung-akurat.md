@@ -5,7 +5,7 @@ meta_description: "Langkah biaya overhead usaha kecil cara hitung tagihan listri
 slug: "biaya-overhead-usaha-kecil-cara-hitung-akurat"
 primary_keyword: "biaya overhead usaha kecil cara hitung"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Biaya Overhead Usaha Kecil Cara Hitung",
       "description": "Langkah biaya overhead usaha kecil cara hitung tagihan listrik gas air telepon toko, metode pembagian biaya tidak langsung ke setiap unit barang dagang.",
-      "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/biaya-overhead-usaha-kecil-cara-hitung-akurat",

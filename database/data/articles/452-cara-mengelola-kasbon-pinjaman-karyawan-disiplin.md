@@ -5,7 +5,7 @@ meta_description: "Panduan cara mengelola kasbon pinjaman karyawan toko ritel, b
 slug: "cara-mengelola-kasbon-pinjaman-karyawan-disiplin"
 primary_keyword: "cara mengelola kasbon pinjaman karyawan"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Mengelola Kasbon Pinjaman Karyawan",
       "description": "Panduan cara mengelola kasbon pinjaman karyawan toko ritel, batas plafon 50 persen gaji, surat perjanjian potong payroll resmi depnaker, dan mitigasi macet.",
-      "image": "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-mengelola-kasbon-pinjaman-karyawan-disiplin",

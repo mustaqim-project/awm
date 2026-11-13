@@ -5,7 +5,7 @@ meta_description: "Strategi cara mengatasi cash drag saldo penjualan marketplace
 slug: "cara-mengatasi-cash-drag-saldo-penjualan-toko"
 primary_keyword: "cara mengatasi cash drag saldo penjualan"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Mengatasi Cash Drag Saldo Penjualan",
       "description": "Strategi cara mengatasi cash drag saldo penjualan marketplace yang tertahan lama di dompet digital platform, percepatan arus kas modal kerja, dan kulakan.",
-      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-mengatasi-cash-drag-saldo-penjualan-toko",

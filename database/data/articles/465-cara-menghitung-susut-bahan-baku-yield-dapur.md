@@ -5,7 +5,7 @@ meta_description: "Panduan cara menghitung susut bahan baku yield daging sayur b
 slug: "cara-menghitung-susut-bahan-baku-yield-dapur"
 primary_keyword: "cara menghitung susut bahan baku yield"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Menghitung Susut Bahan Baku Yield",
       "description": "Panduan cara menghitung susut bahan baku yield daging sayur buah di dapur restoran, rumus persentase rendemen bahan, pencatatan limbah sisa, dan HPP akurat.",
-      "image": "https://images.unsplash.com/photo-1463453091185-61582044d556?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-menghitung-susut-bahan-baku-yield-dapur",

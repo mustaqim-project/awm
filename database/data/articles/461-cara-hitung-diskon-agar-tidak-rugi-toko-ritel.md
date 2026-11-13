@@ -5,7 +5,7 @@ meta_description: "Panduan cara hitung diskon agar tidak rugi saat menggelar pro
 slug: "cara-hitung-diskon-agar-tidak-rugi-toko-ritel"
 primary_keyword: "cara hitung diskon agar tidak rugi"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Hitung Diskon Agar Tidak Rugi",
       "description": "Panduan cara hitung diskon agar tidak rugi saat menggelar promo toko ritel, rumus batas bawah HPP, volume tambahan penutup margin, dan paket bundling hemat.",
-      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-hitung-diskon-agar-tidak-rugi-toko-ritel",

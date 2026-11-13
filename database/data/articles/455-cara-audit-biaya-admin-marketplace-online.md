@@ -5,7 +5,7 @@ meta_description: "Langkah cara audit biaya admin marketplace shopee tokopedia t
 slug: "cara-audit-biaya-admin-marketplace-online"
 primary_keyword: "cara audit biaya admin marketplace"
 category: "Keuangan & Pembukuan"
-cover_image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Audit Biaya Admin Marketplace",
       "description": "Langkah cara audit biaya admin marketplace shopee tokopedia tiktok shop, verifikasi biaya gratis ongkir xtra, komisi transaksi per tier toko, dan net profit.",
-      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-audit-biaya-admin-marketplace-online",

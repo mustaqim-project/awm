@@ -1,0 +1,27 @@
+{
+  "id": 540,
+  "title": "Fitur Kasir Pos Cooca",
+  "slug": "fitur-kasir-pos-cooca-aplikasi-kasir-multi-platform",
+  "meta_title": "Fitur Kasir POS Cooca: Aplikasi Kasir Multi Platform",
+  "meta_description": "Eksplorasi fitur kasir pos cooca di Android, tablet, dan PC laptop, dukungan printer thermal struk Bluetooth, barcode scanner, dan antarmuka kasir cepat.",
+  "primary_keyword": "fitur kasir pos cooca",
+  "category": "Kasir & POS",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/cooca-fitur-kasir-pos-cooca-aplikasi-kasir-multi-platform.jpg",
+  "published_at": "2026-07-28T09:11:00+07:00",
+  "created_at": "2026-07-28T09:11:00+07:00",
+  "faq": [
+    {
+      "question": "Apakah penerapan fitur kasir pos cooca memerlukan perangkat komputer khusus yang mahal?",
+      "answer": "Sama sekali tidak. COOCA dirancang sangat fleksibel dan ringan sehingga dapat diakses melalui berbagai perangkat yang sudah Anda miliki, mulai dari smartphone Android, iPad tablet, hingga laptop komputer biasa dengan peramban web modern tanpa perlu membeli server lokal khusus."
+    },
+    {
+      "question": "Bagaimana jika koneksi internet di toko saya tiba-tiba terputus saat jam sibuk?",
+      "answer": "Aplikasi kasir COOCA dilengkapi kapabilitas offline POS cerdas. Transaksi penjualan kasir tetap dapat berjalan mulus mencetak struk dan memproses pesanan pembeli secara lokal. Begitu perangkat Anda kembali terhubung dengan jaringan internet, seluruh data transaksi akan langsung tersinkronisasi ke server cloud secara otomatis tanpa risiko data hilang."
+    },
+    {
+      "question": "Apakah data formula resep dan pembukuan saya dijamin aman di platform COOCA?",
+      "answer": "Sangat terjamin. COOCA menerapkan isolasi basis data multi-tenant yang ketat, enkripsi transmisi data standar perbankan SSL TLS, dan pencatatan audit log lengkap. Kami menjamin kedaulatan data pemilik usaha 100 persen, tidak pernah menjual data kepada pihak ketiga, dan formula dapur Anda tetap menjadi rahasia eksklusif bisnis Anda."
+    }
+  ]
+}

@@ -5,7 +5,7 @@ meta_description: "Panduan cara menghitung hpp produk makanan kuliner dan kateri
 slug: "cara-menghitung-hpp-produk-makanan-kuliner"
 primary_keyword: "cara menghitung hpp produk makanan"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Cara Menghitung Hpp Produk Makanan",
       "description": "Panduan cara menghitung hpp produk makanan kuliner dan katering, biaya bahan baku langsung resep gramasi, kemasan food grade, dan susut masak yield.",
-      "image": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/cara-menghitung-hpp-produk-makanan-kuliner",

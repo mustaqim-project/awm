@@ -5,7 +5,7 @@ meta_description: "Kalkulasi hpp usaha frozen food dan kemasan vakum, biaya list
 slug: "hpp-usaha-frozen-food-dan-kemasan-vakum-dingin"
 primary_keyword: "hpp usaha frozen food dan kemasan vakum"
 category: "HPP & Harga Jual"
-cover_image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1200&q=80"
+cover_image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80"
 author: "Tim Edukasi COOCA"
 published_at: "2026-11-12T07:00:00+07:00"
 created_at: "2026-11-12T07:00:00+07:00"
@@ -97,7 +97,7 @@ Pada umumnya, dampak positif akan terlihat nyata dalam 7 hingga 14 hari pertama 
       "@type": "Article",
       "headline": "Hpp Usaha Frozen Food Dan Kemasan Vakum",
       "description": "Kalkulasi hpp usaha frozen food dan kemasan vakum, biaya listrik freezer penyimpanan beku, plastik kedap udara nylon, susut dingin, dan harga reseller.",
-      "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=1200&q=80",
       "datePublished": "2026-11-12T07:00:00+07:00",
       "dateModified": "2026-11-12T07:00:00+07:00",
       "url": "https://cooca.id/blog/hpp-usaha-frozen-food-dan-kemasan-vakum-dingin",
