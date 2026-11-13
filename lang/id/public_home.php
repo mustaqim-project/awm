@@ -9,12 +9,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'hero_kicker' => 'Platform Omnichannel & ERP All-in-One UMKM',
-    'hero_title' => 'Platform Omnichannel & ERP Modern: Kendalikan Seluruh Bisnis UMKM Anda',
-    'hero_subtitle' => 'Bukan sekadar kasir biasa. Sinkronisasi transaksi toko fisik, marketplace, stok multi-gudang, resep produksi (BOM), hingga laporan keuangan otomatis dan CRM WhatsApp dalam satu layar praktis. Bebas repot tanpa spreadsheet terpisah.',
+    'hero_kicker' => 'Sistem Operasi Bisnis UMKM Indonesia',
+    'hero_title' => 'Aplikasi Kasir POS, Kontrol Stok Resep & Pembukuan Otomatis Toko Anda',
+    'hero_subtitle' => 'Kelola kasir kilat, otomatis potong stok bahan baku per porsi, kirim nota otomatis ke WhatsApp pelanggan, dan pantau laba bersih harian langsung dari HP tanpa rekap manual.',
     'hero_cta_primary' => 'Mulai Coba Gratis',
     'hero_cta_download_app' => 'Download COOCA My Own',
-    'hero_cta_secondary' => 'Lihat Cara Kerja Sistem',
+    'hero_cta_secondary' => 'Coba Demo Interaktif',
     'btn_dashboard' => 'Dashboard',
 
     'hero_trust_free' => 'Gratis Mulai Rp0',

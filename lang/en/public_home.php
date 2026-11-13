@@ -9,12 +9,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'hero_kicker' => 'All-in-One Omnichannel & ERP Platform for MSMEs',
-    'hero_title' => 'Modern Omnichannel & ERP Platform: Run Your Entire Business from One System',
-    'hero_subtitle' => 'More than just a simple POS. Seamlessly synchronize point-of-sale, online marketplaces, multi-warehouse inventory, recipe BOM manufacturing, automated accounting, and WhatsApp CRM—all in one place without messy spreadsheets.',
+    'hero_kicker' => 'All-in-One Business Operating System for MSMEs',
+    'hero_title' => 'Fast POS Cashier, Recipe Stock Control & Automated Accounting for Your Business',
+    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phone—no manual bookkeeping required.',
     'hero_cta_primary' => 'Start Free Trial',
     'hero_cta_download_app' => 'Download COOCA My Own',
-    'hero_cta_secondary' => 'See How It Works',
+    'hero_cta_secondary' => 'Try Interactive Demo',
     'btn_dashboard' => 'Dashboard',
 
     'hero_trust_free' => 'Free from $0',

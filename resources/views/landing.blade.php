@@ -231,12 +231,12 @@
                                 </a>
                             @endif
 
-                            <!-- Tombol Download COOCA My Own (Release APK) Samping Coba Gratis -->
-                            <a href="{{ route('public.download.apk') }}"
+                            <!-- Tombol Coba Demo Interaktif Samping Coba Gratis -->
+                            <a href="{{ route('public.demo') }}"
                                 class="h-11 sm:h-12 px-4.5 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-cyan-400/50 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_0_20px_rgba(0,194,255,0.3)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 touch-action-manipulation backdrop-blur-md group"
-                                title="Download COOCA My Own (Android APK)">
-                                <i data-lucide="smartphone" class="w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
-                                <span>{{ __('public_home.hero_cta_download_app') }}</span>
+                                title="Lihat Demo Interaktif COOCA">
+                                <i data-lucide="play-circle" class="w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                                <span>{{ __('public_home.hero_cta_secondary') }}</span>
                             </a>
                         </div>
 

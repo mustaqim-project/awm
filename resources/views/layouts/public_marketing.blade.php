@@ -2543,7 +2543,7 @@
                             </a>
                         </div>
 
-                        <!-- 5. Akun / Dashboard -->
+                        <!-- 5. Akun / Dashboard / Coba Gratis (Mobile Conversion Optimized) -->
                         @php
                             $isAdmin = auth('admin')->check();
                             $isWeb = auth('web')->check();
@@ -2557,26 +2557,40 @@
                                 ? route('admin.dashboard')
                                 : ($isWeb
                                     ? route('dashboard')
-                                    : route('login'));
-                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : __('public_marketing.nav_login'));
-                            $tabIcon = $isAuth ? 'layout-dashboard' : 'user';
+                                    : route('register'));
+                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : __('public_marketing.cta_free_short'));
+                            $tabIcon = $isAuth ? 'layout-dashboard' : 'sparkles';
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">
-                            <a href="{{ $targetRoute }}"
-                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isAccountActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
-                                <div
-                                    class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isAccountActive ? 'bg-[#00C2FF]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
-                                    <i data-lucide="{{ $tabIcon }}"
-                                        class="w-[19px] h-[19px] sm:w-5 sm:h-5 transition-transform group-active:scale-90 {{ $isAccountActive ? 'stroke-[2.2]' : 'stroke-[1.75]' }}"></i>
-                                </div>
-                                <span
-                                    class="text-xs font-semibold tracking-tight mt-0.5 {{ $isAccountActive ? 'text-[#00C2FF]' : '' }}">{{ $tabLabel }}</span>
-                                @if ($isAccountActive)
-                                    <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5 opacity-60"></span>
-                                @else
-                                    <span class="w-1 h-1 mt-0.5 opacity-0"></span>
-                                @endif
-                            </a>
+                            @if (!$isAuth)
+                                <a href="{{ route('register') }}"
+                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative text-[#00C2FF]">
+                                    <div
+                                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 bg-gradient-to-tr from-[#007AFF] to-[#00C2FF] text-white shadow-[0_2px_10px_rgba(0,194,255,0.4)] group-active:scale-90">
+                                        <i data-lucide="sparkles"
+                                            class="w-[17px] h-[17px] sm:w-[18px] sm:h-[18px] stroke-[2.2]"></i>
+                                    </div>
+                                    <span
+                                        class="text-[11px] font-bold tracking-tight mt-0.5 text-[#00C2FF]">{{ __('public_marketing.cta_free_short') }}</span>
+                                    <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5"></span>
+                                </a>
+                            @else
+                                <a href="{{ $targetRoute }}"
+                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isAccountActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
+                                    <div
+                                        class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isAccountActive ? 'bg-[#00C2FF]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
+                                        <i data-lucide="{{ $tabIcon }}"
+                                            class="w-[19px] h-[19px] sm:w-5 sm:h-5 transition-transform group-active:scale-90 {{ $isAccountActive ? 'stroke-[2.2]' : 'stroke-[1.75]' }}"></i>
+                                    </div>
+                                    <span
+                                        class="text-xs font-semibold tracking-tight mt-0.5 {{ $isAccountActive ? 'text-[#00C2FF]' : '' }}">{{ $tabLabel }}</span>
+                                    @if ($isAccountActive)
+                                        <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5 opacity-60"></span>
+                                    @else
+                                        <span class="w-1 h-1 mt-0.5 opacity-0"></span>
+                                    @endif
+                                </a>
+                            @endif
                         </div>
 
                     </div>
