@@ -73,10 +73,4 @@ Schedule::command('marketplace:sync-orders')
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/marketplace-sync.log'));
 
-// 11. Auto-generate and schedule 2 daily social media posts with real UI screen capture & Cooca brand logo (Setiap pukul 06:00 WIB)
-Schedule::command('cooca:daily-content')
-    ->dailyAt('06:00')
-    ->withoutOverlapping()
-    ->appendOutputTo(storage_path('logs/social-media-automation.log'));
-
 

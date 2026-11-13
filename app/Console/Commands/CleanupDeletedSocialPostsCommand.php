@@ -92,11 +92,37 @@ class CleanupDeletedSocialPostsCommand extends Command
             }
         }
 
-        // 4. Scrub and reset last-generated.json
+        // 4. Delete all scheduled social media automation posts (image feeds, carousels, automated platform posts)
+        $automatedPosts = SocialMediaPost::where('is_platform', true)
+            ->where(function ($q) {
+                $q->where('status', 'scheduled')
+                  ->orWhereNotNull('metrics->automation_id')
+                  ->orWhere('media_type', 'image');
+            })
+            ->get();
+
+        foreach ($automatedPosts as $post) {
+            $this->line("Purging automated social media post ID: {$post->id} ({$post->platform})");
+            $adminSocialMediaService->deletePlatformPost($post);
+            $deletedCount++;
+        }
+
+        // 5. Scrub and reset content-assets files & last-generated.json
         $jsonPath = storage_path('app/public/content-assets/last-generated.json');
         if (file_exists($jsonPath)) {
             @file_put_contents($jsonPath, '[]');
             $this->info("Reset {$jsonPath} to empty array.");
+        }
+
+        // Clean up any generated PNG assets in content-assets folder
+        $contentAssetsDir = storage_path('app/public/content-assets');
+        if (is_dir($contentAssetsDir)) {
+            $generatedPngs = glob($contentAssetsDir . '/*.png');
+            if (is_array($generatedPngs)) {
+                foreach ($generatedPngs as $pngFile) {
+                    @unlink($pngFile);
+                }
+            }
         }
 
         $this->info("Cleanup completed successfully. Total purged posts: {$deletedCount}.");
