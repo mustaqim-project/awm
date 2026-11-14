@@ -143,7 +143,7 @@
                             <select name="template_code" x-model="selectedTemplate"
                                 class="w-full px-4 py-3 bg-black/[0.03] dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[14px] text-black dark:text-white focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 transition-all text-[16px] sm:text-sm outline-none">
                                 <option value="">{{ __('auth.select_business.template_manual') }}</option>
-                                @foreach ($templates as $tmpl)
+                                @foreach ($templates ?? [] as $tmpl)
                                     <option value="{{ $tmpl->code }}">{{ $tmpl->name }}
                                         ({{ strtoupper($tmpl->industry_category) }})
                                     </option>

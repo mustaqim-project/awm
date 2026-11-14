@@ -286,7 +286,7 @@
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-center gap-2">
-                                            <h3 class="font-bold text-white text-xs sm:text-sm truncate">Nadia Saraswati</h3>
+                                            <p class="font-bold text-white text-xs sm:text-sm truncate">Nadia Saraswati</p>
                                             <span
                                                 class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400 border border-amber-500/40 shrink-0">VIP Gold</span>
                                         </div>

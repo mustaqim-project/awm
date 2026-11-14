@@ -53,9 +53,9 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <!-- Breadcrumbs -->
             <nav class="flex items-center gap-2 text-xs text-slate-400" aria-label="Breadcrumb">
                 <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_templates.breadcrumb_home') }}</a>
-                <span aria-hidden="true" class="text-slate-600">/</span>
+                <span aria-hidden="true" class="text-slate-400">/</span>
                 <a href="{{ route('template.index') }}" class="hover:text-white transition-colors">Template Spreadsheet</a>
-                <span aria-hidden="true" class="text-slate-600">/</span>
+                <span aria-hidden="true" class="text-slate-400">/</span>
                 <span class="text-[#0A84FF] font-semibold truncate max-w-[200px] sm:max-w-none" aria-current="page">{{ $template['name'] }}</span>
             </nav>
 

@@ -191,6 +191,7 @@
         </div>
 
         {{-- 6-Column Real Products Grid --}}
+        <h2 class="sr-only">{{ __('public_marketplace.prod_title') }}</h2>
         @if ($products->isNotEmpty())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5">
                 @foreach ($products as $product)
@@ -302,7 +303,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                         <i data-lucide="layers" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_1_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_1_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.prod_guar_1_desc') }}</p>
                 </div>
 
@@ -310,7 +311,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="handshake" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_2_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_2_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.producer_price_desc') }}</p>
                 </div>
 
@@ -318,7 +319,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                         <i data-lucide="qr-code" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_3_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.prod_guar_3_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.prod_guar_3_desc') }}</p>
                 </div>
             </div>
@@ -334,9 +335,9 @@
                     <i data-lucide="shield-check" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
                     <span>{{ __('public_marketplace.prod_cta_support') }}</span>
                 </div>
-                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     {{ __('public_marketplace.prod_cta_title') }}
-                </h3>
+                </h2>
                 <p class="text-sm text-slate-300 leading-relaxed">
                     {{ __('public_marketplace.prod_cta_desc') }}
                 </p>

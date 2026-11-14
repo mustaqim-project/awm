@@ -223,6 +223,7 @@
     <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12 sm:space-y-16">
 
         {{-- Category Bento Cards --}}
+        <h2 class="sr-only">{{ __('public_marketplace.cat_title') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($categoriesData as $key => $cat)
                 <div class="p-7 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-xl transition-all duration-200 shadow-sm space-y-5 flex flex-col justify-between group">
@@ -268,25 +269,25 @@
 
         {{-- Related Links --}}
         <section class="border-t border-black/[0.06] dark:border-white/[0.08] pt-12 space-y-6">
-            <h3 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.cat_other_channels') }}</h3>
+            <h2 class="text-lg font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.cat_other_channels') }}</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <a href="{{ route('marketplace.sub.businesses') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
                     <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_stores') }}</span>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        {{ __('public_marketplace.cat_channel_stores_sub') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
+                        {{ __('public_marketplace.cat_channel_stores_sub') }}</h3>
                 </a>
                 <a href="{{ route('marketplace.sub.products') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
                     <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_products') }}</span>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        {{ __('public_marketplace.cat_channel_products_sub') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
+                        {{ __('public_marketplace.cat_channel_products_sub') }}</h3>
                 </a>
                 <a href="{{ route('marketplace.sub.locations') }}"
                     class="p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-md transition-all shadow-sm space-y-1 group">
                     <span class="text-xs uppercase font-bold text-[#007AFF]">{{ __('public_marketplace.cat_channel_locations') }}</span>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
-                        {{ __('public_marketplace.cat_channel_locations_sub') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7] group-hover:text-[#007AFF] transition-colors">
+                        {{ __('public_marketplace.cat_channel_locations_sub') }}</h3>
                 </a>
             </div>
         </section>
@@ -301,9 +302,9 @@
                     <i data-lucide="store" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
                     <span>{{ __('public_marketplace.cat_cta_badge') }}</span>
                 </div>
-                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     {{ __('public_marketplace.cat_cta_title') }}
-                </h3>
+                </h2>
                 <p class="text-sm text-slate-300 leading-relaxed">
                     {{ __('public_marketplace.cat_cta_desc') }}
                 </p>

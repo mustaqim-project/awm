@@ -312,8 +312,8 @@
             <div
                 class="space-y-6 text-[#6E6E73] dark:text-[#86868B] text-sm leading-relaxed border-t border-black/[0.06] dark:border-white/[0.08] pt-10">
                 <div>
-                    <h3 class="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">Mengapa Simulasi What-If Penting
-                        Bagi UMKM?</h3>
+                    <h2 class="text-xl font-bold text-[#1D1D1F] dark:text-[#F5F5F7] mb-2">Mengapa Simulasi What-If Penting
+                        Bagi UMKM?</h2>
                     <p>
                         Banyak pengusaha UMKM terlena memberikan diskon besar tanpa memperhitungkan berapa lonjakan kuantiti
                         penjualan yang dibutuhkan untuk menutupi margin keuntungan yang tergerus. {{ __('public_calculators.what_if_edu_desc') }}
@@ -323,7 +323,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div
                         class="p-5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
-                        <h4 class="font-bold text-[#007AFF] dark:text-[#0A84FF] mb-2">{{ __("public_calculators.sim_trap_discount_promo") }}</h4>
+                        <h3 class="font-bold text-[#007AFF] dark:text-[#0A84FF] mb-2">{{ __("public_calculators.sim_trap_discount_promo") }}</h3>
                         <p class="text-xs text-[#6E6E73] dark:text-[#86868B] leading-relaxed">
                             Jika margin keuntungan Anda adalah 30%, memberikan diskon 15% mengharuskan Anda menjual
                             <strong>100% lebih banyak volume</strong> hanya untuk menghasilkan nominal laba bersih yang
@@ -332,8 +332,8 @@
                     </div>
                     <div
                         class="p-5 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-sm">
-                        <h4 class="font-bold text-[#FF9500] dark:text-[#FF9F0A] mb-2">Strategi Hadapi Inflasi Bahan Baku
-                        </h4>
+                        <h3 class="font-bold text-[#FF9500] dark:text-[#FF9F0A] mb-2">Strategi Hadapi Inflasi Bahan Baku
+                        </h3>
                         <p class="text-xs text-[#6E6E73] dark:text-[#86868B] leading-relaxed">
                             Saat bahan baku melonjak, Anda memiliki 3 opsi: menaikkan harga jual, mengecilkan porsi
                             (*shrinkflation*), atau melakukan rekayasa menu (*menu engineering*) dengan menonjolkan produk

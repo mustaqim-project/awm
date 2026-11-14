@@ -143,7 +143,7 @@
                             class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                             <span class="text-[11px] font-medium text-black/45 dark:text-white/45 block mb-1">{{ __('auth.recovery.submission_time_label') }}</span>
                             <span
-                                class="font-semibold text-black dark:text-white text-sm">{{ $recovery->created_at->translatedFormat('d M Y, H:i') }}
+                                class="font-semibold text-black dark:text-white text-sm">{{ optional($recovery->created_at)->translatedFormat('d M Y, H:i') ?? now()->translatedFormat('d M Y, H:i') }}
                                 WIB</span>
                         </div>
 

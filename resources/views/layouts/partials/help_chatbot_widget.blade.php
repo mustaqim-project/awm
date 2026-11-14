@@ -7,6 +7,477 @@
     - Tanpa form pendaftaran (langsung pakai untuk seluruh pengguna terotentikasi)
 --}}
 
+<script>
+function safeSessionGet(key) {
+    try { return window.sessionStorage ? window.sessionStorage.getItem(key) : null; } catch(e) { return null; }
+}
+function safeSessionSet(key, val) {
+    try { if (window.sessionStorage) window.sessionStorage.setItem(key, val); } catch(e) {}
+}
+function safeSessionRemove(key) {
+    try { if (window.sessionStorage) window.sessionStorage.removeItem(key); } catch(e) {}
+}
+
+window.coocaHelpChatbot = coocaHelpChatbot;
+
+function coocaHelpChatbot() {
+    return {
+        isOpen: false,
+        isMounted: false,
+        isHydrated: false,
+        showGreeting: true,
+        isLoading: false,
+        showHistoryView: false,
+        historyLoading: false,
+        conversationList: [],
+        activeMode: 'help_center', // 'help_center' | 'business_assistant'
+        activeConversationId: null,
+        inputQuery: '',
+        messages: [],
+        pollingTimers: {},
+
+        ensureHydrated() {
+            if (this.isHydrated) return;
+            this.isHydrated = true;
+            this.isMounted = true;
+
+            // Load saved conversation state from session storage
+            try {
+                const savedMode = safeSessionGet('cooca_chat_active_mode');
+                if (savedMode && (savedMode === 'help_center' || savedMode === 'business_assistant')) {
+                    this.activeMode = savedMode;
+                }
+
+                const savedConv = safeSessionGet('cooca_chat_conversation_id');
+                if (savedConv) {
+                    this.activeConversationId = savedConv;
+                }
+
+                const saved = safeSessionGet('cooca_help_chat_history_' + this.activeMode);
+                if (saved) {
+                    this.messages = JSON.parse(saved);
+                }
+            } catch (e) {}
+
+            // Dismiss greeting if closed previously
+            if (safeSessionGet('cooca_help_greeting_dismissed')) {
+                this.showGreeting = false;
+            }
+        },
+
+        init() {
+            // Dismiss greeting lightweight check
+            if (safeSessionGet('cooca_help_greeting_dismissed')) {
+                this.showGreeting = false;
+            }
+
+            // Listen for custom event from other pages/components
+            window.addEventListener('cooca-open-chatbot', (e) => {
+                this.ensureHydrated();
+                const detail = e.detail || {};
+                this.isOpen = true;
+                this.dismissGreeting();
+                if (detail.newSession) {
+                    this.showHistoryView = false;
+                    this.startNewConversation();
+                } else if (detail.conversationId) {
+                    this.loadConversationFromHistory(detail.conversationId, detail.mode);
+                }
+            });
+
+            // Defer URL parameter check and full hydration to idle time or after load
+            const checkIdleAndDeepLink = () => {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('open_chatbot')) {
+                        this.ensureHydrated();
+                        this.isOpen = true;
+                        this.dismissGreeting();
+                        const convId = urlParams.get('open_chatbot');
+                        if (convId && convId !== '1' && convId !== 'new') {
+                            this.loadConversationFromHistory(convId, urlParams.get('mode'));
+                        } else if (convId === 'new') {
+                            this.startNewConversation();
+                        }
+                        return;
+                    }
+                } catch(e) {}
+
+                // Non-blocking idle hydration
+                if ('requestIdleCallback' in window) {
+                    window.requestIdleCallback(() => {
+                        this.ensureHydrated();
+                    }, { timeout: 4000 });
+                }
+            };
+
+            if (document.readyState === 'complete') {
+                checkIdleAndDeepLink();
+            } else {
+                window.addEventListener('load', checkIdleAndDeepLink, { once: true });
+            }
+        },
+
+        async toggleHistoryView() {
+            this.showHistoryView = !this.showHistoryView;
+            if (this.showHistoryView) {
+                await this.fetchConversationList();
+            }
+        },
+
+        async fetchConversationList() {
+            this.historyLoading = true;
+            try {
+                const res = await fetch('{{ route('help-chatbot.conversations') }}', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    this.conversationList = data.conversations || [];
+                }
+            } catch (e) {
+                this.conversationList = [];
+            } finally {
+                this.historyLoading = false;
+            }
+        },
+
+        async loadConversationFromHistory(conversationId, type) {
+            this.isLoading = true;
+            try {
+                const res = await fetch(`/help-chatbot/history/${conversationId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    this.activeConversationId = conversationId;
+                    if (type) {
+                        this.activeMode = type;
+                        try { safeSessionSet('cooca_chat_active_mode', type); } catch(e){}
+                    }
+                    try { safeSessionSet('cooca_chat_conversation_id', conversationId); } catch(e){}
+
+                    this.messages = (data.messages || []).map(m => {
+                        const meta = m.metadata || {};
+                        return {
+                            sender: m.sender,
+                            text: m.content,
+                            status: m.status || 'completed',
+                            is_queued: (m.status === 'pending' || m.status === 'processing'),
+                            message_id: m.id,
+                            is_data_query: !!m.is_data_query,
+                            quick_links: meta.quick_links || [],
+                            ai_model: meta.ai_model || null,
+                            time: new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                        };
+                    });
+
+                    this.saveHistory();
+                    this.showHistoryView = false;
+                    this.scrollToBottom();
+                }
+            } catch (e) {
+            } finally {
+                this.isLoading = false;
+            }
+        },
+
+        async deleteConversationFromHistory(conversationId) {
+            if (!confirm('Hapus sesi percakapan ini?')) return;
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                const res = await fetch(`/help-chatbot/conversations/${conversationId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    }
+                });
+                if (res.ok) {
+                    this.conversationList = this.conversationList.filter(c => c.id !== conversationId);
+                    if (this.activeConversationId === conversationId) {
+                        this.clearChat();
+                    }
+                }
+            } catch (e) {}
+        },
+
+        switchMode(mode) {
+            if (this.activeMode === mode) return;
+            this.activeMode = mode;
+            try {
+                safeSessionSet('cooca_chat_active_mode', mode);
+            } catch (e) {}
+
+            // Load mode-specific conversation history
+            try {
+                const saved = safeSessionGet('cooca_help_chat_history_' + mode);
+                this.messages = saved ? JSON.parse(saved) : [];
+            } catch (e) {
+                this.messages = [];
+            }
+
+            this.scrollToBottom();
+            if (this.$refs.chatInput) {
+                this.$refs.chatInput.focus();
+            }
+        },
+
+        toggleChat() {
+            this.ensureHydrated();
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.dismissGreeting();
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                    if (this.$refs.chatInput) {
+                        this.$refs.chatInput.focus();
+                    }
+                });
+            }
+        },
+
+        dismissGreeting() {
+            this.showGreeting = false;
+            try {
+                safeSessionSet('cooca_help_greeting_dismissed', '1');
+            } catch (e) {}
+        },
+
+        clearChat() {
+            this.messages = [];
+            try {
+                safeSessionRemove('cooca_help_chat_history_' + this.activeMode);
+                safeSessionRemove('cooca_chat_conversation_id');
+            } catch (e) {}
+            this.activeConversationId = null;
+            this.inputQuery = '';
+        },
+
+        async startNewConversation() {
+            this.showHistoryView = false;
+            this.clearChat();
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                const res = await fetch('{{ route('help-chatbot.conversations.new') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify({ type: this.activeMode })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    this.activeConversationId = data.conversation_id;
+                    try {
+                        safeSessionSet('cooca_chat_conversation_id', data.conversation_id);
+                    } catch (e) {}
+                }
+            } catch (e) {}
+
+            this.scrollToBottom();
+            if (this.$refs.chatInput) {
+                this.$refs.chatInput.focus();
+            }
+        },
+
+        async sendMessage() {
+            const query = this.inputQuery.trim();
+            if (!query || this.isLoading) return;
+
+            // Push User Message
+            this.messages.push({
+                sender: 'user',
+                text: query,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            });
+
+            this.inputQuery = '';
+            this.isLoading = true;
+            this.scrollToBottom();
+
+            try {
+                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+                const historyPayload = this.messages.slice(-8).map(m => ({
+                    sender: m.sender,
+                    text: m.text
+                }));
+
+                const payload = {
+                    message: query,
+                    type: this.activeMode,
+                    history: historyPayload
+                };
+
+                if (this.activeConversationId) {
+                    payload.conversation_id = this.activeConversationId;
+                }
+
+                const res = await fetch('{{ route('help-chatbot.ask') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.conversation_id) {
+                        this.activeConversationId = data.conversation_id;
+                        try {
+                            safeSessionSet('cooca_chat_conversation_id', data.conversation_id);
+                        } catch (e) {}
+                    }
+
+                    const isQueued = (data.status === 'queued' || data.status === 'pending');
+                    const msgIndex = this.messages.length;
+
+                    this.messages.push({
+                        sender: 'assistant',
+                        text: data.reply || 'Maaf, saya tidak dapat memahami pertanyaan tersebut.',
+                        status: data.status || 'completed',
+                        is_queued: isQueued,
+                        message_id: data.message_id || null,
+                        is_data_query: !!data.is_data_query,
+                        quick_links: data.quick_links || [],
+                        ai_model: data.ai_model || null,
+                        provider: data.provider || null,
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    });
+
+                    // Jika masuk antrean, mulai polling background status
+                    if (isQueued && data.message_id) {
+                        this.startPollingStatus(msgIndex, data.message_id);
+                    }
+                } else {
+                    const errData = await res.json().catch(() => ({}));
+                    this.messages.push({
+                        sender: 'assistant',
+                        text: errData.message || 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.',
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                    });
+                }
+            } catch (err) {
+                this.messages.push({
+                    sender: 'assistant',
+                    text: 'Koneksi terputus. Pastikan perangkat Anda terhubung ke internet.',
+                    quick_links: [],
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                });
+            } finally {
+                this.isLoading = false;
+                this.saveHistory();
+                this.scrollToBottom();
+            }
+        },
+
+        startPollingStatus(msgIndex, messageId) {
+            let attempts = 0;
+            const maxAttempts = 30; // Max 60 seconds of polling
+
+            const check = async () => {
+                attempts++;
+                if (attempts > maxAttempts) {
+                    if (this.messages[msgIndex]) {
+                        this.messages[msgIndex].is_queued = false;
+                        this.messages[msgIndex].text = 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.';
+                    }
+                    this.saveHistory();
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/help-chatbot/status/${messageId}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        if (this.messages[msgIndex]) {
+                            this.messages[msgIndex].status = data.status;
+                            if (data.is_completed) {
+                                this.messages[msgIndex].is_queued = false;
+                                this.messages[msgIndex].text = data.reply;
+                                this.messages[msgIndex].quick_links = data.quick_links || [];
+                                this.messages[msgIndex].ai_model = data.ai_model || null;
+                                this.saveHistory();
+                                this.scrollToBottom();
+                                return; // Stop polling
+                            } else if (data.is_failed) {
+                                this.messages[msgIndex].is_queued = false;
+                                this.messages[msgIndex].text = data.reply;
+                                this.messages[msgIndex].quick_links = data.quick_links || [];
+                                this.saveHistory();
+                                this.scrollToBottom();
+                                return; // Stop polling
+                            }
+                        }
+                    }
+                } catch (e) {}
+
+                // Next poll in 2 seconds
+                setTimeout(check, 2000);
+            };
+
+            setTimeout(check, 2000);
+        },
+
+        saveHistory() {
+            try {
+                safeSessionSet('cooca_help_chat_history_' + this.activeMode, JSON.stringify(this.messages.slice(-15)));
+            } catch (e) {}
+        },
+
+        scrollToBottom() {
+            this.$nextTick(() => {
+                const container = document.getElementById('cooca-chatbot-messages');
+                if (container) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            });
+        },
+
+        formatMessage(text) {
+            if (!text) return '';
+
+            // Simple safe Markdown parsing (Bold, Headings, Bullet Lists, Code, Links)
+            let parsed = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+
+            // Headings ###
+            parsed = parsed.replace(/^### (.*$)/gim, '<h4 class="font-bold text-[13px] text-[#007AFF] dark:text-[#0A84FF] mt-1 mb-1">$1</h4>');
+
+            // Bold **text**
+            parsed = parsed.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-black dark:text-white">$1</strong>');
+
+            // Italic *text*
+            parsed = parsed.replace(/\*(.*?)\*/g, '<em class="italic opacity-90">$1</em>');
+
+            // Inline Code `text`
+            parsed = parsed.replace(/`(.*?)`/g, '<code class="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 font-mono text-[10.5px] text-[#007AFF] dark:text-[#0A84FF]">$1</code>');
+
+            // Markdown Links [Label](url)
+            parsed = parsed.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-[#007AFF] dark:text-[#0A84FF] underline font-semibold hover:opacity-80" target="_self">$1 &rarr;</a>');
+
+            // Bullet Lists
+            parsed = parsed.replace(/^\s*-\s+(.*$)/gim, '<div class="flex items-start gap-1.5 my-0.5"><span class="text-[#007AFF] shrink-0">&bull;</span><span>$1</span></div>');
+
+            // Numbered Lists
+            parsed = parsed.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<div class="flex items-start gap-1.5 my-0.5"><span class="font-bold text-[#007AFF] shrink-0">$1.</span><span>$2</span></div>');
+
+            // Newlines to <br>
+            parsed = parsed.replace(/\n\n/g, '<div class="my-1.5"></div>').replace(/\n/g, '<br>');
+
+            return parsed;
+        }
+    };
+}
+</script>
+
 <div id="cooca-help-chatbot-root"
      x-data="coocaHelpChatbot()"
      x-init="init()"
@@ -421,462 +892,3 @@
     </template>
 
 </div>
-
-<script>
-function coocaHelpChatbot() {
-    return {
-        isOpen: false,
-        isMounted: false,
-        isHydrated: false,
-        showGreeting: true,
-        isLoading: false,
-        showHistoryView: false,
-        historyLoading: false,
-        conversationList: [],
-        activeMode: 'help_center', // 'help_center' | 'business_assistant'
-        activeConversationId: null,
-        inputQuery: '',
-        messages: [],
-        pollingTimers: {},
-
-        ensureHydrated() {
-            if (this.isHydrated) return;
-            this.isHydrated = true;
-            this.isMounted = true;
-
-            // Load saved conversation state from session storage
-            try {
-                const savedMode = sessionStorage.getItem('cooca_chat_active_mode');
-                if (savedMode && (savedMode === 'help_center' || savedMode === 'business_assistant')) {
-                    this.activeMode = savedMode;
-                }
-
-                const savedConv = sessionStorage.getItem('cooca_chat_conversation_id');
-                if (savedConv) {
-                    this.activeConversationId = savedConv;
-                }
-
-                const saved = sessionStorage.getItem('cooca_help_chat_history_' + this.activeMode);
-                if (saved) {
-                    this.messages = JSON.parse(saved);
-                }
-            } catch (e) {}
-
-            // Dismiss greeting if closed previously
-            if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
-                this.showGreeting = false;
-            }
-        },
-
-        init() {
-            // Dismiss greeting lightweight check
-            if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
-                this.showGreeting = false;
-            }
-
-            // Listen for custom event from other pages/components
-            window.addEventListener('cooca-open-chatbot', (e) => {
-                this.ensureHydrated();
-                const detail = e.detail || {};
-                this.isOpen = true;
-                this.dismissGreeting();
-                if (detail.newSession) {
-                    this.showHistoryView = false;
-                    this.startNewConversation();
-                } else if (detail.conversationId) {
-                    this.loadConversationFromHistory(detail.conversationId, detail.mode);
-                }
-            });
-
-            // Defer URL parameter check and full hydration to idle time or after load
-            const checkIdleAndDeepLink = () => {
-                try {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has('open_chatbot')) {
-                        this.ensureHydrated();
-                        this.isOpen = true;
-                        this.dismissGreeting();
-                        const convId = urlParams.get('open_chatbot');
-                        if (convId && convId !== '1' && convId !== 'new') {
-                            this.loadConversationFromHistory(convId, urlParams.get('mode'));
-                        } else if (convId === 'new') {
-                            this.startNewConversation();
-                        }
-                        return;
-                    }
-                } catch(e) {}
-
-                // Non-blocking idle hydration
-                if ('requestIdleCallback' in window) {
-                    window.requestIdleCallback(() => {
-                        this.ensureHydrated();
-                    }, { timeout: 4000 });
-                }
-            };
-
-            if (document.readyState === 'complete') {
-                checkIdleAndDeepLink();
-            } else {
-                window.addEventListener('load', checkIdleAndDeepLink, { once: true });
-            }
-        },
-
-        async toggleHistoryView() {
-            this.showHistoryView = !this.showHistoryView;
-            if (this.showHistoryView) {
-                await this.fetchConversationList();
-            }
-        },
-
-        async fetchConversationList() {
-            this.historyLoading = true;
-            try {
-                const res = await fetch('{{ route('help-chatbot.conversations') }}', {
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    this.conversationList = data.conversations || [];
-                }
-            } catch (e) {
-                this.conversationList = [];
-            } finally {
-                this.historyLoading = false;
-            }
-        },
-
-        async loadConversationFromHistory(conversationId, type) {
-            this.isLoading = true;
-            try {
-                const res = await fetch(`/help-chatbot/history/${conversationId}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    this.activeConversationId = conversationId;
-                    if (type) {
-                        this.activeMode = type;
-                        try { sessionStorage.setItem('cooca_chat_active_mode', type); } catch(e){}
-                    }
-                    try { sessionStorage.setItem('cooca_chat_conversation_id', conversationId); } catch(e){}
-
-                    this.messages = (data.messages || []).map(m => {
-                        const meta = m.metadata || {};
-                        return {
-                            sender: m.sender,
-                            text: m.content,
-                            status: m.status || 'completed',
-                            is_queued: (m.status === 'pending' || m.status === 'processing'),
-                            message_id: m.id,
-                            is_data_query: !!m.is_data_query,
-                            quick_links: meta.quick_links || [],
-                            ai_model: meta.ai_model || null,
-                            time: new Date(m.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                        };
-                    });
-
-                    this.saveHistory();
-                    this.showHistoryView = false;
-                    this.scrollToBottom();
-                }
-            } catch (e) {
-            } finally {
-                this.isLoading = false;
-            }
-        },
-
-        async deleteConversationFromHistory(conversationId) {
-            if (!confirm('Hapus sesi percakapan ini?')) return;
-            try {
-                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-                const res = await fetch(`/help-chatbot/conversations/${conversationId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    }
-                });
-                if (res.ok) {
-                    this.conversationList = this.conversationList.filter(c => c.id !== conversationId);
-                    if (this.activeConversationId === conversationId) {
-                        this.clearChat();
-                    }
-                }
-            } catch (e) {}
-        },
-
-        switchMode(mode) {
-            if (this.activeMode === mode) return;
-            this.activeMode = mode;
-            try {
-                sessionStorage.setItem('cooca_chat_active_mode', mode);
-            } catch (e) {}
-
-            // Load mode-specific conversation history
-            try {
-                const saved = sessionStorage.getItem('cooca_help_chat_history_' + mode);
-                this.messages = saved ? JSON.parse(saved) : [];
-            } catch (e) {
-                this.messages = [];
-            }
-
-            this.scrollToBottom();
-            if (this.$refs.chatInput) {
-                this.$refs.chatInput.focus();
-            }
-        },
-
-        toggleChat() {
-            this.ensureHydrated();
-            this.isOpen = !this.isOpen;
-            if (this.isOpen) {
-                this.dismissGreeting();
-                this.$nextTick(() => {
-                    this.scrollToBottom();
-                    if (this.$refs.chatInput) {
-                        this.$refs.chatInput.focus();
-                    }
-                });
-            }
-        },
-
-        dismissGreeting() {
-            this.showGreeting = false;
-            try {
-                sessionStorage.setItem('cooca_help_greeting_dismissed', '1');
-            } catch (e) {}
-        },
-
-        clearChat() {
-            this.messages = [];
-            try {
-                sessionStorage.removeItem('cooca_help_chat_history_' + this.activeMode);
-                sessionStorage.removeItem('cooca_chat_conversation_id');
-            } catch (e) {}
-            this.activeConversationId = null;
-            this.inputQuery = '';
-        },
-
-        async startNewConversation() {
-            this.showHistoryView = false;
-            this.clearChat();
-            try {
-                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-                const res = await fetch('{{ route('help-chatbot.conversations.new') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify({ type: this.activeMode })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    this.activeConversationId = data.conversation_id;
-                    try {
-                        sessionStorage.setItem('cooca_chat_conversation_id', data.conversation_id);
-                    } catch (e) {}
-                }
-            } catch (e) {}
-
-            this.scrollToBottom();
-            if (this.$refs.chatInput) {
-                this.$refs.chatInput.focus();
-            }
-        },
-
-        async sendMessage() {
-            const query = this.inputQuery.trim();
-            if (!query || this.isLoading) return;
-
-            // Push User Message
-            this.messages.push({
-                sender: 'user',
-                text: query,
-                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            });
-
-            this.inputQuery = '';
-            this.isLoading = true;
-            this.scrollToBottom();
-
-            try {
-                const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
-                const historyPayload = this.messages.slice(-8).map(m => ({
-                    sender: m.sender,
-                    text: m.text
-                }));
-
-                const payload = {
-                    message: query,
-                    type: this.activeMode,
-                    history: historyPayload
-                };
-
-                if (this.activeConversationId) {
-                    payload.conversation_id = this.activeConversationId;
-                }
-
-                const res = await fetch('{{ route('help-chatbot.ask') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': token
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.conversation_id) {
-                        this.activeConversationId = data.conversation_id;
-                        try {
-                            sessionStorage.setItem('cooca_chat_conversation_id', data.conversation_id);
-                        } catch (e) {}
-                    }
-
-                    const isQueued = (data.status === 'queued' || data.status === 'pending');
-                    const msgIndex = this.messages.length;
-
-                    this.messages.push({
-                        sender: 'assistant',
-                        text: data.reply || 'Maaf, saya tidak dapat memahami pertanyaan tersebut.',
-                        status: data.status || 'completed',
-                        is_queued: isQueued,
-                        message_id: data.message_id || null,
-                        is_data_query: !!data.is_data_query,
-                        quick_links: data.quick_links || [],
-                        ai_model: data.ai_model || null,
-                        provider: data.provider || null,
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                    });
-
-                    // Jika masuk antrean, mulai polling background status
-                    if (isQueued && data.message_id) {
-                        this.startPollingStatus(msgIndex, data.message_id);
-                    }
-                } else {
-                    const errData = await res.json().catch(() => ({}));
-                    this.messages.push({
-                        sender: 'assistant',
-                        text: errData.message || 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.',
-                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                    });
-                }
-            } catch (err) {
-                this.messages.push({
-                    sender: 'assistant',
-                    text: 'Koneksi terputus. Pastikan perangkat Anda terhubung ke internet.',
-                    quick_links: [],
-                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                });
-            } finally {
-                this.isLoading = false;
-                this.saveHistory();
-                this.scrollToBottom();
-            }
-        },
-
-        startPollingStatus(msgIndex, messageId) {
-            let attempts = 0;
-            const maxAttempts = 30; // Max 60 seconds of polling
-
-            const check = async () => {
-                attempts++;
-                if (attempts > maxAttempts) {
-                    if (this.messages[msgIndex]) {
-                        this.messages[msgIndex].is_queued = false;
-                        this.messages[msgIndex].text = 'Sistem Sedang Sibuk. Silakan coba beberapa saat lagi atau hubungi tim Support COOCA melalui WhatsApp atau email untuk mendapatkan bantuan.';
-                    }
-                    this.saveHistory();
-                    return;
-                }
-
-                try {
-                    const res = await fetch(`/help-chatbot/status/${messageId}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        if (this.messages[msgIndex]) {
-                            this.messages[msgIndex].status = data.status;
-                            if (data.is_completed) {
-                                this.messages[msgIndex].is_queued = false;
-                                this.messages[msgIndex].text = data.reply;
-                                this.messages[msgIndex].quick_links = data.quick_links || [];
-                                this.messages[msgIndex].ai_model = data.ai_model || null;
-                                this.saveHistory();
-                                this.scrollToBottom();
-                                return; // Stop polling
-                            } else if (data.is_failed) {
-                                this.messages[msgIndex].is_queued = false;
-                                this.messages[msgIndex].text = data.reply;
-                                this.messages[msgIndex].quick_links = data.quick_links || [];
-                                this.saveHistory();
-                                this.scrollToBottom();
-                                return; // Stop polling
-                            }
-                        }
-                    }
-                } catch (e) {}
-
-                // Next poll in 2 seconds
-                setTimeout(check, 2000);
-            };
-
-            setTimeout(check, 2000);
-        },
-
-        saveHistory() {
-            try {
-                sessionStorage.setItem('cooca_help_chat_history_' + this.activeMode, JSON.stringify(this.messages.slice(-15)));
-            } catch (e) {}
-        },
-
-        scrollToBottom() {
-            this.$nextTick(() => {
-                const container = document.getElementById('cooca-chatbot-messages');
-                if (container) {
-                    container.scrollTop = container.scrollHeight;
-                }
-            });
-        },
-
-        formatMessage(text) {
-            if (!text) return '';
-
-            // Simple safe Markdown parsing (Bold, Headings, Bullet Lists, Code, Links)
-            let parsed = text
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-
-            // Headings ###
-            parsed = parsed.replace(/^### (.*$)/gim, '<h4 class="font-bold text-[13px] text-[#007AFF] dark:text-[#0A84FF] mt-1 mb-1">$1</h4>');
-
-            // Bold **text**
-            parsed = parsed.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-black dark:text-white">$1</strong>');
-
-            // Italic *text*
-            parsed = parsed.replace(/\*(.*?)\*/g, '<em class="italic opacity-90">$1</em>');
-
-            // Inline Code `text`
-            parsed = parsed.replace(/`(.*?)`/g, '<code class="px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/10 font-mono text-[10.5px] text-[#007AFF] dark:text-[#0A84FF]">$1</code>');
-
-            // Markdown Links [Label](url)
-            parsed = parsed.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-[#007AFF] dark:text-[#0A84FF] underline font-semibold hover:opacity-80" target="_self">$1 &rarr;</a>');
-
-            // Bullet Lists
-            parsed = parsed.replace(/^\s*-\s+(.*$)/gim, '<div class="flex items-start gap-1.5 my-0.5"><span class="text-[#007AFF] shrink-0">&bull;</span><span>$1</span></div>');
-
-            // Numbered Lists
-            parsed = parsed.replace(/^\s*(\d+)\.\s+(.*$)/gim, '<div class="flex items-start gap-1.5 my-0.5"><span class="font-bold text-[#007AFF] shrink-0">$1.</span><span>$2</span></div>');
-
-            // Newlines to <br>
-            parsed = parsed.replace(/\n\n/g, '<div class="my-1.5"></div>').replace(/\n/g, '<br>');
-
-            return parsed;
-        }
-    };
-}
-</script>

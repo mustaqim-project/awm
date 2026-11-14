@@ -53,7 +53,7 @@
                     </div>
                 @endif
 
-                @if ($deliveryError)
+                @if (!empty($deliveryError))
                     <div class="mb-5 p-3.5 rounded-xl bg-[#FF9500]/10 border border-[#FF9500]/25 text-[#FF9500] dark:text-[#FF9F0A] text-xs sm:text-sm flex items-center gap-2">
                         <i data-lucide="info" class="w-4 h-4 shrink-0"></i>
                         <span>{{ $deliveryError }}</span>

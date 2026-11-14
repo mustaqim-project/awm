@@ -82,6 +82,123 @@ require __DIR__ . '/public.php';
     abort(404);
 })->where('path', '.*');
 
+// Dev/Test Preview Routes for Session-Gated Auth Views
+if (app()->environment('local', 'testing')) {
+    \Illuminate\Support\Facades\Route::prefix('test-preview')->group(function (): void {
+        \Illuminate\Support\Facades\Route::get('/auth-complete-profile', function () {
+            $user = \App\Models\User::first() ?? new \App\Models\User([
+                'id' => 1,
+                'name' => 'Budi Santoso',
+                'email' => 'budi@example.com',
+                'phone' => '081234567890',
+            ]);
+            return view('auth.complete-profile', [
+                'user' => $user,
+                'primaryLocation' => null,
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-select-business', function () {
+            $dummyBusinesses = collect([
+                (object)[
+                    'id' => 1,
+                    'name' => 'Kopi Kenangan Senopati',
+                    'currency_code' => 'IDR',
+                    'currency_symbol' => 'Rp',
+                    'is_active' => true,
+                    'role_label' => 'Owner',
+                    'branches_count' => 3,
+                    'created_at' => now()->subMonths(6),
+                ],
+                (object)[
+                    'id' => 2,
+                    'name' => 'Laundry Express Bersih',
+                    'currency_code' => 'IDR',
+                    'currency_symbol' => 'Rp',
+                    'is_active' => true,
+                    'role_label' => 'Manager',
+                    'branches_count' => 1,
+                    'created_at' => now()->subMonths(2),
+                ],
+            ]);
+            return view('auth.select-business', [
+                'businesses' => $dummyBusinesses,
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-otp', function () {
+            return view('auth.otp', [
+                'phone' => '081234567890',
+                'maskedEmail' => 'u***@cooca.id',
+                'channel' => 'whatsapp',
+                'expiresAt' => time() + 300,
+                'resendIn' => 60,
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-register-otp', function () {
+            return view('auth.register-otp', [
+                'phone' => '081234567890',
+                'maskedEmail' => 'u***@cooca.id',
+                'channel' => 'whatsapp',
+                'expiresAt' => time() + 300,
+                'resendIn' => 60,
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-google-register', function () {
+            return view('auth.google-register', [
+                'pending' => [
+                    'email' => 'owner@example.com',
+                    'name' => 'Budi Santoso',
+                    'avatar' => null,
+                ],
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-verify-email', function () {
+            if (!auth()->check()) {
+                $user = \App\Models\User::first() ?? new \App\Models\User([
+                    'id' => 1,
+                    'name' => 'Demo User',
+                    'email' => 'demo@cooca.id',
+                ]);
+                auth()->login($user);
+            }
+            return view('auth.verify-email');
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-reset-password', function () {
+            return view('auth.reset-password', [
+                'token' => 'dummy-reset-token-12345',
+                'email' => 'demo@cooca.id',
+                'request' => request(),
+            ]);
+        });
+
+        \Illuminate\Support\Facades\Route::get('/auth-recovery-status', function () {
+            $recovery = \App\Models\AccountRecoveryRequest::first();
+            if (!$recovery) {
+                $recovery = new \App\Models\AccountRecoveryRequest([
+                    'ticket_number' => 'REC-2026-0089',
+                    'status' => 'pending',
+                    'applicant_name' => 'Budi Santoso',
+                    'business_name' => 'Kopi Maju Jaya',
+                    'old_email' => 'lama@example.com',
+                    'old_phone' => '081299998888',
+                    'new_email' => 'baru@example.com',
+                    'new_phone' => '081234567890',
+                    'issue_type' => 'lost_device',
+                ]);
+                $recovery->created_at = now();
+            }
+            return view('auth.account-recovery.status', [
+                'recovery' => $recovery,
+            ]);
+        });
+    });
+}
+
 // Catch-all Canonical Redirection: Eliminate any accidental /public prefix
 \Illuminate\Support\Facades\Route::any('/public/{any?}', function (?string $any = null) {
     return redirect('/' . ($any ?? ''), 301);

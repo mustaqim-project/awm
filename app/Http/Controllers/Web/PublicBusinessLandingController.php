@@ -36,11 +36,9 @@ class PublicBusinessLandingController extends Controller
 
         abort_unless($business, 404);
 
-        $landingPage = BusinessLandingPage::where('business_id', $business->id)->first();
-
-        if (! $landingPage) {
-            $landingPage = BusinessLandingPage::create([
-                'business_id' => $business->id,
+        $landingPage = BusinessLandingPage::firstOrCreate(
+            ['business_id' => $business->id],
+            [
                 'headline' => $business->name,
                 'subheadline' => $business->description ?: 'Selamat datang di toko & etalase resmi ' . $business->name . '.',
                 'is_published' => true,
@@ -48,8 +46,8 @@ class PublicBusinessLandingController extends Controller
                 'theme_color' => '#007AFF',
                 'cta_primary_text' => 'Beli Sekarang',
                 'whatsapp_number' => $business->phone ?: '081234567890',
-            ]);
-        }
+            ]
+        );
 
         $isAuthorizedPreview = request()->boolean('preview')
             && request()->user()?->active_business_id === $business->id;
@@ -57,10 +55,9 @@ class PublicBusinessLandingController extends Controller
         abort_unless($landingPage->is_published || $isAuthorizedPreview, 404);
 
         // 0. Storefront settings & active payment methods & shipping rules
-        $storeSetting = \App\Models\CommerceStoreSetting::where('business_id', $business->id)->first();
-        if (! $storeSetting) {
-            $storeSetting = \App\Models\CommerceStoreSetting::create([
-                'business_id' => $business->id,
+        $storeSetting = \App\Models\CommerceStoreSetting::firstOrCreate(
+            ['business_id' => $business->id],
+            [
                 'is_storefront_enabled' => true,
                 'is_discoverable' => true,
                 'allow_pickup' => true,
@@ -68,8 +65,8 @@ class PublicBusinessLandingController extends Controller
                 'allow_scheduled_order' => true,
                 'allow_request_order' => true,
                 'min_order_amount' => 10000,
-            ]);
-        }
+            ]
+        );
 
         $paymentMethods = \App\Models\CommercePaymentMethod::where('business_id', $business->id)
             ->where('is_active', true)

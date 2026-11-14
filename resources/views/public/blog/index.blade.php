@@ -164,7 +164,7 @@ class="blog-page-wrap w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000
             {{-- Breadcrumb Navigation --}}
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-5 lg:mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('landing') }}" class="hover:text-white transition-colors py-1 blog-focus blog-touch-target">{{ __('public_blog.breadcrumb_home') }}</a>
-                <span aria-hidden="true" class="text-slate-600">/</span>
+                <span aria-hidden="true" class="text-slate-400">/</span>
                 <span class="text-[#0A84FF] font-semibold" aria-current="page">{{ __('public_blog.breadcrumb_blog') }}</span>
             </nav>
 

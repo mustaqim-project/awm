@@ -1,43 +1,34 @@
 {
   "totalChecks": 875,
-  "passedChecks": 873,
-  "failedChecks": [
-    {
-      "view": "landing",
-      "error": "CLS score 0.18788389101381653 exceeds 0.1 threshold"
-    },
-    {
-      "view": "business_landing",
-      "error": "CLS score 0.19070543358571246 exceeds 0.1 threshold"
-    }
-  ],
+  "passedChecks": 875,
+  "failedChecks": [],
   "findingsSummary": {
     "overflowFailures": 0,
     "touchTargetFailures": 0,
-    "clsIssues": 2,
-    "mediaDimensionIssues": 1
+    "clsIssues": 0,
+    "mediaDimensionIssues": 0
   },
   "performanceRecords": [
     {
       "view": "landing",
-      "cls": 0.18788389101381653,
-      "domContentLoaded": 72,
-      "load": 72,
-      "duration": 72
+      "cls": 0.029007304526748975,
+      "domContentLoaded": 89,
+      "load": 90,
+      "duration": 90
     },
     {
       "view": "about",
       "cls": 0,
-      "domContentLoaded": 63,
-      "load": 64,
-      "duration": 64
+      "domContentLoaded": 80,
+      "load": 81,
+      "duration": 81
     },
     {
       "view": "demo",
-      "cls": 0,
-      "domContentLoaded": 75,
-      "load": 75,
-      "duration": 75
+      "cls": 0.0016455567243494943,
+      "domContentLoaded": 77,
+      "load": 78,
+      "duration": 78
     },
     {
       "view": "pricing",
@@ -49,121 +40,121 @@
     {
       "view": "privacy",
       "cls": 0.000011862086334019206,
+      "domContentLoaded": 73,
+      "load": 74,
+      "duration": 74
+    },
+    {
+      "view": "security",
+      "cls": 0.010512278155207796,
+      "domContentLoaded": 74,
+      "load": 74,
+      "duration": 74
+    },
+    {
+      "view": "sitemap",
+      "cls": 0,
+      "domContentLoaded": 77,
+      "load": 78,
+      "duration": 78
+    },
+    {
+      "view": "support",
+      "cls": 0.0016848517272698045,
+      "domContentLoaded": 71,
+      "load": 72,
+      "duration": 72
+    },
+    {
+      "view": "terms",
+      "cls": 0.0017715941210669581,
+      "domContentLoaded": 75,
+      "load": 76,
+      "duration": 76
+    },
+    {
+      "view": "business_landing",
+      "cls": 0.0030141174232681755,
+      "domContentLoaded": 77,
+      "load": 78,
+      "duration": 78
+    },
+    {
+      "view": "kasir_android",
+      "cls": 0,
+      "domContentLoaded": 106,
+      "load": 107,
+      "duration": 107
+    },
+    {
+      "view": "kasir_gratis",
+      "cls": 0,
+      "domContentLoaded": 80,
+      "load": 81,
+      "duration": 81
+    },
+    {
+      "view": "kasir_offline",
+      "cls": 0,
       "domContentLoaded": 81,
       "load": 82,
       "duration": 82
     },
     {
-      "view": "security",
-      "cls": 0,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
-    },
-    {
-      "view": "sitemap",
-      "cls": 0,
-      "domContentLoaded": 74,
-      "load": 75,
-      "duration": 75
-    },
-    {
-      "view": "support",
-      "cls": 0,
-      "domContentLoaded": 73,
-      "load": 74,
-      "duration": 74
-    },
-    {
-      "view": "terms",
-      "cls": 0.000011862086334019206,
-      "domContentLoaded": 79,
-      "load": 80,
-      "duration": 80
-    },
-    {
-      "view": "business_landing",
-      "cls": 0.19070543358571246,
-      "domContentLoaded": 104,
-      "load": 105,
-      "duration": 105
-    },
-    {
-      "view": "kasir_android",
-      "cls": 0,
-      "domContentLoaded": 76,
-      "load": 77,
-      "duration": 77
-    },
-    {
-      "view": "kasir_gratis",
-      "cls": 0,
-      "domContentLoaded": 84,
-      "load": 84,
-      "duration": 84
-    },
-    {
-      "view": "kasir_offline",
-      "cls": 0,
-      "domContentLoaded": 73,
-      "load": 74,
-      "duration": 74
-    },
-    {
       "view": "discovery",
       "cls": 0,
-      "domContentLoaded": 105,
-      "load": 106,
-      "duration": 106
+      "domContentLoaded": 94,
+      "load": 95,
+      "duration": 95
     },
     {
       "view": "fnb",
       "cls": 0,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
+      "domContentLoaded": 74,
+      "load": 74,
+      "duration": 74
     },
     {
       "view": "laundry",
+      "cls": 0,
+      "domContentLoaded": 89,
+      "load": 90,
+      "duration": 90
+    },
+    {
+      "view": "manufacturing",
       "cls": 0,
       "domContentLoaded": 86,
       "load": 87,
       "duration": 87
     },
     {
-      "view": "manufacturing",
-      "cls": 0.00997657341767404,
-      "domContentLoaded": 83,
-      "load": 83,
-      "duration": 83
-    },
-    {
       "view": "retail",
       "cls": 0,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
+      "domContentLoaded": 87,
+      "load": 88,
+      "duration": 88
     },
     {
       "view": "services",
       "cls": 0,
-      "domContentLoaded": 79,
-      "load": 79,
-      "duration": 79
+      "domContentLoaded": 89,
+      "load": 90,
+      "duration": 90
     },
     {
       "view": "solutions_show",
       "cls": 0,
-      "domContentLoaded": 79,
-      "load": 79,
-      "duration": 79
+      "domContentLoaded": 81,
+      "load": 82,
+      "duration": 82
     },
     {
       "view": "workshop",
       "cls": 0,
-      "domContentLoaded": 82,
-      "load": 83,
-      "duration": 83
+      "domContentLoaded": 78,
+      "load": 79,
+      "duration": 79
     }
   ]
 }

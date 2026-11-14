@@ -241,10 +241,10 @@
 
                         {{-- Sidebar Header --}}
                         <div class="flex items-center justify-between pb-4 border-b border-slate-200/80 dark:border-white/10">
-                            <div class="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
+                            <h2 class="flex items-center gap-2 font-bold text-base text-slate-900 dark:text-white">
                                 <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[#007AFF]"></i>
                                 <span>{{ __('public_marketplace.srch_filter_title') }}</span>
-                            </div>
+                            </h2>
                             @if ($hasActiveFilters)
                                 <a href="{{ route('marketplace.search') }}"
                                     class="text-xs font-medium text-rose-500 hover:text-rose-600 dark:text-rose-400 flex items-center gap-1 transition"
@@ -257,10 +257,10 @@
 
                         {{-- 1. KATEGORI FILTER --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
                                 <span>{{ __('public_marketplace.srch_cat_title') }}</span>
                                 <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
-                            </h4>
+                            </h3>
 
                             <div class="space-y-1">
                                 {{-- Semua Kategori --}}
@@ -307,9 +307,9 @@
 
                         {{-- 2. BATAS HARGA --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 {{ __('public_marketplace.srch_price_title') }}
-                            </h4>
+                            </h3>
 
                             <form method="GET" action="{{ route('marketplace.search') }}" class="space-y-2.5">
                                 {{-- Preserve other query params --}}
@@ -367,9 +367,9 @@
 
                         {{-- 3. TIPE PRODUK (Ready Stock, Jasa, Pre-Order) --}}
                         <div class="space-y-3 pb-5 border-b border-slate-200/80 dark:border-white/10">
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                                 {{ __('public_marketplace.srch_type_title') }}
-                            </h4>
+                            </h3>
                             <div class="space-y-1">
                                 @foreach ($typeOptions as $tKey => $tData)
                                     @php
@@ -571,7 +571,7 @@
                                                 loading="lazy"
                                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         @else
-                                            <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
+                                            <div class="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-400">
                                                 <i data-lucide="package" class="w-10 h-10 stroke-[1.5]"></i>
                                                 <span class="text-[10px] mt-1 font-medium tracking-tight">{{ __('public_marketplace.srch_merchant_default') }}</span>
                                             </div>
@@ -705,7 +705,7 @@
 
                 {{-- Mobile Categories --}}
                 <div class="space-y-2.5">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_drawer_cat') }}</h4>
+                    <h3 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_drawer_cat') }}</h3>
                     <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('marketplace.search', request()->except(['kategori', 'page'])) }}"
                             class="p-2.5 rounded-[12px] text-xs font-semibold flex items-center gap-2 transition {{ empty($category) || $category === 'semua' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-slate-100 dark:bg-white/10 text-slate-900 dark:text-white' }}">
@@ -730,7 +730,7 @@
 
                 {{-- Mobile Price Range --}}
                 <div class="space-y-3 pt-3 border-t border-slate-200/80 dark:border-white/10">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_price_title') }}</h4>
+                    <h3 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_price_title') }}</h3>
                     <form method="GET" action="{{ route('marketplace.search') }}" class="space-y-2.5">
                         @if ($search !== '')
                             <input type="hidden" name="q" value="{{ $search }}">
@@ -768,7 +768,7 @@
 
                 {{-- Mobile Product Type --}}
                 <div class="space-y-2 pt-3 border-t border-slate-200/80 dark:border-white/10">
-                    <h4 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_type_title') }}</h4>
+                    <h3 class="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">{{ __('public_marketplace.srch_type_title') }}</h3>
                     <div class="grid grid-cols-2 gap-2">
                         @foreach ($typeOptions as $tKey => $tData)
                             <a href="{{ route('marketplace.search', array_merge(request()->except(['tipe', 'page']), $tKey ? ['tipe' => $tKey] : [])) }}"

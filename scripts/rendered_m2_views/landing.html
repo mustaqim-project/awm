@@ -82,14 +82,15 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
     
     <!-- Precompiled Production Vite Assets with Graceful Fallback for Shared Hosting -->
-            <link rel="preload" as="style" href="http://localhost/build/assets/app-BgU5DB-n.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-BgU5DB-n.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
+            <link rel="preload" as="style" href="http://localhost/build/assets/app-BCcBsGeN.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-BCcBsGeN.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
     <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <style>
         :root,
-        .cooca-public {
+        .cooca-public,
+        [data-theme="light"] {
             --apple-blue: #007AFF;
             --apple-green: #34C759;
             --apple-orange: #FF9500;
@@ -106,7 +107,12 @@
         .dark,
         .dark.cooca-public,
         .cooca-public.dark,
-        .cooca-public .dark {
+        .cooca-public .dark,
+        html.dark,
+        html.dark body,
+        .dark body,
+        [data-theme="dark"],
+        [data-theme="dark"] body {
             --apple-blue: #0A84FF;
             --apple-green: #30D158;
             --apple-orange: #FF9F0A;
@@ -181,6 +187,13 @@
             -moz-osx-font-smoothing: grayscale;
             background-color: var(--apple-bg);
             color: var(--apple-text);
+        }
+
+        html.dark body,
+        .dark body,
+        [data-theme="dark"] body {
+            background-color: #000000;
+            color: #F5F5F7;
         }
 
         /* Apple Inset Glass Card (Squircle) */
@@ -398,6 +411,7 @@
 
     
     <style id="cooca-typography-system">
+@layer base {
     /* ==========================================================================
        1. BASE HEADINGS (H1 - H6)
        ========================================================================== */
@@ -718,6 +732,7 @@
     .leading-title {
         line-height: 1.22;
     }
+}
 </style>
 
     
@@ -3826,7 +3841,636 @@
             </div>
             
     
-    <div id="cooca-live-chat-root" x-data="coocaLiveChatWidget()" x-init="init()" x-cloak class="print:hidden">
+    <script>
+window.coocaLiveChatWidget = coocaLiveChatWidget;
+function coocaLiveChatWidget() {
+    return {
+        isOpen: false,
+        isMounted: false,
+        showGreeting: false,
+        isSubmitting: false,
+        isSending: false,
+        isWaitingReply: false,
+        isReverbConnected: false,
+        isSessionEnded: false,
+        sessionEndedReason: '',
+        errorMessage: '',
+        sessionToken: (function() { try { return localStorage.getItem('cooca_livechat_session') || ''; } catch(e) { return ''; } })(),
+        unreadCount: 0,
+        newMessage: '',
+        formData: {
+            name: '',
+            phone: '',
+            email: '',
+            message: '',
+        },
+        visitorData: {
+            name: (function() { try { return localStorage.getItem('cooca_livechat_name') || ''; } catch(e) { return ''; } })(),
+            phone: (function() { try { return localStorage.getItem('cooca_livechat_phone') || ''; } catch(e) { return ''; } })(),
+            email: (function() { try { return localStorage.getItem('cooca_livechat_email') || ''; } catch(e) { return ''; } })(),
+        },
+        messages: [],
+        pusherInstance: null,
+        reverbChannel: null,
+        pollInterval: null,
+        timeoutCheckInterval: null,
+
+        loadPusher(callback) {
+            if (typeof window.Pusher !== 'undefined') {
+                if (callback) callback();
+                return;
+            }
+            if (document.getElementById('cooca-pusher-sdk')) {
+                const s = document.getElementById('cooca-pusher-sdk');
+                s.addEventListener('load', () => { if (callback) callback(); });
+                return;
+            }
+            const s = document.createElement('script');
+            s.id = 'cooca-pusher-sdk';
+            s.src = 'https://js.pusher.com/8.2.0/pusher.min.js';
+            s.async = true;
+            s.onload = () => { if (callback) callback(); };
+            document.head.appendChild(s);
+        },
+
+        dismissGreeting() {
+            this.showGreeting = false;
+            // 7 days dismissal: 7 * 24 * 60 * 60 * 1000 = 604800000 ms
+            try {
+                localStorage.setItem('cooca_greeting_dismissed_until', String(Date.now() + 604800000));
+            } catch (e) {}
+        },
+
+        init() {
+            // Restore visitor info into formData if present
+            if (this.visitorData.name) this.formData.name = this.visitorData.name;
+            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
+            if (this.visitorData.email) this.formData.email = this.visitorData.email;
+
+            // Delayed greeting: 20s or 50% scroll, suppressed if dismissed in last 7 days or on mobile
+            let dismissedUntil = 0;
+            try {
+                dismissedUntil = parseInt(localStorage.getItem('cooca_greeting_dismissed_until') || '0', 10);
+            } catch (e) {}
+            const isSuppressed = Date.now() < dismissedUntil;
+
+            if (!isSuppressed && !this.sessionToken) {
+                let triggered = false;
+                const activateGreeting = () => {
+                    if (triggered || this.isOpen || this.sessionToken) return;
+                    triggered = true;
+                    this.showGreeting = true;
+                    window.removeEventListener('scroll', handleScroll);
+                };
+
+                const timer = setTimeout(activateGreeting, 20000);
+
+                const handleScroll = () => {
+                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+                    if (scrollable > 0 && (window.scrollY / scrollable) >= 0.5) {
+                        clearTimeout(timer);
+                        activateGreeting();
+                    }
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+            }
+
+            // Defer passive session hydration to idle time (Zero TBT on initial page load)
+            if (this.sessionToken) {
+                const idleHydrate = () => {
+                    if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(() => {
+                            if (!this.isOpen && this.sessionToken) {
+                                this.pollMessages();
+                            }
+                        }, { timeout: 4000 });
+                    }
+                };
+                if (document.readyState === 'complete') {
+                    idleHydrate();
+                } else {
+                    window.addEventListener('load', idleHydrate, { once: true });
+                }
+            }
+        },
+
+        startActivePolling() {
+            this.stopActivePolling();
+
+            if (this.sessionToken) {
+                if (this.messages.length === 0) {
+                    this.loadChatHistory();
+                }
+                this.connectReverb();
+
+                this.pollInterval = setInterval(() => {
+                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
+                        this.pollMessages();
+                    }
+                }, 3500);
+
+                this.timeoutCheckInterval = setInterval(() => {
+                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
+                        this.checkInactivityTimeout();
+                    }
+                }, 5000);
+            }
+        },
+
+        stopActivePolling() {
+            if (this.pollInterval) {
+                clearInterval(this.pollInterval);
+                this.pollInterval = null;
+            }
+            if (this.timeoutCheckInterval) {
+                clearInterval(this.timeoutCheckInterval);
+                this.timeoutCheckInterval = null;
+            }
+        },
+
+        checkInactivityTimeout() {
+            if (!this.sessionToken || this.isSessionEnded || this.messages.length === 0) return;
+
+            const lastMsg = this.messages[this.messages.length - 1];
+            // Only timeout if the last message was sent by admin / support and waiting for visitor reply
+            if (lastMsg && (lastMsg.is_cooca || lastMsg.is_from_page)) {
+                const msgTime = lastMsg.created_at ? new Date(lastMsg.created_at).getTime() : 0;
+                if (msgTime > 0) {
+                    const elapsedSeconds = Math.floor((Date.now() - msgTime) / 1000);
+                    if (elapsedSeconds >= 300) { // 5 minutes without visitor reply
+                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                    }
+                }
+            }
+        },
+
+        handleSessionEnded(reason) {
+            this.stopActivePolling();
+            this.isSessionEnded = true;
+            this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
+            this.isWaitingReply = false;
+
+            // Ensure polite closing message bubble appears before session ended banner
+            const hasClosingMsg = this.messages.some(m => (m.is_cooca || m.is_from_page) && m.message && (
+                m.message.toLowerCase().includes('izin mengakhiri sesi') || 
+                m.message.toLowerCase().includes('mengakhiri sesi')
+            ));
+
+            if (!hasClosingMsg && this.messages.length > 0) {
+                const name = this.visitorData?.name ? (' ' + this.visitorData.name.trim()) : '';
+                const now = new Date();
+                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                this.messages.push({
+                    id: 'closing_' + Date.now(),
+                    message: `Baik Kak${name}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja.`,
+                    from_name: 'Cooca Support',
+                    is_cooca: true,
+                    is_from_page: true,
+                    time: timeStr,
+                    time_relative: 'Baru saja',
+                    date: 'Hari ini',
+                    created_at: now.toISOString(),
+                });
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
+            }
+
+            // Clear active session in localStorage so user can easily start a fresh session
+            try {
+                localStorage.removeItem('cooca_livechat_session');
+            } catch (e) {}
+            this.sessionToken = '';
+            if (this.pusherInstance) {
+                try { this.pusherInstance.disconnect(); } catch (_) {}
+            }
+        },
+
+        startNewChatSession() {
+            this.stopActivePolling();
+            this.isSessionEnded = false;
+            this.sessionEndedReason = '';
+            this.sessionToken = '';
+            this.messages = [];
+            this.newMessage = '';
+            this.formData.message = '';
+            try {
+                localStorage.removeItem('cooca_livechat_session');
+            } catch (e) {}
+            if (this.visitorData.name) this.formData.name = this.visitorData.name;
+            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
+            if (this.visitorData.email) this.formData.email = this.visitorData.email;
+        },
+
+        toggleChat() {
+            this.isMounted = true;
+            this.isOpen = !this.isOpen;
+            if (this.isOpen) {
+                this.unreadCount = 0;
+                this.showGreeting = false;
+                this.startActivePolling();
+                this.$nextTick(() => {
+                    this.scrollToBottom();
+                });
+            } else {
+                this.stopActivePolling();
+            }
+        },
+
+        async startChatSession() {
+            this.errorMessage = '';
+            this.isSubmitting = true;
+
+            try {
+                const res = await fetch('/live-chat/start', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(this.formData)
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    this.sessionToken = data.session_token;
+                    this.visitorData = data.visitor;
+                    this.messages = [data.message];
+                    this.isSessionEnded = false;
+                    this.sessionEndedReason = '';
+                    this.isWaitingReply = true;
+
+                    // Store in localStorage
+                    try {
+                        localStorage.setItem('cooca_livechat_session', this.sessionToken);
+                        localStorage.setItem('cooca_livechat_name', this.visitorData.name);
+                        localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
+                        localStorage.setItem('cooca_livechat_email', this.visitorData.email);
+                    } catch (e) {}
+
+                    // Connect Reverb WebSocket and start live active polling
+                    this.connectReverb();
+                    this.startActivePolling();
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+
+                    // If immediate reply arrived with the start payload
+                    if (data.reply) {
+                        setTimeout(() => {
+                            if (!this.messages.some(m => m.id === data.reply.id)) {
+                                this.messages.push(data.reply);
+                                this.playChime();
+                            }
+                            this.isWaitingReply = false;
+                            this.$nextTick(() => {
+                                this.scrollToBottom();
+                            });
+                        }, 700);
+                    }
+                } else {
+                    this.errorMessage = data.message || 'Failed to initialize live chat. Please review your input.';
+                }
+            } catch (err) {
+                this.errorMessage = 'Terjadi gangguan jaringan: ' + err.message;
+            } finally {
+                this.isSubmitting = false;
+            }
+        },
+
+        async sendFollowupMessage() {
+            const text = (this.newMessage || '').trim();
+            if (!text || this.isSending) return;
+
+            if (this.isSessionEnded || !this.sessionToken) {
+                this.handleSessionEnded('Sesi chat telah berakhir. Silakan mulai sesi baru.');
+                return;
+            }
+
+            const tempId = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+            const now = new Date();
+            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+            // 1. OPTIMISTIC UI: Immediately render in dialog without waiting for AI/network
+            const optimisticMsg = {
+                id: tempId,
+                temp_id: tempId,
+                message: text,
+                from_name: this.visitorData?.name || 'Anda',
+                is_cooca: false,
+                is_from_page: false,
+                time: timeStr,
+                time_relative: 'Baru saja',
+                date: 'Hari ini',
+                created_at: now.toISOString(),
+                is_optimistic: true,
+            };
+
+            this.messages.push(optimisticMsg);
+            this.newMessage = '';
+            this.isWaitingReply = true; // Show animated typing dots immediately!
+            this.isSending = true;
+
+            this.$nextTick(() => {
+                this.scrollToBottom();
+            });
+
+            try {
+                const res = await fetch('/live-chat/send', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_token: this.sessionToken,
+                        message: text
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    // Replace temporary optimistic message with persistent server record
+                    const idx = this.messages.findIndex(m => m.id === tempId || m.temp_id === tempId);
+                    if (idx !== -1) {
+                        this.messages.splice(idx, 1, data.message);
+                    } else if (!this.messages.some(m => m.id === data.message.id)) {
+                        this.messages.push(data.message);
+                    }
+
+                    // If server already returned the AI response in payload
+                    if (data.reply) {
+                        setTimeout(() => {
+                            if (!this.messages.some(m => m.id === data.reply.id)) {
+                                this.messages.push(data.reply);
+                                this.playChime();
+                            }
+                            this.isWaitingReply = false;
+                            this.$nextTick(() => {
+                                this.scrollToBottom();
+                            });
+                        }, 700);
+                    }
+
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+                } else if (data.session_ended || res.status === 410 || res.status === 404) {
+                    this.messages = this.messages.filter(m => m.id !== tempId);
+                    this.isWaitingReply = false;
+                    this.handleSessionEnded(data.message);
+                } else {
+                    this.messages = this.messages.filter(m => m.id !== tempId);
+                    this.isWaitingReply = false;
+                    this.newMessage = text; // restore message to composer
+                    alert(data.message || 'Gagal mengirim pesan.');
+                }
+            } catch (err) {
+                this.isWaitingReply = false;
+                alert('Gangguan koneksi: ' + err.message);
+            } finally {
+                this.isSending = false;
+            }
+        },
+
+        async loadChatHistory() {
+            if (!this.sessionToken) return;
+
+            try {
+                const res = await fetch(`/live-chat/history?session_token=${encodeURIComponent(this.sessionToken)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.success && Array.isArray(data.messages)) {
+                        this.messages = data.messages;
+                        if (data.visitor && data.visitor.name) {
+                            this.visitorData = data.visitor;
+                        }
+                        if (data.session_ended) {
+                            this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        } else {
+                            this.checkInactivityTimeout();
+                        }
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    } else if (data.session_ended) {
+                        this.handleSessionEnded(data.message);
+                    }
+                }
+            } catch (e) {
+                console.warn('[LiveChat] History fetch notice:', e);
+            }
+        },
+
+        async pollMessages() {
+            if (!this.sessionToken || this.isSending || this.isSubmitting || this.isSessionEnded) return;
+
+            const lastId = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : '';
+
+            try {
+                const res = await fetch(`/live-chat/poll?session_token=${encodeURIComponent(this.sessionToken)}&after_id=${encodeURIComponent(lastId)}`, {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.session_ended) {
+                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        return;
+                    }
+                    if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
+                        data.messages.forEach(incoming => {
+                            if (!this.messages.some(m => m.id === incoming.id)) {
+                                this.messages.push(incoming);
+                                this.isWaitingReply = false;
+                                if (!this.isOpen && (incoming.is_cooca || incoming.is_from_page)) {
+                                    this.unreadCount++;
+                                    this.playChime();
+                                }
+                            }
+                        });
+                        this.checkInactivityTimeout();
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    }
+                }
+            } catch (e) {}
+        },
+
+        connectReverb() {
+            if (!this.sessionToken) return;
+
+            this.loadPusher(() => {
+                if (typeof Pusher === 'undefined') return;
+
+                try {
+                    const reverbKey = 'cooca_reverb_key_2026' || 'cooca_reverb_key_2026';
+                    const reverbHost = '127.0.0.1' || window.location.hostname;
+                    const reverbPort = 8080;
+                    const reverbScheme = 'http';
+
+                    if (this.pusherInstance) {
+                        try { this.pusherInstance.disconnect(); } catch (_) {}
+                    }
+
+                    this.pusherInstance = new Pusher(reverbKey, {
+                        wsHost: reverbHost,
+                        wsPort: reverbPort,
+                        wssPort: reverbPort,
+                        forceTLS: reverbScheme === 'https',
+                        enabledTransports: ['ws', 'wss'],
+                        cluster: 'mt1',
+                    });
+
+                    this.pusherInstance.connection.bind('connected', () => {
+                        this.isReverbConnected = true;
+                        console.log('[LiveChat] Connected to Laravel Reverb WebSocket.');
+                    });
+
+                    this.pusherInstance.connection.bind('disconnected', () => {
+                        this.isReverbConnected = false;
+                    });
+
+                const channelName = 'livechat.' + this.sessionToken;
+                this.reverbChannel = this.pusherInstance.subscribe(channelName);
+
+                this.reverbChannel.bind('message.sent', (data) => {
+                    console.log('[LiveChat] New message broadcast received:', data);
+                    
+                    // Prevent duplicate if already in array
+                    if (!this.messages.some(m => m.id === data.id)) {
+                        this.messages.push({
+                            id: data.id,
+                            message: data.message,
+                            media_url: data.media_url,
+                            media_type: data.media_type,
+                            from_name: data.from_name,
+                            is_cooca: data.is_cooca,
+                            is_from_page: data.is_from_page,
+                            time: data.time,
+                            date: data.date,
+                            created_at: data.created_at || new Date().toISOString(),
+                        });
+
+                        this.isWaitingReply = false;
+                        if (this.typingTimer) clearTimeout(this.typingTimer);
+
+                        if (!this.isOpen && (data.is_cooca || data.is_from_page)) {
+                            this.unreadCount++;
+                            this.playChime();
+                        }
+
+                        this.checkInactivityTimeout();
+
+                        this.$nextTick(() => {
+                            this.scrollToBottom();
+                        });
+                    }
+                });
+
+                // Listen for live agent typing events
+                this.reverbChannel.bind('agent.typing', (data) => {
+                    this.isWaitingReply = true;
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+                    if (this.typingTimer) clearTimeout(this.typingTimer);
+                    this.typingTimer = setTimeout(() => {
+                        this.isWaitingReply = false;
+                    }, 6000);
+                });
+            } catch (err) {
+                console.warn('[LiveChat] Reverb initialization warning:', err);
+            }
+            });
+        },
+
+        confirmResetSession() {
+            if (confirm('Apakah Anda ingin mengakhiri sesi chat ini dan memulai chat baru?')) {
+                this.startNewChatSession();
+                if (this.pusherInstance) {
+                    try { this.pusherInstance.disconnect(); } catch (_) {}
+                }
+            }
+        },
+
+        scrollToBottom() {
+            const el = document.getElementById('coocaLiveChatMessages');
+            if (el) {
+                el.scrollTop = el.scrollHeight;
+            }
+        },
+
+        playChime() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.35);
+            } catch (_) {}
+        },
+
+        formatMessage(text, isIncoming = true) {
+            if (!text) return '';
+
+            // 1. Sanitize raw HTML tags to prevent XSS injection
+            let safe = String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+
+            // 2. Parse Markdown bold **bold text**
+            safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>');
+
+            // 3. Define action button badge styles
+            const btnClass = isIncoming
+                ? 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
+                : 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-white hover:bg-violet-50 text-violet-700 font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
+
+            const linkClass = isIncoming
+                ? 'text-violet-600 dark:text-violet-400 font-semibold underline hover:text-violet-700 break-all inline-flex items-center gap-1'
+                : 'text-white font-semibold underline hover:opacity-90 break-all inline-flex items-center gap-1';
+
+            const externalIcon = '<svg class="w-3.5 h-3.5 opacity-90 shrink-0 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
+
+            // 4. Parse Markdown links [Title](URL) into styled clickable action buttons
+            safe = safe.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s\)]+)\)/g, (match, title, url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
+            });
+
+            // 5. Parse any remaining bare URLs (https://... or http://...) that are not inside an <a> tag
+            const parts = safe.split(/(<a\b[^>]*>.*?<\/a>)/g);
+            for (let i = 0; i < parts.length; i++) {
+                if (!parts[i].startsWith('<a')) {
+                    parts[i] = parts[i].replace(/(https?:\/\/[^\s<]+)/g, `<a href="$1" target="_blank" rel="noopener noreferrer" class="${linkClass}"><span>$1</span> ${externalIcon}</a>`);
+                }
+            }
+            safe = parts.join('');
+
+            return safe;
+        }
+    }
+}
+</script>
+
+<div id="cooca-live-chat-root" x-data="coocaLiveChatWidget()" x-init="init()" x-cloak class="print:hidden">
 
     
     <div class="fixed floating-live-chat-fab right-4 sm:right-6 lg:right-6 z-50 flex flex-col items-end gap-2 pointer-events-none">
@@ -4213,623 +4857,6 @@
     }
 </style>
 
-<script>
-function coocaLiveChatWidget() {
-    return {
-        isOpen: false,
-        isMounted: false,
-        showGreeting: false,
-        isSubmitting: false,
-        isSending: false,
-        isWaitingReply: false,
-        isReverbConnected: false,
-        isSessionEnded: false,
-        sessionEndedReason: '',
-        errorMessage: '',
-        sessionToken: localStorage.getItem('cooca_livechat_session') || '',
-        unreadCount: 0,
-        newMessage: '',
-        formData: {
-            name: '',
-            phone: '',
-            email: '',
-            message: '',
-        },
-        visitorData: {
-            name: localStorage.getItem('cooca_livechat_name') || '',
-            phone: localStorage.getItem('cooca_livechat_phone') || '',
-            email: localStorage.getItem('cooca_livechat_email') || '',
-        },
-        messages: [],
-        pusherInstance: null,
-        reverbChannel: null,
-        pollInterval: null,
-        timeoutCheckInterval: null,
-
-        loadPusher(callback) {
-            if (typeof window.Pusher !== 'undefined') {
-                if (callback) callback();
-                return;
-            }
-            if (document.getElementById('cooca-pusher-sdk')) {
-                const s = document.getElementById('cooca-pusher-sdk');
-                s.addEventListener('load', () => { if (callback) callback(); });
-                return;
-            }
-            const s = document.createElement('script');
-            s.id = 'cooca-pusher-sdk';
-            s.src = 'https://js.pusher.com/8.2.0/pusher.min.js';
-            s.async = true;
-            s.onload = () => { if (callback) callback(); };
-            document.head.appendChild(s);
-        },
-
-        dismissGreeting() {
-            this.showGreeting = false;
-            // 7 days dismissal: 7 * 24 * 60 * 60 * 1000 = 604800000 ms
-            localStorage.setItem('cooca_greeting_dismissed_until', String(Date.now() + 604800000));
-        },
-
-        init() {
-            // Restore visitor info into formData if present
-            if (this.visitorData.name) this.formData.name = this.visitorData.name;
-            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
-            if (this.visitorData.email) this.formData.email = this.visitorData.email;
-
-            // Delayed greeting: 20s or 50% scroll, suppressed if dismissed in last 7 days or on mobile
-            const dismissedUntil = parseInt(localStorage.getItem('cooca_greeting_dismissed_until') || '0', 10);
-            const isSuppressed = Date.now() < dismissedUntil;
-
-            if (!isSuppressed && !this.sessionToken) {
-                let triggered = false;
-                const activateGreeting = () => {
-                    if (triggered || this.isOpen || this.sessionToken) return;
-                    triggered = true;
-                    this.showGreeting = true;
-                    window.removeEventListener('scroll', handleScroll);
-                };
-
-                const timer = setTimeout(activateGreeting, 20000);
-
-                const handleScroll = () => {
-                    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-                    if (scrollable > 0 && (window.scrollY / scrollable) >= 0.5) {
-                        clearTimeout(timer);
-                        activateGreeting();
-                    }
-                };
-                window.addEventListener('scroll', handleScroll, { passive: true });
-            }
-
-            // Defer passive session hydration to idle time (Zero TBT on initial page load)
-            if (this.sessionToken) {
-                const idleHydrate = () => {
-                    if ('requestIdleCallback' in window) {
-                        window.requestIdleCallback(() => {
-                            if (!this.isOpen && this.sessionToken) {
-                                this.pollMessages();
-                            }
-                        }, { timeout: 4000 });
-                    }
-                };
-                if (document.readyState === 'complete') {
-                    idleHydrate();
-                } else {
-                    window.addEventListener('load', idleHydrate, { once: true });
-                }
-            }
-        },
-
-        startActivePolling() {
-            this.stopActivePolling();
-
-            if (this.sessionToken) {
-                if (this.messages.length === 0) {
-                    this.loadChatHistory();
-                }
-                this.connectReverb();
-
-                this.pollInterval = setInterval(() => {
-                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
-                        this.pollMessages();
-                    }
-                }, 3500);
-
-                this.timeoutCheckInterval = setInterval(() => {
-                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
-                        this.checkInactivityTimeout();
-                    }
-                }, 5000);
-            }
-        },
-
-        stopActivePolling() {
-            if (this.pollInterval) {
-                clearInterval(this.pollInterval);
-                this.pollInterval = null;
-            }
-            if (this.timeoutCheckInterval) {
-                clearInterval(this.timeoutCheckInterval);
-                this.timeoutCheckInterval = null;
-            }
-        },
-
-        checkInactivityTimeout() {
-            if (!this.sessionToken || this.isSessionEnded || this.messages.length === 0) return;
-
-            const lastMsg = this.messages[this.messages.length - 1];
-            // Only timeout if the last message was sent by admin / support and waiting for visitor reply
-            if (lastMsg && (lastMsg.is_cooca || lastMsg.is_from_page)) {
-                const msgTime = lastMsg.created_at ? new Date(lastMsg.created_at).getTime() : 0;
-                if (msgTime > 0) {
-                    const elapsedSeconds = Math.floor((Date.now() - msgTime) / 1000);
-                    if (elapsedSeconds >= 300) { // 5 minutes without visitor reply
-                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
-                    }
-                }
-            }
-        },
-
-        handleSessionEnded(reason) {
-            this.stopActivePolling();
-            this.isSessionEnded = true;
-            this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
-            this.isWaitingReply = false;
-
-            // Ensure polite closing message bubble appears before session ended banner
-            const hasClosingMsg = this.messages.some(m => (m.is_cooca || m.is_from_page) && m.message && (
-                m.message.toLowerCase().includes('izin mengakhiri sesi') || 
-                m.message.toLowerCase().includes('mengakhiri sesi')
-            ));
-
-            if (!hasClosingMsg && this.messages.length > 0) {
-                const name = this.visitorData?.name ? (' ' + this.visitorData.name.trim()) : '';
-                const now = new Date();
-                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-                this.messages.push({
-                    id: 'closing_' + Date.now(),
-                    message: `Baik Kak${name}, jika sudah tidak ada hal lain yang ingin ditanyakan, saya izin mengakhiri sesi live chat ini terlebih dahulu ya. Terima kasih banyak telah berkonsultasi dengan COOCA. Semoga usaha Kakak semakin sukses dan lancar! Jika sewaktu-waktu membutuhkan bantuan seputar operasional atau fitur COOCA, silakan mulai sesi chat baru kapan saja.`,
-                    from_name: 'Cooca Support',
-                    is_cooca: true,
-                    is_from_page: true,
-                    time: timeStr,
-                    time_relative: 'Baru saja',
-                    date: 'Hari ini',
-                    created_at: now.toISOString(),
-                });
-                this.$nextTick(() => {
-                    this.scrollToBottom();
-                });
-            }
-
-            // Clear active session in localStorage so user can easily start a fresh session
-            localStorage.removeItem('cooca_livechat_session');
-            this.sessionToken = '';
-            if (this.pusherInstance) {
-                try { this.pusherInstance.disconnect(); } catch (_) {}
-            }
-        },
-
-        startNewChatSession() {
-            this.stopActivePolling();
-            this.isSessionEnded = false;
-            this.sessionEndedReason = '';
-            this.sessionToken = '';
-            this.messages = [];
-            this.newMessage = '';
-            this.formData.message = '';
-            localStorage.removeItem('cooca_livechat_session');
-            if (this.visitorData.name) this.formData.name = this.visitorData.name;
-            if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
-            if (this.visitorData.email) this.formData.email = this.visitorData.email;
-        },
-
-        toggleChat() {
-            this.isMounted = true;
-            this.isOpen = !this.isOpen;
-            if (this.isOpen) {
-                this.unreadCount = 0;
-                this.showGreeting = false;
-                this.startActivePolling();
-                this.$nextTick(() => {
-                    this.scrollToBottom();
-                });
-            } else {
-                this.stopActivePolling();
-            }
-        },
-
-        async startChatSession() {
-            this.errorMessage = '';
-            this.isSubmitting = true;
-
-            try {
-                const res = await fetch('/live-chat/start', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify(this.formData)
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success) {
-                    this.sessionToken = data.session_token;
-                    this.visitorData = data.visitor;
-                    this.messages = [data.message];
-                    this.isSessionEnded = false;
-                    this.sessionEndedReason = '';
-                    this.isWaitingReply = true;
-
-                    // Store in localStorage
-                    localStorage.setItem('cooca_livechat_session', this.sessionToken);
-                    localStorage.setItem('cooca_livechat_name', this.visitorData.name);
-                    localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
-                    localStorage.setItem('cooca_livechat_email', this.visitorData.email);
-
-                    // Connect Reverb WebSocket and start live active polling
-                    this.connectReverb();
-                    this.startActivePolling();
-
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    });
-
-                    // If immediate reply arrived with the start payload
-                    if (data.reply) {
-                        setTimeout(() => {
-                            if (!this.messages.some(m => m.id === data.reply.id)) {
-                                this.messages.push(data.reply);
-                                this.playChime();
-                            }
-                            this.isWaitingReply = false;
-                            this.$nextTick(() => {
-                                this.scrollToBottom();
-                            });
-                        }, 700);
-                    }
-                } else {
-                    this.errorMessage = data.message || 'Failed to initialize live chat. Please review your input.';
-                }
-            } catch (err) {
-                this.errorMessage = 'Terjadi gangguan jaringan: ' + err.message;
-            } finally {
-                this.isSubmitting = false;
-            }
-        },
-
-        async sendFollowupMessage() {
-            const text = (this.newMessage || '').trim();
-            if (!text || this.isSending) return;
-
-            if (this.isSessionEnded || !this.sessionToken) {
-                this.handleSessionEnded('Sesi chat telah berakhir. Silakan mulai sesi baru.');
-                return;
-            }
-
-            const tempId = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
-            const now = new Date();
-            const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
-
-            // 1. OPTIMISTIC UI: Immediately render in dialog without waiting for AI/network
-            const optimisticMsg = {
-                id: tempId,
-                temp_id: tempId,
-                message: text,
-                from_name: this.visitorData?.name || 'Anda',
-                is_cooca: false,
-                is_from_page: false,
-                time: timeStr,
-                time_relative: 'Baru saja',
-                date: 'Hari ini',
-                created_at: now.toISOString(),
-                is_optimistic: true,
-            };
-
-            this.messages.push(optimisticMsg);
-            this.newMessage = '';
-            this.isWaitingReply = true; // Show animated typing dots immediately!
-            this.isSending = true;
-
-            this.$nextTick(() => {
-                this.scrollToBottom();
-            });
-
-            try {
-                const res = await fetch('/live-chat/send', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        session_token: this.sessionToken,
-                        message: text
-                    })
-                });
-
-                const data = await res.json();
-
-                if (res.ok && data.success) {
-                    // Replace temporary optimistic message with persistent server record
-                    const idx = this.messages.findIndex(m => m.id === tempId || m.temp_id === tempId);
-                    if (idx !== -1) {
-                        this.messages.splice(idx, 1, data.message);
-                    } else if (!this.messages.some(m => m.id === data.message.id)) {
-                        this.messages.push(data.message);
-                    }
-
-                    // If server already returned the AI response in payload
-                    if (data.reply) {
-                        setTimeout(() => {
-                            if (!this.messages.some(m => m.id === data.reply.id)) {
-                                this.messages.push(data.reply);
-                                this.playChime();
-                            }
-                            this.isWaitingReply = false;
-                            this.$nextTick(() => {
-                                this.scrollToBottom();
-                            });
-                        }, 700);
-                    }
-
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    });
-                } else if (data.session_ended || res.status === 410 || res.status === 404) {
-                    this.messages = this.messages.filter(m => m.id !== tempId);
-                    this.isWaitingReply = false;
-                    this.handleSessionEnded(data.message);
-                } else {
-                    this.messages = this.messages.filter(m => m.id !== tempId);
-                    this.isWaitingReply = false;
-                    this.newMessage = text; // restore message to composer
-                    alert(data.message || 'Gagal mengirim pesan.');
-                }
-            } catch (err) {
-                this.isWaitingReply = false;
-                alert('Gangguan koneksi: ' + err.message);
-            } finally {
-                this.isSending = false;
-            }
-        },
-
-        async loadChatHistory() {
-            if (!this.sessionToken) return;
-
-            try {
-                const res = await fetch(`/live-chat/history?session_token=${encodeURIComponent(this.sessionToken)}`, {
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.success && Array.isArray(data.messages)) {
-                        this.messages = data.messages;
-                        if (data.visitor && data.visitor.name) {
-                            this.visitorData = data.visitor;
-                        }
-                        if (data.session_ended) {
-                            this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
-                        } else {
-                            this.checkInactivityTimeout();
-                        }
-                        this.$nextTick(() => {
-                            this.scrollToBottom();
-                        });
-                    } else if (data.session_ended) {
-                        this.handleSessionEnded(data.message);
-                    }
-                }
-            } catch (e) {
-                console.warn('[LiveChat] History fetch notice:', e);
-            }
-        },
-
-        async pollMessages() {
-            if (!this.sessionToken || this.isSending || this.isSubmitting || this.isSessionEnded) return;
-
-            const lastId = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : '';
-
-            try {
-                const res = await fetch(`/live-chat/poll?session_token=${encodeURIComponent(this.sessionToken)}&after_id=${encodeURIComponent(lastId)}`, {
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.session_ended) {
-                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
-                        return;
-                    }
-                    if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
-                        data.messages.forEach(incoming => {
-                            if (!this.messages.some(m => m.id === incoming.id)) {
-                                this.messages.push(incoming);
-                                this.isWaitingReply = false;
-                                if (!this.isOpen && (incoming.is_cooca || incoming.is_from_page)) {
-                                    this.unreadCount++;
-                                    this.playChime();
-                                }
-                            }
-                        });
-                        this.checkInactivityTimeout();
-                        this.$nextTick(() => {
-                            this.scrollToBottom();
-                        });
-                    }
-                }
-            } catch (e) {}
-        },
-
-        connectReverb() {
-            if (!this.sessionToken) return;
-
-            this.loadPusher(() => {
-                if (typeof Pusher === 'undefined') return;
-
-                try {
-                    const reverbKey = 'cooca_reverb_key_2026' || 'cooca_reverb_key_2026';
-                    const reverbHost = '127.0.0.1' || window.location.hostname;
-                    const reverbPort = 8080;
-                    const reverbScheme = 'http';
-
-                    if (this.pusherInstance) {
-                        try { this.pusherInstance.disconnect(); } catch (_) {}
-                    }
-
-                    this.pusherInstance = new Pusher(reverbKey, {
-                        wsHost: reverbHost,
-                        wsPort: reverbPort,
-                        wssPort: reverbPort,
-                        forceTLS: reverbScheme === 'https',
-                        enabledTransports: ['ws', 'wss'],
-                        cluster: 'mt1',
-                    });
-
-                    this.pusherInstance.connection.bind('connected', () => {
-                        this.isReverbConnected = true;
-                        console.log('[LiveChat] Connected to Laravel Reverb WebSocket.');
-                    });
-
-                    this.pusherInstance.connection.bind('disconnected', () => {
-                        this.isReverbConnected = false;
-                    });
-
-                const channelName = 'livechat.' + this.sessionToken;
-                this.reverbChannel = this.pusherInstance.subscribe(channelName);
-
-                this.reverbChannel.bind('message.sent', (data) => {
-                    console.log('[LiveChat] New message broadcast received:', data);
-                    
-                    // Prevent duplicate if already in array
-                    if (!this.messages.some(m => m.id === data.id)) {
-                        this.messages.push({
-                            id: data.id,
-                            message: data.message,
-                            media_url: data.media_url,
-                            media_type: data.media_type,
-                            from_name: data.from_name,
-                            is_cooca: data.is_cooca,
-                            is_from_page: data.is_from_page,
-                            time: data.time,
-                            date: data.date,
-                            created_at: data.created_at || new Date().toISOString(),
-                        });
-
-                        this.isWaitingReply = false;
-                        if (this.typingTimer) clearTimeout(this.typingTimer);
-
-                        if (!this.isOpen && (data.is_cooca || data.is_from_page)) {
-                            this.unreadCount++;
-                            this.playChime();
-                        }
-
-                        this.checkInactivityTimeout();
-
-                        this.$nextTick(() => {
-                            this.scrollToBottom();
-                        });
-                    }
-                });
-
-                // Listen for live agent typing events
-                this.reverbChannel.bind('agent.typing', (data) => {
-                    this.isWaitingReply = true;
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    });
-                    if (this.typingTimer) clearTimeout(this.typingTimer);
-                    this.typingTimer = setTimeout(() => {
-                        this.isWaitingReply = false;
-                    }, 6000);
-                });
-            } catch (err) {
-                console.warn('[LiveChat] Reverb initialization warning:', err);
-            }
-            });
-        },
-
-        confirmResetSession() {
-            if (confirm('Apakah Anda ingin mengakhiri sesi chat ini dan memulai chat baru?')) {
-                this.startNewChatSession();
-                if (this.pusherInstance) {
-                    try { this.pusherInstance.disconnect(); } catch (_) {}
-                }
-            }
-        },
-
-        scrollToBottom() {
-            const el = document.getElementById('coocaLiveChatMessages');
-            if (el) {
-                el.scrollTop = el.scrollHeight;
-            }
-        },
-
-        playChime() {
-            try {
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-                osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + 0.35);
-            } catch (_) {}
-        },
-
-        formatMessage(text, isIncoming = true) {
-            if (!text) return '';
-
-            // 1. Sanitize raw HTML tags to prevent XSS injection
-            let safe = String(text)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-
-            // 2. Parse Markdown bold **bold text**
-            safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>');
-
-            // 3. Define action button badge styles
-            const btnClass = isIncoming
-                ? 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
-                : 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-white hover:bg-violet-50 text-violet-700 font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
-
-            const linkClass = isIncoming
-                ? 'text-violet-600 dark:text-violet-400 font-semibold underline hover:text-violet-700 break-all inline-flex items-center gap-1'
-                : 'text-white font-semibold underline hover:opacity-90 break-all inline-flex items-center gap-1';
-
-            const externalIcon = '<svg class="w-3.5 h-3.5 opacity-90 shrink-0 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
-
-            // 4. Parse Markdown links [Title](URL) into styled clickable action buttons
-            safe = safe.replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^\s\)]+)\)/g, (match, title, url) => {
-                return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="${btnClass}"><span>${title}</span> ${externalIcon}</a>`;
-            });
-
-            // 5. Parse any remaining bare URLs (https://... or http://...) that are not inside an <a> tag
-            const parts = safe.split(/(<a\b[^>]*>.*?<\/a>)/g);
-            for (let i = 0; i < parts.length; i++) {
-                if (!parts[i].startsWith('<a')) {
-                    parts[i] = parts[i].replace(/(https?:\/\/[^\s<]+)/g, `<a href="$1" target="_blank" rel="noopener noreferrer" class="${linkClass}"><span>$1</span> ${externalIcon}</a>`);
-                }
-            }
-            safe = parts.join('');
-
-            return safe;
-        }
-    }
-}
-</script>
-
     
     <!-- Unified Multi-Channel Tracking Engine (GA4 + Meta Pixel + TikTok Pixel) -->
 <script>
@@ -4942,20 +4969,21 @@ document.addEventListener('click', function(e) {
      x-data="{
         showBanner: false,
         init() {
-            var consent = localStorage.getItem('cooca_consent_status');
+            var consent = null;
+            try { consent = localStorage.getItem('cooca_consent_status'); } catch (e) {}
             if (!consent) {
                 setTimeout(() => { this.showBanner = true; }, 1500);
             }
         },
         acceptAll() {
-            localStorage.setItem('cooca_consent_status', 'accepted');
+            try { localStorage.setItem('cooca_consent_status', 'accepted'); } catch (e) {}
             this.showBanner = false;
             if (typeof window.initMarketingPixels === 'function') {
                 window.initMarketingPixels();
             }
         },
         rejectOptional() {
-            localStorage.setItem('cooca_consent_status', 'essential');
+            try { localStorage.setItem('cooca_consent_status', 'essential'); } catch (e) {}
             this.showBanner = false;
         }
      }"

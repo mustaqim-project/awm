@@ -204,6 +204,7 @@
         </div>
 
         {{-- Store Directory Grid --}}
+        <h2 class="sr-only">{{ __('public_marketplace.biz_title') }}</h2>
         @if ($stores->isNotEmpty())
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 @foreach ($stores as $store)
@@ -284,7 +285,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                         <i data-lucide="shield-check" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_1_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_1_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.biz_std_1_desc') }}</p>
                 </div>
 
@@ -292,7 +293,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="boxes" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_2_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_2_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.biz_std_2_desc') }}</p>
                 </div>
 
@@ -300,7 +301,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                         <i data-lucide="message-circle" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_3_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.biz_std_3_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.biz_std_3_desc') }}</p>
                 </div>
             </div>
@@ -316,9 +317,9 @@
                     <i data-lucide="store" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
                     <span>{{ __('public_marketplace.biz_cta_badge') }}</span>
                 </div>
-                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     {{ __('public_marketplace.biz_cta_title') }}
-                </h3>
+                </h2>
                 <p class="text-sm text-slate-300 leading-relaxed">
                     {{ __('public_marketplace.biz_cta_desc') }}
                 </p>

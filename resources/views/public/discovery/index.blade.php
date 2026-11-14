@@ -69,7 +69,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <!-- Breadcrumb Navigation -->
             <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6" aria-label="Breadcrumb">
                 <a href="{{ route('landing') }}" class="hover:text-white transition-colors">{{ __('public_discovery.disc_breadcrumb_home') }}</a>
-                <span aria-hidden="true" class="text-slate-600">/</span>
+                <span aria-hidden="true" class="text-slate-400">/</span>
                 <span class="text-[#0A84FF] font-semibold" aria-current="page">{{ __('public_discovery.disc_breadcrumb') }}</span>
             </nav>
 

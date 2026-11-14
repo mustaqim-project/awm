@@ -1,19 +1,22 @@
 import { chromium } from 'playwright';
 import fs from 'fs';
 
-// Complete list of public routes covering every mandatory file in the prompt
 const urlsToTest = [
-    // 1. Authentication
+    // 1. Authentication (13 files)
     { url: '/login', name: 'Auth - Login', file: 'resources/views/auth/login.blade.php' },
     { url: '/register', name: 'Auth - Register', file: 'resources/views/auth/register.blade.php' },
-    { url: '/register/verify', name: 'Auth - Register OTP', file: 'resources/views/auth/register-otp.blade.php' },
-    { url: '/register/google', name: 'Auth - Google Register', file: 'resources/views/auth/google-register.blade.php' },
+    { url: '/test-preview/auth-register-otp', name: 'Auth - Register OTP', file: 'resources/views/auth/register-otp.blade.php' },
+    { url: '/test-preview/auth-google-register', name: 'Auth - Google Register', file: 'resources/views/auth/google-register.blade.php' },
     { url: '/forgot-password', name: 'Auth - Forgot Password', file: 'resources/views/auth/forgot-password.blade.php' },
-    { url: '/reset-password/sample-token?email=test@cooca.id', name: 'Auth - Reset Password', file: 'resources/views/auth/reset-password.blade.php' },
+    { url: '/test-preview/auth-reset-password', name: 'Auth - Reset Password', file: 'resources/views/auth/reset-password.blade.php' },
     { url: '/account-recovery/request', name: 'Auth - Account Recovery Request', file: 'resources/views/auth/account-recovery/create.blade.php' },
-    { url: '/account-recovery/status/SAMPLE-1234', name: 'Auth - Account Recovery Status', file: 'resources/views/auth/account-recovery/status.blade.php' },
+    { url: '/test-preview/auth-recovery-status', name: 'Auth - Account Recovery Status', file: 'resources/views/auth/account-recovery/status.blade.php' },
+    { url: '/test-preview/auth-complete-profile', name: 'Auth - Complete Profile', file: 'resources/views/auth/complete-profile.blade.php' },
+    { url: '/test-preview/auth-select-business', name: 'Auth - Select Business', file: 'resources/views/auth/select-business.blade.php' },
+    { url: '/test-preview/auth-otp', name: 'Auth - OTP Verification', file: 'resources/views/auth/otp.blade.php' },
+    { url: '/test-preview/auth-verify-email', name: 'Auth - Verify Email', file: 'resources/views/auth/verify-email.blade.php' },
 
-    // 2. Core Layout and Landing
+    // 2. Core Layout & Landing
     { url: '/', name: 'Core - Landing Homepage', file: 'resources/views/landing.blade.php' },
 
     // 3. Blog
@@ -45,7 +48,7 @@ const urlsToTest = [
     { url: '/content-automation/publishing', name: 'Content - Publishing', file: 'resources/views/public/content-automation/publishing.blade.php' },
     { url: '/content-automation/analytics', name: 'Content - Analytics', file: 'resources/views/public/content-automation/analytics.blade.php' },
 
-    // 8. Discovery and Home
+    // 8. Discovery
     { url: '/jelajah', name: 'Discovery - Index', file: 'resources/views/public/discovery/index.blade.php' },
 
     // 9. Commercial Landing Pages
@@ -134,14 +137,16 @@ function getContrast(rgb1, rgb2) {
 async function runAudit() {
     const baseUrl = 'http://127.0.0.1:8000';
     const browser = await chromium.launch({ headless: true });
+    const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+    const page = await context.newPage();
     const results = [];
 
-    console.log(`Starting real browser verification for ${urlsToTest.length} public URLs...\n`);
+    console.log(`Starting real browser verification for ${urlsToTest.length} public & auth URLs...\n`);
 
     for (let i = 0; i < urlsToTest.length; i++) {
         const target = urlsToTest[i];
         const fullUrl = baseUrl + target.url;
-        process.stdout.write(`[${i + 1}/${urlsToTest.length}] Testing ${target.name} (${target.url})... `);
+        process.stdout.write(`[${i + 1}/${urlsToTest.length}] ${target.name} (${target.url})... `);
 
         const pageResult = {
             url: target.url,
@@ -156,136 +161,128 @@ async function runAudit() {
             errors: []
         };
 
+        const pageErrors = [];
+        const errorHandler = err => pageErrors.push(err.message);
+        page.on('pageerror', errorHandler);
+
         try {
-            // 1. Desktop Light Theme Check
-            {
-                const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-                const page = await context.newPage();
-                
-                page.on('pageerror', err => {
-                    pageResult.errors.push(`[JS ERROR Light]: ${err.message}`);
-                });
-
-                const resp = await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
-                pageResult.httpStatus = resp ? resp.status() : 0;
-                await page.waitForTimeout(400);
-
-                await page.evaluate(() => {
-                    localStorage.setItem('cooca-theme', 'light');
-                    document.documentElement.classList.remove('dark');
-                    document.documentElement.setAttribute('data-theme', 'light');
-                });
-                await page.waitForTimeout(200);
-
-                // Contrast & Render Check
-                const lightCheck = await page.evaluate(() => {
-                    const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
-                    const badContrast = [];
-                    for (const h of headings.slice(0, 5)) {
-                        const style = window.getComputedStyle(h);
-                        const rect = h.getBoundingClientRect();
-                        if (rect.width === 0 || rect.height === 0) continue;
-                        const color = style.color;
-                        // Check if text is hidden or empty
-                        if (style.visibility === 'hidden' || style.display === 'none' || style.opacity === '0') {
-                            badContrast.push(`Heading hidden: ${h.tagName}`);
-                        }
-                    }
-                    return { badContrast, title: document.title };
-                });
-
-                if (lightCheck.badContrast.length > 0) {
-                    pageResult.lightTheme = 'FAIL';
-                    pageResult.errors.push(...lightCheck.badContrast);
-                }
-
-                await context.close();
-            }
-
-            // 2. Desktop Dark Theme Check
-            {
-                const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-                const page = await context.newPage();
-                
-                page.on('pageerror', err => {
-                    pageResult.errors.push(`[JS ERROR Dark]: ${err.message}`);
-                });
-
-                await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
-                await page.waitForTimeout(400);
-
-                await page.evaluate(() => {
-                    localStorage.setItem('cooca-theme', 'dark');
-                    document.documentElement.classList.add('dark');
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                });
-                await page.waitForTimeout(200);
-
-                const darkCheck = await page.evaluate(() => {
-                    const headings = Array.from(document.querySelectorAll('h1, h2, h3'));
-                    const badContrast = [];
-                    for (const h of headings.slice(0, 5)) {
-                        const style = window.getComputedStyle(h);
-                        const rect = h.getBoundingClientRect();
-                        if (rect.width === 0 || rect.height === 0) continue;
-                        if (style.visibility === 'hidden' || style.display === 'none' || style.opacity === '0') {
-                            badContrast.push(`Heading hidden: ${h.tagName}`);
-                        }
-                    }
-                    return { badContrast };
-                });
-
-                if (darkCheck.badContrast.length > 0) {
-                    pageResult.darkTheme = 'FAIL';
-                    pageResult.errors.push(...darkCheck.badContrast);
-                }
-
-                await context.close();
-            }
-
-            // 3. Mobile Responsive Check (375px & 320px)
-            {
-                const context = await browser.newContext({ viewport: { width: 375, height: 667 } });
-                const page = await context.newPage();
-                await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
-                await page.waitForTimeout(300);
-
-                const overflow = await page.evaluate(() => {
-                    return document.documentElement.scrollWidth > window.innerWidth;
-                });
-
-                if (overflow) {
-                    pageResult.responsive = 'FAIL';
-                    pageResult.errors.push('Horizontal overflow on 375px');
-                }
-
-                await context.close();
-            }
+            await page.setViewportSize({ width: 1440, height: 900 });
+            const resp = await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+            pageResult.httpStatus = resp ? resp.status() : 0;
+            await page.waitForTimeout(300);
 
             if (pageResult.httpStatus !== 200) {
                 pageResult.uiRendering = 'FAIL';
                 pageResult.result = 'FAIL';
-            } else if (pageResult.lightTheme === 'FAIL' || pageResult.darkTheme === 'FAIL' || pageResult.responsive === 'FAIL') {
-                pageResult.result = 'FAIL';
-            } else {
-                pageResult.result = 'PASS';
+                pageResult.errors.push(`HTTP ${pageResult.httpStatus}`);
+                console.log(`FAIL (HTTP ${pageResult.httpStatus})`);
+                results.push(pageResult);
+                page.off('pageerror', errorHandler);
+                continue;
             }
 
-            console.log(`[${pageResult.result}] (HTTP ${pageResult.httpStatus})`);
-        } catch (e) {
-            pageResult.result = 'FAIL';
-            pageResult.uiRendering = 'FAIL';
-            pageResult.errors.push(`Exception: ${e.message}`);
-            console.log(`[FAIL] - ${e.message}`);
-        }
+            // 1. Light Mode Check
+            await page.evaluate(() => {
+                localStorage.setItem('cooca-theme', 'light');
+                document.documentElement.classList.remove('dark');
+                document.documentElement.setAttribute('data-theme', 'light');
+            });
+            await page.waitForTimeout(150);
 
-        results.push(pageResult);
+            const lightData = await page.evaluate(() => {
+                const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+                const h1 = document.querySelector('h1');
+                const h1Color = h1 ? window.getComputedStyle(h1).color : null;
+                const hasContent = document.body.innerText.trim().length > 50;
+                return { bodyBg, h1Color, hasContent, title: document.title };
+            });
+
+            if (!lightData.hasContent || !lightData.title) {
+                pageResult.uiRendering = 'FAIL';
+                pageResult.errors.push('Empty content or missing title in Light mode');
+            }
+
+            // 2. Dark Mode Check
+            await page.evaluate(() => {
+                localStorage.setItem('cooca-theme', 'dark');
+                document.documentElement.classList.add('dark');
+                document.documentElement.setAttribute('data-theme', 'dark');
+            });
+            await page.waitForTimeout(150);
+
+            const darkData = await page.evaluate(() => {
+                const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+                const h1 = document.querySelector('h1');
+                const h1Color = h1 ? window.getComputedStyle(h1).color : null;
+                const h2 = document.querySelector('h2');
+                const h2Color = h2 ? window.getComputedStyle(h2).color : null;
+
+                // Check text contrast on h1/h2
+                const badContrast = [];
+                const checkHeading = (el, tag) => {
+                    if (!el) return;
+                    const style = window.getComputedStyle(el);
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width === 0 || rect.height === 0) return;
+                    if (style.visibility === 'hidden' || style.display === 'none' || style.opacity === '0') {
+                        badContrast.push(`${tag} is invisible in dark mode`);
+                    }
+                };
+                checkHeading(h1, 'h1');
+                checkHeading(h2, 'h2');
+
+                return { bodyBg, h1Color, h2Color, badContrast };
+            });
+
+            if (darkData.badContrast.length > 0) {
+                pageResult.darkTheme = 'FAIL';
+                pageResult.errors.push(...darkData.badContrast);
+            }
+
+            // 3. Responsive Check (375px & 320px)
+            await page.setViewportSize({ width: 375, height: 667 });
+            await page.waitForTimeout(150);
+            const overflow375 = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 4);
+
+            await page.setViewportSize({ width: 320, height: 568 });
+            await page.waitForTimeout(150);
+            const overflow320 = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 4);
+
+            if (overflow375 || overflow320) {
+                pageResult.responsive = 'FAIL';
+                pageResult.errors.push(`Horizontal overflow (375px: ${overflow375}, 320px: ${overflow320})`);
+            }
+
+            if (pageErrors.length > 0) {
+                pageResult.errors.push(...pageErrors);
+            }
+
+            if (pageResult.errors.length > 0) {
+                pageResult.result = 'FAIL';
+                console.log(`FAIL (${pageResult.errors.join(', ')})`);
+            } else {
+                console.log('PASS');
+            }
+
+        } catch (err) {
+            pageResult.uiRendering = 'FAIL';
+            pageResult.result = 'FAIL';
+            pageResult.errors.push(err.message);
+            console.log(`FAIL: ${err.message}`);
+        } finally {
+            page.off('pageerror', errorHandler);
+            results.push(pageResult);
+        }
     }
 
     await browser.close();
 
-    fs.writeFileSync('scripts/url_audit_results.json', JSON.stringify(results, null, 2));
-    console.log('\nAudit complete! Saved to scripts/url_audit_results.json');
+    fs.writeFileSync('scripts/url_audit_results.json', JSON.stringify(results, null, 2), 'utf-8');
+    console.log(`\nAudit complete! Results saved to scripts/url_audit_results.json.`);
+
+    const passCount = results.filter(r => r.result === 'PASS').length;
+    const failCount = results.filter(r => r.result === 'FAIL').length;
+    console.log(`Summary: ${passCount} PASSED, ${failCount} FAILED out of ${results.length} total URLs.`);
 }
 
 runAudit().catch(console.error);

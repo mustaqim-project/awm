@@ -231,6 +231,7 @@
     <div class="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-12 sm:space-y-16">
 
         {{-- Region Grid --}}
+        <h2 class="sr-only">{{ __('public_marketplace.loc_title') }}</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach ($regions as $r)
                 <div class="p-7 rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#007AFF]/40 hover:shadow-xl transition-all duration-200 shadow-sm space-y-4">
@@ -273,7 +274,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                         <i data-lucide="zap" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_1_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_1_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_1_desc') }}</p>
                 </div>
 
@@ -281,7 +282,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-blue-500/10 text-[#007AFF] flex items-center justify-center">
                         <i data-lucide="store" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_2_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_2_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_2_desc') }}</p>
                 </div>
 
@@ -289,7 +290,7 @@
                     <div class="w-9 h-9 rounded-[10px] bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
                         <i data-lucide="coins" class="w-5 h-5" aria-hidden="true"></i>
                     </div>
-                    <h4 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_3_title') }}</h4>
+                    <h3 class="text-sm font-bold text-[#1D1D1F] dark:text-[#F5F5F7]">{{ __('public_marketplace.loc_bento_3_title') }}</h3>
                     <p class="text-xs text-[#86868B] leading-relaxed">{{ __('public_marketplace.loc_bento_3_desc') }}</p>
                 </div>
             </div>
@@ -305,9 +306,9 @@
                     <i data-lucide="map-pin" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
                     <span>{{ __('public_marketplace.loc_cta_badge') }}</span>
                 </div>
-                <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                     {{ __('public_marketplace.loc_cta_title') }}
-                </h3>
+                </h2>
                 <p class="text-sm text-slate-300 leading-relaxed">
                     {{ __('public_marketplace.loc_cta_desc') }}
                 </p>

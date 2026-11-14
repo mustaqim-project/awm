@@ -2088,7 +2088,21 @@
                 groupOrder: {
                     active: {{ !empty($activeGroupOrder) ? 'true' : 'false' }},
                     token: {!! json_encode($initialGroupOrderToken) !!},
-                    data: {!! json_encode($initialGroupOrderData) !!},
+                    data: {!! json_encode($initialGroupOrderData ?? [
+                        'id' => null,
+                        'title' => '',
+                        'share_token' => '',
+                        'status' => 'closed',
+                        'is_open' => false,
+                        'is_locked' => false,
+                        'is_checked_out' => false,
+                        'is_host' => false,
+                        'host_name' => '',
+                        'scheduled_date' => null,
+                        'subtotal' => 0,
+                        'total_quantity' => 0,
+                        'members_count' => 0,
+                    ]) !!},
                     splitBill: {!! json_encode($initialGroupOrderSplitBill) !!},
                     isDrawerOpen: false,
                     isCreateModalOpen: false,
@@ -3356,14 +3370,14 @@
                         class="inline-flex items-center gap-1 text-[11.5px] text-black/60 dark:text-white/60 bg-black/5 dark:bg-white/5 px-2 py-0.5 rounded-md tabular-nums">
                         <i data-lucide="shopping-bag" class="w-3 h-3 text-brand-primary"></i>
                         <strong class="text-black dark:text-white"
-                            x-text="groupOrder.data.total_quantity || 0"></strong> item (<span
-                            x-text="formatPrice(groupOrder.data.subtotal || 0)"></span>)
+                            x-text="groupOrder.data?.total_quantity || 0"></strong> item (<span
+                            x-text="formatPrice(groupOrder.data?.subtotal || 0)"></span>)
                     </span>
                     <span
                         class="inline-flex items-center gap-1 text-[11.5px] text-black/60 dark:text-white/60 bg-black/5 dark:bg-white/5 px-2 py-0.5 rounded-md tabular-nums">
                         <i data-lucide="user-check" class="w-3 h-3 text-[#34C759]"></i>
                         <strong class="text-black dark:text-white"
-                            x-text="groupOrder.data.members_count || 1"></strong> orang
+                            x-text="groupOrder.data?.members_count || 1"></strong> orang
                     </span>
                 </div>
                 <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
@@ -3959,6 +3973,7 @@
     @if ($sectionVisibility['about'] && !empty($landingPage->values))
         <section class="py-4 sm:py-6">
             <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <h2 class="sr-only">Keunggulan & Nilai Layanan</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                     @foreach ($landingPage->values as $val)
                         <div class="bento-card bento-card-interactive p-6 flex flex-col justify-between space-y-4">
@@ -6341,7 +6356,7 @@
                 <i data-lucide="users" class="w-5 h-5"></i>
                 <span
                     class="absolute -top-2 -right-2.5 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-white text-[#5856D6] tabular-nums shadow-xs leading-none"
-                    x-text="groupOrder.data.total_quantity || 0"></span>
+                    x-text="groupOrder.data?.total_quantity || 0"></span>
             </div>
             <div class="h-4 w-px bg-white/25"></div>
             <div class="text-left leading-tight">
@@ -6350,7 +6365,7 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse"></span>
                 </div>
                 <span class="text-[13px] font-extrabold tabular-nums"
-                    x-text="formatPrice(groupOrder.data.subtotal || 0)"></span>
+                    x-text="formatPrice(groupOrder.data?.subtotal || 0)"></span>
             </div>
             <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center ml-0.5">
                 <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -8566,7 +8581,7 @@
                                             x-text="groupOrder.data.is_locked ? 'Buka Kunci' : 'Kunci Pesanan'"></span>
                                     </button>
                                     <button type="button" @click="openGroupOrderCheckout()"
-                                        :disabled="(groupOrder.data.total_quantity || 0) <= 0 || groupOrder.actionLoading"
+                                        :disabled="(groupOrder.data?.total_quantity || 0) <= 0 || groupOrder.actionLoading"
                                         class="h-11 rounded-[14px] bg-brand-primary hover:opacity-90 disabled:opacity-50 text-white font-bold text-[12.5px] transition flex items-center justify-center gap-1.5 shadow-sm cursor-pointer disabled:cursor-not-allowed">
                                         <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                                         <span>Checkout Bersama</span>

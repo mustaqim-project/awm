@@ -302,7 +302,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     placeholder="{{ __('public_resources.faq_search_input_ph') }}" 
                     class="w-full pl-11 pr-10 py-3.5 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#007AFF] focus:border-transparent text-[16px] sm:text-[14px] transition-all shadow-sm"
                 />
-                <button x-show="searchQuery.trim().length > 0" @click="searchQuery = ''; refreshIcons()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
+                <button x-show="searchQuery.trim().length > 0" @click="searchQuery = ''; refreshIcons()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                     <i data-lucide="x-circle" class="w-4 h-4"></i>
                 </button>
             </div>

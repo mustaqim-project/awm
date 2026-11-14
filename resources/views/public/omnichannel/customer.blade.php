@@ -212,7 +212,7 @@
                                     </div>
                                     <div class="min-w-0 flex-1">
                                         <div class="flex items-center gap-2 flex-wrap">
-                                            <h3 class="font-bold text-white text-xs sm:text-sm truncate">Rian Pratama</h3>
+                                            <p class="font-bold text-white text-xs sm:text-sm truncate">Rian Pratama</p>
                                             <span
                                                 class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#007AFF]/20 text-[#00C4D8] border border-[#00C4D8]/30 shrink-0">VIP Omnichannel</span>
                                         </div>
