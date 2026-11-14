@@ -9,14 +9,22 @@
     {{-- Secondary Sidebar (Desktop Dual Sidebar Layout - macOS Sonoma Column List) --}}
     <aside id="secondary-sidebar"
         data-secondary-sidebar="{{ $activeModuleKey }}"
+        data-html2canvas-ignore="true"
         aria-label="{{ __('common.sub_navigation') }}"
+        x-cloak
+        x-show="!secondarySidebarCollapsed"
+        x-transition:enter="transition-all duration-250 ease-out"
+        x-transition:enter-start="-translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100"
+        x-transition:leave="transition-all duration-200 ease-in"
+        x-transition:leave-start="translate-x-0 opacity-100"
+        x-transition:leave-end="-translate-x-full opacity-0"
         :class="{
             'lg:left-[76px]': sidebarCollapsed,
-            'lg:left-[272px]': !sidebarCollapsed,
-            'lg:-translate-x-[270px] lg:opacity-0 lg:pointer-events-none': secondarySidebarCollapsed,
-            'lg:translate-x-0 lg:opacity-100': !secondarySidebarCollapsed
+            'lg:left-[272px]': !sidebarCollapsed
         }"
-        class="hidden lg:flex fixed inset-y-0 z-30 w-[260px] flex-col justify-between bg-white dark:bg-[#1C1C1E] border-r border-black/5 dark:border-white/10 transition-all duration-250 ease-out select-none shadow-[2px_0_12px_rgba(0,0,0,0.02)]">
+        class="hidden lg:flex fixed inset-y-0 z-30 w-[260px] flex-col justify-between bg-white dark:bg-[#1C1C1E] border-r border-black/5 dark:border-white/10 select-none shadow-[2px_0_12px_rgba(0,0,0,0.02)] print:hidden"
+        style="display: none;">
 
         {{-- Top Header: Module Label, Item Count & Collapse Button --}}
         <div class="h-14 flex items-center justify-between px-3.5 border-b border-black/5 dark:border-white/10 shrink-0">
@@ -84,11 +92,13 @@
 
     {{-- Floating Un-collapse Pill Button when Secondary Sidebar is Hidden on Desktop --}}
     <div x-show="secondarySidebarCollapsed"
+        x-cloak
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0 -translate-x-2"
         x-transition:enter-end="opacity-100 translate-x-0"
         :class="sidebarCollapsed ? 'lg:left-[76px]' : 'lg:left-[272px]'"
-        class="hidden lg:flex fixed top-16 z-30 transition-[left] duration-250 ease-out"
+        class="hidden lg:flex fixed top-16 z-30 transition-[left] duration-250 ease-out print:hidden"
+        data-html2canvas-ignore="true"
         style="display: none;">
         <button @click="toggleSecondarySidebarCollapse()" type="button"
             class="h-8 pl-2.5 pr-3 rounded-r-[10px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-md border border-l-0 border-black/10 dark:border-white/15 shadow-[2px_2px_8px_rgba(0,0,0,0.06)] text-[11.5px] font-semibold text-[#007AFF] hover:bg-[#007AFF]/5 flex items-center gap-1.5 transition-all cursor-pointer"

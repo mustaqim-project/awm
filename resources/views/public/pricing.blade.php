@@ -399,7 +399,7 @@
 
                     <!-- 2. STANDARD PLAN CARD (HIGHLIGHTED / POPULER) -->
                     <div
-                        class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border-2 border-[#007AFF] dark:border-[#0A84FF] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-md relative hover:shadow-xl transition-all">
+                        class="w-[84vw] min-w-[280px] max-w-[340px] shrink-0 snap-center md:w-auto md:shrink md:snap-align-none bg-white dark:bg-[#1C1C1E] rounded-[24px] border-2 border-[#007AFF] dark:border-[#0A84FF] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-md relative hover:shadow-xl transition-all">
 
                         <div class="space-y-4">
                             <div class="flex items-center justify-between gap-2">
@@ -483,7 +483,7 @@
 
                     <!-- 3. PREMIUM PLAN CARD -->
                     <div
-                        class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
+                        class="w-[84vw] min-w-[280px] max-w-[340px] shrink-0 snap-center md:w-auto md:shrink md:snap-align-none bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
                         <div class="space-y-4">
                             <div>
                                 <div
@@ -560,7 +560,7 @@
 
                     <!-- 4. PRESTIGE PLAN CARD -->
                     <div
-                        class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
+                        class="w-[84vw] min-w-[280px] max-w-[340px] shrink-0 snap-center md:w-auto md:shrink md:snap-align-none bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
                         <div class="space-y-4">
                             <div>
                                 <div
@@ -638,6 +638,12 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Mobile Swipe Guide (< md) -->
+                <div class="flex md:hidden items-center justify-center gap-1.5 pt-3 text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                    <i data-lucide="chevrons-right" class="w-3.5 h-3.5 text-[#007AFF] animate-pulse"></i>
+                    <span>Geser untuk membandingkan 4 paket langganan</span>
                 </div>
 
             </div>

@@ -1283,9 +1283,22 @@
         sidebarCollapsed: (localStorage.getItem('cooca-sidebar-collapsed') !== null)
             ? (localStorage.getItem('cooca-sidebar-collapsed') === 'true')
             : (typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1440),
-        secondarySidebarCollapsed: (localStorage.getItem('cooca-secondary-sidebar-collapsed') !== null)
-            ? (localStorage.getItem('cooca-secondary-sidebar-collapsed') === 'true')
-            : false,
+        secondarySidebarCollapsed: (() => {
+            try {
+                if (typeof window !== 'undefined') {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('capture') || urlParams.has('asset') || urlParams.has('screenshot') || urlParams.has('render') || urlParams.has('preview')) {
+                        return true;
+                    }
+                }
+                const saved = localStorage.getItem('cooca-secondary-sidebar-collapsed');
+                if (saved !== null) {
+                    return saved === 'true';
+                }
+            } catch (e) {}
+            // Khusus desktop: jangan otomatis tampil saat render JS / fresh session (default collapsed)
+            return true;
+        })(),
         toggleSidebarCollapse() {
             this.sidebarCollapsed = !this.sidebarCollapsed;
             localStorage.setItem('cooca-sidebar-collapsed', this.sidebarCollapsed);
@@ -1296,7 +1309,9 @@
         },
         toggleSecondarySidebarCollapse() {
             this.secondarySidebarCollapsed = !this.secondarySidebarCollapsed;
-            localStorage.setItem('cooca-secondary-sidebar-collapsed', this.secondarySidebarCollapsed);
+            try {
+                localStorage.setItem('cooca-secondary-sidebar-collapsed', this.secondarySidebarCollapsed);
+            } catch (e) {}
             window.dispatchEvent(new CustomEvent('secondary-sidebar-collapsed-changed', { detail: { collapsed: this.secondarySidebarCollapsed } }));
             this.$nextTick(() => {
                 if (typeof lucide !== 'undefined') lucide.createIcons();
