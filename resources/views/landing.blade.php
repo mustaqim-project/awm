@@ -321,143 +321,281 @@
 
                     </div>
 
-                    <!-- KANAN: Live Interactive POS & Realtime Operations Cockpit (High Conversion Proof) -->
+                    <!-- KANAN: Live Interactive Omnichannel & Realtime Operations Cockpit (High Performance & Zero CLS) -->
                     <div class="lg:col-span-6 relative flex items-center justify-center w-full" x-data="{
-                        simTab: 'pos'
+                        omniTab: 'orders'
                     }">
-                        {{-- Ambient backdrop glow (ringan tanpa filter gaussian blur SVG) --}}
-                        <div class="absolute -inset-4 bg-gradient-to-tr from-[#007AFF]/25 via-[#00C2FF]/15 to-transparent rounded-[32px] blur-2xl pointer-events-none -z-0"></div>
+                        {{-- Ambient backdrop glow (GPU-accelerated, zero layout shift) --}}
+                        <div class="absolute -inset-4 bg-gradient-to-tr from-[#007AFF]/20 via-[#00C2FF]/10 to-transparent rounded-[32px] blur-xl pointer-events-none -z-0 transform-gpu will-change-transform"></div>
 
-                        <div class="relative w-full max-w-[560px] bg-[#0A122C]/95 border border-white/15 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl text-white space-y-4">
+                        <div class="relative w-full max-w-[580px] bg-[#0A122C]/95 border border-white/15 rounded-[24px] sm:rounded-[28px] p-4 sm:p-5 lg:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-md text-white space-y-4 transform-gpu">
                             
                             {{-- Specular Top Highlight Line --}}
                             <div class="absolute top-0 inset-x-8 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none"></div>
 
                             {{-- Cockpit Header Bar with Live Status & Switcher Tabs --}}
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 min-w-0">
                                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-                                    <span class="text-xs font-mono font-bold text-white tracking-wide truncate">Simulasi Kasir &amp; Stok Terhubung</span>
+                                    <div class="min-w-0">
+                                        <span class="text-xs font-mono font-bold text-white tracking-wide truncate block">
+                                            {{ __('public_home.omni_cockpit_title') }}
+                                        </span>
+                                        <span class="text-[10px] text-cyan-400 font-mono flex items-center gap-1">
+                                            <i data-lucide="refresh-cw" class="w-2.5 h-2.5 animate-spin motion-reduce:animate-none"></i>
+                                            {{ __('public_home.omni_cockpit_status') }}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="inline-flex items-center p-1 rounded-xl bg-white/[0.06] border border-white/10 text-xs font-semibold">
-                                    <button type="button" @click="simTab = 'pos'"
+                                <div class="inline-flex items-center p-1 rounded-xl bg-white/[0.06] border border-white/10 text-xs font-semibold shrink-0">
+                                    <button type="button" @click="omniTab = 'orders'"
                                         class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'pos' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Kasir POS
+                                        :class="omniTab === 'orders' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        {{ __('public_home.omni_tab_orders') }}
                                     </button>
-                                    <button type="button" @click="simTab = 'stok'"
+                                    <button type="button" @click="omniTab = 'stock'"
                                         class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'stok' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Potong Resep
+                                        :class="omniTab === 'stock' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        {{ __('public_home.omni_tab_stock') }}
                                     </button>
-                                    <button type="button" @click="simTab = 'laba'"
+                                    <button type="button" @click="omniTab = 'finance'"
                                         class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'laba' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Laba Bersih
+                                        :class="omniTab === 'finance' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        {{ __('public_home.omni_tab_finance') }}
                                     </button>
                                 </div>
                             </div>
 
-                            {{-- Tab 1: Kasir POS Transaksi --}}
-                            <div x-show="simTab === 'pos'" class="space-y-3">
-                                <div class="space-y-2">
-                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
-                                        <div class="space-y-0.5 min-w-0 pr-2">
+                            {{-- Active Omnichannel Channels Bar (Instant Visual Connectivity Proof) --}}
+                            <div class="grid grid-cols-4 gap-1.5 sm:gap-2 p-1.5 rounded-2xl bg-white/[0.03] border border-white/5 text-center text-[10px] sm:text-[11px]">
+                                <div class="flex items-center justify-center gap-1.5 py-1.5 px-1 rounded-xl bg-white/[0.03] border border-white/5">
+                                    <i data-lucide="store" class="w-3.5 h-3.5 text-sky-400 shrink-0"></i>
+                                    <span class="font-bold text-slate-200 truncate">{{ __('public_home.omni_channel_pos') }}</span>
+                                </div>
+                                <div class="flex items-center justify-center gap-1.5 py-1.5 px-1 rounded-xl bg-white/[0.03] border border-white/5">
+                                    <i data-lucide="shopping-bag" class="w-3.5 h-3.5 text-orange-400 shrink-0"></i>
+                                    <span class="font-bold text-slate-200 truncate">{{ __('public_home.omni_channel_marketplace') }}</span>
+                                </div>
+                                <div class="flex items-center justify-center gap-1.5 py-1.5 px-1 rounded-xl bg-white/[0.03] border border-white/5">
+                                    <i data-lucide="globe" class="w-3.5 h-3.5 text-cyan-400 shrink-0"></i>
+                                    <span class="font-bold text-slate-200 truncate">{{ __('public_home.omni_channel_web') }}</span>
+                                </div>
+                                <div class="flex items-center justify-center gap-1.5 py-1.5 px-1 rounded-xl bg-white/[0.03] border border-white/5">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5 text-emerald-400 shrink-0"></i>
+                                    <span class="font-bold text-slate-200 truncate">{{ __('public_home.omni_channel_wa') }}</span>
+                                </div>
+                            </div>
+
+                            {{-- Interactive Content Container with Fixed Minimum Height (Zero CLS on Tab Switch) --}}
+                            <div class="min-h-[295px] sm:min-h-[305px] flex flex-col justify-between">
+
+                                {{-- Tab 1: Alur Pesanan Terpadu (Unified Orders Pipeline) --}}
+                                <div x-show="omniTab === 'orders'" class="space-y-2.5">
+                                    {{-- Card 1: Shopee Marketplace Order --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-orange-500/30 transition-colors space-y-1.5">
+                                        <div class="flex items-center justify-between text-[10px]">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Kopi Susu Gula Aren (16oz)</p>
+                                                <span class="px-1.5 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono font-bold">{{ __('public_home.omni_order_shopee_tag') }}</span>
+                                                <span class="font-mono text-slate-300">#SHP-9821</span>
                                             </div>
-                                            <p class="text-[11px] text-slate-400">Resep: Espresso 18g • Susu 120ml • Aren 25ml</p>
+                                            <span class="text-slate-400">{{ __('public_home.omni_order_shopee_time') }}</span>
                                         </div>
-                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 18.000</span>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="min-w-0">
+                                                <p class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_home.omni_order_shopee_item') }}</p>
+                                                <p class="text-[11px] text-slate-400 truncate">{{ __('public_home.omni_order_shopee_route') }}</p>
+                                            </div>
+                                            <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">{{ __('public_home.omni_order_shopee_price') }}</span>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
-                                        <div class="space-y-0.5 min-w-0 pr-2">
+
+                                    {{-- Card 2: Kasir POS Toko Order --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-sky-500/30 transition-colors space-y-1.5">
+                                        <div class="flex items-center justify-between text-[10px]">
                                             <div class="flex items-center gap-1.5">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Croissant Cokelat Keju</p>
+                                                <span class="px-1.5 py-0.5 rounded-md bg-[#007AFF]/25 text-cyan-300 font-mono font-bold">{{ __('public_home.omni_order_pos_tag') }}</span>
+                                                <span class="font-mono text-slate-300">#POS-1049</span>
                                             </div>
-                                            <p class="text-[11px] text-slate-400">Resep: Pastry 1 pcs • Cokelat 15g • Keju 20g</p>
+                                            <span class="text-slate-400">{{ __('public_home.omni_order_pos_time') }}</span>
                                         </div>
-                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 15.000</span>
-                                    </div>
-                                </div>
-
-                                {{-- Payment Bar & Realtime WhatsApp Notification --}}
-                                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-[#060B1E] to-[#007AFF]/15 border border-emerald-500/30 space-y-2">
-                                    <div class="flex items-center justify-between text-xs">
-                                        <span class="text-slate-300">Total Pembayaran (QRIS Dinamis)</span>
-                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 33.000</span>
-                                    </div>
-                                    <div class="flex items-center justify-between pt-1 border-t border-white/10 text-[11px]">
-                                        <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                                            <i data-lucide="message-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                                            <span>Nota Terkirim Otomatis ke WhatsApp Tamu</span>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="min-w-0">
+                                                <p class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_home.omni_order_pos_item') }}</p>
+                                                <div class="flex items-center gap-1 text-[11px] text-emerald-400 font-medium">
+                                                    <i data-lucide="message-circle" class="w-3 h-3 shrink-0"></i>
+                                                    <span class="truncate">{{ __('public_home.omni_order_pos_wa') }}</span>
+                                                </div>
+                                            </div>
+                                            <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">{{ __('public_home.omni_order_pos_price') }}</span>
                                         </div>
-                                        <span class="text-slate-400 font-mono">0812-****-8891</span>
+                                    </div>
+
+                                    {{-- Card 3: Toko Online Web Order --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-500/30 transition-colors space-y-1.5">
+                                        <div class="flex items-center justify-between text-[10px]">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="px-1.5 py-0.5 rounded-md bg-cyan-500/20 text-cyan-300 font-mono font-bold">{{ __('public_home.omni_order_web_tag') }}</span>
+                                                <span class="font-mono text-slate-300">#WEB-2204</span>
+                                            </div>
+                                            <span class="text-slate-400">{{ __('public_home.omni_order_web_time') }}</span>
+                                        </div>
+                                        <div class="flex items-center justify-between gap-2">
+                                            <div class="min-w-0">
+                                                <p class="text-xs sm:text-sm font-bold text-white truncate">{{ __('public_home.omni_order_web_item') }}</p>
+                                                <p class="text-[11px] text-slate-400 truncate">{{ __('public_home.omni_order_web_route') }}</p>
+                                            </div>
+                                            <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">{{ __('public_home.omni_order_web_price') }}</span>
+                                        </div>
+                                    </div>
+
+                                    {{-- Bottom Orders Reassurance Banner --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-gradient-to-r from-[#007AFF]/15 via-white/[0.04] to-[#00C2FF]/15 border border-[#007AFF]/30 flex items-center justify-between gap-2 text-xs">
+                                        <div class="flex items-center gap-2 min-w-0">
+                                            <i data-lucide="layers" class="w-4 h-4 text-cyan-400 shrink-0"></i>
+                                            <span class="text-slate-200 text-[11px] sm:text-xs leading-snug">{{ __('public_home.omni_orders_banner_text') }}</span>
+                                        </div>
+                                        <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold shrink-0">SLA 99.2%</span>
                                     </div>
                                 </div>
+
+                                {{-- Tab 2: 1 Stok Terpusat (Central Inventory & Anti-Overselling) --}}
+                                <div x-show="omniTab === 'stock'" x-cloak style="display: none;" class="space-y-3">
+                                    {{-- SKU Central Stock Demonstration Box --}}
+                                    <div class="p-3 sm:p-3.5 rounded-xl bg-white/[0.04] border border-white/5 space-y-2.5">
+                                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-white/10">
+                                            <div>
+                                                <p class="text-xs sm:text-sm font-bold text-white">{{ __('public_home.omni_stock_product_title') }}</p>
+                                                <span class="text-[10px] font-mono text-slate-400">{{ __('public_home.omni_stock_sku') }}</span>
+                                            </div>
+                                            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-mono font-bold shrink-0 self-start sm:self-auto">
+                                                {{ __('public_home.omni_stock_central_pool') }}
+                                            </span>
+                                        </div>
+
+                                        {{-- 4 Channels Simultaneous Live Deduction --}}
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                                            <div class="p-2 rounded-lg bg-[#060B1E]/80 border border-white/10 flex items-center justify-between">
+                                                <span class="text-slate-300 flex items-center gap-1.5">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                                                    {{ __('public_home.omni_stock_pos_deduct') }}
+                                                </span>
+                                                <span class="font-mono font-bold text-white">46 pcs</span>
+                                            </div>
+                                            <div class="p-2 rounded-lg bg-[#060B1E]/80 border border-white/10 flex items-center justify-between">
+                                                <span class="text-slate-300 flex items-center gap-1.5">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                                                    {{ __('public_home.omni_stock_channel_shopee') }}
+                                                </span>
+                                                <span class="font-mono font-bold text-emerald-400">46 pcs</span>
+                                            </div>
+                                            <div class="p-2 rounded-lg bg-[#060B1E]/80 border border-white/10 flex items-center justify-between">
+                                                <span class="text-slate-300 flex items-center gap-1.5">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                                    {{ __('public_home.omni_stock_channel_tokped') }}
+                                                </span>
+                                                <span class="font-mono font-bold text-emerald-400">46 pcs</span>
+                                            </div>
+                                            <div class="p-2 rounded-lg bg-[#060B1E]/80 border border-white/10 flex items-center justify-between">
+                                                <span class="text-slate-300 flex items-center gap-1.5">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                                    {{ __('public_home.omni_stock_channel_web') }}
+                                                </span>
+                                                <span class="font-mono font-bold text-emerald-400">46 pcs</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- BOM Recipe / Raw Ingredients Auto Deduct --}}
+                                    <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-1">
+                                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                                            {{ __('public_home.omni_stock_recipe_title') }}
+                                        </span>
+                                        <p class="text-[11px] font-mono text-slate-300">
+                                            {{ __('public_home.omni_stock_recipe_detail') }}
+                                        </p>
+                                    </div>
+
+                                    {{-- Bottom Stock Reassurance Banner --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-gradient-to-r from-emerald-500/15 via-white/[0.04] to-cyan-500/15 border border-emerald-500/30 flex items-center gap-2 text-xs text-emerald-300">
+                                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                                        <span class="text-[11px] sm:text-xs leading-snug">{{ __('public_home.omni_stock_banner_text') }}</span>
+                                    </div>
+                                </div>
+
+                                {{-- Tab 3: Laba Bersih & Keuangan Otomatis (Multi-Channel Finance) --}}
+                                <div x-show="omniTab === 'finance'" x-cloak style="display: none;" class="space-y-3">
+                                    {{-- Metric Cards: Omzet vs Deductions vs Net Profit --}}
+                                    <div class="grid grid-cols-2 gap-2 text-left">
+                                        <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                                            <span class="text-[10px] sm:text-[11px] text-slate-400 block truncate">{{ __('public_home.omni_fin_total_omzet') }}</span>
+                                            <span class="text-sm sm:text-base font-extrabold text-white tabular-nums">{{ __('public_home.omni_fin_total_omzet_val') }}</span>
+                                            <span class="text-[10px] text-cyan-400 font-semibold block mt-0.5 truncate">{{ __('public_home.omni_fin_total_omzet_sub') }}</span>
+                                        </div>
+                                        <div class="p-2.5 sm:p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                                            <span class="text-[10px] sm:text-[11px] text-slate-400 block truncate">{{ __('public_home.omni_fin_deductions') }}</span>
+                                            <span class="text-sm sm:text-base font-extrabold text-slate-300 tabular-nums">{{ __('public_home.omni_fin_deductions_val') }}</span>
+                                            <span class="text-[10px] text-slate-400 block mt-0.5 truncate">{{ __('public_home.omni_fin_deductions_sub') }}</span>
+                                        </div>
+                                    </div>
+
+                                    {{-- Net Profit Highlight Bar --}}
+                                    <div class="p-3 rounded-xl bg-gradient-to-r from-[#007AFF]/20 via-[#0A122C] to-emerald-500/20 border border-[#007AFF]/40 flex items-center justify-between">
+                                        <div>
+                                            <span class="text-[11px] text-slate-300 block">{{ __('public_home.omni_fin_net_profit') }}</span>
+                                            <span class="text-base sm:text-lg font-black text-[#00C2FF] tabular-nums">{{ __('public_home.omni_fin_net_profit_val') }}</span>
+                                        </div>
+                                        <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold font-mono">
+                                            {{ __('public_home.omni_fin_margin_badge') }}
+                                        </span>
+                                    </div>
+
+                                    {{-- Channel Contribution Lines --}}
+                                    <div class="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-1 text-[11px]">
+                                        <div class="flex items-center justify-between text-slate-300">
+                                            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>{{ __('public_home.omni_fin_pos_line') }}</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-slate-300">
+                                            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>{{ __('public_home.omni_fin_mp_line') }}</span>
+                                        </div>
+                                        <div class="flex items-center justify-between text-slate-300">
+                                            <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>{{ __('public_home.omni_fin_web_line') }}</span>
+                                        </div>
+                                    </div>
+
+                                    {{-- Bottom Finance Reassurance Banner --}}
+                                    <div class="p-2.5 sm:p-3 rounded-xl bg-gradient-to-r from-[#007AFF]/15 via-white/[0.04] to-emerald-500/15 border border-[#007AFF]/30 flex items-center gap-2 text-xs text-slate-200">
+                                        <i data-lucide="check-circle-2" class="w-4 h-4 text-[#00C2FF] shrink-0"></i>
+                                        <span class="text-[11px] sm:text-xs leading-snug">{{ __('public_home.omni_fin_banner_text') }}</span>
+                                    </div>
+                                </div>
+
                             </div>
 
-                            {{-- Tab 2: Potong Resep Bahan Baku (BOM Auto-Deduct) --}}
-                            <div x-show="simTab === 'stok'" x-cloak class="space-y-3">
-                                <p class="text-xs text-slate-300">
-                                    Setiap transaksi kasir menekan tombol bayar, stok bahan mentah otomatis berkurang presisi tanpa rekap manual:
-                                </p>
-                                <div class="space-y-2 text-xs">
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Biji Kopi Arabika House Blend</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-18 gram <span class="text-slate-400 font-normal">(Sisa: 4.820g)</span></span>
-                                    </div>
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Fresh Milk Pasteurisasi</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-120 ml <span class="text-slate-400 font-normal">(Sisa: 8.450ml)</span></span>
-                                    </div>
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Cup Sablon &amp; Sedotan Paper</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-1 set <span class="text-slate-400 font-normal">(Sisa: 342 set)</span></span>
-                                    </div>
-                                </div>
-                                <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-center gap-1.5">
-                                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
-                                    <span>Notifikasi stok menipis otomatis dikirim ke WhatsApp owner toko</span>
-                                </div>
-                            </div>
-
-                            {{-- Tab 3: Laba Bersih Riil --}}
-                            <div x-show="simTab === 'laba'" x-cloak class="space-y-3">
-                                <div class="grid grid-cols-2 gap-2.5 text-left">
-                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                                        <span class="text-[11px] text-slate-400 block">Omzet Penjualan Hari Ini</span>
-                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 2.450.000</span>
-                                        <span class="text-[10px] text-emerald-400 font-semibold block mt-0.5">84 Transaksi Selesai</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                                        <span class="text-[11px] text-slate-400 block">Total HPP Bahan Baku</span>
-                                        <span class="text-base font-extrabold text-slate-300 tabular-nums">Rp 980.000</span>
-                                        <span class="text-[10px] text-slate-400 block mt-0.5">HPP Riil 40%</span>
-                                    </div>
-                                </div>
-                                <div class="p-3 rounded-xl bg-[#007AFF]/15 border border-[#007AFF]/30 flex items-center justify-between">
-                                    <div>
-                                        <span class="text-xs text-slate-300 block">Estimasi Laba Kotor Hari Ini</span>
-                                        <span class="text-lg font-black text-[#00C2FF] tabular-nums">Rp 1.470.000</span>
-                                    </div>
-                                    <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
-                                        Margin 60%
-                                    </span>
-                                </div>
-                            </div>
-
-                            {{-- Floating Conversion Reassurance Badges --}}
+                            {{-- Floating Conversion Reassurance Badges & Deep Link --}}
                             <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 text-[11px] text-slate-300">
                                 <div class="flex items-center gap-1.5 text-cyan-400 font-medium">
                                     <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
-                                    <span>Cloud Terisolasi Multi-Tenant</span>
+                                    <span>{{ __('public_home.omni_footer_reassurance') }}</span>
                                 </div>
-                                <a href="{{ route('public.demo') }}"
+                                <a href="{{ route('public.omnichannel.orders') }}"
                                     class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1 group">
-                                    <span>Buka Simulasi Penuh</span>
+                                    <span>{{ __('public_home.omni_footer_action') }}</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                            {{-- Floating Conversion Reassurance Badges & Deep Link --}}
+                            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 text-[11px] text-slate-300">
+                                <div class="flex items-center gap-1.5 text-cyan-400 font-medium">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
+                                    <span>{{ __('public_home.omni_footer_reassurance') }}</span>
+                                </div>
+                                <a href="{{ route('public.omnichannel.orders') }}"
+                                    class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1 group">
+                                    <span>{{ __('public_home.omni_footer_action') }}</span>
                                     <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
                                 </a>
                             </div>

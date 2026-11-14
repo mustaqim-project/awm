@@ -176,7 +176,6 @@ async function runAudit() {
                 pageResult.result = 'FAIL';
                 pageResult.errors.push(`HTTP ${pageResult.httpStatus}`);
                 console.log(`FAIL (HTTP ${pageResult.httpStatus})`);
-                results.push(pageResult);
                 page.off('pageerror', errorHandler);
                 continue;
             }

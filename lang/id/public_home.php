@@ -166,4 +166,74 @@ return [
     'ind_laundry' => 'Laundry Kiloan dan Satuan',
     'ind_manufacturing' => 'Manufaktur Produksi UMKM',
     'ind_services' => 'Bisnis Jasa dan Servis',
+
+    // Hero Right Grid: Integrated Omnichannel Cockpit
+    'omni_cockpit_title' => 'Pusat Kendali Omnichannel',
+    'omni_cockpit_status' => 'Auto-Sync Aktif',
+    'omni_channel_pos' => 'Kasir POS',
+    'omni_channel_marketplace' => 'Shopee & Tokopedia',
+    'omni_channel_web' => 'Toko Online',
+    'omni_channel_wa' => 'WhatsApp',
+
+    // Cockpit Tabs
+    'omni_tab_orders' => 'Pesanan Masuk',
+    'omni_tab_stock' => '1 Stok Terpusat',
+    'omni_tab_finance' => 'Laba Multi-Kanal',
+
+    // Tab 1: Orders Pipeline
+    'omni_order_shopee_tag' => 'Shopee',
+    'omni_order_shopee_time' => '2 mnt lalu',
+    'omni_order_shopee_item' => '1x Kemeja Katun Linen (L)',
+    'omni_order_shopee_route' => 'Gudang Utama • Resi Siap Cetak',
+    'omni_order_shopee_price' => 'Rp 189.000',
+
+    'omni_order_pos_tag' => 'Kasir POS',
+    'omni_order_pos_time' => 'Baru saja',
+    'omni_order_pos_item' => '2x Kopi Susu Gula Aren & 1x Croissant',
+    'omni_order_pos_route' => 'Meja 04 • QRIS Lunas',
+    'omni_order_pos_wa' => 'Struk WA Terkirim Otomatis',
+    'omni_order_pos_price' => 'Rp 51.000',
+
+    'omni_order_web_tag' => 'Toko Online',
+    'omni_order_web_time' => '10 mnt lalu',
+    'omni_order_web_item' => '1x Paket Hampers Gift Box',
+    'omni_order_web_route' => 'Ambil di Toko Senopati (Click & Collect)',
+    'omni_order_web_price' => 'Rp 275.000',
+
+    'omni_orders_banner_text' => 'Semua pesanan marketplace, kasir, web & WA terpusat di 1 antrean tanpa buka banyak aplikasi.',
+
+    // Tab 2: Central Stock
+    'omni_stock_product_title' => 'Kopi Arabika House Blend 250g',
+    'omni_stock_sku' => 'SKU: KOP-ARB-250',
+    'omni_stock_central_pool' => 'Total Stok Terpusat: 46 pcs',
+    'omni_stock_pos_deduct' => 'Kasir Toko (Laku 2 pcs terpotong detik ini)',
+    'omni_stock_channel_shopee' => 'Shopee Mall (Sinkron < 1 dtk)',
+    'omni_stock_channel_tokped' => 'Tokopedia (Sinkron < 1 dtk)',
+    'omni_stock_channel_web' => 'Toko Online (Sinkron < 1 dtk)',
+    'omni_stock_recipe_title' => 'Resep & Bahan Mentah (BOM Auto-Deduct):',
+    'omni_stock_recipe_detail' => 'Espresso -36g • Fresh Milk -240ml • Cup & Sedotan -2 set',
+    'omni_stock_banner_text' => 'Barang laku di kasir toko, stok Shopee & Tokopedia otomatis terpotong detik itu juga. Bebas overselling & denda penalti.',
+
+    // Tab 3: Consolidated Finance
+    'omni_fin_total_omzet' => 'Omzet Seluruh Channel',
+    'omni_fin_total_omzet_val' => 'Rp 8.950.000',
+    'omni_fin_total_omzet_sub' => '84 Transaksi Terkonsolidasi',
+
+    'omni_fin_deductions' => 'HPP & Biaya Admin Platform',
+    'omni_fin_deductions_val' => 'Rp 4.210.000',
+    'omni_fin_deductions_sub' => 'Fee Marketplace & Bahan Baku',
+
+    'omni_fin_net_profit' => 'Laba Bersih Riil Hari Ini',
+    'omni_fin_net_profit_val' => 'Rp 4.740.000',
+    'omni_fin_margin_badge' => 'Margin Bersih 53%',
+
+    'omni_fin_channel_breakdown_title' => 'Kontribusi Penjualan per Saluran:',
+    'omni_fin_pos_line' => 'Kasir POS Toko: Rp 3.800.000 (0% Komisi)',
+    'omni_fin_mp_line' => 'Marketplace (Shopee/Tokped): Rp 4.150.000 (Fee Admin Terpotong Otomatis)',
+    'omni_fin_web_line' => 'Toko Online & WA: Rp 1.000.000 (Margin Penuh)',
+    'omni_fin_banner_text' => 'Laporan laba rugi dan pembukuan SAK EMKM terbentuk otomatis dari seluruh saluran penjualan tanpa Excel.',
+
+    // Cockpit Footer
+    'omni_footer_reassurance' => 'Satu Stok Terpusat Anti-Overselling',
+    'omni_footer_action' => 'Jelajahi Solusi Omnichannel',
 ];

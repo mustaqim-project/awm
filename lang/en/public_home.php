@@ -11,7 +11,7 @@ return [
 
     'hero_kicker' => 'All-in-One Business Operating System for MSMEs',
     'hero_title' => 'Fast POS Cashier, Recipe Stock Control & Automated Accounting for Your Business',
-    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phoneno manual bookkeeping required.',
+    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phone with no manual bookkeeping required.',
     'hero_cta_primary' => 'Start Free Trial',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Try Interactive Demo',
@@ -166,4 +166,74 @@ return [
     'ind_laundry' => 'Laundry and Dry Cleaning',
     'ind_manufacturing' => 'SME Manufacturing Production',
     'ind_services' => 'Service & Professional Business',
+
+    // Hero Right Grid: Integrated Omnichannel Cockpit
+    'omni_cockpit_title' => 'Unified Omnichannel Operations',
+    'omni_cockpit_status' => 'Auto-Sync Active',
+    'omni_channel_pos' => 'Store POS',
+    'omni_channel_marketplace' => 'Shopee & Tokopedia',
+    'omni_channel_web' => 'Online Store',
+    'omni_channel_wa' => 'WhatsApp',
+
+    // Cockpit Tabs
+    'omni_tab_orders' => 'Incoming Orders',
+    'omni_tab_stock' => 'Central Stock',
+    'omni_tab_finance' => 'Channel Profit',
+
+    // Tab 1: Orders Pipeline
+    'omni_order_shopee_tag' => 'Shopee',
+    'omni_order_shopee_time' => '2m ago',
+    'omni_order_shopee_item' => '1x Oxford Linen Cotton Shirt (L)',
+    'omni_order_shopee_route' => 'Main Warehouse • Shipping Label Ready',
+    'omni_order_shopee_price' => 'Rp 189,000',
+
+    'omni_order_pos_tag' => 'Store POS',
+    'omni_order_pos_time' => 'Just now',
+    'omni_order_pos_item' => '2x Palm Sugar Latte & 1x Croissant',
+    'omni_order_pos_route' => 'Table 04 • QRIS Settled',
+    'omni_order_pos_wa' => 'Digital WA Receipt Sent',
+    'omni_order_pos_price' => 'Rp 51,000',
+
+    'omni_order_web_tag' => 'Online Store',
+    'omni_order_web_time' => '10m ago',
+    'omni_order_web_item' => '1x Hampers Gift Box Set',
+    'omni_order_web_route' => 'Store Pickup at Senopati (Click & Collect)',
+    'omni_order_web_price' => 'Rp 275,000',
+
+    'omni_orders_banner_text' => 'All marketplace, cashier, web & WhatsApp orders centralized in 1 queue with zero seller app switching.',
+
+    // Tab 2: Central Stock
+    'omni_stock_product_title' => 'Arabica Coffee House Blend 250g',
+    'omni_stock_sku' => 'SKU: KOP-ARB-250',
+    'omni_stock_central_pool' => 'Central Stock Pool: 46 pcs',
+    'omni_stock_pos_deduct' => 'Store POS (2 pcs deducted live)',
+    'omni_stock_channel_shopee' => 'Shopee Mall (Synced < 1s)',
+    'omni_stock_channel_tokped' => 'Tokopedia (Synced < 1s)',
+    'omni_stock_channel_web' => 'Online Store (Synced < 1s)',
+    'omni_stock_recipe_title' => 'Recipe & Raw Materials (BOM Auto-Deduct):',
+    'omni_stock_recipe_detail' => 'Espresso -36g • Fresh Milk -240ml • Cups & Straws -2 sets',
+    'omni_stock_banner_text' => 'When items sell in store, marketplace stock updates in sub-seconds. Zero overselling & zero cancellation penalties.',
+
+    // Tab 3: Consolidated Finance
+    'omni_fin_total_omzet' => 'All Channels Gross Revenue',
+    'omni_fin_total_omzet_val' => 'Rp 8,950,000',
+    'omni_fin_total_omzet_sub' => '84 Consolidated Transactions',
+
+    'omni_fin_deductions' => 'COGS & Platform Admin Fees',
+    'omni_fin_deductions_val' => 'Rp 4,210,000',
+    'omni_fin_deductions_sub' => 'Marketplace Fees & Raw Ingredients',
+
+    'omni_fin_net_profit' => 'Today Real Net Profit',
+    'omni_fin_net_profit_val' => 'Rp 4,740,000',
+    'omni_fin_margin_badge' => 'Net Margin 53%',
+
+    'omni_fin_channel_breakdown_title' => 'Sales Contribution by Channel:',
+    'omni_fin_pos_line' => 'Store POS: Rp 3,800,000 (0% Commission)',
+    'omni_fin_mp_line' => 'Marketplace (Shopee/Tokped): Rp 4,150,000 (Admin fees auto-deducted)',
+    'omni_fin_web_line' => 'Online Store & WA: Rp 1,000,000 (Full Margin)',
+    'omni_fin_banner_text' => 'P&L statements and SAK EMKM bookkeeping are generated automatically across all channels without Excel spreadsheets.',
+
+    // Cockpit Footer
+    'omni_footer_reassurance' => 'Central Stock Sync Anti-Overselling',
+    'omni_footer_action' => 'Explore Omnichannel Solutions',
 ];

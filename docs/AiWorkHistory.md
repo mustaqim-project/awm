@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-14-573] Redesign Grid Kanan Hero Section Landing Page: Pusat Kendali Omnichannel Terintegrasi COOCA
+
+- **Date:** 2026-11-14
+- **Status:** COMPLETED
+- **Module:** Public Website / Marketing & Omnichannel Landing Page
+- **Feature:** Hero Section Right Grid Omnichannel Architecture Cockpit (Alur Pesanan Multi-Kanal, 1 Stok Terpusat Anti-Overselling, Laba Bersih Konsolidasian, Full i18n & Apple HIG Bento)
+- **Work Type:** UI/UX | Feature Enhancement | Localization | Frontend Architecture
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab instruksi pengguna untuk memperbaiki grid kanan hero section pada landing page COOCA (`resources/views/landing.blade.php`) agar secara jelas dan mendalam menjelaskan serta mendemonstrasikan keunggulan fitur omnichannel terintegrasi dari COOCA. Sebelumnya, grid kanan hanya menampilkan simulasi kasir POS kafe (kopi susu & croissant) yang tidak mencerminkan ekosistem omnichannel (integrasi marketplace Shopee/Tokopedia/TikTok, toko online D2C, kasir POS fisik, dan WhatsApp order).
+- **Target:**
+  1. Mentransformasikan simulasi statis POS menjadi **Pusat Kendali Omnichannel (Unified Omnichannel Operations Cockpit)** interaktif berstandar Bento Apple HIG.
+  2. Menyediakan 4 kanal visual aktif: Kasir POS, Shopee & Tokopedia, Toko Online (Web D2C), dan WhatsApp Commerce.
+  3. Menyediakan 3 tab interaktif:
+     - **Pesanan Masuk (Unified Orders Pipeline):** Agregasi pesanan real-time dari Shopee, Kasir POS (nota WhatsApp), dan Toko Online (pickup di toko) dalam 1 antrean terpusat tanpa repot buka-tutup aplikasi seller center.
+     - **1 Stok Terpusat (Central Inventory & Anti-Overselling):** Demonstrasi sinkronisasi stok otomatis (< 1 detik) serentak di Kasir POS, Shopee, Tokopedia, dan Toko Online saat ada transaksi, eliminasi 100% risiko overselling dan penalti pembatalan, plus potongan resep BOM bahan baku.
+     - **Laba Multi-Kanal (Consolidated P&L & Financials):** Konsolidasi otomatis omzet multi-saluran, potongan biaya admin marketplace, HPP bahan baku, dan laba bersih riil standar SAK EMKM tanpa spreadsheet terpisah.
+  4. Penegakan 100% Zero Hardcoded Text melalui kamus translasi bilingual (`lang/id/public_home.php` dan `lang/en/public_home.php`).
+  5. Kepatuhan mutlak Apple HIG: Zero Unicode emoji (100% Lucide icon), tabular-nums, geometri squircle kontinu, dan responsif sempurna di layar smartphone (360px) hingga desktop (1280px+).
+
+#### 2. What Was Done
+- **Desain & Implementasi Blade Bento Cockpit:**
+  - Mengganti blok simulasi lama di `resources/views/landing.blade.php` dengan komponen Cockpit Omnichannel modern berbasis Alpine.js (`omniTab: 'orders'`).
+  - Menambahkan top highlight specular line, backdrop blur ganda bergradien Apple cyan/blue, dan status indikator live sync.
+  - Mengintegrasikan banner konektivitas 4 saluran penjualan utama dan banner reassurance di tiap tab.
+- **Implementasi Bilingual i18n:**
+  - Menambahkan 36 pasangan key translasi di `lang/id/public_home.php` dan `lang/en/public_home.php`.
+  - Memperbaiki typo spasi pada `hero_subtitle` bahasa Inggris ("phoneno" -> "phone with no").
+- **Audit & Verifikasi Testing:**
+  - Syntax linting PHP CLI (`php -l`) pada berkas bahasa: 100% PASS (0 syntax errors).
+  - Blade compilation test render via scratch script untuk kedua locale (ID & EN): 100% PASS (363KB+ rendered length).
+  - Audit uncompiled localization keys: 100% PASS (zero uncompiled keys).
+  - Audit Apple HIG emoji: 100% PASS (zero Unicode emojis).
+  - Asset build via Vite (`npm run build`): 100% PASS (0 errors, output generated).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `resources/views/landing.blade.php`
+  - `lang/id/public_home.php`
+  - `lang/en/public_home.php`
+  - `public/build/manifest.json` (dan bundle build Vite terbaru)
+
 ### [WORK-2026-11-14-572] Google Trends Business Research, Batch 11 Production (20 Artikel SEO Edukasi ID 572-591) & Production Deployment for COOCA
 
 - **Date:** 2026-11-14

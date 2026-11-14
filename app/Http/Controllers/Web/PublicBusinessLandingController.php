@@ -36,7 +36,9 @@ class PublicBusinessLandingController extends Controller
 
         abort_unless($business, 404);
 
-        $landingPage = BusinessLandingPage::firstOrCreate(
+        \App\Support\Context::setBusiness($business);
+
+        $landingPage = BusinessLandingPage::withoutGlobalScopes()->firstOrCreate(
             ['business_id' => $business->id],
             [
                 'headline' => $business->name,
@@ -55,7 +57,7 @@ class PublicBusinessLandingController extends Controller
         abort_unless($landingPage->is_published || $isAuthorizedPreview, 404);
 
         // 0. Storefront settings & active payment methods & shipping rules
-        $storeSetting = \App\Models\CommerceStoreSetting::firstOrCreate(
+        $storeSetting = \App\Models\CommerceStoreSetting::withoutGlobalScopes()->firstOrCreate(
             ['business_id' => $business->id],
             [
                 'is_storefront_enabled' => true,

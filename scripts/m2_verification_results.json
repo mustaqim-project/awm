@@ -11,150 +11,150 @@
   "performanceRecords": [
     {
       "view": "landing",
-      "cls": 0.029007304526748975,
+      "cls": 0,
+      "domContentLoaded": 74,
+      "load": 75,
+      "duration": 75
+    },
+    {
+      "view": "about",
+      "cls": 0,
+      "domContentLoaded": 93,
+      "load": 95,
+      "duration": 95
+    },
+    {
+      "view": "demo",
+      "cls": 0,
+      "domContentLoaded": 90,
+      "load": 90,
+      "duration": 90
+    },
+    {
+      "view": "pricing",
+      "cls": 0.002453282469028635,
+      "domContentLoaded": 108,
+      "load": 109,
+      "duration": 109
+    },
+    {
+      "view": "privacy",
+      "cls": 0.000011862086334019206,
+      "domContentLoaded": 80,
+      "load": 80,
+      "duration": 80
+    },
+    {
+      "view": "security",
+      "cls": 0,
+      "domContentLoaded": 84,
+      "load": 84,
+      "duration": 84
+    },
+    {
+      "view": "sitemap",
+      "cls": 0.001647424433620542,
       "domContentLoaded": 89,
       "load": 90,
       "duration": 90
     },
     {
-      "view": "about",
-      "cls": 0,
-      "domContentLoaded": 80,
-      "load": 81,
-      "duration": 81
-    },
-    {
-      "view": "demo",
-      "cls": 0.0016455567243494943,
-      "domContentLoaded": 77,
-      "load": 78,
-      "duration": 78
-    },
-    {
-      "view": "pricing",
-      "cls": 0,
-      "domContentLoaded": 68,
-      "load": 69,
-      "duration": 69
-    },
-    {
-      "view": "privacy",
-      "cls": 0.000011862086334019206,
-      "domContentLoaded": 73,
-      "load": 74,
-      "duration": 74
-    },
-    {
-      "view": "security",
-      "cls": 0.010512278155207796,
-      "domContentLoaded": 74,
-      "load": 74,
-      "duration": 74
-    },
-    {
-      "view": "sitemap",
-      "cls": 0,
-      "domContentLoaded": 77,
-      "load": 78,
-      "duration": 78
-    },
-    {
       "view": "support",
       "cls": 0.0016848517272698045,
-      "domContentLoaded": 71,
-      "load": 72,
-      "duration": 72
+      "domContentLoaded": 70,
+      "load": 71,
+      "duration": 71
     },
     {
       "view": "terms",
-      "cls": 0.0017715941210669581,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
-    },
-    {
-      "view": "business_landing",
-      "cls": 0.0030141174232681755,
-      "domContentLoaded": 77,
-      "load": 78,
-      "duration": 78
-    },
-    {
-      "view": "kasir_android",
-      "cls": 0,
-      "domContentLoaded": 106,
-      "load": 107,
-      "duration": 107
-    },
-    {
-      "view": "kasir_gratis",
-      "cls": 0,
-      "domContentLoaded": 80,
-      "load": 81,
-      "duration": 81
-    },
-    {
-      "view": "kasir_offline",
-      "cls": 0,
+      "cls": 0.000011862086334019206,
       "domContentLoaded": 81,
       "load": 82,
       "duration": 82
     },
     {
-      "view": "discovery",
-      "cls": 0,
-      "domContentLoaded": 94,
-      "load": 95,
-      "duration": 95
+      "view": "business_landing",
+      "cls": 0.0030141174232681755,
+      "domContentLoaded": 72,
+      "load": 73,
+      "duration": 73
     },
     {
-      "view": "fnb",
+      "view": "kasir_android",
       "cls": 0,
-      "domContentLoaded": 74,
-      "load": 74,
-      "duration": 74
+      "domContentLoaded": 85,
+      "load": 86,
+      "duration": 86
     },
     {
-      "view": "laundry",
+      "view": "kasir_gratis",
       "cls": 0,
-      "domContentLoaded": 89,
-      "load": 90,
-      "duration": 90
+      "domContentLoaded": 78,
+      "load": 79,
+      "duration": 79
     },
     {
-      "view": "manufacturing",
+      "view": "kasir_offline",
       "cls": 0,
       "domContentLoaded": 86,
       "load": 87,
       "duration": 87
     },
     {
-      "view": "retail",
+      "view": "discovery",
       "cls": 0,
       "domContentLoaded": 87,
       "load": 88,
       "duration": 88
     },
     {
+      "view": "fnb",
+      "cls": 0.0014852962540991513,
+      "domContentLoaded": 100,
+      "load": 101,
+      "duration": 101
+    },
+    {
+      "view": "laundry",
+      "cls": 0,
+      "domContentLoaded": 86,
+      "load": 87,
+      "duration": 87
+    },
+    {
+      "view": "manufacturing",
+      "cls": 0,
+      "domContentLoaded": 76,
+      "load": 77,
+      "duration": 77
+    },
+    {
+      "view": "retail",
+      "cls": 0,
+      "domContentLoaded": 86,
+      "load": 87,
+      "duration": 87
+    },
+    {
       "view": "services",
       "cls": 0,
-      "domContentLoaded": 89,
-      "load": 90,
-      "duration": 90
+      "domContentLoaded": 73,
+      "load": 74,
+      "duration": 74
     },
     {
       "view": "solutions_show",
       "cls": 0,
-      "domContentLoaded": 81,
-      "load": 82,
-      "duration": 82
+      "domContentLoaded": 76,
+      "load": 77,
+      "duration": 77
     },
     {
       "view": "workshop",
       "cls": 0,
-      "domContentLoaded": 78,
-      "load": 79,
-      "duration": 79
+      "domContentLoaded": 77,
+      "load": 78,
+      "duration": 78
     }
   ]
 }
