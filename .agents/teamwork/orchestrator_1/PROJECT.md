@@ -1,89 +1,60 @@
-# Project: COOCA SaaS ERP — Invoices & Labor-Machines Production Readiness
+# Project: COOCA Public Marketing Frontend Audit & High-Impact Optimization
 
 ## Architecture
-- **Framework**: Laravel 11.x on PHP 8.2+, Blade, Alpine.js, Tailwind CSS, Lucide Icons.
-- **Target Modules**:
-  - `Invoices Module` (`app/Http/Controllers/Web/InvoiceWebController.php`, `resources/views/app/invoices/`, `app/Models/Invoice.php`, `app/Models/InvoiceItem.php`)
-  - `Labor & Machines Module` (`app/Http/Controllers/Web/LaborMachineWebController.php`, `resources/views/app/labor-machines/`, `app/Models/LaborRate.php`, `app/Models/Machine.php`)
-  - `Documentation System` (`app/Http/Controllers/Web/DocumentationWebController.php`, `resources/views/app/docs/`)
-- **Authorization & Security**: Spatie / Native multi-tenant RBAC with `Context::hasPermission()`, `Context::isOwner()`, `Context::isAdminOrOwner()`, Controller-Level `HasMiddleware`.
+- **Framework**: Laravel 11.x, Blade Templates, Tailwind CSS, Alpine.js, Lucide Icons, Vite Asset Pipeline.
+- **Master Layout**: `resources/views/layouts/public_marketing.blade.php` (extended by 20+ public marketing views and 10 feature directories).
+- **Core Partials & Widgets**:
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php`
+  - `resources/views/layouts/partials/typography.blade.php`
+  - `resources/views/public/partials/live_chat_widget.blade.php`
+  - `resources/views/public/partials/cookie_consent_banner.blade.php`
+  - `resources/views/public/partials/seo.blade.php`
+  - `resources/views/public/partials/subpage_layout.blade.php`
+  - `resources/views/public/partials/tracking_pixels.blade.php`
+- **Public Marketing Scope**:
+  - Standalone Pages: `landing.blade.php`, `about`, `demo`, `pricing`, `privacy`, `security`, `sitemap`, `support`, `terms`, `business_landing`.
+  - Solutions: `fnb`, `laundry`, `manufacturing`, `retail`, `services`, `show`, `workshop`.
+  - Commercial Landings: `kasir_android`, `kasir_gratis`, `kasir_offline`, `discovery/index`.
+  - Feature Directories (43 Blade files + 111 articles): `blog`, `business-operating-system`, `calculators`, `contact`, `content-automation`, `marketplace`, `omnichannel`, `omnichannel-erp`, `resources`, `templates`.
+- **Localization**: 10 bilingual translation modules in `lang/id/` and `lang/en/` (`public_blog`, `public_bos`, `public_calculators`, `public_contact`, `public_content`, `public_erp`, `public_marketplace`, `public_omnichannel`, `public_resources`, `public_templates`, plus `common.php`).
+- **Core Web Vitals Targets**: LCP <= 2.5s, TBT <= 200ms, CLS <= 0.1, INP Good.
 
 ## Feature Inventory
 | # | Feature | Description | Milestone | Source |
 |---|---------|-------------|-----------|--------|
-| 1 | Controller-Level RBAC in LaborMachineWebController | Implement `HasMiddleware` with `labor_machines.view` and `labor_machines.manage` | M1 | Survey Explorer 2 |
-| 2 | Tenant Isolation & IDOR Protection in LaborMachineWebController | Add defensive `abort_unless($record->business_id === $business->id, 403)` on `updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine` | M1 | Survey Explorer 2 & 3 |
-| 3 | Clean Routing Migration | Remove redundant route-level `require.permission` in `routes/owner.php` where controller handles it | M1 | Survey Explorer 2 |
-| 4 | Permission Synchronization in labor-machines/index | Change incorrect `costing.manage` checks to `@can('labor_machines.manage')` | M1 | Survey Explorer 1, 2, 3 |
-| 5 | Critical JS Syntax Fix in invoices/print.blade.php | Fix unclosed `else` block & function at lines 472-477 breaking PDF & print triggers | M2 | Survey Explorer 1 |
-| 6 | Primary Action Consolidation in create/edit invoices | Eliminate competing duplicate solid `#007AFF` Save buttons; establish clear primary vs secondary hierarchy | M2 | Survey Explorer 1 |
-| 7 | Action Consolidation in labor-machines/index | Consolidate 4 competing "Add" buttons into context-aware primary button in header and clean section headers | M2 | Survey Explorer 1 |
-| 8 | View-Level Auth Gating in invoices create & edit | Wrap top Save button with `@can('invoices.create')` / `@can('invoices.edit')` | M2 | Survey Explorer 1 & 2 |
-| 9 | View-Level Auth Gating in invoices index & show | Wrap PDF and Print links with `@can('invoices.export')` or `@can('invoices.view')` | M2 | Survey Explorer 1 & 2 |
-| 10 | Mobile Touch Target Remediation in invoices/index | Replace cramped 32px 4-button mobile layout with clean chevron link to detail and overflow menu | M2 | Survey Explorer 1 |
-| 11 | Mobile Touch Target & Dangerous Proximity Fix in labor-machines | Upgrade Edit/Delete touch targets to min-h-[44px] and ensure >=8px spacing to prevent accidental deletes | M2 | Survey Explorer 1 |
-| 12 | Modal Canvas Expansion in labor-machines | Expand `sm:max-w-md` modals to comfortable Bento layout (`max-w-4xl`) | M2 | Survey Explorer 1 |
-| 13 | Table Dropdown Overflow Clipping Fix | Ensure action dropdown in `invoices/index.blade.php` does not get clipped by table scroll container (`x-teleport="body"`) | M2 | Survey Explorer 1 |
-| 14 | i18n Localization in labor-machines | Wrap 40+ hardcoded Indonesian strings with `__()` helpers | M2 | Survey Explorer 1 |
-| 15 | Business Owner Docs: Labor-Machines | Create `resources/views/app/docs/partials/sec_labor_machines.blade.php` with UMKM POV, 20-industry matrix, and rate calculation formulas | M3 | Survey Explorer 3 |
-| 16 | Business Owner Docs: Invoices | Create `resources/views/app/docs/partials/sec_invoices.blade.php` replacing 36-line stub with full guide, status lifecycles, and verified route links | M3 | Survey Explorer 3 |
-| 17 | Documentation System Integration | Register both partials in `resources/views/app/docs/index.blade.php` (sidebar TOC, search index, and navigation) | M3 | Survey Explorer 3 |
-| 18 | Dedicated Feature Test Suite for LaborMachineWebController | Create `tests/Feature/LaborMachineWebControllerTest.php` testing auth, tenant isolation, RBAC, and CRUD | M4 | Survey Explorer 3 |
-| 19 | Comprehensive Module Audit & Verification | Run full test suite, syntax checks (`php -l`), and verify production readiness per `laravel-module-audit` | M4 | Survey Explorer 3 |
+| 1 | Master Layout Asset Pipeline & CDN Elimination | Eliminate client-side runtime Tailwind Play CDN JIT compilation; connect to precompiled production Vite CSS bundle / optimized asset pipeline; defer non-critical JS | M1 | Survey Explorer 1, 2 |
+| 2 | Chatbot & Live Chat Lazy Deferral | Defer Alpine initialization, lazy mount DOM, eliminate initial background polling intervals on page load to eliminate TBT penalty | M1 | Survey Explorer 1 |
+| 3 | Mobile Chat Window Viewport Trap & Floating Collision Fix | Fix 748px mobile height overflow trap (ensure header & close button accessible on mobile < 740px), safe-area insets, resolve floating dock collisions | M1 | Survey Explorer 1 |
+| 4 | Mobile Theme Switch Availability & Contrast | Expose theme toggle in mobile navigation drawer/dock; ensure accessible contrast in both themes without FOUC | M1 | Survey Explorer 1 |
+| 5 | Blog Show Inline CSS Optimization | Extract and optimize ~17.8 KB unminified inline `<style>` CSS in `blog/show.blade.php` | M1 | Survey Explorer 3 |
+| 6 | Cookie Banner Touch Target Remediation | Upgrade cookie consent banner action buttons from 34px to WCAG compliant >=44px touch targets | M1 | Survey Explorer 1, 2 |
+| 7 | Business Landing CDN & Asset Optimization | Eliminate runtime Tailwind Play CDN in `business_landing.blade.php`, pin/defer CDN scripts (`alpinejs`, `lucide`) | M2 | Survey Explorer 2 |
+| 8 | Marketing Pages Heading Hierarchy Remediation | Fix heading skips (H1->H3) in `kasir_android`, `kasir_offline`, `about`, `privacy`, `terms`, and solution bottom CTAs to establish strict semantic hierarchy | M2 | Survey Explorer 2 |
+| 9 | Explicit Media Dimensions for CLS Prevention | Add explicit `width`, `height`, and `decoding="async"` to hero images, logos, and catalog thumbnails across standalone marketing pages | M2 | Survey Explorer 2 |
+| 10 | Mobile Navigation & Touch Target Remediation | Enforce minimum 44x44px touch targets on mobile hamburger, sitemap links, and legal navigation | M2 | Survey Explorer 2 |
+| 11 | SEO Canonicals & Structured Data on Marketing Pages | Add explicit canonical URLs and Schema.org JSON-LD structured data for pricing, privacy, terms, security, and sitemap | M2 | Survey Explorer 2 |
+| 12 | Marketplace Media Sizing & Layout Stability | Add explicit `width`, `height`, and `loading="lazy"` attributes on dynamic product and store cards in `marketplace` views | M3 | Survey Explorer 3 |
+| 13 | Calculator Redundant DOM Icon Scan Elimination | Remove duplicate `lucide.createIcons()` scans in Alpine `x-init` across all 9 calculator views | M3 | Survey Explorer 3 |
+| 14 | Business Operating System (BOS) Canonical Tags | Add explicit canonical URL sections to `overview`, `how-it-works`, and `why-cooca` | M3 | Survey Explorer 3 |
+| 15 | Feature Templates Semantic & Responsive Hardening | Ensure responsive table/card layouts without horizontal overflow across all feature and tool views | M3 | Survey Explorer 3 |
+| 16 | Critical Translation Key Parity & Missing Keys Fix | Fix 48 missing keys in `public_erp.php`, 2 in `public_marketplace.php`, and breadcrumb keys in `common.php` (`common.home`, `common.details`) to eliminate raw key rendering | M4 | Survey Explorer 1, 3 |
+| 17 | Zero Hardcoded Text Localization | Localize hardcoded Indonesian strings across public marketing views and feature directories into `lang/id/` and `lang/en/` | M4 | Survey Explorer 2, 3 |
+| 18 | Multilingual Layout Stability Verification | Ensure layout stability and prevent text truncation when switching between ID and EN | M4 | Survey Explorer 3 |
+| 19 | Structured Audit Findings Report Compilation | Compile formal audit findings report across 7 dimensions (up to 10 findings per file with significant issues) specifying Priority, Category, Affected File, Location, Root Cause, Impact, Fix, Risk | M5 | Survey Explorers 1, 2, 3 |
+| 20 | Build, Syntax & Automated Test Verification Gate | Verify `php -l` on all modified Blade/PHP files (0 errors), `npm run build` clean exit (0 errors), automated test suite execution without regressions | M5 | Survey Explorers 1, 2, 3 |
 
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| 1 | M1: Controller-Level RBAC & Tenant Security | `LaborMachineWebController.php`, `routes/owner.php`, permission alignment in `labor-machines/index.blade.php` | none | DONE |
-| 2 | M2: UI Simplification, Layout Ergonomics & View Auth | Blade templates in `resources/views/app/invoices/` and `resources/views/app/labor-machines/` | M1 | IN_PROGRESS |
-| 3 | M3: Business Owner User Documentation | `resources/views/app/docs/partials/sec_labor_machines.blade.php`, `sec_invoices.blade.php`, `resources/views/app/docs/index.blade.php` | none | PLANNED |
-| 4 | M4: Module Production Readiness Audit & Verification | `tests/Feature/LaborMachineWebControllerTest.php`, full test execution, PHP linting, final gate pass | M1, M2, M3 | PLANNED |
-
-## Milestone 1 Outputs
-- `LaborMachineWebController.php`: Implemented `HasMiddleware` mapping `labor_machines.view` to `index` and `labor_machines.manage` to all mutations. Implemented strict tenant scoping on `index()` and defensive IDOR protection (`abort_unless($record->business_id === $business->id, 403)`). Integrated `AuditLog` for create, update, and delete actions.
-- `routes/owner.php`: Clean routing achieved. Removed redundant route-level permissions on 14 invoice routes and 7 labor-machines routes while keeping group prefixes, names, and module gates intact.
-- `resources/views/app/labor-machines/index.blade.php`: Aligned 8 button authorization gates to `@can('labor_machines.manage')`.
-- Verification: 100% test pass (26 tests, 205 assertions across 4 test suites: `LaborMachineRbacCleanRoutingEmpiricalTest`, `LaborMachineRbacAdversarialTest`, `InvoiceModuleAuditTest`, `LaborAndMachineEngineTest`). Gate verdict: PASS.
-
-## Interface Contracts
-### LaborMachineWebController RBAC
-- Controller implements `Illuminate\Routing\Controllers\HasMiddleware`:
-  - `require.permission:labor_machines.view`: `index`
-  - `require.permission:labor_machines.manage`: `storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, `destroyMachine`
-- Tenant Isolation:
-  - `updateLabor`: `abort_unless($laborRate->business_id === $business->id, 403);`
-  - `destroyLabor`: `abort_unless($laborRate->business_id === $business->id, 403);`
-  - `updateMachine`: `abort_unless($machine->business_id === $business->id, 403);`
-  - `destroyMachine`: `abort_unless($machine->business_id === $business->id, 403);`
-
-### View Permissions Mapping
-- Invoices:
-  - Create: `@can('invoices.create')`
-  - Edit: `@can('invoices.edit')`
-  - Delete: `@can('invoices.delete')`
-  - Record Payment: `@can('invoices.record_payment')`
-  - Export / Print: `@can('invoices.export')` or `@can('invoices.view')`
-- Labor & Machines:
-  - View: `@can('labor_machines.view')`
-  - Manage (Add/Edit/Delete Rates & Machines): `@can('labor_machines.manage')`
+| 1 | M1: Core Layouts, Asset Pipeline & Chatbot Optimization | `resources/views/layouts/public_marketing.blade.php`, `help_chatbot_widget.blade.php`, `typography.blade.php`, `live_chat_widget.blade.php`, `cookie_consent_banner.blade.php`, `blog/show.blade.php` | none | DONE (Gate 1 Passed, 427 assertions, 0px dock collision across 8 viewports, Vite bundle connected) |
+| 2 | M2: Marketing Pages, Solutions & Commercial Views Optimization | `landing.blade.php`, `business_landing.blade.php`, `kasir_*.blade.php`, `discovery/`, `solutions/*.blade.php`, `about`, `demo`, `pricing`, `privacy`, `security`, `sitemap`, `support`, `terms` | M1 | PLANNED |
+| 3 | M3: Feature Directories, Deep Content & Tools Optimization | `blog/`, `business-operating-system/`, `calculators/`, `contact/`, `content-automation/`, `marketplace/`, `omnichannel/`, `omnichannel-erp/`, `resources/`, `templates/` | M1 | PLANNED |
+| 4 | M4: Localization (i18n), Missing Keys Repair & SEO Hardening | `lang/id/*.php`, `lang/en/*.php`, `common.php`, and localized views across marketing & feature templates | M2, M3 | PLANNED |
+| 5 | M5: Structured Audit Findings Report & Final Verification Gate | Structured audit findings report (`AUDIT_REPORT.md`), `php -l`, `npm run build`, regression test suites, forensic integrity audit | M1, M2, M3, M4 | PLANNED |
 
 ## Code Layout
-- Controllers:
-  - `app/Http/Controllers/Web/InvoiceWebController.php`
-  - `app/Http/Controllers/Web/LaborMachineWebController.php`
-- Routes:
-  - `routes/owner.php`
-- Views:
-  - `resources/views/app/invoices/index.blade.php`
-  - `resources/views/app/invoices/create.blade.php`
-  - `resources/views/app/invoices/edit.blade.php`
-  - `resources/views/app/invoices/show.blade.php`
-  - `resources/views/app/invoices/print.blade.php`
-  - `resources/views/app/labor-machines/index.blade.php`
-- Documentation:
-  - `resources/views/app/docs/index.blade.php`
-  - `resources/views/app/docs/partials/sec_labor_machines.blade.php`
-  - `resources/views/app/docs/partials/sec_invoices.blade.php`
-- Tests:
-  - `tests/Feature/LaborMachineWebControllerTest.php`
-  - `tests/Feature/Invoice/InvoiceModuleAuditTest.php`
+- Public Layouts & Core Partials: `resources/views/layouts/`, `resources/views/layouts/partials/`, `resources/views/public/partials/`
+- Public Marketing & Solutions: `resources/views/public/`, `resources/views/landing.blade.php`
+- Translations: `lang/id/`, `lang/en/`
+- Compiled Assets: `public/build/`, `resources/css/`, `resources/js/`
+- Test Suites: `tests/Feature/`, `tests/Unit/`

@@ -1,64 +1,72 @@
-# BRIEFING — 2026-11-09T06:48:00Z
+# BRIEFING — 2026-11-13T23:05:00Z
 
 ## Mission
-Perform an independent, adversarial code and architectural review of Milestone 1 changes (LaborMachineWebController RBAC, routes/owner.php clean routing, and labor-machines view permission alignment).
+Objective and Adversarial Review of Milestone 1 CWV, Chatbot & Mobile UX changes implemented by worker_m1.
 
 ## 🔒 My Identity
-- Archetype: reviewer & critic
+- Archetype: reviewer
 - Roles: reviewer, critic
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_2
-- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Milestone: M1 (RBAC & Controller Security)
-- Instance: 2 of 2
-- Milestone Update: Milestone 1 (Invoices & Labor-Machines Controller RBAC & Production Readiness)
-- Current Parent Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
+- Working directory: C:\laragon\www\cooca_core
+- State folder: C:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_2\
+- Original parent: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Milestone: Milestone 1 CWV, Chatbot & Mobile UX
+- Instance: 2 of 2 (reviewer_m1_2)
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation code
-- Reviewer & adversarial critic: actively check for integrity violations (hardcoded test results, facade implementations, shortcuts, fake verification, self-certifying work)
-- Issue clear verdict: APPROVE or REQUEST_CHANGES
-- Update progress.md regularly for liveness heartbeat
-- Mandatory adversarial stress-testing of edge cases, parameter validation, null handling, and tenant isolation
+- Check for integrity violations (hardcoded test outputs, dummy facades, shortcuts, bypassing core work)
+- Adhere to the 5-component Handoff Protocol
+- Evidence-based findings; explicit APPROVE / REQUEST_CHANGES verdict
 
 ## Current Parent
-- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-09T06:48:00Z
+- Conversation ID: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Updated: not yet
 
 ## Review Scope
 - **Files to review**:
-  - `app/Http/Controllers/Web/LaborMachineWebController.php`
-  - `routes/owner.php`
-  - `resources/views/app/labor-machines/index.blade.php`
-- **Interface contracts**: `PROJECT.md`, `ORIGINAL_REQUEST.md`, `worker_m1/handoff.md`, `laravel-permission/SKILL.md`
-- **Review criteria**: Correctness, Logical Completeness, Quality & Standards (Laravel 11 HasMiddleware, Clean Routing), Security & Defense-in-Depth (IDOR rejection, AuditLog traceability)
-
-## Key Decisions Made
-- [2026-11-09T06:36:00Z] Received dispatch and initialized review protocol for Milestone 1.
-- [2026-11-09T06:38:00Z] Inspected controller methods, route lists, and Blade directives.
-- [2026-11-09T06:41:00Z] Independently ran test suites: `InvoiceDraftEditAndPartiesTest`, `InvoiceModuleAuditTest`, and `LaborAndMachineEngineTest` (all passed).
-- [2026-11-09T06:46:00Z] Verified `LaborMachineRbacCleanRoutingEmpiricalTest` (9 tests passed, 134 assertions). Confirmed multi-layer IDOR protection (Eloquent `BusinessScope` returning 404 and Controller `abort_unless` throwing 403).
-- [2026-11-09T06:48:00Z] Zero integrity violations detected. Verdict: APPROVE.
-
-## Artifact Index
-- `DISPATCH.md` — Inbound message log
-- `progress.md` — Liveness & task progress tracker
-- `BRIEFING.md` — Working memory and review state
-- `handoff.md` — Final review and challenge report
+  - `resources/views/layouts/public_marketing.blade.php`
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php`
+  - `resources/views/layouts/partials/typography.blade.php`
+  - `resources/views/public/partials/live_chat_widget.blade.php`
+  - `resources/views/public/partials/cookie_consent_banner.blade.php`
+  - `resources/views/public/partials/tracking_pixels.blade.php`
+  - `resources/views/public/blog/show.blade.php`
+- **Interface contracts**:
+  - `ORIGINAL_REQUEST.md`
+  - `orchestrator_1/PROJECT.md`
+  - `worker_m1/handoff.md`
+- **Review criteria**:
+  - Correctness, performance (CWV, INP, memory, TBT), mobile UX responsiveness, touch targets, DOM deferral, polling deferral, code integrity.
 
 ## Review Checklist
 - **Items reviewed**:
-  - `LaborMachineWebController.php`: verified `HasMiddleware`, 7 action methods mapped, null `$business` guarded, IDOR abort checks, audit logs created on all mutations, redirects to `labor-machines.index`.
-  - `routes/owner.php`: verified 7 labor-machines routes and 14 invoice routes cleanly defined without redundant route-level middleware, preserving exact names.
-  - `resources/views/app/labor-machines/index.blade.php`: verified all 7 `@can('labor_machines.manage')` matched with `@endcan`, zero syntax errors, and zero lingering `costing.manage` checks on labor-machine buttons.
-  - Test suites executed: 4 test suites (26 total tests, 205 assertions) all passed with 0 failures.
+  - `help_chatbot_widget.blade.php`: `<template x-if="isMounted || isOpen">`, idle & event hydration, mobile max-h-[85vh].
+  - `live_chat_widget.blade.php`: `<template x-if="isMounted || isOpen">`, `startActivePolling`/`stopActivePolling`, deferred idle check, mobile bottom sheet (`bottom: 0`, `height: 85vh`).
+  - `cookie_consent_banner.blade.php`: `bottom-20 sm:bottom-6` offset, `min-h-[44px]` touch targets on buttons & privacy link.
+  - `public_marketing.blade.php`: CDN removed, `@vite` assets linked, mobile theme toggle enabled.
+  - `typography.blade.php`: `text-wrap: balance` on H1/H2, font-family order unified.
+  - `tracking_pixels.blade.php`: Idle-deferred init, passive event listener.
+  - `blog/show.blade.php`: Duplicate CSS removed (~12 KB reduction), `.dark` specificity consolidated.
 - **Verdict**: APPROVE
-- **Unverified claims**: None. All claims independently verified.
+- **Unverified claims**: 0. All claims verified via direct execution of `php -l`, `npm run build`, and PHPUnit suites.
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Unmapped action methods: Verified 7/7 action methods mapped in `LaborMachineWebController::middleware()`.
-  - IDOR cross-tenant exploitation: Attempting to modify or delete a LaborRate or Machine belonging to another business is blocked by both Eloquent `BusinessScope` (404) and controller `abort_unless` (403).
-  - Unauthenticated / unauthorized bypass: Requests lacking required permissions are rejected (403 on API/JSON, 302 to portal on web).
-  - Missing parameter handling: Validation covers all required fields, and nullable attributes have resilient default values.
-- **Vulnerabilities found**: None.
-- **Untested angles**: View-level Blade layout redesign and UX polish are designated for Milestone M2 per PROJECT.md.
+  - Mobile viewport height <= 740px trap: Verified resolved by `height: 85vh` and `bottom: 0` bottom sheet.
+  - Initial page load TBT from background intervals: Verified eliminated (no intervals running while closed).
+  - Rapid opening/closing of chat causing interval leaks: Verified `stopActivePolling()` clears intervals cleanly.
+  - Mobile bottom dock collision: Verified `bottom-20` (80px) clears 68px dock.
+  - Lack of `requestIdleCallback` support: Graceful fallback implemented and tested.
+- **Vulnerabilities found**: 0 integrity violations, 0 regressions in Milestone 1 scope.
+- **Untested angles**: M2-M4 downstream views (pricing/commercial specific assertions belong to M2-M4).
+
+## Key Decisions Made
+- Independent verification completed for syntax linting (0 errors), Vite production compilation (7.14s, 0 errors), and PHPUnit test suites (CleanUrlCanonicalTest: 5 passed; PublicPricingAndEntitlementConsistencyTest: 4 passed; AdminPanelAndGoogleAuthTest & AdversarialCompilationAndLayoutTest: 31 passed; PublicMarketingFrontendE2ETest::test_tier2_chatbot_and_live_chat_deferral_integrity: 1 passed).
+- Integrity audit passed: genuine implementations, no facades, no hardcoded cheating.
+- Verdict formulated: APPROVE.
+
+## Artifact Index
+- `DISPATCH.md` — Inbound instruction record
+- `BRIEFING.md` — Persistent working memory
+- `progress.md` — Liveness heartbeat and milestone tracking
+- `handoff.md` — Final review report

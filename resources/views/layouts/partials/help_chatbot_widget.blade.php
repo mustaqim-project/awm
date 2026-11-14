@@ -77,7 +77,8 @@
         </div>
     </div>
 
-    {{-- 2. EXPANDABLE CHATBOT CONTAINER WINDOW --}}
+    {{-- 2. EXPANDABLE CHATBOT CONTAINER WINDOW (Deferred DOM mounting) --}}
+    <template x-if="isMounted || isOpen">
     <div x-show="isOpen"
          x-transition:enter="transition ease-out duration-300 transform"
          x-transition:enter-start="opacity-0 translate-y-6 scale-95"
@@ -85,7 +86,7 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 translate-y-6 scale-95"
-         class="fixed right-3 sm:right-6 bottom-20 sm:bottom-24 lg:bottom-22 z-50 w-[calc(100vw-1.5rem)] sm:w-[420px] h-[580px] sm:h-[630px] max-h-[calc(100vh-6.5rem)] bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 flex flex-col overflow-hidden backdrop-blur-2xl">
+         class="fixed right-3 sm:right-6 bottom-2 sm:bottom-24 lg:bottom-22 z-50 w-[calc(100vw-1.5rem)] sm:w-[420px] h-[580px] sm:h-[630px] max-h-[85vh] sm:max-h-[calc(100vh-6.5rem)] bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.25)] border border-black/10 dark:border-white/10 flex flex-col overflow-hidden backdrop-blur-2xl">
 
         {{-- WINDOW HEADER BAR --}}
         <div class="px-4 py-3 bg-gradient-to-r from-[#007AFF] via-[#5856D6] to-[#AF52DE] text-white flex items-center justify-between shadow-xs shrink-0 select-none">
@@ -417,6 +418,7 @@
         </div> {{-- End of MAIN ACTIVE CHAT VIEW WRAPPER --}}
 
     </div>
+    </template>
 
 </div>
 
@@ -424,6 +426,8 @@
 function coocaHelpChatbot() {
     return {
         isOpen: false,
+        isMounted: false,
+        isHydrated: false,
         showGreeting: true,
         isLoading: false,
         showHistoryView: false,
@@ -435,7 +439,11 @@ function coocaHelpChatbot() {
         messages: [],
         pollingTimers: {},
 
-        init() {
+        ensureHydrated() {
+            if (this.isHydrated) return;
+            this.isHydrated = true;
+            this.isMounted = true;
+
             // Load saved conversation state from session storage
             try {
                 const savedMode = sessionStorage.getItem('cooca_chat_active_mode');
@@ -458,9 +466,17 @@ function coocaHelpChatbot() {
             if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
                 this.showGreeting = false;
             }
+        },
+
+        init() {
+            // Dismiss greeting lightweight check
+            if (sessionStorage.getItem('cooca_help_greeting_dismissed')) {
+                this.showGreeting = false;
+            }
 
             // Listen for custom event from other pages/components
             window.addEventListener('cooca-open-chatbot', (e) => {
+                this.ensureHydrated();
                 const detail = e.detail || {};
                 this.isOpen = true;
                 this.dismissGreeting();
@@ -472,20 +488,37 @@ function coocaHelpChatbot() {
                 }
             });
 
-            // Check URL search params for deep linking
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.has('open_chatbot')) {
-                    this.isOpen = true;
-                    this.dismissGreeting();
-                    const convId = urlParams.get('open_chatbot');
-                    if (convId && convId !== '1' && convId !== 'new') {
-                        this.loadConversationFromHistory(convId, urlParams.get('mode'));
-                    } else if (convId === 'new') {
-                        this.startNewConversation();
+            // Defer URL parameter check and full hydration to idle time or after load
+            const checkIdleAndDeepLink = () => {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('open_chatbot')) {
+                        this.ensureHydrated();
+                        this.isOpen = true;
+                        this.dismissGreeting();
+                        const convId = urlParams.get('open_chatbot');
+                        if (convId && convId !== '1' && convId !== 'new') {
+                            this.loadConversationFromHistory(convId, urlParams.get('mode'));
+                        } else if (convId === 'new') {
+                            this.startNewConversation();
+                        }
+                        return;
                     }
+                } catch(e) {}
+
+                // Non-blocking idle hydration
+                if ('requestIdleCallback' in window) {
+                    window.requestIdleCallback(() => {
+                        this.ensureHydrated();
+                    }, { timeout: 4000 });
                 }
-            } catch(e) {}
+            };
+
+            if (document.readyState === 'complete') {
+                checkIdleAndDeepLink();
+            } else {
+                window.addEventListener('load', checkIdleAndDeepLink, { once: true });
+            }
         },
 
         async toggleHistoryView() {
@@ -593,6 +626,7 @@ function coocaHelpChatbot() {
         },
 
         toggleChat() {
+            this.ensureHydrated();
             this.isOpen = !this.isOpen;
             if (this.isOpen) {
                 this.dismissGreeting();

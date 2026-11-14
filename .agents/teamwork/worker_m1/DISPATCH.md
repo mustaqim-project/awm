@@ -1,61 +1,52 @@
-## 2026-11-08T23:15:19Z
-You are worker_m1.
-Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\
-The workspace root is: C:\laragon\www\cooca_core
+## 2026-11-13T22:31:26Z
+You are worker_m1, a teamwork_worker agent.
+Your working directory is: C:\laragon\www\cooca_core
+Your dedicated state folder is: C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\
+You MUST read the original request before doing anything else:
+Path: C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
 
-MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
-Also read C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md.
-Also read Explorer findings:
-- C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_2\handoff.md
-- C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md
-- Skill reference: C:\Users\Ulfah Ramadhani\.gemini\config\skills\laravel-permission\SKILL.md
+Scope Document: C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
+Survey Analysis: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md
 
-MANDATORY INTEGRITY WARNING:
 DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A teamwork_auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
 
-SCOPE & EXCLUSIVE WRITE OWNERSHIP:
-You own exclusively for Milestone 1:
-- `app\Http\Controllers\Web\LaborMachineWebController.php`
-- `routes\owner.php` (only lines pertaining to labor-machines and invoices routing)
-- `resources\views\app\labor-machines\index.blade.php` (specifically permission directives: replace costing.manage with labor_machines.manage)
+You EXCLUSIVELY own and may modify these files:
+- `resources/views/layouts/public_marketing.blade.php`
+- `resources/views/layouts/partials/help_chatbot_widget.blade.php`
+- `resources/views/layouts/partials/typography.blade.php`
+- `resources/views/public/partials/live_chat_widget.blade.php`
+- `resources/views/public/partials/cookie_consent_banner.blade.php`
+- `resources/views/public/partials/tracking_pixels.blade.php`
+- `resources/views/public/blog/show.blade.php`
 
-TASKS:
-1. Controller-Level RBAC in `app/Http/Controllers/Web/LaborMachineWebController.php`:
-   - Implement `Illuminate\Routing\Controllers\HasMiddleware`
-   - Add `use Illuminate\Routing\Controllers\HasMiddleware;` and `use Illuminate\Routing\Controllers\Middleware;`
-   - Define:
-     ```php
-     public static function middleware(): array
-     {
-         return [
-             new Middleware('require.permission:labor_machines.view', only: ['index']),
-             new Middleware('require.permission:labor_machines.manage', only: [
-                 'storeLabor',
-                 'updateLabor',
-                 'destroyLabor',
-                 'storeMachine',
-                 'updateMachine',
-                 'destroyMachine',
-             ]),
-         ];
-     }
-     ```
-2. Tenant Isolation & IDOR Protection in `LaborMachineWebController.php`:
-   - In `updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine`, retrieve `$business = Context::business();` and enforce:
-     `abort_unless($laborRate->business_id === $business->id, 403);` / `abort_unless($machine->business_id === $business->id, 403);`
-   - Ensure AuditLog entries are dispatched on create, update, and delete actions if standard in Cooca controllers.
-3. Clean Routing Migration in `routes/owner.php`:
-   - Clean up route-level `require.permission` on labor-machines and invoices where the controllers now enforce permissions via `HasMiddleware`, keeping module check (`module:labor_machines`, `module:sales`), prefixes, and route names intact.
-4. Permission Synchronization in `resources/views/app/labor-machines/index.blade.php`:
-   - Replace occurrences of `\App\Support\Context::hasPermission('costing.manage')` with `@can('labor_machines.manage')` / `@endcan` (or `\App\Support\Context::hasPermission('labor_machines.manage')`).
-5. Verification:
-   - Run `php -l` on all modified files to ensure zero syntax errors.
-   - Run relevant tests (e.g. `php artisan test tests/Feature/Invoice/` and `php artisan test tests/Unit/LaborAndMachineEngineTest.php`).
-   - Run `php artisan route:list --name=labor-machines` to verify routes.
+Your Milestone 1 Tasks:
+1. Asset Pipeline & Core Web Vitals (CWV) in `public_marketing.blade.php`:
+   - Eliminate client-side runtime Tailwind Play CDN (`<script defer src="https://cdn.tailwindcss.com"></script>`) and the `console.warn` suppression hack.
+   - Use precompiled production Vite assets (`@vite(['resources/css/app.css', 'resources/js/app.js'])`) or verify the compiled bundle is cleanly integrated.
+   - Add `defer` to `<script src="{{ asset('js/app-alert.js') }}"></script>`.
+   - Prevent font layout shift (CLS): ensure font stack prioritizes system fonts and clean fallbacks.
+2. Chatbot and Live Chat Deferral:
+   - In `resources/views/layouts/partials/help_chatbot_widget.blade.php` and `resources/views/public/partials/live_chat_widget.blade.php`:
+     - Defer Alpine initialization and heavy DOM mounting until user trigger (click on button) or idle time (`requestIdleCallback`).
+     - Eliminate background polling intervals (`setInterval(..., 3500)`) and instant WebSocket/Pusher initialization on initial page load to eliminate TBT overhead.
+3. Mobile Chat Window Viewport Trap & Collisions Fix:
+   - Fix `floating-live-chat-window` on mobile:
+     Remove fixed 748px height overflow trap (`bottom: 10.5rem` + 580px fixed height). Make it a responsive bottom sheet/modal on mobile (`bottom: 0`, `max-h-[85vh]`, safe-area insets).
+     Ensure header bar, title, and close button are 100% visible and accessible on mobile screens < 740px.
+   - Resolve collision between mobile bottom dock and Cookie Consent Banner.
+4. Mobile Theme Switch Accessibility:
+   - Make theme toggle accessible on mobile screens (inside mobile navigation menu drawer or header bar), not restricted to `hidden sm:inline-flex`.
+5. Cookie Consent Banner Touch Targets:
+   - In `resources/views/public/partials/cookie_consent_banner.blade.php`:
+     Upgrade button touch targets from `min-h-[34px]` to `min-h-[44px]` per WCAG 2.5.5 / Apple HIG.
+6. Blog Show Inline CSS Optimization:
+   - In `resources/views/public/blog/show.blade.php`:
+     Clean up and optimize the ~17.8 KB inline `<style>` CSS in `<head>`, removing redundant overrides.
+7. Verification:
+   - Run `php -l` on all modified Blade files to verify 0 syntax errors.
+   - Run `npm run build` to verify clean build with 0 errors.
+   - Run existing automated test suites to ensure zero regressions.
 
-DELIVERABLE:
-Write a comprehensive handoff report to:
+Document commands and results in your handoff report at:
 `C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md`
-Document every change, file paths, verification command outputs, and test results.
-Update `C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\progress.md`.
-Send a completion message when finished.
+And message parent when complete.

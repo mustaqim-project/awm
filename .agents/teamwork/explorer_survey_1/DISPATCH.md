@@ -1,62 +1,36 @@
-## 2026-11-07T06:51:38Z
-You are Explorer 1 (UI & Blade Views).
-Your Working Directory is: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1
-Your parent is: e2aae656-229b-42bb-a7be-8273bdd8a984
+# Dispatch: explorer_survey_1
+Role: Public Layouts and Assets Surveyor
+State folder: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
+Working directory: C:\laragon\www\cooca_core
+Original Request: C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
 
-MANDATORY INSTRUCTIONS:
-1. You MUST read the Original Request file first:
-   c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-2. You are a READ-ONLY exploration agent. Do NOT modify any source code files. You may write only to your working directory (.agents/teamwork/explorer_survey_1/). Keep progress.md updated with "Last visited: [timestamp]".
-3. Relevant skill to consult:
-   C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-simplify-layout\SKILL.md
-   and C:\Users\Ulfah Ramadhani\.gemini\config\skills\responsive-ui-ux\SKILL.md if needed.
+## 2026-11-13T21:52:02Z
+You are explorer_survey_1, a teamwork_explorer agent.
+Your working directory is: C:\laragon\www\cooca_core
+Your dedicated state folder is: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
+You MUST read the original request before doing anything else:
+Path: C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
 
-TASK OBJECTIVE:
-Thoroughly inspect all Blade view files in:
-- c:\laragon\www\cooca_core\resources\views\app\ai
-- c:\laragon\www\cooca_core\resources\views\app\ai-studio
-and any related partials, layouts, or components used by them.
+Task: Public Marketing Layouts, Assets, Typography, Chatbot & Tooling Survey
+1. Map and inspect every file under your assigned scope:
+   - Layouts & partials:
+     - `resources/views/layouts/public_marketing.blade.php`
+     - `resources/views/layouts/partials/help_chatbot_widget.blade.php`
+     - `resources/views/layouts/partials/typography.blade.php`
+     - `resources/views/public/partials/` (recursively inspect all files: header, footer, navigation, cta, banners, etc.)
+2. Analyze the global asset pipeline and dependencies:
+   - How Vite, CSS, JS, and Google/local fonts are loaded in `public_marketing.blade.php`.
+   - Check for render-blocking assets, font bloat, layout shifts (CLS), preloading of critical assets vs non-critical.
+   - Deep dive into `help_chatbot_widget.blade.php`: how it is loaded/initialized, whether it blocks initial interactivity/TBT, and design a non-blocking/lazy-loading deferral mechanism.
+   - Deep dive into `typography.blade.php`: font family declarations, font-display: swap, layout shift risks.
+   - Theme system: inspect dark/light theme toggle, localStorage keys, class `.dark` application, flash of incorrect theme (FOUC) prevention, and verify adherence to a single source of truth without duplicated theme definitions.
+3. Discover verification resources:
+   - Check `package.json`, build scripts (`npm run build`, `npm run dev`), linters, test commands.
+   - Check PHP linting (`php -l`) and any existing test suites or static analysis tools in the repository.
+4. Conduct a code-level audit across the 7 dimensions for your scoped files:
+   (1) Responsive Design, (2) Core Web Vitals & LCP, (3) TBT & JavaScript, (4) CSS/Fonts/Assets, (5) SEO, (6) Light/Dark Theme contrast, (7) Multilingual/Localization.
+   Specify for each finding: Priority (Critical/High/Medium/Low), Category, Affected File, Code Location, Root Cause, Impact, Concrete Fix, Regression Risk.
+5. Write your complete handoff report to:
+   `C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md`
+   And send a completion message to parent with the summary and path.
 
-INVESTIGATE & DOCUMENT:
-1. Enumerate all view files and their hierarchy/structure.
-2. Identify UI clutter, crowded action buttons, floating or absolute-positioned buttons that overlap or collide on mobile (375px-430px) or desktop (>= 1024px).
-3. Identify visual hierarchy issues: separation between primary, secondary, and destructive actions.
-4. Identify broken responsive layouts, fixed widths, overflow-x hazards, and modal/drawer issues.
-5. Provide concrete, actionable recommendations for simplifying the UI, separating button tiers, and ensuring zero overlap and clean mobile/desktop responsiveness.
-
-OUTPUT:
-Write your full investigation report to:
-c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md
-When done, send a message to your parent with a concise summary and confirm handoff.md is ready.
-
-
-## 2026-11-08T22:58:46Z
-You are explorer_survey_1.
-Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
-The workspace root is: C:\laragon\www\cooca_core
-
-MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
-
-Also read skill guidelines:
-- UI Simplification: C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-simplify-layout\SKILL.md
-
-TASK:
-Perform a comprehensive read-only survey of all Blade view templates in:
-1. `resources\views\app\invoices` (and subdirectories/components)
-2. `resources\views\app\labor-machines` (and subdirectories/components)
-
-Investigate and document in detail:
-- List every blade view file and its purpose (index, show, create, edit, forms, modals, tables, components).
-- UI structure and visual hierarchy: analyze headers, filters, table columns, action buttons, modals, dropdowns.
-- Identify all UI issues:
-  * Element overlapping or cramped controls.
-  * Inconsistent button styling or too many competing primary buttons.
-  * Mobile/responsive issues (horizontal overflow, unstacked buttons, small touch targets).
-  * Presence or absence of authorization gates/directives (`@can`, `@cannot`) around sensitive action buttons (Create, Edit, Delete, Export, Print, Approve, etc.).
-- Concrete improvement recommendations aligned with `ui-simplify-layout` (no-overlap, clean button grouping, clear primary vs secondary hierarchy, mobile responsiveness).
-
-Deliverable:
-Write a thorough, structured handoff report to:
-`C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\handoff.md`
-Update your progress in `C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\progress.md`.
-When finished, send a message to the orchestrator with a summary and confirmation of the report path.

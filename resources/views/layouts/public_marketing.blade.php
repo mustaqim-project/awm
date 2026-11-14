@@ -76,10 +76,10 @@
         'isStorefront' => false,
     ])
 
-    <!-- Multilingual Hreflang Tags -->
-    <link rel="alternate" hreflang="id" href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" />
-    <link rel="alternate" hreflang="en" href="{{ request()->fullUrlWithQuery(['lang' => 'en']) }}" />
-    <link rel="alternate" hreflang="x-default" href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}" />
+    <!-- Multilingual Hreflang Tags (Canonical URLs without query parameter pollution) -->
+    <link rel="alternate" hreflang="id" href="{{ url()->current() }}?lang=id" />
+    <link rel="alternate" hreflang="en" href="{{ url()->current() }}?lang=en" />
+    <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}?lang=id" />
 
     <!-- Webmaster Verification -->
     @if (!empty($seoGoogleVerification))
@@ -144,68 +144,16 @@
         {!! $seoCustomHeadScripts !!}
     @endif
 
-    <!-- Fonts (SF Pro Fallback: Inter & JetBrains Mono with Non-Blocking Asynchronous Preload) -->
+    <!-- Fonts (SF Pro Fallback: Inter with Non-Blocking Asynchronous Preload to Prevent CLS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"></noscript>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
     @stack('styles')
 
-    <!-- Tailwind CSS with Apple HIG Design System Tokens -->
-        <script>
-        (function() {
-            const _origWarn = console.warn;
-            console.warn = function(...args) {
-                if (args.some(a => typeof a === 'string' && a.indexOf('tailwindcss.com') !== -1)) return;
-                _origWarn.apply(console, args);
-            };
-        })();
-    </script>
-    <script>
-        window.tailwind = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', '"Inter"',
-                            'system-ui', 'sans-serif'
-                        ],
-                        mono: ['"JetBrains Mono"', 'monospace'],
-                    },
-                    colors: {
-                        apple: {
-                            blue: '#007AFF',
-                            'blue-dark': '#0A84FF',
-                            green: '#34C759',
-                            'green-dark': '#30D158',
-                            orange: '#FF9500',
-                            'orange-dark': '#FF9F0A',
-                            red: '#FF3B30',
-                            'red-dark': '#FF453A',
-                            purple: '#AF52DE',
-                            'purple-dark': '#BF5AF2',
-                            teal: '#30B0C7',
-                            'teal-dark': '#40C8E0',
-                            indigo: '#5856D6',
-                            'indigo-dark': '#5E5CE6',
-                            yellow: '#FFCC00',
-                            'yellow-dark': '#FFD60A',
-                        },
-                        systemGray: {
-                            1: '#8E8E93',
-                            2: '#AEAEB2',
-                            3: '#C7C7CC',
-                            4: '#D1D1D6',
-                            5: '#E5E5EA',
-                            6: '#F2F2F7',
-                        }
-                    }
-                }
-            }
-        };
-    </script>
-    <script defer src="https://cdn.tailwindcss.com"></script>
+    <!-- Precompiled Production Vite Assets (Tailwind CSS v4 + Alpine.js / Echo) -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
@@ -223,6 +171,8 @@
             --apple-card-border: rgba(0, 0, 0, 0.06);
             --apple-text: #1D1D1F;
             --apple-text-muted: #6E6E73;
+            --text-1: #1D1D1F;
+            --text-2: #6E6E73;
         }
 
         .dark,
@@ -238,6 +188,8 @@
             --apple-card-border: rgba(255, 255, 255, 0.08);
             --apple-text: #F5F5F7;
             --apple-text-muted: #86868B;
+            --text-1: #F5F5F7;
+            --text-2: #86868B;
         }
 
         html {
@@ -641,9 +593,9 @@
                         </a>
                     </div>
 
-                    <!-- Apple Theme Switcher Button (Desktop & Tablet only) -->
+                    <!-- Apple Theme Switcher Button (Accessible on Mobile, Tablet & Desktop) -->
                     <button type="button" @click="toggleTheme()"
-                        class="hidden sm:inline-flex w-8 h-8 rounded-full items-center justify-center text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 border border-white/10 active:scale-95 transition-all shrink-0 shadow-xs"
+                        class="inline-flex w-8 h-8 rounded-full items-center justify-center text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 border border-white/10 active:scale-95 transition-all shrink-0 shadow-xs"
                         title="{{ __('public_marketing.theme_label') }}" aria-label="{{ __('public_marketing.theme_label') }}">
                         <!-- Sun Icon for Dark Mode (Switch to Light) -->
                         <svg x-show="isDark" x-cloak class="w-4 h-4 text-[#FFD60A] shrink-0" width="16" height="16"
@@ -714,7 +666,7 @@
                     <!-- Mobile Hamburger Button (Apple HIG Touch Target & Clean Responsive SVG) -->
                     <button type="button"
                         @click="mobileMenu = !mobileMenu; $nextTick(() => { if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons(); })"
-                        class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-[11px] sm:rounded-[12px] bg-white/10 hover:bg-white/15 text-slate-200 hover:text-white active:scale-95 transition-all flex items-center justify-center shadow-xs focus:outline-none shrink-0 border border-white/10"
+                        class="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-[11px] sm:rounded-[12px] bg-white/10 hover:bg-white/15 text-slate-200 hover:text-white active:scale-95 transition-all flex items-center justify-center shadow-xs focus:outline-none shrink-0 border border-white/10"
                         :class="mobileMenu ? 'bg-white/20 text-[#00C2FF] border-[#00C2FF]/40 ring-2 ring-[#00C2FF]/30' : ''"
                         aria-label="Toggle Mobile Navigation" :aria-expanded="mobileMenu ? 'true' : 'false'">
                         <svg x-show="!mobileMenu" class="w-5 h-5 stroke-current stroke-2" fill="none"
@@ -1405,6 +1357,23 @@
                             EN
                         </a>
                     </div>
+                </div>
+
+                <!-- 0b. Mobile Theme Switcher -->
+                <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <svg x-show="isDark" x-cloak class="w-4 h-4 text-[#FFD60A]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                        </svg>
+                        <svg x-show="!isDark" class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                        </svg>
+                        <span class="text-xs font-semibold text-slate-300">{{ __('public_marketing.theme_label') }}</span>
+                    </div>
+                    <button type="button" @click="toggleTheme()"
+                        class="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-semibold text-slate-200 flex items-center gap-1.5 active:scale-95 transition-all">
+                        <span x-text="isDark ? 'Light Mode' : 'Dark Mode'"></span>
+                    </button>
                 </div>
 
                 <!-- 1. Top Auth & User Profile Card -->
@@ -2663,8 +2632,8 @@
     @include('public.partials.tracking_pixels')
     @include('public.partials.cookie_consent_banner')
 
-    <!-- AppAlert (Centralized Alert & Confirm System) -->
-    <script src="{{ asset('js/app-alert.js') }}"></script>
+    <!-- AppAlert (Centralized Alert & Confirm System - Deferred) -->
+    <script defer src="{{ asset('js/app-alert.js') }}"></script>
 
     @php
         $flashSuccess = session()->pull('success');

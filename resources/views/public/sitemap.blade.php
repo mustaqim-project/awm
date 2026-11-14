@@ -5,6 +5,24 @@
 
 @section('og_title', 'Peta Situs (HTML Sitemap) | COOCA')
 @section('og_description', __('public_marketing.sitemap_seo_desc'))
+@section('canonical', route('sitemap.html'))
+
+@section('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Peta Situs COOCA",
+    "description": "{{ __('public_marketing.sitemap_seo_desc') }}",
+    "url": "{{ route('sitemap.html') }}",
+    "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "url": "{{ url('/') }}"
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <div class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors pb-24">
@@ -12,7 +30,7 @@
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
         <!-- ═══ TYPE D SITEMAP HERO (Midnight #060B1E Bento Canvas - No Breadcrumb) ══ -->
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
-        <header class="relative bg-[#060B1E] text-white overflow-hidden border-b border-white/10 min-h-[calc(100svh-4rem)] lg:min-h-[calc(100svh-84px)] flex items-center">
+        <header class="relative bg-[#060B1E] text-white overflow-hidden border-b border-white/10 py-12 sm:py-16 lg:py-20 flex items-center">
             {{-- Dual Ambient Glows --}}
             <div class="absolute top-1/4 -right-24 w-96 h-96 bg-[#007AFF]/20 rounded-full blur-[120px] pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#00C4D8]/15 rounded-full blur-[140px] pointer-events-none"></div>
@@ -55,7 +73,7 @@
                                 <span>Auto-Sync XML</span>
                             </div>
                             <a href="{{ url('/sitemap.xml') }}" target="_blank" rel="noopener"
-                                class="h-8 px-3.5 rounded-xl text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0066DF] transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-[0.98]">
+                                class="h-11 min-h-[44px] px-3.5 rounded-xl text-xs font-semibold text-white bg-[#007AFF] hover:bg-[#0066DF] transition-all inline-flex items-center gap-1.5 cursor-pointer shadow-sm active:scale-[0.98]">
                                 <i data-lucide="file-code-2" class="w-3.5 h-3.5"></i>
                                 <span>{{ __('public_marketing.btn_open_raw_xml') }}</span>
                                 <i data-lucide="external-link" class="w-3 h-3 text-white/70"></i>
@@ -199,7 +217,7 @@
                             <div class="space-y-1.5">
                                 @foreach ($items as $item)
                                     <a href="{{ $item['loc'] }}"
-                                        class="group flex items-center justify-between gap-2.5 p-2 sm:p-2.5 rounded-[12px] bg-slate-50 dark:bg-white/[0.03] hover:bg-blue-50/80 dark:hover:bg-blue-500/10 border border-black/[0.03] dark:border-white/[0.05] hover:border-[#007AFF]/30 transition-all text-xs text-[#1D1D1F] dark:text-[#F5F5F7] min-h-[40px]">
+                                        class="group flex items-center justify-between gap-2.5 p-2 sm:p-2.5 rounded-[12px] bg-slate-50 dark:bg-white/[0.03] hover:bg-blue-50/80 dark:hover:bg-blue-500/10 border border-black/[0.03] dark:border-white/[0.05] hover:border-[#007AFF]/30 transition-all text-xs text-[#1D1D1F] dark:text-[#F5F5F7] min-h-[44px]">
                                         <div class="flex items-center gap-2 min-w-0 flex-1">
                                             <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-[#007AFF]/60 group-hover:text-[#007AFF] group-hover:translate-x-0.5 transition-all shrink-0"></i>
                                             <span class="truncate font-medium group-hover:text-[#007AFF] dark:group-hover:text-[#0A84FF] transition-colors">
@@ -220,11 +238,11 @@
             <!-- SEO Directive Summary Box (Apple Inset Card) -->
             <div
                 class="p-6 sm:p-8 rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs space-y-4">
-                <h3
+                <h2
                     class="text-xs font-bold text-[#1D1D1F] dark:text-[#F5F5F7] uppercase tracking-wider flex items-center gap-2">
                     <i data-lucide="shield-check" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
                     <span>Kebijakan Indexing Mesin Pencari (Search Engine Directives)</span>
-                </h3>
+                </h2>
                 <div
                     class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                     <div
@@ -249,6 +267,18 @@
                             tegas dilarang untuk diindeks guna menjaga kerahasiaan data pengguna.</p>
                     </div>
                 </div>
+            </div>
+            <!-- Conversion Exit Ramp -->
+            <div class="p-6 sm:p-8 rounded-[24px] bg-gradient-to-r from-[#060B1E] to-[#0A122C] border border-white/10 text-white flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
+                <div class="space-y-1 text-center sm:text-left">
+                    <h3 class="text-base sm:text-lg font-bold text-white">Temukan Solusi yang Tepat untuk Usaha Anda</h3>
+                    <p class="text-xs sm:text-sm text-slate-300">Jelajahi fitur kasir POS, akuntansi, dan stok multi-cabang tanpa biaya awal.</p>
+                </div>
+                <a href="{{ route('register') }}"
+                    class="h-11 px-6 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shrink-0 active:scale-95 transition min-h-[44px]">
+                    <span>Coba COOCA Sekarang</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
             </div>
         </main>
     </div>

@@ -1,54 +1,20 @@
-## 2026-11-07T07:32:00Z
-You are Challenger 2 for Milestone M1 (RBAC & Controller Security).
-Your Working Directory is: c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2
-Your parent is: e2aae656-229b-42bb-a7be-8273bdd8a984
+## 2026-11-13T22:52:20Z
+You are challenger_m1_2, a teamwork_challenger agent.
+Your working directory is: C:\laragon\www\cooca_core
+Your dedicated state folder is: C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\
+You MUST read the original request before doing anything else:
+Path: C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
 
-MANDATORY INSTRUCTIONS:
-1. You MUST read the Original Request file first:
-   c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
-2. Read the Project Plan:
-   c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
-3. Read Worker M1's handoff report:
-   c:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
+Scope Document: C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
+Worker Handoff Report: C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
 
-TASK OBJECTIVE:
-Adversarially verify route resolution, legacy fallback routing, and seeder stability:
-1. Test legacy routes `/ai/*` (e.g. `/ai/providers`, `/ai/actions/{proposal}/approve`) to ensure Controller-Level RBAC automatically protects legacy alias endpoints without bypassing middleware.
-2. Verify seeder idempotency: running `php artisan db:seed --class=RbacSeeder --force` multiple times consecutively must NOT duplicate permissions or disconnect role relations.
-3. Test edge case: ensure unauthenticated guests attempting to hit `/cooca-ai/*` are properly intercepted and redirected to login rather than causing 500 exceptions.
-
-You may run tinker, route lists, or temporary scripts in your working directory. Do NOT modify source code files.
-
-OUTPUT:
-Write your empirical challenge report to `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\handoff.md`.
-Explicitly declare your verdict: `APPROVE` or `REQUEST_CHANGES`.
-Send a message to parent with your verdict and empirical proof.
-
-
-## 2026-11-08T23:35:44Z
-You are challenger_m1_2.
-Your working directory is: C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\
-The workspace root is: C:\laragon\www\cooca_core
-
-MANDATORY FIRST STEP: Read C:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md before starting work.
-Also read:
-- C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md
-- C:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md
-
-TASK:
-Empirically stress-test view compilation and costing/invoice engine integrity:
-1. Verify view compilation:
-   - Run `php artisan view:cache` or `php artisan view:clear` to verify that `resources/views/app/labor-machines/index.blade.php` compiles cleanly with no syntax errors or unclosed `@can` / `@endcan` tags.
-2. Verify route caching:
-   - Run `php artisan route:clear` and check route resolution for all labor-machines and invoices routes.
-3. Verify costing engine execution:
-   - Run `php artisan test tests/Feature/LaborAndMachineEngineTest.php`.
-   - Run `php artisan test tests/Feature/InvoiceModuleAuditTest.php`.
-4. Adversarial check:
-   - Check if any permission bypass exists where a user without `labor_machines.manage` can submit a POST/PUT/DELETE request to `/labor-rates` or `/machines`.
-   - Verify that all routes reject unauthenticated requests.
-
-VERDICT:
-Your handoff MUST issue a verdict: **APPROVE** or **REQUEST_CHANGES**.
-Write your report to: `C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\handoff.md`.
-Update `progress.md` and message the orchestrator when finished.
+Your Task: Empirical Challenge on Chatbot Deferral, TBT, and Theme Consistency
+1. Write and run empirical test harnesses to test:
+   - Prove that `help_chatbot_widget.blade.php` and `live_chat_widget.blade.php` do not mount heavy modal DOM nodes eagerly on initial page load (verify `<template x-if="...">` prevents eager parsing).
+   - Prove that zero background polling timers (`setInterval`) or eager WebSocket calls fire upon initial page load without user interaction.
+   - Prove that the theme switch button is present and clickable on mobile screens (< 640px) without FOUC or theme desynchronization.
+   - Prove that blog show CSS consolidation retains proper contrast in both light and dark themes without broken style rules.
+2. Report verified empirical results and deliver an unambiguous verdict: APPROVE or REJECT.
+Write your complete report to:
+`C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_2\handoff.md`
+And message parent with verdict and summary.

@@ -67,7 +67,8 @@
         </div>
     </div>
 
-    {{-- EXPANDABLE LIVE CHAT CONTAINER (MODAL / FLOATING POPUP) --}}
+    {{-- EXPANDABLE LIVE CHAT CONTAINER (MODAL / FLOATING POPUP - Deferred DOM Mount) --}}
+    <template x-if="isMounted || isOpen">
     <div x-show="isOpen" 
          x-transition:enter="transition ease-out duration-300 transform"
          x-transition:enter-start="opacity-0 translate-y-6 scale-95"
@@ -75,7 +76,7 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 translate-y-6 scale-95"
-         class="fixed floating-live-chat-window right-2 sm:right-6 lg:right-6 z-50 w-[calc(100vw-1rem)] sm:w-[410px] h-[580px] sm:h-[620px] max-h-[calc(100vh-6rem)] bg-white dark:bg-[#18181B] rounded-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-violet-100 dark:border-white/10 flex flex-col overflow-hidden">
+         class="fixed floating-live-chat-window right-0 sm:right-6 lg:right-6 z-50 w-full sm:w-[410px] bg-white dark:bg-[#18181B] sm:rounded-[24px] rounded-t-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-violet-100 dark:border-white/10 flex flex-col overflow-hidden">
         
         {{-- HEADER BAR --}}
         <div class="px-4 py-3.5 bg-gradient-to-r from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-between shadow-xs shrink-0">
@@ -121,7 +122,7 @@
                 </button>
 
                 {{-- Close Button --}}
-                <button type="button" @click="isOpen = false" 
+                <button type="button" @click="toggleChat()" 
                         title="{{ __('public_marketing.live_chat_close') }}"
                         class="w-8 h-8 rounded-full hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -334,16 +335,37 @@
         </div>
 
     </div>
+    </template>
 
 </div>
 
-{{-- STYLES FOR SAFE ELEVATION & POSITIONS --}}
+{{-- STYLES FOR SAFE ELEVATION & POSITIONS (Responsive Mobile Bottom Sheet & Zero Trapping) --}}
 <style>
     .floating-live-chat-fab {
         bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;
     }
-    .floating-live-chat-window {
-        bottom: calc(10.5rem + env(safe-area-inset-bottom, 0px)) !important;
+    @media (max-width: 639px) {
+        .floating-live-chat-window {
+            bottom: 0 !important;
+            right: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            max-width: 100vw !important;
+            height: 85vh !important;
+            max-height: 85vh !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+    }
+    @media (min-width: 640px) and (max-width: 1023px) {
+        .floating-live-chat-window {
+            bottom: calc(6.5rem + env(safe-area-inset-bottom, 0px)) !important;
+            right: 1.5rem !important;
+            width: 410px !important;
+            height: 580px !important;
+            max-height: calc(100vh - 7.5rem) !important;
+        }
     }
     @media (min-width: 1024px) {
         .floating-live-chat-fab {
@@ -351,6 +373,10 @@
         }
         .floating-live-chat-window {
             bottom: 6.25rem !important;
+            right: 1.5rem !important;
+            width: 410px !important;
+            height: 600px !important;
+            max-height: calc(100vh - 7.5rem) !important;
         }
         /* Elevate WhatsApp FAB when Live Chat is active on desktop */
         .floating-wa-fab {
@@ -369,6 +395,7 @@
 function coocaLiveChatWidget() {
     return {
         isOpen: false,
+        isMounted: false,
         showGreeting: false,
         isSubmitting: false,
         isSending: false,
@@ -452,25 +479,57 @@ function coocaLiveChatWidget() {
                 window.addEventListener('scroll', handleScroll, { passive: true });
             }
 
-            // If session already exists, restore chat history immediately
+            // Defer passive session hydration to idle time (Zero TBT on initial page load)
             if (this.sessionToken) {
-                this.loadChatHistory();
-                this.connectReverb();
+                const idleHydrate = () => {
+                    if ('requestIdleCallback' in window) {
+                        window.requestIdleCallback(() => {
+                            if (!this.isOpen && this.sessionToken) {
+                                this.pollMessages();
+                            }
+                        }, { timeout: 4000 });
+                    }
+                };
+                if (document.readyState === 'complete') {
+                    idleHydrate();
+                } else {
+                    window.addEventListener('load', idleHydrate, { once: true });
+                }
             }
+        },
 
-            // Fallback polling every 3.5 seconds for resilience
-            this.pollInterval = setInterval(() => {
-                if (this.sessionToken && !this.isSessionEnded) {
-                    this.pollMessages();
-                }
-            }, 3500);
+        startActivePolling() {
+            this.stopActivePolling();
 
-            // Client-side 5-minute inactivity check every 5 seconds
-            this.timeoutCheckInterval = setInterval(() => {
-                if (this.sessionToken && !this.isSessionEnded) {
-                    this.checkInactivityTimeout();
+            if (this.sessionToken) {
+                if (this.messages.length === 0) {
+                    this.loadChatHistory();
                 }
-            }, 5000);
+                this.connectReverb();
+
+                this.pollInterval = setInterval(() => {
+                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
+                        this.pollMessages();
+                    }
+                }, 3500);
+
+                this.timeoutCheckInterval = setInterval(() => {
+                    if (this.isOpen && this.sessionToken && !this.isSessionEnded) {
+                        this.checkInactivityTimeout();
+                    }
+                }, 5000);
+            }
+        },
+
+        stopActivePolling() {
+            if (this.pollInterval) {
+                clearInterval(this.pollInterval);
+                this.pollInterval = null;
+            }
+            if (this.timeoutCheckInterval) {
+                clearInterval(this.timeoutCheckInterval);
+                this.timeoutCheckInterval = null;
+            }
         },
 
         checkInactivityTimeout() {
@@ -490,6 +549,7 @@ function coocaLiveChatWidget() {
         },
 
         handleSessionEnded(reason) {
+            this.stopActivePolling();
             this.isSessionEnded = true;
             this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
             this.isWaitingReply = false;
@@ -529,6 +589,7 @@ function coocaLiveChatWidget() {
         },
 
         startNewChatSession() {
+            this.stopActivePolling();
             this.isSessionEnded = false;
             this.sessionEndedReason = '';
             this.sessionToken = '';
@@ -542,13 +603,17 @@ function coocaLiveChatWidget() {
         },
 
         toggleChat() {
+            this.isMounted = true;
             this.isOpen = !this.isOpen;
             if (this.isOpen) {
                 this.unreadCount = 0;
                 this.showGreeting = false;
+                this.startActivePolling();
                 this.$nextTick(() => {
                     this.scrollToBottom();
                 });
+            } else {
+                this.stopActivePolling();
             }
         },
 
@@ -583,8 +648,9 @@ function coocaLiveChatWidget() {
                     localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
                     localStorage.setItem('cooca_livechat_email', this.visitorData.email);
 
-                    // Connect Reverb WebSocket for real-time messages
+                    // Connect Reverb WebSocket and start live active polling
                     this.connectReverb();
+                    this.startActivePolling();
 
                     this.$nextTick(() => {
                         this.scrollToBottom();

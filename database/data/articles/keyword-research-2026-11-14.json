@@ -1,0 +1,368 @@
+{
+  "date": "2026-11-14",
+  "batch": 11,
+  "market": "Indonesia (UMKM / Ritel / F&B / Grosir)",
+  "total_keywords": 20,
+  "keywords": [
+    {
+      "id": 572,
+      "topic": "Batas Akhir Setor PPh Final 0,5 Persen 15 November 2026 dan Pembuatan Kode Billing Coretax DJP bagi UMKM",
+      "primary_keyword": "batas akhir setor pph final 15 november 2026",
+      "slug": "batas-akhir-setor-pph-final-15-november-2026-billing-coretax",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "kode billing pph final umkm coretax",
+        "kap kjs 411128 420 pph final",
+        "cara bayar pajak umkm online djp",
+        "sanksi telat setor pph final 0 koma 5 persen",
+        "bukti penerimaan negara ntpn pajak"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Panduan langkah pembuatan kode billing mandiri KAP/KJS 411128-420 di portal Coretax, batas waktu cut-off pembayaran bank persepsi, dan validasi NTPN sebagai pengganti pelaporan SPT Masa.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 573,
+      "topic": "Mitigasi Penipuan Bukti Transfer dan QRIS Palsu Kasir dengan Integrasi QRIS Soundbox Audio Otomatis",
+      "primary_keyword": "mitigasi penipuan bukti transfer qris palsu",
+      "slug": "mitigasi-penipuan-bukti-transfer-qris-palsu-soundbox-audio-kasir",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "cara kerja qris soundbox toko ritel",
+        "modus struk transfer palsu kasir",
+        "pencegahan penipuan qris warung makan",
+        "notifikasi suara pembayaran kasir pos",
+        "verifikasi transaksi qris real time"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Bedah modus penipuan bukti bayar editan AI, SOP kasir dilarang percaya layar HP pembeli, dan keunggulan notifikasi audio otomatis QRIS Soundbox yang terhubung ke mesin kasir.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 574,
+      "topic": "Sanksi Administratif Wajib Halal BPJPH 2026 dan Panduan Pengajuan Self-Declare Produk Pangan UMKM",
+      "primary_keyword": "sanksi administratif wajib halal bpjph 2026",
+      "slug": "sanksi-administratif-wajib-halal-bpjph-2026-self-declare-umkm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "syarat sertifikasi halal gratis sehati",
+        "tahapan sanksi permen bpjph nomor 2 tahun 2026",
+        "cara daftar sertifikat halal ptsp halal go id",
+        "kriteria pendamping proses produk halal pph",
+        "aturan label halal makanan minuman kemasan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Hierarki sanksi administratif (peringatan tertulis hingga penarikan barang), kriteria bebas biaya program Sehati self-declare, dan checklist verifikasi bahan baku halal.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 575,
+      "topic": "Manajemen Rantai Dingin Cold Chain Makanan Beku Frozen Food UMKM saat Cuaca Ekstrem Musim Hujan",
+      "primary_keyword": "manajemen cold chain frozen food musim hujan",
+      "slug": "manajemen-cold-chain-rantai-dingin-frozen-food-musim-hujan",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "sop suhu penyimpanan freezer makanan beku",
+        "kemasan styrofoam ice gel pengiriman hujan",
+        "pencegahan bakteri defrost produk daging beku",
+        "genset cadangan freezer toko ritel",
+        "rotasi stok fefo frozen food gudang"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Protokol pengendalian suhu penyimpanan, teknik kemas insulasi ganda menggunakan thermal foil dan ice gel beku, serta checklist inspeksi freezer harian.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 576,
+      "topic": "Strategi Negosiasi Harga dan Termin Pembayaran ke Supplier Grosir Menjelang Lonjakan Permintaan 12.12",
+      "primary_keyword": "strategi negosiasi harga supplier grosir 12.12",
+      "slug": "strategi-negosiasi-harga-dan-termin-supplier-grosir-12-12",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara meminta tempo pembayaran net 45 pemasok",
+        "kontrak kuota pengadaan barang harbolnas",
+        "negosiasi diskon volume kulakan ritel",
+        "sla pengiriman barang supplier akhir tahun",
+        "jaminan alokasi stok distributor utama"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Teknik memanfaatkan rekam jejak pembelian masa lalu sebagai modal tawar, klausul Service Level Agreement (SLA) denda keterlambatan, dan pemisahan order komitmen.",
+      "cooca_feature_alignment": "Invoice, PO & SO"
+    },
+    {
+      "id": 577,
+      "topic": "SOP Blind Counting Kasir dan Berita Acara Rekonsiliasi Selisih Kas Pergantian Shift Toko Ritel",
+      "primary_keyword": "sop blind counting kasir rekonsiliasi shift",
+      "slug": "sop-blind-counting-kasir-dan-rekonsiliasi-selisih-kas-shift",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "cara hitung fisik kas laci tanpa sistem",
+        "berita acara selisih kas fisik pos",
+        "pemisahan uang floater modal kembalian",
+        "x report shift kasir minimarket",
+        "tanggung jawab kasir selisih minus"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Langkah demi langkah blind count, rumus pencocokan uang fisik dengan total omzet tunai sistem POS, serta format Berita Acara Selisih Kas bermeterai internal.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 578,
+      "topic": "Standarisasi Keamanan Pangan dan Izin Edar P-IRT untuk Membuka Peluang Tembus Jaringan Ritel Modern",
+      "primary_keyword": "standarisasi keamanan pangan izin p-irt ritel modern",
+      "slug": "standarisasi-keamanan-pangan-izin-pirt-tembus-ritel-modern",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "syarat produk umkm masuk minimarket indomaret alfamart",
+        "uji laboratorium masa kedaluwarsa pangan",
+        "barcode ean 13 produk kemasan ritel",
+        "labeling nutrisi fakta gizi bpom",
+        "kurasi produk pangan dinas koperasi"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Checklist kepatuhan label kemasan (komposisi, tanggal kedaluwarsa, izin edar P-IRT, kode batch), pengurusan barcode resmi GS1, dan tata cara business matching ritel.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 579,
+      "topic": "Manajemen Material Kemasan dan Meja Packing Toko Online Menghadapi Puncak Kampanye 12.12",
+      "primary_keyword": "manajemen material kemasan packing toko online 12.12",
+      "slug": "manajemen-material-kemasan-dan-meja-packing-toko-online-12-12",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "stok kardus bubble wrap lakban olshop",
+        "desain layout stasiun packing ergonomis",
+        "thermal barcode label printer pengiriman",
+        "mitigasi paket rusak tertindih ekspedisi",
+        "kecepatan packing per paket menit"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Kalkulasi safety stock bahan kemas (kardus, bubble wrap, lakban, label thermal) 3x lipat, tata letak meja packing metode U-shape, dan pembagian tugas tim packing.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 580,
+      "topic": "Panduan Perhitungan Upah Lembur dan Skema Bonus Karyawan Toko Peak Season Libur Akhir Tahun",
+      "primary_keyword": "perhitungan lembur bonus karyawan toko peak season",
+      "slug": "panduan-perhitungan-lembur-dan-bonus-karyawan-peak-season-nataru",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "rumus upah lembur uu cipta kerja ritel",
+        "perhitungan lembur hari libur nasional toko",
+        "bonus target omzet staf kasir pramuniaga",
+        "jadwal rotasi shift lembur adil",
+        "slip gaji potongan dan tunjangan nataru"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Simulasi rumus upah lembur per jam hari kerja versus hari libur resmi, contoh skema bonus komisi berbasis pencapaian omzet harian toko, dan pencatatan absensi digital.",
+      "cooca_feature_alignment": "HRM & Karyawan"
+    },
+    {
+      "id": 581,
+      "topic": "Strategi Liquidasi Dead Stock Barang Lambat Bergerak Lewat Paket Bundling Promo Akhir Tahun",
+      "primary_keyword": "liquidasi dead stock paket bundling akhir tahun",
+      "slug": "strategi-liquidasi-dead-stock-lewat-bundling-promo-akhir-tahun",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara menguras stok mati gudang ritel",
+        "bundling produk laku dan kurang laku",
+        "diskon cuci gudang tutup tahun untung",
+        "kalkulasi harga paket bundling hemat",
+        "strategi perputaran persediaan inventory turnover"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Kombinasi bundling Leader and Laggard (produk hero digabung produk lambat), penetapan margin batas aman anti rugi, dan promosi tematik cuci gudang akhir tahun.",
+      "cooca_feature_alignment": "Inventori & Stok"
+    },
+    {
+      "id": 582,
+      "topic": "SOP Pengelolaan Kas Kecil Petty Cash Operasional Toko Ritel agar Bebas Bon Gantung",
+      "primary_keyword": "sop pengelolaan petty cash kas kecil toko",
+      "slug": "sop-pengelolaan-petty-cash-kas-kecil-toko-anti-bon-gantung",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "metode imprest fund kas kecil toko",
+        "cara mencegah bon gantung karyawan kasir",
+        "formulir voucher pengeluaran kas kecil",
+        "limit saldo kas kecil harian warung",
+        "rekonsiliasi buku kas operasional bulanan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Penerapan sistem dana tetap (imprest system), aturan wajib nota asli tanpa pengecualian, pembuatan bukti kas keluar (BKK), dan jadwal reimbursement mingguan.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 583,
+      "topic": "Cara Mengatasi Retur Paket COD Akibat Gagal Antar dan Pembatalan Sepihak Kurir di Musim Hujan",
+      "primary_keyword": "mengatasi retur cod gagal antar musim hujan",
+      "slug": "cara-mengatasi-retur-paket-cod-gagal-antar-musim-hujan",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sangat Tinggi",
+      "secondary_keywords": [
+        "penyebab paket rts return to sender cod",
+        "konfirmasi order wa sebelum kirim paket cod",
+        "asuransi ongkir retur toko online",
+        "klaim barang rusak retur ekspedisi",
+        "blacklist alamat pembeli fiktif cod"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Filter otomatis verifikasi nomor WhatsApp pembeli sebelum packing, pembatasan COD hanya untuk pembeli bereputasi baik, dan prosedur klaim asuransi paket rusak kurir.",
+      "cooca_feature_alignment": "Omnichannel & Toko Online"
+    },
+    {
+      "id": 584,
+      "topic": "Manajemen Antrean Pesanan Dapur Kafe dan Restoran Menggunakan Kitchen Display System dan Printer Kasir",
+      "primary_keyword": "manajemen antrean pesanan dapur kitchen printer",
+      "slug": "manajemen-antrean-pesanan-dapur-kitchen-printer-kds-kafe-resto",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "sistem kitchen display kds resto kafe",
+        "alur tiket pesanan waiter kasir dapur",
+        "printer thermal dapur anti panas minyak",
+        "pembagian stasiun masak bar dan dapur panas",
+        "pengurangan waktu tunggu pesanan pelanggan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Integrasi pemisahan rute cetak otomatis (stasiun bar minuman versus stasiun dapur makanan), pemanfaatan layar KDS interaktif, dan notifikasi status pesanan siap saji.",
+      "cooca_feature_alignment": "Kuliner & Resto"
+    },
+    {
+      "id": 585,
+      "topic": "Strategi Penetapan Harga Menu Makanan Sehat Less Sugar dan Plant-Based Berdasarkan Analisis HPP",
+      "primary_keyword": "penetapan harga menu sehat analisis hpp",
+      "slug": "strategi-penetapan-harga-menu-sehat-less-sugar-analisis-hpp",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "cara hitung modal bahan baku makanan sehat",
+        "margin keuntungan menu minuman less sugar",
+        "resep bom kuliner plant based kekinian",
+        "mark up harga makanan sehat kafe",
+        "strategi harga jual kuliner fungsional"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Kalkulasi yield susut bahan pangan organik, pemetaan porsi bahan baku gramasi resep (Bill of Materials), dan penetapan harga psikologis menu sehat.",
+      "cooca_feature_alignment": "Kuliner & Resto"
+    },
+    {
+      "id": 586,
+      "topic": "Panduan Penyusunan Laporan Laba Rugi Komparatif Bulanan Menjelang Tutup Buku Tahunan SAK EMKM",
+      "primary_keyword": "laporan laba rugi komparatif tutup buku sak emkm",
+      "slug": "panduan-laporan-laba-rugi-komparatif-tutup-buku-sak-emkm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "format laba rugi bulanan usaha kecil sak emkm",
+        "analisis tren kenaikan beban operasional opex",
+        "rekonsiliasi omzet kotor pendapatan bersih",
+        "laba kotor versus laba bersih usaha ritel",
+        "penyajian data komparatif laporan keuangan"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Struktur standar pos pendapatan, beban pokok penjualan, beban operasional, dan laba bersih komparatif 12 bulan serta cara membacanya untuk perencanaan anggaran tahun depan.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    },
+    {
+      "id": 587,
+      "topic": "SOP Verifikasi Identitas Rekanan B2B dan Pengarsipan Faktur Pajak Elektronik Coretax DJP",
+      "primary_keyword": "verifikasi rekanan b2b faktur pajak coretax djp",
+      "slug": "sop-verifikasi-identitas-b2b-dan-faktur-pajak-coretax-djp",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "penyimpanan arsip digital faktur pajak 10 tahun",
+        "validasi data npwp 16 digit rekanan usaha",
+        "rekonsiliasi faktur pajak masukan pembeli b2b",
+        "audit trail dokumen perpajakan bisnis",
+        "pencegahan faktur fiktif coretax"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Alur validasi Nomor Pokok Wajib Pajak 16 digit saat onboarding klien B2B, penamaan file PDF faktur standar, dan pencadangan arsip cloud terenkripsi.",
+      "cooca_feature_alignment": "Pajak & Legalitas"
+    },
+    {
+      "id": 588,
+      "topic": "Strategi Pemesanan Lebih Awal Early Fulfillment Toko Online untuk Menghindari Penumpukan Ekspedisi",
+      "primary_keyword": "strategi early fulfillment toko online 12.12",
+      "slug": "strategi-early-fulfillment-toko-online-cegah-kemacetan-ekspedisi",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "kampanye pre order belanja tanggal kembar",
+        "pengiriman bertahap paket sebelum puncak harbolnas",
+        "komunikasi estimasi tiba kurir ke pembeli",
+        "jadwal drop off paket ekspedisi pagi hari",
+        "voucher diskon belanja lebih awal"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Teknik promosi flash deal H minus 3, insentif gratis ongkir untuk order lebih awal, dan jadwal serah terima armada logistik khusus sebelum overload.",
+      "cooca_feature_alignment": "Omnichannel & Toko Online"
+    },
+    {
+      "id": 589,
+      "topic": "Pemanfaatan Struk Digital WhatsApp untuk Menekan Biaya Kertas Kasir Thermal dan Menambah Database Pelanggan",
+      "primary_keyword": "struk digital whatsapp hemat kertas thermal",
+      "slug": "pemanfaatan-struk-digital-whatsapp-hemat-kertas-pos-dan-crm",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Sedang",
+      "secondary_keywords": [
+        "solusi hemat kertas kasir pos toko ritel",
+        "cara kirim struk belanja otomatis lewat wa",
+        "pengumpulan nomor telepon pelanggan etis kasir",
+        "crm loyalitas toko lewat struk digital",
+        "struk ramah lingkungan paperless receipt"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Alur pengiriman tautan struk belanja resmi via WhatsApp otomatis saat checkout kasir POS, etika perizinan privasi data pelanggan, dan tindak lanjut program poin belanja.",
+      "cooca_feature_alignment": "Kasir & POS"
+    },
+    {
+      "id": 590,
+      "topic": "SOP Penanganan Komplain Konsumen dan Retur Barang Rusak Akibat Pengiriman Ekspedisi Musim Hujan",
+      "primary_keyword": "sop penanganan komplain retur ekspedisi hujan",
+      "slug": "sop-penanganan-komplain-retur-barang-rusak-ekspedisi-hujan",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "sop klaim asuransi paket basah kurir",
+        "template chat empati komplain pembeli marah",
+        "unboxing video syarat retur barang olshop",
+        "penggantian barang rusak toko online cepat",
+        "mitigasi ulasan buruk rating toko"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Protokol respon pertama dalam 15 menit, verifikasi foto video kemasan basah, form digital klaim asuransi ekspedisi, dan pengiriman barang pengganti tanpa ribet.",
+      "cooca_feature_alignment": "Omnichannel & Toko Online"
+    },
+    {
+      "id": 591,
+      "topic": "Panduan Perhitungan Titik Impas BEP Pembukaan Cabang Baru Toko Ritel atau Kedai Kopi Tahun 2027",
+      "primary_keyword": "perhitungan bep buka cabang baru ritel",
+      "slug": "panduan-perhitungan-bep-titik-impas-buka-cabang-baru-2027",
+      "search_intent": "informational",
+      "estimated_search_volume_tier": "Tinggi",
+      "secondary_keywords": [
+        "rumus bep unit dan bep rupiah usaha kedai",
+        "kalkulasi modal sewa tempat biaya tetap opex",
+        "studi kelayakan finansial ekspansi bisnis umkm",
+        "payback period investasi buka cabang baru",
+        "mitigasi risiko gagal cabang kedua ritel"
+      ],
+      "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+      "unique_angle": "Simulasi matematis pemisahan biaya tetap (sewa, gaji, depresiasi) dan biaya variabel (bahan, listrik, kemasan), rumus BEP Rupiah dan BEP Unit, serta target waktu payback period.",
+      "cooca_feature_alignment": "Keuangan & Pembukuan"
+    }
+  ]
+}

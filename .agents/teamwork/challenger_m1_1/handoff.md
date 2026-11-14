@@ -1,187 +1,182 @@
-# Empirical Challenge & Verification Report: Milestone M1 (Controller-Level RBAC & Clean Routing)
+# Empirical Challenge Report: Milestone 1 Layout Stability, Mobile Viewports & Asset Loading
 
-- **Agent**: `challenger_m1_1` (Critic & Specialist)
-- **Target Work Product**: Milestone M1 changes by `worker_m1`
-- **Date**: 2026-11-09T06:48:00Z
-- **Verdict**: **APPROVE**
+**Agent**: `challenger_m1_1` (Teamwork Empirical Challenger: Critic / Specialist)  
+**Date**: 2026-11-13T23:08:00Z  
+**Workspace**: `C:\laragon\www\cooca_core`  
+**State Folder**: `C:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\`  
+**Milestone**: Milestone 1 (M1)  
+**Final Verdict**: **REJECT**
 
 ---
 
 ## 1. Observation
 
-### 1.1 Source Code and Controller Contracts
-1. **`app/Http/Controllers/Web/LaborMachineWebController.php`**:
-   - Implements `Illuminate\Routing\Controllers\HasMiddleware` (line 20).
-   - Method `public static function middleware(): array` (lines 25–38) declares:
-     ```php
-     return [
-         new Middleware('require.permission:labor_machines.view', only: ['index']),
-         new Middleware('require.permission:labor_machines.manage', only: [
-             'storeLabor',
-             'updateLabor',
-             'destroyLabor',
-             'storeMachine',
-             'updateMachine',
-             'destroyMachine',
-         ]),
-     ];
-     ```
-   - Listing method `index()` (lines 48–56) enforces active tenant query scoping:
-     ```php
-     $laborRates = LaborRate::where('business_id', $business->id)->latest()->get();
-     $machines = Machine::where('business_id', $business->id)->latest()->get();
-     ```
-   - IDOR guards are explicitly placed on all single-record mutation methods:
-     - `updateLabor` (lines 112–114):
-       ```php
-       $business = Context::business();
-       abort_unless($business !== null, 403);
-       abort_unless($laborRate->business_id === $business->id, 403);
-       ```
-     - `destroyLabor` (lines 286–288):
-       ```php
-       $business = Context::business();
-       abort_unless($business !== null, 403);
-       abort_unless($laborRate->business_id === $business->id, 403);
-       ```
-     - `updateMachine` (lines 224–226):
-       ```php
-       $business = Context::business();
-       abort_unless($business !== null, 403);
-       abort_unless($machine->business_id === $business->id, 403);
-       ```
-     - `destroyMachine` (lines 322–324):
-       ```php
-       $business = Context::business();
-       abort_unless($business !== null, 403);
-       abort_unless($machine->business_id === $business->id, 403);
-       ```
-   - `AuditLog` dispatches (lines 86–102, 146–163, 198–215, 259–276, 300–312, 335–347) capture action tags `labor_rates.created`, `labor_rates.updated`, `labor_rates.deleted`, `machines.created`, `machines.updated`, and `machines.deleted` with metadata and old/new values.
-
-2. **`routes/owner.php`**:
-   - Invoices routes (lines 330–343) have eliminated redundant route-level middleware declarations (`require.permission:invoices.*`), relying completely on `InvoiceWebController::middleware()`.
-   - Labor-machines routes (lines 371–379) are cleanly grouped under `Route::middleware('module:labor_machines')->group(...)` with all 7 routes intact and mapped directly to `LaborMachineWebController`:
-     - `GET /labor-machines` -> `labor-machines.index`
-     - `POST /labor-rates` -> `labor-rates.store`
-     - `PUT /labor-rates/{laborRate}` -> `labor-rates.update`
-     - `DELETE /labor-rates/{laborRate}` -> `labor-rates.destroy`
-     - `POST /machines` -> `machines.store`
-     - `PUT /machines/{machine}` -> `machines.update`
-     - `DELETE /machines/{machine}` -> `machines.destroy`
-
-3. **`resources/views/app/labor-machines/index.blade.php`**:
-   - Lines 138, 169, 337, 410, 483, 538, 619, and 694 all check `@can('labor_machines.manage')` or `Context::hasPermission('labor_machines.manage')`, eliminating former mismatch with `costing.manage`.
-
-### 1.2 Empirical Test Execution Results
-An empirical test harness was written and executed at `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php`:
-- **Execution Command**:
-  ```powershell
-  php artisan test tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
-  ```
-- **Result Output**:
-  ```json
-  {"tool":"phpunit","result":"passed","tests":9,"passed":9,"assertions":134,"duration_ms":30831}
-  ```
-  *Verdict: 9 passed, 0 failed, 134 assertions.*
-
-Specific test scenarios proven:
-1. `test_labor_machine_web_controller_implements_has_middleware_and_declares_exact_contracts`: Controller implements `HasMiddleware`; reflection inspection verifies exact middleware names and action arrays matching interface contracts.
-2. `test_route_names_for_labor_machines_are_intact_and_resolve_correctly`: All 7 route names resolve to `LaborMachineWebController` and accept appropriate HTTP verbs (GET/POST/PUT/DELETE).
-3. `test_route_names_for_invoices_are_intact_and_resolve_correctly`: All 14 invoice route names resolve to `InvoiceWebController` and accept designated HTTP verbs.
-4. `test_unauthorized_user_lacking_labor_machines_view_cannot_access_index`: Users lacking `labor_machines.view` receive HTTP `403 Forbidden` (`FORBIDDEN_PERMISSION`) on JSON requests and are redirected to `route('portal')` on browser requests.
-5. `test_user_with_labor_machines_view_can_access_index_and_data_is_tenant_scoped`: Users with `labor_machines.view` receive `200 OK`; assertions prove records belonging to another tenant (`business_id`) are excluded from output.
-6. `test_user_lacking_labor_machines_manage_cannot_execute_mutations`: Users with read-only access attempting to call `storeLabor`, `updateLabor`, `destroyLabor`, `storeMachine`, `updateMachine`, or `destroyMachine` receive HTTP `403 Forbidden` (`FORBIDDEN_PERMISSION`).
-7. `test_authorized_user_can_execute_all_labor_and_machine_mutations_and_dispatches_audit_logs`: Authorized users successfully perform all 6 CRUD operations, create records with correct active `business_id`, and generate verified `AuditLog` records with correct action slugs and payload diffs.
-8. `test_idor_cross_tenant_update_and_destroy_are_defensively_rejected`: Cross-tenant attack attempts by Business B against Business A records are blocked at multiple layers (layer 1: `BusinessScope` / route model binding, layer 2: explicit controller `abort_unless(..., 403)`). Direct controller invocations with mismatched models throw `HttpException(403)`. Target records in the database remain untouched and undeleted.
-9. `test_invoices_controller_level_rbac_enforcement`: Invoices module routes correctly enforce permission requirements via `InvoiceWebController::middleware()`, rejecting unauthorized requests with 403 while granting authorized access.
-
-### 1.3 Full Regression Test Suite Execution
-- `tests/Feature/InvoiceModuleAuditTest.php`: 9 tests passed, 32 assertions (57.3s)
-- `tests/Feature/InvoiceDraftEditAndPartiesTest.php`: 4 tests passed, 24 assertions (15.8s)
-- `tests/Feature/LaborAndMachineEngineTest.php`: 4 tests passed, 15 assertions (15.9s)
-- `tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php`: 9 tests passed, 134 assertions (30.8s)
-- **Cumulative Regression Total**: 26 tests passed, 205 assertions, 0 failures.
-
-### 1.4 Syntax Linting (`php -l`)
+### 1.1 PHP Syntax Linting
+Command:
 ```powershell
-php -l app/Http/Controllers/Web/LaborMachineWebController.php
-php -l routes/owner.php
-php -l resources/views/app/labor-machines/index.blade.php
-php -l tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
+Set-Location C:\laragon\www\cooca_core
+php -l resources/views/layouts/public_marketing.blade.php
+php -l resources/views/layouts/partials/help_chatbot_widget.blade.php
+php -l resources/views/layouts/partials/typography.blade.php
+php -l resources/views/public/partials/live_chat_widget.blade.php
+php -l resources/views/public/partials/cookie_consent_banner.blade.php
+php -l resources/views/public/partials/tracking_pixels.blade.php
+php -l resources/views/public/blog/show.blade.php
 ```
-All four files reported `No syntax errors detected`.
+*Result*: Exit Code 0 across all 7 files:
+- `No syntax errors detected in resources/views/layouts/public_marketing.blade.php`
+- `No syntax errors detected in resources/views/layouts/partials/help_chatbot_widget.blade.php`
+- `No syntax errors detected in resources/views/layouts/partials/typography.blade.php`
+- `No syntax errors detected in resources/views/public/partials/live_chat_widget.blade.php`
+- `No syntax errors detected in resources/views/public/partials/cookie_consent_banner.blade.php`
+- `No syntax errors detected in resources/views/public/partials/tracking_pixels.blade.php`
+- `No syntax errors detected in resources/views/public/blog/show.blade.php`
+
+### 1.2 Production Vite Asset Pipeline & Manifest Verification
+1. Manifest: `public/build/manifest.json` exists and maps:
+   - `resources/css/app.css` -> `assets/app-DbWQsCgM.css` (831,307 bytes on disk)
+   - `resources/js/app.js` -> `assets/app-rutYGsf-.js` (92,771 bytes on disk)
+2. `resources/views/layouts/public_marketing.blade.php`:
+   - Line 208 loads precompiled bundle: `@vite(['resources/css/app.css', 'resources/js/app.js'])`
+   - Zero occurrences of `cdn.tailwindcss.com` runtime JIT compiler script
+   - Zero occurrences of `console.warn` suppression monkey-patch
+   - Line 2667 loads `<script defer src="{{ asset('js/app-alert.js') }}"></script>` with `defer` attribute.
+
+### 1.3 Live Chat Widget & Chatbot Lazy Hydration Verification
+1. `resources/views/public/partials/live_chat_widget.blade.php`:
+   - Line 71 mounts modal container lazily: `<template x-if="isMounted || isOpen">`
+   - Lines 347–360 define mobile bottom sheet layout:
+     ```css
+     @media (max-width: 639px) {
+         .floating-live-chat-window {
+             bottom: 0 !important;
+             right: 0 !important;
+             left: 0 !important;
+             width: 100% !important;
+             max-width: 100vw !important;
+             height: 85vh !important;
+             max-height: 85vh !important;
+             border-bottom-left-radius: 0 !important;
+             border-bottom-right-radius: 0 !important;
+             padding-bottom: env(safe-area-inset-bottom, 0px);
+         }
+     }
+     ```
+   - Lines 344–346 safely elevate the FAB: `bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)) !important;`
+   - Lines 500–533 isolate polling timers inside `startActivePolling()` and `stopActivePolling()`, eliminating initial background thread overhead.
+
+2. `resources/views/layouts/partials/help_chatbot_widget.blade.php`:
+   - Line 81 wraps modal container in `<template x-if="isMounted || isOpen">`
+   - Synchronous `init()` parsing removed; background initialization deferred.
+
+### 1.4 Touch Target Dimensions (WCAG 2.5.5)
+In `resources/views/public/partials/cookie_consent_banner.blade.php` (lines 48–63):
+1. Button `acceptAll()`:
+   `class="... min-h-[44px] inline-flex items-center justify-center"`
+2. Button `rejectOptional()`:
+   `class="... min-h-[44px] inline-flex items-center justify-center"`
+3. Privacy Link `route('public.privacy')`:
+   `class="... py-2 px-1 inline-flex items-center min-h-[44px]"`
+Chromium Playwright empirical measurement: All 3 interactive targets measure exactly **44px** in computed height.
+
+### 1.5 EMPIRICAL DEFECT: Cookie Consent Banner Collision with Apple Floating Dock Navbar
+Worker M1 claimed in `worker_m1/handoff.md` Section 1.1 (Item 4) and Section 2:
+> "Changed mobile bottom offset to `bottom-20 sm:bottom-6` and button heights to `min-h-[44px]`."  
+> "Inference: Complete elimination of touch collision; fully compliant with WCAG 2.5.5 / Apple HIG."
+
+Empirical test executed via Chromium Playwright headless box-model simulation (`scripts/test_m1_mobile_viewports.mjs`):
+1. **Viewport 320x568 (iPhone SE 1st Gen)**:
+   - Mobile Dock: `y = 457px`, `height = 111px`, `bottom = 568px`. **Dock Top = 457px**.
+   - Cookie Banner: `y = 224px`, `height = 264px`, `bottom = 488px`. **Banner Bottom = 488px**.
+   - **Overlap / Collision = 31px** (`dockTop - bannerBottom = -31px`).
+2. **Viewport 375x667 (iPhone 8 / SE 2nd Gen)**:
+   - Mobile Dock: `y = 573px`, `height = 95px`, `bottom = 667px`. **Dock Top = 573px**.
+   - Cookie Banner: `y = 363px`, `height = 224px`, `bottom = 587px`. **Banner Bottom = 587px**.
+   - **Overlap / Collision = 14px** (`dockTop - bannerBottom = -14px`).
+3. **Viewport 375x812 (iPhone 12 / 13)**:
+   - Mobile Dock: `y = 718px`, `height = 95px`, `bottom = 812px`. **Dock Top = 718px**.
+   - Cookie Banner: `y = 508px`, `height = 224px`, `bottom = 732px`. **Banner Bottom = 732px**.
+   - **Overlap / Collision = 14px** (`dockTop - bannerBottom = -14px`).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Controller-Level RBAC Enforcement**:
-   - From Observation 1.1, `LaborMachineWebController` implements `HasMiddleware` and configures `require.permission:labor_machines.view` for `index` and `require.permission:labor_machines.manage` for all 6 mutation actions.
-   - Observation 1.2 (tests 1, 4, 6) confirms that requests lacking these permissions are halted with HTTP 403 Forbidden prior to method execution.
-   - Therefore, controller-level RBAC is correctly enforced independent of route-level definitions.
-
-2. **Clean Routing Integrity**:
-   - Observation 1.1 shows that duplicate `require.permission` declarations were removed from `routes/owner.php` for both invoices and labor-machines.
-   - Observation 1.2 (tests 2, 3, 9) proves that all 21 route names remain registered in Laravel's RouteCollection, resolve to the intended controller methods, and maintain full authorization enforcement via controller middleware.
-   - Therefore, route cleaning did not introduce regressions or route naming breakages.
-
-3. **Tenant Security & IDOR Elimination**:
-   - Observation 1.1 reveals explicit `abort_unless($record->business_id === $business->id, 403)` checks on `updateLabor`, `destroyLabor`, `updateMachine`, and `destroyMachine`.
-   - Observation 1.2 (test 8) executes simulated adversary attacks from Business B against Business A. Direct controller execution throws 403, and HTTP route binding rejects foreign IDs. Database assertions verify no record alteration occurred.
-   - Observation 1.2 (test 5) verifies listing queries are filtered by `where('business_id', $business->id)`, preventing cross-tenant data exposure.
-   - Therefore, tenant isolation and IDOR defenses are robustly implemented with defense-in-depth.
-
-4. **UI Permission Synchronization**:
-   - Observation 1.1 confirms that `resources/views/app/labor-machines/index.blade.php` now gates all action buttons using `@can('labor_machines.manage')`.
-   - This matches the backend requirement of `LaborMachineWebController::middleware()`, eliminating previous authorization desynchronization where users with `labor_machines.manage` were incorrectly blocked by `costing.manage` checks.
+```
+[Observation 1.5: Apple Mobile Floating Dock Navbar geometry in public_marketing.blade.php:2418]
+  │
+  ├─► The mobile dock declares `pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))]` (12px minimum).
+  ├─► The inner container has `py-2` (16px total) and 5 vertical navigation buttons.
+  ├─► On 375px screens, total computed dock height = 95px (top at viewportHeight - 95px).
+  ├─► On 320px screens, dock labels wrap, total computed dock height = 111px (top at viewportHeight - 111px).
+  │
+[Observation 1.5: Cookie Consent Banner positioning in cookie_consent_banner.blade.php:33]
+  │
+  ├─► Cookie banner specifies `class="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 ..."`
+  ├─► Tailwind CSS class `bottom-20` equals `bottom: 5rem` = 80px.
+  ├─► Therefore, the banner's bottom edge is anchored at viewportHeight - 80px.
+  │
+[Mathematical Inevitability of Collision]
+  │
+  ├─► On 375px: Banner bottom (viewportHeight - 80px) extends 15px past Dock top (viewportHeight - 95px). Overlap = 14px–15px.
+  ├─► On 320px: Banner bottom (viewportHeight - 80px) extends 31px past Dock top (viewportHeight - 111px). Overlap = 31px.
+  ├─► Banner has z-50; Mobile Dock has z-40.
+  ├─► Consequence: The action buttons ("Saya Setuju", "Hanya yang Diperlukan", "Kebijakan Privasi") on the bottom
+  │   of the cookie banner physically cover the top icons and labels of the mobile dock ("Beranda", "Platform",
+  │   "Solusi", "Fitur", "Menu").
+  └─► Inference: The claim of "Complete elimination of touch collision" in worker_m1 handoff is empirically false.
+```
 
 ---
 
 ## 3. Caveats
 
-- **View Presentation & Layout**: View visual hierarchy and button spacing were checked for syntax and authorization directives, but full UI ergonomics, no-overlap redesign, and bento layout adjustments are reserved for Milestone M2 as planned in `PROJECT.md`.
-- No other caveats.
+1. **Other M1 Components Are High Quality**:
+   - The Vite migration, elimination of Tailwind Play CDN, deferral of non-critical JS (`app-alert.js`, tracking pixels), chatbot `<template>` lazy mounting, and live chat responsive bottom sheet (`bottom: 0`, `max-h-[85vh]`) are verified 100% sound, robust, and cleanly implemented.
+2. **Exclusivity Constraint Respected**:
+   - As an Empirical Challenger, under the review-only constraint, I did not modify `cookie_consent_banner.blade.php` myself. The required fix is trivial (one-line class change) and must be applied by the worker.
 
 ---
 
 ## 4. Conclusion
 
-The implementation delivered by `worker_m1` for Milestone M1 is empirically robust, secure, and compliant with all project requirements:
-- Controller-level RBAC adheres to Laravel 11 `HasMiddleware` standards.
-- Route names and resolution contracts are 100% intact.
-- Multi-tenant IDOR protection is established at both model-scope and controller levels.
-- Full audit trails are recorded on all state mutations.
-- 26 tests and 205 assertions pass cleanly across the regression boundary.
+**Verdict**: **REJECT** (Milestone 1 rejected pending remediation of the Cookie Banner mobile dock collision).
 
-**Final Verdict: APPROVE**
+### Actionable Remediation Required:
+In `resources/views/public/partials/cookie_consent_banner.blade.php` line 33:
+Change:
+```blade
+class="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 max-w-md ...
+```
+To:
+```blade
+class="fixed bottom-28 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-50 max-w-md ...
+```
+*(Or `bottom-[calc(7.25rem+env(safe-area-inset-bottom,0px))]`)*.  
+`bottom-28` provides `7rem` (112px) of elevation from the screen bottom, leaving a safe 17px clearance on 375px screens and a 1px–5px clearance on 320px screens above the 95px–111px tall floating dock.
 
 ---
 
 ## 5. Verification Method
 
-To independently reproduce and verify this assessment:
+### 5.1 Headless Chromium Playwright Empirical Simulation
+```powershell
+Set-Location C:\laragon\www\cooca_core
+node scripts/test_m1_mobile_viewports.mjs
+```
+*Current Result*: Exits with code 1; fails 3 out of 38 assertions due to 14px–31px overlap between banner and dock.  
+*Pass Condition*: Once `bottom-28` is applied, this script exits with code 0 and reports `VERDICT: APPROVE`.
 
-1. **Run PHP Linting**:
-   ```powershell
-   php -l app/Http/Controllers/Web/LaborMachineWebController.php
-   php -l routes/owner.php
-   php -l resources/views/app/labor-machines/index.blade.php
-   php -l tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
-   ```
+### 5.2 PHPUnit Feature Challenge Suite
+```powershell
+Set-Location C:\laragon\www\cooca_core
+php vendor/phpunit/phpunit/phpunit tests/Feature/PublicMarketingMilestone1EmpiricalChallengeTest.php
+```
+*Result*: 5 tests, 49 assertions passed (verifies Vite bundle, PHP syntax, touch target heights, live chat sheet geometry, and mathematically records collision).
 
-2. **Run Dedicated Empirical RBAC & Clean Routing Test Suite**:
-   ```powershell
-   php artisan test tests/Feature/LaborMachineRbacCleanRoutingEmpiricalTest.php
-   ```
-
-3. **Run Invoices & Calculation Regression Test Suites**:
-   ```powershell
-   php artisan test tests/Feature/InvoiceModuleAuditTest.php
-   php artisan test tests/Feature/InvoiceDraftEditAndPartiesTest.php
-   php artisan test tests/Feature/LaborAndMachineEngineTest.php
-   ```
-
-4. **Invalidation Conditions**:
-   - Any failure in `LaborMachineRbacCleanRoutingEmpiricalTest.php` indicates RBAC bypass or broken route contracts.
-   - Unauthenticated/unauthorized users obtaining HTTP 200 on mutation endpoints invalidates controller middleware.
-   - Modifying a model from Business A while authenticated in Business B without a 403/404 exception invalidates IDOR defense.
+### 5.3 Automated PHPUnit Regression Suite
+```powershell
+Set-Location C:\laragon\www\cooca_core
+php vendor/phpunit/phpunit/phpunit tests/Feature/Security/CleanUrlCanonicalTest.php tests/Feature/Public/PublicPricingAndEntitlementConsistencyTest.php tests/Feature/AdminPanelAndGoogleAuthTest.php tests/Feature/AdversarialCompilationAndLayoutTest.php
+```
+*Result*: 40 tests, 194 assertions passed (0 errors, 0 regressions).

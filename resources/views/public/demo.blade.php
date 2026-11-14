@@ -88,18 +88,21 @@
 
                         {{-- Action CTAs (Left-aligned) --}}
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                            <a href="{{ route('register') }}"
+                            <a href="{{ route('register') }}?intent=demo"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
-                                <span>Mulai Coba Demo Sekarang</span>
+                                <span>Buka Sandbox Demo (Gratis 30 Detik)</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text=Halo%20saya%20ingin%20jadwalkan%20demo%20privat%20COOCA"
+                            <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text=Halo%20COOCA,%20saya%20ingin%20jadwalkan%20demo%20video%20call%20untuk%20usaha%20saya"
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
                                 <i data-lucide="video" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
                                 <span>{{ __('public_marketing.btn_request_video_demo') }}</span>
                             </a>
                         </div>
+                        <p class="text-xs text-slate-400 pt-0.5">
+                            * Langsung masuk ke dasbor simulasi lengkap dengan data produk contoh sesuai jenis usaha Anda.
+                        </p>
 
                         {{-- Reassurance Checkpoints --}}
                         <div class="pt-3 border-t border-white/10 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-slate-300">
@@ -186,7 +189,7 @@
 
                             {{-- Direct Sandbox Button --}}
                             <div class="pt-1">
-                                <a href="{{ route('register') }}"
+                                <a href="{{ route('register') }}?intent=demo"
                                     class="w-full h-11 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-[#007AFF]/25 transition">
                                     <span>{{ __('public_marketing.btn_open_demo_access') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
@@ -295,21 +298,21 @@
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-[#007AFF]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_sandbox_title') }}</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_sandbox_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Daftarkan akun gratis dengan
                             email aktif dan pilih jenis industri usaha Anda.</p>
                     </div>
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-amber-500">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_cashier_title') }}</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_cashier_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Gunakan contoh produk yang
                             telah kami sediakan untuk mencoba proses checkout.</p>
                     </div>
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
                         <div class="text-xs font-mono font-bold text-emerald-500">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_ready_title') }}</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.demo_step_ready_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Hapus data uji coba kapan
                             saja dan masukkan katalog produk toko Anda yang sebenarnya.</p>
                     </div>
@@ -392,9 +395,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
                         <span>Coba Sekarang Tanpa Komitmen Pembayaran</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
                         {{ __('public_marketing.demo_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm text-slate-300 max-w-xl mx-auto leading-relaxed text-pretty">
                         Daftar akun gratis hari ini dan rasakan perbedaan sistem operasi bisnis yang dirancang dengan
                         standar kualitas tinggi untuk bisnis Anda.

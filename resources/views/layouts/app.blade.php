@@ -1283,11 +1283,9 @@
         sidebarCollapsed: (localStorage.getItem('cooca-sidebar-collapsed') !== null)
             ? (localStorage.getItem('cooca-sidebar-collapsed') === 'true')
             : (typeof window !== 'undefined' && window.innerWidth >= 1024 && window.innerWidth < 1440),
-        secondarySidebarCollapsed: (typeof window !== 'undefined' && (new URLSearchParams(window.location.search).has('capture') || new URLSearchParams(window.location.search).has('asset') || new URLSearchParams(window.location.search).has('render') || new URLSearchParams(window.location.search).has('screenshot')))
-            ? true
-            : ((localStorage.getItem('cooca-secondary-sidebar-collapsed') !== null)
-                ? (localStorage.getItem('cooca-secondary-sidebar-collapsed') === 'true')
-                : true),
+        secondarySidebarCollapsed: (localStorage.getItem('cooca-secondary-sidebar-collapsed') !== null)
+            ? (localStorage.getItem('cooca-secondary-sidebar-collapsed') === 'true')
+            : false,
         toggleSidebarCollapse() {
             this.sidebarCollapsed = !this.sidebarCollapsed;
             localStorage.setItem('cooca-sidebar-collapsed', this.sidebarCollapsed);

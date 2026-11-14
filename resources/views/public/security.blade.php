@@ -70,6 +70,19 @@
                             <span>Kepatuhan UU PDP RI</span>
                         </div>
                     </div>
+
+                    <!-- Direct Action CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
+                        <a href="{{ route('register') }}"
+                            class="w-full sm:w-auto h-12 px-7 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#007AFF]/25 active:scale-[0.98] transition-all min-h-[48px]">
+                            <span>Mulai Gunakan COOCA (Data Terenkripsi)</span>
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </a>
+                        <a href="{{ route('public.privacy') }}"
+                            class="w-full sm:w-auto h-12 px-6 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold flex items-center justify-center gap-2 backdrop-blur-sm transition-all min-h-[48px]">
+                            <span>Baca Kebijakan Privasi</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="lg:col-span-4 flex justify-center">
@@ -225,26 +238,26 @@
         <div class="p-6 sm:p-8 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs space-y-6">
             <div>
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-400">KOMITMEN KEJUJURAN KONTEN</span>
-                <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
+                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
                     Prinsip Transparansi Keamanan COOCA
-                </h3>
+                </h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                 <div class="space-y-2">
-                    <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500"></i>
                         <span>{{ __('public_marketing.sec_guarantee_title') }}</span>
-                    </h4>
+                    </h3>
                     <p>
                         Kami tidak pernah dan tidak akan pernah menjual atau menyewakan data operasional, nomor kontak pelanggan, riwayat belanja, atau omzet bisnis Anda kepada pihak pengiklan mana pun. Seluruh data transaksi adalah hak milik eksklusif pemilik usaha yang bersangkutan.
                     </p>
                 </div>
                 <div class="space-y-2">
-                    <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
                         <i data-lucide="clock" class="w-4 h-4 text-amber-500"></i>
                         <span>Roadmap Keamanan Selanjutnya:</span>
-                    </h4>
+                    </h3>
                     <p>
                         Otentikasi Dua Faktor berbasis aplikasi (MFA TOTP via Google Authenticator) dan enkripsi file nota di level storage mandiri saat ini sedang dalam tahapan pengujian tim pengembang kami dan akan dirilis secara bertahap untuk akun paket tingkat lanjut.
                     </p>

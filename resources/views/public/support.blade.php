@@ -55,10 +55,13 @@
                         {{-- Escalation Channels Bento Tiles --}}
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 w-full">
                             <div class="p-3 rounded-[14px] bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
-                                <div class="w-7 h-7 rounded-[8px] bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
-                                    <i data-lucide="headphones" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                                <div class="w-7 h-7 rounded-[8px] bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-500/20">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5" aria-hidden="true"></i>
                                 </div>
-                                <span class="text-xs sm:text-[13px] font-semibold text-slate-200 leading-snug">Respon WhatsApp langsung manusia</span>
+                                <div class="space-y-0.5">
+                                    <span class="text-xs sm:text-[13px] font-bold text-white block">WhatsApp Resmi Dibalas Manusia</span>
+                                    <span class="text-[11px] text-slate-300 block">Rata-rata respon &lt; 5 menit (Senin–Minggu, 08.00–21.00 WIB)</span>
+                                </div>
                             </div>
                             <div class="p-3 rounded-[14px] bg-white/[0.05] border border-white/10 flex items-start gap-2.5 hover:bg-white/[0.08] transition-colors">
                                 <div class="w-7 h-7 rounded-[8px] bg-sky-500/15 text-[#00C4D8] flex items-center justify-center shrink-0 mt-0.5 border border-sky-400/20">
@@ -369,9 +372,9 @@
                         <i data-lucide="headphones" class="w-4 h-4 text-[#00C4D8]" aria-hidden="true"></i>
                         <span>Kami Siap Membantu Perkembangan Usaha Anda</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
                         {{ __('public_marketing.support_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm text-slate-300 leading-relaxed text-pretty">
                         Jangan ragu berkonsultasi mengenai kebutuhan sistem untuk kafe, toko, bengkel, atau pabrik Anda
                         bersama tim kami.

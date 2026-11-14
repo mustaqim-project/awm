@@ -167,7 +167,7 @@
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-[#00C4D8] border border-sky-400/30 text-xs font-bold uppercase tracking-wider mb-4">
                                 <span>{{ __('public_commercial.android_specs_badge') }}</span>
                             </div>
-                            <h3 class="text-2xl font-bold text-white mb-2">{{ __('public_commercial.android_specs_title') }}</h3>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">{{ __('public_commercial.android_specs_title') }}</h2>
                             <p class="text-slate-300 text-sm mb-6 pb-6 border-b border-white/10">
                                 {{ __('public_commercial.android_specs_desc') }}
                             </p>
@@ -276,7 +276,7 @@
                         <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-[#007AFF] dark:text-[#00C4D8] flex items-center justify-center font-bold mb-3">
                             <i data-lucide="zap" class="w-4 h-4"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_1_title') }}</h4>
+                        <h3 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_1_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             {{ __('public_commercial.android_touch_1_desc') }}
                         </p>
@@ -286,7 +286,7 @@
                         <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold mb-3">
                             <i data-lucide="qr-code" class="w-4 h-4"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_2_title') }}</h4>
+                        <h3 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_2_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             {{ __('public_commercial.android_touch_2_desc') }}
                         </p>
@@ -296,7 +296,7 @@
                         <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold mb-3">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_3_title') }}</h4>
+                        <h3 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_3_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             {{ __('public_commercial.android_touch_3_desc') }}
                         </p>
@@ -306,7 +306,7 @@
                         <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center font-bold mb-3">
                             <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                         </div>
-                        <h4 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_4_title') }}</h4>
+                        <h3 class="font-bold text-slate-900 dark:text-white">{{ __('public_commercial.android_touch_4_title') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                             {{ __('public_commercial.android_touch_4_desc') }}
                         </p>

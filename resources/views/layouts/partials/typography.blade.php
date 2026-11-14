@@ -13,11 +13,12 @@
     .h1,
     .heading-1,
     .heading-large-title {
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
         font-size: clamp(1.25rem, 4vw, 2.125rem);
         line-height: 1.2;
         font-weight: 700;
         letter-spacing: -0.025em;
+        text-wrap: balance;
         color: var(--text-1, var(--apple-text, inherit));
         margin-top: 0;
         margin-bottom: 0.5rem;
@@ -30,11 +31,12 @@
     .h2,
     .heading-2,
     .heading-title-1 {
-        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", system-ui, sans-serif;
         font-size: clamp(1.125rem, 3vw, 1.625rem);
         line-height: 1.25;
         font-weight: 600;
         letter-spacing: -0.02em;
+        text-wrap: balance;
         color: var(--text-1, var(--apple-text, inherit));
         margin-top: 0;
         margin-bottom: 0.5rem;

@@ -9,15 +9,14 @@
     {{-- Secondary Sidebar (Desktop Dual Sidebar Layout - macOS Sonoma Column List) --}}
     <aside id="secondary-sidebar"
         data-secondary-sidebar="{{ $activeModuleKey }}"
-        data-html2canvas-ignore="true"
         aria-label="{{ __('common.sub_navigation') }}"
         :class="{
             'lg:left-[76px]': sidebarCollapsed,
             'lg:left-[272px]': !sidebarCollapsed,
             'lg:-translate-x-[270px] lg:opacity-0 lg:pointer-events-none': secondarySidebarCollapsed,
-            'lg:translate-x-0 lg:opacity-100 lg:pointer-events-auto': !secondarySidebarCollapsed
+            'lg:translate-x-0 lg:opacity-100': !secondarySidebarCollapsed
         }"
-        class="hidden lg:flex lg:-translate-x-[270px] lg:opacity-0 lg:pointer-events-none fixed inset-y-0 z-30 w-[260px] flex-col justify-between bg-white dark:bg-[#1C1C1E] border-r border-black/5 dark:border-white/10 transition-all duration-250 ease-out select-none shadow-[2px_0_12px_rgba(0,0,0,0.02)]">
+        class="hidden lg:flex fixed inset-y-0 z-30 w-[260px] flex-col justify-between bg-white dark:bg-[#1C1C1E] border-r border-black/5 dark:border-white/10 transition-all duration-250 ease-out select-none shadow-[2px_0_12px_rgba(0,0,0,0.02)]">
 
         {{-- Top Header: Module Label, Item Count & Collapse Button --}}
         <div class="h-14 flex items-center justify-between px-3.5 border-b border-black/5 dark:border-white/10 shrink-0">

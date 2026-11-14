@@ -72,8 +72,8 @@
                             </a>
                             <a href="{{ route('public.bos.overview') }}"
                                 class="inline-flex justify-center items-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white backdrop-blur-sm text-sm font-semibold hover:-translate-y-0.5 active:translate-y-0 transition-all min-h-[48px]">
-                                <i data-lucide="cpu" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
-                                <span>Pelajari Arsitektur OS</span>
+                                <i data-lucide="layers" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
+                                <span>Lihat Cara Kerja Sistem Terhubung</span>
                             </a>
                         </div>
 
@@ -107,7 +107,7 @@
                             <div class="flex items-center justify-between pb-3 border-b border-white/10">
                                 <div>
                                     <span class="text-[11px] uppercase font-mono font-bold text-[#00C4D8] block">Satu Sumber Kebenaran Data</span>
-                                    <h3 class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">Filosofi Ekosistem Terpadu COOCA</h3>
+                                    <p class="text-sm sm:text-base font-bold text-white mt-0.5 leading-snug">Filosofi Ekosistem Terpadu COOCA</p>
                                 </div>
                                 <span
                                     class="text-[11px] font-semibold text-emerald-400 bg-emerald-400/15 border border-emerald-400/30 px-2.5 py-1 rounded-full flex items-center gap-1 shrink-0">
@@ -272,8 +272,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Kuliner & Restoran (F&B)
-                        </h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Kuliner & Restoran (F&B)
+                        </h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Kedai kopi, kafe,
                             resto
                             keluarga, dan cloud kitchen yang ingin mengontrol HPP bahan baku dan cetak tiket dapur KOT
@@ -282,8 +282,8 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Toko Retail & Kelontong
-                        </h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Toko Retail & Kelontong
+                        </h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Minimarket dan
                             toko fashion
                             yang mengelola ribuan SKU barang, barcode scanner, multi-satuan dus/pcs, dan rekap kasbon.</p>
@@ -291,7 +291,7 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Bengkel & Otomotif</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Bengkel & Otomotif</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Bengkel motor dan
                             mobil yang
                             butuh SPK digital, lacak histori plat nomor, stok sparepart & oli, serta bagi hasil komisi
@@ -300,7 +300,7 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_laundry') }}</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_laundry') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Laundry kiloan
                             dan dry
                             cleaning yang memerlukan timbangan desimal akurat, nomor rak baju, dan notifikasi WA cucian siap
@@ -309,8 +309,8 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Manufaktur & Pabrikasi
-                        </h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">Manufaktur & Pabrikasi
+                        </h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Konveksi, mebel,
                             dan makanan
                             olahan yang mengolah bahan mentah dengan formula Bill of Materials (BOM) dan kontrol HPP riil.
@@ -319,7 +319,7 @@
 
                     <div
                         class="p-5 rounded-[18px] bg-slate-50 dark:bg-[#070A14] border border-slate-200/60 dark:border-white/5 space-y-2">
-                        <h4 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_services') }}</h4>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">{{ __('public_marketing.about_card_services') }}</h3>
                         <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed text-pretty">Salon, servis AC
                             panggilan,
                             studio foto, dan konsultan yang butuh booking kalender reservasi serta invoice termin DP
@@ -344,10 +344,10 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
                         <span>Solusi Sistem Operasi Bisnis Indonesia</span>
                     </div>
-                    <h3
+                    <h2
                         class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-[1.2] text-balance break-words">
                         {{ __('public_marketing.about_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm text-slate-300 leading-relaxed text-pretty">
                         Tinggalkan kerumitan spreadsheet dan nikmati kejelasan finansial bisnis Anda dengan ekosistem COOCA
                         yang saling terhubung.

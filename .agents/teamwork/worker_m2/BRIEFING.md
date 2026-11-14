@@ -1,79 +1,87 @@
-# BRIEFING — 2026-11-09T00:30:00Z
+# BRIEFING — 2026-11-14T01:05:00Z
 
 ## Mission
-Execute Milestone 2: UI Simplification, Layout Ergonomics, and View Auth Gating for Invoices and Labor-Machines views in COOCA ERP according to ui-simplify-layout guidelines and project specifications.
+Execute Milestone 2 (M2) optimizations across 21 public marketing Blade views, 1 layout partial touch target, and 1 discovery translation file according to SCOPE.md and the findings from Explorers M2_1, M2_2, and M2_3.
 
 ## 🔒 My Identity
 - Archetype: implementer
 - Roles: implementer, qa, specialist
-- Working directory: C:\laragon\www\cooca_core\.agents\teamwork\worker_m2\
-- Original parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Milestone: Milestone 2: UI Simplification, Layout Ergonomics & View Auth
+- Working directory: C:\laragon\www\cooca_core
+- State folder: C:\laragon\www\cooca_core\.agents\teamwork\worker_m2\
+- Original parent: 1cadca40-8749-4a27-9009-f425d4420b3b
+- Milestone: Milestone 2: Marketing Pages, Solutions & Commercial Views Optimization
 
 ## 🔒 Key Constraints
 - Exclusive write scope:
-  - `resources/views/app/invoices/index.blade.php`
-  - `resources/views/app/invoices/create.blade.php`
-  - `resources/views/app/invoices/edit.blade.php`
-  - `resources/views/app/invoices/show.blade.php`
-  - `resources/views/app/invoices/print.blade.php`
-  - `resources/views/app/labor-machines/index.blade.php`
-- DO NOT modify controllers or routes (M1 completed those).
+  1. `resources/views/public/business_landing.blade.php`
+  2. `resources/views/landing.blade.php`
+  3. `resources/views/public/about.blade.php`
+  4. `resources/views/public/demo.blade.php`
+  5. `resources/views/public/pricing.blade.php`
+  6. `resources/views/public/privacy.blade.php`
+  7. `resources/views/public/security.blade.php`
+  8. `resources/views/public/sitemap.blade.php`
+  9. `resources/views/public/support.blade.php`
+  10. `resources/views/public/terms.blade.php`
+  11. `resources/views/public/landing_commercial/kasir_android.blade.php`
+  12. `resources/views/public/landing_commercial/kasir_gratis.blade.php`
+  13. `resources/views/public/landing_commercial/kasir_offline.blade.php`
+  14. `resources/views/public/discovery/index.blade.php`
+  15. `resources/views/public/solutions/fnb.blade.php`
+  16. `resources/views/public/solutions/laundry.blade.php`
+  17. `resources/views/public/solutions/manufacturing.blade.php`
+  18. `resources/views/public/solutions/retail.blade.php`
+  19. `resources/views/public/solutions/services.blade.php`
+  20. `resources/views/public/solutions/show.blade.php`
+  21. `resources/views/public/solutions/workshop.blade.php`
+  22. `resources/views/layouts/public_marketing.blade.php` (line 669 hamburger touch target only)
+  23. `lang/id/public_discovery.php` (line 47 empty title alignment only)
+- DO NOT edit files outside this write scope.
 - DO NOT cheat or mock tests. Genuine implementations only.
-- Adhere to `ui-simplify-layout` principles: single primary action per context, min 44px touch targets, >=8px spacing, clean overflow menus, no dropdown clipping, full-size Bento modals (not cramped `sm:max-w-md`), wrap hardcoded strings with `__()`.
+- Adhere to `ui-simplify-layout`, `responsive-ui-ux`, and accessibility standards:
+  - Single H1 per page, sequential H1 -> H2 -> H3 outline (zero heading skips).
+  - Explicit image dimensions (`width`, `height`, `decoding="async"`, `fetchpriority="high"` for LCP).
+  - Touch targets >= 44x44px.
+  - Light & Dark theme contrast >= 4.5:1 (text) and >= 3.0:1 (icons/non-text).
+  - Zero uncompiled translation keys or TypeErrors.
 
 ## Current Parent
-- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-09T00:30:00Z
+- Conversation ID: 1cadca40-8749-4a27-9009-f425d4420b3b
+- Updated: 2026-11-14T01:05:00Z
 
 ## Task Summary
 - **What to build**:
-  1. Fix Critical JS Syntax in `resources/views/app/invoices/print.blade.php` (unclosed else block & downloadPDF function).
-  2. Primary Action Consolidation & View Auth Gating in `create.blade.php` and `edit.blade.php` (remove duplicate solid Save buttons, gate top Save with `@can`, standardize 44px touch targets).
-  3. Mobile Touch Targets & Dropdown Clipping in `invoices/index.blade.php` (replace 4-button mobile cluster with chevron + overflow, fix dropdown clipping with `x-teleport="body"` dynamic coords, gate PDF/Print with `@can`).
-  4. Header Action Clutter & Auth Gating in `invoices/show.blade.php` (clean responsive toolbar wrapping, gate Quick Cetak, WhatsApp, PDF with `@can`, replace raw Context calls).
-  5. Layout Ergonomics, Modals & Touch Targets in `labor-machines/index.blade.php` (consolidate 4 Add buttons to context-aware primary in header, upgrade mobile touch targets to min 44px with >=8px gap, expand modals to Bento `max-w-4xl`, localize hardcoded strings with `__()`).
-  6. Verification: `php -l` on all 6 files, `php artisan view:clear` & `view:cache`, Node.js script parse test on `print.blade.php`.
-- **Success criteria**: All 6 views pass PHP linter, views compile cleanly without blade errors, JS syntax error eliminated, touch targets meet Apple HIG 44px, no button competition, no dropdown clipping, complete auth gating.
-- **Interface contracts**: PROJECT.md View Permissions Mapping (`invoices.create`, `invoices.edit`, `invoices.delete`, `invoices.record_payment`, `invoices.export`, `invoices.view`, `labor_machines.view`, `labor_machines.manage`).
+  - Part 1: Standalone Marketing Pages (Tailwind Play CDN removal, TypeError fix, scripts defer/pin, sticky H2 fix, media dimensions, touch targets, heading hierarchy skips, SEO canonicals & JSON-LD, dark mode contrast in modal).
+  - Part 2: Commercial Landings & Discovery (Heading skips in kasir_android & kasir_offline, table contrast in kasir_gratis, SEO H1 & breadcrumbs in discovery, logo dimensions, filter pill touch targets, contrast fix, empty title translation alignment).
+  - Part 3: Industry Solutions Views (DOM orphan tag removal in show.blade.php, bottom CTA H2 fixes, flow step H3 fixes, mobile grid 1-col on <=390px, feature icon contrast, FAQ summary 44px touch targets, JSON-LD hardening).
+  - Part 4: Verification (php -l on all files, npm run build, php artisan test suites, DOM tag balance check).
+- **Success criteria**:
+  - Zero PHP lint errors.
+  - Zero Vite build errors.
+  - All test suites passing (`PublicMarketingFrontendE2ETest`, `PublicBusinessDiscoveryTest`).
+  - DOM tag balance verified on all 7 solutions views.
 
 ## Key Decisions Made
-- Use single solid primary button per context, secondary actions outlined or tonal.
-- In `invoices/index.blade.php`, replace mobile 4-button horizontal clutter with clean chevron detail link and ⋯ overflow menu with min 44x44px touch targets.
-- Fix dropdown clipping using `x-teleport="body"` and dynamic coordinate calculation (`coords.top`, `coords.left`).
-- Expand labor-machine modals to `max-w-4xl` 2-column Bento canvas with `min-h-[44px]` inputs.
-- Add complete bilingual dictionaries (`lang/id/labor_machines.php` and `lang/en/labor_machines.php`).
+- Replace Play CDN with `@vite(['resources/css/app.css', 'resources/js/app.js'])` in `business_landing.blade.php`.
+- Pin Lucide to `0.469.0` and Alpine to `3.14.8` with `defer`.
+- Fix translation array access: `storefront.tracking.title`.
+- Use `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` for Flow and Cross-links on solution views to support <=390px viewports without card cramping.
 
 ## Artifact Index
 - `handoff.md` — Final handoff report
 - `progress.md` — Liveness & progress tracking
 - `DISPATCH.md` — Incoming dispatch instructions
-- `ui-simplify-layout-SKILL.md` — Loaded skill guidelines
-- `verify_print_js.cjs` — JS syntax verification script for `print.blade.php`
+- `BRIEFING.md` — Working memory and identity index
 
 ## Change Tracker
-- **Files modified**:
-  - `resources/views/app/invoices/print.blade.php`: Fixed unclosed else and downloadPDF JS, 44px touch targets.
-  - `resources/views/app/invoices/create.blade.php`: Removed competing solid save, gated top save with `@can('invoices.create')`, 44px touch targets.
-  - `resources/views/app/invoices/edit.blade.php`: Removed competing solid save, gated top save with `@can('invoices.edit')`, 44px touch targets.
-  - `resources/views/app/invoices/index.blade.php`: Mobile 44x44px chevron & overflow menu, body teleport dropdown, `@can` gating.
-  - `resources/views/app/invoices/show.blade.php`: Cleaned header action toolbar, `@can` gating on quick print/pdf/wa, replaced raw Context.
-  - `resources/views/app/labor-machines/index.blade.php`: Consolidated header Add button, Bento 2-col modals (`max-w-4xl`), 44px targets with >=8px gap, localization.
-  - `lang/id/labor_machines.php` & `lang/en/labor_machines.php`: Full localization key parity.
-- **Build status**: PASS (PHP lint 0 errors on 6 views, Blade cache 0 errors, Node JS syntax 0 errors, PHPUnit test suites passed).
+- **Files modified**: [In progress]
+- **Build status**: Pending
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: PASS
-  - `php -l`: All 6 views pass with 0 syntax errors.
-  - `php artisan view:clear` & `view:cache`: Compiled views cleared and cached successfully.
-  - Node.js JS script verification: All 4 scripts in `print.blade.php` syntax OK.
-  - `InvoiceModuleAuditTest`: 9 passed, 0 failed.
-  - `LaborMachineRbacCleanRoutingEmpiricalTest` & `LaborMachineRbacAdversarialTest`: 15 passed, 219 assertions.
-- **Lint status**: 0 errors
-- **Tests added/modified**: Verified against existing and empirical test suites.
+- **Build/test result**: Pending
+- **Lint status**: Pending
+- **Tests added/modified**: PublicMarketingFrontendE2ETest, PublicBusinessDiscoveryTest
 
 ## Loaded Skills
-- **Source**: C:\Users\Ulfah Ramadhani\.gemini\config\skills\ui-simplify-layout\SKILL.md
-- **Local copy**: C:\laragon\www\cooca_core\.agents\teamwork\worker_m2\ui-simplify-layout-SKILL.md
-- **Core methodology**: Simplify UI information, button hierarchy & placement, eliminate button duplication, fix touch targets (>=44px), prevent layout clipping/overlap, enforce modal size standards (Bento 2-col, responsive canvas).
+- None required to dump; using standard implementation protocols.

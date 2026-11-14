@@ -321,431 +321,145 @@
 
                     </div>
 
-                    <!-- KANAN: Interactive 3D Neon Ecosystem Hub Grid -->
-                    <div class="lg:col-span-6 relative flex items-center justify-center w-full overflow-visible" x-data="{
-                        activeNode: null,
-                        toggle(node) {
-                            this.activeNode = this.activeNode === node ? null : node;
-                        }
-                    }" @click.outside="activeNode = null">
+                    <!-- KANAN: Live Interactive POS & Realtime Operations Cockpit (High Conversion Proof) -->
+                    <div class="lg:col-span-6 relative flex items-center justify-center w-full" x-data="{
+                        simTab: 'pos'
+                    }">
+                        {{-- Ambient backdrop glow (ringan tanpa filter gaussian blur SVG) --}}
+                        <div class="absolute -inset-4 bg-gradient-to-tr from-[#007AFF]/25 via-[#00C2FF]/15 to-transparent rounded-[32px] blur-2xl pointer-events-none -z-0"></div>
 
-                        <div
-                            class="relative w-full max-w-[680px] xl:max-w-[740px] 2xl:max-w-[800px] aspect-[620/460] select-none mx-auto flex items-center justify-center">
+                        <div class="relative w-full max-w-[560px] bg-[#0A122C]/95 border border-white/15 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl text-white space-y-4">
+                            
+                            {{-- Specular Top Highlight Line --}}
+                            <div class="absolute top-0 inset-x-8 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none"></div>
 
-                            <!-- â•â•â• 1. SVG FIBER-OPTIC CABLE CONNECTIONS & GLOWS â•â•â• -->
-                            <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 620 460"
-                                fill="none">
-                                <defs>
-                                    <filter id="heroGlow" x="-30%" y="-30%" width="160%" height="160%">
-                                        <feGaussianBlur stdDeviation="3.5" result="blur" />
-                                        <feMerge>
-                                            <feMergeNode in="blur" />
-                                            <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                    </filter>
-                                    <filter id="heroStrongGlow" x="-40%" y="-40%" width="180%" height="180%">
-                                        <feGaussianBlur stdDeviation="6" result="blur" />
-                                        <feMerge>
-                                            <feMergeNode in="blur" />
-                                            <feMergeNode in="SourceGraphic" />
-                                        </feMerge>
-                                    </filter>
-                                    <linearGradient id="beamGrad" x1="0%" y1="100%" x2="0%"
-                                        y2="0%">
-                                        <stop offset="0%" stop-color="#00C2FF" stop-opacity="0.45" />
-                                        <stop offset="55%" stop-color="#00C2FF" stop-opacity="0.12" />
-                                        <stop offset="100%" stop-color="#00C2FF" stop-opacity="0" />
-                                    </linearGradient>
-                                    <linearGradient id="fiberGrad" x1="0%" y1="0%" x2="100%"
-                                        y2="100%">
-                                        <stop offset="0%" stop-color="#00C2FF" />
-                                        <stop offset="50%" stop-color="#38BDF8" />
-                                        <stop offset="100%" stop-color="#818CF8" />
-                                    </linearGradient>
-                                </defs>
+                            {{-- Cockpit Header Bar with Live Status & Switcher Tabs --}}
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                                    <span class="text-xs font-mono font-bold text-white tracking-wide truncate">Simulasi Kasir &amp; Stok Terhubung</span>
+                                </div>
+                                <div class="inline-flex items-center p-1 rounded-xl bg-white/[0.06] border border-white/10 text-xs font-semibold">
+                                    <button type="button" @click="simTab = 'pos'"
+                                        class="px-2.5 py-1 rounded-lg transition-all"
+                                        :class="simTab === 'pos' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        Kasir POS
+                                    </button>
+                                    <button type="button" @click="simTab = 'stok'"
+                                        class="px-2.5 py-1 rounded-lg transition-all"
+                                        :class="simTab === 'stok' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        Potong Resep
+                                    </button>
+                                    <button type="button" @click="simTab = 'laba'"
+                                        class="px-2.5 py-1 rounded-lg transition-all"
+                                        :class="simTab === 'laba' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
+                                        Laba Bersih
+                                    </button>
+                                </div>
+                            </div>
 
-                                <!-- Ambient Ground Reflection -->
-                                <ellipse cx="310" cy="405" rx="140" ry="20" fill="#00C2FF"
-                                    opacity="0.16" filter="url(#heroGlow)" />
-                                <ellipse cx="310" cy="405" rx="75" ry="10" fill="#007AFF"
-                                    opacity="0.30" filter="url(#heroGlow)" />
-
-                                <!-- Hologram Light Rays from Pedestal to Card -->
-                                <polygon points="250,265 370,265 345,305 275,305" fill="url(#beamGrad)"
-                                    class="hero-holo-beam" />
-
-                                <!-- â•â•â• BUNDLE 1: Operasional (Top Center) â•â•â• -->
-                                <g :class="activeNode === 'operasional' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 310 160 C 310 125, 310 105, 310 81" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 305 160 C 305 125, 307 105, 307 81" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 315 160 C 315 125, 313 105, 313 81" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 310 160 C 310 125, 310 105, 310 81" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 2: Social Media (Top Left) â•â•â• -->
-                                <g :class="activeNode === 'social' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 235 165 C 195 125, 170 115, 145 100" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 230 165 C 190 120, 165 110, 140 95" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 240 165 C 200 130, 175 120, 150 105" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 235 165 C 195 125, 170 115, 145 100" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 3: WhatsApp (Top Right) â•â•â• -->
-                                <g :class="activeNode === 'whatsapp' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 385 165 C 425 125, 450 115, 475 100" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 380 165 C 420 130, 445 120, 470 105" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 390 165 C 430 120, 455 110, 480 95" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 385 165 C 425 125, 450 115, 475 100" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 4: POS (Middle Left) â•â•â• -->
-                                <g :class="activeNode === 'pos' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 205 215 C 170 215, 145 215, 108 215" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 205 210 C 170 210, 145 210, 108 210" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 205 220 C 170 220, 145 220, 108 220" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 205 215 C 170 215, 145 215, 108 215" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 5: Content Automation (Middle Right) â•â•â• -->
-                                <g :class="activeNode === 'automation' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 415 215 C 450 215, 475 215, 512 215" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 415 210 C 450 210, 475 210, 512 210" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 415 220 C 450 220, 475 220, 512 220" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 415 215 C 450 215, 475 215, 512 215" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 6: Website (Bottom Left) â•â•â• -->
-                                <g :class="activeNode === 'website' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 225 260 C 185 285, 160 310, 128 338" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 220 260 C 180 280, 155 305, 123 333" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 230 260 C 190 290, 165 315, 133 343" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 225 260 C 185 285, 160 310, 128 338" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-
-                                <!-- â•â•â• BUNDLE 7: Customer (Bottom Right) â•â•â• -->
-                                <g :class="activeNode === 'customer' ? 'opacity-100' : 'opacity-85'"
-                                    class="transition-opacity">
-                                    <path d="M 395 260 C 435 285, 460 310, 492 338" stroke="#00C2FF" stroke-width="3"
-                                        opacity="0.25" filter="url(#heroGlow)" />
-                                    <path d="M 390 260 C 430 290, 455 315, 487 343" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 400 260 C 440 280, 465 305, 497 333" stroke="#38BDF8" stroke-width="1"
-                                        opacity="0.5" />
-                                    <path d="M 395 260 C 435 285, 460 310, 492 338" stroke="#00C2FF" stroke-width="1.8"
-                                        stroke-dasharray="8 12" class="hero-cable-flow" />
-                                </g>
-                            </svg>
-
-                            <!-- â•â•â• 2. CENTRAL COOCA HUB & 3D ISOMETRIC PODIUM â•â•â• -->
-                            <div
-                                class="absolute left-1/2 top-[47%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
-
-                                <!-- Central Hologram Glass Box (COOCA Core) -->
-                                <div class="relative w-44 sm:w-56 py-4 sm:py-5 px-3 sm:px-4 rounded-2xl sm:rounded-3xl bg-[#071329]/95 backdrop-blur-2xl border-2 border-[#00C2FF] shadow-[0_0_35px_rgba(0,194,255,0.45),inset_0_0_20px_rgba(0,194,255,0.2)] text-center group cursor-pointer hover:scale-105 transition-all duration-300"
-                                    @mouseenter="activeNode = 'core'" @mouseleave="activeNode = null" @click="toggle('core')"
-                                    :class="activeNode === 'core' ?
-                                        'scale-105 !border-cyan-300 !shadow-[0_0_55px_rgba(0,194,255,0.85),inset_0_0_25px_rgba(0,194,255,0.45)] ring-2 ring-cyan-400' :
-                                        ''">
-
-                                    <!-- 4 High-Tech Corner Brackets -->
-                                    <div
-                                        class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#00C2FF] rounded-tl-sm pointer-events-none">
-                                    </div>
-                                    <div
-                                        class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-[#00C2FF] rounded-tr-sm pointer-events-none">
-                                    </div>
-                                    <div
-                                        class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-[#00C2FF] rounded-bl-sm pointer-events-none">
-                                    </div>
-                                    <div
-                                        class="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#00C2FF] rounded-br-sm pointer-events-none">
-                                    </div>
-
-                                    <!-- Circuit Board PCB Traces (SVG inside card) -->
-                                    <svg class="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
-                                        viewBox="0 0 220 110" fill="none">
-                                        <path d="M 20 20 H 60 L 75 35 H 145 L 160 20 H 200" stroke="#00C2FF"
-                                            stroke-width="1" />
-                                        <path d="M 20 90 H 70 L 85 75 H 135 L 150 90 H 200" stroke="#00C2FF"
-                                            stroke-width="1" />
-                                        <path d="M 30 55 H 65 L 75 65 V 85" stroke="#00C2FF" stroke-width="1" />
-                                        <path d="M 190 55 H 155 L 145 65 V 85" stroke="#00C2FF" stroke-width="1" />
-                                        <circle cx="60" cy="20" r="2" fill="#00C2FF" />
-                                        <circle cx="160" cy="20" r="2" fill="#00C2FF" />
-                                        <circle cx="70" cy="90" r="2" fill="#00C2FF" />
-                                        <circle cx="150" cy="90" r="2" fill="#00C2FF" />
-                                        <circle cx="75" cy="85" r="2" fill="#00C2FF" />
-                                        <circle cx="145" cy="85" r="2" fill="#00C2FF" />
-                                    </svg>
-
-                                    <!-- Vertical Scanline Light Beam -->
-                                    <div
-                                        class="absolute inset-0 overflow-hidden pointer-events-none rounded-2xl sm:rounded-3xl">
-                                        <div
-                                            class="w-full h-1/2 bg-gradient-to-b from-transparent via-cyan-400/15 to-transparent hero-scanline-beam">
+                            {{-- Tab 1: Kasir POS Transaksi --}}
+                            <div x-show="simTab === 'pos'" class="space-y-3">
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
+                                        <div class="space-y-0.5 min-w-0 pr-2">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Kopi Susu Gula Aren (16oz)</p>
+                                            </div>
+                                            <p class="text-[11px] text-slate-400">Resep: Espresso 18g • Susu 120ml • Aren 25ml</p>
                                         </div>
+                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 18.000</span>
                                     </div>
+                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
+                                        <div class="space-y-0.5 min-w-0 pr-2">
+                                            <div class="flex items-center gap-1.5">
+                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Croissant Cokelat Keju</p>
+                                            </div>
+                                            <p class="text-[11px] text-slate-400">Resep: Pastry 1 pcs • Cokelat 15g • Keju 20g</p>
+                                        </div>
+                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 15.000</span>
+                                    </div>
+                                </div>
 
-                                    <!-- Wordmark & Tagline -->
-                                    <div class="relative z-10 flex flex-col items-center justify-center">
-                                        @if (!empty($siteLogoDarkUrl))
-                                            <img src="{{ $siteLogoDarkUrl }}" alt="COOCA" width="100" height="28" loading="lazy" decoding="async"
-                                                class="h-6 sm:h-7.5 w-auto object-contain mx-auto filter drop-shadow-[0_0_12px_rgba(0,194,255,0.85)]">
-                                        @else
-                                            <span
-                                                class="font-black text-xl sm:text-2xl tracking-wider text-white font-sans drop-shadow-[0_0_14px_rgba(0,194,255,0.85)]">COOCA</span>
-                                        @endif
+                                {{-- Payment Bar & Realtime WhatsApp Notification --}}
+                                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-[#060B1E] to-[#007AFF]/15 border border-emerald-500/30 space-y-2">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-slate-300">Total Pembayaran (QRIS Dinamis)</span>
+                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 33.000</span>
+                                    </div>
+                                    <div class="flex items-center justify-between pt-1 border-t border-white/10 text-[11px]">
+                                        <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
+                                            <i data-lucide="message-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                                            <span>Nota Terkirim Otomatis ke WhatsApp Tamu</span>
+                                        </div>
+                                        <span class="text-slate-400 font-mono">0812-****-8891</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- â•â•â• 3. SATELLITE NODES (Interactive Ecosystem Cards) â•â•â• -->
-
-                            <!-- Node 1: Operasional (Center Top) -->
-                            <div class="absolute left-1/2 top-[11.5%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer hero-node-gear"
-                                @mouseenter="activeNode = 'operasional'" @mouseleave="activeNode = null" @click="toggle('operasional')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2 sm:p-2.5 transition-all duration-300 group-hover:scale-110 text-cyan-400"
-                                    :class="activeNode === 'operasional' ?
-                                        'scale-115 !border-cyan-300 !shadow-[0_0_30px_rgba(0,194,255,0.85)] ring-2 ring-cyan-400' :
-                                        ''">
-                                    <!-- Dual Gear SVG -->
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7 gear-icon" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" fill="rgba(0,194,255,0.2)" />
-                                        <path
-                                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z" />
-                                    </svg>
+                            {{-- Tab 2: Potong Resep Bahan Baku (BOM Auto-Deduct) --}}
+                            <div x-show="simTab === 'stok'" x-cloak class="space-y-3">
+                                <p class="text-xs text-slate-300">
+                                    Setiap transaksi kasir menekan tombol bayar, stok bahan mentah otomatis berkurang presisi tanpa rekap manual:
+                                </p>
+                                <div class="space-y-2 text-xs">
+                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
+                                        <span class="text-slate-200">Biji Kopi Arabika House Blend</span>
+                                        <span class="font-mono text-emerald-400 font-bold">-18 gram <span class="text-slate-400 font-normal">(Sisa: 4.820g)</span></span>
+                                    </div>
+                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
+                                        <span class="text-slate-200">Fresh Milk Pasteurisasi</span>
+                                        <span class="font-mono text-emerald-400 font-bold">-120 ml <span class="text-slate-400 font-normal">(Sisa: 8.450ml)</span></span>
+                                    </div>
+                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
+                                        <span class="text-slate-200">Cup Sablon &amp; Sedotan Paper</span>
+                                        <span class="font-mono text-emerald-400 font-bold">-1 set <span class="text-slate-400 font-normal">(Sisa: 342 set)</span></span>
+                                    </div>
                                 </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_operations') }}</span>
-                                <!-- Hover Micro-Badge -->
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'operasional' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_operations_hover') }}
-                                </span>
+                                <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-center gap-1.5">
+                                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
+                                    <span>Notifikasi stok menipis otomatis dikirim ke WhatsApp owner toko</span>
+                                </div>
                             </div>
 
-                            <!-- Node 2: Social Media (Top Left) -->
-                            <div class="absolute left-[17.5%] top-[15%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'social'" @mouseleave="activeNode = null" @click="toggle('social')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] grid grid-cols-2 gap-1 p-1.5 sm:p-2 transition-all duration-300 group-hover:scale-110"
-                                    :class="activeNode === 'social' ?
-                                        'scale-115 !border-pink-400 !shadow-[0_0_30px_rgba(244,114,182,0.85)] ring-2 ring-pink-400' :
-                                        ''">
-                                    <!-- Instagram -->
-                                    <span
-                                        class="rounded bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] flex items-center justify-center text-white">
-                                        <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2.2">
-                                            <rect x="2" y="2" width="20" height="20" rx="5"></rect>
-                                            <circle cx="12" cy="12" r="3.5"></circle>
-                                        </svg>
-                                    </span>
-                                    <!-- TikTok -->
-                                    <span
-                                        class="rounded bg-black border border-white/20 flex items-center justify-center text-white">
-                                        <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">
-                                            <path
-                                                d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.82 4.49 6.27 6.27 0 0 0 1.93-4.49V8.6a8.18 8.18 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.93-.03z" />
-                                        </svg>
-                                    </span>
-                                    <!-- Threads -->
-                                    <span
-                                        class="rounded bg-[#101010] border border-white/20 flex items-center justify-center text-white">
-                                        <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">
-                                            <path
-                                                d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.891h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z" />
-                                        </svg>
-                                    </span>
-                                    <!-- Facebook -->
-                                    <span class="rounded bg-[#1877F2] flex items-center justify-center text-white">
-                                        <svg class="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-current" viewBox="0 0 24 24">
-                                            <path
-                                                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                                        </svg>
+                            {{-- Tab 3: Laba Bersih Riil --}}
+                            <div x-show="simTab === 'laba'" x-cloak class="space-y-3">
+                                <div class="grid grid-cols-2 gap-2.5 text-left">
+                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                                        <span class="text-[11px] text-slate-400 block">Omzet Penjualan Hari Ini</span>
+                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 2.450.000</span>
+                                        <span class="text-[10px] text-emerald-400 font-semibold block mt-0.5">84 Transaksi Selesai</span>
+                                    </div>
+                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                                        <span class="text-[11px] text-slate-400 block">Total HPP Bahan Baku</span>
+                                        <span class="text-base font-extrabold text-slate-300 tabular-nums">Rp 980.000</span>
+                                        <span class="text-[10px] text-slate-400 block mt-0.5">HPP Riil 40%</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-[#007AFF]/15 border border-[#007AFF]/30 flex items-center justify-between">
+                                    <div>
+                                        <span class="text-xs text-slate-300 block">Estimasi Laba Kotor Hari Ini</span>
+                                        <span class="text-lg font-black text-[#00C2FF] tabular-nums">Rp 1.470.000</span>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
+                                        Margin 60%
                                     </span>
                                 </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_social') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'social' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_social_hover') }}
-                                </span>
                             </div>
 
-                            <!-- Node 3: WhatsApp (Top Right) -->
-                            <div class="absolute left-[82.5%] top-[15%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'whatsapp'" @mouseleave="activeNode = null" @click="toggle('whatsapp')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 text-[#25D366]"
-                                    :class="activeNode === 'whatsapp' ?
-                                        'scale-115 !border-emerald-400 !shadow-[0_0_30px_rgba(52,211,153,0.85)] ring-2 ring-emerald-400' :
-                                        ''">
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7 fill-current" viewBox="0 0 24 24">
-                                        <path
-                                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                                    </svg>
+                            {{-- Floating Conversion Reassurance Badges --}}
+                            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 text-[11px] text-slate-300">
+                                <div class="flex items-center gap-1.5 text-cyan-400 font-medium">
+                                    <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
+                                    <span>Cloud Terisolasi Multi-Tenant</span>
                                 </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_whatsapp') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'whatsapp' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_whatsapp_hover') }}
-                                </span>
-                            </div>
-
-                            <!-- Node 4: POS (Middle Left) -->
-                            <div class="absolute left-[12%] top-[46.7%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'pos'" @mouseleave="activeNode = null" @click="toggle('pos')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 text-cyan-400"
-                                    :class="activeNode === 'pos' ?
-                                        'scale-115 !border-cyan-300 !shadow-[0_0_30px_rgba(0,194,255,0.85)] ring-2 ring-cyan-400' :
-                                        ''">
-                                    <!-- Sleek POS / EDC Terminal SVG -->
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.8">
-                                        <rect x="4" y="2" width="16" height="20" rx="3"
-                                            stroke-width="2" />
-                                        <path d="M7 6h10" stroke-width="2" stroke-linecap="round" />
-                                        <rect x="6" y="9" width="12" height="5" rx="1.5"
-                                            fill="rgba(0,194,255,0.25)" />
-                                        <circle cx="8.5" cy="17.5" r="1" fill="currentColor" />
-                                        <circle cx="12" cy="17.5" r="1" fill="currentColor" />
-                                        <circle cx="15.5" cy="17.5" r="1" fill="currentColor" />
-                                    </svg>
-                                </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_pos') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'pos' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_pos_hover') }}
-                                </span>
-                            </div>
-
-                            <!-- Node 5: Content Automation (Middle Right) -->
-                            <div class="absolute left-[88%] top-[46.7%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'automation'" @mouseleave="activeNode = null" @click="toggle('automation')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 text-purple-400"
-                                    :class="activeNode === 'automation' ?
-                                        'scale-115 !border-purple-400 !shadow-[0_0_30px_rgba(192,132,252,0.85)] ring-2 ring-purple-400' :
-                                        ''">
-                                    <!-- Robotic Arm Camera Mechanism SVG -->
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <rect x="3" y="19" width="18" height="3" rx="1"
-                                            fill="rgba(168,85,247,0.2)" />
-                                        <path d="M6 19v-4l5-6" />
-                                        <circle cx="11" cy="9" r="2.5" fill="currentColor" />
-                                        <path d="M13 8l5-2" />
-                                        <!-- Camera Head with Aperture -->
-                                        <rect x="16" y="3" width="6" height="5" rx="1.5" stroke-width="2"
-                                            fill="rgba(0,194,255,0.3)" />
-                                        <circle cx="19" cy="5.5" r="1.2" fill="#00C2FF" />
-                                    </svg>
-                                </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center whitespace-nowrap">{{ __('public_home.node_content') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'automation' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_content_hover') }}
-                                </span>
-                            </div>
-
-                            <!-- Node 6: Website (Bottom Left) -->
-                            <div class="absolute left-[15.5%] top-[79.5%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'website'" @mouseleave="activeNode = null" @click="toggle('website')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 text-blue-400"
-                                    :class="activeNode === 'website' ?
-                                        'scale-115 !border-blue-400 !shadow-[0_0_30px_rgba(96,165,250,0.85)] ring-2 ring-blue-400' :
-                                        ''">
-                                    <!-- Browser with Glowing Globe SVG -->
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.8">
-                                        <rect x="2" y="3" width="20" height="18" rx="3"
-                                            stroke-width="2" />
-                                        <path d="M2 8h20" stroke-width="1.5" />
-                                        <circle cx="5" cy="5.5" r="1" fill="#FF5F56" />
-                                        <circle cx="8" cy="5.5" r="1" fill="#FFBD2E" />
-                                        <circle cx="11" cy="5.5" r="1" fill="#27C93F" />
-                                        <!-- Globe Wireframe -->
-                                        <circle cx="12" cy="14" r="4.5" stroke="#00C2FF" />
-                                        <ellipse cx="12" cy="14" rx="2" ry="4.5"
-                                            stroke="#00C2FF" />
-                                        <path d="M7.8 14h8.4" stroke="#00C2FF" />
-                                    </svg>
-                                </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_website') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'website' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_website_hover') }}
-                                </span>
-                            </div>
-
-                            <!-- Node 7: Customer (Bottom Right) -->
-                            <div class="absolute left-[84.5%] top-[79.5%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="activeNode = 'customer'" @mouseleave="activeNode = null" @click="toggle('customer')">
-                                <div class="w-12 h-12 sm:w-15 sm:h-15 rounded-xl sm:rounded-2xl bg-[#09152e]/90 backdrop-blur-md border border-cyan-400/40 group-hover:border-cyan-300 shadow-[0_4px_20px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_25px_rgba(0,194,255,0.7)] flex items-center justify-center p-2.5 transition-all duration-300 group-hover:scale-110 text-cyan-300"
-                                    :class="activeNode === 'customer' ?
-                                        'scale-115 !border-cyan-300 !shadow-[0_0_30px_rgba(0,194,255,0.85)] ring-2 ring-cyan-400' :
-                                        ''">
-                                    <!-- Diverse Customer Avatars SVG -->
-                                    <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                        <circle cx="12" cy="7" r="3.2" stroke-width="2"
-                                            fill="rgba(0,194,255,0.2)" />
-                                        <path d="M6 19a6 6 0 0 1 12 0" stroke-width="2" />
-                                        <circle cx="5" cy="9" r="2.2" stroke-width="1.5" />
-                                        <path d="M2 19a4 4 0 0 1 4-4" stroke-width="1.5" />
-                                        <circle cx="19" cy="9" r="2.2" stroke-width="1.5" />
-                                        <path d="M22 19a4 4 0 0 0-4-4" stroke-width="1.5" />
-                                    </svg>
-                                </div>
-                                <span
-                                    class="mt-1 text-[9px] sm:text-[11px] font-semibold text-slate-300 group-hover:text-white transition-colors text-center">{{ __('public_home.node_customer') }}</span>
-                                <span
-                                    class="absolute -top-6 opacity-0 group-hover:opacity-100 transition-opacity px-2 py-0.5 rounded bg-[#00C2FF] text-slate-950 text-[9px] font-bold tracking-tight whitespace-nowrap shadow-md pointer-events-none"
-                                    :class="activeNode === 'customer' ? '!opacity-100' : ''">
-                                    {{ __('public_home.node_customer_hover') }}
-                                </span>
+                                <a href="{{ route('public.demo') }}"
+                                    class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1 group">
+                                    <span>Buka Simulasi Penuh</span>
+                                    <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+                                </a>
                             </div>
 
                         </div>
@@ -1516,10 +1230,10 @@
                             {{ __('public_home.bottom_cta_title') }}
                         </h2>
 
-                        <!-- Subheadline (H3) -->
-                        <h3 class="text-base sm:text-lg lg:text-xl font-semibold text-slate-200 tracking-tight">
+                        <!-- Subheadline -->
+                        <p class="text-base sm:text-lg lg:text-xl font-semibold text-slate-200 tracking-tight">
                             {{ __('public_home.bottom_cta_subtitle') }}
-                        </h3>
+                        </p>
 
                         <!-- Supporting Copy -->
                         <p class="text-slate-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">

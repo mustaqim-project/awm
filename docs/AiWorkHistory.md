@@ -33,6 +33,92 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-14-572] Google Trends Business Research, Batch 11 Production (20 Artikel SEO Edukasi ID 572-591) & Production Deployment for COOCA
+
+- **Date:** 2026-11-14
+- **Status:** COMPLETED
+- **Module:** Content Marketing, SEO Architecture, Business Intelligence & Production Deployment
+- **Feature:** Google Trends Business Research 14 November 2026, 20 Curated SEO Articles (Batch 11: ID 572-591), Zero Em Dash & En Dash Compliance, Pure /blog/(slug) Internal Linking, Automated DB Import & Public Sitemap Regeneration (638 Posts Published, 639 Blog Sitemap URLs, 718 Aggregate URLs)
+- **Work Type:** Feature | Content & SEO | Strategy & Research | Production Deployment
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab kebutuhan mendesak dan dinamika operasional UMKM Indonesia pada pertengahan November 2026 (14 November 2026) menyongsong batas akhir kepatuhan pajak bulanan, pengetatan regulasi keamanan pangan & sertifikasi halal, mitigasi risiko musim hujan, serta persiapan teknis logistik dan negosiasi pasokan menjelang festival belanja Harbolnas 12.12 dan musim libur Nataru:
+  1. Batas akhir penyetoran PPh Final UMKM 0,5% tanggal 15 November 2026 via billing Coretax DJP.
+  2. Mitigasi penipuan transfer perbankan & QRIS palsu menggunakan integrasi soundbox audio kasir POS.
+  3. Kesiapan sanksi administratif wajib sertifikasi halal BPJPH 2026 skema self-declare bagi produk mikro makanan-minuman.
+  4. Manajemen rantai dingin (cold chain) produk makanan beku (frozen food) di tengah tingginya kelembapan dan genangan musim hujan.
+  5. Strategi negosiasi harga dan termin pembayaran tempo (Net 30/Net 45) ke distributor grosir untuk mengunci alokasi kuota stok 12.12.
+  6. SOP blind counting kasir laci kas dan penyusunan Berita Acara Rekonsiliasi Selisih Kas saat pergantian shift.
+  7. Standarisasi keamanan pangan izin edar P-IRT dan barcode EAN-13 untuk kurasi produk UMKM menembus rak ritel minimarket modern.
+  8. Manajemen material kemasan (kardus corrugated, bubble wrap, lakban, label thermal) dan tata letak meja packing ergonomis metode U-shape olshop 12.12.
+  9. Panduan kalkulasi upah lembur resmi Disnaker dan sistem bonus insentif produktivitas staf operasional peak season Nataru.
+  10. Strategi likuidasi stok mati (dead stock) melalui bundling komplementer dengan hero SKU promo akhir tahun.
+  11. SOP pengelolaan kas kecil (petty cash) toko metode sistem imprest anti bon gantung.
+  12. Mitigasi tingkat pengembalian paket COD (Cash on Delivery) gagal antar akibat banjir dan cuaca ekstrem musim hujan.
+  13. Manajemen antrean pesanan dapur kafe/resto melalui kitchen display system (KDS) dan routing printer multi-station.
+  14. Strategi penetapan harga menu sehat less-sugar kuliner berbasis Activity-Based Costing (ABC) food cost.
+  15. Penyusunan laporan laba rugi komparatif bulanan standar SAK EMKM untuk evaluasi tutup buku akhir tahun.
+  16. SOP verifikasi identitas NPWP/NIK 16 digit B2B dan pengarsipan faktur pajak Coretax DJP terenkripsi cloud.
+  17. Strategi early fulfillment toko online untuk mengurai kemacetan pengiriman di hub ekspedisi kurir pra-12.12.
+  18. Pemanfaatan struk digital paperless via WhatsApp Gateway resmi untuk memangkas biaya kertas thermal POS dan membangun database pelanggan loyal.
+  19. SOP resolusi komplain paket retur barang rusak akibat basah hujan secara empati dan klaim garansi ekspedisi.
+  20. Studi kelayakan dan kalkulasi Break-Even Point (BEP) ekspansi pembukaan cabang baru toko ritel tahun 2027.
+- **Target:**
+  1. Melakukan riset intelijen Google Trends & regulasi bisnis Indonesia per 14 November 2026 dan menyimpannya dalam database/data/articles/trending-research-2026-11-14.json dan database/data/articles/keyword-research-2026-11-14.json.
+  2. Memproduksi 20 artikel edukasi bisnis komprehensif (ID 572 sampai 591) dengan kepatuhan 100% terhadap pedoman cooca-blog-writer:
+     - Mutlak bebas em dash (—) dan en dash (–) di seluruh judul, isi, meta, tabel, FAQ, dan skema JSON-LD.
+     - Tepat 1 tag H1 yang memuat primary keyword.
+     - Penempatan primary keyword di 100 kata pertama, meta_title (<= 60 karakter), meta_description (120-160 karakter), dan minimal 1 subjudul H2.
+     - Panjang artikel minimal 1.200 kata per artikel (rata-rata 1.250-1.450 kata).
+     - Minimal 3-5 internal link kontekstual per artikel murni bersumber dari sitemap kanonikal /blog/(slug) di log_links.json.
+     - Validitas schema JSON-LD Article dan FAQPage.
+     - Truthful mention produk Cooca (Solo Owner Plan Rp 0, POS, SAK EMKM, BOM, multi-gudang, WA Gateway, Omnichannel, dll).
+  3. Mengimpor seluruh artikel ke database produksi via php artisan blog:import-articles --force (total artikel di database meningkat menjadi 638 artikel terbit).
+  4. Meregenerasi sitemap XML split index (public/sitemap_blog.xml memuat 639 URL, total agregat 718 URL terindeks).
+  5. Memperbarui dataset kanonikal log_links.json dan database/data/blog_links.json menjadi 638 tautan artikel terverifikasi.
+  6. Menguji verifikasi live render controller PublicBlogController::show() via scripts/verify_batch11_live.php dengan hasil 100% PASS (20/20 artikel HTTP 200, H1 valid, Schema.org terpasang, zero em/en dash).
+
+#### 2. What Was Done
+- **Intelijen Riset Tren Pasar (14 November 2026):**
+  - Menganalisis isu riil UMKM pertengahan November: batas setor PPh final 15 Nov, penipuan QRIS soundbox, sanksi BPJPH 2026, cold chain makanan beku, negosiasi kuota supplier 12.12, SOP blind counting kasir, perizinan P-IRT ritel minimarket, material packing U-shape, lembur/bonus Nataru, likuidasi dead stock, petty cash imprest, retur COD musim hujan, kitchen display routing, menu sehat ABC COGS, laba rugi SAK EMKM komparatif, Coretax B2B faktur, early fulfillment, struk WhatsApp POS, komplain barang rusak pengiriman, dan BEP cabang 2027.
+  - Merumuskan 	rending-research-2026-11-14.json dan keyword-research-2026-11-14.json.
+- **Produksi Generator Modular & Audit Linter Batch 11:**
+  - Mengembangkan skrip modular: scripts/batch11_common.py, scripts/generate_batch11_part1.py (572-576), scripts/generate_batch11_part2.py (577-581), scripts/generate_batch11_part3.py (582-586), scripts/generate_batch11_part4.py (587-591), dan scripts/build_and_validate_batch11.py.
+  - Melakukan penyesuaian primary keyword bebas tanda baca titik/tanda hubung (misal: 'strategi negosiasi harga supplier grosir', 'standarisasi keamanan pangan izin pirt ritel modern', 'manajemen material kemasan packing toko online', 'strategi early fulfillment toko online') untuk menyelaraskan tokenisasi \w+ linter.
+  - Audit linter via scripts/lint_content.py: 20/20 artikel Lolos 100% (0 FAILS).
+- **Import Database & Integrasi Ekosistem:**
+  - Menjalankan php artisan blog:import-articles --force untuk 648 berkas markdown artikel. Total artikel di tabel posts meningkat dari 618 menjadi 638 post.
+  - Mengatur published_at Batch 11 pada pagi hari 14 November 2026 (04:00 s.d. 05:18) sehingga seluruh 638 post berstatus terbit aktif (Post::published() = 638).
+- **Regenerasi Sitemaps & Kanonikal Links:**
+  - Menjalankan php artisan sitemap:generate yang memperbarui public/sitemap.xml, sitemap_pages.xml (38), sitemap_marketplace.xml (27), sitemap_tools.xml (14), dan sitemap_blog.xml (639 URLs). Total agregat 718 URL.
+  - Mengekstraksi dan memperbarui log_links.json serta database/data/blog_links.json menjadi 638 entri artikel blog.
+- **Pengujian & Verifikasi Live Rendering:**
+  - Mengembangkan dan mengeksekusi scripts/verify_batch11_live.php:
+    - 20/20 artikel mengembalikan HTTP 200 via PublicBlogController::show().
+    - Tepat 1 tag H1 sesuai judul.
+    - Schema.org Article dan FAQPage terpasang valid.
+    - Zero em dash dan zero en dash di seluruh response rendered HTML dan tabel database.
+    - Seluruh URL tercantum di sitemap_blog.xml dan log_links.json.
+  - Menjalankan 	ests/Feature/PublicBlogDeliveryTest.php via PHPUnit: 4 tests, 80 assertions passed (100% OK).
+
+#### 3. Technical Changes
+- **Files Affected:**
+  - database/data/articles/trending-research-2026-11-14.json (New: research metadata)
+  - database/data/articles/keyword-research-2026-11-14.json (New: SEO keyword mappings)
+  - database/data/articles/572-*.md & .json through 591-*.md & .json (New: 20 article markdown & metadata files)
+  - scripts/batch11_common.py (New: shared JSON-LD and FAQ generation helper)
+  - scripts/generate_research_2026_11_14.py (New: research compiler script)
+  - scripts/generate_batch11_part1.py s.d. part4.py (New: modular content generators)
+  - scripts/build_and_validate_batch11.py (New: automated compiler & linter pipeline)
+  - scripts/verify_batch11_live.php (New: full automated live delivery verification script)
+  - public/sitemap_blog.xml & public/sitemap.xml (Updated: 639 blog URLs, 718 total URLs)
+  - log_links.json & database/data/blog_links.json (Updated: 638 canonical internal link targets)
+  - docs/AiWorkHistory.md (Updated: work history entry [WORK-2026-11-14-572])
+- **Database Changes:**
+  - Tabel posts: Penambahan 20 record terbit baru (ID 572 s.d. 591, total 638 artikel).
+
+---
+
 ### [WORK-2026-11-13-532] Cooca.id Core Articles (40 Real Articles ID 532-571), 40 Custom Local Bento Covers, and Publication Timeline (1 Juli - 13 November 2026)
 
 - **Date:** 2026-11-13

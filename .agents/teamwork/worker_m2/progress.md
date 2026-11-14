@@ -1,19 +1,36 @@
-# Progress — worker_m2
+# Progress: Worker M2
 
-Last visited: 2026-11-09T00:30:00Z
-Status: COMPLETED
+Last visited: 2026-11-14T01:05:00Z
+Status: IN_PROGRESS
+Phase: Implementation
 
-## Steps
-- [x] Review dispatch instructions, ORIGINAL_REQUEST.md, PROJECT.md, and survey handoff.
-- [x] Initialize DISPATCH.md, BRIEFING.md, progress.md, and local skill dump `ui-simplify-layout-SKILL.md`.
-- [x] Task 1: Fix critical JS syntax in `resources/views/app/invoices/print.blade.php` (unclosed `else` & unclosed `downloadPDF()`, standardized 44px toolbar actions).
-- [x] Task 2: Primary action consolidation & view auth gating in `create.blade.php` and `edit.blade.php` (eliminated duplicate solid Save, gated top Save with `@can`, standardized 44px touch targets).
-- [x] Task 3: Mobile touch targets & dropdown clipping in `resources/views/app/invoices/index.blade.php` (replaced 4-button mobile cluster with chevron link & 44x44px overflow menu, fixed table dropdown clipping via `x-teleport="body"` and dynamic coordinate calculation, wrapped actions with `@can`).
-- [x] Task 4: Header action clutter & auth gating in `resources/views/app/invoices/show.blade.php` (cleaned responsive toolbar wrapping, replaced raw `Context::hasPermission` with `Gate::allows` / `@can`, gated quick print, WhatsApp, and PDF actions).
-- [x] Task 5: Layout ergonomics, modals & touch targets in `resources/views/app/labor-machines/index.blade.php` (consolidated competing header Add buttons into context-aware single primary action, expanded 4 form modals from cramped `sm:max-w-md` to 2-column Bento canvas `max-w-4xl` with `min-h-[44px]` touch targets, upgraded mobile card actions to `min-h-[44px] min-w-[44px]` with 12px gap, localized strings and added bilingual dictionaries in `lang/id` and `lang/en`).
-- [x] Task 6: Full verification:
-  - `php -l` on all 6 view files (0 errors detected).
-  - `php artisan view:clear` and `php artisan view:cache` (all views compiled and cached successfully).
-  - Node.js JS script verification script (`verify_print_js.cjs` passes all 4 scripts in `print.blade.php` with 0 syntax errors).
-  - Test suites: `InvoiceModuleAuditTest` (9/9 pass), `LaborMachineRbacCleanRoutingEmpiricalTest` and `LaborMachineRbacAdversarialTest` (15/15 pass, 219 assertions), `LaborAndMachineEngineTest` (4/4 pass, 15 assertions).
-- [x] Task 7: Final handoff report & notification to parent.
+## Task Checklist
+- [ ] Part 1: Standalone Marketing Pages
+  - [ ] `resources/views/public/business_landing.blade.php` (Play CDN, TypeError, scripts, sticky H2, media dims, hamburger touch)
+  - [ ] Heading hierarchy skips (`about`, `privacy`, `terms`, `pricing`, `demo`, `security`, `sitemap`, `support`, `landing`)
+  - [ ] SEO Canonicals & Schema.org JSON-LD (`pricing`, `privacy`, `terms`, `sitemap`)
+  - [ ] Theme Contrast & Touch Targets (`pricing`, `layouts/public_marketing.blade.php`, `sitemap`, `privacy`, `terms`)
+- [ ] Part 2: Commercial Landings & Discovery
+  - [ ] `kasir_android.blade.php` (Specs card H2, feature cards H3)
+  - [ ] `kasir_offline.blade.php` (Architecture bento H2)
+  - [ ] `kasir_gratis.blade.php` (Table cell contrast)
+  - [ ] `discovery/index.blade.php` (H1 SEO, empty state H2, merchant banner H2, logo dims, touch targets, contrast, breadcrumb JSON-LD)
+  - [ ] `lang/id/public_discovery.php` (Line 47 'Toko Tidak Ditemukan')
+- [ ] Part 3: Industry Solutions Views
+  - [ ] `show.blade.php` (DOM orphan tags, parent heading H2, cross-links H2/H3, bottom CTA H2, JSON-LD hardening)
+  - [ ] 6 Industry views (`fnb`, `laundry`, `manufacturing`, `retail`, `services`, `workshop`):
+    - [ ] Bottom CTA H2
+    - [ ] Flow step headings H3
+    - [ ] Mobile grid 1-col on <=390px
+    - [ ] Feature icon contrast
+    - [ ] Cross-link headings H2 / cards H3
+    - [ ] FAQ summary 44px touch targets
+    - [ ] SoftwareApplication JSON-LD attributes (url, brand, inLanguage)
+    - [ ] Decorative Lucide `aria-hidden="true"`
+    - [ ] Truncation guards in `fnb.blade.php`
+- [ ] Part 4: Mandatory Verification
+  - [ ] PHP syntax check (`php -l`) on all modified views and PHP files
+  - [ ] `npm run build`
+  - [ ] Automated tests: `PublicMarketingFrontendE2ETest.php`, `PublicBusinessDiscoveryTest.php`
+  - [ ] DOM tag balance check on all 7 solutions views
+  - [ ] Compile comprehensive `handoff.md`

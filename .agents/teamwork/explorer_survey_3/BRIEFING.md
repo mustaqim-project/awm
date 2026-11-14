@@ -1,61 +1,62 @@
-# BRIEFING — 2026-11-08T23:13:00Z
+# BRIEFING — 2026-11-13T22:20:00Z
 
 ## Mission
-Perform comprehensive read-only survey of Module Audit readiness and Documentation structure for `invoices` and `labor-machines`.
+Public Feature Directories, Deep Content Templates, i18n & SEO Architecture Survey across 10 public directories (`blog`, `business-operating-system`, `calculators`, `contact`, `content-automation`, `marketplace`, `omnichannel`, `omnichannel-erp`, `resources`, `templates`), Laravel translation architecture, and SEO semantics.
 
 ## 🔒 My Identity
-- Archetype: Teamwork explorer
-- Roles: Documentation & Module Audit / Tests Specialist
-- Working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3
-- Original parent: e2aae656-229b-42bb-a7be-8273bdd8a984
-- Milestone: Investigation & Survey
-- Current parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Sub-milestone: Survey invoices & labor-machines (docs, models/DB, test/production readiness)
+- Archetype: explorer
+- Roles: Read-only investigation, architectural survey, code-level 7-dimension audit, synthesis
+- Working directory: C:\laragon\www\cooca_core
+- State folder: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\
+- Original parent: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Milestone: Survey & Audit of Assigned Scope Complete
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source code
-- Write only to working directory: .agents/teamwork/explorer_survey_3/
-- Update progress.md with "Last visited: [timestamp]"
-- 5-Component handoff report required
-- Focus strictly on invoices and labor-machines modules
+- Read-only investigation — do NOT implement changes or modify source files
+- Audit strictly against the 7 dimensions: Responsive Design, Core Web Vitals/LCP, TBT & JS, CSS/Fonts/Assets, SEO, Light/Dark Theme contrast, Multilingual/Localization
+- Provide up to 10 prioritized findings per file with significant issues with Priority, Category, Affected File, Code Location, Root Cause, Impact, Concrete Fix, Regression Risk
+- Produce self-contained handoff.md with 5 components: Observation, Logic Chain, Caveats, Conclusion, Verification Method
+- Write only to dedicated folder: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_3\
 
 ## Current Parent
-- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-08T23:13:00Z
+- Conversation ID: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Updated: 2026-11-13T22:20:00Z
 
 ## Investigation State
 - **Explored paths**:
-  - `resources/views/app/docs/` (`index.blade.php`, `partials/*`)
-  - `resources/views/app/invoices/` (`index`, `show`, `create`, `edit`, `print`)
-  - `resources/views/app/labor-machines/` (`index`)
-  - `app/Http/Controllers/Web/InvoiceWebController.php`
-  - `app/Http/Controllers/Web/LaborMachineWebController.php`
-  - `app/Models/Invoice.php`, `InvoiceItem.php`, `InvoicePayment.php`
-  - `app/Models/LaborRate.php`, `Machine.php`, `CostModelLabor.php`, `CostModelMachine.php`
-  - `app/Domain/Commerce/InvoiceService.php`, `InvoiceNumberGenerator.php`
-  - `app/Domain/Labor/LaborCostService.php`, `app/Domain/Machine/MachineCostService.php`
-  - `database/migrations/` (migrations for invoices, labor rates, machines)
-  - `database/seeders/RbacSeeder.php`
-  - `tests/Feature/InvoiceModuleAuditTest.php`, `InvoiceDraftEditAndPartiesTest.php`, `InvoiceStockAndJournalIntegrationTest.php`, `LaborAndMachineEngineTest.php`, `Commerce/InvoiceTest.php`
+  - `resources/views/public/blog` (2 blade views + 111 markdown articles)
+  - `resources/views/public/business-operating-system` (3 blade views)
+  - `resources/views/public/calculators` (9 blade views)
+  - `resources/views/public/contact` (1 blade view)
+  - `resources/views/public/content-automation` (4 blade views)
+  - `resources/views/public/marketplace` (6 blade views)
+  - `resources/views/public/omnichannel` (5 blade views)
+  - `resources/views/public/omnichannel-erp` (8 blade views)
+  - `resources/views/public/resources` (3 blade views)
+  - `resources/views/public/templates` (2 blade views)
+  - Translation files: `lang/en/` and `lang/id/` (10 public translation modules)
+  - Routing: `routes/public.php`, `routes/web.php`
+  - SEO configuration: `config/seo.php`, `resources/views/public/partials/seo.blade.php`
 - **Key findings**:
-  1. Documentation:
-     - `labor-machines` documentation is 100% missing from `resources/views/app/docs/` (needs `partials/sec_labor_machines.blade.php`, TOC link, and search indexing).
-     - `invoices` is currently represented only by an obsolete 36-line inline stub (`#sec-sales-b2b`) in `index.blade.php`. Needs dedicated partial `partials/sec_invoices.blade.php` following the Business Owner 20-industry format.
-  2. RBAC & Security:
-     - `InvoiceWebController` implements `HasMiddleware` and enforces tenant check (`abort_unless($invoice->business_id === $business->id, 403)`) across all methods.
-     - `LaborMachineWebController` DOES NOT implement `HasMiddleware` (relies purely on route middleware) and lacks explicit tenant isolation defense checks in `updateLabor`, `destroyLabor`, `updateMachine`, `destroyMachine`.
-     - In `labor-machines/index.blade.php`, action buttons check `costing.manage` instead of `labor_machines.manage`.
-  3. Tests & Production Readiness:
-     - All 9 tests in `InvoiceModuleAuditTest.php` and 14 tests in other invoice test suites pass.
-     - `LaborAndMachineEngineTest.php` passes (4 tests, 15 assertions), but tests only API and domain service; web controller `LaborMachineWebController` has 0 dedicated feature tests.
-     - `php artisan view:cache` passes with 0 syntax errors across all Blade templates.
-- **Unexplored areas**: None. Comprehensive survey completed.
+  1. CRITICAL: 48 missing translation keys called in `omnichannel-erp/*.blade.php` (`acc_*`, `analytics_*`, `crm_*`, `erp_*`, `fin_*`, `inv_*`, `pos_hero_rating`) cause raw key strings to render on live production pages.
+  2. CRITICAL: 2 missing breadcrumb translation keys in `marketplace/search.blade.php` (`mkt_breadcrumb_home`, `mkt_breadcrumb_marketplace`).
+  3. CRITICAL: Over 1,000 hardcoded Indonesian strings inside Apple Bento visualizers, forms, calculators, and spreadsheet templates across `templates/`, `resources/`, `calculators/`, `content-automation/`, `omnichannel/`, `business-operating-system/`.
+  4. PERFORMANCE: 17.8 KB of unminified inline `<style>` CSS in `blog/show.blade.php` across two separate blocks fighting typography specificity; redundant Lucide icon re-scanning across 9 calculator views.
+  5. SEO & CWV: Missing canonical sections in `business-operating-system/` views; missing explicit `width`/`height` on marketplace product/store thumbnail images causing CLS.
+- **Unexplored areas**: None within assigned scope (all 43 files fully inspected).
 
 ## Key Decisions Made
-- Synthesize all findings into the mandatory 5-component handoff report (`handoff.md`).
+- Fully cataloged all 43 Blade templates, 10 translation file pairs, and routing architecture.
+- Documented actionable prioritized remediation plans across 7 dimensions.
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming dispatch logs
-- `progress.md` — Heartbeat and task tracker
-- `BRIEFING.md` — Persistent working memory
-- `handoff.md` — Final 5-component investigation report
+- `.agents/teamwork/explorer_survey_3/DISPATCH.md` — Inbound task directive
+- `.agents/teamwork/explorer_survey_3/BRIEFING.md` — State index & working memory
+- `.agents/teamwork/explorer_survey_3/progress.md` — Heartbeat & execution progress
+- `.agents/teamwork/explorer_survey_3/compare_lang.php` — Translation parity test script
+- `.agents/teamwork/explorer_survey_3/audit_translations.php` — Missing keys & untranslated strings test script
+- `.agents/teamwork/explorer_survey_3/audit_views.php` — 43-view audit scanner
+- `.agents/teamwork/explorer_survey_3/inspect_samples.php` — Detailed line-level inspector
+- `.agents/teamwork/explorer_survey_3/detailed_audit.php` — 7-dimension detailed issue detector
+- `.agents/teamwork/explorer_survey_3/check_scripts.php` — Inline script analyzer
+- `.agents/teamwork/explorer_survey_3/handoff.md` — Final survey and audit report

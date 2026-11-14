@@ -6,6 +6,24 @@
     'Kebijakan privasi resmi COOCA mengenai pengumpulan data pemilik UMKM dan pelanggan toko, enkripsi AES-256 GCM, isolasi multi-tenant, dan hak data UU PDP No. 27/2022.')
 @section('og_title', ($page->meta_title ?? 'Kebijakan Privasi & Perlindungan Data Pribadi') . ' | COOCA')
 @section('og_description', $page->meta_description ?? 'Kebijakan privasi resmi COOCA mengenai kepatuhan UU PDP, isolasi multi-tenant, dan hak perlindungan data UMKM.')
+@section('canonical', route('public.privacy'))
+
+@section('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{ $page->title ?? 'Kebijakan Privasi' }}",
+    "description": "{{ $page->meta_description ?? 'Kebijakan privasi resmi COOCA.' }}",
+    "url": "{{ route('public.privacy') }}",
+    "publisher": {
+        "@type": "Organization",
+        "name": "PT Cooca Digital Teknologi",
+        "url": "{{ url('/') }}"
+    }
+}
+</script>
+@endsection
 
 @section('content')
     <div x-data="{ audienceFilter: 'all' }" class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F] dark:text-[#F5F5F7] transition-colors pb-24">
@@ -13,7 +31,7 @@
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
         <!-- ═══ TYPE D LEGAL HERO (Midnight #060B1E Bento Canvas - No Breadcrumb) ════ -->
         <!-- ══════════════════════════════════════════════════════════════════════════ -->
-        <header class="relative bg-[#060B1E] text-white overflow-hidden border-b border-white/10 min-h-[calc(100svh-4rem)] lg:min-h-[calc(100svh-84px)] flex items-center">
+        <header class="relative bg-[#060B1E] text-white overflow-hidden border-b border-white/10 py-12 sm:py-16 lg:py-20 flex items-center">
             {{-- Dual Ambient Glows --}}
             <div class="absolute top-1/4 -right-24 w-96 h-96 bg-[#007AFF]/20 rounded-full blur-[120px] pointer-events-none"></div>
             <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-[#00C4D8]/15 rounded-full blur-[140px] pointer-events-none"></div>
@@ -60,7 +78,7 @@
                                 <span>Isolasi Multi-Tenant</span>
                             </div>
                             <button type="button" onclick="window.print()"
-                                class="h-8 px-3.5 rounded-xl text-xs font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-[0.98]">
+                                class="h-11 min-h-[44px] px-3.5 rounded-xl text-xs font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/15 transition-all inline-flex items-center gap-1.5 cursor-pointer active:scale-[0.98]">
                                 <i data-lucide="printer" class="w-3.5 h-3.5 text-slate-300"></i>
                                 <span>Cetak / PDF</span>
                             </button>
@@ -71,19 +89,19 @@
                             <div class="p-1 rounded-xl bg-[#0A122C] border border-white/15 inline-flex items-center gap-1 max-w-full overflow-x-auto shadow-inner">
                                 <button type="button" @click="audienceFilter = 'all'"
                                     :class="audienceFilter === 'all' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
-                                    class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
+                                    class="h-11 min-h-[44px] px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('public_marketing.legal_tab_all') }}</span>
                                 </button>
                                 <button type="button" @click="audienceFilter = 'owner'"
                                     :class="audienceFilter === 'owner' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
-                                    class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
+                                    class="h-11 min-h-[44px] px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="store" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('public_marketing.legal_tab_owner') }}</span>
                                 </button>
                                 <button type="button" @click="audienceFilter = 'customer'"
                                     :class="audienceFilter === 'customer' ? 'bg-[#007AFF] text-white shadow-sm font-bold' : 'text-slate-300 hover:text-white font-medium'"
-                                    class="h-8 px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
+                                    class="h-11 min-h-[44px] px-3.5 rounded-lg text-xs transition-all flex items-center gap-1.5 shrink-0 cursor-pointer">
                                     <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
                                     <span>{{ __('public_marketing.legal_tab_customer') }}</span>
                                 </button>
@@ -175,29 +193,29 @@
                             class="p-6 rounded-[24px] bg-white/85 dark:bg-[#1C1C1E]/85 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-xl shadow-xs space-y-4">
                             <div class="flex items-center gap-2 pb-3 border-b border-black/[0.04] dark:border-white/[0.06]">
                                 <i data-lucide="list" class="w-4 h-4 text-[#007AFF]"></i>
-                                <h3 class="text-[14px] font-bold text-black dark:text-white">{{ __('public_marketing.legal_toc_title_privacy') }}</h3>
+                                <p class="text-[14px] font-bold text-black dark:text-white">{{ __('public_marketing.legal_toc_title_privacy') }}</p>
                             </div>
 
                             <nav class="space-y-1.5 text-[13px]">
                                 <a href="#general-policy"
-                                    class="block p-2 rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
+                                    class="flex items-center px-3 py-2.5 min-h-[44px] rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
                                     1. Kerangka Pelindungan Data (UU PDP)
                                 </a>
                                 <a href="#third-party-integrations"
-                                    class="block p-2 rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
+                                    class="flex items-center px-3 py-2.5 min-h-[44px] rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
                                     2. Integrasi TriPay, Biteship &amp; WhatsApp
                                 </a>
                                 <a href="#data-subject-rights"
-                                    class="block p-2 rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
+                                    class="flex items-center px-3 py-2.5 min-h-[44px] rounded-[10px] text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 hover:text-[#007AFF] transition-colors">
                                     {{ __('public_marketing.legal_toc_sec_3') }}
                                 </a>
                                 <a href="#owner-section" x-show="audienceFilter === 'all' || audienceFilter === 'owner'"
-                                    class="block p-2 rounded-[10px] text-[#007AFF] dark:text-[#0A84FF] font-semibold hover:bg-[#007AFF]/10 transition-colors">
+                                    class="flex items-center px-3 py-2.5 min-h-[44px] rounded-[10px] text-[#007AFF] dark:text-[#0A84FF] font-semibold hover:bg-[#007AFF]/10 transition-colors">
                                     4. Bagian {{ __('public_marketing.legal_tab_owner') }} (Owner)
                                 </a>
                                 <a href="#customer-section"
                                     x-show="audienceFilter === 'all' || audienceFilter === 'customer'"
-                                    class="block p-2 rounded-[10px] text-[#34C759] dark:text-[#30D158] font-semibold hover:bg-[#34C759]/10 transition-colors">
+                                    class="flex items-center px-3 py-2.5 min-h-[44px] rounded-[10px] text-[#34C759] dark:text-[#30D158] font-semibold hover:bg-[#34C759]/10 transition-colors">
                                     {{ __('public_marketing.legal_toc_sec_5') }}
                                 </a>
                             </nav>
@@ -276,6 +294,19 @@
                                 penghapusan akun permanen, silakan hubungi tim kami di <a href="mailto:support@cooca.id"
                                     class="text-[#007AFF] font-medium hover:underline">support@cooca.id</a>.
                             </p>
+                        </div>
+
+                        {{-- Conversion Exit Ramp --}}
+                        <div class="p-6 sm:p-8 rounded-[24px] bg-gradient-to-r from-[#060B1E] to-[#0A122C] border border-white/10 text-white flex flex-col sm:flex-row items-center justify-between gap-5 shadow-lg">
+                            <div class="space-y-1 text-center sm:text-left">
+                                <h3 class="text-base sm:text-lg font-bold text-white">Kelola Bisnis dengan Tenang &amp; Aman</h3>
+                                <p class="text-xs sm:text-sm text-slate-300">Data usaha Anda dienkripsi AES-256 dan terisolasi penuh sesuai UU PDP.</p>
+                            </div>
+                            <a href="{{ route('register') }}"
+                                class="h-11 px-6 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center gap-2 shrink-0 active:scale-95 transition min-h-[44px]">
+                                <span>Mulai Akun Gratis</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            </a>
                         </div>
 
                     </div>

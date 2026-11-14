@@ -22,7 +22,7 @@
     @include('public.partials.seo', [
         'siteName' => $business->name,
         'title' => $landingPage->meta_title ?: ($business->name . ' - ' . ($landingPage->headline ?: 'Toko Online & Layanan Resmi')),
-        'description' => $landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Selamat datang di website resmi ' . $business->name . '. Temukan aneka produk terbaik, kemudahan pemesanan, dan layanan pelanggan terpercaya.')),
+        'description' => $landingPage->meta_description ?: ($landingPage->subheadline ?: ($business->description ?: 'Pesan langsung aneka produk dan layanan resmi ' . $business->name . '. Praktis, cepat, dan terpercaya dengan pilihan pengiriman atau ambil di toko.')),
         'url' => $bizCanonical,
         'image' => $bizOgImage,
         'keywords' => $landingPage->meta_keywords ?? null,
@@ -136,51 +136,7 @@
     $themeRgb = "{$r}, {$g}, {$b}";
     ?>
 
-    {{-- Load the CDN before assigning config so class-based dark mode is registered. --}}
-        <script>
-        (function() {
-            const _origWarn = console.warn;
-            console.warn = function(...args) {
-                if (args.some(a => typeof a === 'string' && a.indexOf('tailwindcss.com') !== -1)) return;
-                _origWarn.apply(console, args);
-            };
-        })();
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"{{ $configuredFont }}"', '-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"',
-                            '"SF Pro Text"', '"Inter"',
-                            'system-ui', 'sans-serif'
-                        ],
-                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
-                    },
-                    colors: {
-                        brand: {
-                            DEFAULT: '{{ $themeColor }}',
-                            primary: '{{ $themeColor }}',
-                            50: 'rgba({{ $themeRgb }}, 0.05)',
-                            100: 'rgba({{ $themeRgb }}, 0.1)',
-                            200: 'rgba({{ $themeRgb }}, 0.2)',
-                            500: '{{ $themeColor }}',
-                            600: '{{ $themeColor }}',
-                        },
-                        apple: {
-                            blue: '#007AFF',
-                            green: '#34C759',
-                            orange: '#FF9500',
-                            red: '#FF3B30',
-                            purple: '#AF52DE',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Anti-FOUC, Cloak, and Core Bento Styling --}}
     <style>
@@ -189,6 +145,7 @@
         }
 
         :root {
+            --font-storefront: "{{ $configuredFont }}", -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
             --primary: {{ $themeColor }};
             --primary-color: {{ $themeColor }};
             --primary-rgb: {{ $themeRgb }};
@@ -197,6 +154,7 @@
         }
 
         body {
+            font-family: var(--font-storefront);
             font-feature-settings: "cv02", "cv03", "cv04", "cv11";
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -1777,8 +1735,8 @@
     ];
     ?>
     {{-- Alpine.js & Lucide Icons --}}
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 
     <script>
         window.makeSlider = function(totalItems, perViewConfig, intervalMs = 3500) {
@@ -3383,8 +3341,8 @@
                         <span
                             x-text="groupOrder.data.is_locked ? 'Pesanan Dikunci' : (groupOrder.data.is_checked_out ? 'Selesai Dicheckout' : 'Pesan Bareng Aktif')"></span>
                     </span>
-                    <h2 class="text-[13px] sm:text-[14px] font-bold text-black dark:text-white tracking-tight"
-                        x-text="groupOrder.data.title || 'Pesanan Bersama'"></h2>
+                    <p class="text-[13px] sm:text-[14px] font-bold text-black dark:text-white tracking-tight"
+                        x-text="groupOrder.data.title || 'Pesanan Bersama'"></p>
                     <span class="text-[11.5px] text-black/55 dark:text-white/55">
                         &bull; Host: <strong class="text-black dark:text-white"
                             x-text="groupOrder.data.host_name"></strong>
@@ -3509,7 +3467,7 @@
                     $headerBrandLogo = $business->logo_url ?: $landingPage->logo_url;
                 @endphp
                 @if ($headerBrandLogo)
-                    <img src="{{ $headerBrandLogo }}" alt="{{ $business->name }}"
+                    <img src="{{ $headerBrandLogo }}" alt="{{ $business->name }}" width="36" height="36" decoding="async"
                         class="w-8 h-8 sm:w-9 sm:h-9 rounded-[10px] object-contain border border-black/5 dark:border-white/10 bg-white dark:bg-[#1C1C1E] p-1 shadow-sm group-hover:scale-105 transition-transform"
                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div
@@ -3710,7 +3668,7 @@
 
                 {{-- Mobile Hamburger --}}
                 <button type="button" @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="md:hidden w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/70 dark:text-white/70 active:scale-95 transition"
+                    class="md:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/70 dark:text-white/70 active:scale-95 transition"
                     aria-label="Menu navigasi" aria-controls="storefront-mobile-menu"
                     :aria-expanded="mobileMenuOpen ? 'true' : 'false'">
                     <i data-lucide="menu" class="w-4 h-4" x-show="!mobileMenuOpen"></i>
@@ -3966,9 +3924,8 @@
                         <div class="lg:col-span-5 pt-6 lg:pt-0">
                             <div
                                 class="rounded-[28px] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.12)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.45)] border border-black/10 dark:border-white/10 aspect-[4/3] bg-black/[0.03] dark:bg-white/[0.05] relative group flex items-center justify-center">
-                                <img src="{{ $heroDisplayImage }}" alt="{{ $business->name }}"
+                                <img src="{{ $heroDisplayImage }}" alt="{{ $business->name }}" width="640" height="480" fetchpriority="high" decoding="async"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                                    fetchpriority="high"
                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <div
                                     class="hidden w-full h-full flex items-center justify-center bg-gradient-to-br from-brand-primary/10 via-black/5 dark:via-white/5 to-brand-primary/20">
@@ -4687,7 +4644,7 @@
                                                         class="w-full aspect-square rounded-[18px] bg-black/[0.03] dark:bg-white/[0.05] flex items-center justify-center mb-2.5 overflow-hidden border border-black/5 dark:border-white/10 relative">
                                                         @if ($prod->image_url)
                                                             <img src="{{ $prod->image_url }}"
-                                                                alt="{{ $prod->name }}" loading="lazy"
+                                                                alt="{{ $prod->name }}" loading="lazy" width="300" height="300" decoding="async"
                                                                 class="w-full h-full object-cover"
                                                                 onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');">
                                                             <i data-lucide="package"
@@ -8621,7 +8578,7 @@
                                     <a :href="groupOrder.orderTrackingUrl || '#'"
                                         class="h-11 rounded-[14px] bg-brand-primary hover:opacity-90 text-white text-[12.5px] font-bold transition flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
                                         <i data-lucide="truck" class="w-3.5 h-3.5"></i>
-                                        <span>{{ __('storefront.tracking') }}</span>
+                                        <span>{{ __('storefront.tracking.title') }}</span>
                                     </a>
                                 </div>
                             </template>

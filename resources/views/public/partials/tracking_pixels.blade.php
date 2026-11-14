@@ -86,9 +86,13 @@ window.initMarketingPixels = function() {
     }
 };
 
-// Initialize marketing pixels if consent is already stored
+// Initialize marketing pixels if consent is already stored (deferred to idle time to preserve CWV/TBT)
 if (localStorage.getItem('cooca_consent_status') === 'accepted') {
-    window.initMarketingPixels();
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(function() { window.initMarketingPixels(); }, { timeout: 3500 });
+    } else {
+        window.addEventListener('load', function() { setTimeout(window.initMarketingPixels, 1800); }, { once: true });
+    }
 }
 
 // Track WhatsApp Lead clicks automatically across the entire site
@@ -101,6 +105,6 @@ document.addEventListener('click', function(e) {
             page: window.location.pathname
         });
     }
-});
+}, { passive: true });
 </script>
 

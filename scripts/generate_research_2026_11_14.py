@@ -1,0 +1,414 @@
+# scripts/generate_research_2026_11_14.py
+import json, os
+
+def generate_research():
+    out_dir = os.path.join("database", "data", "articles")
+    os.makedirs(out_dir, exist_ok=True)
+    
+    trending = {
+        "date": "2026-11-14",
+        "batch": 11,
+        "geo": "ID",
+        "category": "3",
+        "category_name": "Tren Bisnis, Logistik Ritel, Keamanan Transaksi Kasir, Regulasi Perpajakan & Operasional Peak Season UMKM",
+        "source": "Google Trends Indonesia 14 November 2026, Tenggat Pajak Coretax DJP 15 November, Pengawasan Halal BPJPH, Kesiapan Harbolnas 12.12 & Libur Nataru",
+        "total_topics": 20,
+        "topics": [
+            {
+                "id": 572,
+                "topic": "Batas Akhir Setor PPh Final 0,5 Persen 15 November 2026 dan Pembuatan Kode Billing Coretax DJP bagi UMKM",
+                "trending_query": "batas akhir setor pph final 15 november 2026 billing coretax djp umkm",
+                "primary_keyword": "batas akhir setor pph final 15 november 2026",
+                "secondary_keywords": "kode billing pph final umkm coretax, kap kjs 411128 420 pph final, cara bayar pajak umkm online djp, sanksi telat setor pph final 0 koma 5 persen, bukti penerimaan negara ntpn pajak",
+                "search_intent": "informational",
+                "search_interest": "Sangat Tinggi",
+                "trending_reason": "Tanggal 15 November 2026 merupakan batas akhir penyetoran PPh Final 0,5 persen masa pajak Oktober 2026 di sistem Coretax DJP, sehingga wajib pajak UMKM membutuhkan panduan cepat pembuatan kode billing agar terhindar dari denda keterlambatan.",
+                "credible_sources": [
+                    "Direktorat Jenderal Pajak Kementerian Keuangan Republik Indonesia",
+                    "Peraturan Pemerintah Nomor 55 Tahun 2022 tentang Penyesuaian Pengaturan Pajak Penghasilan"
+                ],
+                "msme_opportunity": "Menghindari sanksi denda bunga keterlambatan otomatis di Coretax dan mengamankan status kepatuhan perpajakan usaha untuk kemudahan fasilitas pembiayaan.",
+                "article_angle": "Panduan langkah pembuatan kode billing mandiri KAP/KJS 411128-420 di portal Coretax, batas waktu cut-off pembayaran bank persepsi, dan validasi NTPN sebagai pengganti pelaporan SPT Masa.",
+                "slug": "batas-akhir-setor-pph-final-15-november-2026-billing-coretax",
+                "assigned_category": "Pajak & Legalitas"
+            },
+            {
+                "id": 573,
+                "topic": "Mitigasi Penipuan Bukti Transfer dan QRIS Palsu Kasir dengan Integrasi QRIS Soundbox Audio Otomatis",
+                "trending_query": "mitigasi penipuan bukti transfer qris palsu soundbox audio kasir umkm",
+                "primary_keyword": "mitigasi penipuan bukti transfer qris palsu",
+                "secondary_keywords": "cara kerja qris soundbox toko ritel, modus struk transfer palsu kasir, pencegahan penipuan qris warung makan, notifikasi suara pembayaran kasir pos, verifikasi transaksi qris real time",
+                "search_intent": "informational",
+                "search_interest": "Sangat Tinggi",
+                "trending_reason": "Banyak pedagang dan kasir ritel menjadi korban screenshot bukti transfer palsu saat jam sibuk, sehingga adopsi perangkat QRIS Soundbox yang menyuarakan nominal uang masuk secara real-time melonjak pesat.",
+                "credible_sources": [
+                    "Bank Indonesia Petunjuk Keamanan Transaksi QRIS",
+                    "Asosiasi Sistem Pembayaran Indonesia (ASPI)"
+                ],
+                "msme_opportunity": "Menghilangkan risiko kerugian akibat nota palsu tanpa memperlambat antrean kasir, serta memberikan kepastian dana masuk ke rekening toko seketika.",
+                "article_angle": "Bedah modus penipuan bukti bayar editan AI, SOP kasir dilarang percaya layar HP pembeli, dan keunggulan notifikasi audio otomatis QRIS Soundbox yang terhubung ke mesin kasir.",
+                "slug": "mitigasi-penipuan-bukti-transfer-qris-palsu-soundbox-audio-kasir",
+                "assigned_category": "Kasir & POS"
+            },
+            {
+                "id": 574,
+                "topic": "Sanksi Administratif Wajib Halal BPJPH 2026 dan Panduan Pengajuan Self-Declare Produk Pangan UMKM",
+                "trending_query": "sanksi administratif wajib halal bpjph 2026 self declare umkm pangan",
+                "primary_keyword": "sanksi administratif wajib halal bpjph 2026",
+                "secondary_keywords": "syarat sertifikasi halal gratis sehati, tahapan sanksi permen bpjph nomor 2 tahun 2026, cara daftar sertifikat halal ptsp halal go id, kriteria pendamping proses produk halal pph, aturan label halal makanan minuman kemasan",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Pemerintah mulai memberlakukan pengawasan dan penegakan sanksi administratif bertahap bagi produk makanan minuman yang belum bersertifikat halal, mendorong pelaku usaha kuliner segera mengajukan sertifikasi mandiri.",
+                "credible_sources": [
+                    "Badan Penyelenggara Jaminan Produk Halal (BPJPH) Kementerian Agama RI",
+                    "Peraturan Pemerintah Nomor 42 Tahun 2024 tentang Penyelenggaraan Bidang Jaminan Produk Halal"
+                ],
+                "msme_opportunity": "Melindungi produk dari penarikan izin edar, meningkatkan kepercayaan konsumen muslim, dan memperluas distribusi ke supermarket dan minimarket modern.",
+                "article_angle": "Hierarki sanksi administratif (peringatan tertulis hingga penarikan barang), kriteria bebas biaya program Sehati self-declare, dan checklist verifikasi bahan baku halal.",
+                "slug": "sanksi-administratif-wajib-halal-bpjph-2026-self-declare-umkm",
+                "assigned_category": "Pajak & Legalitas"
+            },
+            {
+                "id": 575,
+                "topic": "Manajemen Rantai Dingin Cold Chain Makanan Beku Frozen Food UMKM saat Cuaca Ekstrem Musim Hujan",
+                "trending_query": "manajemen cold chain rantai dingin frozen food musim hujan umkm",
+                "primary_keyword": "manajemen cold chain frozen food musim hujan",
+                "secondary_keywords": "sop suhu penyimpanan freezer makanan beku, kemasan styrofoam ice gel pengiriman hujan, pencegahan bakteri defrost produk daging beku, genset cadangan freezer toko ritel, rotasi stok fefo frozen food gudang",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Curah hujan tinggi dan potensi pemadaman listrik darurat menuntut pengusaha makanan beku menjaga standar suhu freezer minus 18 derajat Celcius agar produk tidak mencair dan rusak selama distribusi.",
+                "credible_sources": [
+                    "Badan Pengawas Obat dan Makanan (BPOM) RI Pedoman Rantai Dingin Pangan",
+                    "Asosiasi Rantai Pendingin Indonesia (ARPI)"
+                ],
+                "msme_opportunity": "Menjaga kualitas rasa, tekstur, dan keamanan pangan beku, mencegah kerugian basi (spoilage), serta mempertahankan reputasi pengiriman tepat mutu.",
+                "article_angle": "Protokol pengendalian suhu penyimpanan, teknik kemas insulasi ganda menggunakan thermal foil dan ice gel beku, serta checklist inspeksi freezer harian.",
+                "slug": "manajemen-cold-chain-rantai-dingin-frozen-food-musim-hujan",
+                "assigned_category": "Inventori & Stok"
+            },
+            {
+                "id": 576,
+                "topic": "Strategi Negosiasi Harga dan Termin Pembayaran ke Supplier Grosir Menjelang Lonjakan Permintaan 12.12",
+                "trending_query": "strategi negosiasi harga dan termin supplier grosir belanja 12 12",
+                "primary_keyword": "strategi negosiasi harga supplier grosir",
+                "secondary_keywords": "cara meminta tempo pembayaran net 45 pemasok, kontrak kuota pengadaan barang harbolnas, negosiasi diskon volume kulakan ritel, sla pengiriman barang supplier akhir tahun, jaminan alokasi stok distributor utama",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Memasuki pertengahan November, pemilik toko harus segera mengunci harga beli dan kesepakatan kuota stok dengan pemasok agar tidak terkena kenaikan harga sepihak menjelang Harbolnas 12.12.",
+                "credible_sources": [
+                    "Kamar Dagang dan Industri Indonesia (KADIN) Logistik & Rantai Pasok",
+                    "Panduan Pengadaan Barang Dagangan Ritel Modern Indonesia"
+                ],
+                "msme_opportunity": "Memperoleh margin kotor lebih lebar, mengamankan ketersediaan barang fast moving, dan menjaga arus kas lewat termin pembayaran tempo yang fleksibel.",
+                "article_angle": "Teknik memanfaatkan rekam jejak pembelian masa lalu sebagai modal tawar, klausul Service Level Agreement (SLA) denda keterlambatan, dan pemisahan order komitmen.",
+                "slug": "strategi-negosiasi-harga-dan-termin-supplier-grosir-12-12",
+                "assigned_category": "Invoice, PO & SO"
+            },
+            {
+                "id": 577,
+                "topic": "SOP Blind Counting Kasir dan Berita Acara Rekonsiliasi Selisih Kas Pergantian Shift Toko Ritel",
+                "trending_query": "sop blind counting kasir rekonsiliasi selisih kas pergantian shift toko ritel",
+                "primary_keyword": "sop blind counting kasir rekonsiliasi shift",
+                "secondary_keywords": "cara hitung fisik kas laci tanpa sistem, berita acara selisih kas fisik pos, pemisahan uang floater modal kembalian, x report shift kasir minimarket, tanggung jawab kasir selisih minus",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Penerapan penghitungan fisik uang laci tanpa kasir melihat angka sistem (blind counting) terbukti paling efektif menutup celah penggelapan kas dan salah hitung uang kembalian di toko ritel.",
+                "credible_sources": [
+                    "Asosiasi Pengusaha Ritel Indonesia (APRINDO) Pedoman Pengendalian Kasir",
+                    "Standar Audit Pengendalian Kas Kecil Ritel Indonesia"
+                ],
+                "msme_opportunity": "Menekan angka selisih kas harian hingga nol rupiah, menumbuhkan integritas kerja kasir, dan mempercepat proses pergantian shift tanpa perdebatan.",
+                "article_angle": "Langkah demi langkah blind count, rumus pencocokan uang fisik dengan total omzet tunai sistem POS, serta format Berita Acara Selisih Kas bermeterai internal.",
+                "slug": "sop-blind-counting-kasir-dan-rekonsiliasi-selisih-kas-shift",
+                "assigned_category": "Kasir & POS"
+            },
+            {
+                "id": 578,
+                "topic": "Standarisasi Keamanan Pangan dan Izin Edar P-IRT untuk Membuka Peluang Tembus Jaringan Ritel Modern",
+                "trending_query": "standarisasi keamanan pangan izin pirt tembus ritel modern umkm",
+                "primary_keyword": "standarisasi keamanan pangan izin pirt ritel modern",
+                "secondary_keywords": "syarat produk umkm masuk minimarket indomaret alfamart, uji laboratorium masa kedaluwarsa pangan, barcode ean 13 produk kemasan ritel, labeling nutrisi fakta gizi bpom, kurasi produk pangan dinas koperasi",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Peringatan Hari Ritel Nasional 2026 mendorong program kemitraan ritel modern membuka rak khusus produk lokal UMKM, dengan syarat sertifikasi izin P-IRT dan keamanan pangan terpenuhi.",
+                "credible_sources": [
+                    "Badan Pengawas Obat dan Makanan (BPOM) RI",
+                    "Kementerian Koperasi dan UKM Pedoman Standardisasi Produk UMKM"
+                ],
+                "msme_opportunity": "Melonjakkan volume penjualan berkali-kali lipat lewat jejaring ratusan gerai ritel modern dan membangun citra merek yang profesional dan higienis.",
+                "article_angle": "Checklist kepatuhan label kemasan (komposisi, tanggal kedaluwarsa, izin edar P-IRT, kode batch), pengurusan barcode resmi GS1, dan tata cara business matching ritel.",
+                "slug": "standarisasi-keamanan-pangan-izin-pirt-tembus-ritel-modern",
+                "assigned_category": "Pajak & Legalitas"
+            },
+            {
+                "id": 579,
+                "topic": "Manajemen Material Kemasan dan Meja Packing Toko Online Menghadapi Puncak Kampanye 12.12",
+                "trending_query": "manajemen material kemasan meja packing toko online harbolnas 12 12",
+                "primary_keyword": "manajemen material kemasan packing toko online",
+                "secondary_keywords": "stok kardus bubble wrap lakban olshop, desain layout stasiun packing ergonomis, thermal barcode label printer pengiriman, mitigasi paket rusak tertindih ekspedisi, kecepatan packing per paket menit",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Kemacetan operasional toko online pada puncak tanggal kembar 12.12 paling sering disebabkan oleh kehabisan bahan packing dan susunan stasiun kerja pengemasan yang semrawut.",
+                "credible_sources": [
+                    "Asosiasi E-Commerce Indonesia (idEA) Panduan Logistik Merchant",
+                    "Jurnal Ergonomi dan Efisiensi Operasional Pergudangan Ritel"
+                ],
+                "msme_opportunity": "Mempercepat proses serah terima paket ke kurir dalam waktu kurang dari 24 jam dan meminimalkan komplain barang rusak atau pecah di perjalanan.",
+                "article_angle": "Kalkulasi safety stock bahan kemas (kardus, bubble wrap, lakban, label thermal) 3x lipat, tata letak meja packing metode U-shape, dan pembagian tugas tim packing.",
+                "slug": "manajemen-material-kemasan-dan-meja-packing-toko-online-12-12",
+                "assigned_category": "Inventori & Stok"
+            },
+            {
+                "id": 580,
+                "topic": "Panduan Perhitungan Upah Lembur dan Skema Bonus Karyawan Toko Peak Season Libur Akhir Tahun",
+                "trending_query": "perhitungan upah lembur bonus karyawan toko peak season akhir tahun nataru",
+                "primary_keyword": "perhitungan lembur bonus karyawan toko peak season",
+                "secondary_keywords": "rumus upah lembur uu cipta kerja ritel, perhitungan lembur hari libur nasional toko, bonus target omzet staf kasir pramuniaga, jadwal rotasi shift lembur adil, slip gaji potongan dan tunjangan nataru",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Lonjakan jam operasional toko ritel dan kuliner menjelang libur Nataru memerlukan sistem penggajian lembur yang sah secara regulasi ketenagakerjaan dan skema bonus yang memotivasi staf.",
+                "credible_sources": [
+                    "Kementerian Ketenagakerjaan Republik Indonesia Peraturan Pengupahan Lembur",
+                    "Undang-Undang Cipta Kerja Sektor Ketenagakerjaan dan Ritel"
+                ],
+                "msme_opportunity": "Menjaga loyalitas dan produktivitas karyawan tanpa menimbulkan konflik ketenagakerjaan, serta menjaga anggaran biaya tenaga kerja tetap terkontrol.",
+                "article_angle": "Simulasi rumus upah lembur per jam hari kerja versus hari libur resmi, contoh skema bonus komisi berbasis pencapaian omzet harian toko, dan pencatatan absensi digital.",
+                "slug": "panduan-perhitungan-lembur-dan-bonus-karyawan-peak-season-nataru",
+                "assigned_category": "HRM & Karyawan"
+            },
+            {
+                "id": 581,
+                "topic": "Strategi Liquidasi Dead Stock Barang Lambat Bergerak Lewat Paket Bundling Promo Akhir Tahun",
+                "trending_query": "strategi liquidasi dead stock bundling promo akhir tahun toko ritel",
+                "primary_keyword": "liquidasi dead stock paket bundling akhir tahun",
+                "secondary_keywords": "cara menguras stok mati gudang ritel, bundling produk laku dan kurang laku, diskon cuci gudang tutup tahun untung, kalkulasi harga paket bundling hemat, strategi perputaran persediaan inventory turnover",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Barang slow moving yang menumpuk di gudang mengunci modal kerja dan berisiko susut atau kedaluwarsa, sehingga pemilik usaha perlu melikuidasinya menjadi uang tunai sebelum tutup buku.",
+                "credible_sources": [
+                    "Asosiasi Logistik Indonesia Analisis Perputaran Persediaan Ritel",
+                    "Pedoman Manajemen Keuangan Dagang Kecil Menengah"
+                ],
+                "msme_opportunity": "Mengonversi modal beku menjadi uang tunai cair untuk kulakan barang baru awal tahun 2027 dan mengosongkan ruang rak gudang yang sempit.",
+                "article_angle": "Kombinasi bundling Leader and Laggard (produk hero digabung produk lambat), penetapan margin batas aman anti rugi, dan promosi tematik cuci gudang akhir tahun.",
+                "slug": "strategi-liquidasi-dead-stock-lewat-bundling-promo-akhir-tahun",
+                "assigned_category": "Inventori & Stok"
+            },
+            {
+                "id": 582,
+                "topic": "SOP Pengelolaan Kas Kecil Petty Cash Operasional Toko Ritel agar Bebas Bon Gantung",
+                "trending_query": "sop pengelolaan kas kecil petty cash toko ritel bebas bon gantung",
+                "primary_keyword": "sop pengelolaan petty cash kas kecil toko",
+                "secondary_keywords": "metode imprest fund kas kecil toko, cara mencegah bon gantung karyawan kasir, formulir voucher pengeluaran kas kecil, limit saldo kas kecil harian warung, rekonsiliasi buku kas operasional bulanan",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Pengeluaran operasional dadakan (parkir, galon air, lakban, bensin kurir) sering menimbulkan bon gantung dan selisih kas operasional jika tidak dikelola dengan sistem kas kecil yang disiplin.",
+                "credible_sources": [
+                    "Standar Prosedur Pengendalian Kas Kecil Ritel Indonesia",
+                    "Pedoman Tata Kelola Pembukuan Kas Mikro Kemenkop UKM"
+                ],
+                "msme_opportunity": "Menghilangkan kebocoran dana operasional remeh-temeh, mempermudah pelacakan bukti nota fisik, dan menjamin ketersediaan dana tunai darurat toko.",
+                "article_angle": "Penerapan sistem dana tetap (imprest system), aturan wajib nota asli tanpa pengecualian, pembuatan bukti kas keluar (BKK), dan jadwal reimbursement mingguan.",
+                "slug": "sop-pengelolaan-petty-cash-kas-kecil-toko-anti-bon-gantung",
+                "assigned_category": "Keuangan & Pembukuan"
+            },
+            {
+                "id": 583,
+                "topic": "Cara Mengatasi Retur Paket COD Akibat Gagal Antar dan Pembatalan Sepihak Kurir di Musim Hujan",
+                "trending_query": "cara mengatasi retur cod gagal antar musim hujan olshop marketplace",
+                "primary_keyword": "mengatasi retur cod gagal antar musim hujan",
+                "secondary_keywords": "penyebab paket rts return to sender cod, konfirmasi order wa sebelum kirim paket cod, asuransi ongkir retur toko online, klaim barang rusak retur ekspedisi, blacklist alamat pembeli fiktif cod",
+                "search_intent": "informational",
+                "search_interest": "Sangat Tinggi",
+                "trending_reason": "Cuaca buruk dan banjir lokal menyebabkan lonjakan angka paket COD gagal antar (Return to Sender / RTS), membebani penjual online dengan ongkos kirim hangus dan kemasan barang rusak.",
+                "credible_sources": [
+                    "Asosiasi Perusahaan Jasa Pengiriman Ekspres Indonesia (ASPERINDO)",
+                    "Panduan Mitigasi Risiko Transaksi COD Asosiasi E-Commerce Indonesia"
+                ],
+                "msme_opportunity": "Menekan rasio retur COD di bawah 3 persen, menyelamatkan barang dagangan dari kerusakan perjalanan bolak-balik, dan memotong kerugian operasional.",
+                "article_angle": "Filter otomatis verifikasi nomor WhatsApp pembeli sebelum packing, pembatasan COD hanya untuk pembeli bereputasi baik, dan prosedur klaim asuransi paket rusak kurir.",
+                "slug": "cara-mengatasi-retur-paket-cod-gagal-antar-musim-hujan",
+                "assigned_category": "Omnichannel & Toko Online"
+            },
+            {
+                "id": 584,
+                "topic": "Manajemen Antrean Pesanan Dapur Kafe dan Restoran Menggunakan Kitchen Display System dan Printer Kasir",
+                "trending_query": "manajemen antrean pesanan dapur kitchen printer kds kafe restoran",
+                "primary_keyword": "manajemen antrean pesanan dapur kitchen printer",
+                "secondary_keywords": "sistem kitchen display kds resto kafe, alur tiket pesanan waiter kasir dapur, printer thermal dapur anti panas minyak, pembagian stasiun masak bar dan dapur panas, pengurangan waktu tunggu pesanan pelanggan",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Tingginya kunjungan dine-in dan pesanan online saat musim libur akhir tahun kerap memicu kekacauan di dapur restoran akibat tiket pesanan manual hilang atau salah urutan masak.",
+                "credible_sources": [
+                    "Perhimpunan Hotel dan Restoran Indonesia (PHRI)",
+                    "Panduan Efisiensi Dapur Komersial Restoran Modern"
+                ],
+                "msme_opportunity": "Memangkas waktu penyajian makanan hingga 40 persen, mencegah pesanan terlewat (missed order), dan meningkatkan kepuasan pelanggan saat peak hour.",
+                "article_angle": "Integrasi pemisahan rute cetak otomatis (stasiun bar minuman versus stasiun dapur makanan), pemanfaatan layar KDS interaktif, dan notifikasi status pesanan siap saji.",
+                "slug": "manajemen-antrean-pesanan-dapur-kitchen-printer-kds-kafe-resto",
+                "assigned_category": "Kuliner & Resto"
+            },
+            {
+                "id": 585,
+                "topic": "Strategi Penetapan Harga Menu Makanan Sehat Less Sugar dan Plant-Based Berdasarkan Analisis HPP",
+                "trending_query": "penetapan harga menu sehat less sugar plant based analisis hpp kuliner",
+                "primary_keyword": "penetapan harga menu sehat analisis hpp",
+                "secondary_keywords": "cara hitung modal bahan baku makanan sehat, margin keuntungan menu minuman less sugar, resep bom kuliner plant based kekinian, mark up harga makanan sehat kafe, strategi harga jual kuliner fungsional",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Meningkatnya tren gaya hidup sehat di perkotaan membuka peluang bisnis menu rendah gula dan nabati, namun biaya bahan baku alternatif yang mahal menuntut kalkulasi HPP presisi.",
+                "credible_sources": [
+                    "Kementerian Kesehatan Pedoman Gizi Seimbang dan Konsumsi Rendah Gula",
+                    "Jurnal Agribisnis dan Kuliner Berkelanjutan Indonesia"
+                ],
+                "msme_opportunity": "Menetapkan harga jual yang kompetitif sekaligus menghasilkan margin kotor di atas 60 persen pada segmen pasar premium yang loyal.",
+                "article_angle": "Kalkulasi yield susut bahan pangan organik, pemetaan porsi bahan baku gramasi resep (Bill of Materials), dan penetapan harga psikologis menu sehat.",
+                "slug": "strategi-penetapan-harga-menu-sehat-less-sugar-analisis-hpp",
+                "assigned_category": "Kuliner & Resto"
+            },
+            {
+                "id": 586,
+                "topic": "Panduan Penyusunan Laporan Laba Rugi Komparatif Bulanan Menjelang Tutup Buku Tahunan SAK EMKM",
+                "trending_query": "penyusunan laporan laba rugi komparatif bulanan tutup buku sak emkm",
+                "primary_keyword": "laporan laba rugi komparatif tutup buku sak emkm",
+                "secondary_keywords": "format laba rugi bulanan usaha kecil sak emkm, analisis tren kenaikan beban operasional opex, rekonsiliasi omzet kotor pendapatan bersih, laba kotor versus laba bersih usaha ritel, penyajian data komparatif laporan keuangan",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Menjelang penutupan tahun buku 2026, pemilik usaha membutuhkan laporan laba rugi komparatif dari bulan ke bulan untuk membaca lonjakan biaya dan mempersiapkan laporan tahunan resmi.",
+                "credible_sources": [
+                    "Ikatan Akuntan Indonesia (IAI) Standar Akuntansi Keuangan SAK EMKM",
+                    "Panduan Penyusunan Laporan Keuangan UMKM Terstandar"
+                ],
+                "msme_opportunity": "Mendeteksi inefisiensi pengeluaran sejak dini, mengevaluasi profitabilitas riil antar-bulan, dan menyajikan laporan kredibel bagi pemegang saham maupun perbankan.",
+                "article_angle": "Struktur standar pos pendapatan, beban pokok penjualan, beban operasional, dan laba bersih komparatif 12 bulan serta cara membacanya untuk perencanaan anggaran tahun depan.",
+                "slug": "panduan-laporan-laba-rugi-komparatif-tutup-buku-sak-emkm",
+                "assigned_category": "Keuangan & Pembukuan"
+            },
+            {
+                "id": 587,
+                "topic": "SOP Verifikasi Identitas Rekanan B2B dan Pengarsipan Faktur Pajak Elektronik Coretax DJP",
+                "trending_query": "sop verifikasi rekanan b2b pengarsipan faktur pajak coretax djp",
+                "primary_keyword": "verifikasi rekanan b2b faktur pajak coretax djp",
+                "secondary_keywords": "penyimpanan arsip digital faktur pajak 10 tahun, validasi data npwp 16 digit rekanan usaha, rekonsiliasi faktur pajak masukan pembeli b2b, audit trail dokumen perpajakan bisnis, pencegahan faktur fiktif coretax",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Kewajiban kepatuhan pajak Coretax menuntut perusahaan dan toko B2B memiliki tata kelola pengarsipan faktur digital yang rapi dan terhubung langsung ke invoice penjualan.",
+                "credible_sources": [
+                    "Direktorat Jenderal Pajak Kementerian Keuangan RI Aturan Arsip Digital Perpajakan",
+                    "Undang-Undang Ketentuan Umum dan Tata Cara Perpajakan (KUP)"
+                ],
+                "msme_opportunity": "Menghilangkan risiko sanksi denda administrasi pemeriksaan pajak dan mempermudah rekonsiliasi bukti potong saat verifikasi tahunan.",
+                "article_angle": "Alur validasi Nomor Pokok Wajib Pajak 16 digit saat onboarding klien B2B, penamaan file PDF faktur standar, dan pencadangan arsip cloud terenkripsi.",
+                "slug": "sop-verifikasi-identitas-b2b-dan-faktur-pajak-coretax-djp",
+                "assigned_category": "Pajak & Legalitas"
+            },
+            {
+                "id": 588,
+                "topic": "Strategi Pemesanan Lebih Awal Early Fulfillment Toko Online untuk Menghindari Penumpukan Ekspedisi",
+                "trending_query": "strategi early fulfillment toko online penumpukan ekspedisi harbolnas 12 12",
+                "primary_keyword": "strategi early fulfillment toko online",
+                "secondary_keywords": "kampanye pre order belanja tanggal kembar, pengiriman bertahap paket sebelum puncak harbolnas, komunikasi estimasi tiba kurir ke pembeli, jadwal drop off paket ekspedisi pagi hari, voucher diskon belanja lebih awal",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Kemacetan parah di hub logistik kurir pada 12 sampai 14 Desember mendorong penjual cerdas mengalihkan trafik pembelian ke periode pra-kampanye dengan skema pemenuhan lebih awal.",
+                "credible_sources": [
+                    "Asosiasi Logistik Indonesia (ALI)",
+                    "Riset Perilaku Belanja Konsumen Harbolnas Indonesia"
+                ],
+                "msme_opportunity": "Menjaga SLA pengiriman tepat waktu, mengurangi beban stres tim gudang pada hari-H, dan meraih rating ulasan bintang lima dari pembeli puas.",
+                "article_angle": "Teknik promosi flash deal H minus 3, insentif gratis ongkir untuk order lebih awal, dan jadwal serah terima armada logistik khusus sebelum overload.",
+                "slug": "strategi-early-fulfillment-toko-online-cegah-kemacetan-ekspedisi",
+                "assigned_category": "Omnichannel & Toko Online"
+            },
+            {
+                "id": 589,
+                "topic": "Pemanfaatan Struk Digital WhatsApp untuk Menekan Biaya Kertas Kasir Thermal dan Menambah Database Pelanggan",
+                "trending_query": "pemanfaatan struk digital whatsapp hemat kertas thermal pos crm ritel",
+                "primary_keyword": "struk digital whatsapp hemat kertas thermal",
+                "secondary_keywords": "solusi hemat kertas kasir pos toko ritel, cara kirim struk belanja otomatis lewat wa, pengumpulan nomor telepon pelanggan etis kasir, crm loyalitas toko lewat struk digital, struk ramah lingkungan paperless receipt",
+                "search_intent": "informational",
+                "search_interest": "Sedang",
+                "trending_reason": "Kenaikan harga gulungan kertas kasir thermal dan kebutuhan membangun database pelanggan untuk promosi akhir tahun mendorong peralihan ke struk digital WhatsApp.",
+                "credible_sources": [
+                    "Kementerian Lingkungan Hidup dan Kehutanan Program Efisiensi Kertas Bisnis",
+                    "Riset Adopsi Saluran Komunikasi Konsumen WhatsApp Indonesia"
+                ],
+                "msme_opportunity": "Menghemat biaya operasional kertas kasir hingga 70 persen sekaligus mengumpulkan ribuan kontak pelanggan aktif yang siap menerima info promo toko.",
+                "article_angle": "Alur pengiriman tautan struk belanja resmi via WhatsApp otomatis saat checkout kasir POS, etika perizinan privasi data pelanggan, dan tindak lanjut program poin belanja.",
+                "slug": "pemanfaatan-struk-digital-whatsapp-hemat-kertas-pos-dan-crm",
+                "assigned_category": "Kasir & POS"
+            },
+            {
+                "id": 590,
+                "topic": "SOP Penanganan Komplain Konsumen dan Retur Barang Rusak Akibat Pengiriman Ekspedisi Musim Hujan",
+                "trending_query": "sop penanganan komplain retur barang rusak ekspedisi hujan toko online",
+                "primary_keyword": "sop penanganan komplain retur ekspedisi hujan",
+                "secondary_keywords": "sop klaim asuransi paket basah kurir, template chat empati komplain pembeli marah, unboxing video syarat retur barang olshop, penggantian barang rusak toko online cepat, mitigasi ulasan buruk rating toko",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Kerusakan kemasan kardus basah dan bocor akibat hujan lebat memicu lonjakan komplain konsumen, yang jika tidak ditangani dengan SOP santun berisiko merusak reputasi toko.",
+                "credible_sources": [
+                    "Yayasan Lembaga Konsumen Indonesia (YLKI) Panduan Hak Pembeli Online",
+                    "Standar Pelayanan Konsumen E-Commerce Indonesia"
+                ],
+                "msme_opportunity": "Mengubah pembeli komplain menjadi pelanggan loyal melalui solusi cepat, serta mengklaim ganti rugi 100 persen ke pihak jasa kurir pengiriman.",
+                "article_angle": "Protokol respon pertama dalam 15 menit, verifikasi foto video kemasan basah, form digital klaim asuransi ekspedisi, dan pengiriman barang pengganti tanpa ribet.",
+                "slug": "sop-penanganan-komplain-retur-barang-rusak-ekspedisi-hujan",
+                "assigned_category": "Omnichannel & Toko Online"
+            },
+            {
+                "id": 591,
+                "topic": "Panduan Perhitungan Titik Impas BEP Pembukaan Cabang Baru Toko Ritel atau Kedai Kopi Tahun 2027",
+                "trending_query": "perhitungan bep titik impas pembukaan cabang baru toko ritel 2027",
+                "primary_keyword": "perhitungan bep buka cabang baru ritel",
+                "secondary_keywords": "rumus bep unit dan bep rupiah usaha kedai, kalkulasi modal sewa tempat biaya tetap opex, studi kelayakan finansial ekspansi bisnis umkm, payback period investasi buka cabang baru, mitigasi risiko gagal cabang kedua ritel",
+                "search_intent": "informational",
+                "search_interest": "Tinggi",
+                "trending_reason": "Banyak pemilik bisnis ritel dan kuliner menyusun rencana ekspansi cabang baru menyambut tahun 2027, membutuhkan perhitungan titik impas yang realistis agar tidak boncos.",
+                "credible_sources": [
+                    "Kementerian Koperasi dan UKM Panduan Studi Kelayakan Finansial UMKM",
+                    "Asosiasi Manajemen Keuangan Usaha Ritel Indonesia"
+                ],
+                "msme_opportunity": "Menghitung secara pasti berapa omzet harian minimum yang wajib dicapai agar cabang baru tidak membebani arus kas gerai utama, serta mempercepat balik modal.",
+                "article_angle": "Simulasi matematis pemisahan biaya tetap (sewa, gaji, depresiasi) dan biaya variabel (bahan, listrik, kemasan), rumus BEP Rupiah dan BEP Unit, serta target waktu payback period.",
+                "slug": "panduan-perhitungan-bep-titik-impas-buka-cabang-baru-2027",
+                "assigned_category": "Keuangan & Pembukuan"
+            }
+        ]
+    }
+    
+    keywords = {
+        "date": "2026-11-14",
+        "batch": 11,
+        "market": "Indonesia (UMKM / Ritel / F&B / Grosir)",
+        "total_keywords": 20,
+        "keywords": [
+            {
+                "id": t["id"],
+                "topic": t["topic"],
+                "primary_keyword": t["primary_keyword"],
+                "slug": t["slug"],
+                "search_intent": t["search_intent"],
+                "estimated_search_volume_tier": t["search_interest"],
+                "secondary_keywords": [s.strip() for s in t["secondary_keywords"].split(",")],
+                "target_audience": "Pemilik usaha ritel, toko kelontong, kafe kuliner, distributor grosir, produsen rumahan",
+                "unique_angle": t["article_angle"],
+                "cooca_feature_alignment": t["assigned_category"]
+            }
+            for t in trending["topics"]
+        ]
+    }
+    
+    trending_path = os.path.join(out_dir, "trending-research-2026-11-14.json")
+    keyword_path = os.path.join(out_dir, "keyword-research-2026-11-14.json")
+    
+    with open(trending_path, "w", encoding="utf-8") as f:
+        json.dump(trending, f, indent=2, ensure_ascii=False)
+        
+    with open(keyword_path, "w", encoding="utf-8") as f:
+        json.dump(keywords, f, indent=2, ensure_ascii=False)
+        
+    print(f"Generated {trending_path} and {keyword_path} successfully!")
+
+if __name__ == "__main__":
+    generate_research()

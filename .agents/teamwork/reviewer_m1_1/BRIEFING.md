@@ -1,56 +1,65 @@
-# BRIEFING — 2026-11-09T06:45:00Z
+# BRIEFING — 2026-11-13T22:59:30Z
 
 ## Mission
-Conduct objective and adversarial review of Milestone 1 changes (Labor & Machine RBAC, IDOR scoping, clean routing, view gates).
+Objective and adversarial review of Milestone 1 changes (layout, assets, typography, widgets, theme toggle, blog show styles).
 
 ## 🔒 My Identity
-- Archetype: reviewer / critic
+- Archetype: teamwork_reviewer
 - Roles: reviewer, critic
-- Working directory: C:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1
-- Original parent: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Milestone: Milestone 1
+- Working directory: C:\laragon\www\cooca_core
+- State folder: C:\laragon\www\cooca_core\.agents\teamwork\reviewer_m1_1\
+- Original parent: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Milestone: Milestone 1 Review
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation code
-- Check for integrity violations (hardcoded test results, facade implementations, bypasses)
-- Issue unambiguous verdict: APPROVE or REQUEST_CHANGES
+- Report any failures as findings — do NOT fix them yourself
+- Detect integrity violations (hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certifying work) -> REQUEST_CHANGES
 
 ## Current Parent
-- Conversation ID: c60b67b9-0908-441c-87e7-9ba74ae8e468
-- Updated: 2026-11-08T23:35:16Z
+- Conversation ID: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
+- Updated: 2026-11-13T22:52:00Z
 
 ## Review Scope
-- **Files to review**:
-  - `app/Http/Controllers/Web/LaborMachineWebController.php`
-  - `routes/owner.php`
-  - `resources/views/app/labor-machines/index.blade.php`
-  - `tests/Feature/LaborAndMachineEngineTest.php`
-  - `tests/Feature/InvoiceModuleAuditTest.php`
-- **Interface contracts**: PROJECT.md, SCOPE.md, laravel-permission SKILL.md
-- **Review criteria**: Correctness, Logical Completeness, Quality, Security/IDOR, Stress-testing
+- **Files reviewed**:
+  - `resources/views/layouts/public_marketing.blade.php`
+  - `resources/views/layouts/partials/help_chatbot_widget.blade.php`
+  - `resources/views/layouts/partials/typography.blade.php`
+  - `resources/views/public/partials/live_chat_widget.blade.php`
+  - `resources/views/public/partials/cookie_consent_banner.blade.php`
+  - `resources/views/public/partials/tracking_pixels.blade.php`
+  - `resources/views/public/blog/show.blade.php`
+- **Interface contracts**: `C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md`
+- **Review criteria**: Correctness, integrity, security/performance, asset bundling, accessibility, responsiveness, zero styling regressions
 
 ## Key Decisions Made
-- Confirmed controller-level RBAC via `HasMiddleware` conforms to Laravel 11/12 and `laravel-permission/SKILL.md`
-- Verified IDOR checks provide defense-in-depth alongside `BusinessScope`
-- Verified zero syntax errors via `php -l`
-- Executed `LaborAndMachineEngineTest` (4 passed) and `InvoiceModuleAuditTest` (9 passed)
-- Determined verdict: APPROVE
-
-## Artifact Index
-- DISPATCH.md — Parent dispatch instructions
-- progress.md — Liveness heartbeat and task tracker
-- handoff.md — Final review and challenge report
+- Confirmed zero integrity violations: no hardcoding, no facades, no fabricated results.
+- Verified all 7 files pass `php -l` syntax validation with 0 errors.
+- Verified `npm run build` succeeds cleanly with exit code 0 and valid manifest.
+- Verified deferred script loading (`app-alert.js`, tracking pixels, chatbot hydration).
+- Verified responsive bottom sheet in `live_chat_widget` and mobile theme toggle accessibility in header & drawer.
+- Verified removal of redundant `@push('late-styles')` and consolidation of dark mode styles in `blog/show.blade.php`.
+- Verified automated regression test suite passes cleanly for all M1 scope.
+- Verdict: **APPROVE**.
 
 ## Review Checklist
-- **Items reviewed**: `LaborMachineWebController.php`, `routes/owner.php`, `resources/views/app/labor-machines/index.blade.php`, test suites
+- **Items reviewed**: All 7 assigned Blade templates & partials + Vite production assets + test suites
 - **Verdict**: APPROVE
-- **Unverified claims**: None
+- **Unverified claims**: None (all claims independently reproduced and verified)
 
 ## Attack Surface
 - **Hypotheses tested**:
-  - Cross-tenant IDOR attack on `updateLabor`/`destroyLabor`/`updateMachine`/`destroyMachine` -> Mitigated by `BusinessScope` (404) and controller assertion (403).
-  - Unauthenticated/unauthorized access -> Blocked by `HasMiddleware` and `RequirePermission` (redirects to portal with 302).
-  - Audit logging data loss after model deletion -> Mitigated; variables and `old_values` captured prior to `$model->delete()`.
-- **Vulnerabilities found**: None in Milestone 1 implementation.
-- **Untested angles**: Full end-to-end browser E2E (covered in subsequent milestones).
+  - CDN fallback & NoScript font loading (Pass)
+  - FOUC prevention & synchronized dark mode state across Alpine and DOM classList (Pass)
+  - Chatbot deep-linking and passive hydration (Pass)
+  - Mobile bottom-sheet height trap elimination & safe area padding (Pass)
+  - Cookie consent touch target compliance & z-index isolation with floating dock (Pass)
+  - CSS selector specificity & prose dark mode readability in blog show (Pass)
+- **Vulnerabilities found**: None in M1 files. Downstream scope issues in M2/M3 views noted as expected milestone boundaries.
+- **Untested angles**: None within M1 assigned boundaries.
+
+## Artifact Index
+- `handoff.md` — Final review report
+- `DISPATCH.md` — Initial dispatch message
+- `progress.md` — Progress tracker

@@ -5,6 +5,48 @@
 
 @section('og_title', __('public_marketing.pricing_seo_title'))
 @section('og_description', __('public_marketing.pricing_seo_desc'))
+@section('canonical', route('public.pricing'))
+
+@section('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "COOCA Omnichannel ERP",
+    "description": "{{ __('public_marketing.pricing_seo_desc') }}",
+    "offers": [
+        {
+            "@type": "Offer",
+            "name": "Gratis",
+            "price": "0",
+            "priceCurrency": "IDR",
+            "url": "{{ route('public.pricing') }}"
+        },
+        {
+            "@type": "Offer",
+            "name": "Standard",
+            "price": "49000",
+            "priceCurrency": "IDR",
+            "url": "{{ route('public.pricing') }}"
+        },
+        {
+            "@type": "Offer",
+            "name": "Premium",
+            "price": "99000",
+            "priceCurrency": "IDR",
+            "url": "{{ route('public.pricing') }}"
+        },
+        {
+            "@type": "Offer",
+            "name": "Prestige",
+            "price": "199000",
+            "priceCurrency": "IDR",
+            "url": "{{ route('public.pricing') }}"
+        }
+    ]
+}
+</script>
+@endsection
 
 @section('content')
 @php
@@ -343,7 +385,7 @@
                         </div>
 
                         <div class="space-y-2 pt-4">
-                            <a href="{{ route('register') }}"
+                            <a href="{{ route('register') }}?plan=free"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-100 dark:bg-white/[0.08] hover:bg-slate-200 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
                                 {{ __('public_marketing.btn_start_free_now') }}
                             </a>
@@ -427,7 +469,7 @@
                         </div>
 
                         <div class="space-y-2 pt-4">
-                            <a href="{{ route('register') }}"
+                            <a :href="'{{ route('register') }}?plan=standard&cycle=' + pricingCycle"
                                 class="w-full py-3 px-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0066D6] text-white font-bold text-xs sm:text-sm text-center transition shadow-sm active:scale-[0.98] flex items-center justify-center min-h-[48px]">
                                 {{ __('public_marketing.btn_choose_standard') }}
                             </a>
@@ -504,7 +546,7 @@
                         </div>
 
                         <div class="space-y-2 pt-4">
-                            <a href="{{ route('register') }}"
+                            <a :href="'{{ route('register') }}?plan=premium&cycle=' + pricingCycle"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-200 text-white dark:text-slate-900 font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
                                 {{ __('public_marketing.btn_choose_premium') }}
                             </a>
@@ -584,7 +626,7 @@
                         </div>
 
                         <div class="space-y-2 pt-4">
-                            <a href="{{ route('register') }}"
+                            <a :href="'{{ route('register') }}?plan=prestige&cycle=' + pricingCycle"
                                 class="w-full py-3 px-4 rounded-[14px] bg-slate-100 dark:bg-white/[0.08] hover:bg-slate-200 dark:hover:bg-white/[0.12] text-slate-900 dark:text-white font-bold text-xs sm:text-sm text-center transition active:scale-[0.98] flex items-center justify-center min-h-[48px]">
                                 {{ __('public_marketing.btn_choose_prestige') }}
                             </a>
@@ -618,10 +660,10 @@
                                     class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
                                     PANDUAN PEMILIHAN
                                 </div>
-                                <h3
+                                <h2
                                     class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                                     {{ __('public_marketing.pricing_wizard_title') }}
-                                </h3>
+                                </h2>
                                 <p
                                     class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
                                     Kami merekomendasikan paket yang paling hemat dan sesuai dengan kebutuhan operasional
@@ -832,9 +874,9 @@
                     <div class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                         LAYANAN TAMBAHAN SESUAI KEBUTUHAN
                     </div>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                         Add-On Fleksibel Tanpa Memaksa Beli Paket Mahal
-                    </h3>
+                    </h2>
                     <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
                         Jika kuota paket bawaan Anda telah mencukupi, Anda tidak perlu menambah apa pun. Add-on ini hanya
                         diaktifkan jika toko Anda memerlukan kapasitas ekstra.
@@ -852,7 +894,7 @@
                                 <i data-lucide="cloud" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-base font-bold text-slate-900 dark:text-white">Kapasitas Cloud Ekstra</h4>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Kapasitas Cloud Ekstra</h3>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
                                     Untuk toko dengan puluhan ribu foto produk beresolusi tinggi dan arsip bukti transaksi
                                     nota digital.
@@ -879,8 +921,8 @@
                                 <i data-lucide="cpu" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-base font-bold text-slate-900 dark:text-white">Token AI Assistant Ekstra
-                                </h4>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">Token AI Assistant Ekstra
+                                </h3>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
                                     Untuk konsultasi data keuangan otomatis, pembuatan teks promosi medsos, dan analisa
                                     pergerakan stok barang.
@@ -907,7 +949,7 @@
                                 <i data-lucide="printer" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h4 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_marketing.pricing_hardware_support_title') }}</h4>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_marketing.pricing_hardware_support_title') }}</h3>
                                 <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed text-pretty">
                                     Kompatibel dengan printer thermal bluetooth 58mm/80mm, laci uang kasir (cash drawer),
                                     dan barcode scanner.
@@ -981,9 +1023,9 @@
                         <div class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                             JAWABAN PERTANYAAN
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                             Pertanyaan yang Paling Sering Diajukan Pemilik Toko
-                        </h3>
+                        </h2>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
                             Jawaban jujur seputar pengoperasian harian, keamanan data, dan bantuan teknis.
                         </p>
@@ -1126,9 +1168,9 @@
                         <div class="text-[12px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
                             KONSULTASI GRATIS TANPA KEWAJIBAN MEMBELI
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                             {{ __('public_marketing.pricing_still_hesitant_title') }}
-                        </h3>
+                        </h2>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed text-pretty">
                             Bapak dan Ibu dapat langsung berkonsultasi santai dengan tim kami via WhatsApp. Kami siap
                             mendengarkan alur jualan toko Anda dan memberikan saran yang paling pas tanpa memaksakan paket
@@ -1293,13 +1335,13 @@
                                     <tr class="bg-black/[0.01] dark:bg-white/[0.01]">
                                         <td class="p-3 sm:p-4 font-semibold text-slate-800 dark:text-slate-200">Cetak Struk
                                             Thermal (Bluetooth/USB)</td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600"><i data-lucide="check"
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check"
                                                 class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600"><i data-lucide="check"
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check"
                                                 class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600"><i data-lucide="check"
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check"
                                                 class="w-4 h-4 mx-auto"></i></td>
-                                        <td class="p-3 sm:p-4 text-center text-emerald-600"><i data-lucide="check"
+                                        <td class="p-3 sm:p-4 text-center text-emerald-600 dark:text-emerald-400"><i data-lucide="check"
                                                 class="w-4 h-4 mx-auto"></i></td>
                                     </tr>
                                     <tr>
@@ -1511,7 +1553,7 @@
                     </div>
 
                     <button type="button" @click="closeDetail()"
-                        class="w-9 h-9 rounded-full bg-slate-100 dark:bg-white/[0.08] text-slate-600 dark:text-slate-300 flex items-center justify-center transition cursor-pointer">
+                        class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-slate-100 dark:bg-white/[0.08] text-slate-600 dark:text-slate-300 flex items-center justify-center transition cursor-pointer">
                         <i data-lucide="x" class="w-4 h-4"></i>
                     </button>
                 </div>

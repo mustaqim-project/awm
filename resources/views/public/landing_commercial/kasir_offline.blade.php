@@ -167,7 +167,7 @@
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30 text-xs font-bold uppercase tracking-wider">
                                 <span>{{ __('public_commercial.offline_arch_badge') }}</span>
                             </div>
-                            <h3 class="text-2xl font-bold text-white">{{ __('public_commercial.offline_arch_title') }}</h3>
+                            <h2 class="text-xl sm:text-2xl font-bold text-white">{{ __('public_commercial.offline_arch_title') }}</h2>
 
                             <div class="space-y-4 text-xs sm:text-sm text-slate-200">
                                 <div class="p-4 rounded-xl bg-white/5 border border-white/10 flex items-start gap-3">

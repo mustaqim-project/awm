@@ -382,90 +382,22 @@
         .article-prose h2 { font-size: 1.875rem; }
         .article-prose h3 { font-size: 1.5rem; }
     }
-</style>
-@endpush
 
-{{-- Late-styles: injected AFTER typography system to guarantee dark mode wins --}}
-@push('late-styles')
-<style>
-    /* ═══════════════════════════════════════════════════════════════════
-       ARTICLE PROSE: DUAL MODE LIGHT & DARK OVERRIDES GUARANTEE
-       Loaded after cooca-typography-system to win specificity.
-    ═══════════════════════════════════════════════════════════════════ */
-
-    /* ── 1. LIGHT MODE SPECIFIC OVERRIDES ── */
-    html:not(.dark):not([data-theme="dark"]) .article-prose,
-    :root:not(.dark):not([data-theme="dark"]) .article-prose {
-        color: #1D1D1F;
-    }
-    html:not(.dark):not([data-theme="dark"]) .article-prose p,
-    html:not(.dark):not([data-theme="dark"]) .article-prose li,
-    html:not(.dark):not([data-theme="dark"]) .article-prose td {
-        color: #2C2C2E;
-    }
-    html:not(.dark):not([data-theme="dark"]) .article-prose h1,
-    html:not(.dark):not([data-theme="dark"]) .article-prose h2,
-    html:not(.dark):not([data-theme="dark"]) .article-prose h3,
-    html:not(.dark):not([data-theme="dark"]) .article-prose h4,
-    html:not(.dark):not([data-theme="dark"]) .article-prose h5,
-    html:not(.dark):not([data-theme="dark"]) .article-prose h6 {
-        color: #1D1D1F;
-    }
-    html:not(.dark):not([data-theme="dark"]) .article-prose strong,
-    html:not(.dark):not([data-theme="dark"]) .article-prose b {
-        color: #1D1D1F;
-    }
-
-    /* ── 2. DARK MODE OVERRIDES (Matches html.dark, [data-theme="dark"], .dark, body.dark) ── */
-    html.dark .article-prose,
-    html[data-theme="dark"] .article-prose,
+    /* ── High-Performance Dual-Mode Dark Theme Overrides (Optimized) ── */
     .dark .article-prose,
-    [data-theme="dark"] .article-prose,
-    body.dark .article-prose {
+    [data-theme="dark"] .article-prose {
         color: #F5F5F7 !important;
     }
-
-    /* All text nodes inside prose in dark mode */
-    html.dark .article-prose p,
-    html.dark .article-prose li,
-    html.dark .article-prose span,
-    html.dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
-    html.dark .article-prose td,
-    html.dark .article-prose caption,
-    html[data-theme="dark"] .article-prose p,
-    html[data-theme="dark"] .article-prose li,
-    html[data-theme="dark"] .article-prose span,
-    html[data-theme="dark"] .article-prose div:not([class*="bg-"]):not([class*="text-"]),
-    html[data-theme="dark"] .article-prose td,
-    html[data-theme="dark"] .article-prose caption,
     .dark .article-prose p,
     .dark .article-prose li,
     .dark .article-prose span,
-    .dark .article-prose div:not([class*="bg-"]):not([class*="text-"]),
     .dark .article-prose td,
-    .dark .article-prose caption,
     [data-theme="dark"] .article-prose p,
     [data-theme="dark"] .article-prose li,
     [data-theme="dark"] .article-prose span,
-    [data-theme="dark"] .article-prose div:not([class*="bg-"]):not([class*="text-"]),
-    [data-theme="dark"] .article-prose td,
-    [data-theme="dark"] .article-prose caption {
+    [data-theme="dark"] .article-prose td {
         color: #E5E5EA !important;
     }
-
-    /* Headings in dark mode: high contrast pure white */
-    html.dark .article-prose h1,
-    html.dark .article-prose h2,
-    html.dark .article-prose h3,
-    html.dark .article-prose h4,
-    html.dark .article-prose h5,
-    html.dark .article-prose h6,
-    html[data-theme="dark"] .article-prose h1,
-    html[data-theme="dark"] .article-prose h2,
-    html[data-theme="dark"] .article-prose h3,
-    html[data-theme="dark"] .article-prose h4,
-    html[data-theme="dark"] .article-prose h5,
-    html[data-theme="dark"] .article-prose h6,
     .dark .article-prose h1,
     .dark .article-prose h2,
     .dark .article-prose h3,
@@ -480,66 +412,33 @@
     [data-theme="dark"] .article-prose h6 {
         color: #FFFFFF !important;
     }
-
-    html.dark .article-prose h2,
-    html[data-theme="dark"] .article-prose h2,
     .dark .article-prose h2,
     [data-theme="dark"] .article-prose h2 {
         border-bottom-color: rgba(255,255,255,0.08) !important;
     }
-
-    /* Bold text in dark mode */
-    html.dark .article-prose strong,
-    html.dark .article-prose b,
-    html[data-theme="dark"] .article-prose strong,
-    html[data-theme="dark"] .article-prose b,
     .dark .article-prose strong,
     .dark .article-prose b,
     [data-theme="dark"] .article-prose strong,
     [data-theme="dark"] .article-prose b {
         color: #FFFFFF !important;
     }
-
-    /* Links in dark mode */
-    html.dark .article-prose a,
-    html[data-theme="dark"] .article-prose a,
     .dark .article-prose a,
-    [data-theme="dark"] .article-prose a {
-        color: #0A84FF !important;
-    }
-
-    /* List markers in dark mode */
-    html.dark .article-prose li::marker,
-    html[data-theme="dark"] .article-prose li::marker,
     .dark .article-prose li::marker,
+    [data-theme="dark"] .article-prose a,
     [data-theme="dark"] .article-prose li::marker {
         color: #0A84FF !important;
     }
-
-    /* Blockquote in dark mode */
-    html.dark .article-prose blockquote,
-    html[data-theme="dark"] .article-prose blockquote,
     .dark .article-prose blockquote,
     [data-theme="dark"] .article-prose blockquote {
         color: #AEAEB2 !important;
         background: rgba(10,132,255,0.08) !important;
         border-left-color: #0A84FF !important;
     }
-
-    /* Inline code in dark mode */
-    html.dark .article-prose code,
-    html[data-theme="dark"] .article-prose code,
     .dark .article-prose code,
     [data-theme="dark"] .article-prose code {
         background: #2C2C2E !important;
         color: #E5E5EA !important;
     }
-
-    /* Table cells in dark mode */
-    html.dark .article-prose th,
-    html.dark .article-prose td,
-    html[data-theme="dark"] .article-prose th,
-    html[data-theme="dark"] .article-prose td,
     .dark .article-prose th,
     .dark .article-prose td,
     [data-theme="dark"] .article-prose th,
@@ -547,76 +446,14 @@
         border-bottom-color: rgba(255,255,255,0.08) !important;
         color: #E5E5EA !important;
     }
-
-    html.dark .article-prose th,
-    html[data-theme="dark"] .article-prose th,
     .dark .article-prose th,
     [data-theme="dark"] .article-prose th {
         background: #2C2C2E !important;
         color: #FFFFFF !important;
     }
-
-    /* Horizontal rule in dark mode */
-    html.dark .article-prose hr,
-    html[data-theme="dark"] .article-prose hr,
     .dark .article-prose hr,
     [data-theme="dark"] .article-prose hr {
         background: rgba(255,255,255,0.08) !important;
-    }
-
-    /* ── 3. MEDIA QUERY SYSTEM DARK MODE FALLBACK (for OS-level dark mode) ── */
-    @media (prefers-color-scheme: dark) {
-        html:not(.light):not([data-theme="light"]) .article-prose,
-        :root:not(.light):not([data-theme="light"]) .article-prose {
-            color: #F5F5F7 !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose p,
-        html:not(.light):not([data-theme="light"]) .article-prose li,
-        html:not(.light):not([data-theme="light"]) .article-prose span,
-        html:not(.light):not([data-theme="light"]) .article-prose div:not([class*="bg-"]):not([class*="text-"]),
-        html:not(.light):not([data-theme="light"]) .article-prose td,
-        html:not(.light):not([data-theme="light"]) .article-prose caption {
-            color: #E5E5EA !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose h1,
-        html:not(.light):not([data-theme="light"]) .article-prose h2,
-        html:not(.light):not([data-theme="light"]) .article-prose h3,
-        html:not(.light):not([data-theme="light"]) .article-prose h4,
-        html:not(.light):not([data-theme="light"]) .article-prose h5,
-        html:not(.light):not([data-theme="light"]) .article-prose h6 {
-            color: #FFFFFF !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose h2 {
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose strong,
-        html:not(.light):not([data-theme="light"]) .article-prose b {
-            color: #FFFFFF !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose a {
-            color: #0A84FF !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose li::marker {
-            color: #0A84FF !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose blockquote {
-            color: #AEAEB2 !important;
-            background: rgba(10,132,255,0.08) !important;
-            border-left-color: #0A84FF !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose code {
-            background: #2C2C2E !important;
-            color: #E5E5EA !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose th,
-        html:not(.light):not([data-theme="light"]) .article-prose td {
-            border-bottom-color: rgba(255,255,255,0.08) !important;
-            color: #E5E5EA !important;
-        }
-        html:not(.light):not([data-theme="light"]) .article-prose th {
-            background: #2C2C2E !important;
-            color: #FFFFFF !important;
-        }
     }
 </style>
 @endpush
