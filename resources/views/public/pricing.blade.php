@@ -324,11 +324,11 @@
         <section class="py-12 sm:py-16">
             <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 items-stretch">
+                <div class="flex md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-none gap-4 -mx-4 px-4 md:mx-0 md:px-0 md:grid-cols-2 lg:grid-cols-4 md:gap-5 lg:gap-6 items-stretch pb-2 md:pb-0">
 
                     <!-- 1. FREE PLAN CARD -->
                     <div
-                        class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
+                        class="w-[84vw] min-w-[280px] max-w-[340px] shrink-0 snap-center md:w-auto md:shrink md:snap-align-none bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/[0.06] dark:border-white/[0.08] p-6 sm:p-7 flex flex-col justify-between space-y-6 shadow-xs hover:border-black/20 dark:hover:border-white/20 transition-all">
                         <div class="space-y-4">
                             <div>
                                 <div

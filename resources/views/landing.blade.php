@@ -229,27 +229,27 @@
                         <div class="pt-1 flex flex-row flex-wrap sm:flex-nowrap items-center justify-start gap-2.5 sm:gap-3.5 w-full sm:w-auto">
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
-                                    class="h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
+                                    class="flex-1 sm:flex-none h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
                                     <span>{{ __('public_home.btn_dashboard') }}</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @elseif (auth('web')->check())
                                 <a href="{{ route('dashboard') }}"
-                                    class="h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
+                                    class="flex-1 sm:flex-none h-11 sm:h-12 px-5 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] touch-action-manipulation">
                                     <span>{{ __('public_home.btn_dashboard') }}</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
                                 <a href="{{ route('register') }}"
-                                    class="h-11 sm:h-12 px-6 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 border border-white/20 touch-action-manipulation">
+                                    class="flex-1 sm:flex-none h-11 sm:h-12 px-4.5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 border border-white/20 touch-action-manipulation">
                                     <span>{{ __('public_home.hero_cta_primary') }}</span>
-                                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @endif
 
                             <!-- Tombol Coba Demo Interaktif Samping Coba Gratis -->
                             <a href="{{ route('public.demo') }}"
-                                class="h-11 sm:h-12 px-4.5 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-cyan-400/50 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_0_20px_rgba(0,194,255,0.3)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 touch-action-manipulation backdrop-blur-md group"
+                                class="flex-1 sm:flex-none h-11 sm:h-12 px-3.5 sm:px-6 rounded-[12px] sm:rounded-[14px] bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 hover:border-cyan-400/50 text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_0_20px_rgba(0,194,255,0.3)] active:scale-[0.98] transition-all min-h-[44px] sm:min-h-[48px] shrink-0 touch-action-manipulation backdrop-blur-md group"
                                 title="Lihat Demo Interaktif COOCA">
                                 <i data-lucide="play-circle" class="w-4 h-4 sm:w-4.5 sm:h-4.5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
                                 <span>{{ __('public_home.hero_cta_secondary') }}</span>
@@ -337,222 +337,141 @@
 
                     </div>
 
-                    <!-- KANAN: High-Tech Omnichannel Radial Mesh Network (Tampilan Jaring Terintegrasi COOCA) -->
+                    <!-- KANAN: High-Tech Omnichannel Ecosystem (3D Platform Visual & Live Transaction Mockup Cards) -->
                     <div class="lg:col-span-6 relative flex flex-col items-center justify-center w-full" x-data="{
-                        activeNode: null,
+                        activeStation: null,
                         defaultTip: '{{ __('public_home.omni_mesh_default_tip') }}',
                         currentTip: '{{ __('public_home.omni_mesh_default_tip') }}',
-                        setNode(key, tip) {
-                            this.activeNode = key;
+                        setStation(key, tip) {
+                            this.activeStation = key;
                             this.currentTip = tip;
                         },
-                        resetNode() {
-                            this.activeNode = null;
+                        resetStation() {
+                            this.activeStation = null;
                             this.currentTip = this.defaultTip;
                         }
-                    }" @click.outside="resetNode()">
+                    }" @click.outside="resetStation()">
 
-                        {{-- Radial Mesh Network Stage --}}
-                        <div class="relative w-full max-w-[420px] xs:max-w-[460px] sm:max-w-[500px] lg:max-w-[540px] aspect-square select-none mx-auto flex items-center justify-center">
+                        {{-- 3D Isometric Ecosystem Stage --}}
+                        <div class="relative w-full max-w-[420px] xs:max-w-[480px] sm:max-w-[540px] lg:max-w-[620px] select-none mx-auto">
 
                             {{-- Ambient Background Glow --}}
-                            <div class="absolute inset-4 sm:inset-6 bg-gradient-to-tr from-[#007AFF]/20 via-[#00C2FF]/10 to-[#A855F7]/10 rounded-full blur-2xl pointer-events-none transform-gpu -z-0"></div>
+                            <div class="absolute inset-4 sm:inset-8 bg-gradient-to-tr from-[#007AFF]/25 via-[#00C2FF]/15 to-[#A855F7]/15 rounded-3xl blur-3xl pointer-events-none transform-gpu -z-10"></div>
 
-                            {{-- SVG Optical Jaring Network Lines & Rings --}}
-                            <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 500 500" fill="none">
-                                <defs>
-                                    <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#00C2FF" stop-opacity="0.6" />
-                                        <stop offset="100%" stop-color="#007AFF" stop-opacity="0.15" />
-                                    </linearGradient>
-                                </defs>
+                            {{-- Frame Wrapper for the 3D Illustration --}}
+                            <div class="relative w-full aspect-[16/10] sm:aspect-[16/9.6] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-[0_12px_45px_rgba(0,0,0,0.7)] bg-[#070D1F] group">
+                                <picture>
+                                    <source srcset="{{ asset('images/hero/omnichannel-mesh.webp') }}" type="image/webp">
+                                    <img src="{{ asset('images/hero/omnichannel-mesh.jpg') }}"
+                                         alt="{{ __('public_home.omni_image_alt') }}"
+                                         class="w-full h-full object-cover transform-gpu group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                                         width="620" height="372"
+                                         fetchpriority="high"
+                                         loading="eager">
+                                </picture>
 
-                                {{-- Concentric Orbital Web Rings --}}
-                                <circle cx="250" cy="250" r="175" stroke="#00C2FF" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="6 8" />
-                                <circle cx="250" cy="250" r="115" stroke="#007AFF" stroke-width="1" stroke-opacity="0.2" />
-                                <circle cx="250" cy="250" r="62" stroke="#00C2FF" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 4" />
+                                {{-- Soft Vignette & Cybernet Gradients --}}
+                                <div class="absolute inset-0 bg-gradient-to-t from-[#070D1F]/90 via-transparent to-transparent pointer-events-none"></div>
+                                <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl sm:rounded-3xl pointer-events-none"></div>
 
-                                {{-- Inter-Node Ring Polygon (Jaring Web Mesh) --}}
-                                <polygon points="250,75 374,126 425,250 374,374 250,425 126,374 75,250 126,126"
-                                    stroke="#00C2FF" stroke-width="1.2" stroke-opacity="0.18" stroke-dasharray="4 6" fill="rgba(0,194,255,0.015)" />
-
-                                {{-- 8 Radial Spoke Lines from Central Core to 8 Nodes --}}
-                                {{-- Spoke 1: Web --}}
-                                <line x1="250" y1="250" x2="250" y2="75"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'web' ? 'text-cyan-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 2: Marketplace --}}
-                                <line x1="250" y1="250" x2="374" y2="126"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'marketplace' ? 'text-orange-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 3: Social Media --}}
-                                <line x1="250" y1="250" x2="425" y2="250"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'social' ? 'text-purple-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 4: Multi-Gudang --}}
-                                <line x1="250" y1="250" x2="374" y2="374"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'inventory' ? 'text-amber-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 5: Pembukuan --}}
-                                <line x1="250" y1="250" x2="250" y2="425"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'accounting' ? 'text-emerald-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 6: WhatsApp --}}
-                                <line x1="250" y1="250" x2="126" y2="374"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'whatsapp' ? 'text-emerald-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 7: Kasir POS --}}
-                                <line x1="250" y1="250" x2="75" y2="250"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'pos' ? 'text-sky-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-
-                                {{-- Spoke 8: Kasir Mobile --}}
-                                <line x1="250" y1="250" x2="126" y2="126"
-                                    stroke="currentColor" class="transition-all duration-300"
-                                    :class="activeNode === 'app' ? 'text-sky-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
-                            </svg>
-
-                            {{-- Central Core Podium: COOCA Omnichannel Hub --}}
-                            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center">
-                                <div class="w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 rounded-full bg-[#071329]/95 backdrop-blur-md border-2 border-cyan-400 shadow-[0_0_35px_rgba(0,194,255,0.45)] flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:scale-105 transition-transform duration-300"
-                                    @mouseenter="setNode('core', '{{ __('public_home.omni_mesh_default_tip') }}')"
-                                    @mouseleave="resetNode()"
-                                    @click="resetNode()">
-                                    <span class="font-black text-base xs:text-lg sm:text-xl tracking-wider text-white font-sans drop-shadow-[0_0_12px_rgba(0,194,255,0.85)]">COOCA</span>
-                                    <span class="text-[9px] xs:text-[10px] sm:text-[11px] font-extrabold text-cyan-300 uppercase tracking-widest mt-0.5">
-                                        {{ __('public_home.omni_mesh_center_title') }}
-                                    </span>
-                                    <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-[8.5px] xs:text-[9px] font-mono font-bold text-emerald-300">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        <span>{{ __('public_home.omni_mesh_center_badge') }}</span>
+                                {{-- Central Core Floating Pulse Badge (Pusat Hub COOCA) --}}
+                                <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 cursor-pointer"
+                                     @mouseenter="setStation('core', '{{ __('public_home.omni_mesh_default_tip') }}')"
+                                     @mouseleave="resetStation()"
+                                     @click="resetStation()">
+                                    <div class="px-2.5 xs:px-3.5 py-1 xs:py-1.5 rounded-full bg-[#071329]/95 backdrop-blur-md border-2 border-cyan-400 shadow-[0_0_28px_rgba(0,194,255,0.7)] hover:scale-105 transition-transform duration-200 flex items-center gap-1.5 xs:gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                                        <span class="font-black text-[10px] xs:text-xs sm:text-sm tracking-wider text-white">COOCA HUB</span>
+                                        <span class="text-[8.5px] xs:text-[9.5px] font-mono text-cyan-300 font-bold border-l border-white/20 pl-1.5 xs:pl-2">Sync &lt; 1s</span>
                                     </div>
                                 </div>
-                            </div>
 
-                            {{-- 8 Radial Satellite Nodes (Zero Phone Call, Zero SMS) --}}
-
-                            {{-- Node 1: Toko Online Web (Top, 12 o'clock ~ 50%, 15%) --}}
-                            <div class="absolute left-1/2 top-[15%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('web', '{{ __('public_home.omni_node_web_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('web', '{{ __('public_home.omni_node_web_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-cyan-400/60 group-hover:border-cyan-300 shadow-[0_4px_16px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_24px_rgba(0,194,255,0.7)] flex items-center justify-center p-2 text-cyan-300 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'web' ? 'scale-115 !border-cyan-300 !shadow-[0_0_26px_rgba(0,194,255,0.85)]' : ''">
-                                    <i data-lucide="globe" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                {{-- Station 1: Kasir POS Toko Fisik (Top Left ~ over Cashier Counter) --}}
+                                <div class="absolute left-2 xs:left-3 sm:left-4 top-2 xs:top-3 sm:top-4 z-20 group/card cursor-pointer"
+                                     @mouseenter="setStation('pos', '{{ __('public_home.omni_node_pos_desc') }}')"
+                                     @mouseleave="resetStation()"
+                                     @click="setStation('pos', '{{ __('public_home.omni_node_pos_desc') }}')">
+                                    <div class="px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#071329]/90 backdrop-blur-md border border-cyan-400/40 hover:border-cyan-300 shadow-[0_6px_20px_rgba(0,194,255,0.25)] hover:shadow-[0_0_24px_rgba(0,194,255,0.6)] transition-all duration-200 flex items-center gap-1.5 xs:gap-2 group-hover/card:scale-105"
+                                         :class="activeStation === 'pos' ? 'scale-105 !border-cyan-300 !shadow-[0_0_28px_rgba(0,194,255,0.8)]' : ''">
+                                        <div class="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#007AFF]/20 border border-[#007AFF]/40 flex items-center justify-center text-[#00C2FF] shrink-0">
+                                            <i data-lucide="store" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                        </div>
+                                        <div class="flex flex-col text-left">
+                                            <div class="flex items-center gap-1 xs:gap-1.5">
+                                                <span class="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-white">{{ __('public_home.omni_card_pos_title') }}</span>
+                                                <span class="px-1 py-0.2 rounded text-[7.5px] xs:text-[8px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">QRIS</span>
+                                            </div>
+                                            <span class="text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-slate-300 font-mono">Nota #1042 • Rp 33.000</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_web') }}
-                                </span>
-                            </div>
 
-                            {{-- Node 2: Shopee & Tokopedia Marketplace (Top-Right, 1:30 ~ 75%, 25%) --}}
-                            <div class="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('marketplace', '{{ __('public_home.omni_node_marketplace_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('marketplace', '{{ __('public_home.omni_node_marketplace_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-[#FF5722]/60 group-hover:border-[#FF5722] shadow-[0_4px_16px_rgba(255,87,34,0.25)] group-hover:shadow-[0_0_24px_rgba(255,87,34,0.7)] flex items-center justify-center p-2 text-[#FF5722] transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'marketplace' ? 'scale-115 !border-[#FF5722] !shadow-[0_0_26px_rgba(255,87,34,0.85)]' : ''">
-                                    <i data-lucide="shopping-bag" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                {{-- Station 2: Multi-Gudang & Kurir Pengiriman (Top Right ~ over Courier Scooter) --}}
+                                <div class="absolute right-2 xs:right-3 sm:right-4 top-2 xs:top-3 sm:top-4 z-20 group/card cursor-pointer"
+                                     @mouseenter="setStation('inventory', '{{ __('public_home.omni_node_inventory_desc') }}')"
+                                     @mouseleave="resetStation()"
+                                     @click="setStation('inventory', '{{ __('public_home.omni_node_inventory_desc') }}')">
+                                    <div class="px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#071329]/90 backdrop-blur-md border border-amber-400/40 hover:border-amber-300 shadow-[0_6px_20px_rgba(245,158,11,0.25)] hover:shadow-[0_0_24px_rgba(245,158,11,0.6)] transition-all duration-200 flex items-center gap-1.5 xs:gap-2 group-hover/card:scale-105"
+                                         :class="activeStation === 'inventory' ? 'scale-105 !border-amber-300 !shadow-[0_0_28px_rgba(245,158,11,0.8)]' : ''">
+                                        <div class="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 shrink-0">
+                                            <i data-lucide="package" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                        </div>
+                                        <div class="flex flex-col text-left">
+                                            <div class="flex items-center gap-1 xs:gap-1.5">
+                                                <span class="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-white">{{ __('public_home.omni_card_logistics_title') }}</span>
+                                                <span class="px-1 py-0.2 rounded text-[7.5px] xs:text-[8px] font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">Auto Resi</span>
+                                            </div>
+                                            <span class="text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-slate-300 font-mono">Gudang &rarr; Ekspedisi</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_marketplace') }}
-                                </span>
-                            </div>
 
-                            {{-- Node 3: Media Sosial Bisnis (Right, 3 o'clock ~ 85%, 50%) --}}
-                            <div class="absolute left-[85%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('social', '{{ __('public_home.omni_node_social_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('social', '{{ __('public_home.omni_node_social_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-purple-400/60 group-hover:border-purple-300 shadow-[0_4px_16px_rgba(168,85,247,0.25)] group-hover:shadow-[0_0_24px_rgba(168,85,247,0.7)] flex items-center justify-center p-2 text-purple-300 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'social' ? 'scale-115 !border-purple-300 !shadow-[0_0_26px_rgba(168,85,247,0.85)]' : ''">
-                                    <i data-lucide="share-2" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                {{-- Station 3: WhatsApp Commerce & Nota Digital (Bottom Left ~ over Phone screen) --}}
+                                <div class="absolute left-2 xs:left-3 sm:left-4 bottom-2.5 xs:bottom-3 sm:bottom-4 z-20 group/card cursor-pointer"
+                                     @mouseenter="setStation('whatsapp', '{{ __('public_home.omni_node_whatsapp_desc') }}')"
+                                     @mouseleave="resetStation()"
+                                     @click="setStation('whatsapp', '{{ __('public_home.omni_node_whatsapp_desc') }}')">
+                                    <div class="px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#071329]/90 backdrop-blur-md border border-emerald-500/40 hover:border-emerald-400 shadow-[0_6px_20px_rgba(34,197,94,0.25)] hover:shadow-[0_0_24px_rgba(34,197,94,0.6)] transition-all duration-200 flex items-center gap-1.5 xs:gap-2 group-hover/card:scale-105"
+                                         :class="activeStation === 'whatsapp' ? 'scale-105 !border-emerald-400 !shadow-[0_0_28px_rgba(34,197,94,0.8)]' : ''">
+                                        <div class="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+                                            <i data-lucide="message-circle" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                        </div>
+                                        <div class="flex flex-col text-left">
+                                            <div class="flex items-center gap-1 xs:gap-1.5">
+                                                <span class="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-white">{{ __('public_home.omni_card_wa_title') }}</span>
+                                                <span class="px-1 py-0.2 rounded text-[7.5px] xs:text-[8px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Otomatis</span>
+                                            </div>
+                                            <span class="text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-slate-300 font-mono">Nota PDF ke WA Pelanggan</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_social') }}
-                                </span>
-                            </div>
 
-                            {{-- Node 4: Multi-Gudang & Logistik (Bottom-Right, 4:30 ~ 75%, 75%) --}}
-                            <div class="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('inventory', '{{ __('public_home.omni_node_inventory_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('inventory', '{{ __('public_home.omni_node_inventory_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-amber-400/60 group-hover:border-amber-300 shadow-[0_4px_16px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_24px_rgba(245,158,11,0.7)] flex items-center justify-center p-2 text-amber-300 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'inventory' ? 'scale-115 !border-amber-300 !shadow-[0_0_26px_rgba(245,158,11,0.85)]' : ''">
-                                    <i data-lucide="package" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                {{-- Station 4: Shopee, Tokopedia & Web Store Sync (Bottom Right ~ over Web Store Window) --}}
+                                <div class="absolute right-2 xs:right-3 sm:right-4 bottom-2.5 xs:bottom-3 sm:bottom-4 z-20 group/card cursor-pointer"
+                                     @mouseenter="setStation('marketplace', '{{ __('public_home.omni_node_marketplace_desc') }}')"
+                                     @mouseleave="resetStation()"
+                                     @click="setStation('marketplace', '{{ __('public_home.omni_node_marketplace_desc') }}')">
+                                    <div class="px-2 xs:px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl bg-[#071329]/90 backdrop-blur-md border border-[#FF5722]/50 hover:border-[#FF5722] shadow-[0_6px_20px_rgba(255,87,34,0.25)] hover:shadow-[0_0_24px_rgba(255,87,34,0.6)] transition-all duration-200 flex items-center gap-1.5 xs:gap-2 group-hover/card:scale-105"
+                                         :class="activeStation === 'marketplace' ? 'scale-105 !border-[#FF5722] !shadow-[0_0_28px_rgba(255,87,34,0.8)]' : ''">
+                                        <div class="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-[#FF5722]/20 border border-[#FF5722]/40 flex items-center justify-center text-[#FF5722] shrink-0">
+                                            <i data-lucide="shopping-bag" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+                                        </div>
+                                        <div class="flex flex-col text-left">
+                                            <div class="flex items-center gap-1 xs:gap-1.5">
+                                                <span class="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-white">{{ __('public_home.omni_card_market_title') }}</span>
+                                                <span class="px-1 py-0.2 rounded text-[7.5px] xs:text-[8px] font-semibold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">0.8s Sync</span>
+                                            </div>
+                                            <span class="text-[8px] xs:text-[8.5px] sm:text-[9.5px] text-slate-300 font-mono">Stok Sinkron • Nol Selisih</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_inventory') }}
-                                </span>
-                            </div>
 
-                            {{-- Node 5: Pembukuan SAK EMKM (Bottom, 6 o'clock ~ 50%, 85%) --}}
-                            <div class="absolute left-1/2 top-[85%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('accounting', '{{ __('public_home.omni_node_accounting_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('accounting', '{{ __('public_home.omni_node_accounting_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-emerald-400/60 group-hover:border-emerald-300 shadow-[0_4px_16px_rgba(16,185,129,0.25)] group-hover:shadow-[0_0_24px_rgba(16,185,129,0.7)] flex items-center justify-center p-2 text-emerald-300 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'accounting' ? 'scale-115 !border-emerald-300 !shadow-[0_0_26px_rgba(16,185,129,0.85)]' : ''">
-                                    <i data-lucide="bar-chart-3" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
-                                </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_accounting') }}
-                                </span>
-                            </div>
-
-                            {{-- Node 6: WhatsApp Commerce (Bottom-Left, 7:30 ~ 25%, 75%) --}}
-                            <div class="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('whatsapp', '{{ __('public_home.omni_node_whatsapp_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('whatsapp', '{{ __('public_home.omni_node_whatsapp_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-emerald-500/60 group-hover:border-emerald-400 shadow-[0_4px_16px_rgba(34,197,94,0.25)] group-hover:shadow-[0_0_24px_rgba(34,197,94,0.7)] flex items-center justify-center p-2 text-emerald-400 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'whatsapp' ? 'scale-115 !border-emerald-400 !shadow-[0_0_26px_rgba(34,197,94,0.85)]' : ''">
-                                    <i data-lucide="message-circle" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
-                                </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_whatsapp') }}
-                                </span>
-                            </div>
-
-                            {{-- Node 7: Kasir POS Toko Fisik (Left, 9 o'clock ~ 15%, 50%) --}}
-                            <div class="absolute left-[15%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('pos', '{{ __('public_home.omni_node_pos_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('pos', '{{ __('public_home.omni_node_pos_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-[#007AFF]/60 group-hover:border-[#007AFF] shadow-[0_4px_16px_rgba(0,122,255,0.25)] group-hover:shadow-[0_0_24px_rgba(0,122,255,0.7)] flex items-center justify-center p-2 text-sky-400 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'pos' ? 'scale-115 !border-sky-400 !shadow-[0_0_26px_rgba(0,122,255,0.85)]' : ''">
-                                    <i data-lucide="store" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
-                                </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_pos') }}
-                                </span>
-                            </div>
-
-                            {{-- Node 8: Kasir Mobile Android (Top-Left, 10:30 ~ 25%, 25%) --}}
-                            <div class="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
-                                @mouseenter="setNode('app', '{{ __('public_home.omni_node_app_desc') }}')"
-                                @mouseleave="resetNode()"
-                                @click="setNode('app', '{{ __('public_home.omni_node_app_desc') }}')">
-                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-sky-400/60 group-hover:border-sky-300 shadow-[0_4px_16px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_24px_rgba(56,189,248,0.7)] flex items-center justify-center p-2 text-sky-300 transition-all duration-200 group-hover:scale-115"
-                                    :class="activeNode === 'app' ? 'scale-115 !border-sky-300 !shadow-[0_0_26px_rgba(56,189,248,0.85)]' : ''">
-                                    <i data-lucide="smartphone" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
-                                </div>
-                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
-                                    {{ __('public_home.omni_node_app') }}
-                                </span>
                             </div>
 
                         </div>
 
                         {{-- Interactive Live Channel Explanation Pill Console --}}
-                        <div class="mt-3 sm:mt-4 p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs w-full max-w-[500px]">
+                        <div class="mt-3 sm:mt-4 p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs w-full max-w-[540px]">
                             <div class="flex items-center gap-2 min-w-0 w-full sm:w-auto">
                                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
                                 <span class="text-slate-200 text-[11px] sm:text-xs leading-snug truncate" x-text="currentTip"></span>
@@ -1054,9 +973,9 @@
                                     class="px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 font-medium text-[11.5px] shrink-0 hover:bg-slate-200 dark:hover:bg-slate-700/80 hover:text-slate-900 dark:hover:text-white transition-colors min-h-[32px] flex items-center touch-action-manipulation">{{ __('public_home.category_other') }}</a>
                             </div>
 
-                            <!-- Mini Product Showcase or Honest Merchant Invitation (Prompt 3 Compliant) -->
+                            <!-- Mini Product Showcase or Honest Merchant Invitation (Mobile Snap Rail + Desktop Grid) -->
                             @if (isset($previewProducts) && $previewProducts->count() >= 3)
-                                <div class="grid grid-cols-3 gap-2 sm:gap-2.5">
+                                <div class="flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory scrollbar-none gap-2 sm:gap-2.5 pb-1 sm:pb-0 sm:grid-cols-3 -mx-1 px-1 sm:mx-0 sm:px-0">
                                     @foreach ($previewProducts->take(3) as $product)
                                         @php
                                             $productUrl = url(
@@ -1067,7 +986,7 @@
                                             );
                                         @endphp
                                         <a href="{{ $productUrl }}"
-                                            class="p-2 sm:p-2.5 rounded-2xl bg-slate-50/90 dark:bg-slate-900/60 border border-slate-200/70 dark:border-white/10 text-left hover:border-[#007AFF]/50 hover:bg-white dark:hover:bg-slate-800/80 hover:shadow-md transition-all group flex flex-col justify-between">
+                                            class="w-[38vw] min-w-[125px] max-w-[155px] shrink-0 snap-start sm:w-auto sm:shrink sm:snap-align-none p-2 sm:p-2.5 rounded-2xl bg-slate-50/90 dark:bg-slate-900/60 border border-slate-200/70 dark:border-white/10 text-left hover:border-[#007AFF]/50 hover:bg-white dark:hover:bg-slate-800/80 hover:shadow-md transition-all group flex flex-col justify-between active:scale-[0.98] touch-manipulation">
                                             <div>
                                                 <div class="relative w-full h-18 sm:h-20 rounded-xl mb-2 overflow-hidden bg-slate-100 dark:bg-slate-800">
                                                     @if ($product->image_url)
