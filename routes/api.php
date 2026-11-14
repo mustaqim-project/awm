@@ -891,18 +891,18 @@ Route::prefix('v1')->group(function (): void {
             'success' => true,
             'app_name' => 'COOCA My Own',
             'package_name' => 'com.cooca.myown.cooca_my_own',
-            'latest_version' => '1.0.7',
-            'latest_build' => 8,
+            'latest_version' => '1.0.8',
+            'latest_build' => 9,
             'min_supported_version' => '1.0.0',
             'force_update' => false,
             'download_url' => url('/cooca.apk'),
             'file_size' => $fileSize,
             'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
             'release_notes' => [
+                'Pembaruan registrasi cepat via Google yang selaras dengan portal website cooca.id.',
+                'Penyematan logo resmi usaha pada struk bill kasir, printer thermal ESC/POS, dan PDF struk.',
                 'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176) dan akses langsung panduan.',
-                'Perbaikan tampilan versi aplikasi pada Pengaturan Sistem agar bersih, proporsional, dan bebas tumpang tindih.',
-                'Penyederhanaan menu Pengaturan Sistem dengan menghapus eksposur teknis server engine.',
-                'Peningkatan kestabilan performa kasir dan sinkronisasi transaksi offline-online.',
+                'Peningkatan kestabilan sinkronisasi dan keamanan sertifikat rilis aplikasi.',
             ],
         ]);
     });
@@ -916,10 +916,10 @@ Route::prefix('v1')->group(function (): void {
         return response()->json([
             'success' => true,
             'data' => [
-                'version' => '1.0.7',
-                'build_number' => '8',
+                'version' => '1.0.8',
+                'build_number' => '9',
                 'download_url' => url('/cooca.apk'),
-                'release_notes' => 'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176), perbaikan tampilan versi sistem, dan kestabilan performa.',
+                'release_notes' => 'Registrasi Google, tampilan logo usaha di struk bill & thermal printer, dan peningkatan keamanan sistem.',
                 'is_mandatory' => false,
                 'file_size' => $fileSize,
             ],

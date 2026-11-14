@@ -128,6 +128,10 @@ final class AuthController extends Controller
             'email' => ['required', 'email', 'max:150'],
             'name' => ['nullable', 'string', 'max:150'],
             'avatar_url' => ['nullable', 'string'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'business_name' => ['nullable', 'string', 'max:255'],
+            'business_scale' => ['nullable', 'string', 'in:umkm,corporate'],
+            'template_code' => ['nullable', 'string'],
         ]);
 
         /** @var User|null $user */
@@ -140,11 +144,13 @@ final class AuthController extends Controller
                 'google_id' => $validated['google_id'],
                 'avatar' => $validated['avatar_url'] ?? $user->avatar,
                 'email_verified_at' => $user->email_verified_at ?? now(),
+                'phone' => $validated['phone'] ?? $user->phone,
             ]);
         } else {
             $user = User::create([
                 'name' => $validated['name'] ?? explode('@', $validated['email'])[0],
                 'email' => $validated['email'],
+                'phone' => $validated['phone'] ?? null,
                 'google_id' => $validated['google_id'],
                 'avatar' => $validated['avatar_url'] ?? null,
                 'password' => Hash::make(\Illuminate\Support\Str::random(32)),
@@ -153,7 +159,16 @@ final class AuthController extends Controller
         }
 
         if ($user->businesses()->count() === 0) {
-            $bizName = 'Usaha ' . ($user->name ?: 'COOCA');
+            $bizName = ! empty($validated['business_name'])
+                ? trim($validated['business_name'])
+                : ('Usaha ' . ($user->name ?: 'COOCA'));
+
+            $scale = ($validated['business_scale'] ?? 'umkm') === 'corporate'
+                ? \App\Models\Business::SCALE_CORPORATE
+                : \App\Models\Business::SCALE_UMKM;
+
+            $templateCode = $validated['template_code'] ?? 'retail_reseller';
+
             $newBiz = \App\Models\Business::create([
                 'name' => $bizName,
                 'slug' => \Illuminate\Support\Str::slug($bizName) . '-' . \Illuminate\Support\Str::random(5),
@@ -161,7 +176,8 @@ final class AuthController extends Controller
                 'currency_symbol' => 'Rp',
                 'currency_precision' => 0,
                 'is_active' => true,
-                'template_code' => 'retail_reseller',
+                'scale' => $scale,
+                'template_code' => $templateCode,
                 'industry_category' => 'retail',
             ]);
             \App\Models\BusinessMembership::create([
