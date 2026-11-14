@@ -112,6 +112,7 @@ return [
     // POS
     'pos_seo_title' => 'Aplikasi Kasir Online & POS Terpadu UMKM | COOCA',
     'pos_seo_desc' => 'Aplikasi POS kasir toko & restoran: scan barcode, QRIS dinamis, tiket dapur KOT, kitchen prep sheet, dan pembukuan otomatis.',
+    'pos_hero_rating' => 'Rating Kepuasan Kasir & Operasional Cepat',
     'pos_check_speed' => '< 3 Detik Checkout',
     'pos_check_stock' => 'Auto Potong Stok Gudang',
     'pos_check_receipt' => 'Cetak Struk Thermal & WA',

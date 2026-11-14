@@ -99,8 +99,13 @@ PHP_BLOCK_COMMENT_REGEX = re.compile(r"/\*.*?\*/", re.DOTALL)
 PHP_LINE_COMMENT_REGEX = re.compile(r"//.*?$|#.*?$", re.MULTILINE)
 TRANSLATION_HELPER_REGEX = re.compile(
     r"""(?:__|\@lang|trans|Lang::get)\s*\(\s*(['"])(.*?)\1""",
-    re.MULTILINE
+    re.DOTALL
 )
+RELATIVE_CTA_REGEX = re.compile(
+    r"""href\s*=\s*(['"])/(register|pricing)(?:[/?#][^'"]*)?\1""",
+    re.IGNORECASE
+)
+INSECURE_HTTP_REGEX = re.compile(r"""http://cooca\.id""", re.IGNORECASE)
 PLACEHOLDER_REGEX = re.compile(r":([a-zA-Z_][a-zA-Z0-9_]*)")
 
 CANONICAL_REGISTER = "https://cooca.id/register"
@@ -125,6 +130,37 @@ class FrontendVerificationEngine:
         self.placeholder_violations: List[Dict[str, Any]] = []
         self.total_keys_validated = 0
         self.total_helpers_checked = 0
+
+    def get_relative_path(self, target_path: Path) -> str:
+        """Resolve path relative to root, falling back gracefully for external/arbitrary paths."""
+        try:
+            return str(target_path.resolve().relative_to(self.root.resolve()))
+        except (ValueError, RuntimeError):
+            try:
+                return os.path.relpath(str(target_path), str(self.root))
+            except Exception:
+                return str(target_path)
+
+    def strip_blade_comments(self, text: str) -> str:
+        """Strip Blade comments preserving line count to keep line numbers accurate."""
+        return BLADE_COMMENT_REGEX.sub(lambda m: "\n" * m.group(0).count("\n"), text)
+
+    @staticmethod
+    def dict_has_key(d: Any, key_path: str) -> bool:
+        """Check if dictionary contains key_path, supporting flat keys and dot-nested hierarchy."""
+        if not isinstance(d, dict):
+            return False
+        # 1. Direct flat key lookup
+        if key_path in d:
+            return True
+        # 2. Nested dot traversal
+        parts = key_path.split(".")
+        curr = d
+        for part in parts:
+            if not isinstance(curr, dict) or part not in curr:
+                return False
+            curr = curr[part]
+        return True
 
     def load_dictionaries(self) -> None:
         """Load all language dictionaries using PHP CLI for exact array representation."""
@@ -161,7 +197,14 @@ class FrontendVerificationEngine:
                 check=True
             )
             data = json.loads(res.stdout)
-            self.dictionaries = data
+            # Ensure each locale and domain is a dict, converting empty arrays ([]) to {}
+            normalized = {"id": {}, "en": {}}
+            for loc in ["id", "en"]:
+                loc_dict = data.get(loc, {})
+                if isinstance(loc_dict, dict):
+                    for dom, val in loc_dict.items():
+                        normalized[loc][dom] = val if isinstance(val, dict) else {}
+            self.dictionaries = normalized
         except Exception as e:
             print(f"{RED}Failed to load dictionaries via PHP CLI: {e}{RESET}", file=sys.stderr)
             raise
@@ -191,7 +234,7 @@ class FrontendVerificationEngine:
                             k = m.group(1)
                             if k in seen_keys:
                                 self.duplicate_key_violations.append({
-                                    "file": str(php_file.relative_to(self.root)),
+                                    "file": self.get_relative_path(php_file),
                                     "line": line_num,
                                     "key": k,
                                     "locale": locale
@@ -233,10 +276,10 @@ class FrontendVerificationEngine:
         """Scan views and dictionary files for banned trial terminology."""
         # 1. Scan Blade views
         for b_path in self.blade_files:
-            rel_path = str(b_path.relative_to(self.root))
+            rel_path = self.get_relative_path(b_path)
             raw_text = b_path.read_text(encoding="utf-8", errors="replace")
-            # Strip Blade comments to avoid false positives in comments
-            text_clean = BLADE_COMMENT_REGEX.sub("", raw_text)
+            # Strip Blade comments preserving line count to avoid false positives in comments
+            text_clean = self.strip_blade_comments(raw_text)
 
             for line_idx, line in enumerate(text_clean.splitlines(), start=1):
                 for pattern, term_name in BANNED_PATTERNS:
@@ -260,7 +303,7 @@ class FrontendVerificationEngine:
                 php_path = lang_dir / lang_file
                 if not php_path.exists():
                     continue
-                rel_path = str(php_path.relative_to(self.root))
+                rel_path = self.get_relative_path(php_path)
                 content = php_path.read_text(encoding="utf-8", errors="replace")
                 # Remove block comments & line comments
                 content_clean = PHP_BLOCK_COMMENT_REGEX.sub("", content)
@@ -288,6 +331,11 @@ class FrontendVerificationEngine:
         for domain in checked_domains:
             id_dict = self.dictionaries.get("id", {}).get(domain, {})
             en_dict = self.dictionaries.get("en", {}).get(domain, {})
+
+            if not isinstance(id_dict, dict):
+                id_dict = {}
+            if not isinstance(en_dict, dict):
+                en_dict = {}
 
             id_keys = set(id_dict.keys())
             en_keys = set(en_dict.keys())
@@ -361,81 +409,81 @@ class FrontendVerificationEngine:
                     })
 
     def scan_blade_views_for_missing_keys(self) -> None:
-        """Extract all __() and @lang() calls from Blade views and ensure they exist in both ID and EN dictionaries."""
+        """Extract all __() and @lang() calls from Blade views (including multiline) and ensure existence in dictionaries."""
         all_id_dicts = self.dictionaries.get("id", {})
         all_en_dicts = self.dictionaries.get("en", {})
 
         for b_path in self.blade_files:
-            rel_path = str(b_path.relative_to(self.root))
+            rel_path = self.get_relative_path(b_path)
             content = b_path.read_text(encoding="utf-8", errors="replace")
-            # Strip Blade comments
-            clean_content = BLADE_COMMENT_REGEX.sub("", content)
+            # Strip Blade comments preserving line count
+            clean_content = self.strip_blade_comments(content)
 
-            lines = clean_content.splitlines()
-            for line_idx, line in enumerate(lines, start=1):
-                matches = TRANSLATION_HELPER_REGEX.findall(line)
-                for quote, full_key in matches:
-                    self.total_helpers_checked += 1
-                    full_key = full_key.strip()
-                    # Skip dynamic variables like $var or expression concatenations
-                    if "$" in full_key or "{" in full_key or "}" in full_key:
-                        continue
-                    # Check if domain is present
-                    if "." not in full_key:
-                        # Raw key without domain
-                        self.missing_key_violations.append({
-                            "file": rel_path,
-                            "line": line_idx,
-                            "key": full_key,
-                            "issue": "Missing domain prefix (must follow 'domain.key')"
-                        })
-                        continue
+            # Match translation helpers across full content (supports single-line and multiline calls)
+            for match in TRANSLATION_HELPER_REGEX.finditer(clean_content):
+                self.total_helpers_checked += 1
+                full_key = match.group(2).strip()
+                line_idx = clean_content[:match.start()].count("\n") + 1
 
-                    parts = full_key.split(".", 1)
-                    domain = parts[0]
-                    key = parts[1]
+                # Skip dynamic variables like $var or expression concatenations or empty strings
+                if not full_key or "$" in full_key or "{" in full_key or "}" in full_key:
+                    continue
 
-                    # Check ID
-                    id_domain_dict = all_id_dicts.get(domain)
-                    if id_domain_dict is None:
-                        self.missing_key_violations.append({
-                            "file": rel_path,
-                            "line": line_idx,
-                            "key": full_key,
-                            "issue": f"Domain '{domain}' does not exist in lang/id/"
-                        })
-                    elif key not in id_domain_dict:
-                        self.missing_key_violations.append({
-                            "file": rel_path,
-                            "line": line_idx,
-                            "key": full_key,
-                            "issue": f"Key '{key}' missing from lang/id/{domain}.php"
-                        })
+                # Check if domain is present
+                if "." not in full_key:
+                    # Raw key without domain
+                    self.missing_key_violations.append({
+                        "file": rel_path,
+                        "line": line_idx,
+                        "key": full_key,
+                        "issue": "Missing domain prefix (must follow 'domain.key')"
+                    })
+                    continue
 
-                    # Check EN
-                    en_domain_dict = all_en_dicts.get(domain)
-                    if en_domain_dict is None:
-                        self.missing_key_violations.append({
-                            "file": rel_path,
-                            "line": line_idx,
-                            "key": full_key,
-                            "issue": f"Domain '{domain}' does not exist in lang/en/"
-                        })
-                    elif key not in en_domain_dict:
-                        self.missing_key_violations.append({
-                            "file": rel_path,
-                            "line": line_idx,
-                            "key": full_key,
-                            "issue": f"Key '{key}' missing from lang/en/{domain}.php"
-                        })
+                parts = full_key.split(".", 1)
+                domain = parts[0]
+                key = parts[1]
+
+                # Check ID dictionary (supports flat and dot-nested keys like storefront.php)
+                id_domain_dict = all_id_dicts.get(domain)
+                if id_domain_dict is None:
+                    self.missing_key_violations.append({
+                        "file": rel_path,
+                        "line": line_idx,
+                        "key": full_key,
+                        "issue": f"Domain '{domain}' does not exist in lang/id/"
+                    })
+                elif not self.dict_has_key(id_domain_dict, key):
+                    self.missing_key_violations.append({
+                        "file": rel_path,
+                        "line": line_idx,
+                        "key": full_key,
+                        "issue": f"Key '{key}' missing from lang/id/{domain}.php"
+                    })
+
+                # Check EN dictionary (supports flat and dot-nested keys like storefront.php)
+                en_domain_dict = all_en_dicts.get(domain)
+                if en_domain_dict is None:
+                    self.missing_key_violations.append({
+                        "file": rel_path,
+                        "line": line_idx,
+                        "key": full_key,
+                        "issue": f"Domain '{domain}' does not exist in lang/en/"
+                    })
+                elif not self.dict_has_key(en_domain_dict, key):
+                    self.missing_key_violations.append({
+                        "file": rel_path,
+                        "line": line_idx,
+                        "key": full_key,
+                        "issue": f"Key '{key}' missing from lang/en/{domain}.php"
+                    })
 
     def verify_canonical_ctas(self) -> None:
-        """Verify that CTA links conform to canonical URLs."""
-        # Find <a> tags with hrefs pointing to register or pricing
+        """Verify that CTA links conform to canonical URLs and catch relative paths with queries, slashes, or anchors."""
         for b_path in self.blade_files:
-            rel_path = str(b_path.relative_to(self.root))
+            rel_path = self.get_relative_path(b_path)
             content = b_path.read_text(encoding="utf-8", errors="replace")
-            clean_content = BLADE_COMMENT_REGEX.sub("", content)
+            clean_content = self.strip_blade_comments(content)
 
             lines = clean_content.splitlines()
             for line_idx, line in enumerate(lines, start=1):
@@ -447,10 +495,9 @@ class FrontendVerificationEngine:
                         "issue": "Insecure HTTP URL found: 'http://cooca.id'",
                         "snippet": line.strip()[:120]
                     })
-                
-                # Check for relative /register or /pricing in primary CTA buttons
-                # e.g. <a href="/register" or href='/pricing'
-                if re.search(r"""href\s*=\s*['"]/(register|pricing)['"]""", line, re.IGNORECASE):
+
+                # Check for relative /register or /pricing in CTA buttons (including queries, trailing slashes, anchors)
+                if RELATIVE_CTA_REGEX.search(line):
                     self.cta_violations.append({
                         "file": rel_path,
                         "line": line_idx,
@@ -467,7 +514,12 @@ class FrontendVerificationEngine:
             return False
 
         self.verify_dictionary_parity()
-        if fix_check and (len(self.parity_violations) > 0 or len(self.duplicate_key_violations) > 0):
+        if fix_check and (
+            len(self.parity_violations) > 0
+            or len(self.duplicate_key_violations) > 0
+            or len(self.empty_value_violations) > 0
+            or len(self.placeholder_violations) > 0
+        ):
             return False
 
         self.scan_blade_views_for_missing_keys()
@@ -475,6 +527,8 @@ class FrontendVerificationEngine:
             return False
 
         self.verify_canonical_ctas()
+        if fix_check and len(self.cta_violations) > 0:
+            return False
 
         total_violations = (
             len(self.banned_term_violations)
@@ -561,6 +615,9 @@ class FrontendVerificationEngine:
             + len(self.parity_violations)
             + len(self.missing_key_violations)
             + len(self.cta_violations)
+            + len(self.duplicate_key_violations)
+            + len(self.empty_value_violations)
+            + len(self.placeholder_violations)
         )
         if total == 0:
             print(f"{BOLD}{GREEN}OVERALL STATUS: PASS (Production Ready - 0 Regressions){RESET}")
@@ -570,10 +627,20 @@ class FrontendVerificationEngine:
 
     def to_json(self) -> str:
         """Export full findings to JSON."""
+        total_violations = (
+            len(self.banned_term_violations)
+            + len(self.parity_violations)
+            + len(self.missing_key_violations)
+            + len(self.cta_violations)
+            + len(self.duplicate_key_violations)
+            + len(self.empty_value_violations)
+            + len(self.placeholder_violations)
+        )
         return json.dumps({
             "scanned_blade_files_count": len(self.blade_files),
             "total_keys_validated": self.total_keys_validated,
             "total_helpers_checked": self.total_helpers_checked,
+            "total_violations": total_violations,
             "banned_term_violations": self.banned_term_violations,
             "parity_violations": self.parity_violations,
             "missing_key_violations": self.missing_key_violations,
@@ -581,12 +648,7 @@ class FrontendVerificationEngine:
             "duplicate_key_violations": self.duplicate_key_violations,
             "empty_value_violations": self.empty_value_violations,
             "placeholder_violations": self.placeholder_violations,
-            "passed": (
-                len(self.banned_term_violations) == 0
-                and len(self.parity_violations) == 0
-                and len(self.missing_key_violations) == 0
-                and len(self.cta_violations) == 0
-            )
+            "passed": total_violations == 0
         }, indent=2)
 
 

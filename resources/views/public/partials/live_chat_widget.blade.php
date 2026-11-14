@@ -161,7 +161,7 @@ function coocaLiveChatWidget() {
                 if (msgTime > 0) {
                     const elapsedSeconds = Math.floor((Date.now() - msgTime) / 1000);
                     if (elapsedSeconds >= 300) { // 5 minutes without visitor reply
-                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        this.handleSessionEnded('{{ __('public_marketing.live_chat_session_timeout_default') }}');
                     }
                 }
             }
@@ -170,7 +170,7 @@ function coocaLiveChatWidget() {
         handleSessionEnded(reason) {
             this.stopActivePolling();
             this.isSessionEnded = true;
-            this.sessionEndedReason = reason || 'Sesi chat otomatis diakhiri karena tidak ada balasan dalam 5 menit.';
+            this.sessionEndedReason = reason || '{{ __('public_marketing.live_chat_session_timeout_default') }}';
             this.isWaitingReply = false;
 
             // Ensure polite closing message bubble appears before session ended banner
@@ -190,8 +190,8 @@ function coocaLiveChatWidget() {
                     is_cooca: true,
                     is_from_page: true,
                     time: timeStr,
-                    time_relative: 'Baru saja',
-                    date: 'Hari ini',
+                    time_relative: '{{ __('public_marketing.live_chat_just_now') }}',
+                    date: '{{ __('public_marketing.live_chat_today') }}',
                     created_at: now.toISOString(),
                 });
                 this.$nextTick(() => {
@@ -298,7 +298,7 @@ function coocaLiveChatWidget() {
                     this.errorMessage = data.message || @js(__('public_marketing.live_chat_failed_start'));
                 }
             } catch (err) {
-                this.errorMessage = 'Terjadi gangguan jaringan: ' + err.message;
+                this.errorMessage = '{{ __('public_marketing.live_chat_network_error') }}: ' + err.message;
             } finally {
                 this.isSubmitting = false;
             }
@@ -309,7 +309,7 @@ function coocaLiveChatWidget() {
             if (!text || this.isSending) return;
 
             if (this.isSessionEnded || !this.sessionToken) {
-                this.handleSessionEnded('Sesi chat telah berakhir. Silakan mulai sesi baru.');
+                this.handleSessionEnded('{{ __('public_marketing.live_chat_session_ended_refresh') }}');
                 return;
             }
 
@@ -322,12 +322,12 @@ function coocaLiveChatWidget() {
                 id: tempId,
                 temp_id: tempId,
                 message: text,
-                from_name: this.visitorData?.name || 'Anda',
+                from_name: this.visitorData?.name || '{{ __('public_marketing.live_chat_you') }}',
                 is_cooca: false,
                 is_from_page: false,
                 time: timeStr,
-                time_relative: 'Baru saja',
-                date: 'Hari ini',
+                time_relative: '{{ __('public_marketing.live_chat_just_now') }}',
+                date: '{{ __('public_marketing.live_chat_today') }}',
                 created_at: now.toISOString(),
                 is_optimistic: true,
             };
@@ -391,11 +391,11 @@ function coocaLiveChatWidget() {
                     this.messages = this.messages.filter(m => m.id !== tempId);
                     this.isWaitingReply = false;
                     this.newMessage = text; // restore message to composer
-                    alert(data.message || 'Gagal mengirim pesan.');
+                    alert(data.message || '{{ __('public_marketing.live_chat_send_failed') }}');
                 }
             } catch (err) {
                 this.isWaitingReply = false;
-                alert('Gangguan koneksi: ' + err.message);
+                alert('{{ __('public_marketing.live_chat_conn_error') }}: ' + err.message);
             } finally {
                 this.isSending = false;
             }
@@ -416,7 +416,7 @@ function coocaLiveChatWidget() {
                             this.visitorData = data.visitor;
                         }
                         if (data.session_ended) {
-                            this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                            this.handleSessionEnded('{{ __('public_marketing.live_chat_session_timeout_default') }}');
                         } else {
                             this.checkInactivityTimeout();
                         }
@@ -444,7 +444,7 @@ function coocaLiveChatWidget() {
                 if (res.ok) {
                     const data = await res.json();
                     if (data.session_ended) {
-                        this.handleSessionEnded('Sesi chat otomatis diakhiri karena tidak ada balasan dari Anda selama 5 menit.');
+                        this.handleSessionEnded('{{ __('public_marketing.live_chat_session_timeout_default') }}');
                         return;
                     }
                     if (data.success && Array.isArray(data.messages) && data.messages.length > 0) {
@@ -556,7 +556,7 @@ function coocaLiveChatWidget() {
         },
 
         confirmResetSession() {
-            if (confirm('Apakah Anda ingin mengakhiri sesi chat ini dan memulai chat baru?')) {
+            if (confirm('{{ __('public_marketing.live_chat_confirm_reset') }}')) {
                 this.startNewChatSession();
                 if (this.pusherInstance) {
                     try { this.pusherInstance.disconnect(); } catch (_) {}
@@ -716,12 +716,12 @@ function coocaLiveChatWidget() {
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5">
-                        <h3 class="text-[14.5px] font-bold text-white tracking-tight truncate">Live Chat COOCA</h3>
-                        <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-semibold bg-emerald-400/25 text-emerald-200 border border-emerald-400/30">Online</span>
+                        <h3 class="text-[14.5px] font-bold text-white tracking-tight truncate">{{ __('public_marketing.live_chat_title') }}</h3>
+                        <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-semibold bg-emerald-400/25 text-emerald-200 border border-emerald-400/30">{{ __('public_marketing.live_chat_status_online') }}</span>
                     </div>
                     <p class="text-[11.5px] text-violet-100/90 truncate flex items-center gap-1">
                         <span x-show="sessionToken" class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
-                        <span x-text="sessionToken ? (isReverbConnected ? 'Terhubung (Realtime)' : 'Aktif') : 'Tim kami siap membantu Anda'"></span>
+                        <span x-text="sessionToken ? (isReverbConnected ? '{{ __('public_marketing.live_chat_connected_realtime') }}' : '{{ __('public_marketing.live_chat_active') }}') : '{{ __('public_marketing.live_chat_ready_to_help') }}'"></span>
                     </p>
                 </div>
             </div>
@@ -731,7 +731,7 @@ function coocaLiveChatWidget() {
                 <a href="https://wa.me/6285287864176?text=Halo%20COOCA%2C%20saya%20butuh%20bantuan%20seputar%20sistem%20kasir" 
                    target="_blank" 
                    rel="noopener noreferrer" 
-                   title="Chat via WhatsApp (+62 852-8786-4176)"
+                   title="{{ __('public_marketing.live_chat_wa_title') }}"
                    class="w-8 h-8 rounded-full hover:bg-white/20 text-emerald-300 hover:text-emerald-200 flex items-center justify-center transition-colors">
                     <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.825 2.787.826h.004c3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.766-5.768-5.766zm9.969 5.766c0 5.503-4.477 9.98-9.969 9.98-1.747 0-3.385-.453-4.819-1.246l-5.212 1.366 1.393-5.086c-.888-1.488-1.393-3.235-1.393-5.014 0-5.503 4.477-9.98 9.969-9.98 5.492 0 10.031 4.477 10.031 9.98z"/>
@@ -740,7 +740,7 @@ function coocaLiveChatWidget() {
 
                 {{-- Reset / New Chat Option if in session --}}
                 <button type="button" x-show="sessionToken" @click="confirmResetSession()" 
-                        title="Mulai sesi chat baru"
+                        title="{{ __('public_marketing.live_chat_new_session_title') }}"
                         class="w-8 h-8 rounded-full hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
@@ -775,7 +775,7 @@ function coocaLiveChatWidget() {
                 </div>
                 <h4 class="text-[15px] font-bold text-gray-900 dark:text-white">{{ __('public_marketing.live_chat_welcome_title') }}</h4>
                 <p class="text-[12px] text-gray-500 dark:text-gray-400 mt-1 max-w-[320px] mx-auto leading-relaxed">
-                    Mohon isi data diri Anda di bawah ini agar tim kami dapat memberikan solusi terbaik untuk bisnis Anda.
+                    {{ __('public_marketing.live_chat_form_desc') }}
                 </p>
             </div>
 
@@ -790,14 +790,14 @@ function coocaLiveChatWidget() {
                     {{-- 1. NAMA LENGKAP --}}
                     <div>
                         <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
-                            Nama Lengkap <span class="text-rose-500">*</span>
+                            {{ __('public_marketing.live_chat_label_name') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </span>
                             <input type="text" x-model="formData.name" required
-                                   placeholder="Contoh: Budi Santoso"
+                                   placeholder="{{ __('public_marketing.live_chat_ph_name') }}"
                                    class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
                         </div>
                     </div>
@@ -805,14 +805,14 @@ function coocaLiveChatWidget() {
                     {{-- 2. NOMOR HP / WHATSAPP --}}
                     <div>
                         <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
-                            Nomor WhatsApp / HP <span class="text-rose-500">*</span>
+                            {{ __('public_marketing.live_chat_label_phone') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                             </span>
                             <input type="tel" x-model="formData.phone" required
-                                   placeholder="Contoh: 081234567890"
+                                   placeholder="{{ __('public_marketing.live_chat_ph_phone') }}"
                                    class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
                         </div>
                     </div>
@@ -820,14 +820,14 @@ function coocaLiveChatWidget() {
                     {{-- 3. EMAIL --}}
                     <div>
                         <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
-                            Email Aktif <span class="text-rose-500">*</span>
+                            {{ __('public_marketing.live_chat_label_email') }} <span class="text-rose-500">*</span>
                         </label>
                         <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                             </span>
                             <input type="email" x-model="formData.email" required
-                                   placeholder="Contoh: budi@bisnisanda.com"
+                                   placeholder="{{ __('public_marketing.live_chat_ph_email') }}"
                                    class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
                         </div>
                     </div>
@@ -835,7 +835,7 @@ function coocaLiveChatWidget() {
                     {{-- 4. PERTANYAAN / PESAN AWAL --}}
                     <div>
                         <label class="block text-[12px] font-semibold text-gray-700 dark:text-gray-200 mb-1">
-                            Pertanyaan / Kebutuhan Bisnis <span class="text-rose-500">*</span>
+                            {{ __('public_marketing.live_chat_label_message') }} <span class="text-rose-500">*</span>
                         </label>
                         <textarea x-model="formData.message" required rows="3"
                                   placeholder="{{ __('public_marketing.live_chat_issue_placeholder') }}"
@@ -847,12 +847,12 @@ function coocaLiveChatWidget() {
                     <button type="submit" :disabled="isSubmitting"
                             class="w-full h-11 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[13.5px] shadow-lg shadow-violet-500/25 disabled:opacity-50 flex items-center justify-center gap-2 transition-all">
                         <svg x-show="isSubmitting" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity=".25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-opacity=".75"></path></svg>
-                        <span x-text="isSubmitting ? 'Menghubungkan...' : 'Mulai Chat Sekarang'"></span>
+                        <span x-text="isSubmitting ? '{{ __('public_marketing.live_chat_connecting') }}' : '{{ __('public_marketing.live_chat_btn_start') }}'"></span>
                         <svg x-show="!isSubmitting" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                     </button>
                     <p class="text-[11px] text-gray-400 text-center mt-2 flex items-center justify-center gap-1">
                         <svg class="w-3 h-3 text-emerald-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        Data aman dan terenkripsi.
+                        {{ __('public_marketing.live_chat_data_secure') }}
                     </p>
                 </div>
             </form>
@@ -867,7 +867,7 @@ function coocaLiveChatWidget() {
             <div class="px-4 py-2 bg-violet-50/80 dark:bg-violet-950/30 border-b border-violet-100 dark:border-violet-900/40 flex items-center justify-between text-[11.5px] text-violet-800 dark:text-violet-300 shrink-0">
                 <div class="flex items-center gap-1.5 truncate">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Chat dengan: <strong x-text="visitorData.name || 'Anda'"></strong></span>
+                    <span>{{ __('public_marketing.live_chat_with') }} <strong x-text="visitorData.name || '{{ __('public_marketing.live_chat_you') }}'"></strong></span>
                 </div>
                 <div class="flex items-center gap-1 text-[10.5px] text-violet-600 dark:text-violet-400">
                     <span x-text="isReverbConnected ? 'Reverb Live' : 'Polling Mode'"></span>
@@ -879,7 +879,7 @@ function coocaLiveChatWidget() {
                 
                 {{-- System Welcome Message --}}
                 <div class="p-3 rounded-2xl bg-white dark:bg-[#27272A] border border-gray-100 dark:border-white/5 shadow-xs text-[12px] text-gray-600 dark:text-gray-300 leading-relaxed">
-                    <strong>Halo <span x-text="visitorData.name || 'Bapak/Ibu'"></span>!</strong> Terima kasih telah menghubungi COOCA. Pertanyaan Anda sudah diteruskan langsung ke tim admin kami melalui dashboard omnichannel. Kami akan segera membalasnya di sini.
+                    <strong>{{ __('public_marketing.live_chat_hello') }} <span x-text="visitorData.name || '{{ __('public_marketing.live_chat_default_visitor') }}'"></span>!</strong> {{ __('public_marketing.live_chat_welcome_system') }}
                 </div>
 
                 {{-- Messages Bubbles --}}
@@ -889,7 +889,7 @@ function coocaLiveChatWidget() {
                         {{-- Sender Name & Time --}}
                         <div class="flex items-center gap-1.5 mb-1 px-1 text-[10.5px] text-gray-400">
                             <span class="font-semibold" :class="msg.is_cooca || msg.is_from_page ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-300'" 
-                                  x-text="msg.is_cooca || msg.is_from_page ? 'Cooca Support' : 'Anda'"></span>
+                                  x-text="msg.is_cooca || msg.is_from_page ? 'Cooca Support' : '{{ __('public_marketing.live_chat_you') }}'"></span>
                             <span>•</span>
                             <span x-text="msg.time"></span>
                         </div>
@@ -917,7 +917,7 @@ function coocaLiveChatWidget() {
                     <div class="flex items-center gap-1.5 px-1 text-[10.5px] text-gray-400">
                         <span class="font-semibold text-violet-600 dark:text-violet-400">Cooca Support</span>
                         <span>•</span>
-                        <span class="text-violet-500 font-medium animate-pulse">sedang mengetik...</span>
+                        <span class="text-violet-500 font-medium animate-pulse">{{ __('public_marketing.live_chat_typing') }}</span>
                     </div>
                     <div class="rounded-2xl rounded-tl-xs px-4 py-3 bg-white dark:bg-[#27272A] border border-gray-200/80 dark:border-white/10 shadow-xs flex items-center gap-2.5">
                         <div class="flex items-center gap-1.5 py-0.5">
@@ -925,7 +925,7 @@ function coocaLiveChatWidget() {
                             <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce [animation-delay:-0.16s]"></span>
                             <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce"></span>
                         </div>
-                        <span class="text-[12px] text-gray-500 dark:text-gray-400 italic">mengetik balasan...</span>
+                        <span class="text-[12px] text-gray-500 dark:text-gray-400 italic">{{ __('public_marketing.live_chat_typing_reply') }}</span>
                     </div>
                 </div>
             </div>
@@ -935,12 +935,12 @@ function coocaLiveChatWidget() {
                 <div class="p-3.5 bg-amber-50/90 dark:bg-[#201D1A] border-t border-amber-200/80 dark:border-amber-900/50 flex flex-col items-center gap-2 text-center shrink-0">
                     <div class="flex items-center gap-1.5 text-[12px] font-medium text-amber-800 dark:text-amber-300">
                         <svg class="w-4 h-4 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                        <span x-text="sessionEndedReason || 'Sesi chat otomatis diakhiri karena tidak ada balasan selama 5 menit.'"></span>
+                        <span x-text="sessionEndedReason || '{{ __('public_marketing.live_chat_session_timeout_default') }}'"></span>
                     </div>
                     <button type="button" @click="startNewChatSession()" 
                             class="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12.5px] shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                        <span>Mulai Sesi Chat Baru</span>
+                        <span>{{ __('public_marketing.live_chat_btn_new_session') }}</span>
                     </button>
                 </div>
             </template>

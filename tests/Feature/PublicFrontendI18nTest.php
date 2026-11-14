@@ -88,15 +88,29 @@ class PublicFrontendI18nTest extends TestCase
         $enResponse->assertStatus(200);
         $enContent = $enResponse->getContent();
 
-        // Must display canonical CTA texts in English
+        // Must display canonical CTA URLs in English
         $this->assertStringContainsString('https://cooca.id/register', $enContent);
         $this->assertStringContainsString('https://cooca.id/pricing', $enContent);
+
+        // Standardized English CTA copy assertions
+        $enResponse->assertSee('Start for free');
+        $enResponse->assertSee('View Plans & Pricing');
+
+        // Negative assertions against relative CTAs in English
+        $enResponse->assertDontSee('href="/register"', false);
+        $enResponse->assertDontSee('href="/pricing"', false);
 
         $idResponse = $this->get('/?lang=id');
         $idResponse->assertStatus(200);
         $idContent = $idResponse->getContent();
+
+        // Must display canonical CTA URLs in Indonesian
         $this->assertStringContainsString('https://cooca.id/register', $idContent);
         $this->assertStringContainsString('https://cooca.id/pricing', $idContent);
+
+        // Negative assertions against relative CTAs in Indonesian
+        $idResponse->assertDontSee('href="/register"', false);
+        $idResponse->assertDontSee('href="/pricing"', false);
     }
 
     /**
@@ -492,29 +506,43 @@ class PublicFrontendI18nTest extends TestCase
 
     /**
      * T4.4: Deep-dive crawl of core public pages ensuring absence of raw translation keys
-     * such as "public_erp." or "public_bos." in rendered output.
+     * across all 15 public modular language domains in rendered output.
      */
     public function test_no_raw_translation_keys_in_rendered_output(): void
     {
         $sampleRoutes = [
             '/',
             '/about',
+            '/support',
+            '/kontak',
             '/business-operating-system/overview',
+            '/business-operating-system/how-it-works',
             '/omnichannel-erp/pos',
+            '/omnichannel-erp/finance',
             '/omnichannel/whatsapp',
+            '/solutions/fnb',
             '/solutions/retail',
+            '/resources/guides',
             '/resources/faq',
+            '/kalkulator',
         ];
 
         $rawKeyPrefixes = [
-            'public_marketing.',
-            'public_home.',
+            'public_blog.',
             'public_bos.',
-            'public_erp.',
-            'public_omnichannel.',
-            'public_solutions.',
-            'public_resources.',
+            'public_calculators.',
+            'public_commercial.',
+            'public_contact.',
             'public_content.',
+            'public_discovery.',
+            'public_erp.',
+            'public_home.',
+            'public_marketing.',
+            'public_marketplace.',
+            'public_omnichannel.',
+            'public_resources.',
+            'public_solutions.',
+            'public_templates.',
         ];
 
         foreach ($sampleRoutes as $route) {
@@ -534,7 +562,8 @@ class PublicFrontendI18nTest extends TestCase
     }
 
     /**
-     * T1.6 - T1.10: Verify absence of banned trial terminology across rendered public responses.
+     * T1.6 - T1.10: Verify absence of banned trial terminology across rendered public responses
+     * across all major public application suites.
      */
     public function test_rendered_public_pages_do_not_contain_banned_terms(): void
     {
@@ -542,10 +571,24 @@ class PublicFrontendI18nTest extends TestCase
             '/',
             '/pricing',
             '/about',
+            '/support',
             '/kontak',
             '/business-operating-system/overview',
+            '/business-operating-system/how-it-works',
+            '/business-operating-system/why-cooca',
             '/omnichannel-erp/pos',
+            '/omnichannel-erp/inventory',
+            '/omnichannel-erp/finance',
+            '/omnichannel-erp/accounting',
+            '/omnichannel/social-media',
+            '/omnichannel/whatsapp',
+            '/content-automation/content-creation',
+            '/solutions/fnb',
             '/solutions/retail',
+            '/solutions/workshop',
+            '/resources/guides',
+            '/resources/faq',
+            '/kalkulator',
         ];
 
         $violations = [];

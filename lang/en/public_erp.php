@@ -112,6 +112,7 @@ return [
     // POS
     'pos_seo_title' => 'Online Cloud POS & Integrated Cashier App | COOCA',
     'pos_seo_desc' => 'Store & restaurant POS system: barcode scanner, dynamic QRIS, kitchen tickets, prep sheets, and automated bookkeeping.',
+    'pos_hero_rating' => 'High Satisfaction Rating from Active POS Users',
     'pos_check_speed' => '< 3s Swift Checkout',
     'pos_check_stock' => 'Auto Warehouse Deduction',
     'pos_check_receipt' => 'Thermal & WhatsApp Receipts',
