@@ -12,7 +12,7 @@
     {
       "@@context": "https://schema.org",
       "@@type": "ContactPage",
-      "name": "Kontak Dukungan COOCA",
+      "name": "{{ __('public_contact.contact_seo_title') }}",
       "url": "{{ route('contact') }}",
       "telephone": "{{ $officialWhatsapp }}"
     }
@@ -62,7 +62,7 @@
                         {{-- Direct Primary Actions --}}
                         <div
                             class="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-3.5 pt-2 w-full sm:w-auto">
-                            <a href="https://wa.me/{{ $officialWhatsappRaw }}?text=Halo%20Tim%20Cooca%20UMKM,%20saya%20butuh%20bantuan%20seputar%20aplikasi"
+                            <a href="https://wa.me/{{ $officialWhatsappRaw }}?text={{ urlencode(__('public_contact.wa_greeting_text')) }}"
                                 target="_blank" rel="noopener"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#34C759] hover:bg-[#2DB84D] text-white font-semibold text-sm shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all min-h-[48px]">
                                 <i data-lucide="message-circle" class="w-5 h-5 shrink-0"></i>
@@ -142,10 +142,10 @@
                                             {{ $officialWhatsapp }}</div>
                                     </div>
                                 </div>
-                                <a href="https://wa.me/{{ $officialWhatsappRaw }}?text=Halo%20Tim%20Cooca%20UMKM"
+                                <a href="https://wa.me/{{ $officialWhatsappRaw }}?text={{ urlencode(__('public_contact.wa_quick_greeting')) }}"
                                     target="_blank" rel="noopener"
                                     class="text-xs font-bold text-emerald-400 hover:underline flex items-center gap-1 shrink-0 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                                    Chat <i data-lucide="external-link" class="w-3 h-3"></i>
+                                    <span>{{ __('public_contact.wa_action_chat') }}</span> <i data-lucide="external-link" class="w-3 h-3"></i>
                                 </a>
                             </div>
 

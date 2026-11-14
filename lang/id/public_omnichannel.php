@@ -16,15 +16,15 @@ return [
 
     // Common Buttons
     'btn_dashboard' => 'Dashboard',
-    'btn_try_demo' => 'Mulai Coba Gratis',
+    'btn_try_demo' => 'Mulai Gratis',
     'btn_connect_pos' => 'Koneksi ke Kasir POS',
     'btn_connect_marketplace' => 'Koneksi ke Marketplace',
-    'btn_social_demo' => 'Mulai Coba Gratis',
+    'btn_social_demo' => 'Mulai Gratis',
     'btn_view_calendar' => 'Lihat Kalender Konten',
-    'btn_orders_demo' => 'Mulai Coba Gratis',
-    'btn_customer_demo' => 'Mulai Coba Gratis',
+    'btn_orders_demo' => 'Mulai Gratis',
+    'btn_customer_demo' => 'Mulai Gratis',
     'btn_consultation' => 'Konsultasi Kebutuhan Toko',
-    'btn_free_account' => 'Mulai Coba Gratis',
+    'btn_free_account' => 'Mulai Gratis',
 
     // ==========================================
     // 1. WhatsApp Integration (whatsapp.blade.php)

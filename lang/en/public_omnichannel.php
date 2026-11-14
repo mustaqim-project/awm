@@ -16,15 +16,15 @@ return [
 
     // Common Buttons
     'btn_dashboard' => 'Dashboard',
-    'btn_try_demo' => 'Start Free Trial',
+    'btn_try_demo' => 'Start for free',
     'btn_connect_pos' => 'Connect to POS Cashier',
     'btn_connect_marketplace' => 'Connect to Marketplaces',
-    'btn_social_demo' => 'Start Free Trial',
+    'btn_social_demo' => 'Start for free',
     'btn_view_calendar' => 'View Content Calendar',
-    'btn_orders_demo' => 'Start Free Trial',
-    'btn_customer_demo' => 'Start Free Trial',
+    'btn_orders_demo' => 'Start for free',
+    'btn_customer_demo' => 'Start for free',
     'btn_consultation' => 'Store Consultation',
-    'btn_free_account' => 'Start Free Trial',
+    'btn_free_account' => 'Start for free',
 
     // ==========================================
     // 1. WhatsApp Integration (whatsapp.blade.php)

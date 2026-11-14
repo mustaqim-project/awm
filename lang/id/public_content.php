@@ -53,7 +53,7 @@ return [
     'create_faq_4_a' => 'Bisa. Setiap materi konten yang dibuat menyediakan format teks pendek yang ringkas dan ramah, lengkap dengan link katalog belanja yang siap disebarkan ke daftar broadcast pelanggan.',
     'create_cta_title' => 'Mulai Hasilkan Konten Promosi Produk Berkualitas',
     'create_cta_desc' => 'Bebaskan tim pemasaran Anda dari kebingungan ide konten harian dan ciptakan materi promosi yang terhubung dengan stok produk Anda bersama COOCA.',
-    'create_cta_btn' => 'Mulai Coba Gratis',
+    'create_cta_btn' => 'Mulai Gratis',
     'create_cta_consult' => 'Konsultasi Kebutuhan Konten',
 
     // Calendar
@@ -62,7 +62,7 @@ return [
     'cal_kicker' => 'Kalender Editorial Terpadu',
     'cal_title' => 'Rencanakan Pemasaran Sebulan Penuh Dalam Satu Tampilan Visual',
     'cal_subtitle' => 'Ketahui persis konten apa yang akan tayang besok, lusa, hingga akhir bulan. Susun tema promosi mingguan, sesuaikan dengan tanggal gajian pembeli, dan geser jadwal tayang secara leluasa dengan kalender editorial interaktif COOCA.',
-    'cal_btn_try' => 'Mulai Coba Gratis',
+    'cal_btn_try' => 'Mulai Gratis',
     'cal_btn_pub' => 'Lihat Modul Publikasi',
     'cal_check_1' => 'Grid Mingguan & Bulanan',
     'cal_check_2' => 'Status Draf ke Terjadwal',
@@ -77,7 +77,7 @@ return [
     'cal_bento_title' => 'Visibilitas Penuh Jadwal Promosi Seluruh Saluran',
     'cal_cta_title' => 'Rencanakan Agenda Promosi Bisnis Anda Hari Ini',
     'cal_cta_desc' => 'Susun strategi konten media sosial bulanan Anda secara terstruktur dan hindari kebingungan ide promosi mendadak bersama COOCA.',
-    'cal_cta_btn' => 'Mulai Coba Gratis',
+    'cal_cta_btn' => 'Mulai Gratis',
     'cal_cta_consult' => 'Konsultasi Strategi Konten',
 
     // Publishing
@@ -106,7 +106,7 @@ return [
     'anl_kicker' => 'Analisis Performa Konten & Konversi',
     'anl_title' => 'Ketahui Konten Mana yang Benar-Benar Menghasilkan Penjualan',
     'anl_subtitle' => 'Jumlah likes dan komentar tidak ada artinya jika tidak berujung pada pembelian. COOCA memperlihatkan metrik performa media sosial yang terhubung langsung dengan klik katalog produk dan transaksi kasir toko Anda.',
-    'anl_btn_try' => 'Mulai Coba Gratis',
+    'anl_btn_try' => 'Mulai Gratis',
     'anl_btn_create' => 'Buka Studio Kreasi',
     'anl_check_1' => 'Pelacakan Omzet per Postingan',
     'anl_check_2' => 'Jam Tayang Paling Efektif',
@@ -123,7 +123,7 @@ return [
     'anl_faq_3_a' => 'Bisa. Anda dapat mengunduh ringkasan performa konten bulanan dalam format PDF atau Excel lengkap dengan metrik jangkauan dan peringkat materi promosi paling favorit bagi pelanggan.',
     'anl_cta_title' => 'Ukur Efektivitas Konten Promosi Bisnis Anda',
     'anl_cta_desc' => 'Hubungkan postingan media sosial dengan omzet penjualan kasir nyata untuk strategi pemasaran yang terarah bersama COOCA.',
-    'anl_cta_btn' => 'Mulai Uji Coba Analitik',
+    'anl_cta_btn' => 'Mulai Gratis',
     'anl_cta_consult' => 'Konsultasi Performa Konten',
 
     // Extra headings & buttons

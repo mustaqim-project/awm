@@ -23,7 +23,7 @@
                     @if(($v['platform'] ?? 'youtube') === 'youtube')
                         <iframe class="w-full h-full"
                                 src="https://www.youtube-nocookie.com/embed/{{ $v['embed_id'] }}"
-                                title="{{ $v['title'] ?? 'Video Testimoni' }}"
+                                title="{{ $v['title'] ?? __('public_marketing.video_default_title') }}"
                                 loading="lazy"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowfullscreen>

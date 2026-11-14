@@ -242,7 +242,7 @@
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @else
-                                <a href="{{ route('register') }}"
+                                <a href="https://cooca.id/register"
                                     class="w-full sm:w-auto h-12 sm:h-13 px-8 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-[0_6px_28px_rgba(0,122,255,0.5)] hover:shadow-[0_8px_35px_rgba(0,122,255,0.65)] active:scale-[0.98] transition-all border border-white/20 touch-action-manipulation group">
                                     <span>{{ __('public_home.hero_cta_primary') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"></i>
@@ -356,12 +356,12 @@
                                         </div>
                                         <div>
                                             <div class="text-xs font-bold text-white tracking-wide">COOCA Engine</div>
-                                            <div class="text-[10px] text-cyan-300 font-medium">1 Core &bull; Multi-Channel</div>
+                                            <div class="text-[10px] text-cyan-300 font-medium">{{ __('public_home.mesh_core_multichannel') }}</div>
                                         </div>
                                     </div>
                                     <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] font-semibold">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        <span>Live Sync &bull; 0.3s</span>
+                                        <span>{{ __('public_home.mesh_live_sync') }}</span>
                                     </div>
                                 </div>
 
@@ -376,7 +376,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_pos') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Offline & Online Kasir</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_pos_desc') }}</p>
                                     </div>
 
                                     <!-- WhatsApp -->
@@ -387,7 +387,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_crm') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Chat Order & Resi</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_crm_desc') }}</p>
                                     </div>
 
                                     <!-- Marketplace -->
@@ -398,7 +398,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_marketplace') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Shopee, Tokped, TikTok</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_marketplace_desc') }}</p>
                                     </div>
 
                                     <!-- B2B & Wholesale -->
@@ -409,7 +409,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_b2b') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Grosir & Faktur Tempo</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_b2b_desc') }}</p>
                                     </div>
 
                                     <!-- Multi-Gudang -->
@@ -420,7 +420,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_inventory') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Stok Real-time Anti-Minus</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_inventory_desc') }}</p>
                                     </div>
 
                                     <!-- Finance -->
@@ -431,7 +431,7 @@
                                             </div>
                                             <span class="text-xs font-bold text-slate-100 truncate">{{ __('public_home.omni_node_finance') }}</span>
                                         </div>
-                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">Laba Rugi Otomatis</p>
+                                        <p class="text-[10px] text-slate-400 mt-1.5 leading-tight line-clamp-1">{{ __('public_home.mesh_finance_desc') }}</p>
                                     </div>
 
                                 </div>
@@ -1229,7 +1229,7 @@
                                             {{ __('public_home.split_marketplace_empty_desc') }}
                                         </p>
                                     </div>
-                                    <a href="{{ route('register') }}"
+                                    <a href="https://cooca.id/register"
                                         class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#007AFF] to-[#0062D2] hover:from-[#0071E3] hover:to-[#0055BA] text-white text-[11px] sm:text-xs font-semibold shadow-xs transition">
                                         <span>{{ __('public_home.split_marketplace_empty_btn') }}</span>
                                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -1502,7 +1502,7 @@
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @else
-                                <a href="{{ route('register') }}"
+                                <a href="https://cooca.id/register"
                                     class="w-full sm:w-auto px-7 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation">
                                     <span>{{ __('public_home.bottom_cta_btn_free') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>

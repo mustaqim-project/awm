@@ -595,10 +595,10 @@
                     </button>
 
                     <!-- 5. Pricing (Direct Link) -->
-                    <a href="{{ route('public.pricing') }}"
+                    <a href="https://cooca.id/pricing"
                         @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
                         class="px-3 py-2 xl:px-3.5 xl:py-2 rounded-xl hover:text-white hover:bg-white/10 transition-all whitespace-nowrap shrink-0 {{ request()->routeIs('public.pricing') ? 'text-[#00C2FF] font-semibold' : '' }}">
-                        <span class="whitespace-nowrap">{{ __('public_marketing.nav_pricing') }}</span>
+                        <span class="whitespace-nowrap">{{ __('public_marketing.btn_view_pricing') }}</span>
                     </a>
                 </nav>
 
@@ -652,9 +652,9 @@
                                 <span>Dashboard</span>
                             </a>
                         @else
-                            <a href="{{ route('register') }}"
+                            <a href="https://cooca.id/register"
                                 class="inline-flex items-center justify-center px-3 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all whitespace-nowrap">
-                                <span>{{ __('public_marketing.cta_free_short') }}</span>
+                                <span>{{ __('public_marketing.btn_start_free') }}</span>
                             </a>
                         @endif
                     </div>
@@ -680,9 +680,9 @@
                                     class="w-4 h-4 text-slate-400 group-hover:text-white transition-colors shrink-0"></i>
                                 <span class="whitespace-nowrap">{{ __('public_marketing.nav_login') }}</span>
                             </a>
-                            <a href="{{ route('register') }}"
+                            <a href="https://cooca.id/register"
                                 class="group relative inline-flex items-center justify-center gap-1.5 whitespace-nowrap shrink-0 px-4 xl:px-5 py-2 xl:py-2.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm tracking-tight shadow-[0_4px_18px_rgba(0,194,255,0.4),inset_0_1px_0_rgba(255,255,255,0.4)] hover:shadow-[0_6px_28px_rgba(0,194,255,0.65),inset_0_1px_0_rgba(255,255,255,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all">
-                                <span class="whitespace-nowrap">{{ __('public_marketing.cta_free_trial') }}</span>
+                                <span class="whitespace-nowrap">{{ __('public_marketing.btn_start_free') }}</span>
                                 <i data-lucide="arrow-right"
                                     class="w-4 h-4 transition-transform group-hover:translate-x-0.5 shrink-0"></i>
                             </a>
@@ -1012,7 +1012,7 @@
                                 </p>
 
                                 <!-- Showcase Banner Card -->
-                                <a href="{{ route('register') }}"
+                                <a href="https://cooca.id/register"
                                     class="group block relative rounded-2xl overflow-hidden bg-[#0A0E1A] border border-slate-800/80 p-5 shadow-sm transition-all hover:scale-[1.01] hover:border-slate-700">
                                     <!-- Ambient Glow -->
                                     <div
@@ -1034,9 +1034,9 @@
 
                                 <!-- Sub-link below banner -->
                                 <div class="mt-4">
-                                    <a href="{{ route('register') }}"
+                                    <a href="https://cooca.id/register"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>{{ __('public_home.hero_cta_primary') }}</span>
+                                        <span>{{ __('public_marketing.btn_start_free') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
@@ -1447,19 +1447,17 @@
                     <div
                         class="p-3.5 rounded-[16px] bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-transparent border border-white/10 flex items-center justify-between gap-3">
                         <div class="min-w-0">
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#00C2FF] block">Ekosistem
-                                UMKM</span>
-                            <span class="text-xs font-semibold text-white truncate block">Coba Gratis Tanpa Kartu
-                                Kredit</span>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-[#00C2FF] block">{{ __('public_marketing.ecosystem_umkm') }}</span>
+                            <span class="text-xs font-semibold text-white truncate block">{{ __('public_marketing.start_free_no_credit_card') }}</span>
                         </div>
                         <div class="flex items-center gap-2 shrink-0">
                             <a href="{{ route('login') }}" @click="mobileMenu = false"
                                 class="px-3 py-1.5 rounded-[10px] bg-white/10 hover:bg-white/15 text-white text-xs font-semibold active:scale-95 transition-all">
                                 {{ __('public_marketing.nav_login') }}
                             </a>
-                            <a href="{{ route('register') }}" @click="mobileMenu = false"
+                            <a href="https://cooca.id/register" @click="mobileMenu = false"
                                 class="px-3.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white text-xs font-bold shadow-xs active:scale-95 transition-all flex items-center gap-1">
-                                <span>{{ __('public_marketing.nav_register') }}</span>
+                                <span>{{ __('public_marketing.btn_start_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-3 h-3"></i>
                             </a>
                         </div>
@@ -1791,15 +1789,15 @@
                             </div>
                         </div>
 
-                        <!-- Showcase Banner Card: Mulai Gratis -->
+                        <!-- Showcase Banner Card: Start for free -->
                         <div class="pt-1 border-t border-white/5">
-                            <a href="{{ route('register') }}" @click="mobileMenu = false"
+                            <a href="https://cooca.id/register" @click="mobileMenu = false"
                                 class="block relative rounded-xl overflow-hidden bg-[#0A0E1A] border border-slate-800 p-3 shadow-xs">
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
                                             class="text-[9px] font-bold uppercase tracking-wider text-[#00C2FF] block">{{ __('public_marketing.badge_umkm_architecture') }}</span>
-                                        <span class="text-xs font-bold text-white block">{{ __('public_home.hero_cta_primary') }}</span>
+                                        <span class="text-xs font-bold text-white block">{{ __('public_marketing.btn_start_free') }}</span>
                                         <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_home.trust_badge_no_card') }} • {{ __('public_home.trust_badge_free') }}</span>
                                     </div>
                                     <div
@@ -2056,11 +2054,11 @@
                 <!-- ════════════════════════════════════════════════════════════════════════ -->
                 <div class="grid grid-cols-2 gap-2 text-xs pt-1">
                     <!-- Pricing Highlight -->
-                    <a href="{{ route('public.pricing') }}" @click="mobileMenu = false"
+                    <a href="https://cooca.id/pricing" @click="mobileMenu = false"
                         class="p-3 rounded-[14px] bg-gradient-to-r from-[#00C2FF]/10 via-white/[0.04] to-transparent border border-[#00C2FF]/30 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="tag" class="w-4 h-4 text-[#00C2FF]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">{{ __('public_marketing.nav_pricing') }}</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.btn_view_pricing') }}</span>
                             <span class="text-[9px] text-[#00C2FF] block truncate">{{ __('public_marketing.btn_sub_pricing') }}</span>
                         </div>
                     </a>
@@ -2364,8 +2362,8 @@
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_guides') }}</a>
                                 <a href="{{ route('public.resources.case-studies') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_case_studies') }}</a>
-                                <a href="{{ route('public.pricing') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.nav_pricing') }}</a>
+                                <a href="https://cooca.id/pricing"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.btn_view_pricing') }}</a>
                                 <a href="{{ route('public.resources.faq') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_faq') }}</a>
                             </nav>
@@ -2538,7 +2536,7 @@
                             </a>
                         </div>
 
-                        <!-- 5. Akun / Dashboard / Coba Gratis (Mobile Conversion Optimized) -->
+                        <!-- 5. Akun / Dashboard / Start for free (Mobile Conversion Optimized) -->
                         @php
                             $isAdmin = auth('admin')->check();
                             $isWeb = auth('web')->check();
@@ -2552,13 +2550,13 @@
                                 ? route('admin.dashboard')
                                 : ($isWeb
                                     ? route('dashboard')
-                                    : route('register'));
-                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : __('public_marketing.cta_free_short'));
+                                    : 'https://cooca.id/register');
+                            $tabLabel = $isAdmin ? 'Admin' : ($isWeb ? 'Dashboard' : __('public_marketing.btn_start_free'));
                             $tabIcon = $isAuth ? 'layout-dashboard' : 'sparkles';
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">
                             @if (!$isAuth)
-                                <a href="{{ route('register') }}"
+                                <a href="https://cooca.id/register"
                                     class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative text-[#00C2FF]">
                                     <div
                                         class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 bg-gradient-to-tr from-[#007AFF] to-[#00C2FF] text-white shadow-[0_2px_10px_rgba(0,194,255,0.4)] group-active:scale-90">
@@ -2566,7 +2564,7 @@
                                             class="w-[17px] h-[17px] sm:w-[18px] sm:h-[18px] stroke-[2.2]"></i>
                                     </div>
                                     <span
-                                        class="text-[11px] font-bold tracking-tight mt-0.5 text-[#00C2FF]">{{ __('public_marketing.cta_free_short') }}</span>
+                                        class="text-[11px] font-bold tracking-tight mt-0.5 text-[#00C2FF]">{{ __('public_marketing.btn_start_free') }}</span>
                                     <span class="w-1 h-1 rounded-full bg-[#00C2FF] mt-0.5"></span>
                                 </a>
                             @else

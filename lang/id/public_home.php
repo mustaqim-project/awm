@@ -16,7 +16,7 @@ return [
     'hero_pill_omni' => 'WhatsApp, Web & Marketplace',
     'hero_pill_b2b' => 'B2B & Multi-Gudang',
     'hero_pill_erp' => 'Finance, CRM & HRM',
-    'hero_cta_primary' => 'Mulai Coba Gratis',
+    'hero_cta_primary' => 'Mulai Gratis',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Coba Demo Interaktif',
     'btn_dashboard' => 'Dashboard',
@@ -160,7 +160,7 @@ return [
     'bottom_cta_step_2' => 'Pilih modul',
     'bottom_cta_step_3' => 'Hubungkan channel',
     'bottom_cta_step_4' => 'Jalankan bisnis',
-    'bottom_cta_btn_free' => 'Coba COOCA Gratis',
+    'bottom_cta_btn_free' => 'Mulai Gratis',
     'bottom_cta_btn_dashboard' => 'Dashboard',
     'bottom_cta_annotation' => 'Satu Sistem, Berbagai Kemudahan Usaha',
     'umkm_catalog' => 'Katalog UMKM',
@@ -269,4 +269,13 @@ return [
 
     'omni_mesh_default_tip' => 'Semua saluran penjualan & operasional terhubung ke 1 pusat data COOCA secara real-time.',
     'omni_mesh_explore_btn' => 'Jelajahi Solusi Lengkap',
+
+    'mesh_core_multichannel' => '1 Core • Multi-Channel',
+    'mesh_live_sync' => 'Live Sync • 0.3s',
+    'mesh_pos_desc' => 'Offline & Online Kasir',
+    'mesh_crm_desc' => 'Chat Order & Resi',
+    'mesh_marketplace_desc' => 'Shopee, Tokped, TikTok',
+    'mesh_b2b_desc' => 'Grosir & Faktur Tempo',
+    'mesh_inventory_desc' => 'Stok Real-time Anti-Minus',
+    'mesh_finance_desc' => 'Laba Rugi Otomatis',
 ];

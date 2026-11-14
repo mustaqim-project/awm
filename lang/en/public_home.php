@@ -16,7 +16,7 @@ return [
     'hero_pill_omni' => 'WhatsApp, Web & Marketplaces',
     'hero_pill_b2b' => 'B2B & Multi-Warehouse',
     'hero_pill_erp' => 'Finance, CRM & HRM',
-    'hero_cta_primary' => 'Start Free Trial',
+    'hero_cta_primary' => 'Start for free',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Try Interactive Demo',
     'btn_dashboard' => 'Dashboard',
@@ -160,7 +160,7 @@ return [
     'bottom_cta_step_2' => 'Select modules',
     'bottom_cta_step_3' => 'Connect channels',
     'bottom_cta_step_4' => 'Run your business',
-    'bottom_cta_btn_free' => 'Try COOCA for Free',
+    'bottom_cta_btn_free' => 'Start for free',
     'bottom_cta_btn_dashboard' => 'Dashboard',
     'bottom_cta_annotation' => 'One System, Endless Business Ease',
     'umkm_catalog' => 'SME Catalog',
@@ -269,4 +269,13 @@ return [
 
     'omni_mesh_default_tip' => 'All sales channels & business operations connected into 1 unified COOCA data engine in real time.',
     'omni_mesh_explore_btn' => 'Explore Full Solution',
+
+    'mesh_core_multichannel' => '1 Core • Multi-Channel',
+    'mesh_live_sync' => 'Live Sync • 0.3s',
+    'mesh_pos_desc' => 'Offline & Online POS',
+    'mesh_crm_desc' => 'Chat Orders & Tracking',
+    'mesh_marketplace_desc' => 'Shopee, Tokped, TikTok',
+    'mesh_b2b_desc' => 'Wholesale & Invoicing',
+    'mesh_inventory_desc' => 'Real-time Anti-Deficit Stock',
+    'mesh_finance_desc' => 'Automated Profit & Loss',
 ];

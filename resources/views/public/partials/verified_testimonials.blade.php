@@ -7,13 +7,13 @@
     <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
             <span class="text-xs font-bold text-[#007AFF] uppercase tracking-wider block">
-                Pelanggan Kami
+                {{ __('public_marketing.testi_kicker') }}
             </span>
             <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Kisah &amp; Pengalaman Nyata Pengguna COOCA
+                {{ __('public_marketing.testi_title') }}
             </h2>
             <p class="text-sm text-slate-600 dark:text-slate-400">
-                Pengalaman langsung pemilik usaha yang telah mendigitalisasi operasional kasir dan pembukuan bersama COOCA.
+                {{ __('public_marketing.testi_subtitle') }}
             </p>
         </div>
 
@@ -37,7 +37,7 @@
                             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
                                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                             </svg>
-                            Terverifikasi
+                            {{ __('public_marketing.testi_verified') }}
                         </span>
                     </div>
                 </div>

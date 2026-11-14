@@ -53,7 +53,7 @@ return [
     'create_faq_4_a' => 'Yes. Every generated creative provides a concise, conversational text format paired with an online ordering link, ready to dispatch to customer broadcast lists.',
     'create_cta_title' => 'Start Producing High-Converting Promotional Assets',
     'create_cta_desc' => 'Free your marketing team from daily writer\'s block and generate promotional content directly tied to active store inventory with COOCA.',
-    'create_cta_btn' => 'Start Free Trial',
+    'create_cta_btn' => 'Start for free',
     'create_cta_consult' => 'Consult Marketing Workflows',
 
     // Calendar
@@ -62,7 +62,7 @@ return [
     'cal_kicker' => 'Unified Editorial Calendar',
     'cal_title' => 'Plan Your Entire Month of Marketing in One Visual Grid',
     'cal_subtitle' => 'Know exactly what publishes tomorrow, next week, and throughout the month. Organize weekly promotional themes, align with customer paydays, and adjust release schedules seamlessly on COOCA\'s interactive editorial calendar.',
-    'cal_btn_try' => 'Start Free Trial',
+    'cal_btn_try' => 'Start for free',
     'cal_btn_pub' => 'Explore Publishing Module',
     'cal_check_1' => 'Weekly & Monthly Grid Views',
     'cal_check_2' => 'Draft to Scheduled Statuses',
@@ -77,7 +77,7 @@ return [
     'cal_bento_title' => 'Complete Cross-Channel Visibility for Every Scheduled Campaign',
     'cal_cta_title' => 'Organize Your Brand\'s Promotional Roadmap Today',
     'cal_cta_desc' => 'Establish a structured monthly social media campaign pipeline and avoid last-minute promo scrambles with COOCA.',
-    'cal_cta_btn' => 'Start Free Trial',
+    'cal_cta_btn' => 'Start for free',
     'cal_cta_consult' => 'Discuss Calendar Strategy',
 
     // Publishing
@@ -106,7 +106,7 @@ return [
     'anl_kicker' => 'Performance & Conversion Analytics',
     'anl_title' => 'Identify Which Social Media Posts Actually Drive Store Revenue',
     'anl_subtitle' => 'Likes and comments have little value if they do not convert into actual checkouts. COOCA bridges social media engagement metrics directly with catalog clicks and cashier register receipts.',
-    'anl_btn_try' => 'Start Free Trial',
+    'anl_btn_try' => 'Start for free',
     'anl_btn_create' => 'Open Creation Studio',
     'anl_check_1' => 'Per-Post Revenue Attribution',
     'anl_check_2' => 'High-Conversion Time Windows',
@@ -123,7 +123,7 @@ return [
     'anl_faq_3_a' => 'Yes. You can export monthly executive summaries in PDF or Excel formats complete with reach metrics and rankings of your audience\'s top-favorite promotional campaigns.',
     'anl_cta_title' => 'Measure the Real Bottom-Line Impact of Your Marketing',
     'anl_cta_desc' => 'Connect social media engagement directly with cashier register sales for data-guided growth with COOCA.',
-    'anl_cta_btn' => 'Start Analytics Trial',
+    'anl_cta_btn' => 'Start for free',
     'anl_cta_consult' => 'Review Marketing Analytics',
 
     // Extra headings & buttons

@@ -71,4 +71,8 @@ return [
     'form_privacy_footer' => 'Your contact details are secure and only utilized by COOCA to respond to this inquiry.',
     'form_success_title' => 'Message Sent Successfully!',
     'form_success_desc' => 'Thank you for reaching out to COOCA. Our advisory team will review your inquiry and follow up promptly via WhatsApp or email.',
+
+    'wa_greeting_text' => 'Hello COOCA Team, I need assistance regarding the application',
+    'wa_quick_greeting' => 'Hello COOCA Team',
+    'wa_action_chat' => 'Chat',
 ];

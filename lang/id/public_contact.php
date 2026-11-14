@@ -71,4 +71,8 @@ return [
     'form_privacy_footer' => 'Data kontak Anda aman dan hanya digunakan oleh tim COOCA untuk membalas pertanyaan ini.',
     'form_success_title' => 'Pesan Berhasil Terkirim!',
     'form_success_desc' => 'Terima kasih telah menghubungi COOCA. Tim konsultan kami akan meninjau pesan Anda dan segera menghubungi via WhatsApp atau email.',
+
+    'wa_greeting_text' => 'Halo Tim Cooca UMKM, saya butuh bantuan seputar aplikasi',
+    'wa_quick_greeting' => 'Halo Tim Cooca UMKM',
+    'wa_action_chat' => 'Chat',
 ];

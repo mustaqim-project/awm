@@ -61,16 +61,16 @@
 
                         <!-- Action Buttons (Centered on Mobile, Row on Desktop) -->
                         <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center lg:justify-start gap-3.5 w-full sm:w-auto">
-                            <a href="{{ route('register') }}"
+                            <a href="https://cooca.id/register"
                                 class="px-8 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition-all min-h-[50px]">
-                                <span>{{ __('public_marketing.btn_start_now_free') }}</span>
+                                <span>{{ __('public_marketing.btn_start_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                             <a href="{{ \App\Models\SystemSetting::get('social_whatsapp_url', 'https://wa.me/6285287864176') }}?text={{ urlencode('Halo Tim COOCA, saya ingin konsultasi mengenai ' . ($title ?? 'solusi bisnis')) }}"
                                 target="_blank" rel="noopener"
                                 class="px-6 py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition active:scale-[0.98] min-h-[50px]">
                                 <i data-lucide="phone-call" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Tanya Konsultan (WhatsApp)</span>
+                                <span>{{ __('public_marketing.btn_ask_consultant_wa') }}</span>
                             </a>
                         </div>
 
@@ -78,15 +78,15 @@
                         <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-5 text-xs text-slate-400">
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Gratis Selamanya (s.d. {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln)</span>
+                                <span>{{ __('public_marketing.subpage_checkpoint_free') }} (s.d. {{ $tierLimits['free']['pos'] ?? 30 }} Trx/bln)</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Buku Panduan &amp; Video Bahasa Indonesia</span>
+                                <span>{{ __('public_marketing.subpage_checkpoint_guide') }}</span>
                             </div>
                             <div class="flex items-center gap-1.5">
                                 <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
-                                <span>Bisa dari HP Android &amp; Komputer</span>
+                                <span>{{ __('public_marketing.subpage_checkpoint_devices') }}</span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                         class="w-3 h-3 rounded-full bg-[#27C93F] shadow-[inset_0_1px_1px_rgba(0,0,0,0.2)]"></span>
                                 </div>
                                 <span class="text-xs font-semibold text-slate-300 truncate max-w-[200px] tracking-tight">
-                                    Cooca OS &bull; {{ $badge ?? ($category ?? 'Dashboard Bisnis') }}
+                                    Cooca OS &bull; {{ $badge ?? ($category ?? __('public_marketing.subpage_biz_dashboard')) }}
                                 </span>
                                 <div class="w-6"></div>
                             </div>
@@ -118,16 +118,16 @@
                             <!-- Live Operational Status Widget -->
                             <div class="p-4 rounded-[16px] bg-white/[0.04] border border-white/[0.08] space-y-2">
                                 <div class="flex items-center justify-between">
-                                    <span class="text-xs font-medium text-slate-400">Status Sinkronisasi</span>
+                                    <span class="text-xs font-medium text-slate-400">{{ __('public_marketing.subpage_sync_status') }}</span>
                                     <span class="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-400">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                                        <span>Real-Time Aktif</span>
+                                        <span>{{ __('public_marketing.subpage_sync_active') }}</span>
                                     </span>
                                 </div>
                                 <div class="flex items-baseline justify-between pt-1">
                                     <div>
-                                        <p class="text-2xl font-bold tabular-nums text-white">100% Otomatis</p>
-                                        <p class="text-xs text-slate-400">Tanpa hitung manual ulang</p>
+                                        <p class="text-2xl font-bold tabular-nums text-white">{{ __('public_marketing.subpage_auto_100') }}</p>
+                                        <p class="text-xs text-slate-400">{{ __('public_marketing.subpage_no_manual') }}</p>
                                     </div>
                                     <div
                                         class="w-10 h-10 rounded-[12px] bg-sky-500/15 text-[#00C4D8] flex items-center justify-center border border-sky-400/30">
@@ -145,9 +145,8 @@
                                         <i data-lucide="layers" class="w-4 h-4"></i>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <p class="text-xs font-bold text-white">Pencatatan Sekali Jalan</p>
-                                        <p class="text-[11.5px] text-slate-300 leading-snug">Transaksi kasir langsung
-                                            memotong stok dan membukukan jurnal laba rugi.</p>
+                                        <p class="text-xs font-bold text-white">{{ __('public_marketing.subpage_single_entry') }}</p>
+                                        <p class="text-[11.5px] text-slate-300 leading-snug">{{ __('public_marketing.subpage_single_entry_desc') }}</p>
                                     </div>
                                 </div>
 
@@ -158,9 +157,8 @@
                                         <i data-lucide="shield-check" class="w-4 h-4"></i>
                                     </div>
                                     <div class="min-w-0 flex-1">
-                                        <p class="text-xs font-bold text-white">Akurasi Data Finansial</p>
-                                        <p class="text-[11.5px] text-slate-300 leading-snug">Menghilangkan selisih kas fisik
-                                            dan mencegah kebocoran modal bahan baku.</p>
+                                        <p class="text-xs font-bold text-white">{{ __('public_marketing.subpage_fin_accuracy') }}</p>
+                                        <p class="text-[11.5px] text-slate-300 leading-snug">{{ __('public_marketing.subpage_fin_accuracy_desc') }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -169,7 +167,7 @@
                             <div
                                 class="flex items-center gap-2 pt-2 border-t border-white/[0.08] text-[11px] text-slate-400">
                                 <i data-lucide="info" class="w-3.5 h-3.5 text-[#00C4D8] shrink-0"></i>
-                                <span>Sistem siap pakai dalam 2 menit tanpa instalasi teknis rumit.</span>
+                                <span>{{ __('public_marketing.subpage_ready_2min') }}</span>
                             </div>
 
                         </div>
@@ -220,7 +218,7 @@
                                             @if ($isFirst)
                                                 <span
                                                     class="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF] px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-[8px] bg-[#007AFF]/10 shrink-0">
-                                                    Fungsi Utama
+                                                    {{ __('public_marketing.subpage_primary_func') }}
                                                 </span>
                                             @else
                                                 <span
@@ -242,7 +240,7 @@
                                         <div
                                             class="pt-3 sm:pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center gap-2 text-xs font-semibold text-[#007AFF] dark:text-[#0A84FF]">
                                             <i data-lucide="check" class="w-4 h-4 shrink-0"></i>
-                                            <span class="truncate sm:whitespace-normal">Terintegrasi penuh dengan seluruh laporan dan kasir POS Cooca</span>
+                                            <span class="truncate sm:whitespace-normal">{{ __('public_marketing.subpage_first_feat_badge') }}</span>
                                         </div>
                                     @endif
 
@@ -283,9 +281,9 @@
                         </div>
 
                         <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
-                            <a href="{{ route('register') }}"
+                            <a href="https://cooca.id/register"
                                 class="w-full py-4 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,122,255,0.35)] active:scale-[0.98] transition min-h-[48px]">
-                                <span>{{ __('public_marketing.btn_register_free_now') }}</span>
+                                <span>{{ __('public_marketing.btn_start_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
                         </div>
