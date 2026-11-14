@@ -319,7 +319,7 @@
                             </tr>
                             <tr>
                                 <td class="p-4 sm:p-5 font-medium text-slate-900 dark:text-white">{{ __('public_commercial.free_comp_row_roles') }}</td>
-                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-400">{{ __('public_commercial.free_comp_val_roles_free', ['user' => $tierLimits['free']['user'] ?? 1]) }}</td>
+                                <td class="p-4 sm:p-5 bg-emerald-500/5 text-slate-600 dark:text-slate-400">{{ __('public_commercial.free_comp_val_roles_free', ['user' => $tierLimits['free']['user'] ?? 1]) }}</td>
                                 <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_std', ['user' => $tierLimits['standard']['user'] ?? 3]) }}</td>
                                 <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_prem', ['user' => $tierLimits['premium']['user'] ?? 10]) }}</td>
                                 <td class="p-4 sm:p-5">{{ __('public_commercial.free_comp_val_roles_prest') }}</td>

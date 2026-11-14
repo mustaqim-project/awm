@@ -23,6 +23,26 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "{{ __('public_discovery.disc_breadcrumb_home') }}",
+      "item": "{{ url('/') }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "{{ __('public_discovery.disc_breadcrumb') }}",
+      "item": "{{ route('public.discovery.index') }}"
+    }
+  ]
+}
+</script>
 @endpush
 
 @section('content')
@@ -64,7 +84,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                         </div>
 
                         <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[2.65rem] xl:text-[3rem] font-extrabold tracking-tight text-white leading-[1.15] text-balance break-words max-w-[22rem] sm:max-w-xl lg:max-w-none mx-auto lg:mx-0">
-                            {{ __('public_discovery.disc_title') }}
+                            {{ \App\Services\Seo\SeoMetadataService::getH1(__('public_discovery.disc_title')) }}
                         </h1>
                     </div>
 
@@ -206,12 +226,12 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
             <!-- Category Filters -->
             <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
                 <a href="{{ route('public.discovery.index', array_filter(['q' => $search, 'fitur' => $capability])) }}"
-                    class="h-10 px-4 rounded-[12px] text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 {{ empty($category) || $category === 'all' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-white dark:bg-[#1C1C1E] text-slate-700 dark:text-slate-300 border border-black/[0.06] dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-[#2C2C2E]' }}">
+                    class="min-h-[44px] h-11 px-4 rounded-[12px] text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 {{ empty($category) || $category === 'all' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-white dark:bg-[#1C1C1E] text-slate-700 dark:text-slate-300 border border-black/[0.06] dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-[#2C2C2E]' }}">
                     {{ __('public_discovery.disc_cat_all', ['count' => $totalStores]) }}
                 </a>
                 @foreach ($categories as $key => $cat)
                     <a href="{{ route('public.discovery.index', array_filter(['kategori' => $key, 'q' => $search, 'fitur' => $capability])) }}"
-                        class="h-10 px-4 rounded-[12px] text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 {{ $category === $key ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-white dark:bg-[#1C1C1E] text-slate-700 dark:text-slate-300 border border-black/[0.06] dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-[#2C2C2E]' }}">
+                        class="min-h-[44px] h-11 px-4 rounded-[12px] text-xs font-semibold whitespace-nowrap transition flex items-center gap-1.5 {{ $category === $key ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-white dark:bg-[#1C1C1E] text-slate-700 dark:text-slate-300 border border-black/[0.06] dark:border-white/[0.08] hover:bg-slate-50 dark:hover:bg-[#2C2C2E]' }}">
                         <i data-lucide="{{ $cat['icon'] }}" class="w-4 h-4"></i>
                         <span>{{ $cat['label'] }} ({{ $cat['count'] }})</span>
                     </a>
@@ -220,7 +240,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
 
             <!-- Service Capabilities Filter -->
             <div class="flex items-center gap-2 overflow-x-auto text-xs pb-1 no-scrollbar">
-                <span class="text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-wider text-[11px] shrink-0 mr-1">
+                <span class="text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-wider text-[11px] shrink-0 mr-1">
                     {{ __('public_discovery.disc_cap_filter_label') }}
                 </span>
                 @php
@@ -235,7 +255,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                 @endphp
                 @foreach ($capabilities as $capKey => $cap)
                     <a href="{{ route('public.discovery.index', array_filter(['fitur' => $capability === $capKey ? null : $capKey, 'kategori' => $category, 'q' => $search])) }}"
-                        class="h-8 px-3 rounded-[8px] border transition flex items-center gap-1.5 whitespace-nowrap {{ $capability === $capKey ? 'bg-emerald-500/15 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-bold' : 'border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
+                        class="min-h-[44px] py-2 px-3 rounded-[8px] border transition flex items-center gap-1.5 whitespace-nowrap {{ $capability === $capKey ? 'bg-emerald-500/15 border-emerald-500 text-emerald-600 dark:text-emerald-400 font-bold' : 'border-black/[0.06] dark:border-white/[0.08] bg-white dark:bg-[#1C1C1E] text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white' }}">
                         <i data-lucide="{{ $cap['icon'] }}" class="w-3.5 h-3.5"></i>
                         <span>{{ $cap['label'] }}</span>
                     </a>
@@ -249,7 +269,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                 <div class="w-14 h-14 rounded-full bg-slate-100 dark:bg-[#2C2C2E] flex items-center justify-center mx-auto text-slate-500 dark:text-slate-400">
                     <i data-lucide="store" class="w-7 h-7"></i>
                 </div>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_discovery.disc_empty_title') }}</h3>
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_discovery.disc_empty_title') }}</h2>
                 <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {{ __('public_discovery.disc_empty_desc', ['query' => $search]) }}
                 </p>
@@ -275,7 +295,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             <!-- Store Header & Avatar -->
                             <div class="flex items-start gap-3.5">
                                 @if ($store->logo_path)
-                                    <img src="{{ Storage::url($store->logo_path) }}" alt="{{ $store->name }}"
+                                    <img src="{{ Storage::url($store->logo_path) }}" alt="{{ $store->name }}" width="48" height="48" loading="lazy" decoding="async"
                                         class="w-12 h-12 rounded-[14px] object-cover border border-black/[0.06] dark:border-white/[0.08] shrink-0">
                                 @else
                                     <div class="w-12 h-12 rounded-[14px] bg-[#007AFF] text-white font-extrabold text-sm flex items-center justify-center shrink-0 shadow-xs">
@@ -360,7 +380,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             </div>
 
                             <a href="{{ $storeUrl }}"
-                                class="h-9 px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition active:scale-[0.98]">
+                                class="h-11 min-h-[44px] px-4 rounded-[10px] bg-[#007AFF] hover:bg-[#0066DF] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition active:scale-[0.98] shrink-0">
                                 <span>{{ __('public_discovery.disc_card_visit') }}</span>
                                 <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                             </a>
@@ -382,9 +402,9 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                     <i data-lucide="store" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
                     <span>{{ __('public_discovery.disc_banner_badge') }}</span>
                 </div>
-                <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                     {{ __('public_discovery.disc_banner_title') }}
-                </h3>
+                </h2>
                 <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                     {{ __('public_discovery.disc_banner_desc') }}
                 </p>

@@ -44,7 +44,7 @@ return [
     'disc_cap_filter_request' => 'Custom Request',
     'disc_cap_filter_po' => 'PO B2B Bertahap',
     'disc_cap_filter_reservation' => 'Reservasi Meja/Jasa',
-    'disc_empty_title' => 'Toko Belum Ditemukan',
+    'disc_empty_title' => 'Toko Tidak Ditemukan',
     'disc_empty_desc' => 'Tidak ada toko yang sesuai dengan pencarian ":query". Silakan gunakan kata kunci lain atau hapus filter kategori.',
     'disc_empty_reset' => 'Reset Semua Filter',
     'disc_card_verified' => 'Toko Terverifikasi',
