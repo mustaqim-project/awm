@@ -146,4 +146,6 @@ return array (
     'rejected' => 'Rejected',
     'settings' => 'Settings',
     'transactions' => 'Transactions',
+    'home' => 'Home',
+    'details' => 'Details',
 );

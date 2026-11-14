@@ -146,4 +146,6 @@ return array (
     'rejected' => 'Ditolak',
     'settings' => 'Pengaturan',
     'transactions' => 'Transaksi',
+    'home' => 'Beranda',
+    'details' => 'Rincian',
 );
