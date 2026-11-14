@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T01:00:00Z
+# BRIEFING  2026-11-14T01:00:00Z
 
 ## Mission
 Investigate 7 Solutions templates for heading hierarchy, media dimensions, responsive behavior & touch targets, dark mode contrast, and canonical URLs & Schema.org structured data.
@@ -12,7 +12,7 @@ Investigate 7 Solutions templates for heading hierarchy, media dimensions, respo
 - Milestone: M2 - Solutions Templates Audit
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or edit source files
+- Read-only investigation  do NOT implement or edit source files
 - Audit 7 solution views: fnb, laundry, manufacturing, retail, services, show, workshop
 - Report line numbers, root causes, and concrete code-level recommendations in handoff.md
 
@@ -51,6 +51,6 @@ Investigate 7 Solutions templates for heading hierarchy, media dimensions, respo
 - Prepared notification summary message for `sub_orch_m2`.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch records
-- progress.md — liveness heartbeat
-- handoff.md — structured 5-component report with line numbers and concrete recommendations
+- DISPATCH.md  incoming dispatch records
+- progress.md  liveness heartbeat
+- handoff.md  structured 5-component report with line numbers and concrete recommendations

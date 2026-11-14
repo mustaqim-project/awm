@@ -1,4 +1,4 @@
-# Handoff Report — Milestone 3 (App Views Batch 1: Commerce, Trade, Purchasing & CRM)
+# Handoff Report  Milestone 3 (App Views Batch 1: Commerce, Trade, Purchasing & CRM)
 
 ## 1. Observation
 - **Assigned Scope**: 39 target Blade view files across Retail & Omnichannel Commerce (Group A, 19 files) and B2B Trade, Purchasing & CRM (Group B, 20 files):

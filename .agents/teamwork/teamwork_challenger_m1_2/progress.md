@@ -1,4 +1,4 @@
-# Progress Log — Challenger 2 (Milestone 1)
+# Progress Log  Challenger 2 (Milestone 1)
 
 Last visited: 2026-11-05T00:45:45Z
 

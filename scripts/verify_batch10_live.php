@@ -51,7 +51,7 @@ foreach ($targetSlugs as $idx => $slug) {
     // 1. Check em/en dash in DB fields
     $fields = ['title' => $post->title, 'content' => $post->content, 'meta_title' => $post->meta_title, 'meta_description' => $post->meta_description];
     foreach ($fields as $fn => $fv) {
-        if (str_contains((string)$fv, '—') || str_contains((string)$fv, '–')) {
+        if (str_contains((string)$fv, '') || str_contains((string)$fv, '–')) {
             echo "DASH ERROR in DB [{$fn}]: {$slug}\n";
             $emDashErrors++;
         }
@@ -67,7 +67,7 @@ foreach ($targetSlugs as $idx => $slug) {
                 $controllerErrors++;
             } else {
                 // Check dash in rendered HTML
-                if (str_contains($renderedHtml, '—') || str_contains($renderedHtml, '–')) {
+                if (str_contains($renderedHtml, '') || str_contains($renderedHtml, '–')) {
                     echo "DASH ERROR in Rendered HTML: {$slug}\n";
                     $emDashErrors++;
                 }

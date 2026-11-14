@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T14:25:00Z
+# BRIEFING  2026-11-08T14:25:00Z
 
 ## Mission
 Survey and audit all 19 Blade views in resources/views/app/feedback and resources/views/app/finance for layout cleanliness, button hierarchy, mobile responsiveness, RBAC guards, and i18n string usage.
@@ -11,7 +11,7 @@ Survey and audit all 19 Blade views in resources/views/app/feedback and resource
 - Milestone: Milestone 1 - Reconnaissance & Inventory
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify any source code files
+- Read-only investigation  do NOT implement or modify any source code files
 - Write only to working directory: .agents/teamwork/explorer_feedback_finance_ui/
 - Follow the Handoff Protocol (Observation, Logic Chain, Caveats, Conclusion, Verification)
 
@@ -39,8 +39,8 @@ Survey and audit all 19 Blade views in resources/views/app/feedback and resource
 - Completed comprehensive survey of all 19 Blade views and published detailed report `ui_survey_report.md` and `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — Task dispatch record & server restart notification
-- BRIEFING.md — Persistent context & situational awareness
-- progress.md — Liveness heartbeat & task progress
-- ui_survey_report.md — Comprehensive survey report
-- handoff.md — Final hard handoff report
+- DISPATCH.md  Task dispatch record & server restart notification
+- BRIEFING.md  Persistent context & situational awareness
+- progress.md  Liveness heartbeat & task progress
+- ui_survey_report.md  Comprehensive survey report
+- handoff.md  Final hard handoff report

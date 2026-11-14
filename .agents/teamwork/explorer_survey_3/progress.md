@@ -1,4 +1,4 @@
-# Progress Tracker — explorer_survey_3
+# Progress Tracker  explorer_survey_3
 
 Last visited: 2026-11-13T22:20:00Z
 

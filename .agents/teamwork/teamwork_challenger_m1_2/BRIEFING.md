@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:37:30Z
+# BRIEFING  2026-11-05T00:37:30Z
 
 ## Mission
 Empirically challenge the translation files `lang/id/storefront.php` and `lang/en/storefront.php` for Milestone 1 (Backend & Service Normalization), verifying key-by-key parity, dot notation access patterns, and runtime locale switching.
@@ -12,9 +12,9 @@ Empirically challenge the translation files `lang/id/storefront.php` and `lang/e
 - Instance: 2 of 2 (Challenger 2)
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Run verification code empirically — do not trust claims or logs without reproduction
-- .agents/teamwork/ holds only metadata — no test code or data inside .agents/teamwork/
+- Review-only  do NOT modify implementation code
+- Run verification code empirically  do not trust claims or logs without reproduction
+- .agents/teamwork/ holds only metadata  no test code or data inside .agents/teamwork/
 - Never name a file AGENTS.md or GEMINI.md in .agents/teamwork/
 - Communicate back to parent via send_message
 
@@ -34,11 +34,11 @@ Empirically challenge the translation files `lang/id/storefront.php` and `lang/e
 - Delivered verdict APPROVE based on 100% test pass rate (253 assertions) and feature regression pass rate (440 assertions).
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming dispatch log
-- `BRIEFING.md` — Situational awareness
-- `progress.md` — Liveness heartbeat and step tracking
-- `analysis.md` — Detailed test runs, metrics, and empirical results
-- `handoff.md` — Final 5-component report with verdict
+- `DISPATCH.md`  Incoming dispatch log
+- `BRIEFING.md`  Situational awareness
+- `progress.md`  Liveness heartbeat and step tracking
+- `analysis.md`  Detailed test runs, metrics, and empirical results
+- `handoff.md`  Final 5-component report with verdict
 
 ## Attack Surface
 - **Hypotheses tested**: Key disparity between ID and EN, missing dot-notation resolution, locale bleeding during runtime switches, parameter interpolation errors, theme fallback translation resolution.

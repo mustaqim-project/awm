@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T09:05:00Z
+# BRIEFING  2026-11-02T09:05:00Z
 
 ## Mission
 Survey cross-system API contracts, payload schemas, error handling, and test automation infrastructure across cooca_core and cooca_my_own for Fase 2 & Fase 3.
@@ -11,7 +11,7 @@ Survey cross-system API contracts, payload schemas, error handling, and test aut
 - Milestone: Fase 2 & Fase 3 Cross-System Integration Contract Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Adhere strictly to file workspace conventions (write only inside .agents/teamwork/explorer_fase23_3/)
 - Verify all file paths and line numbers with evidence
 
@@ -40,6 +40,6 @@ Survey cross-system API contracts, payload schemas, error handling, and test aut
 - Document exact implementation blueprint for backend and mobile implementers.
 
 ## Artifact Index
-- report.md — Comprehensive findings on contracts, validation, models, and test baselines
-- handoff.md — 5-component handoff report
-- progress.md — Liveness heartbeat
+- report.md  Comprehensive findings on contracts, validation, models, and test baselines
+- handoff.md  5-component handoff report
+- progress.md  Liveness heartbeat

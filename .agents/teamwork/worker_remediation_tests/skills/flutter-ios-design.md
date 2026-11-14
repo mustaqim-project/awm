@@ -3,11 +3,11 @@ name: flutter-ios-design
 description: Design and redesign Flutter mobile app UI with the Apple HIG look on BOTH iOS and Android, responsive across phone and tablet (iPhone, iPad, Android phones, tablets, foldables). Simple, uncluttered but fully styled controls (few button kinds, one primary action, every state styled), Cupertino widgets, SF/Inter typography, adaptive navigation, dark mode, accessibility, plus Android plumbing (back, edge-to-edge, fonts, scroll, TalkBack). Use whenever the user mentions Flutter UI/UX, redesign aplikasi mobile, tampilan iOS, iOS-style di Android, Apple design, HIG, Cupertino, tablet, iPad, responsive, tombol/btn terlalu padat, "sederhana tapi full styling", "bikin UI lebih rapi/modern/premium", or pastes Flutter screens to improve. Also for auditing against iOS standards, converting Material screens, making phone apps work on tablets, or building a Flutter theme/design system.
 ---
 
-# Flutter iOS-Look Design (Apple HIG) — iOS + Android, Phone + Tablet
+# Flutter iOS-Look Design (Apple HIG)  iOS + Android, Phone + Tablet
 
 Redesign and design Flutter screens so they look and feel like a native iOS app: clear hierarchy, generous whitespace, system-consistent components, full dark mode and Dynamic Type/font-scale support, layouts that adapt from a 320 pt phone to a 1366 pt tablet, **and a delivery that holds up on Android**, where the iOS look is intentional but the Android platform contracts (back, system bars, TalkBack, fonts) still have to work.
 
-The goal is not "make it look like iOS screenshots" but to apply the HIG's principles — **clarity, deference, depth** — consistently on every platform and size.
+The goal is not "make it look like iOS screenshots" but to apply the HIG's principles  **clarity, deference, depth**  consistently on every platform and size.
 
 ## Core stance: look = iOS, contracts = Android
 
@@ -39,12 +39,12 @@ If the input is ambiguous, ask at most one question; the most valuable is the pl
 
 ## Decide the targets (they affect every later choice)
 
-**Platform** — default assumption: **iOS look on iOS and Android** (one UI, shipped to both). State it in one line.
+**Platform**  default assumption: **iOS look on iOS and Android** (one UI, shipped to both). State it in one line.
 - **iOS-only app** → `IOSApp`/`CupertinoApp`; ignore Android sections.
 - **iOS look on both (default)** → `IOSApp` (pure Cupertino) or `IOSHybridApp` (MaterialApp wearing Cupertino theme) from `assets/ios_app.dart`. Choose the hybrid when any dependency needs a Material ancestor (`TextField`, `Slider`, `showDatePicker`, many packages). Bundle Inter for non-Apple platforms.
 - **Adaptive per platform** (iOS looks iOS, Android looks Material) → use `.adaptive` constructors and branch dialogs/navigation by `defaultTargetPlatform`. This is *not* the iOS-look-on-Android goal; use only if the user asks for native Material on Android.
 
-**Form factor** — default is **phone + tablet**, always. Design every screen for `compact` and `regular/wide` size classes, on both platforms.
+**Form factor**  default is **phone + tablet**, always. Design every screen for `compact` and `regular/wide` size classes, on both platforms.
 
 ## Core responsive rules (apply to every screen)
 
@@ -56,7 +56,7 @@ If the input is ambiguous, ask at most one question; the most valuable is the pl
 
 See `references/adaptive-layout.md`.
 
-## Step 1 — Audit (Redesign / Audit / Adaptive / Android modes)
+## Step 1  Audit (Redesign / Audit / Adaptive / Android modes)
 
 Read the code or screenshots first; never redesign blind. Check each screen against `references/hig-checklist.md` (sections 1–9, plus section 10 if it ships on Android) and report:
 
@@ -72,13 +72,13 @@ Be specific and cite the widget/line: "`ElevatedButton` with 8 px radius at `hom
 
 Then summarize the **top 3–5 systemic issues** (shared tokens, dark-mode colors, breakpoint system, app shell choice, Android font/back/system bars). Fixing these at the token/shell level beats fixing screens one by one.
 
-## Step 2 — Define tokens and shell
+## Step 2  Define tokens and shell
 
 Copy and adapt, in this order:
-1. `assets/ios_platform.dart` — platform detection, font family (system SF on Apple, Inter elsewhere), tracking, `IOSScrollBehavior`, `IOSSystemUi`/`IOSSystemUiScope`.
-2. `assets/ios_design_system.dart` — spacing, radii, semantic colors, platform-aware `IOSText`, full `buildIOSTheme()`, base components.
-3. `assets/ios_adaptive_layout.dart` — size classes, readable width, adaptive scaffold, master-detail, adaptive sheet, grid delegate.
-4. `assets/ios_app.dart` — `IOSApp` / `IOSHybridApp`.
+1. `assets/ios_platform.dart`  platform detection, font family (system SF on Apple, Inter elsewhere), tracking, `IOSScrollBehavior`, `IOSSystemUi`/`IOSSystemUiScope`.
+2. `assets/ios_design_system.dart`  spacing, radii, semantic colors, platform-aware `IOSText`, full `buildIOSTheme()`, base components.
+3. `assets/ios_adaptive_layout.dart`  size classes, readable width, adaptive scaffold, master-detail, adaptive sheet, grid delegate.
+4. `assets/ios_app.dart`  `IOSApp` / `IOSHybridApp`.
 
 Tokens first because a screen-by-screen redesign drifts; tokens make consistency, dark mode, and Android parity nearly free. Rules that matter most:
 - **Colors**: semantic system colors (`CupertinoColors.label`, `.systemGroupedBackground`, …) auto-resolve for dark mode. Hardcoded hex is the #1 cause of broken dark mode. Brand color = accent only, a `CupertinoDynamicColor` with light and dark variants.
@@ -87,11 +87,11 @@ Tokens first because a screen-by-screen redesign drifts; tokens make consistency
 - **Radius**: 10 cells, 12–14 cards/buttons, 20 sheets.
 - **Touch targets**: ≥ 44 pt on iOS, **48 dp on Android** (same visual size, extra hit padding).
 
-## Step 2b — Simplify pass (before coding)
+## Step 2b  Simplify pass (before coding)
 
 For each screen: count interactive controls ("before"), classify essential / frequent / rare, keep one primary visible, demote the rest to a named place (overflow menu, sheet, swipe action, detail), merge true duplicates, then style the survivors with the full state matrix and recount ("after"). Every original action must still be reachable; supply the mapping. Procedure and report format: `references/simplicity-and-component-styling.md` §10.
 
-## Step 3 — Pick the right pattern per screen, per size class
+## Step 3  Pick the right pattern per screen, per size class
 
 Map each screen to the native iOS pattern (`references/cupertino-widget-map.md`), then decide how it changes across size classes.
 
@@ -110,7 +110,7 @@ Map each screen to the native iOS pattern (`references/cupertino-widget-map.md`)
 - Grids → `iosAdaptiveGridDelegate`; modals → centered form sheet (`showIOSAdaptiveSheet`)
 - Operational screens (POS, ERP, dashboards) → true multi-pane layout
 
-## Step 4 — Write the code
+## Step 4  Write the code
 
 - Compose from small reusable widgets on the tokens; screens read like layout, not styling. Use `IOSButton`, `IOSIconButton`, `IOSChip`, `showIOSActionMenu` instead of ad-hoc button styling; never add outlined/gradient/shadowed button variants.
 - `main()`: `WidgetsFlutterBinding.ensureInitialized(); await IOSSystemUi.init();` then `runApp` with `IOSApp`/`IOSHybridApp` and localization delegates + `supportedLocales` (e.g., `id`, `en`).
@@ -125,7 +125,7 @@ Map each screen to the native iOS pattern (`references/cupertino-widget-map.md`)
 - Deliver full compilable files for changed screens plus a migration note (removed/replaced, packages and pubspec/AndroidManifest changes such as the Inter font and `enableOnBackInvokedCallback`).
 - Flag version-dependent APIs (`withValues`, `showCupertinoSheet`, `PopScope.onPopInvokedWithResult`, `CupertinoButton.minimumSize`) and note the assumed Flutter version.
 
-## Step 5 — Verify across sizes and platforms
+## Step 5  Verify across sizes and platforms
 
 Run the final gate in `references/hig-checklist.md` and the test matrices in `references/adaptive-layout.md` and `references/android-ios-look.md`:
 - iPhone 393×852, iPad 744×1133 / 820×1180 / 1180×820, Android 360×640 / 412×915, tablet ≈ 800×1280, narrow split ≈ 320 wide
@@ -162,12 +162,12 @@ For large apps, work in phases (tokens + shell + adaptive scaffold → shared co
 
 ## Reference files
 
-- `references/hig-checklist.md` — audit checklist (incl. Responsive §9, Android §10) and final gate (Steps 1, 5)
-- `references/simplicity-and-component-styling.md` — density budget, button system, where actions live, forms, state matrix, simplify pass (Steps 1, 2b, 4)
-- `references/android-ios-look.md` — fonts, scrolling, back/predictive back, edge-to-edge, shell choice, input, localization, accessibility, Android config and tests (Steps 1–5 on Android)
-- `references/adaptive-layout.md` — size classes, patterns per class, tablet/foldable behaviors, test matrix (Steps 3, 5)
-- `references/cupertino-widget-map.md` — Material → Cupertino mapping with snippets (Steps 3, 4)
-- `assets/ios_platform.dart` — platform fonts/tracking, scroll behavior, system UI (Step 2)
-- `assets/ios_design_system.dart` — tokens, platform-aware text styles, full Cupertino theme, `IOSButton`/`IOSIconButton`/`IOSChip`/`showIOSActionMenu`, base components (Step 2)
-- `assets/ios_adaptive_layout.dart` — size classes and adaptive components (Steps 2–4)
-- `assets/ios_app.dart` — `IOSApp` and `IOSHybridApp` shells (Steps 2, 4)
+- `references/hig-checklist.md`  audit checklist (incl. Responsive §9, Android §10) and final gate (Steps 1, 5)
+- `references/simplicity-and-component-styling.md`  density budget, button system, where actions live, forms, state matrix, simplify pass (Steps 1, 2b, 4)
+- `references/android-ios-look.md`  fonts, scrolling, back/predictive back, edge-to-edge, shell choice, input, localization, accessibility, Android config and tests (Steps 1–5 on Android)
+- `references/adaptive-layout.md`  size classes, patterns per class, tablet/foldable behaviors, test matrix (Steps 3, 5)
+- `references/cupertino-widget-map.md`  Material → Cupertino mapping with snippets (Steps 3, 4)
+- `assets/ios_platform.dart`  platform fonts/tracking, scroll behavior, system UI (Step 2)
+- `assets/ios_design_system.dart`  tokens, platform-aware text styles, full Cupertino theme, `IOSButton`/`IOSIconButton`/`IOSChip`/`showIOSActionMenu`, base components (Step 2)
+- `assets/ios_adaptive_layout.dart`  size classes and adaptive components (Steps 2–4)
+- `assets/ios_app.dart`  `IOSApp` and `IOSHybridApp` shells (Steps 2, 4)

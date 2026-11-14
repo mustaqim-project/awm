@@ -71,7 +71,7 @@ Simak studi kasus lengkapnya di: https://cooca.id
 TXT;
 
         // Clean caption from em dash and en dash
-        $cleanCaption = trim(str_replace(['—', '–'], '-', $caption));
+        $cleanCaption = trim(str_replace(['', '–'], '-', $caption));
 
         // Use primary carousel asset with fallback guarantee (Slide 2: Anatomi 3 Titik Kebocoran & Miniatur Butik 3D)
         $imageRel = 'admin/social-media-assets/carousel/slide-02.png';

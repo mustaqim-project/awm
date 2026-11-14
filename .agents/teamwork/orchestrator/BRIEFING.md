@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:50:00Z
+# BRIEFING  2026-11-08T20:50:00Z
 
 ## Mission
 Perbaiki modul HRM, Import, dan Inventory pada views c:\laragon\www\cooca_core\resources\views\app\hrm, c:\laragon\www\cooca_core\resources\views\app\import, dan c:\laragon\www\cooca_core\resources\views\app\inventory dengan penyederhanaan tata letak UI, penegakan kontrol akses RBAC di tingkat controller, penyusunan dokumentasi Business Owner, serta audit modul menyeluruh.
@@ -37,11 +37,11 @@ Perbaiki modul HRM, Import, dan Inventory pada views c:\laragon\www\cooca_core\r
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
-- NEVER run build/test commands yourself — require workers to do so.
-- NEVER investigate or explore the problem at the code level — dispatch Explorers for technical investigation.
+- NEVER run build/test commands yourself  require workers to do so.
+- NEVER investigate or explore the problem at the code level  dispatch Explorers for technical investigation.
 - You MAY use file-editing tools ONLY for metadata/state files (.md) in your .agents/teamwork/ folder.
 - Preserve all existing functionality, multi-tenant boundaries, and clean architecture.
-- Never reuse a subagent after it has delivered its handoff — always spawn fresh.
+- Never reuse a subagent after it has delivered its handoff  always spawn fresh.
 - Hard audit veto: clean forensic audit required.
 
 ## Current Parent
@@ -86,9 +86,9 @@ Perbaiki modul HRM, Import, dan Inventory pada views c:\laragon\www\cooca_core\r
 - Safety timer: none
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Authoritative user request
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\DISPATCH.md — Incoming parent dispatch
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\progress.md — Progress tracking
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md — Global project plan & feature inventory
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md — Quality gate tracking
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\handoff.md — Final hard handoff report
+- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md  Authoritative user request
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\DISPATCH.md  Incoming parent dispatch
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\progress.md  Progress tracking
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\PROJECT.md  Global project plan & feature inventory
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\GATE_STATUS.md  Quality gate tracking
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator\handoff.md  Final hard handoff report

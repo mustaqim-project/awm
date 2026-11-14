@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T02:02:00Z
+# BRIEFING  2026-11-14T02:02:00Z
 
 ## Mission
 Adversarially and empirically verify Theme Contrast (Light & Dark), Localization (Indonesian & English), and Heading Outline Semantics across all 21 scoped views for Milestone 2.
@@ -13,7 +13,7 @@ Adversarially and empirically verify Theme Contrast (Light & Dark), Localization
 - Instance: 2 of 2 (Theme Contrast, Localization, Heading Outline Semantics)
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code directly unless reporting verification failures.
+- Review-only  do NOT modify implementation code directly unless reporting verification failures.
 - Empirical execution required: run tests, scripts, or artisan commands directly; do not rely on claims.
 - Scope: 21 public marketing views, pricing modal, discovery filter, industry solutions.
 
@@ -35,10 +35,10 @@ Adversarially and empirically verify Theme Contrast (Light & Dark), Localization
 - [2026-11-14]: Identified empirical defects: 5 leaking translation keys in `business_landing.blade.php`, missed `dark:text-emerald-400` in pricing modal categories 3 & 4, and low-contrast labels in `pricing.blade.php` and `security.blade.php`.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch message
-- progress.md — Liveness heartbeat and milestone tracking
-- handoff.md — Verification findings, empirical evidence, and verdict
-- tests/Feature/AdversarialM2ThemeLocalizationHierarchyTest.php — Empirical verification test suite
+- DISPATCH.md  Initial dispatch message
+- progress.md  Liveness heartbeat and milestone tracking
+- handoff.md  Verification findings, empirical evidence, and verdict
+- tests/Feature/AdversarialM2ThemeLocalizationHierarchyTest.php  Empirical verification test suite
 
 ## Attack Surface
 - **Hypotheses tested**:

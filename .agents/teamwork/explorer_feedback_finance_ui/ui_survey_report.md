@@ -1,5 +1,5 @@
 # Laporan Survei Tata Letak Antarmuka (UI Layout Survey Report)
-## Modul Feedback & Finance — COOCA Core Platform
+## Modul Feedback & Finance  COOCA Core Platform
 
 **Tanggal Survei**: 2026-11-08  
 **Surveior**: Explorer 1 (Feedback & Finance UI Layout Survey Subagent)  
@@ -59,11 +59,11 @@ Pemeriksaan direktori `resources/views/app/feedback/` dan `resources/views/app/f
 ### 3.1 Pelanggaran Tombol Primer Bersaing (Multiple Solid Primary Actions)
 Standar `ui-simplify-layout` dan Bento Apple HIG v2.0 menegaskan: **Maksimal 1 tombol solid primary per layar/konteks**. Keberadaan lebih dari satu tombol solid dengan warna mencolok membuat pengguna ragu (*choice paralysis*).
 
-* **Pelanggaran Kritis — `cash-bank/index.blade.php` (Baris 20–48)**:
+* **Pelanggaran Kritis  `cash-bank/index.blade.php` (Baris 20–48)**:
   Pada header halaman terdapat **3 tombol solid primer yang bersaing secara simultan**:
-  1. `Kas Masuk` — Solid Hijau (`bg-[#34C759] text-white shadow-[0_1px_2px_rgba(52,199,89,0.25)]`)
-  2. `Kas Keluar` — Solid Merah (`bg-[#FF3B30] text-white shadow-[0_1px_2px_rgba(255,59,48,0.25)]`)
-  3. `Transfer Kas` — Solid Biru (`bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]`)
+  1. `Kas Masuk`  Solid Hijau (`bg-[#34C759] text-white shadow-[0_1px_2px_rgba(52,199,89,0.25)]`)
+  2. `Kas Keluar`  Solid Merah (`bg-[#FF3B30] text-white shadow-[0_1px_2px_rgba(255,59,48,0.25)]`)
+  3. `Transfer Kas`  Solid Biru (`bg-[#007AFF] text-white shadow-[0_1px_2px_rgba(0,122,255,0.25)]`)
   Ditambah 2 tombol sekunder (`Tambah Akun` dan `Buku Kas`), menghasilkan 5 tombol berjajar di header.
   *Rekomendasi*: Tetapkan 1 aksi primer (misalnya Transfer Kas atau Kas Masuk), jadikan aksi mutasi lainnya sebagai segmented action bar atau satukan dalam satu tombol dropdown/split-action.
 

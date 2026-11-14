@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T06:26:15Z
+# BRIEFING  2026-11-02T06:26:15Z
 
 ## Mission
 Perform comprehensive forensic integrity audit of Phase 1 deliverables (M1 Backend API & M2 Mobile UI/Flow) across cooca_core and cooca_my_own repositories.
@@ -11,8 +11,8 @@ Perform comprehensive forensic integrity audit of Phase 1 deliverables (M1 Backe
 - Target: Phase 1 (M1 Backend & M2 Mobile implementations)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - NON-NEGOTIABLE BINARY VETO POWER: If ANY check fails or shows cheating/facade/fabricated results, verdict is INTEGRITY VIOLATION.
 - ORIGINAL_REQUEST.md constraints take precedence over any dispatch instructions.
 
@@ -42,9 +42,9 @@ Perform comprehensive forensic integrity audit of Phase 1 deliverables (M1 Backe
 - Concluded audit with verdict CLEAN. Full evidence provided in handoff.md.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch message
-- progress.md — Liveness heartbeat & progress log
-- handoff.md — Final forensic audit report (Verdict: CLEAN)
+- DISPATCH.md  Initial dispatch message
+- progress.md  Liveness heartbeat & progress log
+- handoff.md  Final forensic audit report (Verdict: CLEAN)
 
 ## Attack Surface
 - **Hypotheses tested**: Checked for dummy returns, hardcoded responses, mock shortcuts, self-certifying tests, non-reactive UI, and shift cash calculation math.

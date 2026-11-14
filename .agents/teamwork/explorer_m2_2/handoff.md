@@ -1,4 +1,4 @@
-# Handoff Report — Explorer M2_2: Commercial Landings & Discovery
+# Handoff Report  Explorer M2_2: Commercial Landings & Discovery
 
 ## 1. Observation
 

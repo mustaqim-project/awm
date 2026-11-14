@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T06:23:00Z
+# BRIEFING  2026-11-02T06:23:00Z
 
 ## Mission
 Perform independent code review and adversarial stress-testing of mobile implementation (cooca_my_own) for Phase 1 (POS Petty Cash Expense & Owner Approvals).
@@ -12,7 +12,7 @@ Perform independent code review and adversarial stress-testing of mobile impleme
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Actively check for integrity violations (hardcoded test data, dummy facades, shortcuts, self-certifying logic)
 - Strict evidence-based observations with exact line numbers
 - Full flutter analyze and flutter test execution in target codebase
@@ -70,6 +70,6 @@ Perform independent code review and adversarial stress-testing of mobile impleme
 - Issued verdict: APPROVE.
 
 ## Artifact Index
-- `handoff.md` — Final review and adversarial challenge report
-- `progress.md` — Liveness heartbeat
-- `DISPATCH.md` — Incoming dispatch log
+- `handoff.md`  Final review and adversarial challenge report
+- `progress.md`  Liveness heartbeat
+- `DISPATCH.md`  Incoming dispatch log

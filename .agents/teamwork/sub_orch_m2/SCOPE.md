@@ -1,4 +1,4 @@
-# Scope: Milestone 2 (M2) — Marketing Pages, Solutions & Commercial Views Optimization
+# Scope: Milestone 2 (M2)  Marketing Pages, Solutions & Commercial Views Optimization
 
 ## Architecture
 - Framework: Laravel 11 Blade, Tailwind CSS (via Vite bundle), Alpine.js, Lucide Icons

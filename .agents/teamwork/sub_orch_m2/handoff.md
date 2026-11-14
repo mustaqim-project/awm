@@ -3,7 +3,7 @@
 **Orchestrator**: `sub_orch_m2`  
 **Parent Orchestrator**: `4e686b8a-2e28-4b82-9b39-8b7a237105e3`  
 **State Folder**: `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\`  
-**Milestone Scope**: Milestone 2 — 21 Public Marketing Views (Items 10–30 in `AUDIT_INVENTORY.md`):
+**Milestone Scope**: Milestone 2  21 Public Marketing Views (Items 10–30 in `AUDIT_INVENTORY.md`):
 - Standalone Marketing Pages (10 files): `landing.blade.php`, `public/business_landing.blade.php`, `public/about.blade.php`, `public/demo.blade.php`, `public/pricing.blade.php`, `public/privacy.blade.php`, `public/security.blade.php`, `public/sitemap.blade.php`, `public/support.blade.php`, `public/terms.blade.php`.
 - Commercial Landings (4 files): `public/landing_commercial/kasir_android.blade.php`, `public/landing_commercial/kasir_gratis.blade.php`, `public/landing_commercial/kasir_offline.blade.php`, `public/discovery/index.blade.php`.
 - Solutions Templates (7 files): `public/solutions/fnb.blade.php`, `public/solutions/laundry.blade.php`, `public/solutions/manufacturing.blade.php`, `public/solutions/retail.blade.php`, `public/solutions/services.blade.php`, `public/solutions/show.blade.php`, `public/solutions/workshop.blade.php`.

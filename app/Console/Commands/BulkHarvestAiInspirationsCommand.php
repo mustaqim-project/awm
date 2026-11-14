@@ -42,7 +42,7 @@ final class BulkHarvestAiInspirationsCommand extends Command
         $batchSize = max(5, min(30, (int) $this->option('batch-size')));
 
         $this->info("===================================================================");
-        $this->info("   COOCA AI STUDIO — MASS HARVESTER (MINIMAL 2000 ASET VISUAL)     ");
+        $this->info("   COOCA AI STUDIO  MASS HARVESTER (MINIMAL 2000 ASET VISUAL)     ");
         $this->info("===================================================================");
 
         $currentTotal = InspirationItem::where('status', 'active')->count();

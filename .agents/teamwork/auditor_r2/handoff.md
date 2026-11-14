@@ -1,4 +1,4 @@
-# Forensic Audit Report — Round 2
+# Forensic Audit Report  Round 2
 
 **Work Product**: `lang/id/customers.php`, `lang/en/customers.php`  
 **Profile**: General Project  

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:10:00Z
+# BRIEFING  2026-11-08T19:10:00Z
 
 ## Mission
 Conduct a comprehensive UI layout, decluttering, touch ergonomics, and responsiveness survey across HRM, Import, and Inventory module views in COOCA, identifying issues and formulating actionable design & structure recommendations.
@@ -11,7 +11,7 @@ Conduct a comprehensive UI layout, decluttering, touch ergonomics, and responsiv
 - Milestone: UI Survey & Diagnostics
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify any source code files.
+- Read-only investigation  do NOT implement or modify any source code files.
 - Survey targets:
   1. `c:\laragon\www\cooca_core\resources\views\app\hrm\`
   2. `c:\laragon\www\cooca_core\resources\views\app\import\`
@@ -25,7 +25,7 @@ Conduct a comprehensive UI layout, decluttering, touch ergonomics, and responsiv
 ## Investigation State
 - **Explored paths**:
   - `resources/views/app/hrm/` (index.blade.php, 8 tabs, 15 modals, 3 payroll views)
-  - `resources/views/app/import/` (index.blade.php — 2,185 lines)
+  - `resources/views/app/import/` (index.blade.php  2,185 lines)
   - `resources/views/app/inventory/` (stocks, movements, opname, transfers)
   - Layout anchor: `resources/views/layouts/app.blade.php` (verified z-indices and mobile bottom bar)
 - **Key findings**:
@@ -40,7 +40,7 @@ Conduct a comprehensive UI layout, decluttering, touch ergonomics, and responsiv
 - Structured recommendations into 4 priority tracks: Critical Layout/Overlap Fixes, Button De-duplication & Hierarchy, Apple HIG Touch Target & Safe Area Standardization, and Architecture Modularization for `import/index.blade.php`.
 
 ## Artifact Index
-- `DISPATCH.md` — Inbound message log
-- `BRIEFING.md` — Situational awareness and persistent memory
-- `progress.md` — Real-time progress and heartbeat
-- `handoff.md` — Final survey and recommendations report
+- `DISPATCH.md`  Inbound message log
+- `BRIEFING.md`  Situational awareness and persistent memory
+- `progress.md`  Real-time progress and heartbeat
+- `handoff.md`  Final survey and recommendations report

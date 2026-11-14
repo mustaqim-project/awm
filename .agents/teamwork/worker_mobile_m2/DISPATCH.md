@@ -77,5 +77,5 @@ TASK SPECIFICATIONS:
      - `test/owner_approval_screen_test.dart`: Widget test checking cards rendering, swipe actions, empty state.
      - `test/pos_shift_expense_test.dart`: Unit/widget test checking expected cash calculation with petty cash deduction.
    - Execute verification commands in `c:\laragon\www\cooca_my_own`:
-     - Run `flutter analyze` — MUST have 0 issues!
-     - Run `flutter test` — ALL tests MUST pass!
+     - Run `flutter analyze`  MUST have 0 issues!
+     - Run `flutter test`  ALL tests MUST pass!

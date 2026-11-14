@@ -51,7 +51,7 @@ Coba gratis sekarang di https://cooca.id (klik link di bio profil!)
 TXT;
 
 // Strict Brand Safety: zero em/en dash
-$cleanCaption = trim(str_replace(['—', '–'], '-', $caption));
+$cleanCaption = trim(str_replace(['', '–'], '-', $caption));
 
 $platformPostId = 'cooca_tiktok_feed_' . strtolower(Str::random(12));
 

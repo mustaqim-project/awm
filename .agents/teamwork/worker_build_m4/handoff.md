@@ -1,4 +1,4 @@
-# Handoff Report — Milestone 4: Android Production Build Configuration & Performance Hardening
+# Handoff Report  Milestone 4: Android Production Build Configuration & Performance Hardening
 
 **Worker ID:** `worker_build_m4`  
 **Milestone:** Milestone 4 (Android Build & Performance)  

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T06:38:00Z
+# BRIEFING  2026-11-07T06:38:00Z
 
 ## Mission
 Implement Milestone 2: WhatsApp Views UI Simplification & RBAC for WhatsApp Module Blade templates (`index.blade.php`, `broadcast.blade.php`, `broadcast_detail.blade.php`, `logs.blade.php`).

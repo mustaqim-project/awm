@@ -1,6 +1,6 @@
-# Gate Status Tracking — Milestone 2 (M2)
+# Gate Status Tracking  Milestone 2 (M2)
 
-## Gate 2 — Iteration 1
+## Gate 2  Iteration 1
 | Agent | Role | Verdict | Source | Notes |
 |-------|------|---------|--------|-------|
 | explorer_m2_1 | teamwork_explorer | DONE | handoff.md | 10 standalone marketing views audited |
@@ -17,7 +17,7 @@ Gate Result: **FAIL** (challenger_m2_2 REJECT: 4 blockers identified)
 
 ---
 
-## Gate 2 — Iteration 2 (Remediation)
+## Gate 2  Iteration 2 (Remediation)
 | Agent | Role | Verdict | Source | Notes |
 |-------|------|---------|--------|-------|
 | worker_m2_remediation | self | DONE (remediation complete) | handoff.md | Fixed all 5 translation keys in `business_landing.blade.php` & `storefront.php`, added `dark:text-emerald-400` across pricing modal, resolved contrast on pricing & security |

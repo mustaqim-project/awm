@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 5 — Complete Test Execution & Five Mandatory Audit Reports
+# Handoff Report: Milestone 5  Complete Test Execution & Five Mandatory Audit Reports
 
 **Agent ID**: `worker_audit_reports_m5`  
 **Parent Agent**: `73d9d035-59a2-45d3-a207-90bc9a5adcc4`  

@@ -4,7 +4,7 @@ Memastikan kepatuhan mutlak terhadap standar visual profesional:
 1. Rasio 1:1 Square (1080 x 1080 px).
 2. Zero Overlap & Zero Cut-Off (Header y<=240px, Hero y=260-760px, CTA y=775-860px, Footer y=1030-1050px).
 3. Bebas emoji.
-4. Bebas karakter em dash (—) dan en dash (–).
+4. Bebas karakter em dash () dan en dash (–).
 5. Logo resmi Cooca tersemat.
 6. Identitas wajib: 'Toko Kamu' & 'Cooca Indonesia'.
 7. Screenshot nyata aplikasi tersemat.
@@ -22,8 +22,8 @@ def lint_html(html_path):
     warnings = []
 
     # 1. Cek Em Dash & En Dash
-    if '—' in text:
-        errors.append("Ditemukan karakter em dash ('—'). Wajib gunakan tanda hubung biasa ('-').")
+    if '' in text:
+        errors.append("Ditemukan karakter em dash (''). Wajib gunakan tanda hubung biasa ('-').")
     if '–' in text:
         errors.append("Ditemukan karakter en dash ('–'). Wajib gunakan tanda hubung biasa ('-').")
 

@@ -1,4 +1,4 @@
-# Handoff Report — Milestone 2A: Batch 1 Themes 1-5 Empirical Challenge
+# Handoff Report  Milestone 2A: Batch 1 Themes 1-5 Empirical Challenge
 
 ## 1. Observation
 - **Assigned Scope**: Empirical challenge on Themes 1 to 5:

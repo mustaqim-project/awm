@@ -19,7 +19,7 @@ You own and may modify:
 - C:\laragon\www\cooca_my_own\android\app\src\main\AndroidManifest.xml
 - C:\laragon\www\cooca_my_own\pubspec.yaml
 
-YOUR MISSION — ANDROID PRODUCTION BUILD CONFIGURATION & PERFORMANCE HARDENING (Milestone 4):
+YOUR MISSION  ANDROID PRODUCTION BUILD CONFIGURATION & PERFORMANCE HARDENING (Milestone 4):
 1. **Enforce Non-Debuggable Release Build in `android/app/build.gradle.kts`**:
    - In `buildTypes.release`:
      - Explicitly set `isDebuggable = false`.

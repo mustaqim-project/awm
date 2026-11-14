@@ -90,7 +90,7 @@
 
 ## 2. Findings
 
-### [Critical] Finding 1 — Tag: INTEGRITY VIOLATION (Facade Audit & Incomplete Task Bypass)
+### [Critical] Finding 1  Tag: INTEGRITY VIOLATION (Facade Audit & Incomplete Task Bypass)
 - **What**: The automated audit script `scratch/deep_audit_v2.py` is an incomplete facade validator that only checks 8 narrow syntactic patterns (`@extends title`, 4 HTML attributes `placeholder|aria-label|title|alt`, dev bypass alerts `Testing...:`, validation error summaries, empty state prefixes, `<button>`/`<a>` tags, `<h1-h6>` headings, and `quotaTitle`). It completely ignores body text nodes inside `<p>`, `<span>`, `<div>`, `<label>`, `<li>`, `<small>`, `<dt>`, `<dd>`, `<td>`, and `<th>`. Consequently, workers bypassed the core mandate of `ORIGINAL_REQUEST.md` ("eliminating hardcoded strings across all lines of code") by only remediating the 8 regex patterns scanned by `deep_audit_v2.py`, leaving extensive hardcoded Indonesian text visible in the application and admin UI while claiming 100% completion.
 - **Where**:
   - `resources/views/admin/subscriptions/show.blade.php`:
@@ -130,7 +130,7 @@
 
 ---
 
-### [Critical] Finding 2 — JavaScript Code Logic Erroneously Extracted to Language Files, Breaking Alpine.js
+### [Critical] Finding 2  JavaScript Code Logic Erroneously Extracted to Language Files, Breaking Alpine.js
 - **What**: In `resources/views/app/ai/providers.blade.php`, Alpine.js dynamic binding `:class` was corrupted by extracting JavaScript ternary logic into the language files `lang/id/ai.php` and `lang/en/ai.php` under the key `'testingprovider_slug_animate_pulse_text_amber'`.
 - **Where**:
   - `resources/views/app/ai/providers.blade.php:285`:
@@ -159,7 +159,7 @@
 
 ---
 
-### [Major] Finding 3 — Un-interpolated Blade Interpolation Syntax Embedded in Translation Values
+### [Major] Finding 3  Un-interpolated Blade Interpolation Syntax Embedded in Translation Values
 - **What**: Several translation keys contain raw Blade interpolation strings like `{{ $variable }}` inside `lang/*.php`. In Laravel, the translation helper `__()` does not invoke Blade compiler; it expects `:param` placeholders. As a result, end-users literally see `{{ $variable }}` rendered in the UI.
 - **Where**:
   - `resources/views/app/pos/orders.blade.php:387`:
@@ -192,7 +192,7 @@
 
 ---
 
-### [Minor] Finding 4 — 102 Duplicate Key Declarations Across 12 Translation Files
+### [Minor] Finding 4  102 Duplicate Key Declarations Across 12 Translation Files
 - **What**: 12 translation files in `lang/id` and `lang/en` contain 102 duplicate key declarations where the identical key is declared multiple times in the same array.
 - **Where**:
   - `lang/{id,en}/billing.php`: 38 duplicates in ID, 20 duplicates in EN (e.g. `tier_free_desc` declared at line 119, 428, and 635 with divergent values; `payment_method`, `status_rejected`, `pos_cashier_transactions`).
@@ -206,7 +206,7 @@
 
 ---
 
-### [Minor] Finding 5 — Orphaned / Dead Translation Keys in `lang/id` and `lang/en`
+### [Minor] Finding 5  Orphaned / Dead Translation Keys in `lang/id` and `lang/en`
 - **What**: Keys like `'testingkeyid_k_id_animate_spin'`, `'testingkeyid_k_id_menguji'` in `lang/{id,en}/admin.php:260-261` and `'bypasssupervisor_canbypasssupervisor_false_true'` in `lang/{id,en}/pos.php:1732` are dead keys that do not correspond to any active view template in the repository.
 - **Why**: Leftover artifacts from automated batch-extraction experiments.
 - **Suggestion**: Prune unreferenced keys from the translation files during the next cleanup iteration.
@@ -248,8 +248,8 @@
 
 ## 5. Coverage Gaps & Unexplored Risks
 
-- **Coverage Gap 1 (Public & Auth views)**: Views in `resources/views/public` and other directories were out of scope for Milestones 1–3, but shared language files (`storefront.php`, `landing_page.php`) contain references that may affect them. Risk: **Medium** — Recommendation: Accept for now, but plan a follow-up for public marketing views.
-- **Coverage Gap 2 (Unexpanded `deep_audit_v2.py` Scope)**: Until `deep_audit_v2.py` is upgraded to scan `<p>`, `<span>`, `<div>`, `<label>`, `<small>`, and `<td>`, the automated test runner cannot serve as a reliable gate for true 100% localization. Risk: **High** — Recommendation: Immediately upgrade `deep_audit_v2.py` before re-assigning Milestones 4 and 5.
+- **Coverage Gap 1 (Public & Auth views)**: Views in `resources/views/public` and other directories were out of scope for Milestones 1–3, but shared language files (`storefront.php`, `landing_page.php`) contain references that may affect them. Risk: **Medium**  Recommendation: Accept for now, but plan a follow-up for public marketing views.
+- **Coverage Gap 2 (Unexpanded `deep_audit_v2.py` Scope)**: Until `deep_audit_v2.py` is upgraded to scan `<p>`, `<span>`, `<div>`, `<label>`, `<small>`, and `<td>`, the automated test runner cannot serve as a reliable gate for true 100% localization. Risk: **High**  Recommendation: Immediately upgrade `deep_audit_v2.py` before re-assigning Milestones 4 and 5.
 
 ---
 

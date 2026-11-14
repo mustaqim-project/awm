@@ -35,8 +35,8 @@ In `cooca_core`, cash ledger transactions are modeled through `CashAccount` and 
 - `id` (UUID, primary key)
 - `business_id` (foreignUuid -> `businesses.id`, cascadeOnDelete)
 - `chart_of_account_id` (foreignUuid -> `chart_of_accounts.id`, nullable, nullOnDelete)
-- `name` (string 100) — e.g. `'Kas Utama'`, `'Bank BCA'`, `'QRIS / E-Wallet'`
-- `type` (string 20, default `'cash'`) — constants: `TYPE_CASH = 'cash'`, `TYPE_BANK = 'bank'`, `TYPE_EWALLET = 'ewallet'`
+- `name` (string 100)  e.g. `'Kas Utama'`, `'Bank BCA'`, `'QRIS / E-Wallet'`
+- `type` (string 20, default `'cash'`)  constants: `TYPE_CASH = 'cash'`, `TYPE_BANK = 'bank'`, `TYPE_EWALLET = 'ewallet'`
 - `current_balance` (decimal 15, 2, default `0.00`)
 - `is_active` (boolean, default `true`)
 - Timestamps (`created_at`, `updated_at`)
@@ -46,11 +46,11 @@ In `cooca_core`, cash ledger transactions are modeled through `CashAccount` and 
 - `id` (UUID, primary key)
 - `business_id` (foreignUuid -> `businesses.id`, cascadeOnDelete)
 - `cash_account_id` (foreignUuid -> `cash_accounts.id`, restrictOnDelete)
-- `type` (string 10) — constants: `TYPE_IN = 'in'`, `TYPE_OUT = 'out'`, `TYPE_TRANSFER = 'transfer'`
+- `type` (string 10)  constants: `TYPE_IN = 'in'`, `TYPE_OUT = 'out'`, `TYPE_TRANSFER = 'transfer'`
 - `amount` (decimal 15, 2)
 - `balance_after` (decimal 15, 2)
-- `reference_type` (string 50, nullable) — e.g. `'expense'`, `'pos_order'`, `'manual_cash'`, `'cash_transfer_in'`, `'cash_transfer_out'`
-- `reference_id` (string 64, nullable) — UUID of the related document or external reference
+- `reference_type` (string 50, nullable)  e.g. `'expense'`, `'pos_order'`, `'manual_cash'`, `'cash_transfer_in'`, `'cash_transfer_out'`
+- `reference_id` (string 64, nullable)  UUID of the related document or external reference
 - `description` (string 255)
 - `transaction_date` (date)
 - `created_by` (foreignUuid -> `users.id`, nullable, nullOnDelete)
@@ -185,13 +185,13 @@ The codebase has three primary models for handling approvals:
      - `id` (UUID)
      - `business_id` (foreignUuid)
      - `requested_by` (foreignUuid -> `users.id`)
-     - `action_type` (string 40) — constants:
+     - `action_type` (string 40)  constants:
        - `ACTION_VOID = 'void'`
        - `ACTION_REFUND = 'refund'`
        - `ACTION_HIGH_DISCOUNT = 'high_discount'`
        - `ACTION_OPEN_DRAWER = 'open_drawer'`
      - `reference_id` (string 64, e.g. order_id)
-     - `payload` (JSON) — stores details such as items, void reason, requested discount percentage, etc.
+     - `payload` (JSON)  stores details such as items, void reason, requested discount percentage, etc.
      - `status` (`pending`, `approved`, `rejected`)
      - `approved_by` (foreignUuid -> `users.id`, nullable)
      - `rejection_reason` (string 255, nullable)

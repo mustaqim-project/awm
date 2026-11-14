@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T14:52:00Z
+# BRIEFING  2026-11-08T14:52:00Z
 
 ## Mission
 Implement RBAC Enforcement & Controller-Level Guards for Feedback & Finance modules according to task specs.
@@ -48,27 +48,27 @@ Implement RBAC Enforcement & Controller-Level Guards for Feedback & Finance modu
 - Blade Views: Wrapped import buttons, EDC/Payout add buttons, settlement disbursement form, and accounting report export links with appropriate `@can(...)` directives.
 
 ## Artifact Index
-- DISPATCH.md — assignment record
-- progress.md — liveness heartbeat
-- BRIEFING.md — persistent state memory
-- handoff.md — final delivery report
+- DISPATCH.md  assignment record
+- progress.md  liveness heartbeat
+- BRIEFING.md  persistent state memory
+- handoff.md  final delivery report
 
 ## Change Tracker
 - **Files modified**:
-  1. `database/seeders/RbacSeeder.php` — added `feedback.view` and `feedback.create` to `permissionMatrix()` and role assignments.
-  2. `app/Http/Controllers/Web/FeedbackWebController.php` — configured granular permissions in `middleware()`.
-  3. `routes/owner.php` — unwrapped feedback routes from `require.role:owner`.
-  4. `app/Http/Controllers/Common/SettlementProofController.php` — enforced `finance.cash_bank` permission for merchants.
-  5. `resources/views/layouts/partials/sidebar.blade.php` — updated feedback link visibility condition.
-  6. `resources/views/layouts/partials/topbar.blade.php` — updated feedback link visibility condition.
-  7. `resources/views/app/finance/payables.blade.php` — wrapped import button in `@can('finance.payables')`.
-  8. `resources/views/app/finance/receivables.blade.php` — wrapped import button in `@can('finance.receivables')`.
-  9. `resources/views/app/finance/edc-terminals/index.blade.php` — wrapped add modal button in `@can('finance.cash_bank')`.
-  10. `resources/views/app/finance/payout-accounts/index.blade.php` — wrapped add modal button in `@can('finance.cash_bank')`.
-  11. `resources/views/app/finance/settlements/index.blade.php` — wrapped settlement payout form in `@can('finance.cash_bank')`.
-  12. `resources/views/app/finance/accounting/balance-sheet.blade.php` — wrapped export excel link in `@can('accounting.view')`.
-  13. `resources/views/app/finance/accounting/trial-balance.blade.php` — wrapped export excel link in `@can('accounting.view')`.
-  14. `resources/views/app/finance/accounting/general-ledger.blade.php` — wrapped export excel link in `@can('accounting.view')`.
+  1. `database/seeders/RbacSeeder.php`  added `feedback.view` and `feedback.create` to `permissionMatrix()` and role assignments.
+  2. `app/Http/Controllers/Web/FeedbackWebController.php`  configured granular permissions in `middleware()`.
+  3. `routes/owner.php`  unwrapped feedback routes from `require.role:owner`.
+  4. `app/Http/Controllers/Common/SettlementProofController.php`  enforced `finance.cash_bank` permission for merchants.
+  5. `resources/views/layouts/partials/sidebar.blade.php`  updated feedback link visibility condition.
+  6. `resources/views/layouts/partials/topbar.blade.php`  updated feedback link visibility condition.
+  7. `resources/views/app/finance/payables.blade.php`  wrapped import button in `@can('finance.payables')`.
+  8. `resources/views/app/finance/receivables.blade.php`  wrapped import button in `@can('finance.receivables')`.
+  9. `resources/views/app/finance/edc-terminals/index.blade.php`  wrapped add modal button in `@can('finance.cash_bank')`.
+  10. `resources/views/app/finance/payout-accounts/index.blade.php`  wrapped add modal button in `@can('finance.cash_bank')`.
+  11. `resources/views/app/finance/settlements/index.blade.php`  wrapped settlement payout form in `@can('finance.cash_bank')`.
+  12. `resources/views/app/finance/accounting/balance-sheet.blade.php`  wrapped export excel link in `@can('accounting.view')`.
+  13. `resources/views/app/finance/accounting/trial-balance.blade.php`  wrapped export excel link in `@can('accounting.view')`.
+  14. `resources/views/app/finance/accounting/general-ledger.blade.php`  wrapped export excel link in `@can('accounting.view')`.
 - **Build status**: PASS
 - **Pending issues**: None
 

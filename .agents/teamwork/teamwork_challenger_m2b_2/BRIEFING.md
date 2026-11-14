@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T02:35:19Z
+# BRIEFING  2026-11-05T02:35:19Z
 
 ## Mission
 Stress-testing and empirical verification of cross-industry neutrality on Milestone 2B (Batch 2: 11 Themes).
@@ -46,10 +46,10 @@ Stress-testing and empirical verification of cross-industry neutrality on Milest
 - [Initial turn: Initializing briefing and reading required materials]
 
 ## Artifact Index
-- DISPATCH.md — incoming task dispatch
-- BRIEFING.md — situational awareness
-- progress.md — liveness heartbeat
-- handoff.md — final handoff report
+- DISPATCH.md  incoming task dispatch
+- BRIEFING.md  situational awareness
+- progress.md  liveness heartbeat
+- handoff.md  final handoff report
 
 ## Attack Surface
 - **Hypotheses tested**:

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T04:42:00Z
+# BRIEFING  2026-11-03T04:42:00Z
 
 ## Mission
 Empirically and adversarially challenge Milestone 3 (Dummy Data Elimination) and Milestone 4 (Android Build) in cooca_my_own Flutter codebase.
@@ -12,7 +12,7 @@ Empirically and adversarially challenge Milestone 3 (Dummy Data Elimination) and
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Must run verification code independently (empirical proof required)
 - Do NOT trust worker claims or logs; reproduce all assertions
 - Explicit verdict required: APPROVE or REQUEST_CHANGES
@@ -56,7 +56,7 @@ Empirically and adversarially challenge Milestone 3 (Dummy Data Elimination) and
 - Final verdict: APPROVE with operational note on release keystore management.
 
 ## Artifact Index
-- `DISPATCH.md` — Parent dispatch instructions
-- `BRIEFING.md` — Situational memory
-- `progress.md` — Liveness & task execution tracker
-- `handoff.md` — Final adversarial challenge report with APPROVE verdict
+- `DISPATCH.md`  Parent dispatch instructions
+- `BRIEFING.md`  Situational memory
+- `progress.md`  Liveness & task execution tracker
+- `handoff.md`  Final adversarial challenge report with APPROVE verdict

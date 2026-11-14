@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T07:10:30Z
+# BRIEFING  2026-11-07T07:10:30Z
 
 ## Mission
 Review WhatsApp module refactoring for production readiness, UI simplification, and RBAC enforcement.
@@ -12,7 +12,7 @@ Review WhatsApp module refactoring for production readiness, UI simplification, 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Integrity check: detect hardcoded tests, facade implementations, shortcuts, fake logs
 - Adversarial review: stress-test assumptions, find failure modes, edge cases
 
@@ -37,10 +37,10 @@ Review WhatsApp module refactoring for production readiness, UI simplification, 
 - Issued final verdict: APPROVE.
 
 ## Artifact Index
-- `.agents/teamwork/reviewer_wa_1/DISPATCH.md` — Inbound instructions
-- `.agents/teamwork/reviewer_wa_1/BRIEFING.md` — Situational awareness
-- `.agents/teamwork/reviewer_wa_1/progress.md` — Heartbeat and execution log
-- `.agents/teamwork/reviewer_wa_1/handoff.md` — Final review report and verdict
+- `.agents/teamwork/reviewer_wa_1/DISPATCH.md`  Inbound instructions
+- `.agents/teamwork/reviewer_wa_1/BRIEFING.md`  Situational awareness
+- `.agents/teamwork/reviewer_wa_1/progress.md`  Heartbeat and execution log
+- `.agents/teamwork/reviewer_wa_1/handoff.md`  Final review report and verdict
 
 ## Review Checklist
 - **Items reviewed**:

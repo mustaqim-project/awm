@@ -26,9 +26,9 @@ foreach ($slugs as $idx => $slug) {
     $post = $dbPosts[$slug];
     
     // Check em/en dash
-    if (str_contains($post->title, '—') || str_contains($post->title, '–') ||
-        str_contains($post->content, '—') || str_contains($post->content, '–') ||
-        str_contains($post->meta_title, '—') || str_contains($post->meta_title, '–')) {
+    if (str_contains($post->title, '') || str_contains($post->title, '–') ||
+        str_contains($post->content, '') || str_contains($post->content, '–') ||
+        str_contains($post->meta_title, '') || str_contains($post->meta_title, '–')) {
         echo "DASH ERROR in: {$slug}\n";
         $emDashErrors++;
     }

@@ -1,4 +1,4 @@
-# Dispatch: Worker — Master UI/UX Audit Report Authoring
+# Dispatch: Worker  Master UI/UX Audit Report Authoring
 
 ## Objective
 Author the master, comprehensive, publication-grade UI/UX Audit Report document in `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md`.

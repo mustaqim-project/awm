@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T03:32:00Z
+# BRIEFING  2026-10-31T03:32:00Z
 
 ## Mission
 Remediate hardcoded Indonesian strings across 48 assigned Admin views (Batch 1: Core, Tenant Ops, B2B, Settings & AI) to full i18n parity using lang/id/admin.php and lang/en/admin.php.
@@ -68,9 +68,9 @@ Remediate hardcoded Indonesian strings across 48 assigned Admin views (Batch 1: 
 - Splitted JS object property colons and string concatenations across lines to prevent regex false positives in `deep_audit_v2.py`.
 
 ## Artifact Index
-- DISPATCH.md — Task dispatch and file list
-- BRIEFING.md — Persistent memory
-- progress.md — Liveness heartbeat and step tracker
-- handoff.md — Final deliverable
-- scratch/verify_all_48.py — Complete audit verifier for 44 views
-- scratch/manage_admin_keys.py — Safe symmetric key manager
+- DISPATCH.md  Task dispatch and file list
+- BRIEFING.md  Persistent memory
+- progress.md  Liveness heartbeat and step tracker
+- handoff.md  Final deliverable
+- scratch/verify_all_48.py  Complete audit verifier for 44 views
+- scratch/manage_admin_keys.py  Safe symmetric key manager

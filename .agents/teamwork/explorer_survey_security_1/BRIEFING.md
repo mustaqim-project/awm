@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T02:24:30Z
+# BRIEFING  2026-11-03T02:24:30Z
 
 ## Mission
 Deep-dive investigation into Android Security & Fake GPS Prevention for Attendance (R2): auditing mobile location/security handling, mock GPS detection, dev options, Play Integrity/root, backend attendance contracts and anti-spoofing validation.
@@ -11,7 +11,7 @@ Deep-dive investigation into Android Security & Fake GPS Prevention for Attendan
 - Milestone: Survey & Architecture Discovery - R2 Android Security & Fake GPS
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Target Mobile Repo: C:\laragon\www\cooca_my_own
 - Target Backend Repo: C:\laragon\www\cooca_core
 - Live API: https://cooca.id
@@ -50,8 +50,8 @@ Deep-dive investigation into Android Security & Fake GPS Prevention for Attendan
 - Fully documented findings in `analysis.md` and 5-component report in `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent situational awareness
-- progress.md — liveness heartbeat
-- analysis.md — comprehensive technical report
-- handoff.md — 5-component handoff report
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent situational awareness
+- progress.md  liveness heartbeat
+- analysis.md  comprehensive technical report
+- handoff.md  5-component handoff report

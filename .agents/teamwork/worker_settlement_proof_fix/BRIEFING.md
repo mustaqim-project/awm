@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T15:55:00Z
+# BRIEFING  2026-11-08T15:55:00Z
 
 ## Mission
 Fix the return type declaration of `SettlementProofController::show()` from `BinaryFileResponse` to `Response` (`\Symfony\Component\HttpFoundation\Response`) to prevent TypeError when returning a `StreamedResponse`.
@@ -30,10 +30,10 @@ Fix the return type declaration of `SettlementProofController::show()` from `Bin
 - Declared return type `: Response` for `public function show(Request $request, PaymentSettlement $settlement): Response`.
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\DISPATCH.md — Task assignment
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\BRIEFING.md — Context memory
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\progress.md — Liveness heartbeat & progress
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\handoff.md — Final handoff report
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\DISPATCH.md  Task assignment
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\BRIEFING.md  Context memory
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\progress.md  Liveness heartbeat & progress
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_settlement_proof_fix\handoff.md  Final handoff report
 
 ## Change Tracker
 - **Files modified**: `app/Http/Controllers/Common/SettlementProofController.php` (changed return type declaration and import to `Symfony\Component\HttpFoundation\Response`)

@@ -1,4 +1,4 @@
-# Handoff Report — Milestone 2: UI Layout Simplification, Touch Targets, Button Hierarchy & View Authorization Guards
+# Handoff Report  Milestone 2: UI Layout Simplification, Touch Targets, Button Hierarchy & View Authorization Guards
 
 ## 1. Observation
 

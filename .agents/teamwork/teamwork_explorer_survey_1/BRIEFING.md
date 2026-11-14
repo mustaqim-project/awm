@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:07:30Z
+# BRIEFING  2026-11-05T00:07:30Z
 
 ## Mission
 Investigate the backend architecture for storefront themes and CMS landing page to determine Phase 1 requirements.
@@ -11,7 +11,7 @@ Investigate the backend architecture for storefront themes and CMS landing page 
 - Milestone: backend-architecture-investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Scope: Backend architecture for storefront themes & CMS landing page (Phase 1)
 - Output analysis.md and handoff.md in working directory
 - Send message back to parent when done
@@ -44,8 +44,8 @@ Investigate the backend architecture for storefront themes and CMS landing page 
 - Fully documented all required methods, data mappings, translation keys, and verification steps in `analysis.md` and `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — Recorded instructions
-- BRIEFING.md — Situational awareness
-- progress.md — Liveness heartbeat
-- analysis.md — Full deep-dive analysis
-- handoff.md — 5-component structured handoff report
+- DISPATCH.md  Recorded instructions
+- BRIEFING.md  Situational awareness
+- progress.md  Liveness heartbeat
+- analysis.md  Full deep-dive analysis
+- handoff.md  5-component structured handoff report

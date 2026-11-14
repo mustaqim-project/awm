@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T16:06:00Z
+# BRIEFING  2026-11-08T16:06:00Z
 
 ## Mission
 Independently review the RBAC and security implementation for Feedback and Finance modules, stress-test assumptions, assess integrity, and issue a definitive verdict.
@@ -12,7 +12,7 @@ Independently review the RBAC and security implementation for Feedback and Finan
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Check for integrity violations (hardcoded test results, facade implementations, bypassed tasks, fabricated logs)
 - Strictly verify claims with real code inspection and command executions
 
@@ -61,5 +61,5 @@ Independently review the RBAC and security implementation for Feedback and Finan
 - Issued verdict: APPROVE.
 
 ## Artifact Index
-- `.agents/teamwork/reviewer_feedback_finance_rbac/review_report.md` — Comprehensive review report
-- `.agents/teamwork/reviewer_feedback_finance_rbac/handoff.md` — Final handoff with verdict
+- `.agents/teamwork/reviewer_feedback_finance_rbac/review_report.md`  Comprehensive review report
+- `.agents/teamwork/reviewer_feedback_finance_rbac/handoff.md`  Final handoff with verdict

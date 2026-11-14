@@ -1,4 +1,4 @@
-# Dispatch: Forensic Auditor — Final Integrity Audit (Iteration 2)
+# Dispatch: Forensic Auditor  Final Integrity Audit (Iteration 2)
 
 ## Objective
 Perform forensic integrity verification on `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md` and the workspace after remediation.

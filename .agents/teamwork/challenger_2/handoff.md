@@ -1,4 +1,4 @@
-# Handoff Report — Challenger 2 (Compilation & Responsive Layout Challenger)
+# Handoff Report  Challenger 2 (Compilation & Responsive Layout Challenger)
 
 **Verdict**: **REQUEST_CHANGES**
 

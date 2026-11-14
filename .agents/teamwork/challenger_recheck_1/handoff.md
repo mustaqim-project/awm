@@ -19,7 +19,7 @@
 | **HRM Monolith Disclosure** | `hrm/index.blade.php` (5,705 lines, 15 modals, 10 tables) | File confirmed at 5,705 lines, 15 unique modal state variables, 10 `<table>` elements. Explicitly disclosed in Sec 4.42 and Sec 1.1. | **PASS** |
 | **Section 5.1 Defect Citations** | Updated citations for Item 3, 12, 15, 19 | Verified: line 388 submit button, line 437 table container, lines 1297-1538 destructive buttons, 62 hardcoded strings. | **PASS** |
 | **Read-Only Codebase State** | Zero modifications to `resources/views/app` | `git status resources/views/app` yields `nothing to commit, working tree clean`. | **PASS (Clean)** |
-| **FINAL VERDICT** | — | **ALL 5 EMPIRICAL CHECKS PASSED** | **APPROVE** ✅ |
+| **FINAL VERDICT** |  | **ALL 5 EMPIRICAL CHECKS PASSED** | **APPROVE** ✅ |
 
 ---
 

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:22:00Z
+# BRIEFING  2026-11-05T00:22:00Z
 
 ## Mission
 Analyze Theme Service archetypes & fallbacks in `app/Domain/Storefront/StorefrontThemeService.php` and design exact data structures and method signatures for the 6 Design Archetypes across 42 themes with backward compatibility.
@@ -11,7 +11,7 @@ Analyze Theme Service archetypes & fallbacks in `app/Domain/Storefront/Storefron
 - Milestone: Milestone 1 (Backend & Service Normalization)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Do NOT modify any source files
 - Focus on `app/Domain/Storefront/StorefrontThemeService.php`
 - Design exact data structures and method signatures for 6 Design Archetypes (42 themes total)
@@ -53,8 +53,8 @@ Analyze Theme Service archetypes & fallbacks in `app/Domain/Storefront/Storefron
 - Detailed complete recommendations in `analysis.md` and structured 5-component summary in `handoff.md`.
 
 ## Artifact Index
-- `DISPATCH.md` — Received dispatch instructions
-- `BRIEFING.md` — Persistent context & identity
-- `progress.md` — Liveness heartbeat & checklist
-- `analysis.md` — Exhaustive architectural analysis, data schemas, and drop-in code snippet
-- `handoff.md` — 5-component handoff report for parent orchestrator
+- `DISPATCH.md`  Received dispatch instructions
+- `BRIEFING.md`  Persistent context & identity
+- `progress.md`  Liveness heartbeat & checklist
+- `analysis.md`  Exhaustive architectural analysis, data schemas, and drop-in code snippet
+- `handoff.md`  5-component handoff report for parent orchestrator

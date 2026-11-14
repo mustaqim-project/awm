@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:59:30Z
+# BRIEFING  2026-11-13T22:59:30Z
 
 ## Mission
 Objective and adversarial review of Milestone 1 changes (layout, assets, typography, widgets, theme toggle, blog show styles).
@@ -13,8 +13,8 @@ Objective and adversarial review of Milestone 1 changes (layout, assets, typogra
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Report any failures as findings — do NOT fix them yourself
+- Review-only  do NOT modify implementation code
+- Report any failures as findings  do NOT fix them yourself
 - Detect integrity violations (hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certifying work) -> REQUEST_CHANGES
 
 ## Current Parent
@@ -60,6 +60,6 @@ Objective and adversarial review of Milestone 1 changes (layout, assets, typogra
 - **Untested angles**: None within M1 assigned boundaries.
 
 ## Artifact Index
-- `handoff.md` — Final review report
-- `DISPATCH.md` — Initial dispatch message
-- `progress.md` — Progress tracker
+- `handoff.md`  Final review report
+- `DISPATCH.md`  Initial dispatch message
+- `progress.md`  Progress tracker

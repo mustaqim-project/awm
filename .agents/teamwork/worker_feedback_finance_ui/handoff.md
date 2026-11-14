@@ -1,4 +1,4 @@
-# Handoff Report — Milestone M2: UI Simplification & Layout Optimization
+# Handoff Report  Milestone M2: UI Simplification & Layout Optimization
 
 **Agent**: Worker Subagent (Worker M2: UI Simplification & Layout Optimization)  
 **Parent Conversation ID**: `2dc7873b-7808-466b-ace5-8c03239822ef`  

@@ -1,4 +1,4 @@
-# Implementation Report: Milestone 1 (Backend Fase 2 — Logistik & Gudang Toko)
+# Implementation Report: Milestone 1 (Backend Fase 2  Logistik & Gudang Toko)
 
 **Worker**: Worker Fase 2 Backend (Implementer & QA)  
 **Date**: 2026-11-02  

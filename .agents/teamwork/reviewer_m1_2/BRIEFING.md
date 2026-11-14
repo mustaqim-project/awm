@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T23:05:00Z
+# BRIEFING  2026-11-13T23:05:00Z
 
 ## Mission
 Objective and Adversarial Review of Milestone 1 CWV, Chatbot & Mobile UX changes implemented by worker_m1.
@@ -13,7 +13,7 @@ Objective and Adversarial Review of Milestone 1 CWV, Chatbot & Mobile UX changes
 - Instance: 2 of 2 (reviewer_m1_2)
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Check for integrity violations (hardcoded test outputs, dummy facades, shortcuts, bypassing core work)
 - Adhere to the 5-component Handoff Protocol
 - Evidence-based findings; explicit APPROVE / REQUEST_CHANGES verdict
@@ -66,7 +66,7 @@ Objective and Adversarial Review of Milestone 1 CWV, Chatbot & Mobile UX changes
 - Verdict formulated: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — Inbound instruction record
-- `BRIEFING.md` — Persistent working memory
-- `progress.md` — Liveness heartbeat and milestone tracking
-- `handoff.md` — Final review report
+- `DISPATCH.md`  Inbound instruction record
+- `BRIEFING.md`  Persistent working memory
+- `progress.md`  Liveness heartbeat and milestone tracking
+- `handoff.md`  Final review report

@@ -1,4 +1,4 @@
-# Progress Heartbeat — Challenger 1 (Adversarial RBAC & Security)
+# Progress Heartbeat  Challenger 1 (Adversarial RBAC & Security)
 
 Last visited: 2026-11-07T15:35:00Z
 

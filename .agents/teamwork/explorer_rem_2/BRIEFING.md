@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T19:24:00Z
+# BRIEFING  2026-10-31T19:24:00Z
 
 ## Mission
 Explore, audit, and provide exact remediation blueprints for Phase 2 (Modal Standardization & Table Action Consolidation) and Phase 3 (Mobile Ergonomics, Grids, Touch Targets, and Emojis) across resources/views/app.
@@ -11,7 +11,7 @@ Explore, audit, and provide exact remediation blueprints for Phase 2 (Modal Stan
 - Milestone: Phase 2 & 3 Remediation Exploration
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement directly
+- Read-only investigation  do NOT implement directly
 - Write all findings, analyses, and handoff reports to working directory (.agents/teamwork/explorer_rem_2/)
 - Communication via send_message to orchestrator upon completion
 
@@ -38,7 +38,7 @@ Explore, audit, and provide exact remediation blueprints for Phase 2 (Modal Stan
 
 
 ## Artifact Index
-- DISPATCH.md — Task incoming instructions
-- BRIEFING.md — Situational awareness
-- progress.md — Liveness heartbeat
-- handoff.md — Final comprehensive report
+- DISPATCH.md  Task incoming instructions
+- BRIEFING.md  Situational awareness
+- progress.md  Liveness heartbeat
+- handoff.md  Final comprehensive report

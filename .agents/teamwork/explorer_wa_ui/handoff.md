@@ -17,10 +17,10 @@ The WhatsApp module UI consists of four major views in `resources/views/app/what
 
 ### 1.1 Scope and File Inventory
 Directly inspected the entire view hierarchy under `resources/views/app/whatsapp/`:
-- `resources/views/app/whatsapp/index.blade.php` (944 lines, 63,303 bytes) — Gateway Cockpit
-- `resources/views/app/whatsapp/broadcast.blade.php` (1,001 lines, 79,527 bytes) — Broadcast Hub & Modal Sheet Composer
-- `resources/views/app/whatsapp/broadcast_detail.blade.php` (434 lines, 27,029 bytes) — Campaign Delivery Report & Polling
-- `resources/views/app/whatsapp/logs.blade.php` (527 lines, 38,387 bytes) — Message Logs, Inspector Sheet & Pruning Modal
+- `resources/views/app/whatsapp/index.blade.php` (944 lines, 63,303 bytes)  Gateway Cockpit
+- `resources/views/app/whatsapp/broadcast.blade.php` (1,001 lines, 79,527 bytes)  Broadcast Hub & Modal Sheet Composer
+- `resources/views/app/whatsapp/broadcast_detail.blade.php` (434 lines, 27,029 bytes)  Campaign Delivery Report & Polling
+- `resources/views/app/whatsapp/logs.blade.php` (527 lines, 38,387 bytes)  Message Logs, Inspector Sheet & Pruning Modal
 - Related components: `resources/views/components/module-header.blade.php`, `resources/views/components/module-tabs.blade.php`
 - Routing & Navigation: `routes/owner.php` (lines 925–962), `app/Support/Navigation/NavigationRegistry.php` (lines 442–504)
 - Gate & Context: `app/Providers/AppServiceProvider.php` (lines 139–150), `app/Support/Context.php` (lines 195–216)

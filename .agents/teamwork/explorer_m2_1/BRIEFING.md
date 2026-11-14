@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T01:00:00Z
+# BRIEFING  2026-11-14T01:00:00Z
 
 ## Mission
 Read-only investigation of Standalone Marketing Views (10 files) in COOCA core for Tailwind Play CDN removal, translation array TypeError, script optimization, heading hierarchy, LCP image optimization, SEO tags, dark/light contrast, and touch targets.
@@ -12,7 +12,7 @@ Read-only investigation of Standalone Marketing Views (10 files) in COOCA core f
 - Milestone: M2 - Standalone Marketing Views Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source code files
+- Read-only investigation  do NOT implement or modify source code files
 - Write only to dedicated state folder: C:\laragon\www\cooca_core\.agents\teamwork\explorer_m2_1\
 - Produce structured 5-component handoff report (handoff.md)
 - Provide exact file paths, line numbers, root causes, and verified fix snippets
@@ -46,11 +46,11 @@ Read-only investigation of Standalone Marketing Views (10 files) in COOCA core f
 - Verified route names and localization structure for complete precision.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch message
-- BRIEFING.md — Persistent state
-- progress.md — Liveness & step heartbeat
-- inspect_views.py — Headings and media analysis script
-- detailed_audit.py — Comprehensive multi-factor audit script
-- audit_contrast.py — Theme contrast scanner
-- check_routes.py — Route definitions scanner
-- handoff.md — Complete 5-component handoff report
+- DISPATCH.md  Initial dispatch message
+- BRIEFING.md  Persistent state
+- progress.md  Liveness & step heartbeat
+- inspect_views.py  Headings and media analysis script
+- detailed_audit.py  Comprehensive multi-factor audit script
+- audit_contrast.py  Theme contrast scanner
+- check_routes.py  Route definitions scanner
+- handoff.md  Complete 5-component handoff report

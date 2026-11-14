@@ -1,5 +1,5 @@
 # Master UI/UX & Information Architecture Audit Report: `resources/views/app`
-**Platform**: COOCA — Multi-Tenant SaaS ERP Operating System for Indonesian SMBs  
+**Platform**: COOCA  Multi-Tenant SaaS ERP Operating System for Indonesian SMBs  
 **Audit Target**: Entire `resources/views/app` Directory (185 Blade Templates, 44 Submodules, 134,824 Lines of Code)  
 **Evaluation Standard**: Apple Human Interface Guidelines (HIG), Tailwind CSS Responsive Standards, Mobile-First Touch Ergonomics (Fitts's Law, ≥44px Target Rule), Zero-Manual UI Philosophy  
 **Audit Mode**: Comprehensive Static Analysis, AST Inspection & Component Verification  
@@ -16,7 +16,7 @@ A comprehensive, systematic UI/UX and information architecture audit was perform
 
 COOCA's interface demonstrates a sophisticated modern design direction inspired by **Apple Human Interface Guidelines (HIG)** and **macOS Sonoma/Ventura desktop conventions**. The application employs a refined light/dark mode aesthetic, squircle corner radii (`rounded-[16px]`, `rounded-[20px]`, `rounded-[24px]`), delicate hairline borders (`border-black/5 dark:border-white/10`), frosted glass backdrops (`backdrop-blur-md bg-white/80 dark:bg-[#1C1C1E]/80`), Apple system blue accenting (`#007AFF`), and a responsive multi-tiered navigation structure (9-cluster primary rail, secondary sub-sidebar, sticky topbar with Spotlight palette, and mobile bottom tab bar).
 
-However, rigorous inspection against professional UI/UX standards, touch ergonomics, responsive layout resilience, and multi-industry interface isolation uncovered **systemic architectural defects, component redundancies, and usability friction points**. These deficiencies degrade the user experience for Indonesian small and medium-sized enterprise (SMB) owners and operational staff—particularly on tablets, low-cost Android smartphones, and point-of-sale touch displays:
+However, rigorous inspection against professional UI/UX standards, touch ergonomics, responsive layout resilience, and multi-industry interface isolation uncovered **systemic architectural defects, component redundancies, and usability friction points**. These deficiencies degrade the user experience for Indonesian small and medium-sized enterprise (SMB) owners and operational staffparticularly on tablets, low-cost Android smartphones, and point-of-sale touch displays:
 
 1. **Double Header Redundancy (44 views)**: Simultaneously rendering the sticky topbar title (56px) and an inline `<x-module-header>` card with identical text, consuming 140px–180px of valuable vertical screen real estate.
 2. **Mobile Bottom Tab Bar Occlusion (32 views)**: Root containers omitting `pb-28`/`pb-36` bottom padding, causing primary action buttons, save triggers, and pagination controls to be physically covered by the fixed mobile bottom bar (`fixed inset-x-0 bottom-0 z-30 lg:hidden`).
@@ -107,12 +107,12 @@ Standard Backoffice        Dual Sidebar Subnav          10 Print /       1 POS T
 CRUD & Reporting Views    Active Module Views           Thermal Receipts (Full Custom Shell)    Partials
 ```
 
-#### A. Standard Shell (`layouts.app` — 2,763 lines)
+#### A. Standard Shell (`layouts.app`  2,763 lines)
 - **Structure**: Encapsulates HTML `<head>`, Google Fonts (`Inter`, `Plus Jakarta Sans`), CSRF meta tags, PWA manifest tags, theme initialization (`dark`/`light` mode script), desktop sidebar navigation rail, secondary sidebar wrapper, 56px sticky topbar, toast notification containers, quick-action drawers, mobile bottom navigation, and `<x-quota-modal>`.
 - **Architectural Debt & Code Bloat**:
   1. *Inlined CSS Tokens*: Over 700 lines of custom CSS (`#sidebar-scroll::-webkit-scrollbar`, `.glassmorphism-apple`, `.ios-segmented-control`, `.touch-callout-none`) are embedded directly in `<style>` blocks within `layouts/app.blade.php` instead of being compiled via Vite/PostCSS.
   2. *Inlined JavaScript Utilities*: Over 400 lines of Alpine.js helper scripts, currency formatters (`window.formatRupiah`), toast dispatchers, and keyboard shortcut listeners reside in `<script>` tags at the base of the file.
-  3. *Inlined Quick Actions Duplicate*: Lines 1460–2335 (876 lines) contain inline markup for Quick Expense, Quick Income, Quick Stock In, and Mobile Action Sheets—identical to the separate file `layouts/partials/quick-actions.blade.php`.
+  3. *Inlined Quick Actions Duplicate*: Lines 1460–2335 (876 lines) contain inline markup for Quick Expense, Quick Income, Quick Stock In, and Mobile Action Sheetsidentical to the separate file `layouts/partials/quick-actions.blade.php`.
 
 #### B. Standalone & Partial Views (51 views)
 1. **Print & Thermal Receipt Templates (10 views)**:
@@ -155,27 +155,27 @@ Static code analysis revealed three orphaned layout assets that are never extend
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
 │ MOBILE VIEWPORT (<1024px)                                                                        │
 │ ┌──────────────────────────────────────────────────────────────────────────────────────────────┐ │
-│ │ STICKY TOPBAR (h-14 / 56px) — Hamburger Drawer Trigger, Quick Add, Profile Icon              │ │
+│ │ STICKY TOPBAR (h-14 / 56px)  Hamburger Drawer Trigger, Quick Add, Profile Icon              │ │
 │ ├──────────────────────────────────────────────────────────────────────────────────────────────┤ │
 │ │ MAIN CONTENT SCROLL AREA                                                                     │ │
 │ │ (Requires pb-28 / pb-36 padding. 32 views omit this, causing content obstruction!)           │ │
 │ │                                                                                              │ │
 │ │ [Bottom table rows, submit buttons, pagination controls]                                     │ │
 │ ├──────────────────────────────────────────────────────────────────────────────────────────────┤ │
-│ │ FIXED FROSTED GLASS BOTTOM TAB BAR (fixed inset-x-0 bottom-0 z-30 lg:hidden — ~72px height)  │ │
+│ │ FIXED FROSTED GLASS BOTTOM TAB BAR (fixed inset-x-0 bottom-0 z-30 lg:hidden  ~72px height)  │ │
 │ │ [Home]        [POS]           [Orders]        [Inventory]     [More...]                      │ │
 │ └──────────────────────────────────────────────────────────────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 #### A. Dual Sidebar Navigation
-- **Primary Navigation Rail (`sidebar.blade.php` — 2,271 lines)**:
+- **Primary Navigation Rail (`sidebar.blade.php`  2,271 lines)**:
   Organizes the entire application into 9 domain clusters: Core Operations, POS & Retail, Sales & CRM, Inventory & Logistics, Financial Engine, Human Resources, Omnichannel Commerce, AI Suite, and System Settings. Supports desktop collapsible state (`lg:w-[76px]` icon rail vs. `lg:w-[272px]` expanded sidebar) and an off-canvas mobile drawer (`w-72 max-w-[84vw]`).
-- **Secondary Module Sub-Navigation (`secondary-sidebar.blade.php` — 91 lines)**:
+- **Secondary Module Sub-Navigation (`secondary-sidebar.blade.php`  91 lines)**:
   Positions an active secondary navigation sidebar (`lg:left-[272px] w-[260px]`) for modules requiring deep sub-routing (e.g., Finance with COA, General Ledger, Journals, Balance Sheet, Cash & Bank; Settings with General, Integrations, WhatsApp, Social Media, Roles). This modern dual-rail pattern keeps complex multi-level menus legible without nested dropdown clutter.
 
 #### B. Topbar Header, Breadcrumbs & Spotlight Command Palette
-- **Sticky Topbar (`topbar.blade.php` — 970 lines)**:
+- **Sticky Topbar (`topbar.blade.php`  970 lines)**:
   Maintains Apple HIG macOS desktop standard height of 56px (`h-14`). Integrates responsive hamburger menu toggle, dynamic breadcrumbs, Spotlight trigger (`Cmd+K` / `Ctrl+K`), quick transaction triggers (`+` button), theme switcher (Dark/Light), language switcher (ID/EN), and user profile popover.
 - **Spotlight Modal**:
   Provides instant keyboard-driven search indexing across 44 modules, customers, products, and recent orders. Implements genuine search debounce and keyboard arrow navigation (`ArrowDown`, `ArrowUp`, `Enter`).
@@ -860,7 +860,7 @@ The following master catalog maps the highest-severity visual, structural, and e
 - **Consequences**:
   1. *Header Bleed*: When the parent container or browser body experiences fractional scroll offsets, the flex wrapper's rendering bounds can tear, leaving a white flash at the top of the viewport.
   2. *Scroll Clipping*: If modal content exceeds viewport height, placing `flex items-center` on the scrolling wrapper clips the top and bottom of the dialog, rendering header close buttons and footer save buttons unreachable.
-- **Architectural Solution (Golden Reference — `suppliers/index.blade.php:656–674`)**:
+- **Architectural Solution (Golden Reference  `suppliers/index.blade.php:656–674`)**:
   ```html
   <!-- CORRECT BENTO APPLE HIG ARCHITECTURE -->
   <div x-show="openModal" class="fixed inset-0 z-[200] overflow-y-auto" role="dialog" aria-modal="true">

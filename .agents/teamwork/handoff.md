@@ -1,4 +1,4 @@
-# Sentinel Handoff Report — Feedback & Finance Modules Production Readiness
+# Sentinel Handoff Report  Feedback & Finance Modules Production Readiness
 
 **Date**: 2026-11-08  
 **Sentinel**: Project Sentinel (`808bc5d7-efe9-4846-b9c9-314c5cf5bfa3`)  

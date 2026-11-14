@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:09:40Z
+# BRIEFING  2026-11-08T19:09:40Z
 
 ## Mission
 Conduct a comprehensive module audit, test coverage review, and documentation survey for HRM, Import, and Inventory modules.
@@ -11,7 +11,7 @@ Conduct a comprehensive module audit, test coverage review, and documentation su
 - Milestone: Survey & Audit of HRM, Import, and Inventory Modules + Documentation Survey
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Strictly read-only on project source code, tests, docs
 - Write only to working directory `.agents/teamwork/explorer_survey_audit_docs/`
 - Deliver findings to handoff.md and send_message to orchestrator
@@ -42,7 +42,7 @@ Conduct a comprehensive module audit, test coverage review, and documentation su
 - Formulated concrete remediation specifications for implementers.
 
 ## Artifact Index
-- DISPATCH.md — record of orchestrator instructions
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat
-- handoff.md — final audit & survey report
+- DISPATCH.md  record of orchestrator instructions
+- BRIEFING.md  persistent working memory
+- progress.md  liveness heartbeat
+- handoff.md  final audit & survey report

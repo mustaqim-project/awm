@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:26:00Z
+# BRIEFING  2026-11-13T22:26:00Z
 
 ## Mission
 Conduct a comprehensive, read-only code-level audit of assigned public marketing pages, commercial views, and solutions across 7 dimensions to produce a 5-component handoff report.
@@ -12,7 +12,7 @@ Conduct a comprehensive, read-only code-level audit of assigned public marketing
 - Milestone: Public Marketing Pages, Solutions & Commercial Views Survey
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement code changes
+- Read-only investigation  do NOT implement code changes
 - Audit assigned scope: 10 standalone pages + 4 public directories (`resources/views/public/home`, `landing_commercial`, `discovery`, `solutions`)
 - 7 dimensions: Responsive Design, CWV & LCP, TBT & JS, CSS/Fonts/Assets, SEO, Light/Dark Theme contrast, Multilingual/Localization
 - Max 10 prioritized findings per file with significant issues
@@ -63,8 +63,8 @@ Conduct a comprehensive, read-only code-level audit of assigned public marketing
 - Documented shared layout root causes so the implementer agent can address issues at their source.
 
 ## Artifact Index
-- DISPATCH.md — Received dispatch instructions
-- BRIEFING.md — Context and state tracking
-- progress.md — Liveness heartbeat
-- survey_script.ps1, audit_scanner.ps1, inspect_landing.ps1, inspect_biz.ps1, inspect_commercial.ps1, inspect_discovery.ps1, inspect_solutions.ps1, inspect_standalone.ps1, inspect_pricing.ps1, check_seo.ps1, inspect_theme_issues.ps1, find_hardcoded.ps1, check_lang_parity.ps1, check_syntax.ps1 — Static audit tooling scripts
-- handoff.md — Final comprehensive survey report (ready to write)
+- DISPATCH.md  Received dispatch instructions
+- BRIEFING.md  Context and state tracking
+- progress.md  Liveness heartbeat
+- survey_script.ps1, audit_scanner.ps1, inspect_landing.ps1, inspect_biz.ps1, inspect_commercial.ps1, inspect_discovery.ps1, inspect_solutions.ps1, inspect_standalone.ps1, inspect_pricing.ps1, check_seo.ps1, inspect_theme_issues.ps1, find_hardcoded.ps1, check_lang_parity.ps1, check_syntax.ps1  Static audit tooling scripts
+- handoff.md  Final comprehensive survey report (ready to write)

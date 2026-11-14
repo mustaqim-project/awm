@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T10:30:00Z
+# BRIEFING  2026-11-02T10:30:00Z
 
 ## Mission
 Implement Milestone 3: Backend Fase 3 (Customer Piutang & Omnichannel Digital) on cooca_core for production use.
@@ -45,11 +45,11 @@ Implement Milestone 3: Backend Fase 3 (Customer Piutang & Omnichannel Digital) o
 - Verified 100% pass across 22 automated feature tests in SQLite in-memory test environment.
 
 ## Artifact Index
-- DISPATCH.md — Assignment and requirements
-- BRIEFING.md — Persistent context & situational awareness
-- progress.md — Heartbeat and activity log
-- handoff.md — Final 5-component handoff report
-- report.md — Comprehensive implementation report
+- DISPATCH.md  Assignment and requirements
+- BRIEFING.md  Persistent context & situational awareness
+- progress.md  Heartbeat and activity log
+- handoff.md  Final 5-component handoff report
+- report.md  Comprehensive implementation report
 
 ## Change Tracker
 - **Files modified**:

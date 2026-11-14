@@ -1,4 +1,4 @@
-# Handoff Report — Security & RBAC Review (Milestone 1 & Scope Verification)
+# Handoff Report  Security & RBAC Review (Milestone 1 & Scope Verification)
 
 **Agent:** Reviewer 1 (Security & RBAC Reviewer & Adversarial Critic)  
 **Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_1`  
@@ -130,7 +130,7 @@ Direct command executions produced the following results:
 
 ## 3. Caveats & Advisory Findings
 
-1. **Advisory Finding 1 — Missing Translation Keys in Customers Module**:
+1. **Advisory Finding 1  Missing Translation Keys in Customers Module**:
    - In `resources/views/app/customers/index.blade.php`, 5 translation keys were migrated from `purchasing.*` to `customers.*` without registering the corresponding strings in `lang/id/customers.php` and `lang/en/customers.php`:
      - `customers.terjadi_kesalahan_saat_mengunggah_file`
      - `customers.terjadi_kesalahan_sistem_saat_mengeksekusi_import`
@@ -138,10 +138,10 @@ Direct command executions produced the following results:
      - `customers.unduh_template_excel`
      - `customers.unduh_template_xlsx`
    - *Impact*: UI display shows raw translation keys for these 5 strings. Does not affect authorization or security, but should be addressed for localization completeness.
-2. **Advisory Finding 2 — Translation Injection in HTML Head**:
+2. **Advisory Finding 2  Translation Injection in HTML Head**:
    - In `AdversarialCommunityCrmCustomerTest.php:320`, asserting `$response->assertDontSee(__('customers.edit_customer_desc'))` triggers a false positive assertion failure because `resources/views/layouts/app.blade.php` injects the complete `customers` language dictionary into `<script>window.COOCA_I18N = ... </script>` in the `<head>` of all pages.
    - In the actual DOM markup, the Modal 2 template is completely absent (`assertDontSee(':action="\'/customers/\'', false)` and `assertDontSee('x-model="editCustomer.name"', false)` both pass). Test assertions for element visibility should target DOM element tags and directives rather than global dictionary strings.
-3. **Advisory Finding 3 — Broad `--filter=Customer` in PHPUnit**:
+3. **Advisory Finding 3  Broad `--filter=Customer` in PHPUnit**:
    - Running `php artisan test --filter=Customer` matches unrelated legacy test classes outside this module (`CustomerMultiAddressAndBiteshipGeoTest` in ecommerce checkout and `PurchaseOrderComprehensiveRemediationTest` in purchasing). These failures are external to the Community, CRM, and Customers module scope. Dedicated module tests (`CustomerWebFeatureTest`, `CustomerModuleAuditTest`, and `CrmAndCustomerComprehensiveSecurityTest`) pass with 100% success.
 
 ---

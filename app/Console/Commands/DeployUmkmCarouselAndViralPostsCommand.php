@@ -129,7 +129,7 @@ Paket Free Rp 0 Gratis Selamanya untuk Solo Owner!
 CAPTION;
 
         // Clean caption from forbidden characters
-        $carouselCaption = str_replace(['—', '–'], '-', $carouselCaption);
+        $carouselCaption = str_replace(['', '–'], '-', $carouselCaption);
 
         $igSchedTime = Carbon::parse("{$startDateStr} 12:15:00");
 

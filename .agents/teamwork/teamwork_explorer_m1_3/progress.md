@@ -1,4 +1,4 @@
-# Progress — Explorer 3 (Milestone 1)
+# Progress  Explorer 3 (Milestone 1)
 
 Last visited: 2026-11-05T00:22:30Z
 Status: Completed

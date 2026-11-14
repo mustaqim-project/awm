@@ -125,15 +125,15 @@ Detailed scanning revealed heading skips in 7 views:
 ### 1.3 SEO Tags: Canonical URLs & Schema.org JSON-LD
 Inspection of SEO tags showed:
 - **Canonical URLs Missing**:
-  - `resources/views/public/pricing.blade.php` — Missing `@section('canonical', route('public.pricing'))`
-  - `resources/views/public/privacy.blade.php` — Missing `@section('canonical', route('public.privacy'))`
-  - `resources/views/public/terms.blade.php` — Missing `@section('canonical', route('public.terms'))`
-  - `resources/views/public/sitemap.blade.php` — Missing `@section('canonical', route('sitemap.html'))`
+  - `resources/views/public/pricing.blade.php`  Missing `@section('canonical', route('public.pricing'))`
+  - `resources/views/public/privacy.blade.php`  Missing `@section('canonical', route('public.privacy'))`
+  - `resources/views/public/terms.blade.php`  Missing `@section('canonical', route('public.terms'))`
+  - `resources/views/public/sitemap.blade.php`  Missing `@section('canonical', route('sitemap.html'))`
 - **Schema.org JSON-LD Missing**:
-  - `resources/views/public/pricing.blade.php` — Missing `<script type="application/ld+json">` (`Product` / `OfferCatalog` / `SoftwareApplication`).
-  - `resources/views/public/privacy.blade.php` — Missing Schema.org JSON-LD (`WebPage` / `AboutPage` privacy statement).
-  - `resources/views/public/terms.blade.php` — Missing Schema.org JSON-LD (`WebPage` terms statement).
-  - `resources/views/public/sitemap.blade.php` — Missing Schema.org JSON-LD (`SiteNavigationElement` / `CollectionPage`).
+  - `resources/views/public/pricing.blade.php`  Missing `<script type="application/ld+json">` (`Product` / `OfferCatalog` / `SoftwareApplication`).
+  - `resources/views/public/privacy.blade.php`  Missing Schema.org JSON-LD (`WebPage` / `AboutPage` privacy statement).
+  - `resources/views/public/terms.blade.php`  Missing Schema.org JSON-LD (`WebPage` terms statement).
+  - `resources/views/public/sitemap.blade.php`  Missing Schema.org JSON-LD (`SiteNavigationElement` / `CollectionPage`).
 
 ---
 

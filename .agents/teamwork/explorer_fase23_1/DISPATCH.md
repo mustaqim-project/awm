@@ -54,5 +54,5 @@ Write your findings to c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase2
 
 ## 2026-11-02T09:02:29Z
 **Context**: Status check on Backend Architecture Survey
-**Content**: Heartbeat check — please provide an update on your investigation status and update progress.md.
+**Content**: Heartbeat check  please provide an update on your investigation status and update progress.md.
 **Action**: Reply with your current progress or ETA.

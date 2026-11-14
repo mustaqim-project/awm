@@ -26,7 +26,7 @@ You own and may modify:
 - C:\laragon\www\cooca_my_own\lib\core\services\attendance_service.dart
 - Test files: C:\laragon\www\cooca_my_own\test\dummy_data_elimination_test.dart
 
-YOUR MISSION — ELIMINATE DUMMY/MOCK DATA & CONNECT TO LIVE ENDPOINTS (Milestone 3):
+YOUR MISSION  ELIMINATE DUMMY/MOCK DATA & CONNECT TO LIVE ENDPOINTS (Milestone 3):
 1. **POS Catalog Dummy Starter Products Elimination**:
    - In `lib/state/merchant_state.dart`:
      - Eliminate `_getDefaultStarterProducts(businessType)` (lines 1231–1576) containing 24+ hardcoded dummy products with fake prices and static Unsplash URLs.

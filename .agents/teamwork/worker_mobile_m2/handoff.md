@@ -3,7 +3,7 @@
 **Agent ID:** worker_mobile_m2  
 **Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\worker_mobile_m2\`  
 **Target Codebase:** `c:\laragon\www\cooca_my_own`  
-**Milestone:** Milestone 2 — Mobile Petty Cash Modal & Owner Approval Center Implementation  
+**Milestone:** Milestone 2  Mobile Petty Cash Modal & Owner Approval Center Implementation  
 **Date:** 2026-11-02  
 
 ---

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T03:09:00Z
+# BRIEFING  2026-11-03T03:09:00Z
 
 ## Mission
 Remediate all OpenShift lifecycle root causes across Flutter mobile (`cooca_my_own`) and Laravel backend (`cooca_core`), hardening response parsing, cache resilience, cashier isolation, multi-register support, and error UX.
@@ -8,7 +8,7 @@ Remediate all OpenShift lifecycle root causes across Flutter mobile (`cooca_my_o
 - Roles: implementer, qa, specialist
 - Working directory: c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\
 - Original parent: 73d9d035-59a2-45d3-a207-90bc9a5adcc4
-- Milestone: M1 — OpenShift Lifecycle Remediation & Hardening
+- Milestone: M1  OpenShift Lifecycle Remediation & Hardening
 
 ## 🔒 Key Constraints
 - EXCLUSIVE WRITE OWNERSHIP:
@@ -42,21 +42,21 @@ Remediate all OpenShift lifecycle root causes across Flutter mobile (`cooca_my_o
 - Implemented Smart Drawer Float and Expandable Denominations counter matching `shifts.blade.php`.
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\DISPATCH.md` — Assigned instructions and scope
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\BRIEFING.md` — Persistent working memory
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\progress.md` — Liveness and step tracking
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\handoff.md` — Final 5-component handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\DISPATCH.md`  Assigned instructions and scope
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\BRIEFING.md`  Persistent working memory
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\progress.md`  Liveness and step tracking
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_openshift_m1\handoff.md`  Final 5-component handoff report
 
 ## Change Tracker
 - **Files modified**:
-  - `C:\laragon\www\cooca_my_own\lib\core\services\api_client.dart` — Suppressed `'data': null` injection on error; added `ApiClient.forTesting()`
-  - `C:\laragon\www\cooca_my_own\lib\core\services\pos_service.dart` — Hardened response parsing across `openShift`, `closeShift`, `getActiveShift`, `recordCashMovement`, `recordExpense`, `bootstrapTerminal`, `fetchOrders`, `repayCustomerDebt`, `dispatchCourier`; added `posRegisterId` and denominations support
-  - `C:\laragon\www\cooca_my_own\lib\state\merchant_state.dart` — Added `selectedPosRegisterId`, register selection, strict shift state gating, testability hook, and fixed string interpolation syntax
-  - `C:\laragon\www\cooca_my_own\lib\screens\pos\pos_shift_modal.dart` — Preserved cached active shift on network dropout, non-dismissing modal on error with red error banner, smart drawer float pre-fill, and expandable denominations breakdown counter
-  - `C:\laragon\www\cooca_core\app\Domain\Pos\PosShiftService.php` — Enforced cashier shift isolation in `getActiveShift` and register concurrency protection in `openShift`
-  - `C:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Pos\PosShiftController.php` — Added location/register tenant ownership verification and InvalidArgumentException handling in `open`
-  - `C:\laragon\www\cooca_my_own\test\pos_shift_test.dart` — 11 comprehensive unit and widget tests covering all OpenShift scenarios
-  - `C:\laragon\www\cooca_core\tests\Feature\Api\PosShiftRemediationTest.php` — 7 comprehensive feature tests covering cashier isolation, register concurrency, denominations, and tenant validation
+  - `C:\laragon\www\cooca_my_own\lib\core\services\api_client.dart`  Suppressed `'data': null` injection on error; added `ApiClient.forTesting()`
+  - `C:\laragon\www\cooca_my_own\lib\core\services\pos_service.dart`  Hardened response parsing across `openShift`, `closeShift`, `getActiveShift`, `recordCashMovement`, `recordExpense`, `bootstrapTerminal`, `fetchOrders`, `repayCustomerDebt`, `dispatchCourier`; added `posRegisterId` and denominations support
+  - `C:\laragon\www\cooca_my_own\lib\state\merchant_state.dart`  Added `selectedPosRegisterId`, register selection, strict shift state gating, testability hook, and fixed string interpolation syntax
+  - `C:\laragon\www\cooca_my_own\lib\screens\pos\pos_shift_modal.dart`  Preserved cached active shift on network dropout, non-dismissing modal on error with red error banner, smart drawer float pre-fill, and expandable denominations breakdown counter
+  - `C:\laragon\www\cooca_core\app\Domain\Pos\PosShiftService.php`  Enforced cashier shift isolation in `getActiveShift` and register concurrency protection in `openShift`
+  - `C:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Pos\PosShiftController.php`  Added location/register tenant ownership verification and InvalidArgumentException handling in `open`
+  - `C:\laragon\www\cooca_my_own\test\pos_shift_test.dart`  11 comprehensive unit and widget tests covering all OpenShift scenarios
+  - `C:\laragon\www\cooca_core\tests\Feature\Api\PosShiftRemediationTest.php`  7 comprehensive feature tests covering cashier isolation, register concurrency, denominations, and tenant validation
 - **Build status**: PASS
 - **Pending issues**: None
 

@@ -14,7 +14,7 @@ Strict Rules Enforced:
 - 100% Sapaan santai "kamu", "usahamu", "bisnismu", "timmu" (Strictly ZERO "Anda")
 - ZERO forbidden words: "optimalisasi", "implementasi", "solusi terintegrasi", "mengakselerasi"
 - ZERO route URLs: strictly "cooca.id" only (no /pos, /roles, etc.)
-- ZERO em-dash (—) and en-dash (–) and mojibake
+- ZERO em-dash () and en-dash (–) and mojibake
 - ZERO fake business names ("Toko Kamu", etc.) and zero fake user names
 - Virality score >= 85.0 dynamically calculated
 - Auto-rotates across 20 sectors, avoiding the last 10 used sectors
@@ -695,8 +695,8 @@ def pick_next_sector(automation_id: str = "") -> tuple:
     return selected_key, SECTOR_KNOWLEDGE[selected_key]
 
 def clean_text_strictly(text: str) -> str:
-    # Strict Zero em-dash (—) and en-dash (–)
-    t = text.replace("—", "-").replace("–", "-")
+    # Strict Zero em-dash () and en-dash (–)
+    t = text.replace("", "-").replace("–", "-")
     # Strict Zero sapaan "Anda" -> replace with "kamu" / "usahamu"
     t = t.replace(" Anda", " kamu").replace("Anda ", "kamu ")
     t = t.replace("usaha Anda", "usahamu").replace("bisnis Anda", "bisnismu").replace("toko Anda", "tokomu")

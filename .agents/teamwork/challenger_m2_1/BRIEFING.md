@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T01:46:00Z
+# BRIEFING  2026-11-14T01:46:00Z
 
 ## Mission
 Adversarially and empirically verify responsive layout, horizontal overflow, layout stability (CLS), and performance metrics across all 21 scoped views in Milestone 2.
@@ -13,7 +13,7 @@ Adversarially and empirically verify responsive layout, horizontal overflow, lay
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code (report findings/bugs empirically)
+- Review-only  do NOT modify implementation code (report findings/bugs empirically)
 - Empirical testing required: write and execute actual test scripts (Playwright/Puppeteer/Node/cURL/etc.)
 - Must test 8 mandatory viewports: 320px, 360px, 390px, 414px, 768px, 1024px, 1440px, 1920px
 - Zero horizontal overflow (`scrollWidth <= innerWidth`) on all 21 scoped views
@@ -41,6 +41,6 @@ Adversarially and empirically verify responsive layout, horizontal overflow, lay
 - Initialized state files and verification planning
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent state briefing
-- progress.md — liveness heartbeat
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent state briefing
+- progress.md  liveness heartbeat

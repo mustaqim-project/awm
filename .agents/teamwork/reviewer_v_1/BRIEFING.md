@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T04:41:00Z
+# BRIEFING  2026-11-03T04:41:00Z
 
 ## Mission
 Independently review, stress-test, and verify Milestone 1 (OpenShift Remediation) and Milestone 2 (Android Security & Attendance Fake GPS) across cooca_my_own and cooca_core repositories.
@@ -12,9 +12,9 @@ Independently review, stress-test, and verify Milestone 1 (OpenShift Remediation
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Independent verification — execute all required test suites directly
-- Adversarial review — search for integrity violations, shortcuts, facade implementations, hardcoded outputs, concurrency leaks, bypasses
+- Review-only  do NOT modify implementation code
+- Independent verification  execute all required test suites directly
+- Adversarial review  search for integrity violations, shortcuts, facade implementations, hardcoded outputs, concurrency leaks, bypasses
 - Issue explicit verdict: APPROVE or REQUEST_CHANGES
 
 ## Current Parent
@@ -68,7 +68,7 @@ Independently review, stress-test, and verify Milestone 1 (OpenShift Remediation
 - Zero dummy or hardcoded test bypasses identified.
 
 ## Artifact Index
-- `DISPATCH.md` — Inbound instructions
-- `BRIEFING.md` — Situational memory
-- `progress.md` — Liveness & step heartbeat
-- `handoff.md` — Final review report
+- `DISPATCH.md`  Inbound instructions
+- `BRIEFING.md`  Situational memory
+- `progress.md`  Liveness & step heartbeat
+- `handoff.md`  Final review report

@@ -22,7 +22,7 @@ You own and may modify:
 - C:\laragon\www\cooca_core\app\Http\Controllers\Api\V1\Pos\PosShiftController.php
 - Test files: C:\laragon\www\cooca_my_own\test\pos_shift_test.dart and C:\laragon\www\cooca_core\tests\Feature\Api\PosShiftRemediationTest.php
 
-YOUR MISSION — REMEDIATE ALL OPENSHIFT ROOT CAUSES (Milestone 1):
+YOUR MISSION  REMEDIATE ALL OPENSHIFT ROOT CAUSES (Milestone 1):
 1. **Fix Response Parsing Bug**:
    - In `lib/core/services/pos_service.dart` (and `lib/core/services/api_client.dart`), eliminate the flaw where `response.containsKey('data')` causes HTTP 4xx/5xx errors (with `'data': null`) to be treated as successful operations.
    - Strictly check `response['success'] != false && response['statusCode'] == null && (response['success'] == true || response['data'] != null || response['shift'] != null)`.

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T05:41:00Z
+# BRIEFING  2026-11-07T05:41:00Z
 
 ## Mission
 Investigate Role-Based Access Control (RBAC), Controllers, Routes, Database Seeders, and View Authorization for the WhatsApp module in COOCA.
@@ -11,7 +11,7 @@ Investigate Role-Based Access Control (RBAC), Controllers, Routes, Database Seed
 - Milestone: WhatsApp Module RBAC & Controller Authorization Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify application code files
+- Read-only investigation  do NOT implement or modify application code files
 - Adhere to the 5-component handoff report structure
 - Deliver findings via handoff.md and send_message
 
@@ -46,7 +46,7 @@ Investigate Role-Based Access Control (RBAC), Controllers, Routes, Database Seed
 - Deliver detailed findings and step-by-step implementation recommendations in `handoff.md` and send message to parent.
 
 ## Artifact Index
-- DISPATCH.md — incoming parent dispatch messages
-- BRIEFING.md — persistent situational awareness
-- progress.md — liveness heartbeat and subtask tracking
-- handoff.md — final 5-component handoff report
+- DISPATCH.md  incoming parent dispatch messages
+- BRIEFING.md  persistent situational awareness
+- progress.md  liveness heartbeat and subtask tracking
+- handoff.md  final 5-component handoff report

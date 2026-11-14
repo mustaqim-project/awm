@@ -1,4 +1,4 @@
-# Progress — Worker Master UI/UX Audit Report Authoring
+# Progress  Worker Master UI/UX Audit Report Authoring
 
 **Agent**: worker_audit_1  
 **Milestone**: M1 (Master UI/UX Audit Report Authoring)  

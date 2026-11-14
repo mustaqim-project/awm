@@ -1,4 +1,4 @@
-# Handoff Report — Reviewer M2_1: Standalone Marketing Pages and Commercial Landings
+# Handoff Report  Reviewer M2_1: Standalone Marketing Pages and Commercial Landings
 
 ## 1. Observation
 

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T06:05:00Z
+# BRIEFING  2026-11-07T06:05:00Z
 
 ## Mission
 Implement Milestone 1: RBAC Core & Controller Guards for the WhatsApp module in COOCA.
@@ -63,7 +63,7 @@ Implement Milestone 1: RBAC Core & Controller Guards for the WhatsApp module in 
 - None specified in dispatch
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\DISPATCH.md` — Assigned instructions
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\BRIEFING.md` — Agent working memory
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\progress.md` — Progress heartbeat
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\handoff.md` — Final handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\DISPATCH.md`  Assigned instructions
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\BRIEFING.md`  Agent working memory
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\progress.md`  Progress heartbeat
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_wa_m1_rbac\handoff.md`  Final handoff report

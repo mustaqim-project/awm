@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T07:08:30Z
+# BRIEFING  2026-11-07T07:08:30Z
 
 ## Mission
 Forensic integrity verification of the WhatsApp module refactoring (RBAC enforcement, UI simplification, test suite).
@@ -11,8 +11,8 @@ Forensic integrity verification of the WhatsApp module refactoring (RBAC enforce
 - Target: WhatsApp module refactoring (Milestones 1-3)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Integrity Mode: development (per ORIGINAL_REQUEST.md)
 - Verify authentic implementations, zero dummy facades, genuine RBAC enforcement, real tests
 
@@ -46,7 +46,7 @@ Forensic integrity verification of the WhatsApp module refactoring (RBAC enforce
   - Behavioral verification & tests (`WhatsAppRbacSecurityTest`: 13/13 passed, 124 assertions; `MerchantWhatsAppWebFeatureTest`: 28/28 passed, 191 assertions)
   - PHP syntax verification (`php -l` on all PHP files -> 0 errors)
 - **Checks remaining**: []
-- **Findings so far**: CLEAN — No integrity violations found. All implementations authentic and verified empirically.
+- **Findings so far**: CLEAN  No integrity violations found. All implementations authentic and verified empirically.
 
 ## Key Decisions Made
 - Confirmed Gate::before correctly bridges User models to Context::hasPermission.
@@ -55,10 +55,10 @@ Forensic integrity verification of the WhatsApp module refactoring (RBAC enforce
 - Confirmed zero regressions across existing test suite (28 tests passed).
 
 ## Artifact Index
-- DISPATCH.md — Audit dispatch task instructions
-- BRIEFING.md — Situational awareness and state
-- progress.md — Audit execution log
-- handoff.md — Final audit verdict and evidence report
+- DISPATCH.md  Audit dispatch task instructions
+- BRIEFING.md  Situational awareness and state
+- progress.md  Audit execution log
+- handoff.md  Final audit verdict and evidence report
 
 ## Attack Surface
 - **Hypotheses tested**:

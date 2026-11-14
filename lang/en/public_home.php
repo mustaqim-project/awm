@@ -11,7 +11,7 @@ return [
 
     'hero_kicker' => 'All-in-One Business Operating System for MSMEs',
     'hero_title' => 'Fast POS Cashier, Recipe Stock Control & Automated Accounting for Your Business',
-    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phone—no manual bookkeeping required.',
+    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phoneno manual bookkeeping required.',
     'hero_cta_primary' => 'Start Free Trial',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Try Interactive Demo',

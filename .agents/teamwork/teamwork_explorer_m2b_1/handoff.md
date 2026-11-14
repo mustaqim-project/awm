@@ -1,4 +1,4 @@
-# Handoff Report — Milestone 2B (Batch 2 Themes 1–4 Audit)
+# Handoff Report  Milestone 2B (Batch 2 Themes 1–4 Audit)
 
 ## 1. Observation
 Across the 4 themes (`bakery_cake`, `fnb_bakery`, `fnb_cafe`, `fnb_catering`), direct inspection of `hero.blade.php`, `features_banner.blade.php`, and `category_chips.blade.php` in `resources/views/public/storefront/themes/{theme_key}/` revealed the following concrete evidence:

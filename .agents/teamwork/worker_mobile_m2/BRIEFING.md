@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T06:14:00Z
+# BRIEFING  2026-11-02T06:14:00Z
 
 ## Mission
 Implement Mobile Petty Cash / Quick Expense Modal and Owner Approval Center for cooca_my_own Flutter app, with Apple HIG design tokens, state updates, dashboard integration, and automated tests.
@@ -52,12 +52,12 @@ Implement Mobile Petty Cash / Quick Expense Modal and Owner Approval Center for 
 - Dashboard includes live pending approvals badge counter and Apple HIG operational banner navigating to `OwnerApprovalScreen`.
 
 ## Artifact Index
-- `lib/screens/pos/pos_expense_modal.dart` — Petty Cash / Quick Expense Modal
-- `lib/screens/approvals/owner_approval_screen.dart` — Owner Approval Center Screen
-- `lib/core/services/approvals_service.dart` — Approvals API Client Service
-- `test/pos_expense_modal_test.dart` — Widget test suite for Petty Cash Modal
-- `test/owner_approval_screen_test.dart` — Widget test suite for Owner Approval Center
-- `test/pos_shift_expense_test.dart` — Unit/widget tests for shift expected cash deduction
+- `lib/screens/pos/pos_expense_modal.dart`  Petty Cash / Quick Expense Modal
+- `lib/screens/approvals/owner_approval_screen.dart`  Owner Approval Center Screen
+- `lib/core/services/approvals_service.dart`  Approvals API Client Service
+- `test/pos_expense_modal_test.dart`  Widget test suite for Petty Cash Modal
+- `test/owner_approval_screen_test.dart`  Widget test suite for Owner Approval Center
+- `test/pos_shift_expense_test.dart`  Unit/widget tests for shift expected cash deduction
 
 ## Change Tracker
 - **Files modified**:

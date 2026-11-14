@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 1 — Backend Fase 2 (Logistik & Gudang Toko)
+# Handoff Report: Milestone 1  Backend Fase 2 (Logistik & Gudang Toko)
 
 **Agent**: Worker Fase 2 Backend (`worker_fase2_backend_2`)  
 **Recipient**: Orchestrator / Forensic Auditor / Downstream Mobile Worker  

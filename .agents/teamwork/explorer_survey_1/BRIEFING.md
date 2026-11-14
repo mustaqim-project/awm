@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:20:00Z
+# BRIEFING  2026-11-13T22:20:00Z
 
 ## Mission
 Public Marketing Layouts, Assets, Typography, Chatbot & Tooling Survey: Map and inspect all files under assigned scope (`resources/views/layouts/public_marketing.blade.php`, `resources/views/layouts/partials/help_chatbot_widget.blade.php`, `resources/views/layouts/partials/typography.blade.php`, `resources/views/public/partials/`), analyze global asset pipeline (Vite, CSS, JS, fonts, CLS, LCP, TBT), theme system (FOUC, dark/light contrast), discover verification resources (build scripts, php -l, linters, tests), and conduct 7-dimension code-level audit.
@@ -14,14 +14,14 @@ Public Marketing Layouts, Assets, Typography, Chatbot & Tooling Survey: Map and 
 - Working directory: C:\laragon\www\cooca_core
 - State folder: C:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_1\
 - Original parent: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
-- Milestone: Survey & Investigation — Public Marketing Architecture
+- Milestone: Survey & Investigation  Public Marketing Architecture
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify any source code files.
+- Read-only investigation  do NOT implement or modify any source code files.
 - Write only to working directory (`.agents/teamwork/explorer_survey_1/`).
 - Follow ui-simplify-layout and responsive-ui-ux skills.
 - Deliver self-contained 5-component handoff report (`handoff.md`).
-- [New Constraints 2026-11-13]: Read-only investigation — do NOT implement or modify source code. Produce structured audit report with concrete findings across 7 dimensions (Responsive, CWV/LCP, TBT/JS, CSS/Fonts, SEO, Theme Contrast, Multilingual/i18n). Max 10 findings per file.
+- [New Constraints 2026-11-13]: Read-only investigation  do NOT implement or modify source code. Produce structured audit report with concrete findings across 7 dimensions (Responsive, CWV/LCP, TBT/JS, CSS/Fonts, SEO, Theme Contrast, Multilingual/i18n). Max 10 findings per file.
 
 ## Current Parent
 - Conversation ID: 4e686b8a-2e28-4b82-9b39-8b7a237105e3
@@ -55,10 +55,10 @@ Public Marketing Layouts, Assets, Typography, Chatbot & Tooling Survey: Map and 
 - Formulated lazy hydration architecture (`<template x-if="isOpen">`) and idle callback deferral for chatbot widgets.
 
 ## Artifact Index
-- `DISPATCH.md` — Inbound instructions log
-- `BRIEFING.md` — Persistent working memory and state
-- `progress.md` — Liveness heartbeat and milestone tracking
-- `check_missing_keys.php` — Automated translation auditor for scoped views
-- `check_lang.php` — Language catalog key symmetry validator
-- `scan_hardcoded.php` — Regex analyzer for hardcoded strings
-- `handoff.md` — Final 5-component handoff report
+- `DISPATCH.md`  Inbound instructions log
+- `BRIEFING.md`  Persistent working memory and state
+- `progress.md`  Liveness heartbeat and milestone tracking
+- `check_missing_keys.php`  Automated translation auditor for scoped views
+- `check_lang.php`  Language catalog key symmetry validator
+- `scan_hardcoded.php`  Regex analyzer for hardcoded strings
+- `handoff.md`  Final 5-component handoff report

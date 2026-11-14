@@ -26,14 +26,14 @@ Direct observations and evidence collected from code inspection and tool executi
 5. **Navigation Views (`sidebar.blade.php:2129` & `topbar.blade.php:466`)**:
    - Hardcoded `@if (\App\Support\Context::isOwner())` for feedback links.
 6. **Finance Views Unguarded Actions**:
-   - `resources/views/app/finance/payables.blade.php:21` — Import button had no permission check.
-   - `resources/views/app/finance/receivables.blade.php:21` — Import button had no permission check.
-   - `resources/views/app/finance/edc-terminals/index.blade.php:10` — Add EDC button had no permission check.
-   - `resources/views/app/finance/payout-accounts/index.blade.php:10` — Add bank account button had no permission check.
-   - `resources/views/app/finance/settlements/index.blade.php:190` — Payout action form had no permission check.
-   - `resources/views/app/finance/accounting/balance-sheet.blade.php:28` — Export Excel link had no permission check.
-   - `resources/views/app/finance/accounting/trial-balance.blade.php:23` — Export Excel link had no permission check.
-   - `resources/views/app/finance/accounting/general-ledger.blade.php:17` — Export Excel link had no permission check.
+   - `resources/views/app/finance/payables.blade.php:21`  Import button had no permission check.
+   - `resources/views/app/finance/receivables.blade.php:21`  Import button had no permission check.
+   - `resources/views/app/finance/edc-terminals/index.blade.php:10`  Add EDC button had no permission check.
+   - `resources/views/app/finance/payout-accounts/index.blade.php:10`  Add bank account button had no permission check.
+   - `resources/views/app/finance/settlements/index.blade.php:190`  Payout action form had no permission check.
+   - `resources/views/app/finance/accounting/balance-sheet.blade.php:28`  Export Excel link had no permission check.
+   - `resources/views/app/finance/accounting/trial-balance.blade.php:23`  Export Excel link had no permission check.
+   - `resources/views/app/finance/accounting/general-ledger.blade.php:17`  Export Excel link had no permission check.
 
 ### 1.2 Modifications Made
 1. **`database/seeders/RbacSeeder.php`**:

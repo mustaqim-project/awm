@@ -9,20 +9,21 @@
      x-data="{
         showBanner: false,
         init() {
-            var consent = localStorage.getItem('cooca_consent_status');
+            var consent = null;
+            try { consent = localStorage.getItem('cooca_consent_status'); } catch (e) {}
             if (!consent) {
                 setTimeout(() => { this.showBanner = true; }, 1500);
             }
         },
         acceptAll() {
-            localStorage.setItem('cooca_consent_status', 'accepted');
+            try { localStorage.setItem('cooca_consent_status', 'accepted'); } catch (e) {}
             this.showBanner = false;
             if (typeof window.initMarketingPixels === 'function') {
                 window.initMarketingPixels();
             }
         },
         rejectOptional() {
-            localStorage.setItem('cooca_consent_status', 'essential');
+            try { localStorage.setItem('cooca_consent_status', 'essential'); } catch (e) {}
             this.showBanner = false;
         }
      }"

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T15:35:00Z
+# BRIEFING  2026-11-07T15:35:00Z
 
 ## Mission
 Empirically stress-test and adversarially challenge the RBAC authorization implementation in Community, CRM, and Customers modules (permission boundaries, cross-tenant isolation, edit/destroy controls, automated security test suites, regression and bypass detection).
@@ -13,7 +13,7 @@ Empirically stress-test and adversarially challenge the RBAC authorization imple
 - Current parent: 8d27681a-70c2-4f72-a481-2fbed64c6df8
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code (STRICTLY READ-ONLY towards resources/views/app and application code)
+- Review-only  do NOT modify implementation code (STRICTLY READ-ONLY towards resources/views/app and application code)
 - Must empirically verify every claim with code/tests
 - Provide explicit verdict: APPROVE or REQUEST_CHANGES
 - Write full verification report to handoff.md
@@ -64,8 +64,8 @@ Empirically stress-test and adversarially challenge the RBAC authorization imple
 - Issued explicit verdict: **`APPROVE`** based on 100% test pass rate across 51 empirical tests and 266 assertions, with zero security bypasses or regressions found.
 
 ## Artifact Index
-- `DISPATCH.md` — Task instructions and parent communications
-- `BRIEFING.md` — Situational awareness
-- `progress.md` — Liveness heartbeat and step tracking
-- `handoff.md` — Final verification report and verdict
-- `tests/Feature/AdversarialCommunityCrmCustomerTest.php` — Dedicated adversarial test harness
+- `DISPATCH.md`  Task instructions and parent communications
+- `BRIEFING.md`  Situational awareness
+- `progress.md`  Liveness heartbeat and step tracking
+- `handoff.md`  Final verification report and verdict
+- `tests/Feature/AdversarialCommunityCrmCustomerTest.php`  Dedicated adversarial test harness

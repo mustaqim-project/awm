@@ -9,15 +9,15 @@ Skill operasional ini memandu AI Agent dalam mengeksekusi **audit teks 100% meny
 
 > 🎯 **MANDAT ZERO HARDCODED TEXT (100% EXHAUSTIVE COVERAGE)**:  
 > **TIDAK BOLEH ADA SATUPUN TEKS BAHASA INDONESIA MENTAH YANG TERTINGGAL** di kode sumber.  
-> Seluruh informasi teks—mulai dari Document Title `<title>`, Header H1/H2, Breadcrumb & Overline, Form Input/Placeholder/Helper, Dev Testing Alert, Validation Error Heading, Tombol Aksi, Modal Sheet, Empty State, Kolom Tabel, Badge Status, Pagination, Toast JavaScript, Flash Message, Domain Exception, Notifikasi WhatsApp/Email, hingga Audit Log—**WAJIB MENGGUNAKAN HELPER TRANSLATABLE `{{ __('group.key') }}` ATAU `__('group.key')`**.
+> Seluruh informasi teksmulai dari Document Title `<title>`, Header H1/H2, Breadcrumb & Overline, Form Input/Placeholder/Helper, Dev Testing Alert, Validation Error Heading, Tombol Aksi, Modal Sheet, Empty State, Kolom Tabel, Badge Status, Pagination, Toast JavaScript, Flash Message, Domain Exception, Notifikasi WhatsApp/Email, hingga Audit Log**WAJIB MENGGUNAKAN HELPER TRANSLATABLE `{{ __('group.key') }}` ATAU `__('group.key')`**.
 
 ---
 
 ## 🧭 File Referensi Pendukung
 
-* `references/i18n-dictionary-structure.md` — Matriks struktur kamus Full-Stack (`lang/id/` & `lang/en/`), 12 kategori file kamus, konvensi key, dan checklist kelengkapan.
-* `references/text-audit-and-extraction-protocol.md` — Protokol audit teks 10 domain & katalog pola deteksi Regex untuk membersihkan string mentah hulu-ke-hilir.
-* `scripts/scan_i18n.py` — Skrip scanner otomatis berbasis CLI untuk memindai pelanggaran teks mentah dan 10 domain sasaran i18n pada berkas view Blade.
+* `references/i18n-dictionary-structure.md`  Matriks struktur kamus Full-Stack (`lang/id/` & `lang/en/`), 12 kategori file kamus, konvensi key, dan checklist kelengkapan.
+* `references/text-audit-and-extraction-protocol.md`  Protokol audit teks 10 domain & katalog pola deteksi Regex untuk membersihkan string mentah hulu-ke-hilir.
+* `scripts/scan_i18n.py`  Skrip scanner otomatis berbasis CLI untuk memindai pelanggaran teks mentah dan 10 domain sasaran i18n pada berkas view Blade.
 
 ---
 

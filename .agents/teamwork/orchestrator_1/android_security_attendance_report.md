@@ -1,6 +1,6 @@
 # Android Security & Fake GPS Prevention for Smart Attendance
 
-**Document Version**: 1.0.0 — Production Security Audit & Verification  
+**Document Version**: 1.0.0  Production Security Audit & Verification  
 **Date**: 2026-11-03  
 **Auditor / Security Worker**: Teamwork Quality & Documentation Worker (`worker_audit_reports_m5`)  
 **Client Project**: `C:\laragon\www\cooca_my_own` (Flutter & Android Kotlin Native)  
@@ -175,7 +175,7 @@ To prevent false-positive lockouts for legitimate developers and technicians who
 ### SEC-06: Geospatial Edge Case & Null Island Prevention
 - **Feature Name**: Geospatial Input Sanitization
 - **File Location**: `C:\laragon\www\cooca_my_own\lib\core\services\location_biometric_service.dart`
-- **Problem Description**: Default zero coordinates (`0.0, 0.0` — Null Island in the Gulf of Guinea) or out-of-range latitude/longitude coordinates could pass to geofencing calculation and produce erroneous distance offsets.
+- **Problem Description**: Default zero coordinates (`0.0, 0.0`  Null Island in the Gulf of Guinea) or out-of-range latitude/longitude coordinates could pass to geofencing calculation and produce erroneous distance offsets.
 - **Root Cause**: Missing boundary validation.
 - **Risk Level**: **Low**
 - **Remediation Applied**:

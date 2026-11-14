@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T04:45:00Z
+# BRIEFING  2026-11-03T04:45:00Z
 
 ## Mission
 Empirically and adversarially stress-test Milestone 1 (OpenShift Remediation) and Milestone 2 (Attendance Security) across cooca_my_own and cooca_core, executing test suites and verifying edge cases.
@@ -12,7 +12,7 @@ Empirically and adversarially stress-test Milestone 1 (OpenShift Remediation) an
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Run automated tests yourself; do not trust claims or logs
 - If cannot reproduce empirically, it does not count
 - Write handoff.md with APPROVE or REQUEST_CHANGES
@@ -35,10 +35,10 @@ Empirically and adversarially stress-test Milestone 1 (OpenShift Remediation) an
 - Final verdict: APPROVE Milestone 1 and Milestone 2.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch instructions
-- BRIEFING.md — Persistent context & state
-- progress.md — Liveness heartbeat and milestone progress
-- handoff.md — Final verdict and empirical challenge report
+- DISPATCH.md  Initial dispatch instructions
+- BRIEFING.md  Persistent context & state
+- progress.md  Liveness heartbeat and milestone progress
+- handoff.md  Final verdict and empirical challenge report
 
 ## Attack Surface
 - **Hypotheses tested**:

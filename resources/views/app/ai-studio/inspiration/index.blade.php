@@ -10,7 +10,7 @@
     {{-- 1. BENTO APPLE HIG MODULE HEADER --}}
     <x-module-header
         title="AI Inspiration Library"
-        subtitle="Pusat inspirasi gaya visual komersial resmi COOCA — Kurasi Internal, Pexels, Pixabay, Unsplash & Koleksi Pribadi"
+        subtitle="Pusat inspirasi gaya visual komersial resmi COOCA  Kurasi Internal, Pexels, Pixabay, Unsplash & Koleksi Pribadi"
         :breadcrumbs="[
             ['label' => 'Dashboard', 'url' => route('dashboard')],
             ['label' => 'AI Studio Visual', 'url' => route('ai-studio.index')],

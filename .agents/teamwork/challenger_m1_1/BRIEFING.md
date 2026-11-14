@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T23:05:00Z
+# BRIEFING  2026-11-13T23:05:00Z
 
 ## Mission
 Empirical challenge and stress-testing of Milestone 1: Layout Stability, Mobile Viewports (320px, 375px, 640px), Touch Targets (WCAG 2.5.5), and Vite Asset Pipeline across 7 modified public frontend files.
@@ -13,7 +13,7 @@ Empirical challenge and stress-testing of Milestone 1: Layout Stability, Mobile 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code in `resources/views/`, `app/`, `public/`, etc.
+- Review-only  do NOT modify implementation code in `resources/views/`, `app/`, `public/`, etc.
 - Test files and test runners must reside in designated dirs (`tests/Feature/`) and `.agents/teamwork/` must contain only metadata
 - Empirical verification mandatory: every claim backed by executed tests / test scripts run directly
 
@@ -53,7 +53,7 @@ Empirical challenge and stress-testing of Milestone 1: Layout Stability, Mobile 
 - Unambiguous Verdict: **REJECT** due to verified 14px–31px physical collision between Cookie Consent Banner and Mobile Dock.
 
 ## Artifact Index
-- `progress.md` — Liveness and execution heartbeat
-- `handoff.md` — Final empirical challenge report and verdict
-- `tests/Feature/PublicMarketingMilestone1EmpiricalChallengeTest.php` — Persistent feature test suite
-- `scripts/test_m1_mobile_viewports.mjs` — Playwright headless Chromium box-model test runner
+- `progress.md`  Liveness and execution heartbeat
+- `handoff.md`  Final empirical challenge report and verdict
+- `tests/Feature/PublicMarketingMilestone1EmpiricalChallengeTest.php`  Persistent feature test suite
+- `scripts/test_m1_mobile_viewports.mjs`  Playwright headless Chromium box-model test runner

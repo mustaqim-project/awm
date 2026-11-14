@@ -57,13 +57,13 @@ Used in `features_banner.blade.php` when the business owner has not populated cu
 | Translation Key | Bahasa Indonesia (`id`) | English (`en`) | Icon Token |
 |---|---|---|---|
 | `official_store` | `Outlet Resmi Terverifikasi` | `Verified Official Store` | `shield-check` |
-| `official_desc` | `Produk dan layanan 100% original langsung dari merchant resmi terpercaya.` | `100% authentic products and dependable services directly from verified merchants.` | — |
+| `official_desc` | `Produk dan layanan 100% original langsung dari merchant resmi terpercaya.` | `100% authentic products and dependable services directly from verified merchants.` |  |
 | `easy_payment` | `Pembayaran Mudah & Aman` | `Seamless & Secure Payment` | `credit-card` |
-| `payment_desc` | `Mendukung QRIS instan, transfer bank, e-wallet, serta metode pembayaran aman lainnya.` | `Supports instant QRIS, bank transfers, e-wallets, and trusted payment methods.` | — |
+| `payment_desc` | `Mendukung QRIS instan, transfer bank, e-wallet, serta metode pembayaran aman lainnya.` | `Supports instant QRIS, bank transfers, e-wallets, and trusted payment methods.` |  |
 | `secure_delivery` | `Pengiriman Cepat & Aman` | `Fast & Reliable Delivery` | `truck` |
-| `delivery_desc` | `Layanan pengantaran andal dengan nomor resi dan pelacakan status pesanan real-time.` | `Dependable courier and logistics services with automated real-time order tracking.` | — |
+| `delivery_desc` | `Layanan pengantaran andal dengan nomor resi dan pelacakan status pesanan real-time.` | `Dependable courier and logistics services with automated real-time order tracking.` |  |
 | `customer_care` | `Layanan Pelanggan Siaga` | `Dedicated Customer Support` | `headset` / `message-circle` |
-| `care_desc` | `Konsultasi ramah dan respon cepat langsung bersama tim kami melalui WhatsApp resmi.` | `Friendly assistance and prompt responses directly from our team via official WhatsApp.` | — |
+| `care_desc` | `Konsultasi ramah dan respon cepat langsung bersama tim kami melalui WhatsApp resmi.` | `Friendly assistance and prompt responses directly from our team via official WhatsApp.` |  |
 
 #### Recommended PHP Code (`features`):
 ```php

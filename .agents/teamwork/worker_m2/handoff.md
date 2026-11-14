@@ -1,4 +1,4 @@
-# Handoff Report — Worker M2: Marketing Pages, Solutions & Commercial Views Optimization
+# Handoff Report  Worker M2: Marketing Pages, Solutions & Commercial Views Optimization
 
 ## 1. Observation
 

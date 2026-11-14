@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T00:42:00Z
+# BRIEFING  2026-11-14T00:42:00Z
 
 ## Mission
 Milestone 1 Cookie Banner Elevation & 8-Viewport Independent Empirical Recheck for COOCA core marketing layout.
@@ -13,7 +13,7 @@ Milestone 1 Cookie Banner Elevation & 8-Viewport Independent Empirical Recheck f
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code directly unless reproducing/testing via isolated scripts
+- Review-only  do NOT modify implementation code directly unless reproducing/testing via isolated scripts
 - Strict empirical proof: tests, oracles, geometry collision measurements across 8 viewports
 - Must deliver clear verdict: APPROVE or REJECT
 
@@ -59,7 +59,7 @@ Milestone 1 Cookie Banner Elevation & 8-Viewport Independent Empirical Recheck f
 - Final Verdict: **APPROVE**
 
 ## Artifact Index
-- `.agents/teamwork/challenger_m1_recheck/DISPATCH.md` — Inbound instructions
-- `.agents/teamwork/challenger_m1_recheck/BRIEFING.md` — Situational awareness
-- `.agents/teamwork/challenger_m1_recheck/progress.md` — Liveness & status tracking
-- `.agents/teamwork/challenger_m1_recheck/handoff.md` — Final verdict report
+- `.agents/teamwork/challenger_m1_recheck/DISPATCH.md`  Inbound instructions
+- `.agents/teamwork/challenger_m1_recheck/BRIEFING.md`  Situational awareness
+- `.agents/teamwork/challenger_m1_recheck/progress.md`  Liveness & status tracking
+- `.agents/teamwork/challenger_m1_recheck/handoff.md`  Final verdict report

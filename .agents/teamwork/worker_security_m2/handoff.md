@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 2 — Android Security & Fake GPS Prevention for Attendance
+# Handoff Report: Milestone 2  Android Security & Fake GPS Prevention for Attendance
 
 **Agent ID**: `worker_security_m2`  
 **Handoff Type**: Hard (Task Complete)  

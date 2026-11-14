@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T03:58:00Z
+# BRIEFING  2026-11-03T03:58:00Z
 
 ## Mission
 Eliminate dummy/mock data and connect Flutter app modules to live endpoints (Milestone 3).
@@ -46,10 +46,10 @@ Eliminate dummy/mock data and connect Flutter app modules to live endpoints (Mil
 - Comprehensive test suite in `test/dummy_data_elimination_test.dart` passes 7/7 tests.
 
 ## Artifact Index
-- DISPATCH.md — Task assignment
-- BRIEFING.md — Context and status
-- progress.md — Heartbeat and step tracking
-- handoff.md — Verification and completion report
+- DISPATCH.md  Task assignment
+- BRIEFING.md  Context and status
+- progress.md  Heartbeat and step tracking
+- handoff.md  Verification and completion report
 
 ## Change Tracker
 - **Files modified**:

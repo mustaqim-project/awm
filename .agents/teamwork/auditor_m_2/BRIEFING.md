@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T09:15:00Z
+# BRIEFING  2026-10-31T09:15:00Z
 
 ## Mission
 Forensic integrity audit of translation key remediation across lang/id/*.php, lang/en/*.php, and Blade views to verify Acceptance Criterion 4 and full localization compliance with zero shortcuts or integrity violations.
@@ -11,8 +11,8 @@ Forensic integrity audit of translation key remediation across lang/id/*.php, la
 - Target: translation_key_remediation_audit
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Integrity mode: development (from ORIGINAL_REQUEST.md)
 - Verify zero hardcoded text, zero empty translations, zero placeholder strings, zero dummy/facade implementations
 - Run all 7 authoritative tests independently and inspect git diffs
@@ -44,6 +44,6 @@ Forensic integrity audit of translation key remediation across lang/id/*.php, la
 - Prioritize independent verification using fresh python/php scripts without relying on worker's reports
 
 ## Artifact Index
-- DISPATCH.md — Audit assignment
-- BRIEFING.md — Situational awareness
-- handoff.md — Final audit report
+- DISPATCH.md  Audit assignment
+- BRIEFING.md  Situational awareness
+- handoff.md  Final audit report

@@ -1,4 +1,4 @@
-# Handoff Report — Comprehensive E2E Testing Suite for COOCA Public Marketing Frontend
+# Handoff Report  Comprehensive E2E Testing Suite for COOCA Public Marketing Frontend
 
 **Agent**: `test_writer_e2e` (roles: `specialist`, `qa`)  
 **Date**: 2026-11-14T06:05:00+07:00 (UTC 2026-11-13T23:05:00Z)  
@@ -17,7 +17,7 @@
      3. Execute the test suite and verify clean execution.
      4. Publish `TEST_READY.md` at `C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\TEST_READY.md`.
      5. Deliver a 5-component handoff report.
-   - The role constraint specifies: test code only — never modify implementation code under `app/` or `resources/views/`.
+   - The role constraint specifies: test code only  never modify implementation code under `app/` or `resources/views/`.
 
 2. **Test File Created**:
    - `tests/Feature/PublicMarketingFrontendE2ETest.php` (618 lines, 15 test methods).

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:46:00Z
+# BRIEFING  2026-11-05T00:46:00Z
 
 ## Mission
 Review and adversarial stress-test Milestone 1 implementation: Storefront translations (ID/EN) and BusinessLandingPage normalization methods (`isSectionVisible`, `getSectionVisibility`, `getUniversalValues`).
@@ -12,8 +12,8 @@ Review and adversarial stress-test Milestone 1 implementation: Storefront transl
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Integrity check — actively check for hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certifying work
+- Review-only  do NOT modify implementation code
+- Integrity check  actively check for hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certifying work
 - Issue structured verdict: APPROVE or REQUEST_CHANGES
 
 ## Current Parent
@@ -42,8 +42,8 @@ Review and adversarial stress-test Milestone 1 implementation: Storefront transl
 - Structured verdict issued: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — incoming task dispatch
-- `BRIEFING.md` — persistent working memory
-- `progress.md` — heartbeat tracker
-- `analysis.md` — full review and stress test report
-- `handoff.md` — formal handoff report with verdict
+- `DISPATCH.md`  incoming task dispatch
+- `BRIEFING.md`  persistent working memory
+- `progress.md`  heartbeat tracker
+- `analysis.md`  full review and stress test report
+- `handoff.md`  formal handoff report with verdict

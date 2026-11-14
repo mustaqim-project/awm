@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T07:07:00Z
+# BRIEFING  2026-11-07T07:07:00Z
 
 ## Mission
 Independent quality and adversarial review of the WhatsApp module refactoring (RBAC enforcement, UI layout simplification, touch targets, and test suite).
@@ -12,7 +12,7 @@ Independent quality and adversarial review of the WhatsApp module refactoring (R
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Actively check for integrity violations: hardcoded results, dummy implementations, shortcuts, fabricated verifications
 - If any integrity violations detected, issue REQUEST_CHANGES with Critical finding
 - Maintain independent verification commands
@@ -68,6 +68,6 @@ Independent quality and adversarial review of the WhatsApp module refactoring (R
 - **Untested angles**: None within WhatsApp module scope.
 
 ## Artifact Index
-- `handoff.md` — Final review and challenge report
-- `progress.md` — Liveness heartbeat
-- `DISPATCH.md` — Incoming message log
+- `handoff.md`  Final review and challenge report
+- `progress.md`  Liveness heartbeat
+- `DISPATCH.md`  Incoming message log

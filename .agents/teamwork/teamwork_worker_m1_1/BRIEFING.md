@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:32:50Z
+# BRIEFING  2026-11-05T00:32:50Z
 
 ## Mission
 Implement backend and service normalization for Storefront Themes across translations, BusinessLandingPage model, and StorefrontThemeService.
@@ -38,18 +38,18 @@ Implement backend and service normalization for Storefront Themes across transla
 - `empty` translation dictionary contains both top-level prefixed keys (`cart_title`) and nested keys (`cart.title`), preventing translation lookup failures in any Blade style.
 
 ## Artifact Index
-- `DISPATCH.md` — Initial dispatch instructions
-- `BRIEFING.md` — Persistent working memory
-- `progress.md` — Real-time progress and heartbeat
-- `changes.md` — Detailed record of modifications
-- `handoff.md` — 5-component hard handoff report
+- `DISPATCH.md`  Initial dispatch instructions
+- `BRIEFING.md`  Persistent working memory
+- `progress.md`  Real-time progress and heartbeat
+- `changes.md`  Detailed record of modifications
+- `handoff.md`  5-component hard handoff report
 
 ## Change Tracker
 - **Files modified**:
-  - `lang/id/storefront.php` — Added badges, features, catalog keys, empty dict, and alias.
-  - `lang/en/storefront.php` — Added badges, features, catalog keys, empty dict, and alias.
-  - `app/Models/BusinessLandingPage.php` — Added visibility constant, `isSectionVisible`, `getSectionVisibility`, `resolveSectionAlias`, `getUniversalValues`, `getDefaultUniversalValues`.
-  - `app/Domain/Storefront/StorefrontThemeService.php` — Added `ARCHETYPES`, `THEME_ARCHETYPE_MAP`, `getAllArchetypes`, `getThemeArchetype`, `getUniversalFallback`, enriched `getAllThemes` and `getTheme`.
+  - `lang/id/storefront.php`  Added badges, features, catalog keys, empty dict, and alias.
+  - `lang/en/storefront.php`  Added badges, features, catalog keys, empty dict, and alias.
+  - `app/Models/BusinessLandingPage.php`  Added visibility constant, `isSectionVisible`, `getSectionVisibility`, `resolveSectionAlias`, `getUniversalValues`, `getDefaultUniversalValues`.
+  - `app/Domain/Storefront/StorefrontThemeService.php`  Added `ARCHETYPES`, `THEME_ARCHETYPE_MAP`, `getAllArchetypes`, `getThemeArchetype`, `getUniversalFallback`, enriched `getAllThemes` and `getTheme`.
 - **Build status**: Pass (Zero syntax errors across all 4 files)
 - **Pending issues**: None
 

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T19:31:00Z
+# BRIEFING  2026-10-31T19:31:00Z
 
 ## Mission
 Map out Phase 1 Remediation (Quick Wins & Layout Normalization) across resources/views/app: 44 Double Header views and 76 Flawed Backdrop instances across 21 views.
@@ -11,7 +11,7 @@ Map out Phase 1 Remediation (Quick Wins & Layout Normalization) across resources
 - Milestone: Phase 1 Remediation Exploration
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Write only to working directory .agents/teamwork/explorer_rem_1/
 - Produce complete, exact, actionable mapping for Phase 1 remediation
 
@@ -37,9 +37,9 @@ Map out Phase 1 Remediation (Quick Wins & Layout Normalization) across resources
 - Standardized Backdrop fix: Adopt Apple HIG Bento layout (teleported, `fixed inset-0 z-[200] overflow-y-auto` root, standalone `fixed inset-0 bg-black/60 backdrop-blur-md` backdrop with fade transition and `@click="close"`, centered `relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6` scroll wrapper, inner dialog card with scale/fade transition).
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\BRIEFING.md` — Agent briefing & working memory
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\DISPATCH.md` — Incoming dispatch messages log
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\progress.md` — Liveness heartbeat & task progress
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\handoff.md` — Comprehensive Phase 1 Remediation Handoff Report (4,186 lines)
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\dh_detailed.json` — Structured JSON for all 44 Double Header views
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\fb_full_mapping.json` — Structured JSON for all 76 Flawed Backdrop instances
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\BRIEFING.md`  Agent briefing & working memory
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\DISPATCH.md`  Incoming dispatch messages log
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\progress.md`  Liveness heartbeat & task progress
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\handoff.md`  Comprehensive Phase 1 Remediation Handoff Report (4,186 lines)
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\dh_detailed.json`  Structured JSON for all 44 Double Header views
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_rem_1\fb_full_mapping.json`  Structured JSON for all 76 Flawed Backdrop instances

@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 1 Explorer 2 — Model Helper Methods in `BusinessLandingPage.php`
+# Handoff Report: Milestone 1 Explorer 2  Model Helper Methods in `BusinessLandingPage.php`
 
 **Date**: 2026-11-05T07:18:00Z  
 **From**: Explorer 2 (`teamwork_explorer_m1_2`)  

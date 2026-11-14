@@ -2,7 +2,7 @@
 
 **Subagent**: Worker M3 (Feedback & Finance Documentation)  
 **Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_feedback_finance_docs\`  
-**Milestone**: M3 — Business Owner Documentation & User Guides  
+**Milestone**: M3  Business Owner Documentation & User Guides  
 **Date**: 2026-11-08  
 **Status**: `COMPLETED` [VERIFIED]
 

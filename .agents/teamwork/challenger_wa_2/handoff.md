@@ -1,4 +1,4 @@
-# Handoff Report — Challenger WA 2 (UI Simplification & Blade Robustness)
+# Handoff Report  Challenger WA 2 (UI Simplification & Blade Robustness)
 
 **Agent**: `challenger_wa_2`  
 **Parent**: `072c1567-fb7e-4663-b29a-0dc2a878655b`  

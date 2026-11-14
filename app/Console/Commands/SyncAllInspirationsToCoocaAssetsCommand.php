@@ -23,7 +23,7 @@ final class SyncAllInspirationsToCoocaAssetsCommand extends Command
     public function handle(): int
     {
         $this->info("===================================================================");
-        $this->info("   COOCA AI STUDIO — SINKRONISASI ASET RESMI & URL COOCA.ID       ");
+        $this->info("   COOCA AI STUDIO  SINKRONISASI ASET RESMI & URL COOCA.ID       ");
         $this->info("===================================================================");
 
         $ownerUser = User::where('email', 'cooca.idn@gmail.com')->first() ?? User::first();

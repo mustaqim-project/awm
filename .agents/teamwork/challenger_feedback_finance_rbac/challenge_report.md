@@ -11,7 +11,7 @@
 ## Challenge Summary
 
 **Overall risk assessment**: **LOW (Robust Production Security Posture)**  
-The implementation of Role-Based Access Control (RBAC) and Cross-Tenant multi-tenant boundaries across the Feedback and Finance modules was subjected to rigorous empirical attack scenarios. All tested attack vectors—including direct controller bypass, unauthenticated access, role privilege escalation by cashiers, cross-tenant IDOR file access, and attachment streaming—were completely neutralized by dual-layer defense mechanisms (Eloquent `BusinessScope` + Controller-level middleware and explicit authorization guards).
+The implementation of Role-Based Access Control (RBAC) and Cross-Tenant multi-tenant boundaries across the Feedback and Finance modules was subjected to rigorous empirical attack scenarios. All tested attack vectorsincluding direct controller bypass, unauthenticated access, role privilege escalation by cashiers, cross-tenant IDOR file access, and attachment streamingwere completely neutralized by dual-layer defense mechanisms (Eloquent `BusinessScope` + Controller-level middleware and explicit authorization guards).
 
 ---
 

@@ -69,7 +69,7 @@ Pelajari sistem multi-outlet terintegrasi untuk bisnis Anda di: https://cooca.id
 TXT;
 
         // Clean caption from em dash and en dash
-        $cleanCaption = trim(str_replace(['—', '–'], '-', $caption));
+        $cleanCaption = trim(str_replace(['', '–'], '-', $caption));
 
         // Use primary carousel asset with fallback guarantee
         $imageRel = 'admin/social-media-assets/carousel/slide-04.png';

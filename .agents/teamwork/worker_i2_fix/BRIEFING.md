@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T15:48:15Z
+# BRIEFING  2026-11-07T15:48:15Z
 
 ## Mission
 Add the 5 missing translation keys identified by Challenger 2 to `lang/id/customers.php` and `lang/en/customers.php`, validate syntax, and verify test suites pass.

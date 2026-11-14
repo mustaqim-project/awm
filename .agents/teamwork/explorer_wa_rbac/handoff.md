@@ -21,12 +21,12 @@ From filesystem analysis of `app/Http/Controllers`:
      - Implements `Illuminate\Routing\Controllers\HasMiddleware`
      - Methods: `getSignupConfig`, `exchangeCode`, `getStatus`, `disconnect`.
 2. **Platform Superadmin Controllers**:
-   - `app/Http/Controllers/Admin/AdminWhatsAppController.php` (512 lines) — Manages platform-level Meta templates, admin blasts, subscription reminders, and server gateway.
+   - `app/Http/Controllers/Admin/AdminWhatsAppController.php` (512 lines)  Manages platform-level Meta templates, admin blasts, subscription reminders, and server gateway.
    - `app/Http/Controllers/Admin/AdminSettingController.php` (`testWhatsAppConfig` at line 163).
 3. **Public / Webhook / API Controllers**:
-   - `app/Http/Controllers/Api/V1/WhatsAppWebhookController.php` — Inbound Baileys webhook.
-   - `app/Http/Controllers/Api/V1/WhatsApp/MetaWhatsAppWebhookController.php` — Inbound official Meta Cloud API webhook.
-   - `app/Http/Controllers/Api/V1/PosReceiptApiController.php` — POS endpoint `sendWhatsAppReceipt`.
+   - `app/Http/Controllers/Api/V1/WhatsAppWebhookController.php`  Inbound Baileys webhook.
+   - `app/Http/Controllers/Api/V1/WhatsApp/MetaWhatsAppWebhookController.php`  Inbound official Meta Cloud API webhook.
+   - `app/Http/Controllers/Api/V1/PosReceiptApiController.php`  POS endpoint `sendWhatsAppReceipt`.
 
 ---
 

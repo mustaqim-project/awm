@@ -1,4 +1,4 @@
-# Orchestrator Handoff Report — Dual Sidebar Migration
+# Orchestrator Handoff Report  Dual Sidebar Migration
 
 ## Milestone State
 - [x] **M1. Dual Sidebar Layout & Sub-Navigation Migration**: DONE

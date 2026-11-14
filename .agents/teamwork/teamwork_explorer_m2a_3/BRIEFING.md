@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:56:00Z
+# BRIEFING  2026-11-05T00:56:00Z
 
 ## Mission
 Audit and map refactoring changes for Themes 8 (`service_workshop`), 9 (`food_restaurant`), and 10 (`health_beauty`) to implement Universal Blade Contracts §3.1 (Hero), §3.2 (Features Banner), §3.3 (Category Chips) while preserving distinctive aesthetic styles.
@@ -11,7 +11,7 @@ Audit and map refactoring changes for Themes 8 (`service_workshop`), 9 (`food_re
 - Milestone: Milestone 2A (Batch 1 Themes Refactoring - Themes 8 to 10)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source files
+- Read-only investigation  do NOT implement or modify source files
 - Audit Themes 8 (`service_workshop`), 9 (`food_restaurant`), 10 (`health_beauty`)
 - Preserve theme visual identity: high-impact dark carbon (`service_workshop`), playful fresh vibe (`food_restaurant`), elegant beauty aesthetic (`health_beauty`)
 - Produce `analysis.md` and `handoff.md`
@@ -40,8 +40,8 @@ Audit and map refactoring changes for Themes 8 (`service_workshop`), 9 (`food_re
 - Generated `analysis.md` and `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — Recorded instructions
-- BRIEFING.md — Persistent context & state
-- progress.md — Liveness heartbeat
-- analysis.md — Detailed findings & exact adaptation specs
-- handoff.md — 5-component handoff report
+- DISPATCH.md  Recorded instructions
+- BRIEFING.md  Persistent context & state
+- progress.md  Liveness heartbeat
+- analysis.md  Detailed findings & exact adaptation specs
+- handoff.md  5-component handoff report

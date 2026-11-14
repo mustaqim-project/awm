@@ -9,9 +9,9 @@
 ## 1. Executive Summary & Scope Definition
 
 In accordance with the Universal Storefront Blueprint (`STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md`) and Milestone 2B requirements, this investigation audits 3 target themes in Batch 2 (F&B & Retail):
-1. **Theme 5**: `fnb_fastfood` (Bundle: `fnb_fastfood`, Alias: `neon_crunch`) — Archetype: *Playful, Fresh & Appetite*
-2. **Theme 6**: `fnb_resto` (Bundle: `fnb_resto`, Alias: `nusantara_feast`) — Archetype: *Playful, Fresh & Appetite*
-3. **Theme 7**: `retail_bookstore` (Bundle: `retail_bookstore`, Alias: `bibliotheca`) — Archetype: *Playful, Fresh & Appetite*
+1. **Theme 5**: `fnb_fastfood` (Bundle: `fnb_fastfood`, Alias: `neon_crunch`)  Archetype: *Playful, Fresh & Appetite*
+2. **Theme 6**: `fnb_resto` (Bundle: `fnb_resto`, Alias: `nusantara_feast`)  Archetype: *Playful, Fresh & Appetite*
+3. **Theme 7**: `retail_bookstore` (Bundle: `retail_bookstore`, Alias: `bibliotheca`)  Archetype: *Playful, Fresh & Appetite*
 
 ### Core Investigation Findings
 All 3 themes currently violate the Universal Storefront Directive in 3 critical areas:

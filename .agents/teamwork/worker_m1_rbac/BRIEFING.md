@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:31:00Z
+# BRIEFING  2026-11-08T19:31:00Z
 
 ## Mission
 Implement controller-level RBAC middleware for ImportWebController & HrmApiController, register HRM and Import permissions in RbacSeeder, update HrmWebController fallback, synchronize routes/owner.php, and seed/verify.

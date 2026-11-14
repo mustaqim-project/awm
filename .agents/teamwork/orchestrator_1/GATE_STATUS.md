@@ -1,6 +1,6 @@
 # Gate Status Tracking
 
-## Gate 1 — Milestone 1 (M1) Core Layouts, Asset Pipeline & Chatbot Optimization
+## Gate 1  Milestone 1 (M1) Core Layouts, Asset Pipeline & Chatbot Optimization
 | Agent | Role | Verdict | Source | Notes |
 |-------|------|---------|--------|-------|
 | worker_m1 | teamwork_worker | DONE (build passed) | handoff.md | 7 files updated, Tailwind CDN removed, Vite connected, Chatbot deferred, bottom sheet implemented, touch targets >=44px |

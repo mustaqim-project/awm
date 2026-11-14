@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T04:10:00Z
+# BRIEFING  2026-10-31T04:10:00Z
 
 ## Mission
 Adversarial empirical stress testing of localization across resources/views/app and resources/views/admin.
@@ -12,7 +12,7 @@ Adversarial empirical stress testing of localization across resources/views/app 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code or view source code
+- Review-only  do NOT modify implementation code or view source code
 - Empirical verification: run verification code directly, do not trust claims
 - Document all test harnesses, findings, and reproduce any issues empirically
 
@@ -47,8 +47,8 @@ Adversarial empirical stress testing of localization across resources/views/app 
 - Render verdict: **REQUEST_CHANGES** due to 61 missing translation keys violating R2 and Acceptance Criteria.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- progress.md — liveness heartbeat and execution log
-- handoff.md — final handoff report
-- missing_keys_inventory.json — itemized catalog of all 61 missing keys
-- adversarial_results.json — raw stress test execution metrics
+- DISPATCH.md  incoming dispatch instructions
+- progress.md  liveness heartbeat and execution log
+- handoff.md  final handoff report
+- missing_keys_inventory.json  itemized catalog of all 61 missing keys
+- adversarial_results.json  raw stress test execution metrics

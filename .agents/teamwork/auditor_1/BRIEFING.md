@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-09T03:32:00Z
+# BRIEFING  2026-11-09T03:32:00Z
 
 ## Mission
 Forensic integrity audit of COOCA HRM, Import, and Inventory modules (Controller-Level RBAC enforcement, UI layout simplification & touch targets, Business Owner documentation, and test suite authenticity).
@@ -13,8 +13,8 @@ Forensic integrity audit of COOCA HRM, Import, and Inventory modules (Controller
 - Target update: full project (HRM, Import, Inventory remediation, RBAC, UI, Docs, and QA suites)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently with raw tool outputs
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently with raw tool outputs
 - Ground-truth user constraints in ORIGINAL_REQUEST.md take precedence
 - Zero tolerance for integrity violations: immediate VETO on hardcoded test results, facade implementations, or disabled security checks
 - Strict 5-component handoff report with explicit CLEAN or INTEGRITY VIOLATION verdict
@@ -46,10 +46,10 @@ Forensic integrity audit of COOCA HRM, Import, and Inventory modules (Controller
 - Confirmed verdict as CLEAN based on comprehensive empirical evidence and independent test executions.
 
 ## Artifact Index
-- `DISPATCH.md` — Dispatch instructions and objectives
-- `BRIEFING.md` — Situational awareness and persistent memory
-- `progress.md` — Liveness heartbeat
-- `handoff.md` — Complete 5-component Forensic Audit Report
+- `DISPATCH.md`  Dispatch instructions and objectives
+- `BRIEFING.md`  Situational awareness and persistent memory
+- `progress.md`  Liveness heartbeat
+- `handoff.md`  Complete 5-component Forensic Audit Report
 
 ## Attack Surface
 - **Hypotheses tested**:

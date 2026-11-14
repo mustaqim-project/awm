@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T09:05:00Z
+# BRIEFING  2026-11-02T09:05:00Z
 
 ## Mission
 Survey the backend repository `c:\laragon\www\cooca_core` for Fase 2 (Logistik & Gudang Toko) and Fase 3 (Customer Piutang & Omnichannel Digital), covering PO & Goods Receipt, Stock Transfer, Customer Debt/Kasbon, WhatsApp receipt, Storefront/QR orders, Sanctum API auth, routes/api.php, and PHPUnit test baseline.
@@ -11,7 +11,7 @@ Survey the backend repository `c:\laragon\www\cooca_core` for Fase 2 (Logistik &
 - Milestone: Fase 2 & Fase 3 Backend Architecture Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement production code
+- Read-only investigation  do NOT implement production code
 - Write all findings to `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\report.md`
 - Generate `handoff.md` in your working directory
 - Communicate completion to parent agent via `send_message`
@@ -44,7 +44,7 @@ Survey the backend repository `c:\laragon\www\cooca_core` for Fase 2 (Logistik &
 - Prepared 5-component handoff report in `handoff.md`.
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\DISPATCH.md` — Task assignment & heartbeat logs
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\report.md` — Detailed backend survey report
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\handoff.md` — 5-component handoff report
-- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\progress.md` — Liveness heartbeat and status
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\DISPATCH.md`  Task assignment & heartbeat logs
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\report.md`  Detailed backend survey report
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\handoff.md`  5-component handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_1\progress.md`  Liveness heartbeat and status

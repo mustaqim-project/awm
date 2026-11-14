@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T00:55:00Z
+# BRIEFING  2026-11-14T00:55:00Z
 
 ## Mission
 Investigate Commercial Landings & Discovery views (kasir_android, kasir_gratis, kasir_offline, discovery/index) for heading hierarchy, media dimensions/CLS, mobile layout/touch targets, theme/contrast, and SEO/metadata.
@@ -12,7 +12,7 @@ Investigate Commercial Landings & Discovery views (kasir_android, kasir_gratis, 
 - Milestone: M2 - Public Landing & Commercial Pages
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Do NOT edit or write source code files
 - Produce structured handoff report at: C:\laragon\www\cooca_core\.agents\teamwork\explorer_m2_2\handoff.md
 - Report findings with exact line numbers, root causes, and concrete code-level fix recommendations
@@ -49,7 +49,7 @@ Investigate Commercial Landings & Discovery views (kasir_android, kasir_gratis, 
 - Fully documented exact before/after code snippets in handoff.md for seamless worker execution.
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming parent dispatches
-- `BRIEFING.md` — Persistent context & state
-- `progress.md` — Liveness heartbeat
-- `handoff.md` — Final investigation report
+- `DISPATCH.md`  Incoming parent dispatches
+- `BRIEFING.md`  Persistent context & state
+- `progress.md`  Liveness heartbeat
+- `handoff.md`  Final investigation report

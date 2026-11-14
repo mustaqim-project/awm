@@ -21,8 +21,10 @@ try {
 } catch (\Throwable $e) { echo $e->getMessage() . "\n"; }
 
 
-echo "--- Business Slugs ---\n";
+echo "--- Users ---\n";
 try {
-    $biz = \App\Models\Business::where('is_active', true)->take(3)->get(['id', 'slug', 'name']);
-    foreach ($biz as $b) echo "Business: " . $b->slug . " (" . $b->name . ")\n";
+    echo "Total users: " . \App\Models\User::count() . "\n";
+    $u = \App\Models\User::first();
+    if ($u) echo "First user: " . $u->email . " (ID: " . $u->id . ")\n";
 } catch (\Throwable $e) { echo $e->getMessage() . "\n"; }
+

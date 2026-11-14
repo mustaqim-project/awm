@@ -1,4 +1,4 @@
-# Laporan Implementasi: Milestone 2 — Mobile Fase 2 (Logistik & Gudang Toko)
+# Laporan Implementasi: Milestone 2  Mobile Fase 2 (Logistik & Gudang Toko)
 
 **Pengembang:** Worker Fase 2 Mobile (`worker_fase2_mobile`)  
 **Target Repositori:** `c:\laragon\www\cooca_my_own`  

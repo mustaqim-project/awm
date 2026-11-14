@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T02:33:00Z
+# BRIEFING  2026-11-03T02:33:00Z
 
 ## Mission
 Comprehensive deep-dive investigation into OpenShift lifecycle, bugs, and root causes across Flutter mobile (`C:\laragon\www\cooca_my_own`) and backend contracts (`C:\laragon\www\cooca_core` and `https://cooca.id`).
@@ -11,7 +11,7 @@ Comprehensive deep-dive investigation into OpenShift lifecycle, bugs, and root c
 - Milestone: OpenShift Lifecycle & Bug Investigation (R1)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Target Mobile Repo: C:\laragon\www\cooca_my_own
 - Target Backend Repo: C:\laragon\www\cooca_core
 - Live API: https://cooca.id
@@ -41,8 +41,8 @@ Comprehensive deep-dive investigation into OpenShift lifecycle, bugs, and root c
 - Fully documented 7 critical root causes, code snippets, contract comparison matrix, and concrete remediation plan in `analysis.md` and `handoff.md`.
 
 ## Artifact Index
-- DISPATCH.md — Dispatch log
-- BRIEFING.md — Identity, constraints, and persistent state
-- progress.md — Liveness heartbeat and milestone checklist
-- analysis.md — Full deep-dive investigation report
-- handoff.md — 5-component self-contained handoff report
+- DISPATCH.md  Dispatch log
+- BRIEFING.md  Identity, constraints, and persistent state
+- progress.md  Liveness heartbeat and milestone checklist
+- analysis.md  Full deep-dive investigation report
+- handoff.md  5-component self-contained handoff report

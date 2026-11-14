@@ -23,7 +23,7 @@ You own and may modify:
 - Backend database migration for security columns in `C:\laragon\www\cooca_core\database\migrations\`
 - Test files: C:\laragon\www\cooca_my_own\test\attendance_security_test.dart and C:\laragon\www\cooca_core\tests\Feature\Api\AttendanceSecurityRemediationTest.php
 
-YOUR MISSION — IMPLEMENT ANDROID SECURITY & FAKE GPS PREVENTION FOR ATTENDANCE (Milestone 2):
+YOUR MISSION  IMPLEMENT ANDROID SECURITY & FAKE GPS PREVENTION FOR ATTENDANCE (Milestone 2):
 1. **Native Android MethodChannel in `MainActivity.kt`**:
    - In `android/app/src/main/kotlin/com/cooca/myown/cooca_my_own/MainActivity.kt`, implement MethodChannel `com.cooca.myown/security` with method `checkDeviceSecurity`.
    - Inspect Android system settings:

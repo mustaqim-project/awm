@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:44:00Z
+# BRIEFING  2026-11-05T00:44:00Z
 
 ## Mission
 Review and adversarial stress-test the Milestone 1 implementation of StorefrontThemeService (Backend & Service Normalization).
@@ -12,7 +12,7 @@ Review and adversarial stress-test the Milestone 1 implementation of StorefrontT
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Actively check for integrity violations: hardcoded test results, facade implementations, bypassed tasks, fabricated outputs
 - Strictly adhere to 6 Design Archetypes partitioning and backward compatibility
 - Independent verification of all commands and claims
@@ -42,12 +42,12 @@ Review and adversarial stress-test the Milestone 1 implementation of StorefrontT
 - Issued verdict: **APPROVE**.
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming dispatch instructions
-- `BRIEFING.md` — Persistent situational awareness
-- `progress.md` — Liveness heartbeat and step tracking
-- `verify_test.php` — Independent programmatic verification and adversarial stress suite
-- `analysis.md` — In-depth quality & adversarial analysis
-- `handoff.md` — 5-component handoff report with final verdict
+- `DISPATCH.md`  Incoming dispatch instructions
+- `BRIEFING.md`  Persistent situational awareness
+- `progress.md`  Liveness heartbeat and step tracking
+- `verify_test.php`  Independent programmatic verification and adversarial stress suite
+- `analysis.md`  In-depth quality & adversarial analysis
+- `handoff.md`  5-component handoff report with final verdict
 
 ## Review Checklist
 - **Items reviewed**: `StorefrontThemeService.php`, `BusinessLandingPage.php`, `lang/{id,en}/storefront.php`

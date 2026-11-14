@@ -1,4 +1,4 @@
-# Progress — Explorer 2 (Mobile Architecture)
+# Progress  Explorer 2 (Mobile Architecture)
 
 - **Status**: Investigation Complete. Writing report & handoff.
 - **Last visited**: 2026-11-02T09:00:00Z

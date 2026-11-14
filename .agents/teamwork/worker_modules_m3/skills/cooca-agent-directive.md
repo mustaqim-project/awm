@@ -3,9 +3,9 @@ name: cooca-agent-directive
 description: Direktif orkestrasi operasional terpadu untuk AI Agent di repositori COOCA (platform SaaS ERP multi-tenant untuk UMKM Indonesia). Skill ini berfungsi sebagai ORKESTRATOR SISTEM yang TIDAK MEMBATASI dan WAJIB BERKOLABORASI secara sinergis dengan SELURUH skill spesialis lainnya (Design System, Taste/Minimalist, UI Layout Reorganizer, UI Simplify, Responsive UI/UX, Multi-Industry, i18n, Security & Fraud Audit, Laravel Permission, Strix AppSec). Trigger untuk setiap task yang menyentuh codebase COOCA.
 ---
 
-# COOCA — Direktif Operasional AI Agent
+# COOCA  Direktif Operasional AI Agent
 
-Dokumen ini adalah hasil penggabungan dua draft `AGENT.md` COOCA menjadi satu sumber kebenaran tunggal, tanpa duplikasi. Detail teknis yang panjang dipecah ke `references/` — baca file tersebut saat relevan, jangan asumsikan isinya.
+Dokumen ini adalah hasil penggabungan dua draft `AGENT.md` COOCA menjadi satu sumber kebenaran tunggal, tanpa duplikasi. Detail teknis yang panjang dipecah ke `references/`  baca file tersebut saat relevan, jangan asumsikan isinya.
 
 ```
 references/design-system.md         → Spesifikasi lengkap Bento Apple HIG (tipografi, spacing, warna,
@@ -26,11 +26,11 @@ Penta-prinsip inti: **Clarity → Deference → Depth → Empathy → Simplicity
 Tujuan utama:
 1. Memahami sistem yang sudah ada sebelum melakukan perubahan apa pun.
 2. Menjaga integritas data, workflow, keamanan, dan kompatibilitas sistem.
-3. Menghasilkan UI Bento Apple HIG yang sederhana, lapang, cepat dipahami, dan ramah pengguna UMKM usia 40–65+ tahun (*Zero-Manual UI*) — lihat `references/design-system.md`.
+3. Menghasilkan UI Bento Apple HIG yang sederhana, lapang, cepat dipahami, dan ramah pengguna UMKM usia 40–65+ tahun (*Zero-Manual UI*)  lihat `references/design-system.md`.
 4. Menghindari duplikasi fitur, menu, route, service, komponen, dan dokumentasi.
-5. Mengeliminasi proses manual repetitif lewat otomasi penuh (jurnal, stok, notifikasi) — lihat `references/automation-and-testing.md`.
+5. Mengeliminasi proses manual repetitif lewat otomasi penuh (jurnal, stok, notifikasi)  lihat `references/automation-and-testing.md`.
 6. Membuktikan hasil pekerjaan lewat testing nyata yang lolos 100%, bukan klaim.
-7. Memperbarui dokumentasi 3-layer setelah setiap perubahan — lihat `references/documentation-and-dod.md`.
+7. Memperbarui dokumentasi 3-layer setelah setiap perubahan  lihat `references/documentation-and-dod.md`.
 
 > **Golden Rule:** Setiap pekerjaan harus membuat COOCA menjadi lebih aman, lebih mudah digunakan, lebih terstruktur, dan lebih mudah dipahami daripada sebelumnya. Jangan menambah teks, elemen, warna, atau komponen jika tidak memberi manfaat nyata bagi pengguna.
 
@@ -81,7 +81,7 @@ resources/              database/              tests/
 
 Telusuri: Work ID terkait, perubahan fitur sebelumnya, keputusan arsitektur, bug yang pernah diperbaiki, workflow berjalan, struktur database & relasi, permission/role, komponen UI tersedia, otomasi yang sudah diterapkan, integrasi eksternal, serta pekerjaan berstatus `PARTIAL`, `NEEDS_REVIEW`, `OUTDATED`, atau `UNKNOWN`.
 
-**History Lock** — jika history/dokumentasi/source code relevan tidak dapat diakses:
+**History Lock**  jika history/dokumentasi/source code relevan tidak dapat diakses:
 1. Jangan mengarang kondisi sistem atau menganggap fitur belum pernah dibuat.
 2. Jangan membuat implementasi duplikat.
 3. Tandai informasi sebagai `UNKNOWN`, jelaskan apa yang tidak dapat diakses.
@@ -133,9 +133,9 @@ PERBARUI DOKUMENTASI 3-LAYER (references/documentation-and-dod.md)
 FINAL AUDIT → LAPORKAN DENGAN FORMAT DI BAGIAN 7, BERDASARKAN BUKTI BUKAN ASUMSI
 ```
 
-**Jangan pernah** menyatakan fitur selesai hanya karena tampilan UI sudah tersedia — telusuri traceability end-to-end di atas sampai tuntas.
+**Jangan pernah** menyatakan fitur selesai hanya karena tampilan UI sudah tersedia  telusuri traceability end-to-end di atas sampai tuntas.
 
-Setiap workflow yang menyentuh **route, business logic, atau destructive change** wajib melewati Interactive Confirmation Gate sebelum implementasi — lihat klasifikasi risiko di bawah.
+Setiap workflow yang menyentuh **route, business logic, atau destructive change** wajib melewati Interactive Confirmation Gate sebelum implementasi  lihat klasifikasi risiko di bawah.
 
 ---
 
@@ -152,7 +152,7 @@ Setiap workflow yang menyentuh **route, business logic, atau destructive change*
 
 ## 6. Audit Duplikasi
 
-Sebelum membuat fitur, menu, route, service, model, view, modal, form, JS, endpoint AJAX, workflow, atau permission baru — cari dulu kemungkinan duplikasi. Urutan solusi wajib:
+Sebelum membuat fitur, menu, route, service, model, view, modal, form, JS, endpoint AJAX, workflow, atau permission baru  cari dulu kemungkinan duplikasi. Urutan solusi wajib:
 
 ```
 Reuse Existing → Refactor Existing → Consolidate Existing → Create New Only If Necessary
@@ -162,27 +162,27 @@ Jika dua/tiga antarmuka mengelola entitas yang sama, WAJIB digabung menjadi satu
 
 ---
 
-## 7. Keamanan, Data, & Multi-Tenant (Ringkasan — detail penuh di `references/security-and-data.md`)
+## 7. Keamanan, Data, & Multi-Tenant (Ringkasan  detail penuh di `references/security-and-data.md`)
 
 Hard guardrails yang **tidak boleh dilanggar dalam kondisi apa pun**, walau user memintanya:
 - Dilarang mengubah rumus finansial (subtotal, diskon, pajak, HPP/COGS, margin, jurnal akuntansi, saldo kas) atau data transaksi historis berstatus selesai, tanpa persetujuan eksplisit.
-- Setiap query Eloquent/DB pada entitas tenant **wajib** di-scope ke `business_id` aktif (`Context::requireBusiness()`) — dilarang keras query lintas tenant.
+- Setiap query Eloquent/DB pada entitas tenant **wajib** di-scope ke `business_id` aktif (`Context::requireBusiness()`)  dilarang keras query lintas tenant.
 - Dilarang membypass middleware keamanan (`auth:*`, `wa.otp`, `business.active`, `verified`, `require.permission:*`, `entitlement:*`), menghapus `@csrf`/`@method`, melemahkan validasi request, memakai `DB::raw` tanpa binding aman, atau merender `{!! !!}` tanpa sanitasi.
 - Dilarang diam-diam menghapus fitur/menu/endpoint tanpa redirect/alias dan tanpa Confirmation Gate.
 - UI yang menyembunyikan tombol **tidak pernah** menggantikan validasi permission di backend.
 
-Setiap modul yang ditinjau wajib dianalisis lewat **Matriks Audit Kesenjangan 4-kuadran** (Admin/Owner/Customer/Otomasi) — IDOR shield pada portal customer, proteksi `supervisor_pin` untuk void/refund kasir, dan fallback fail-safe saat otomasi (mis. WhatsApp gateway) offline. Detail lengkap matriks ada di `references/security-and-data.md`.
+Setiap modul yang ditinjau wajib dianalisis lewat **Matriks Audit Kesenjangan 4-kuadran** (Admin/Owner/Customer/Otomasi)  IDOR shield pada portal customer, proteksi `supervisor_pin` untuk void/refund kasir, dan fallback fail-safe saat otomasi (mis. WhatsApp gateway) offline. Detail lengkap matriks ada di `references/security-and-data.md`.
 
 ---
 
-## 8. UI/UX — Bento Apple HIG (Ringkasan — detail penuh & wajib dibaca di `references/design-system.md`)
+## 8. UI/UX  Bento Apple HIG (Ringkasan  detail penuh & wajib dibaca di `references/design-system.md`)
 
-Seluruh antarmuka COOCA mengadopsi **COOCA Apple HIG Design System** (Clarity, Deference, Depth) dengan geometri squircle kontinu, frosted glass vibrancy, tipografi SF Pro `tabular-nums`, dan palet warna semantik Apple resmi — identik di Smartphone (360–430px), Tablet Kasir (768–1024px), dan Desktop (1280px+).
+Seluruh antarmuka COOCA mengadopsi **COOCA Apple HIG Design System** (Clarity, Deference, Depth) dengan geometri squircle kontinu, frosted glass vibrancy, tipografi SF Pro `tabular-nums`, dan palet warna semantik Apple resmi  identik di Smartphone (360–430px), Tablet Kasir (768–1024px), dan Desktop (1280px+).
 
 Poin yang paling sering dilanggar dan **wajib dicek setiap kali menyentuh Blade/view**:
 - **Anti-Pill-Abuse & Anti-AI-Template Mandate**: dilarang keras eyebrow pill di atas judul, badge tempel di samping angka KPI, fake pulse dot pada teks biasa, dan slogan klise AI (*AI-Powered, Next-Gen, Ultimate Solution*). Badge `rounded-full` hanya untuk status siklus hidup entitas (transaksi, stok, akun), maksimal 1 badge per entitas.
-- **Zero Emoji di UI** — hanya Lucide icon (`<i data-lucide="...">`), tidak ada emoji Unicode di tombol, judul, badge, atau tabel.
-- **Anti-Excessive-Text** — hapus total teks yang tidak fungsional, bukan hanya melepas bungkus pill-nya.
+- **Zero Emoji di UI**  hanya Lucide icon (`<i data-lucide="...">`), tidak ada emoji Unicode di tombol, judul, badge, atau tabel.
+- **Anti-Excessive-Text**  hapus total teks yang tidak fungsional, bukan hanya melepas bungkus pill-nya.
 - **Modal-First**: Show/Create/Edit pada halaman index wajib pop-up/modal sheet, zero navigation jumps, filter & pagination tetap utuh.
 - **Inline Quick-Add `[ + ]`** pada setiap dropdown relasi master data.
 - Font input mobile minimal **16px** (anti-auto-zoom iOS), tombol aksi utama **44–52px**, padding bawah aman **`pb-28` s/d `pb-32`**, dan preservasi 100% tampilan desktop yang sudah baik saat memperbaiki mobile.
@@ -191,13 +191,13 @@ Poin yang paling sering dilanggar dan **wajib dicek setiap kali menyentuh Blade/
 
 ## 9. Otomasi, Testing, & Production Hardening
 
-Lihat `references/automation-and-testing.md` untuk daftar penuh. Ringkasan: proses manual repetitif (jurnal akuntansi, potong stok BOM, invoice, notifikasi WhatsApp, pengingat jatuh tempo, transisi status) **wajib diotomasi**, tapi jangan menambah otomasi yang belum dipahami dampaknya. Sebelum menyatakan tugas selesai, testing wajib dijalankan nyata (`php -l`, `php artisan test`, `php artisan route:list`, `npm run build`) dan **lolos 100%** (0 failure, 0 error) — dilarang mengklaim `PASS` tanpa bukti. Source code wajib bebas debug residue (`dd()`, `dump()`, `ray()`, `var_dump()`, `console.log()`) dan data testing/dummy dibersihkan tuntas dari database & storage produksi.
+Lihat `references/automation-and-testing.md` untuk daftar penuh. Ringkasan: proses manual repetitif (jurnal akuntansi, potong stok BOM, invoice, notifikasi WhatsApp, pengingat jatuh tempo, transisi status) **wajib diotomasi**, tapi jangan menambah otomasi yang belum dipahami dampaknya. Sebelum menyatakan tugas selesai, testing wajib dijalankan nyata (`php -l`, `php artisan test`, `php artisan route:list`, `npm run build`) dan **lolos 100%** (0 failure, 0 error)  dilarang mengklaim `PASS` tanpa bukti. Source code wajib bebas debug residue (`dd()`, `dump()`, `ray()`, `var_dump()`, `console.log()`) dan data testing/dummy dibersihkan tuntas dari database & storage produksi.
 
 ---
 
 ## 10. Dokumentasi 3-Layer & Definition of Done
 
-Setiap pekerjaan yang mengubah sistem wajib mengevaluasi tiga layer dokumentasi (`docs/AiWorkHistory.md`, `docs/system/`, `docs/SYSTEM_GUIDE.md`) dan checklist Definition of Done lengkap — keduanya ada di `references/documentation-and-dod.md`. Jangan menyatakan pekerjaan `VERIFIED` sebelum seluruh item checklist tercentang dengan bukti nyata.
+Setiap pekerjaan yang mengubah sistem wajib mengevaluasi tiga layer dokumentasi (`docs/AiWorkHistory.md`, `docs/system/`, `docs/SYSTEM_GUIDE.md`) dan checklist Definition of Done lengkap  keduanya ada di `references/documentation-and-dod.md`. Jangan menyatakan pekerjaan `VERIFIED` sebelum seluruh item checklist tercentang dengan bukti nyata.
 
 ---
 

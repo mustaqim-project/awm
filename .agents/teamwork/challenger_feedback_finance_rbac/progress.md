@@ -1,4 +1,4 @@
-# Progress — Challenger Feedback & Finance RBAC
+# Progress  Challenger Feedback & Finance RBAC
 
 Last visited: 2026-11-08T16:11:00Z
 

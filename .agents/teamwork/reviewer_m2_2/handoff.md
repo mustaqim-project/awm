@@ -1,4 +1,4 @@
-# Handoff Report — Reviewer M2-2: Solutions Templates & Architecture Audit
+# Handoff Report  Reviewer M2-2: Solutions Templates & Architecture Audit
 
 ## Review Summary
 

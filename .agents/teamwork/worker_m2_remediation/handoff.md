@@ -1,4 +1,4 @@
-# Handoff Report — Worker M2 Remediation
+# Handoff Report  Worker M2 Remediation
 
 ## 1. Observation
 

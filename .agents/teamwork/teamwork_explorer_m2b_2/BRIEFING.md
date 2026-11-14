@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T01:43:00Z
+# BRIEFING  2026-11-05T01:43:00Z
 
 ## Mission
 Audit and map universal theme refactoring for Themes 5 to 7 (`fnb_fastfood`, `fnb_resto`, `retail_bookstore`) to support universal multi-sector use while retaining visual personality.
@@ -11,7 +11,7 @@ Audit and map universal theme refactoring for Themes 5 to 7 (`fnb_fastfood`, `fn
 - Milestone: Milestone 2B (Batch 2 Themes Refactoring)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT modify any source files
+- Read-only investigation  do NOT modify any source files
 - Audit Themes 5 to 7: `fnb_fastfood`, `fnb_resto`, `retail_bookstore`
 - Inspect `hero.blade.php`, `features_banner.blade.php`, `category_chips.blade.php` for each theme
 - Identify rigid sector texts, hardcoded Unsplash photos, and hardcoded hex colors
@@ -43,8 +43,8 @@ Audit and map universal theme refactoring for Themes 5 to 7 (`fnb_fastfood`, `fn
 - Preserved read-only constraint (no source code modified).
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat
-- analysis.md — detailed findings and component mapping
-- handoff.md — structured 5-component handoff report
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent working memory
+- progress.md  liveness heartbeat
+- analysis.md  detailed findings and component mapping
+- handoff.md  structured 5-component handoff report

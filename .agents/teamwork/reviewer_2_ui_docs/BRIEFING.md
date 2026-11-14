@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:26:30Z
+# BRIEFING  2026-11-08T20:26:30Z
 
 ## Mission
 Independent code, UX, and adversarial review of UI layout simplification, responsiveness, and Business Owner documentation across HRM, Inventory, Import modules, and Docs.
@@ -12,8 +12,8 @@ Independent code, UX, and adversarial review of UI layout simplification, respon
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Report failures as findings — do not fix them yourself
+- Review-only  do NOT modify implementation code
+- Report failures as findings  do not fix them yourself
 - Actively check for integrity violations: hardcoded results, facade implementations, bypassed tasks, fabricated verification outputs, self-certifying work
 - Issue explicit verdict: APPROVE or REQUEST_CHANGES
 
@@ -69,6 +69,6 @@ Independent code, UX, and adversarial review of UI layout simplification, respon
 - Issued APPROVE verdict.
 
 ## Artifact Index
-- handoff.md — final review report and verdict
-- progress.md — liveness and progress tracking
-- DISPATCH.md — incoming dispatch instructions log
+- handoff.md  final review report and verdict
+- progress.md  liveness and progress tracking
+- DISPATCH.md  incoming dispatch instructions log

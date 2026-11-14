@@ -1,4 +1,4 @@
-# Dispatch: Reviewer — UI/UX Audit Report Re-Check (Iteration 2)
+# Dispatch: Reviewer  UI/UX Audit Report Re-Check (Iteration 2)
 
 ## Objective
 Independently review the remediated Master UI/UX Audit Report in `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md` (updated by `worker_remediation_2`).

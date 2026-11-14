@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:12:00Z
+# BRIEFING  2026-11-08T19:12:00Z
 
 ## Mission
 Comprehensive RBAC and Controller Authorization Survey for HRM, Import, and Inventory modules.
@@ -11,7 +11,7 @@ Comprehensive RBAC and Controller Authorization Survey for HRM, Import, and Inve
 - Milestone: RBAC Survey (HRM, Import, Inventory)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify any codebase source files
+- Read-only investigation  do NOT implement or modify any codebase source files
 - All findings written to handoff.md and communicated via send_message to parent orchestrator
 
 ## Current Parent
@@ -42,7 +42,7 @@ Comprehensive RBAC and Controller Authorization Survey for HRM, Import, and Inve
 - Cataloged full master Controller & Permission Matrix with dedicated `hrm.*` and `import.*` permissions and role assignments for `RbacSeeder.php`.
 
 ## Artifact Index
-- DISPATCH.md — Parent task instructions and updates
-- BRIEFING.md — Working state and identity
-- progress.md — Liveness heartbeat and milestone tracking
-- handoff.md — Comprehensive RBAC survey report
+- DISPATCH.md  Parent task instructions and updates
+- BRIEFING.md  Working state and identity
+- progress.md  Liveness heartbeat and milestone tracking
+- handoff.md  Comprehensive RBAC survey report

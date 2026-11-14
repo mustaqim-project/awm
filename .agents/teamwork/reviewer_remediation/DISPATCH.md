@@ -1,4 +1,4 @@
-# Dispatch — Reviewer Remediation
+# Dispatch  Reviewer Remediation
 
 ## 2026-11-08T20:42:00Z
 You are an independent code and security reviewer (`teamwork_reviewer`).

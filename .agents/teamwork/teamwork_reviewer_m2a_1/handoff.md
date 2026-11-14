@@ -1,4 +1,4 @@
-# Handoff Report — Reviewer 1 (Milestone 2A: Themes 1 to 5)
+# Handoff Report  Reviewer 1 (Milestone 2A: Themes 1 to 5)
 
 ## 1. Observation
 - **Audited Scope**: 15 Blade files comprising Themes 1 to 5 (`universal_storefront`, `modern_umkm`, `online_store`, `business_corporate`, `coffee_beverage`) located under `resources/views/public/storefront/themes/{theme_name}/`:

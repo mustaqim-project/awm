@@ -66,7 +66,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Target:**
   1. Melakukan riset intelijen Google Trends & regulasi bisnis Indonesia per 14 November 2026 dan menyimpannya dalam database/data/articles/trending-research-2026-11-14.json dan database/data/articles/keyword-research-2026-11-14.json.
   2. Memproduksi 20 artikel edukasi bisnis komprehensif (ID 572 sampai 591) dengan kepatuhan 100% terhadap pedoman cooca-blog-writer:
-     - Mutlak bebas em dash (—) dan en dash (–) di seluruh judul, isi, meta, tabel, FAQ, dan skema JSON-LD.
+     - Mutlak bebas em dash () dan en dash (–) di seluruh judul, isi, meta, tabel, FAQ, dan skema JSON-LD.
      - Tepat 1 tag H1 yang memuat primary keyword.
      - Penempatan primary keyword di 100 kata pertama, meta_title (<= 60 karakter), meta_description (120-160 karakter), dan minimal 1 subjudul H2.
      - Panjang artikel minimal 1.200 kata per artikel (rata-rata 1.250-1.450 kata).
@@ -133,7 +133,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   1. Menulis 40 artikel berkualitas tinggi (ID 532 s.d. 571) berdasarkan fitur riil Cooca (POS Kasir, Offline POS, Multi-Gudang, Resep BOM, QRIS Dinamis, Akuntansi SAK EMKM, Payroll HRM, WhatsApp Gateway, Omnichannel Marketplace, Katalog Digital, dll).
   2. Menghasilkan 40 sampul artikel editorial kustom (Bento Grid Apple HIG aesthetic, Navy `#070B19`, Sapphire `#2563EB`, logo resmi Cooca, 3D element icons) beresolusi 1200x675 JPG yang digenerate sendiri menggunakan Playwright browser engine tanpa menggunakan stock photo eksternal.
   3. Membagi jadwal tayang 40 artikel secara proporsional dan bertahap antara 1 Juli 2026 sampai dengan 13 November 2026.
-  4. Menegakkan 100% kepatuhan SEO: Zero em dash (`—`) & zero en dash (`–`), primary keyword di 100 kata pertama & H1/H2, meta description, internal link terverifikasi, dan JSON-LD Article + FAQPage.
+  4. Menegakkan 100% kepatuhan SEO: Zero em dash (``) & zero en dash (`–`), primary keyword di 100 kata pertama & H1/H2, meta description, internal link terverifikasi, dan JSON-LD Article + FAQPage.
   5. Impor database (`php artisan blog:import-articles --force`), sitemap generation (`php artisan sitemap:generate`), pembaruan cache `blog_links.json`, dan pengujian live view HTTP 200.
 
 #### 2. What Was Done
@@ -296,7 +296,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   1. Merumuskan dan mengeksekusi strategi konten edukasi bisnis UMKM yang terintegrasi penuh dengan solusi produk Cooca (kalkulasi HPP ABC, inventori multi-gudang, kasir POS terpadu, WA Gateway, dan penjualan omnichannel).
   2. Menyusun intelijen riset Google Trends & Regulasi `database/data/articles/trending-research-2026-11-10-batch6.json` serta `database/data/articles/keyword-research-2026-11-10-batch6.json` (20 topik operasional prioritas tinggi).
   3. Memproduksi 20 artikel edukasi bisnis berkualitas tinggi (ID 331 hingga 350) dengan kepatuhan editorial mutlak:
-     - Mutlak tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Mutlak tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel, tanpa tautan eksternal).
      - Struktur SEO on-page lengkap: single H1 exact match primary keyword, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang jujur (Solo Owner Rp 0 gratis selamanya), serta Article & FAQPage JSON-LD Schema.
      - 100% lolos linter konten (`lint_content.py`) dengan status 0 FAIL.
@@ -446,7 +446,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Target:**
   1. Melakukan riset mendalam Google Trends Indonesia & Regulasi Bisnis Nasional tanggal 10 November 2026 dan menyusun dataset intelijen `database/data/articles/trending-research-2026-11-10.json` serta `database/data/articles/keyword-research-2026-11-10.json` (20 topik operasional esensial).
   2. Memproduksi 20 artikel edukasi bisnis berkualitas tinggi (ID 311 hingga 330) dengan kepatuhan editorial ketat:
-     - Mutlak tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Mutlak tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel, tanpa tautan eksternal).
      - Struktur SEO on-page lengkap: single H1 exact match primary keyword, primary keyword di 100 kata pertama dan minimal satu H2, 4-8 H2, FAQPage (4-6 item), meta title (<= 60 karakter), meta description (120-160 karakter), tabel simulasi data konkret (maksimal 4-5 kolom), penempatan peran Cooca yang jujur (Solo Owner Rp 0 gratis selamanya, tanpa klaim palsu/trial), serta Article JSON-LD Schema.
      - 100% lolos linter konten (`lint_content.py`) dengan status 0 FAIL.
@@ -510,7 +510,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Target:**
   1. Melakukan riset mendalam Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 9 November 2026 dan menghasilkan `database/data/articles/trending-research-2026-11-09.json` serta `database/data/articles/keyword-research-2026-11-09.json` yang memetakan 20 topik esensial operasional UMKM.
   2. Memproduksi 20 artikel edukasi bisnis berkualitas tinggi (ID 291 hingga 310) dengan kepatuhan mutlak:
-     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel).
      - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
      - Lolos linter konten (`lint_content.py`) dengan status 100% lulus (0 FAIL).
@@ -570,7 +570,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Target:**
   1. Melakukan riset mendalam Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 8 November 2026 dan menghasilkan `database/data/articles/trending-research-2026-11-08.json` serta `database/data/articles/keyword-research-2026-11-08.json`.
   2. Memproduksi 10 artikel edukasi bisnis berkualitas tinggi (ID 281 hingga 290) dengan kepatuhan mutlak:
-     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal eksklusif dari `/blog/(slug)` valid di `blog_links.json` (3-5 internal link unik per artikel).
      - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama dan H2, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
      - Lolos linter konten (`lint_content.py`) dengan status 100% lulus (0 FAIL).
@@ -636,7 +636,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
   1. Melakukan riset kata kunci dan tren mendalam menggunakan 6 variasi penelusuran web bahasa Indonesia seputar regulasi PP 20/2026, Coretax DJP, dan ketentuan pemotongan lokapasar.
   2. Menyusun strategi konten SEO dan Keyword Brief yang memetakan search intent, secondary keywords, pertanyaan FAQ, dan unique value proposition Cooca secara natural.
   3. Memproduksi artikel edukasi bisnis berkualitas tinggi (2.234 kata) dengan kepatuhan mutlak:
-     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal kontekstual eksklusif dari `/blog/(slug)` valid di `blog_links.json` (5 internal links unik).
      - Heading structure terstandarisasi (1 H1, 6 H2, FAQ komprehensif 5 pertanyaan).
      - Frontmatter lengkap + blok JSON-LD `Article` dan `FAQPage`.
@@ -756,7 +756,7 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Target:**
   1. Melakukan riset komprehensif Google Trends Indonesia Kategori 3 (Bisnis & Keuangan) tanggal 7 November 2026 dan menghasilkan `trending-research-2026-11-07.json` serta `keyword-research-2026-11-07.json`.
   2. Memproduksi 10 artikel edukasi bisnis berkualitas tinggi (ID 261 hingga 270) dengan kepatuhan ketat:
-     - Tanpa karakter em dash (`—`) maupun en dash (`–`).
+     - Tanpa karakter em dash (``) maupun en dash (`–`).
      - Tautan internal eksklusif dari `/blog/(slug)` valid di `sitemap_blog.xml` (tanpa link eksternal atau tebakan).
      - Struktur SEO on-page lengkap: single H1, primary keyword di 100 kata pertama, meta title (<= 60 karakter), meta description (120-160 karakter), tabel data simulasi konkret, penempatan peran Cooca yang natural dan jujur, FAQPage, serta Article JSON-LD Schema.
      - Lolos 100% linter konten (`lint_content.py`) dengan status 0 FAIL.
@@ -816,10 +816,10 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Konteks:** Menjangkau audiens pemilik usaha, ritel, dan UMKM di Indonesia melalui kehadiran multi-platform yang konsisten, berbobot tinggi, dan terhindar dari duplikasi maupun kelelahan audiens (*audience fatigue*).
 - **Target:**
   1. Menghasilkan 4 postingan konten unik setiap hari untuk 4 saluran utama di jam viral resmi masing-masing (WIB / UTC+7):
-     - **LinkedIn (08:00 WIB)**: *B2B Morning Insight* — Tata Kelola Bisnis, Multi-Outlet, dan Rekonsiliasi Finansial.
-     - **Instagram (12:15 WIB)**: *Lunchtime Visual Carousel* — Edukasi Ritel Toko Kamu dengan visual 3D & Human Cutout.
-     - **Facebook (16:30 WIB)**: *Afternoon Community Post* — Studi Kasus Toko Kamu & Diskusi Komunitas Ritel.
-     - **TikTok (19:45 WIB)**: *Prime Time FYP Hook* — Tips Kilat Anti-Bocor Kas & Solusi Operasional Cepat.
+     - **LinkedIn (08:00 WIB)**: *B2B Morning Insight*  Tata Kelola Bisnis, Multi-Outlet, dan Rekonsiliasi Finansial.
+     - **Instagram (12:15 WIB)**: *Lunchtime Visual Carousel*  Edukasi Ritel Toko Kamu dengan visual 3D & Human Cutout.
+     - **Facebook (16:30 WIB)**: *Afternoon Community Post*  Studi Kasus Toko Kamu & Diskusi Komunitas Ritel.
+     - **TikTok (19:45 WIB)**: *Prime Time FYP Hook*  Tips Kilat Anti-Bocor Kas & Solusi Operasional Cepat.
   2. Menerapkan **Viral Potential Gate (Skor >= 80/100)** berbasis 4 metrik berbobot: Trend Velocity (30%), Hook Urgency (30%), Visual Depth 3D & Cutout (25%), dan CTA Clarity (15%).
   3. Menegakkan **Zero Same-Day Collisions**: 4 fitur berbeda secara deterministik diputar setiap hari dari katalog fitur terverifikasi.
   4. Brand Safety terjamin: Persona bisnis wajib menggunakan `Toko Kamu` dengan Pemilik `Cooca Indonesia` (tidak menggunakan nama merchant riil).
@@ -24781,7 +24781,7 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
    - *Primary Keyword:* `tren bisnis 2027 dan peluang usaha`.
    - *Key Insights:* Dominasi konsumen Generasi Z (25% populasi RI) yang menuntut layanan nir-antrean, konvergensi ritel fisik dan digital (*phygital*), tren F&B *healthy meal prep* dan *ghost kitchen*, peluang agensi solusi AI lokal, efisiensi upah & kontrol HPP terintegrasi via COOCA.
 2. **Quality & Compliance Verification (cooca-blog-writer):**
-   - *Strict Guardrails:* 0 em dash (`—`), 0 en dash (`–`), 0 invalid external links, tepat 1 H1, penyebaran primary keyword di 100 kata pertama, meta title, meta description, dan H2, serta 5 contextual internal link resmi dari `blog_links.json`.
+   - *Strict Guardrails:* 0 em dash (``), 0 en dash (`–`), 0 invalid external links, tepat 1 H1, penyebaran primary keyword di 100 kata pertama, meta title, meta description, dan H2, serta 5 contextual internal link resmi dari `blog_links.json`.
    - *Linter Status:* `0 FAIL, 0 WARN` pada `351-tren-bisnis-2027-dan-peluang-usaha-umkm.md` serta `0 FAIL` pada seluruh 20 artikel Batch 6 (IDs 331 s/d 350) setelah meremediasi format H1 dan penempatan keyword pada ID 341, 344, dan 345.
 3. **Core Command & Schema Enhancement:**
    - Memperbarui `app/Console/Commands/ImportUmkmArticlesCommand.php` agar secara cerdas mengekstrak entitas `FAQPage` dari blok JSON-LD markdown sebelum di-strip, dan menyuntikkan kontainer tersembunyi `<div class="faq-schema-json">` sehingga `resources/views/public/blog/show.blade.php` otomatis merender schema FAQ Google yang kaya (*rich snippet*).
@@ -24818,7 +24818,7 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
    - *Primary Keyword:* `strategi rekonsiliasi keuangan toko online`.
    - *Key Insights:* Lonjakan pesanan 11.11 sering kali diiringi jeda pelepasan dana (escrow) 3-7 hari, beban komisi platform 15-22%, lonjakan retur COD (15-30% pada fesyen), dan denda selisih volumetrik kurir. Tanpa rekonsiliasi kas, seller berisiko mengalami defisit modal kerja untuk kulakan stok baru.
 2. **Quality & Compliance Verification (cooca-blog-writer):**
-   - *Strict Guardrails:* 0 em dash (`—`), 0 en dash (`–`), 0 invalid external links, tepat 1 H1, penyebaran primary keyword di 100 kata pertama, meta title (54 karakter), meta description (147 karakter), dan H2, serta 5 contextual internal link resmi dari `blog_links.json`.
+   - *Strict Guardrails:* 0 em dash (``), 0 en dash (`–`), 0 invalid external links, tepat 1 H1, penyebaran primary keyword di 100 kata pertama, meta title (54 karakter), meta description (147 karakter), dan H2, serta 5 contextual internal link resmi dari `blog_links.json`.
    - *Linter Status:* `0 FAIL, 0 WARN` pada `352-strategi-rekonsiliasi-keuangan-pasca-11-11-umkm.md` (1.991 kata, kepadatan keyword optimal 2,26%).
    - *Tabel Simulasi Finansial:* Membedah komparasi omzet kotor Rp100.000.000 vs laba bersih riil Rp15.140.000 setelah seluruh potongan operasional.
 3. **Production Database & Sitemap Synchronization:**
@@ -24845,7 +24845,7 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 #### 1. Business Context & Objective
 - Melanjutkan eksekusi strategi konten edukasi bisnis UMKM Indonesia untuk COOCA (`cooca.id`) bertepatan dengan hari puncak festival belanja 11.11 dan persiapan tutup tahun 2026 / 2027 berbasis skill `cooca-blog-writer` dan direktif `cooca-agent-directive`.
 - Memproduksi 20 artikel blog pilar SEO mendalam (IDs 372 sampai 391) yang mencakup manajemen pesanan same-day kilat, penanganan resi tertahan/hilang, penataan meja fast-track kurir instan, SOP upselling/cross-selling POS, audit biaya kemasan tahan air musim hujan, rekonsiliasi saldo escrow payout, laporan perubahan modal SAK EMKM, strategi jam lembur gudang, dynamic pricing beretika, pemeliharaan printer thermal, perhitungan BEP resto online, mitigasi ketergantungan diskon harga, SOP retur toko fisik, negosiasi sewa kios 2027, barcode GS1 EAN-13 resmi, SOP kasbon karyawan tertib, reaktivasi pelanggan pasca event via WhatsApp personal, penyusunan PO bahan baku 12.12, kalkulasi biaya reverse logistics retur COD, dan izin edar kosmetik notifikasi BPOM maklon.
-- Menegakkan standar editorial tanpa kompromi: 0 em dash (`—`), 0 en dash (`–`), internal link murni kanonis `/blog/{slug}` dari `blog_links.json`, penyebaran keyword presisi (H1, 100 kata pertama, meta title <= 60 karakter, meta description 120-160 karakter, dan H2), panjang artikel 1.200+ kata, tabel komparasi, serta skema JSON-LD `Article` + `FAQPage`.
+- Menegakkan standar editorial tanpa kompromi: 0 em dash (``), 0 en dash (`–`), internal link murni kanonis `/blog/{slug}` dari `blog_links.json`, penyebaran keyword presisi (H1, 100 kata pertama, meta title <= 60 karakter, meta description 120-160 karakter, dan H2), panjang artikel 1.200+ kata, tabel komparasi, serta skema JSON-LD `Article` + `FAQPage`.
 - Mengimpor seluruh artikel ke database produksi `posts`, memperbarui `public/sitemap_blog.xml` dan `blog_links.json`, serta memvalidasi rendering live controller `PublicBlogController::show($slug)` 100% bebas error.
 
 #### 2. Execution & Key Results

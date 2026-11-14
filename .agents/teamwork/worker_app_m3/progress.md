@@ -1,4 +1,4 @@
-# Progress Tracker — Milestone 3 (App Views Batch 1)
+# Progress Tracker  Milestone 3 (App Views Batch 1)
 
 Last visited: 2026-10-31T03:55:00Z
 
@@ -51,6 +51,6 @@ Last visited: 2026-10-31T03:55:00Z
   - [x] `quotations/create.blade.php` (0 issues)
   - [x] `purchase-orders/create.blade.php` (0 issues)
   - [x] `invoices/index.blade.php` (0 issues)
-- [x] Translation Key Parity Sync (`lang/id/*.php` and `lang/en/*.php`) — 100.00% Parity (17,715 keys)
-- [x] Syntax & Tier 3, 4 Verification — 0 Blade syntax errors, all 132 language files pass php -l
+- [x] Translation Key Parity Sync (`lang/id/*.php` and `lang/en/*.php`)  100.00% Parity (17,715 keys)
+- [x] Syntax & Tier 3, 4 Verification  0 Blade syntax errors, all 132 language files pass php -l
 - [x] Final deep audit confirmation on all 39 target files (0 issues across all 185 files in resources/views/app)

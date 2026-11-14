@@ -1,4 +1,4 @@
-# Forensic Audit Handoff Report — Milestone 2A: Batch 1 Themes Refactoring
+# Forensic Audit Handoff Report  Milestone 2A: Batch 1 Themes Refactoring
 
 ## 1. Observation
 1. **Target Scope & Boundary Enforcement**:

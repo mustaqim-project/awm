@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T16:11:30Z
+# BRIEFING  2026-11-08T16:11:30Z
 
 ## Mission
 Adversarially challenge and stress-test RBAC boundaries, authorization guards, and cross-tenant IDOR protection in Feedback and Finance modules.
@@ -12,7 +12,7 @@ Adversarially challenge and stress-test RBAC boundaries, authorization guards, a
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code unless creating test/stress verification scripts.
+- Review-only  do NOT modify implementation code unless creating test/stress verification scripts.
 - Empirical verification required: must run automated and targeted tests.
 - Propose counter-examples and stress scenarios for authorization bypass, role privilege escalation, and cross-tenant leakage.
 
@@ -36,11 +36,11 @@ Adversarially challenge and stress-test RBAC boundaries, authorization guards, a
 - Verdict: **APPROVE**.
 
 ## Artifact Index
-- DISPATCH.md — Dispatch instructions
-- BRIEFING.md — Situational awareness
-- progress.md — Liveness & progress tracker
-- challenge_report.md — Detailed adversarial challenge report
-- handoff.md — Final handoff report with verdict: APPROVE
+- DISPATCH.md  Dispatch instructions
+- BRIEFING.md  Situational awareness
+- progress.md  Liveness & progress tracker
+- challenge_report.md  Detailed adversarial challenge report
+- handoff.md  Final handoff report with verdict: APPROVE
 
 ## Attack Surface
 - **Hypotheses tested**:

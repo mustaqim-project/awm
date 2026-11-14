@@ -65,7 +65,7 @@ Command: `php artisan test tests/Feature/AdversarialSecurityChallengerTest.php`
 Output: `{"tool":"phpunit","result":"passed","tests":4,"passed":4,"assertions":68,"duration_ms":18601}`  
 Detailed test results:
 - **Challenge 1 (`test_read_only_viewers_cannot_execute_import_mutations`)**:
-  - Tested 4 read-only viewer roles (`materials.view only`, `products.view only`, `inventory.view only`, `import.view only`) across 4 execution endpoints (`import.materials.execute`, `import.products.execute`, `import.recipes.execute`, `import.inventory.execute`) — 16 adversarial mutation attempts.
+  - Tested 4 read-only viewer roles (`materials.view only`, `products.view only`, `inventory.view only`, `import.view only`) across 4 execution endpoints (`import.materials.execute`, `import.products.execute`, `import.recipes.execute`, `import.inventory.execute`)  16 adversarial mutation attempts.
   - Every attempt resulted in HTTP `403 Forbidden` with JSON error code `'FORBIDDEN_PERMISSION'`.
 - **Challenge 2 (`test_hrm_api_rejects_unauthorized_and_viewer_only_members_from_mutations`)**:
   - Shift creation (`POST /api/v1/hrm/shifts`) by cashier -> HTTP `403 Forbidden`.

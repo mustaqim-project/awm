@@ -1,4 +1,4 @@
-# Handoff Report — Explorer 3: Theme Service Archetypes & Universal Fallbacks
+# Handoff Report  Explorer 3: Theme Service Archetypes & Universal Fallbacks
 
 **Milestone:** Milestone 1 (Backend & Service Normalization)  
 **Agent:** Explorer 3 (`teamwork_explorer_m1_3`)  

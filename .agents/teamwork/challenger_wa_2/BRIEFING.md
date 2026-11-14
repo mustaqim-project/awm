@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T07:13:00Z
+# BRIEFING  2026-11-07T07:13:00Z
 
 ## Mission
 Empirically verify UI simplification, layout hierarchy, and Blade compilation robustness of the WhatsApp views in resources/views/app/whatsapp/
@@ -12,7 +12,7 @@ Empirically verify UI simplification, layout hierarchy, and Blade compilation ro
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Must run verification code directly (no trusting unverified claims)
 - Target directory: resources/views/app/whatsapp/
 - Must output 5-Component Handoff Report with clear verdict (APPROVE / REQUEST_CHANGES)
@@ -33,10 +33,10 @@ Empirically verify UI simplification, layout hierarchy, and Blade compilation ro
 - Confirmed zero Blade compilation errors and complete locale coverage. Verdict: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — Initial dispatch message
-- `BRIEFING.md` — Context tracker
-- `progress.md` — Task progress & heartbeat
-- `handoff.md` — 5-Component Handoff Report with verdict APPROVE
+- `DISPATCH.md`  Initial dispatch message
+- `BRIEFING.md`  Context tracker
+- `progress.md`  Task progress & heartbeat
+- `handoff.md`  5-Component Handoff Report with verdict APPROVE
 
 ## Attack Surface
 - **Hypotheses tested**:

@@ -1,4 +1,4 @@
-# Phase 1 Remediation Handoff Report — worker_phase1
+# Phase 1 Remediation Handoff Report  worker_phase1
 
 ## 1. Observation
 - **Target Scope**:

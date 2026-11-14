@@ -1,4 +1,4 @@
-# Forensic Integrity Audit Report — Milestone 2 (M2)
+# Forensic Integrity Audit Report  Milestone 2 (M2)
 
 **Work Product**: Milestone 2 Code Changes (Storefront, Marketing Pages, Solutions & Commercial Views)  
 **Profile**: General Project (Laravel 11 / Blade / Tailwind / Vite)  

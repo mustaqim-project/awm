@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T14:04:15Z
+# BRIEFING  2026-11-07T14:04:15Z
 
 ## Mission
 Investigate production readiness, automated test coverage, and documentation architecture for Community, CRM, and Customers modules in COOCA.
@@ -11,7 +11,7 @@ Investigate production readiness, automated test coverage, and documentation arc
 - Milestone: Survey & Audit Discovery
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Multi-tenant scoping and 20-industry matrix analysis
 - Adhere to COOCA agent directive and business-owner-doc-generator skill standards
 
@@ -40,6 +40,6 @@ Investigate production readiness, automated test coverage, and documentation arc
 - Formulated exact 20-industry matrix and route specifications for documentation implementer.
 
 ## Artifact Index
-- survey_report.md — Comprehensive audit & docs survey report
-- handoff.md — 5-component handoff report
-- progress.md — Liveness heartbeat
+- survey_report.md  Comprehensive audit & docs survey report
+- handoff.md  5-component handoff report
+- progress.md  Liveness heartbeat

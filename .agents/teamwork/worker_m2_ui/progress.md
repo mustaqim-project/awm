@@ -1,4 +1,4 @@
-# Progress — Worker Milestone 2 (UI Layout & Simplification)
+# Progress  Worker Milestone 2 (UI Layout & Simplification)
 
 Last visited: 2026-11-08T19:44:00Z
 - [x] Fix floating calculation bar offset in resources/views/app/hrm/payroll/create.blade.php (`bottom-[calc(68px+env(safe-area-inset-bottom))] lg:bottom-4`)

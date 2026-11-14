@@ -48,7 +48,7 @@ return [
     // Laundry
     'laundry_kicker' => 'Laundry POS & Outlet Management',
     'laundry_title' => 'Laundry Software: Thermal Receipts & Automated WhatsApp Status Updates',
-    'laundry_subtitle' => 'Manage wash-by-kilo and dry-cleaning workflows with rack storage tagging, waterproof receipt printing, and automated WhatsApp notifications when garments are ready—no manual contact saving required.',
+    'laundry_subtitle' => 'Manage wash-by-kilo and dry-cleaning workflows with rack storage tagging, waterproof receipt printing, and automated WhatsApp notifications when garments are readyno manual contact saving required.',
     'laundry_cta_start' => 'Try Free Laundry Software',
     'laundry_feat_1' => 'Full support for wash-by-kilo & specialty items',
     'laundry_feat_2' => 'Rack bin numbering & garment bundle identification',

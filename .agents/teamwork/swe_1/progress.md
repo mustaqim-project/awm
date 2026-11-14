@@ -1,4 +1,4 @@
-# Progress — SWE Light Orchestrator
+# Progress  SWE Light Orchestrator
 
 ## Current Status
 Last visited: 2026-10-31T00:28:30Z

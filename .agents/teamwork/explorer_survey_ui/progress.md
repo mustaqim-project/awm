@@ -1,4 +1,4 @@
-# Progress Tracking — UI Survey Explorer
+# Progress Tracking  UI Survey Explorer
 
 Last visited: 2026-11-08T19:15:00Z
 

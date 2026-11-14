@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:26:00Z
+# BRIEFING  2026-11-08T20:26:00Z
 
 ## Mission
 Empirical verification and stress testing of Blade compilation, PHP syntax, route registrations, and test suites across touched modules (HRM, Import, Inventory, RBAC).
@@ -12,9 +12,9 @@ Empirical verification and stress testing of Blade compilation, PHP syntax, rout
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Report failures as findings — do NOT fix them yourself
-- Empirical verification mandatory — must run tests and commands directly
+- Review-only  do NOT modify implementation code
+- Report failures as findings  do NOT fix them yourself
+- Empirical verification mandatory  must run tests and commands directly
 
 ## Current Parent
 - Conversation ID: 17ad45ac-9d4d-4f53-8d10-684c6e458faa
@@ -43,7 +43,7 @@ Empirical verification and stress testing of Blade compilation, PHP syntax, rout
 - Verdict formulated as explicit `APPROVE`.
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming dispatch instructions
-- `BRIEFING.md` — Working context and state memory
-- `progress.md` — Liveness heartbeat and step tracking
-- `handoff.md` — Final 5-component adversarial verification report
+- `DISPATCH.md`  Incoming dispatch instructions
+- `BRIEFING.md`  Working context and state memory
+- `progress.md`  Liveness heartbeat and step tracking
+- `handoff.md`  Final 5-component adversarial verification report

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T13:53:00Z
+# BRIEFING  2026-11-07T13:53:00Z
 
 ## Mission
 Investigate Role-Based Access Control (RBAC) across Community, CRM, and Customers modules in COOCA codebase (controllers, routes, seeders, blade view guards).
@@ -11,7 +11,7 @@ Investigate Role-Based Access Control (RBAC) across Community, CRM, and Customer
 - Milestone: RBAC Authorization Survey for Community, CRM, Customers
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Investigate routes, controllers, guards, seeders, and blade views for Community, CRM, and Customers
 - Deliver findings in survey_report.md and handoff.md
 
@@ -40,7 +40,7 @@ Investigate Role-Based Access Control (RBAC) across Community, CRM, and Customer
 - Generated `survey_report.md` and 5-component `handoff.md`.
 
 ## Artifact Index
-- `survey_report.md` — Comprehensive findings for Community, CRM, Customers
-- `handoff.md` — 5-Component handoff report
-- `progress.md` — Heartbeat and progress log
-- `DISPATCH.md` — Received directives
+- `survey_report.md`  Comprehensive findings for Community, CRM, Customers
+- `handoff.md`  5-Component handoff report
+- `progress.md`  Heartbeat and progress log
+- `DISPATCH.md`  Received directives

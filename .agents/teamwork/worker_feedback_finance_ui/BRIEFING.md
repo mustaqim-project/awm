@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T15:30:00Z
+# BRIEFING  2026-11-08T15:30:00Z
 
 ## Mission
 UI Simplification & Layout Optimization across Feedback and Finance modules (Features F6 to F11).

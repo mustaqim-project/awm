@@ -1,4 +1,4 @@
-# Handoff Report — Adversarial RBAC & Security Challenge (Community, CRM, Customers)
+# Handoff Report  Adversarial RBAC & Security Challenge (Community, CRM, Customers)
 
 **Agent:** Challenger 1 (Adversarial RBAC & Security Challenger)  
 **Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\challenger_1`  

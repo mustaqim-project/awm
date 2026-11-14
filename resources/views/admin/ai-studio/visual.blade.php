@@ -1558,7 +1558,7 @@ function adminAiStudioVisual() {
             if (currentPreset && currentPreset.caption_suggestion) {
                 this.socialContent = currentPreset.caption_suggestion;
             } else {
-                this.socialContent = '🚀 ' + (this.activeAsset?.title || 'COOCA Business OS') + ' — Permudah operasional bisnis UMKM Indonesia bersama sistem cerdas terintegrasi. Cek selengkapnya di cooca.id! #COOCA #BisnisUMKM';
+                this.socialContent = '🚀 ' + (this.activeAsset?.title || 'COOCA Business OS') + '  Permudah operasional bisnis UMKM Indonesia bersama sistem cerdas terintegrasi. Cek selengkapnya di cooca.id! #COOCA #BisnisUMKM';
             }
         },
 

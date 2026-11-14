@@ -1,4 +1,4 @@
-# TEST_READY — Comprehensive E2E Testing Suite for COOCA Public Marketing Frontend
+# TEST_READY  Comprehensive E2E Testing Suite for COOCA Public Marketing Frontend
 
 **Publication Date**: 2026-11-14T06:05:00+07:00 (UTC 2026-11-13T23:05:00Z)  
 **Author**: `test_writer_e2e` (roles: `specialist`, `qa`)  

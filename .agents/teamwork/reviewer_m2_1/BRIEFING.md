@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T01:56:00Z
+# BRIEFING  2026-11-14T01:56:00Z
 
 ## Mission
 Conduct thorough quality and adversarial review of Worker M2's implementation on Standalone Marketing Pages and Commercial Landings.
@@ -13,7 +13,7 @@ Conduct thorough quality and adversarial review of Worker M2's implementation on
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Integrity check: actively check for hardcoded test results, facade implementations, shortcuts, fabricated verification, self-certification
 - Report with explicit APPROVE or REQUEST_CHANGES verdict
 
@@ -65,7 +65,7 @@ Conduct thorough quality and adversarial review of Worker M2's implementation on
 - Issued APPROVE with 3 advisory findings documented in handoff.md.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat
-- handoff.md — final review report and verdict
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent working memory
+- progress.md  liveness heartbeat
+- handoff.md  final review report and verdict

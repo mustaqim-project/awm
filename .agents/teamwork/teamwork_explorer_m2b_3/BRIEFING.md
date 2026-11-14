@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T01:50:00Z
+# BRIEFING  2026-11-05T01:50:00Z
 
 ## Mission
 Audit and map refactoring changes for Themes 8-11 (`retail_building`, `retail_electronics`, `retail_florist`, `retail_grocery`) according to Universal Blade Contracts (§3.1 Hero, §3.2 Features Banner, §3.3 Category Chips) while preserving each theme's unique visual personality.
@@ -11,7 +11,7 @@ Audit and map refactoring changes for Themes 8-11 (`retail_building`, `retail_el
 - Milestone: Milestone 2B (Batch 2 Themes Refactoring)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement / modify source files
+- Read-only investigation  do NOT implement / modify source files
 - Keep findings rigorously structured around Universal Blade Contracts
 - Maintain theme-specific visual personality and styling
 - Deliver analysis.md and handoff.md, notify parent via send_message
@@ -40,8 +40,8 @@ Audit and map refactoring changes for Themes 8-11 (`retail_building`, `retail_el
 - Zero source code files modified (read-only constraint strictly upheld).
 
 ## Artifact Index
-- `DISPATCH.md` — Parent instructions log
-- `BRIEFING.md` — Situational awareness
-- `progress.md` — Liveness heartbeat
-- `analysis.md` — Full audit report and implementation blueprints for Themes 8 to 11
-- `handoff.md` — 5-component handoff report
+- `DISPATCH.md`  Parent instructions log
+- `BRIEFING.md`  Situational awareness
+- `progress.md`  Liveness heartbeat
+- `analysis.md`  Full audit report and implementation blueprints for Themes 8 to 11
+- `handoff.md`  5-component handoff report

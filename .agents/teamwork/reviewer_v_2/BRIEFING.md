@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T04:45:00Z
+# BRIEFING  2026-11-03T04:45:00Z
 
 ## Mission
 Review and adversarially audit Milestone 3 (Dummy Data Elimination), Milestone 4 (Android Production Build), and Milestone 5 (Audit Documentation) across code, builds, tests, and reports.
@@ -12,7 +12,7 @@ Review and adversarially audit Milestone 3 (Dummy Data Elimination), Milestone 4
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Actively check for integrity violations (hardcoded test results, facade implementations, bypasses, fabricated logs)
 - Issue an explicit verdict: APPROVE or REQUEST_CHANGES
 
@@ -60,5 +60,5 @@ Review and adversarially audit Milestone 3 (Dummy Data Elimination), Milestone 4
 - Issued verdict: APPROVE.
 
 ## Artifact Index
-- DISPATCH.md — Task assignment from orchestrator
-- handoff.md — Comprehensive review and adversarial audit report
+- DISPATCH.md  Task assignment from orchestrator
+- handoff.md  Comprehensive review and adversarial audit report

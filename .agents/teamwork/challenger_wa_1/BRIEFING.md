@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T07:15:00Z
+# BRIEFING  2026-11-07T07:15:00Z
 
 ## Mission
 Empirically challenge RBAC enforcement and authorization robustness of the WhatsApp module.
@@ -12,8 +12,8 @@ Empirically challenge RBAC enforcement and authorization robustness of the Whats
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Report any failures as findings — do NOT fix them yourself
+- Review-only  do NOT modify implementation code
+- Report any failures as findings  do NOT fix them yourself
 - Empirically verify everything with actual test execution
 
 ## Current Parent
@@ -42,7 +42,7 @@ Empirically challenge RBAC enforcement and authorization robustness of the Whats
 - Compiled handoff report with verdict APPROVE.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat and execution tracker
-- handoff.md — final empirical verdict and report
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent working memory
+- progress.md  liveness heartbeat and execution tracker
+- handoff.md  final empirical verdict and report

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:31:30Z
+# BRIEFING  2026-11-08T19:31:30Z
 
 ## Mission
 Author comprehensive Business Owner documentation for HRM, Import, and Inventory modules (F15, F16, F17) and integrate into docs index (F18) in full alignment with Cooca Design System and the 20-industry framework.

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T09:10:00Z
+# BRIEFING  2026-10-31T09:10:00Z
 
 ## Mission
 Remediate all 61 missing translation keys in both Indonesian (`lang/id/*.php`) and English (`lang/en/*.php`) so that Laravel Oracle and all auditor verification scripts pass with 0 missing keys and 0 errors, achieving 100% translation key resolution parity.
@@ -39,10 +39,10 @@ Remediate all 61 missing translation keys in both Indonesian (`lang/id/*.php`) a
 - Resolved and cleaned git index and working tree, ensuring uncommitted files are properly validated and staged.
 
 ## Artifact Index
-- `DISPATCH.md` — assignment dispatch
-- `BRIEFING.md` — persistent memory
-- `progress.md` — liveness heartbeat
-- `handoff.md` — 5-component completion report
+- `DISPATCH.md`  assignment dispatch
+- `BRIEFING.md`  persistent memory
+- `progress.md`  liveness heartbeat
+- `handoff.md`  5-component completion report
 
 ## Change Tracker
 - **Files modified**:

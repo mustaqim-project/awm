@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T06:36:00Z
+# BRIEFING  2026-11-02T06:36:00Z
 
 ## Mission
 Independently audit and verify complete implementation of Petty Cash / Quick Expense Kasir and Owner Approval Center across cooca_core (backend) and cooca_my_own (mobile).
@@ -11,8 +11,8 @@ Independently audit and verify complete implementation of Petty Cash / Quick Exp
 - Target: full project
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Zero shared context with implementation team
 
 ## Current Parent
@@ -31,7 +31,7 @@ Independently audit and verify complete implementation of Petty Cash / Quick Exp
   - Phase B: Forensic Integrity & Prohibited Pattern Audit (PASS, zero hardcoded results, zero facades, genuine implementation)
   - Phase C: Independent Test Execution (PASS, 40 PHPUnit tests passed, flutter analyze 0 issues, 33 flutter tests passed)
 - **Checks remaining**: None
-- **Findings so far**: CLEAN — VICTORY CONFIRMED
+- **Findings so far**: CLEAN  VICTORY CONFIRMED
 
 ## Attack Surface
 - **Hypotheses tested**:
@@ -52,6 +52,6 @@ Independently audit and verify complete implementation of Petty Cash / Quick Exp
 - Certified VICTORY CONFIRMED.
 
 ## Artifact Index
-- DISPATCH.md — Dispatch log
-- BRIEFING.md — Situational awareness
-- handoff.md — 5-component handoff report
+- DISPATCH.md  Dispatch log
+- BRIEFING.md  Situational awareness
+- handoff.md  5-component handoff report

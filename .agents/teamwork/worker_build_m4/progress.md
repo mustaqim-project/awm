@@ -1,4 +1,4 @@
-# Progress — worker_build_m4
+# Progress  worker_build_m4
 
 Last visited: 2026-11-03T03:22:30Z
 
@@ -10,7 +10,7 @@ Last visited: 2026-11-03T03:22:30Z
 - [x] Copied and reviewed relevant skills (`cooca-agent-directive`, `find-security-vulnerabilities-in-code`)
 - [x] Inspected existing configuration files in `C:\laragon\www\cooca_my_own\`
 - [x] Added `cached_network_image: ^3.4.1` to `pubspec.yaml`
-- [x] Executed `flutter pub get` — resolved cleanly with 0 errors
+- [x] Executed `flutter pub get`  resolved cleanly with 0 errors
 - [x] Removed `android:usesCleartextTraffic="true"` from `android/app/src/main/AndroidManifest.xml` (enforcing HTTPS)
 - [x] Authored `android/app/proguard-rules.pro` with comprehensive keep rules (Flutter engine, plugins, MethodChannels, MainActivity, Kotlin coroutines, JSON serialization/reflection, desugaring)
 - [x] Updated `android/app/build.gradle.kts`:

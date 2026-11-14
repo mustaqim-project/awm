@@ -73,58 +73,58 @@ Seluruh pemetaan 42 tema telah diverifikasi secara matematis dan logis tanpa dup
 ### 3.2 Pemetaan Tema ke Arketipe (Partition 42 Tema)
 
 #### 1. `clean_bento` (8 Tema)
-- `universal_storefront` — Universal Storefront (Bento Multi-Bisnis)
-- `modern_umkm` — Modern UMKM
-- `online_store` — Online Store
-- `service_agency` — Modern Digital Agency
-- `retail_electronics` — Cyber Electronics & Gadget
-- `retail_building` — Mitra Konstruksi & Material SNI
-- `professional_services` — Advisory & Legal Practice
-- `retail_grocery` — Pasar Sembako & Kebutuhan Harian
+- `universal_storefront`  Universal Storefront (Bento Multi-Bisnis)
+- `modern_umkm`  Modern UMKM
+- `online_store`  Online Store
+- `service_agency`  Modern Digital Agency
+- `retail_electronics`  Cyber Electronics & Gadget
+- `retail_building`  Mitra Konstruksi & Material SNI
+- `professional_services`  Advisory & Legal Practice
+- `retail_grocery`  Pasar Sembako & Kebutuhan Harian
 
 #### 2. `warm_artisan` (7 Tema)
-- `coffee_beverage` — Coffee & Beverage (Artisan Brew)
-- `agriculture_farm` — Kebun Segar & Hidroponik
-- `bakery_cake` — Roti & Kue Panggang Segar
-- `fnb_bakery` — Artisan Bakery & Patisserie
-- `fnb_cafe` — Cafe & Roastery
-- `retail_florist` — Toko Bunga & Florist Romantis
-- `hospitality_accommodation` — Homestay, Villa & Penginapan
+- `coffee_beverage`  Coffee & Beverage (Artisan Brew)
+- `agriculture_farm`  Kebun Segar & Hidroponik
+- `bakery_cake`  Roti & Kue Panggang Segar
+- `fnb_bakery`  Artisan Bakery & Patisserie
+- `fnb_cafe`  Cafe & Roastery
+- `retail_florist`  Toko Bunga & Florist Romantis
+- `hospitality_accommodation`  Homestay, Villa & Penginapan
 
 #### 3. `luxe_editorial` (6 Tema)
-- `retail_fashion` — Butik & Mode Busana Eksklusif
-- `health_beauty` — Skincare, Estetika & Kosmetik
-- `product_showcase` — Produk Unggulan & Formula Inovatif
-- `event_wedding` — Wedding & Event Organizer
-- `personal_brand` — Personal Brand & Konsultan Privat
-- `portfolio_creative` — Studio Kreatif & Desain Brand
+- `retail_fashion`  Butik & Mode Busana Eksklusif
+- `health_beauty`  Skincare, Estetika & Kosmetik
+- `product_showcase`  Produk Unggulan & Formula Inovatif
+- `event_wedding`  Wedding & Event Organizer
+- `personal_brand`  Personal Brand & Konsultan Privat
+- `portfolio_creative`  Studio Kreatif & Desain Brand
 
 #### 4. `dark_carbon` (7 Tema)
-- `service_workshop` — Bengkel Mobil & Motor (Apex Velocity)
-- `service_carwash` — Auto Detailing & Cuci Mobil
-- `service_fitness` — Fitness Center & Gym Komunitas
-- `service_laundry` — Laundry Higienis & Dry Clean
-- `construction_property` — Kontraktor & Renovasi Properti
-- `manufacturing_factory` — Pabrik, Maklon OEM & Konveksi
-- `logistics_transportation` — Ekspedisi & Armada Logistik
+- `service_workshop`  Bengkel Mobil & Motor (Apex Velocity)
+- `service_carwash`  Auto Detailing & Cuci Mobil
+- `service_fitness`  Fitness Center & Gym Komunitas
+- `service_laundry`  Laundry Higienis & Dry Clean
+- `construction_property`  Kontraktor & Renovasi Properti
+- `manufacturing_factory`  Pabrik, Maklon OEM & Konveksi
+- `logistics_transportation`  Ekspedisi & Armada Logistik
 
 #### 5. `playful_fresh` (7 Tema)
-- `food_restaurant` — Restoran Nusantara & Cita Rasa Otentik
-- `fnb_resto` — Resto Keluarga & Sajian Khas
-- `fnb_fastfood` — Kuliner Cepat Saji & Gorengan Renyah
-- `fnb_catering` — Jasa Katering Acara & Pesta
-- `retail_bookstore` — Toko Buku & Alat Tulis
-- `service_petshop` — Pet Care, Grooming & Hotel Anabul
-- `service_beauty` — Salon Kecantikan & Perawatan Terapis
+- `food_restaurant`  Restoran Nusantara & Cita Rasa Otentik
+- `fnb_resto`  Resto Keluarga & Sajian Khas
+- `fnb_fastfood`  Kuliner Cepat Saji & Gorengan Renyah
+- `fnb_catering`  Jasa Katering Acara & Pesta
+- `retail_bookstore`  Toko Buku & Alat Tulis
+- `service_petshop`  Pet Care, Grooming & Hotel Anabul
+- `service_beauty`  Salon Kecantikan & Perawatan Terapis
 
 #### 6. `institutional_trust` (7 Tema)
-- `business_corporate` — Business Corporate & Solusi B2B
-- `education_courses` — Kursus, Pelatihan & Akademi Kejuruan
-- `retail_pharmacy` — Apotek Resmi & Perlengkapan Medis
-- `service_business` — Layanan Jasa & Perawatan Terpercaya
-- `service_printing` — Digital Printing & Percetakan Cepat
-- `booking_appointment` — Booking Jadwal & Konsultasi
-- `wholesale_distributor` — Pusat Grosir & Pasokan Partai Besar
+- `business_corporate`  Business Corporate & Solusi B2B
+- `education_courses`  Kursus, Pelatihan & Akademi Kejuruan
+- `retail_pharmacy`  Apotek Resmi & Perlengkapan Medis
+- `service_business`  Layanan Jasa & Perawatan Terpercaya
+- `service_printing`  Digital Printing & Percetakan Cepat
+- `booking_appointment`  Booking Jadwal & Konsultasi
+- `wholesale_distributor`  Pusat Grosir & Pasokan Partai Besar
 
 ---
 

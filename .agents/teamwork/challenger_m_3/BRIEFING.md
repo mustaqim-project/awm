@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T09:12:00Z
+# BRIEFING  2026-10-31T09:12:00Z
 
 ## Mission
 Perform empirical adversarial stress testing on remediated translation keys and views to rigorously test for missing keys, unescaped quotes, broken interpolations, or runtime crashes.
@@ -12,7 +12,7 @@ Perform empirical adversarial stress testing on remediated translation keys and 
 - Instance: 3 of 3
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Write only to own directory .agents/teamwork/challenger_m_3/
 - Must empirically run all tests and adversarial scripts directly
 
@@ -37,5 +37,5 @@ Perform empirical adversarial stress testing on remediated translation keys and 
 - Commencing empirical testing suite execution and adversarial checks.
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m_3\handoff.md` — Final handoff report
-- `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m_3\progress.md` — Progress tracker
+- `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m_3\handoff.md`  Final handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\challenger_m_3\progress.md`  Progress tracker

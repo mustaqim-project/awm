@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T05:37:00Z
+# BRIEFING  2026-11-07T05:37:00Z
 
 ## Mission
 Investigate Testing Infrastructure and Test Coverage for the WhatsApp module and design a comprehensive testing plan.
@@ -11,7 +11,7 @@ Investigate Testing Infrastructure and Test Coverage for the WhatsApp module and
 - Milestone: WhatsApp Testing Infrastructure & Test Coverage Investigation
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement application code
+- Read-only investigation  do NOT implement application code
 - Write only to working directory: c:\laragon\www\cooca_core\.agents\teamwork\explorer_wa_test
 - Produce structured 5-component handoff report
 
@@ -42,7 +42,7 @@ Investigate Testing Infrastructure and Test Coverage for the WhatsApp module and
 - Formulated concrete testing matrix covering unauthenticated (302 login), unauthorized (403 Forbidden on JSON/API, 302 portal on web), authorized partial viewer (view allowed, manage 403), authorized full manager/owner (200 OK), blade compilation/rendering, and regression testing.
 
 ## Artifact Index
-- DISPATCH.md — Initial dispatch instructions
-- BRIEFING.md — Working memory and context
-- progress.md — Liveness heartbeat and milestone tracker
-- handoff.md — Final structured handoff report
+- DISPATCH.md  Initial dispatch instructions
+- BRIEFING.md  Working memory and context
+- progress.md  Liveness heartbeat and milestone tracker
+- handoff.md  Final structured handoff report

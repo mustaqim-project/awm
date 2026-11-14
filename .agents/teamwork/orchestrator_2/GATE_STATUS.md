@@ -1,6 +1,6 @@
-# Gate Status — Orchestrator 2
+# Gate Status  Orchestrator 2
 
-## Gate — Iteration 1 (Milestone 1: Controller-Level RBAC & Tenant Security)
+## Gate  Iteration 1 (Milestone 1: Controller-Level RBAC & Tenant Security)
 | Agent | Role | Verdict | Source |
 |-------|------|---------|--------|
 | worker_m1 | teamwork_worker | DONE (17 tests passed) | handoff.md |
@@ -14,7 +14,7 @@ Gate Result: **PASS** (Milestone 1 complete)
 
 ---
 
-## Gate — Iteration 2 (Milestone 2: UI Simplification, Layout Ergonomics & View Auth)
+## Gate  Iteration 2 (Milestone 2: UI Simplification, Layout Ergonomics & View Auth)
 | Agent | Role | Verdict | Source |
 |-------|------|---------|--------|
 | worker_m2 | teamwork_worker | DONE (6 views & lang modified, tests pass) | handoff.md |

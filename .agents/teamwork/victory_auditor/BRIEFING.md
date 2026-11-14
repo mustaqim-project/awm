@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:51:30Z
+# BRIEFING  2026-11-08T20:51:30Z
 
 ## Mission
 Conduct an independent, adversarial post-victory audit for HRM, Import, and Inventory remediation against ORIGINAL_REQUEST.md and orchestrator claims.
@@ -11,8 +11,8 @@ Conduct an independent, adversarial post-victory audit for HRM, Import, and Inve
 - Target: HRM, Import, and Inventory remediation project (full project)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Zero shared context with implementation team
 - Ground truth is c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md
 - A single integrity violation or discrepancy = VICTORY REJECTED
@@ -42,9 +42,9 @@ Conduct an independent, adversarial post-victory audit for HRM, Import, and Inve
 - Proceed strictly according to 3-phase Victory Audit protocol.
 
 ## Artifact Index
-- DISPATCH.md — record of initial dispatch message
-- BRIEFING.md — persistent situational awareness and index
-- handoff.md — final audit report and verification method
+- DISPATCH.md  record of initial dispatch message
+- BRIEFING.md  persistent situational awareness and index
+- handoff.md  final audit report and verification method
 
 ## Attack Surface
 - **Hypotheses tested**: [TBD]

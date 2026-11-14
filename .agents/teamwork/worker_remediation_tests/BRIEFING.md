@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T05:15:30Z
+# BRIEFING  2026-11-03T05:15:30Z
 
 ## Mission
 Resolve all issues identified in Victory Audit Report (flutter analyze compilation errors, flutter test failures), execute verification, update documentation, and deliver handoff.
@@ -32,8 +32,8 @@ Resolve all issues identified in Victory Audit Report (flutter analyze compilati
 - Adopted exact fixes identified in victory_auditor_2 handoff: visibleForTesting helper in merchant_state, remove unused import, update Indonesian localized strings in social/marketplace test, set surface size in receipt watermark test.
 
 ## Artifact Index
-- handoff.md — Completion report
-- progress.md — Liveness heartbeat
+- handoff.md  Completion report
+- progress.md  Liveness heartbeat
 
 ## Change Tracker
 - **Files modified**: None yet

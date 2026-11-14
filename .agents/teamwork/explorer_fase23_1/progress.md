@@ -1,4 +1,4 @@
-# Progress — Explorer 1 (Backend Architecture Explorer)
+# Progress  Explorer 1 (Backend Architecture Explorer)
 
 Last visited: 2026-11-02T09:04:00Z
 

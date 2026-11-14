@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:48:00Z
+# BRIEFING  2026-11-08T20:48:00Z
 
 ## Mission
 Conduct an objective quality review and adversarial critique of the fixes applied by worker_remediation for RBAC permissions and member limit testing.
@@ -12,7 +12,7 @@ Conduct an objective quality review and adversarial critique of the fixes applie
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Evidence-based review with independent verification commands
 - Anti-integrity violation checks (no hardcoded cheats, facade logic, shortcuts)
 
@@ -54,6 +54,6 @@ Conduct an objective quality review and adversarial critique of the fixes applie
 - Issued verdict: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — Incoming dispatch instructions
-- `progress.md` — Liveness heartbeat and step tracking
-- `handoff.md` — Comprehensive handoff report
+- `DISPATCH.md`  Incoming dispatch instructions
+- `progress.md`  Liveness heartbeat and step tracking
+- `handoff.md`  Comprehensive handoff report

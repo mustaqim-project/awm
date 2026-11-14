@@ -1,6 +1,6 @@
 # Comprehensive Mobile Application Audit Report: COOCA My Own & Backend Integration
 
-**Document Version**: 1.0.0 — Production Release Audit  
+**Document Version**: 1.0.0  Production Release Audit  
 **Date**: 2026-11-03  
 **Auditor**: Teamwork Quality & Documentation Worker (`worker_audit_reports_m5`)  
 **Mobile Repository**: `C:\laragon\www\cooca_my_own` (Flutter / Dart / Android Native Kotlin)  

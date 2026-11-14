@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T14:26:00Z
+# BRIEFING  2026-11-08T14:26:00Z
 
 ## Mission
 Survey and audit all Feedback and Finance controllers, routes, middleware, and RBAC seeders for RBAC compliance and authorization coverage.
@@ -11,7 +11,7 @@ Survey and audit all Feedback and Finance controllers, routes, middleware, and R
 - Milestone: Feedback & Finance RBAC & Controller Authorization Survey
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement / do NOT modify source code files
+- Read-only investigation  do NOT implement / do NOT modify source code files
 - Controller-level RBAC auditing using Laravel 11 `HasMiddleware` and `require.permission` conventions
 - Follow Handoff Protocol (Observation, Logic Chain, Caveats, Conclusion, Verification)
 
@@ -41,8 +41,8 @@ Survey and audit all Feedback and Finance controllers, routes, middleware, and R
 - Completed full survey report (`rbac_survey_report.md`) and hard handoff (`handoff.md`).
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions and server restart recovery
-- BRIEFING.md — situational awareness
-- progress.md — liveness heartbeat
-- rbac_survey_report.md — comprehensive survey report
-- handoff.md — 5-component handoff document
+- DISPATCH.md  incoming dispatch instructions and server restart recovery
+- BRIEFING.md  situational awareness
+- progress.md  liveness heartbeat
+- rbac_survey_report.md  comprehensive survey report
+- handoff.md  5-component handoff document

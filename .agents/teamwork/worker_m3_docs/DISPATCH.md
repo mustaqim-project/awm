@@ -1,4 +1,4 @@
-# DISPATCH — 2026-11-08T19:17:07Z
+# DISPATCH  2026-11-08T19:17:07Z
 
 ## 2026-11-08T19:17:07Z
 You are a technical documentation implementation subagent (teamwork_worker).

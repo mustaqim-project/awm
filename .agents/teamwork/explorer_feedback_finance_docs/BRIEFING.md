@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T14:26:00Z
+# BRIEFING  2026-11-08T14:26:00Z
 
 ## Mission
 Exhaustively investigate the module health, existing test suites, error handling, and business owner documentation structure for Feedback and Finance in COOCA Core.
@@ -11,7 +11,7 @@ Exhaustively investigate the module health, existing test suites, error handling
 - Milestone: Feedback & Finance Module Health, Tests & Docs Survey
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement or modify source code
+- Read-only investigation  do NOT implement or modify source code
 - Strictly write only within .agents\teamwork\explorer_feedback_finance_docs\
 - Comprehensive evidence-based findings with line numbers and exact code references
 
@@ -41,8 +41,8 @@ Exhaustively investigate the module health, existing test suites, error handling
 - Detail the exact implementation blueprints for `sec_feedback.blade.php` and `sec_finance.blade.php` so the implementer can execute without ambiguity.
 
 ## Artifact Index
-- DISPATCH.md — Dispatch log
-- BRIEFING.md — Situational awareness
-- progress.md — Liveness heartbeat
-- audit_docs_survey_report.md — Detailed survey report
-- handoff.md — 5-component handoff report
+- DISPATCH.md  Dispatch log
+- BRIEFING.md  Situational awareness
+- progress.md  Liveness heartbeat
+- audit_docs_survey_report.md  Detailed survey report
+- handoff.md  5-component handoff report

@@ -1,4 +1,4 @@
-# Handoff Report — Challenger M2_2: Adversarial Theme Contrast, Localization & Heading Hierarchy Verification
+# Handoff Report  Challenger M2_2: Adversarial Theme Contrast, Localization & Heading Hierarchy Verification
 
 ## 1. Observation
 

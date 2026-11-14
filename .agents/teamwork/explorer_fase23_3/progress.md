@@ -1,4 +1,4 @@
-# Progress — Explorer 3 (Integration Contracts Explorer)
+# Progress  Explorer 3 (Integration Contracts Explorer)
 
 - Last visited: 2026-11-02T09:07:00Z
 - Status: Complete

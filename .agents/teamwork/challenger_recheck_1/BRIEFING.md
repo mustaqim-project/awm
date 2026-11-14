@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T13:45:00Z
+# BRIEFING  2026-10-31T13:45:00Z
 
 ## Mission
 Empirically verify and stress-test the remediated `docs/UI_UX_AUDIT_REPORT.md` (Iteration 2) to issue a definitive verdict: APPROVE or REQUEST_CHANGES.
@@ -12,7 +12,7 @@ Empirically verify and stress-test the remediated `docs/UI_UX_AUDIT_REPORT.md` (
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code in `resources/views/app`
+- Review-only  do NOT modify implementation code in `resources/views/app`
 - Run all verification code myself, never trust claims or logs
 - Ground all findings with empirical reproduction
 
@@ -35,12 +35,12 @@ Empirically verify and stress-test the remediated `docs/UI_UX_AUDIT_REPORT.md` (
 - Final Verdict: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — incoming dispatch instructions
-- `BRIEFING.md` — persistent working memory
-- `progress.md` — liveness heartbeat
-- `verify_all_empirical.py` — comprehensive test harness
-- `verify_sec5_citations.py` — Section 5.1 citation verification script
-- `handoff.md` — final verification report and verdict
+- `DISPATCH.md`  incoming dispatch instructions
+- `BRIEFING.md`  persistent working memory
+- `progress.md`  liveness heartbeat
+- `verify_all_empirical.py`  comprehensive test harness
+- `verify_sec5_citations.py`  Section 5.1 citation verification script
+- `handoff.md`  final verification report and verdict
 
 ## Attack Surface
 - **Hypotheses tested**: 

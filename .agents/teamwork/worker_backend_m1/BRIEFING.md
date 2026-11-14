@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T05:44:30Z
+# BRIEFING  2026-11-02T05:44:30Z
 
 ## Mission
 Implement backend APIs for POS Shift Expense recording and Owner Approvals (pending aggregation and action) along with comprehensive PHPUnit tests.
@@ -49,9 +49,9 @@ Implement backend APIs for POS Shift Expense recording and Owner Approvals (pend
 - Void approvals update PosOrder status to voided via PosOrderService::voidOrder (with fallback).
 
 ## Artifact Index
-- DISPATCH.md — Assignment and requirements
-- progress.md — Liveness heartbeat and progress tracker
-- handoff.md — Final handoff report
+- DISPATCH.md  Assignment and requirements
+- progress.md  Liveness heartbeat and progress tracker
+- handoff.md  Final handoff report
 
 ## Change Tracker
 - **Files modified**:

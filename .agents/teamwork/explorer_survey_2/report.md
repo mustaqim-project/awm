@@ -3,7 +3,7 @@
 **Investigator**: `explorer_survey_2` (Teamwork Explorer)  
 **Date**: 2026-11-02  
 **Target Codebase**: `c:\laragon\www\cooca_my_own`  
-**Integration Scope**: Phase 1 — Petty Cash / Quick Expense Kasir & Owner Approval Center  
+**Integration Scope**: Phase 1  Petty Cash / Quick Expense Kasir & Owner Approval Center  
 
 ---
 
@@ -316,7 +316,7 @@ For `PosExpenseModal`, `ImagePicker().pickImage(source: ImageSource.camera, maxW
 ### 5.3. Verification Execution Results
 1. **`flutter analyze`**:
    - Command: `cd c:\laragon\www\cooca_my_own; flutter analyze`
-   - Result: `No issues found! (ran in 16.1s)` — **Exit Code 0, 0 issues**.
+   - Result: `No issues found! (ran in 16.1s)`  **Exit Code 0, 0 issues**.
 2. **`flutter test`**:
    - Command: `cd c:\laragon\www\cooca_my_own; flutter test`
    - Result:

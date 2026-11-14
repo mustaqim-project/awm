@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T03:15:00Z
+# BRIEFING  2026-11-03T03:15:00Z
 
 ## Mission
 Eliminate dummy/mock data across POS catalog, inventory, dashboard, settings, auth, and HRM in `cooca_my_own`, fix route mismatches, and bind directly to live endpoints.
@@ -46,10 +46,10 @@ Eliminate dummy/mock data across POS catalog, inventory, dashboard, settings, au
 - [TBD]
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\DISPATCH.md` — Dispatch record
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\BRIEFING.md` — Situational awareness
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\progress.md` — Liveness & progress tracker
-- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\handoff.md` — Final handoff report
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\DISPATCH.md`  Dispatch record
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\BRIEFING.md`  Situational awareness
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\progress.md`  Liveness & progress tracker
+- `c:\laragon\www\cooca_core\.agents\teamwork\worker_modules_m3\handoff.md`  Final handoff report
 
 ## Change Tracker
 - **Files modified**: None yet

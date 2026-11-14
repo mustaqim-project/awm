@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T19:45:00Z
+# BRIEFING  2026-11-08T19:45:00Z
 
 ## Mission
 Implement Milestone 2 UI layout simplification and decluttering across HRM, Import, and Inventory Blade views: mobile bottom navigation clearing, button deduplication, button visual hierarchy, touch target sizing (>=44px), empty states in import preview, and view-level authorization guards.
@@ -56,22 +56,22 @@ Implement Milestone 2 UI layout simplification and decluttering across HRM, Impo
 - Enhanced Alpine.js reactivity with clean getters for filtered rows in import previews, rendering dedicated empty states when filtering yields 0 rows.
 
 ## Artifact Index
-- handoff.md — Final handoff report
-- progress.md — Liveness heartbeat and step tracker
+- handoff.md  Final handoff report
+- progress.md  Liveness heartbeat and step tracker
 
 ## Change Tracker
 - **Files modified**:
-  1. `resources/views/app/hrm/payroll/create.blade.php` — mobile bottom nav clearance
-  2. `resources/views/app/hrm/payroll/payslip.blade.php` — 44px action buttons
-  3. `resources/views/app/hrm/partials/tab-corrections.blade.php` — button deduplication & view guards
-  4. `resources/views/app/hrm/partials/tab-locations.blade.php` — button deduplication & view guards
-  5. `resources/views/app/hrm/partials/tab-schedules.blade.php` — neutral filter button & view guards
-  6. `resources/views/app/hrm/partials/tab-attendance.blade.php` — filter alignment & pt-5 removal
-  7. `resources/views/app/hrm/index.blade.php` — unified tab CTA view guards
-  8. `resources/views/app/inventory/stocks.blade.php` — pb-28 bottom clearance, 40px action buttons, view guards
-  9. `resources/views/app/inventory/opname.blade.php` — pb-28 bottom clearance, 40px action buttons, view guards
-  10. `resources/views/app/inventory/transfers.blade.php` — pb-28 bottom clearance, 40px action buttons, view guards
-  11. `resources/views/app/import/index.blade.php` — domain card touch targets (>=40px), segmented tabs (>=44px), filtered getters, empty state rows, execute button guards & touch targets
+  1. `resources/views/app/hrm/payroll/create.blade.php`  mobile bottom nav clearance
+  2. `resources/views/app/hrm/payroll/payslip.blade.php`  44px action buttons
+  3. `resources/views/app/hrm/partials/tab-corrections.blade.php`  button deduplication & view guards
+  4. `resources/views/app/hrm/partials/tab-locations.blade.php`  button deduplication & view guards
+  5. `resources/views/app/hrm/partials/tab-schedules.blade.php`  neutral filter button & view guards
+  6. `resources/views/app/hrm/partials/tab-attendance.blade.php`  filter alignment & pt-5 removal
+  7. `resources/views/app/hrm/index.blade.php`  unified tab CTA view guards
+  8. `resources/views/app/inventory/stocks.blade.php`  pb-28 bottom clearance, 40px action buttons, view guards
+  9. `resources/views/app/inventory/opname.blade.php`  pb-28 bottom clearance, 40px action buttons, view guards
+  10. `resources/views/app/inventory/transfers.blade.php`  pb-28 bottom clearance, 40px action buttons, view guards
+  11. `resources/views/app/import/index.blade.php`  domain card touch targets (>=40px), segmented tabs (>=44px), filtered getters, empty state rows, execute button guards & touch targets
 - **Build status**: PASS (`php artisan view:cache` 100% clean)
 - **Pending issues**: None
 

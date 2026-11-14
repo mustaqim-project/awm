@@ -1,4 +1,4 @@
-# Progress — reviewer_m2_1
+# Progress  reviewer_m2_1
 
 - **Last visited**: 2026-11-14T01:57:00Z
 - **Current status**: Review and adversarial testing complete. Writing handoff.md.

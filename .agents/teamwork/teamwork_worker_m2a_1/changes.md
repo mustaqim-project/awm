@@ -1,4 +1,4 @@
-# Milestone 2A: Batch 1 Themes Refactoring (10 Themes) — Changes Report
+# Milestone 2A: Batch 1 Themes Refactoring (10 Themes)  Changes Report
 
 ## Overview
 - **Milestone**: 2A (Batch 1 Themes Refactoring)

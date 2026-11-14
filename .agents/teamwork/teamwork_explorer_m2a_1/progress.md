@@ -1,4 +1,4 @@
-# Progress Heartbeat — Explorer M2A 1
+# Progress Heartbeat  Explorer M2A 1
 
 - Status: Completed
 - Current Step: Audit complete. Artifacts `analysis.md` and `handoff.md` generated. Ready for handoff to orchestrator.

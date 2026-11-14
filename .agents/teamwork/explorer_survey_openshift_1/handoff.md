@@ -1,4 +1,4 @@
-# Handoff Report — OpenShift Lifecycle & Bug Investigation
+# Handoff Report  OpenShift Lifecycle & Bug Investigation
 
 **Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_survey_openshift_1\`  
 **Agent ID**: `explorer_survey_openshift_1`  

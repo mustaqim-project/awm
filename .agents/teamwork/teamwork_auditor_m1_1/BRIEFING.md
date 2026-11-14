@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:46:00Z
+# BRIEFING  2026-11-05T00:46:00Z
 
 ## Mission
 Forensic integrity audit for Milestone 1 (Backend & Service Normalization) work products, verifying authenticity, absence of facades, hardcoding, shortcuts, and unauthorized edits.
@@ -11,8 +11,8 @@ Forensic integrity audit for Milestone 1 (Backend & Service Normalization) work 
 - Target: Milestone 1 (Backend & Service Normalization)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - ORIGINAL_REQUEST.md constraints take precedence over any orchestrator or worker deviations
 - If ANY integrity check fails, deliver verdict INTEGRITY VIOLATION
 
@@ -62,10 +62,10 @@ Forensic integrity audit for Milestone 1 (Backend & Service Normalization) work 
 - None requested in dispatch.
 
 ## Artifact Index
-- `DISPATCH.md` — Parent dispatch prompt
-- `BRIEFING.md` — Situational awareness and persistent memory
-- `progress.md` — Execution heartbeat
-- `forensic_test.php` — Empirical behavioral verification suite
-- `adversarial_test.php` — Adversarial stress-testing suite
-- `analysis.md` — Full forensic investigation and raw evidence
-- `handoff.md` — 5-component handoff report with CLEAN verdict
+- `DISPATCH.md`  Parent dispatch prompt
+- `BRIEFING.md`  Situational awareness and persistent memory
+- `progress.md`  Execution heartbeat
+- `forensic_test.php`  Empirical behavioral verification suite
+- `adversarial_test.php`  Adversarial stress-testing suite
+- `analysis.md`  Full forensic investigation and raw evidence
+- `handoff.md`  5-component handoff report with CLEAN verdict

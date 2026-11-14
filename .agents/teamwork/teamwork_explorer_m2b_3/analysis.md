@@ -5,10 +5,10 @@
 - **Milestone**: 2B (Batch 2 Storefront Themes Refactoring)
 - **Explorer**: Explorer 3 (`teamwork_explorer_m2b_3`)
 - **Assigned Scope**: Audit and map refactoring changes for 4 themes (12 component files):
-  1. **Theme 8**: `retail_building` ("Ironclad Builder") — Archetype: `clean_bento` (Heavy slate, industrial amber, Barlow Semi Condensed)
-  2. **Theme 9**: `retail_electronics` ("Nexus Cyber") — Archetype: `clean_bento` (Dark cyber navy, neon cyan, Space Grotesk)
-  3. **Theme 10**: `retail_florist` ("Flora Romance") — Archetype: `warm_artisan` (Botanical rose, olive green, Bodoni Moda / Playfair)
-  4. **Theme 11**: `retail_grocery` ("Fresh Mart") — Archetype: `clean_bento` (Fresh supermarket green, citrus orange, Plus Jakarta Sans)
+  1. **Theme 8**: `retail_building` ("Ironclad Builder")  Archetype: `clean_bento` (Heavy slate, industrial amber, Barlow Semi Condensed)
+  2. **Theme 9**: `retail_electronics` ("Nexus Cyber")  Archetype: `clean_bento` (Dark cyber navy, neon cyan, Space Grotesk)
+  3. **Theme 10**: `retail_florist` ("Flora Romance")  Archetype: `warm_artisan` (Botanical rose, olive green, Bodoni Moda / Playfair)
+  4. **Theme 11**: `retail_grocery` ("Fresh Mart")  Archetype: `clean_bento` (Fresh supermarket green, citrus orange, Plus Jakarta Sans)
 - **Target Files per Theme**:
   - `hero.blade.php`
   - `features_banner.blade.php`

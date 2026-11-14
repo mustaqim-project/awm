@@ -1,6 +1,6 @@
 # Mobile API Integration Audit Report: COOCA Mobile Client & Core Backend Contracts
 
-**Document Version**: 1.0.0 — Production Contract Specification & Audit  
+**Document Version**: 1.0.0  Production Contract Specification & Audit  
 **Date**: 2026-11-03  
 **Auditor**: Teamwork Quality & Documentation Worker (`worker_audit_reports_m5`)  
 **Client Project**: `C:\laragon\www\cooca_my_own` (Flutter)  

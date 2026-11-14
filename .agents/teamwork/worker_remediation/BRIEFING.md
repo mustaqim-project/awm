@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:41:00Z
+# BRIEFING  2026-11-08T20:41:00Z
 
 ## Mission
 Remediate view permission guards in HRM payroll Blade templates and fix RbacTest free tier user limit fixture.
@@ -50,7 +50,7 @@ Remediate view permission guards in HRM payroll Blade templates and fix RbacTest
 - None.
 
 ## Artifact Index
-- `.agents/teamwork/worker_remediation/DISPATCH.md` — Dispatch prompt
-- `.agents/teamwork/worker_remediation/progress.md` — Heartbeat and task tracker
-- `.agents/teamwork/worker_remediation/BRIEFING.md` — Situational awareness
-- `.agents/teamwork/worker_remediation/handoff.md` — Final handoff report
+- `.agents/teamwork/worker_remediation/DISPATCH.md`  Dispatch prompt
+- `.agents/teamwork/worker_remediation/progress.md`  Heartbeat and task tracker
+- `.agents/teamwork/worker_remediation/BRIEFING.md`  Situational awareness
+- `.agents/teamwork/worker_remediation/handoff.md`  Final handoff report

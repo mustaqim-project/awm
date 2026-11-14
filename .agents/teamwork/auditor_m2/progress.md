@@ -1,4 +1,4 @@
-# Progress Tracker — auditor_m2
+# Progress Tracker  auditor_m2
 
 Last visited: 2026-11-14T02:03:00Z
 Status: Audit complete, compiling handoff report

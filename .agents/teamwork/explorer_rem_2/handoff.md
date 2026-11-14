@@ -1,6 +1,6 @@
 # Handoff Report: Phase 2 & Phase 3 Remediation Blueprint across `resources/views/app`
 
-**Platform**: COOCA — Multi-Tenant SaaS ERP Operating System for Indonesian SMBs  
+**Platform**: COOCA  Multi-Tenant SaaS ERP Operating System for Indonesian SMBs  
 **Scope**: Complete Remediation Mapping for **Phase 2** (Modal Standardization & Table Action Consolidation) and **Phase 3** (Mobile Ergonomics, Grids, Touch Targets & Unicode Emojis) across `resources/views/app`  
 **Agent**: explorer_rem_2 (Phase 2 & 3 Remediation Explorer)  
 **Parent**: Orchestrator (`a75db325-cf9d-49ca-b5e1-728a0b485275`)  

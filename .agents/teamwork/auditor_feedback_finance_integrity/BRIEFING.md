@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T16:07:00Z
+# BRIEFING  2026-11-08T16:07:00Z
 
 ## Mission
 Forensic integrity audit across Feedback and Finance module hardening, verifying authenticity of implementations, RBAC rules, documentation lines, tests, and change footprint.
@@ -11,8 +11,8 @@ Forensic integrity audit across Feedback and Finance module hardening, verifying
 - Target: full project (Feedback & Finance modules)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Read ORIGINAL_REQUEST.md for ground-truth user constraints
 - Run all checks empirically with raw evidence proof
 - Single failure = INTEGRITY VIOLATION verdict
@@ -43,11 +43,11 @@ Forensic integrity audit across Feedback and Finance module hardening, verifying
 - Verdict rendered: **CLEAN**.
 
 ## Artifact Index
-- DISPATCH.md — Audit assignment dispatch
-- BRIEFING.md — Working memory & state
-- progress.md — Liveness heartbeat
-- audit_report.md — Comprehensive forensic audit report (Verdict: CLEAN)
-- handoff.md — Final handoff with verdict and reproduction commands
+- DISPATCH.md  Audit assignment dispatch
+- BRIEFING.md  Working memory & state
+- progress.md  Liveness heartbeat
+- audit_report.md  Comprehensive forensic audit report (Verdict: CLEAN)
+- handoff.md  Final handoff with verdict and reproduction commands
 
 ## Attack Surface
 - **Hypotheses tested**: [Controller auth bypass, fake docs, hardcoded test passes, git unintended modifications]

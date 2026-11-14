@@ -70,7 +70,7 @@ Coba gratis sekarang di https://cooca.id (klik link di bio!)
 TXT;
 
         // Clean caption from em dash and en dash
-        $cleanCaption = trim(str_replace(['—', '–'], '-', $caption));
+        $cleanCaption = trim(str_replace(['', '–'], '-', $caption));
 
         // Use primary carousel asset with fallback guarantee (Slide 3: Real Screen UI Kasir POS 2.8 Detik)
         $imageRel = 'admin/social-media-assets/carousel/slide-03.png';

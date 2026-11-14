@@ -1,4 +1,4 @@
-# Handoff Report — UI Layout & Documentation Review (Milestone 2 & Milestone 3)
+# Handoff Report  UI Layout & Documentation Review (Milestone 2 & Milestone 3)
 
 **Agent:** Reviewer 2 (UI Layout & Documentation Quality Reviewer & Adversarial Critic)  
 **Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\reviewer_2`  

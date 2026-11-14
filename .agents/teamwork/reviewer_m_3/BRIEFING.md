@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T09:15:00Z
+# BRIEFING  2026-10-31T09:15:00Z
 
 ## Mission
 Independent review and adversarial verification of translation key parity remediation executed by worker_remediation_keys across lang/id, lang/en, and Blade views.
@@ -12,7 +12,7 @@ Independent review and adversarial verification of translation key parity remedi
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Actively check for integrity violations (hardcoded test results, facade implementations, test bypassing, fabricated logs)
 - Run independent verification commands and stress-test assumptions
 
@@ -39,5 +39,5 @@ Independent review and adversarial verification of translation key parity remedi
 - Initiating adversarial audit: inspect test scripts for hardcoded outputs or bypasses before accepting test results.
 
 ## Artifact Index
-- `.agents/teamwork/reviewer_m_3/DISPATCH.md` — Dispatch assignment
-- `.agents/teamwork/reviewer_m_3/handoff.md` — Handoff report (pending)
+- `.agents/teamwork/reviewer_m_3/DISPATCH.md`  Dispatch assignment
+- `.agents/teamwork/reviewer_m_3/handoff.md`  Handoff report (pending)

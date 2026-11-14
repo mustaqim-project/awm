@@ -1,7 +1,7 @@
 # Specification & Contract Mining Report: Phase 1 Integration (cooca_core & cooca_my_own)
 
 **Mining Agent:** `explorer_survey_3` (teamwork_spec_miner)  
-**Target Milestone:** Phase 1 — Anti-Bocor Kasir (Petty Cash / Quick Expense & Owner Approval Center)  
+**Target Milestone:** Phase 1  Anti-Bocor Kasir (Petty Cash / Quick Expense & Owner Approval Center)  
 **Date:** 2026-11-02  
 **Repositories:**  
 - Backend API: `c:\laragon\www\cooca_core` (Laravel 11, Sanctum, Eloquent, Context Tenancy)  

@@ -5,7 +5,7 @@ $potentialHardcoded = [];
 foreach ($lines as $i => $line) {
     $lineNum = $i + 1;
     // Check for obvious Indonesian phrases in plain HTML text
-    if (preg_match('/>\s*([A-Za-z0-9\s,\.\-—&]+)\s*</', $line, $m)) {
+    if (preg_match('/>\s*([A-Za-z0-9\s,\.\-&]+)\s*</', $line, $m)) {
         $text = trim($m[1]);
         if (strlen($text) > 3 && !preg_match('/^(\{\{|\@|\$|<|&nbsp;|\d+$)/', $text)) {
             // Check if contains typical Indonesian words

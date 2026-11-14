@@ -1,4 +1,4 @@
-# Handoff Report — E2E Test Suite & Infrastructure Track
+# Handoff Report  E2E Test Suite & Infrastructure Track
 
 **Date**: 2026-10-31  
 **Agent**: E2E Test Writer (`e2e_test_writer_1`)  

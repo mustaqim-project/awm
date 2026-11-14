@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T04:46:00Z
+# BRIEFING  2026-11-03T04:46:00Z
 
 ## Mission
 Forensic integrity audit across Milestones 1 to 5 in cooca_my_own and cooca_core.
@@ -11,8 +11,8 @@ Forensic integrity audit across Milestones 1 to 5 in cooca_my_own and cooca_core
 - Target: full project (Milestones 1-5)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Empirical verification of all claims and tests
 - Strict detection of mocks, facades, cheating, hardcoded test values, or shortcuts
 - Block on failure: If ANY check fails, verdict is INTEGRITY VIOLATION
@@ -30,7 +30,7 @@ Forensic integrity audit across Milestones 1 to 5 in cooca_my_own and cooca_core
 - **Phase**: reporting
 - **Checks completed**: [DISPATCH & BRIEFING initialization, ORIGINAL_REQUEST review, Phase 1 code analysis, Phase 2 behavioral & test verification, Report validation, Adversarial challenge]
 - **Checks remaining**: [Final handoff report & verdict delivery]
-- **Findings so far**: CLEAN — 100% genuine implementation, 0 cheats, 0 facades, 0 mocks in production, 105 automated tests passed across all suites.
+- **Findings so far**: CLEAN  100% genuine implementation, 0 cheats, 0 facades, 0 mocks in production, 105 automated tests passed across all suites.
 
 ## Key Decisions Made
 - Confirmed mode is Development Mode with zero dummy data/mock tolerance as mandated by R3.
@@ -43,10 +43,10 @@ Forensic integrity audit across Milestones 1 to 5 in cooca_my_own and cooca_core
 - Confirmed all 5 audit report documents are genuine and truthful.
 
 ## Artifact Index
-- `DISPATCH.md` — Audit assignment
-- `BRIEFING.md` — Situational awareness
-- `progress.md` — Liveness & progress tracking
-- `handoff.md` — Final audit report & verdict
+- `DISPATCH.md`  Audit assignment
+- `BRIEFING.md`  Situational awareness
+- `progress.md`  Liveness & progress tracking
+- `handoff.md`  Final audit report & verdict
 
 ## Attack Surface
 - **Hypotheses tested**: 

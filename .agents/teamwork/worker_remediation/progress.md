@@ -1,4 +1,4 @@
-# Progress — Remediation Worker
+# Progress  Remediation Worker
 
 Last visited: 2026-11-08T20:41:00Z
 - [x] Update payroll/show.blade.php permission guards to include hrm.payroll.manage (lines 68 & 121)

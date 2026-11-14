@@ -1,4 +1,4 @@
-# Quality & Adversarial Review Analysis — Milestone 2A (Themes 1 to 5)
+# Quality & Adversarial Review Analysis  Milestone 2A (Themes 1 to 5)
 
 **Reviewer**: Reviewer 1 (Milestone 2A)  
 **Roles**: Reviewer, Adversarial Critic  

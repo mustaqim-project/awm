@@ -1,4 +1,4 @@
-# Progress — Reviewer RBAC & Security
+# Progress  Reviewer RBAC & Security
 
 Last visited: 2026-11-08T16:06:30Z
 Status: COMPLETED

@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 1 — Forensic Integrity Audit
+# Handoff Report: Milestone 1  Forensic Integrity Audit
 
 **Agent**: Forensic Auditor (`teamwork_auditor_m1_1`)  
 **Recipient**: Parent Orchestrator (`3e6ffd97-6534-466f-a0f2-f2278f17c1fe`)  

@@ -1,4 +1,4 @@
-# Milestone 2B — Explorer 1 Detailed Audit & Change Mapping (Themes 1–4)
+# Milestone 2B  Explorer 1 Detailed Audit & Change Mapping (Themes 1–4)
 
 **Audit Target Themes:**
 1. `bakery_cake` (Artisan Bakery & Cake Shop)
@@ -35,7 +35,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
 
 ---
 
-## 2. Deep-Dive Audit: Theme 1 — `bakery_cake`
+## 2. Deep-Dive Audit: Theme 1  `bakery_cake`
 
 ### 2.1 Visual Archetype & Personality
 - **Archetype**: `warm_artisan` (Earthy & Warm Artisan)
@@ -144,7 +144,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
 
 ---
 
-## 3. Deep-Dive Audit: Theme 2 — `fnb_bakery`
+## 3. Deep-Dive Audit: Theme 2  `fnb_bakery`
 
 ### 3.1 Visual Archetype & Personality
 - **Archetype**: `warm_artisan` (Earthy & Warm Artisan)
@@ -180,7 +180,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
      - Line 46: Hardcoded hex gradient `background: linear-gradient(135deg, #BE185D, #9D174D);`.
      - Line 47: Fallback text `'Pilih Roti & Pastry'`.
      - Line 56: Secondary button hardcoded text `<span>Pesan Cake Kustom</span>`.
-  6. **CRITICAL LEAKAGE — Line 66: Hardcoded Unsplash Photo**:
+  6. **CRITICAL LEAKAGE  Line 66: Hardcoded Unsplash Photo**:
      ```blade
      $heroImg = $landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1000&auto=format&fit=crop&q=80';
      ```
@@ -232,7 +232,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
 
 ---
 
-## 4. Deep-Dive Audit: Theme 3 — `fnb_cafe`
+## 4. Deep-Dive Audit: Theme 3  `fnb_cafe`
 
 ### 4.1 Visual Archetype & Personality
 - **Archetype**: `warm_artisan` (Earthy & Warm Artisan)
@@ -271,7 +271,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
      <span ...>Medium</span>
      ```
      *Impact*: Coffee roast level widget displayed on the storefront.
-  7. **CRITICAL LEAKAGE — Line 97: Hardcoded Unsplash Photo**:
+  7. **CRITICAL LEAKAGE  Line 97: Hardcoded Unsplash Photo**:
      ```blade
      $heroImg = $landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1000&auto=format&fit=crop&q=80';
      ```
@@ -326,7 +326,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
 
 ---
 
-## 5. Deep-Dive Audit: Theme 4 — `fnb_catering`
+## 5. Deep-Dive Audit: Theme 4  `fnb_catering`
 
 ### 5.1 Visual Archetype & Personality
 - **Archetype**: `playful_fresh` (Playful, Fresh & Appetite)
@@ -357,7 +357,7 @@ This audit maps **every hardcoded phrase, stock photo URL, and rigid contract vi
      - Line 43: hardcoded hex gradient `linear-gradient(135deg, #059669, #047857)`.
      - Line 44: fallback text `'Pilih Paket Katering'`.
      - Line 53: hardcoded secondary CTA text `<span>Konsultasi Menu Acara</span>`.
-  6. **CRITICAL LEAKAGE — Line 62: Hardcoded Unsplash Photo**:
+  6. **CRITICAL LEAKAGE  Line 62: Hardcoded Unsplash Photo**:
      ```blade
      $heroImg = $landingPage->hero_image_url ?: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000&auto=format&fit=crop&q=80';
      ```

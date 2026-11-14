@@ -2,7 +2,7 @@
 
 **Agent**: auditor_1  
 **Last visited**: 2026-11-09T03:32:15Z  
-**Current Phase**: Phase 2 — Reporting & Final Sign-Off  
+**Current Phase**: Phase 2  Reporting & Final Sign-Off  
 
 ### Steps:
 - [x] Initialized DISPATCH.md and updated BRIEFING.md

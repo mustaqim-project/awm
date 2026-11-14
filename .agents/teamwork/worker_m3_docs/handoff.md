@@ -1,4 +1,4 @@
-# Handoff Report: Milestone 3 — Business Owner Documentation (Features F15, F16, F17, F18)
+# Handoff Report: Milestone 3  Business Owner Documentation (Features F15, F16, F17, F18)
 
 **Author**: Teamwork Worker (`teamwork_worker`)  
 **Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\worker_m3_docs\`  

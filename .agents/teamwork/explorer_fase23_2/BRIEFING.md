@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T09:00:00Z
+# BRIEFING  2026-11-02T09:00:00Z
 
 ## Mission
 Investigate the mobile Flutter repository c:\laragon\www\cooca_my_own for Fase 2 (Logistik & Gudang Toko) and Fase 3 (Customer Piutang & Omnichannel Digital).
@@ -11,7 +11,7 @@ Investigate the mobile Flutter repository c:\laragon\www\cooca_my_own for Fase 2
 - Milestone: Mobile Survey Fase 2 & Fase 3
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Mobile target: c:\laragon\www\cooca_my_own
 - Backend context: c:\laragon\www\cooca_core
 - Apple HIG design language adherence
@@ -44,5 +44,5 @@ Investigate the mobile Flutter repository c:\laragon\www\cooca_my_own for Fase 2
 - Formulate complete UI component architecture, state management hooks, API integration contracts, and test plans for implementation agent.
 
 ## Artifact Index
-- `report.md` — Detailed survey report
-- `handoff.md` — 5-component handoff report
+- `report.md`  Detailed survey report
+- `handoff.md`  5-component handoff report

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:17:30Z
+# BRIEFING  2026-11-05T00:17:30Z
 
 ## Mission
 Investigate and design universal translations in `lang/id/storefront.php` and `lang/en/storefront.php` for Milestone 1.
@@ -11,7 +11,7 @@ Investigate and design universal translations in `lang/id/storefront.php` and `l
 - Milestone: Milestone 1 (Backend & Service Normalization)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Strictly read-only on project source code (do not modify lang/id/storefront.php or lang/en/storefront.php directly)
 - Write analysis.md and handoff.md in working directory
 - Communicate via send_message to parent (3e6ffd97-6534-466f-a0f2-f2278f17c1fe)
@@ -41,8 +41,8 @@ Investigate and design universal translations in `lang/id/storefront.php` and `l
 - Preserved existing root-level keys to prevent regressions in legacy views.
 
 ## Artifact Index
-- DISPATCH.md — record of incoming tasks
-- BRIEFING.md — persistent working memory
-- progress.md — liveness heartbeat
-- analysis.md — detailed findings and proposed translation array structures
-- handoff.md — structured handoff report
+- DISPATCH.md  record of incoming tasks
+- BRIEFING.md  persistent working memory
+- progress.md  liveness heartbeat
+- analysis.md  detailed findings and proposed translation array structures
+- handoff.md  structured handoff report

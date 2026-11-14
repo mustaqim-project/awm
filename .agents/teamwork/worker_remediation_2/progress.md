@@ -1,4 +1,4 @@
-# Progress Tracker — worker_remediation_2
+# Progress Tracker  worker_remediation_2
 
 Last visited: 2026-10-31T13:37:00Z
 

@@ -1,4 +1,4 @@
-# Adversarial Analysis — Milestone 2A: Themes 1 to 5 Refactoring
+# Adversarial Analysis  Milestone 2A: Themes 1 to 5 Refactoring
 
 ## Challenge Summary
 - **Target Themes**:

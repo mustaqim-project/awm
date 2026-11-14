@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-09T00:55:30Z
+# BRIEFING  2026-11-09T00:55:30Z
 
 ## Mission
 Perbaiki dan audit modul resources\views\app\invoices dan resources\views\app\labor-machines pada aplikasi COOCA untuk kesiapan produksi (production readiness), menerapkan panduan /ui-simplify-layout, /laravel-rbac, /business-owner-doc-generator, dan /laravel-module-audit.
@@ -33,10 +33,10 @@ Perbaiki dan audit modul resources\views\app\invoices dan resources\views\app\la
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
-- NEVER run build/test commands yourself — require workers to do so.
-- NEVER investigate or explore the problem at the code level — dispatch Explorers for technical investigation.
+- NEVER run build/test commands yourself  require workers to do so.
+- NEVER investigate or explore the problem at the code level  dispatch Explorers for technical investigation.
 - File-editing tools ONLY for metadata/state files (.md) in .agents/teamwork/
-- Never reuse a subagent after it has delivered its handoff — always spawn fresh
+- Never reuse a subagent after it has delivered its handoff  always spawn fresh
 - MANDATORY: Include the path to ORIGINAL_REQUEST.md in every subagent dispatch.
 - FORENSIC AUDIT VETO: Non-negotiable binary veto.
 
@@ -67,10 +67,10 @@ Perbaiki dan audit modul resources\views\app\invoices dan resources\views\app\la
 - Safety timer: none
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Original User Request
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\PROJECT.md — Global project plan & architecture
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\GATE_STATUS.md — Gate Verdicts
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\progress.md — Orchestrator Progress
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_m2\handoff.md — Worker M2 Report
-- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_1\handoff.md — Reviewer M2 1 Report
-- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_2\handoff.md — Reviewer M2 2 Report
+- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md  Original User Request
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\PROJECT.md  Global project plan & architecture
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\GATE_STATUS.md  Gate Verdicts
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_2\progress.md  Orchestrator Progress
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_m2\handoff.md  Worker M2 Report
+- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_1\handoff.md  Reviewer M2 1 Report
+- c:\laragon\www\cooca_core\.agents\teamwork\reviewer_m2_2\handoff.md  Reviewer M2 2 Report

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T02:24:00Z
+# BRIEFING  2026-11-14T02:24:00Z
 
 ## Mission
 Orchestrate Milestone 2 (M2): Marketing Pages, Solutions & Commercial Views Optimization across 21 scoped Blade views in COOCA website.
@@ -27,13 +27,13 @@ Orchestrate Milestone 2 (M2): Marketing Pages, Solutions & Commercial Views Opti
 4. **Succession**: At 16 spawns, write handoff.md, cancel crons, spawn successor.
 - **Work items**:
   1. Milestone 2 Optimization & Hardening [DONE]
-- **Current phase**: Gate 2 Passed — Handing off to Parent
+- **Current phase**: Gate 2 Passed  Handing off to Parent
 - **Current focus**: Handoff report compilation
 
 ## 🔒 Key Constraints
 - Never write, modify, or create source code directly.
 - Never run build/test commands directly.
-- Never investigate the problem at code level directly — dispatch Explorers.
+- Never investigate the problem at code level directly  dispatch Explorers.
 - Binary veto on Forensic Auditor integrity violations.
 - Measure performance with Lighthouse/benchmarks across 8 viewports (320px, 360px, 390px, 414px, 768px, 1024px, 1440px, 1920px), Light/Dark themes, ID/EN locales.
 - Target Core Web Vitals: LCP <= 2.5s, TBT <= 200ms, CLS <= 0.1, INP Good.
@@ -81,7 +81,7 @@ Orchestrate Milestone 2 (M2): Marketing Pages, Solutions & Commercial Views Opti
 - Safety timer: none
 
 ## Artifact Index
-- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\SCOPE.md` — Scope definition and feature mapping for M2
-- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\progress.md` — Liveness and iteration progress tracking
-- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\GATE_STATUS.md` — Structured gate verdicts for M2 iterations
-- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\handoff.md` — Final Milestone 2 Handoff Report
+- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\SCOPE.md`  Scope definition and feature mapping for M2
+- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\progress.md`  Liveness and iteration progress tracking
+- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\GATE_STATUS.md`  Structured gate verdicts for M2 iterations
+- `C:\laragon\www\cooca_core\.agents\teamwork\sub_orch_m2\handoff.md`  Final Milestone 2 Handoff Report

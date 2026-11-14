@@ -1,4 +1,4 @@
-# Handoff Report — Explorer 3 (Integration Contracts Explorer)
+# Handoff Report  Explorer 3 (Integration Contracts Explorer)
 
 **Working Directory**: `c:\laragon\www\cooca_core\.agents\teamwork\explorer_fase23_3`  
 **Task**: Survey cross-system API contracts, payload schemas, and test automation infrastructure across `cooca_core` and `cooca_my_own` for Fase 2 & Fase 3.  

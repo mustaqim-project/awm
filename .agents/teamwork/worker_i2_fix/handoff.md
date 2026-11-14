@@ -1,4 +1,4 @@
-# Handoff Report — Translation & i18n Remediation Worker (`worker_i2_fix`)
+# Handoff Report  Translation & i18n Remediation Worker (`worker_i2_fix`)
 
 **Verdict**: **RESOLVED / PASS**
 

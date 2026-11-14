@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T02:03:00Z
+# BRIEFING  2026-11-14T02:03:00Z
 
 ## Mission
 Forensic integrity audit of all code modifications in Milestone 2 (Storefront & Landing SEO, Asset Pipeline, Layout, and Accessibility Fixes).
@@ -12,8 +12,8 @@ Forensic integrity audit of all code modifications in Milestone 2 (Storefront & 
 - Target: Milestone 2
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Binary verdict: CLEAN or INTEGRITY VIOLATION
 - Ground truth from ORIGINAL_REQUEST.md supersedes any dispatch discrepancy
 - Every claim must be backed by empirical evidence
@@ -49,7 +49,7 @@ Forensic integrity audit of all code modifications in Milestone 2 (Storefront & 
   1. Anti-cheating & facade detection (PASS)
   2. Codebase authenticity (PASS)
   3. Runtime & build verification (PASS: `php -l` 24/24, `npm run build` 0 errors, `PublicMarketingFrontendE2ETest` 15/15 passed)
-- **Findings so far**: CLEAN — No integrity violations found
+- **Findings so far**: CLEAN  No integrity violations found
 
 ## Key Decisions Made
 - Confirmed zero modifications to test suites between 0cd5167a and HEAD
@@ -57,8 +57,8 @@ Forensic integrity audit of all code modifications in Milestone 2 (Storefront & 
 - Reached final binary verdict: CLEAN
 
 ## Artifact Index
-- DISPATCH.md — Task assignment
-- BRIEFING.md — Persistent context
-- progress.md — Liveness heartbeat
-- run_syntax_audit.php — Independent syntax verification script
-- handoff.md — Final audit verdict report
+- DISPATCH.md  Task assignment
+- BRIEFING.md  Persistent context
+- progress.md  Liveness heartbeat
+- run_syntax_audit.php  Independent syntax verification script
+- handoff.md  Final audit verdict report

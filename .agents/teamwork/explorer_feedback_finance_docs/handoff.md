@@ -1,4 +1,4 @@
-# Handoff Report — Feedback & Finance Module Health, Tests & Docs Survey
+# Handoff Report  Feedback & Finance Module Health, Tests & Docs Survey
 
 **Subagent**: Explorer 3 (Feedback & Finance Module Health, Tests & Docs Survey)  
 **Recipient**: Orchestrator / Parent Agent  

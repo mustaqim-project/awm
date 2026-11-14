@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T00:36:20Z
+# BRIEFING  2026-11-14T00:36:20Z
 
 ## Mission
 Milestone 1 Cookie Banner Elevation Remediation & 8-Viewport Testing to eliminate mobile dock collision (0px overlap) across 8 viewports in light and dark mode.

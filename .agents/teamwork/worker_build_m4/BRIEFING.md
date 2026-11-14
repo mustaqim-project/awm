@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-03T03:22:00Z
+# BRIEFING  2026-11-03T03:22:00Z
 
 ## Mission
 Harden Android Production Build Configuration & Performance for cooca_my_own Flutter project (Milestone 4).
@@ -42,10 +42,10 @@ Harden Android Production Build Configuration & Performance for cooca_my_own Flu
 - Integrated `cached_network_image: ^3.4.1` to enable disk and memory image caching for POS products and catalog assets.
 
 ## Artifact Index
-- DISPATCH.md — assignment record
-- BRIEFING.md — persistent situational awareness
-- progress.md — liveness and progress tracker
-- handoff.md — final 5-component handoff report
+- DISPATCH.md  assignment record
+- BRIEFING.md  persistent situational awareness
+- progress.md  liveness and progress tracker
+- handoff.md  final 5-component handoff report
 
 ## Change Tracker
 - **Files modified**:

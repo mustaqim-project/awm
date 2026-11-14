@@ -39,7 +39,7 @@ c:\laragon\www\cooca_core\.agents\teamwork\explorer_feedback_finance_rbac\handof
 
 Follow the Handoff Protocol (Observation, Logic Chain, Caveats, Conclusion, Verification).
 When finished, send a message to the orchestrator summarizing that your survey is complete and linking to the report.
-DO NOT modify any source code files — you are read-only!
+DO NOT modify any source code files  you are read-only!
 
 
 ## 2026-11-08T14:21:32Z

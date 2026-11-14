@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:50:00Z
+# BRIEFING  2026-11-13T22:50:00Z
 
 ## Mission
 Complete Milestone 1 (M1): Optimize core public marketing layout, asset pipeline, chatbot widgets, mobile viewport ergonomics, touch targets, and blog CSS.
@@ -21,7 +21,7 @@ Complete Milestone 1 (M1): Optimize core public marketing layout, asset pipeline
   - `resources/views/public/partials/tracking_pixels.blade.php`
   - `resources/views/public/blog/show.blade.php`
 - Do not modify files outside this exclusive list.
-- Genuine implementations only — no cheating, no facade implementations.
+- Genuine implementations only  no cheating, no facade implementations.
 - 0 syntax errors (`php -l`), clean `npm run build`, all existing tests pass.
 
 ## Current Parent
@@ -46,10 +46,10 @@ Complete Milestone 1 (M1): Optimize core public marketing layout, asset pipeline
 - Removed redundant `@push('late-styles')` block from `blog/show.blade.php` while preserving full dark mode fidelity.
 
 ## Artifact Index
-- `.agents/teamwork/worker_m1/DISPATCH.md` — Dispatch prompt
-- `.agents/teamwork/worker_m1/BRIEFING.md` — Working memory
-- `.agents/teamwork/worker_m1/progress.md` — Liveness & progress tracking
-- `.agents/teamwork/worker_m1/handoff.md` — Final handoff report
+- `.agents/teamwork/worker_m1/DISPATCH.md`  Dispatch prompt
+- `.agents/teamwork/worker_m1/BRIEFING.md`  Working memory
+- `.agents/teamwork/worker_m1/progress.md`  Liveness & progress tracking
+- `.agents/teamwork/worker_m1/handoff.md`  Final handoff report
 
 ## Change Tracker
 - **Files modified**:

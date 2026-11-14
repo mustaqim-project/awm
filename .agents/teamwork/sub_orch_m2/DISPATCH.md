@@ -10,7 +10,7 @@ You MUST read the original request and upstream documents before starting work:
 - Audit Inventory: C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\AUDIT_INVENTORY.md
 - Gate Status: C:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md
 
-Your Assigned Scope: Milestone 2 (M2) — Marketing Pages, Solutions & Commercial Views Optimization
+Your Assigned Scope: Milestone 2 (M2)  Marketing Pages, Solutions & Commercial Views Optimization
 Audited paths and files (Items 10–30 in AUDIT_INVENTORY.md):
 - Standalone Marketing Pages:
   `resources/views/landing.blade.php`

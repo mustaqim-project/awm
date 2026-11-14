@@ -1,4 +1,4 @@
-# Detailed Review & Adversarial Analysis — Milestone 2A: Themes 6 to 10
+# Detailed Review & Adversarial Analysis  Milestone 2A: Themes 6 to 10
 
 **Reviewer**: Reviewer 2 (`teamwork_reviewer_m2a_2`)  
 **Scope**: Themes 6 to 10 (`agriculture_farm`, `retail_fashion`, `service_workshop`, `food_restaurant`, `health_beauty`)  

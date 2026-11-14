@@ -3,7 +3,7 @@ name: laravel-module-audit
 description: Audit komprehensif menyeluruh satu modul Laravel berbasis bukti kode nyata (code-first) sampai production readiness. Otomatis memicu dan mengorkestrasi bundle skill spesialis (laravel-rbac, laravel-permission-audit, multi-industry-system-audit, stitch-design-taste, responsive-ui-ux, ui-simplify-layout, ui-ux-pro-max, ui-layout-hierarchy-reorganizer, multi-language-and-i18n, reports-and-dashboard-audit, business-owner-doc-generator, find-security-vulnerabilities-in-code, cooca-agent-directive). Aktifkan setiap kali pengguna mengetik atau menyebut "audit modul .... dengan skill /laravel modul audit", "/laravel modul audit", "/laravel-module-audit", "audit modul [nama]", "review modul Laravel", "production readiness modul", "cek modul Product/Sales/Purchasing/Inventory/Finance/HRM/CRM/Admin", temuan + task list perbaikan, atau meminta dokumentasi audit / user guide modul.
 ---
 
-# Laravel Module Audit — dari Bukti Kode sampai Production Readiness
+# Laravel Module Audit  dari Bukti Kode sampai Production Readiness
 
 Skill ini mengaudit **satu modul Laravel per run**, lalu membawanya sampai keputusan production
 yang bisa dipertanggungjawabkan. Hasil akhirnya bukan opini, melainkan: temuan berbukti,
@@ -44,12 +44,12 @@ flowchart TD
    - **`ui-layout-hierarchy-reorganizer`**: Mengaudit dan menyusun ulang hierarki tata letak visual (F/Z-pattern) secara non-destruktif tanpa merusak business logic atau Alpine model.
 
 
-3. **Multi-Bahasa, Lokalisasi & Universal i18n (Aspek 5 & 12 — Mandat Zero Hardcoded Text 100%):**
+3. **Multi-Bahasa, Lokalisasi & Universal i18n (Aspek 5 & 12  Mandat Zero Hardcoded Text 100%):**
    - **`multi-language-and-i18n`**: Mengaudit dan menegakkan mandat Zero Hardcoded Text 100% pada 10 domain sasaran teks (*Document Title `@extends`*, *Breadcrumb/Overline*, *Headers H1/H2*, *Form Input/Placeholder/Helper*, *Dev/Sandbox Testing Alert Banners*, *Validation Error Headings*, *Action Buttons/Links*, *Modals/Dialogs*, *Tables/Badges/Empty States*, *Backend Messages/Exceptions/Audit Logs*).
    - Menjalankan scanner otomatis `scripts/scan_i18n.py` pada direktori view modul.
    - Menegakkan simetri kamus dwibahasa `lang/id/*.php` $\leftrightarrow$ `lang/en/*.php` (Bahasa Indonesia default & English), menyingkirkan string mentah, serta memastikan adapter format mata uang dan tanggal terkonfigurasi secara adaptif.
 
-4. **Laporan, Dashboard, & Ekspor Data (Aspek 7, 8, & 9 — jika modul memiliki fitur laporan):**
+4. **Laporan, Dashboard, & Ekspor Data (Aspek 7, 8, & 9  jika modul memiliki fitur laporan):**
    - **`reports-and-dashboard-audit`**: Mengaudit validitas perhitungan saldo, omzet, HPP, FIFO/Average inventory, struktur Bento Dashboard, serta ekspor file (XLSX/PDF) agar profesional dan aman dari formula injection.
 
 5. **Dokumentasi Pengguna & SOP Bisnis (Aspek 13 & Fase G):**
@@ -90,7 +90,7 @@ Aturan konflik (urutan prioritas): **keamanan > akurasi berbasis kode aktual > i
 Contoh: header `X-XSS-Protection` di template generator sudah usang di browser modern; jangan jadikan temuan
 bila CSP yang kuat ada, dan jangan "memperbaiki" dengan menambahkannya.
 
-## Langkah 0 — Intake (maksimal satu putaran pertanyaan)
+## Langkah 0  Intake (maksimal satu putaran pertanyaan)
 
 Mulai bekerja bila modul jelas. Tanyakan hanya yang mengubah hasil dan tidak bisa ditemukan sendiri:
 
@@ -107,7 +107,7 @@ Bila sesi berjalan tanpa pengguna aktif, ambil bacaan paling masuk akal, tulis a
 Setiap fase punya **exit evidence**: fase belum selesai sebelum bukti itu ada. Catat progres di
 `docs/audits/{module}/audit-state.json` supaya audit bisa dilanjutkan di sesi lain (lihat "Resumability").
 
-### Fase A — Discovery & Baseline (read-only)
+### Fase A  Discovery & Baseline (read-only)
 
 Tujuan: memahami modul dan lingkungannya sebelum menilai apa pun.
 
@@ -124,7 +124,7 @@ Tujuan: memahami modul dan lingkungannya sebelum menilai apa pun.
 Exit evidence: `01-system-baseline.md` terisi dengan versi, inventaris, peta dependensi, dan daftar batas verifikasi.
 Detail teknik: `references/discovery.md`.
 
-### Fase B — Audit & Evidence Collection
+### Fase B  Audit & Evidence Collection
 
 Telusuri satu alur penuh: UI → route → middleware → controller/request → service/action → model → DB → event/job → integrasi → respons.
 Untuk setiap aspek dari 13 aspek, buka bagian terkait di `references/audit-aspects.md`; di sana ada *apa yang diperiksa*,
@@ -144,7 +144,7 @@ Aturan temuan (format lengkap di `references/evidence-and-severity.md`):
 
 Exit evidence: tiap aspek punya status `Covered` atau `Not verifiable (alasan)`. Tidak ada aspek yang diam-diam dilewati.
 
-### Fase C — Dokumentasi Audit
+### Fase C  Dokumentasi Audit
 
 Tulis dokumen 00-06 dan 09-12 sesuai `references/document-templates.md` (struktur `docs/audits/{module}/` ada di bawah).
 Dokumen ditulis dari temuan Fase B, bukan dari template kosong. Executive summary harus bisa dibaca pemilik bisnis dalam dua menit:
@@ -152,7 +152,7 @@ status gate saat ini, jumlah temuan per severity, 3 risiko terbesar, keputusan y
 
 Exit evidence: setiap temuan muncul di risk register; setiap klaim "lulus" punya rujukan bukti.
 
-### Fase D — Implementation Plan & Task List
+### Fase D  Implementation Plan & Task List
 
 Ubah setiap temuan yang butuh tindakan menjadi task (`07-implementation-plan.md`, `08-task-list.md`).
 Format wajib dan aturan urutan ada di `references/implementation.md`. Intinya:
@@ -165,7 +165,7 @@ Format wajib dan aturan urutan ada di `references/implementation.md`. Intinya:
 
 Exit evidence: tidak ada temuan actionable tanpa task; tidak ada task tanpa acceptance criteria yang bisa dicek mesin atau mata.
 
-### Fase E — Implementasi Perbaikan (hanya mode `audit+fix` / `full`)
+### Fase E  Implementasi Perbaikan (hanya mode `audit+fix` / `full`)
 
 Per task, dalam urutan plan: **tulis test yang menangkap bug → lihat gagal → perbaiki root cause → test lulus → jalankan regression modul terkait → catat bukti → ubah status ke Verified**.
 Aturan teknis (migration aman, backward compat, tanpa data dummy/hardcode bisnis, kontrak API) ada di `references/implementation.md`.
@@ -173,7 +173,7 @@ Aturan teknis (migration aman, backward compat, tanpa data dummy/hardcode bisnis
 Status `Verified` hanya boleh diberikan bila ada bukti: nama test + output lulus, atau perintah + output. "Kode sudah diubah" bukan bukti.
 Jangan menyentuh kode di luar scope task kecuali ada alasan teknis tertulis di task.
 
-### Fase F — Verification & Regression
+### Fase F  Verification & Regression
 
 Jalankan yang relevan dengan proyek aktual (daftar perintah dan cara menafsirkannya: `references/verification.md`):
 test suite, Pint/PHPStan/Larastan (bila ada), `route:list`, `composer audit`, validasi migration (up, down/rollback, pada salinan data bila ada),
@@ -184,7 +184,7 @@ Larangan: menyatakan fitur lulus hanya karena kode ter-compile atau halaman terb
 
 Exit evidence: `09-test-and-verification-report.md` berisi perintah, hasil nyata, dan daftar yang **tidak** dijalankan beserta alasannya.
 
-### Fase G — User Guide berbasis artikel
+### Fase G  User Guide berbasis artikel
 
 Buat `docs/user-guides/{module}/` (index, artikel per fitur/workflow, troubleshooting, faq) sesuai `references/user-guides.md`.
 Syarat keras: setiap artikel punya tautan langsung ke halaman fitur yang **terverifikasi terhadap route aktual**.
@@ -195,7 +195,7 @@ Syarat keras: setiap artikel punya tautan langsung ke halaman fitur yang **terve
    atau dicatat sebagai pengecualian dengan alasan.
 4. Cocokkan langkah artikel dengan UI aktual (view/komponen); jangan menggambarkan tombol yang tidak ada.
 
-### Fase H — Production Readiness Gate & Deployment
+### Fase H  Production Readiness Gate & Deployment
 
 1. Isi `10-production-readiness-checklist.md` dari bukti, memakai gate di `references/production-gate.md`.
 2. Tetapkan status: **READY** (semua gate wajib lulus + bukti), **READY WITH ACCEPTED RISKS** (ada risiko residual yang

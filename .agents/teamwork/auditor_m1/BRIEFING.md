@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T23:03:00Z
+# BRIEFING  2026-11-13T23:03:00Z
 
 ## Mission
 Perform an independent forensic integrity audit on Milestone M1 work product (Core Layouts, Asset Pipeline, Chatbot Deferral, and Mobile Hardening by Worker M1).
@@ -15,8 +15,8 @@ Perform an independent forensic integrity audit on Milestone M1 work product (Co
 - Target Milestone: M1 (COOCA Public Marketing Frontend Audit & High-Impact Optimization - Core Layouts, Asset Pipeline, Chatbot Deferral, Mobile Hardening)
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - ORIGINAL_REQUEST.md always takes precedence over dispatch
 - Verify all claims empirically (syntax linting, asset build, test executions, code inspection)
 
@@ -57,11 +57,11 @@ Perform an independent forensic integrity audit on Milestone M1 work product (Co
 - Final verdict issued: CLEAN.
 
 ## Artifact Index
-- `DISPATCH.md` — Parent dispatch instructions
-- `BRIEFING.md` — Persistent context & memory
-- `progress.md` — Liveness heartbeat and progress tracker
-- `test_audit.php` — Independent empirical verification test harness
-- `handoff.md` — Final forensic audit report
+- `DISPATCH.md`  Parent dispatch instructions
+- `BRIEFING.md`  Persistent context & memory
+- `progress.md`  Liveness heartbeat and progress tracker
+- `test_audit.php`  Independent empirical verification test harness
+- `handoff.md`  Final forensic audit report
 
 ## Attack Surface
 - **Hypotheses tested**:

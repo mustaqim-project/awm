@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T01:38:00Z
+# BRIEFING  2026-11-05T01:38:00Z
 
 ## Mission
 Empirical stress testing and adversarial validation for Milestone 2A: Themes 1 to 5 refactoring (`universal_storefront`, `modern_umkm`, `online_store`, `business_corporate`, `coffee_beverage`).
@@ -12,7 +12,7 @@ Empirical stress testing and adversarial validation for Milestone 2A: Themes 1 t
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code.
+- Review-only  do NOT modify implementation code.
 - Report all failures and bugs as findings; do NOT fix them directly.
 - Must execute verification code ourselves (empirical proof).
 - Working directory is strictly `.agents/teamwork/teamwork_challenger_m2a_1/`.
@@ -58,8 +58,8 @@ None currently requested.
 - Reached verdict: **APPROVE**.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch instructions
-- BRIEFING.md — persistent memory
-- progress.md — liveness heartbeat
-- analysis.md — detailed empirical findings
-- handoff.md — final handoff report & verdict
+- DISPATCH.md  incoming dispatch instructions
+- BRIEFING.md  persistent memory
+- progress.md  liveness heartbeat
+- analysis.md  detailed empirical findings
+- handoff.md  final handoff report & verdict

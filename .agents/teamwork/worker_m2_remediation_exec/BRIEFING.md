@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T02:22:00Z
+# BRIEFING  2026-11-14T02:22:00Z
 
 ## Mission
 Remediate M2 issues identified by Challenger M2_2: fix uncompiled translation keys in business_landing.blade.php & lang files, dark mode checkmark contrast and inverted contrast in pricing.blade.php, and light mode contrast in security.blade.php.
@@ -35,10 +35,10 @@ Remediate M2 issues identified by Challenger M2_2: fix uncompiled translation ke
 - Resolved low contrast on eyebrows in `pricing.blade.php` and `security.blade.php` using `text-slate-600 dark:text-slate-400` achieving WCAG AA 7.51:1 (light) and 6.57:1 (dark).
 
 ## Artifact Index
-- `DISPATCH.md` — assignment dispatch
-- `BRIEFING.md` — persistent working context
-- `progress.md` — heartbeat
-- `handoff.md` — comprehensive 5-component handoff report
+- `DISPATCH.md`  assignment dispatch
+- `BRIEFING.md`  persistent working context
+- `progress.md`  heartbeat
+- `handoff.md`  comprehensive 5-component handoff report
 
 ## Change Tracker
 - **Files modified**:

@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T00:28:30Z
+# BRIEFING  2026-10-31T00:28:30Z
 
 ## Mission
 Transform COOCA sub-navigation layout from horizontal top tabs into a secondary sidebar (dual sidebar layout), responsive mobile drawer integration, preserving RBAC and multi-industry gating, backed by PHPUnit automated tests.
@@ -39,7 +39,7 @@ Transform COOCA sub-navigation layout from horizontal top tabs into a secondary 
 - Maintain an open-issues ledger across all rounds.
 - Propagate original task verbatim to workers.
 - Run at least 3 review rounds.
-- Never reuse a subagent after it has delivered its handoff — always spawn fresh.
+- Never reuse a subagent after it has delivered its handoff  always spawn fresh.
 
 ## Current Parent
 - Conversation ID: b6506ba4-9183-4178-8893-7d375a3cf7e2
@@ -71,12 +71,12 @@ Transform COOCA sub-navigation layout from horizontal top tabs into a secondary 
 - Safety timer: none
 
 ## Artifact Index
-- .agents/teamwork/ORIGINAL_REQUEST.md — Verbatim user request
-- .agents/teamwork/swe_1/DISPATCH.md — Verbatim dispatch directive
-- .agents/teamwork/swe_1/progress.md — Liveness & iteration progress
-- .agents/teamwork/swe_1/handoff.md — Final orchestrator handoff report
-- .agents/teamwork/implementer_1/handoff.md — Implementer completion report
-- .agents/teamwork/reviewer_1/handoff.md — Reviewer 1 completion report
-- .agents/teamwork/reviewer_2/handoff.md — Reviewer 2 completion report
-- .agents/teamwork/reviewer_3/handoff.md — Reviewer 3 completion report
-- .agents/teamwork/auditor_1/handoff.md — Independent Victory Auditor report
+- .agents/teamwork/ORIGINAL_REQUEST.md  Verbatim user request
+- .agents/teamwork/swe_1/DISPATCH.md  Verbatim dispatch directive
+- .agents/teamwork/swe_1/progress.md  Liveness & iteration progress
+- .agents/teamwork/swe_1/handoff.md  Final orchestrator handoff report
+- .agents/teamwork/implementer_1/handoff.md  Implementer completion report
+- .agents/teamwork/reviewer_1/handoff.md  Reviewer 1 completion report
+- .agents/teamwork/reviewer_2/handoff.md  Reviewer 2 completion report
+- .agents/teamwork/reviewer_3/handoff.md  Reviewer 3 completion report
+- .agents/teamwork/auditor_1/handoff.md  Independent Victory Auditor report

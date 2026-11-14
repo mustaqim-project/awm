@@ -1,4 +1,4 @@
-# BRIEFING — 2026-10-31T04:06:50Z
+# BRIEFING  2026-10-31T04:06:50Z
 
 ## Mission
 Adversarially stress-test localization changes across `resources/views/app` (185 files) and `resources/views/admin` (87 files) for unescaped JS quotes, malformed Blade syntax, missing dictionary keys, and audit compliance.
@@ -12,7 +12,7 @@ Adversarially stress-test localization changes across `resources/views/app` (185
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code or Blade templates
+- Review-only  do NOT modify implementation code or Blade templates
 - Write only to .agents/teamwork/challenger_m_2/ (and scratch/ test harnesses)
 - Never trust unverified claims; write and execute empirical test harnesses
 - Report all findings and output in handoff.md and send message to orchestrator
@@ -34,10 +34,10 @@ Adversarially stress-test localization changes across `resources/views/app` (185
 - Rendered Verdict: **REQUEST_CHANGES**.
 
 ## Artifact Index
-- `DISPATCH.md` — incoming dispatch instructions
-- `progress.md` — execution log and heartbeat
-- `adversarial_results.json` — structured test harness output
-- `handoff.md` — comprehensive 5-component handoff report
+- `DISPATCH.md`  incoming dispatch instructions
+- `progress.md`  execution log and heartbeat
+- `adversarial_results.json`  structured test harness output
+- `handoff.md`  comprehensive 5-component handoff report
 
 ## Attack Surface
 - **Hypotheses tested**:

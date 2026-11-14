@@ -17,7 +17,7 @@ return [
     // 1. Kasir Gratis
     'free_kicker' => 'Zero-Subscription POS Application',
     'free_title' => 'Free Forever POS Software for Micro-Businesses & Early-Stage SMBs',
-    'free_subtitle' => 'Manage checkout queues, print Bluetooth thermal receipts, and accept QRIS payments without hidden monthly charges. Not a 14-day trial—genuinely free forever.',
+    'free_subtitle' => 'Manage checkout queues, print Bluetooth thermal receipts, and accept QRIS payments without hidden monthly charges. Not a 14-day trialgenuinely free forever.',
     'free_hero_badge' => 'Zero Cost • No Credit Card • No Trial Limits',
     'free_hero_desc' => 'Start digitalizing your store, stall, or coffee shop checkout today without spending a single penny. Enjoy a complete POS app with thermal receipt printing, smartphone camera barcode scanning, QRIS payments, and automated revenue summaries right from your mobile device.',
     'free_hero_pill_1' => ':outlet Store & :product Products Free Forever',

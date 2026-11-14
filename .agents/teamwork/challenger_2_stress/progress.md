@@ -1,4 +1,4 @@
-# Progress — Challenger 2 (Stress & Compilation)
+# Progress  Challenger 2 (Stress & Compilation)
 
 Last visited: 2026-11-08T20:26:00Z
 - [x] Initial dispatch received & briefed

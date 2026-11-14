@@ -1,4 +1,4 @@
-# Forensic Audit Report — HRM, Import & Inventory Modules Remediation
+# Forensic Audit Report  HRM, Import & Inventory Modules Remediation
 
 **Work Product**: HRM, Import, and Inventory Modules (Controllers, RBAC Seeder, Views, Business Owner Docs, and Test Suites)  
 **Profile**: General Project (Laravel 11 Multi-Tenant SaaS ERP)  

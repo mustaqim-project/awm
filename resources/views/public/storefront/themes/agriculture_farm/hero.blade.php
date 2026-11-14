@@ -3,7 +3,7 @@
 {{-- Agrarian editorial dignity, farm-fresh harvest story & fair-trade pillars  --}}
 {{-- ========================================================================= --}}
 @php
-    $heroHeadline = $landingPage->headline ?: ($business->name . ' — Sentra Panen & Tani Alami');
+    $heroHeadline = $landingPage->headline ?: ($business->name . '  Sentra Panen & Tani Alami');
     $heroSubheadline = $landingPage->subheadline ?: ($business->description ?: 'Hasil tani segar berkualitas, sayuran dan buah organik, bibit tanaman unggul, dan sarana pertanian ramah lingkungan langsung dari petani binaan Nusantara.');
     $heroEyebrow = $landingPage->announcement_badge ?: ($activeTheme['industry'] ?? 'Pertanian, Peternakan, Perkebunan, Perikanan & Hasil Panen');
 

@@ -1,4 +1,4 @@
-# Progress — Explorer 1 (Milestone 1 Translations)
+# Progress  Explorer 1 (Milestone 1 Translations)
 
 - [x] Initialized workspace and briefing
 - [x] Read ORIGINAL_REQUEST.md, STANDARISASI_DAN_IMPLEMENTASI_TEMA_UNIVERSAL.md, and PROJECT.md

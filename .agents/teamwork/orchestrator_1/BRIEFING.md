@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:53:00Z
+# BRIEFING  2026-11-13T22:53:00Z
 
 ## Mission
 Perform a comprehensive, code-level audit and optimization of the entire public frontend of the COOCA website across all specified marketing layouts, templates, and partials. Deliver a structured audit report with concrete findings across 7 dimensions and implement high-impact optimizations directly in the codebase.
@@ -31,10 +31,10 @@ Perform a comprehensive, code-level audit and optimization of the entire public 
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
-- NEVER run build/test commands yourself — require workers to do so.
-- NEVER investigate or explore the problem at the code level — dispatch Explorers for technical investigation.
+- NEVER run build/test commands yourself  require workers to do so.
+- NEVER investigate or explore the problem at the code level  dispatch Explorers for technical investigation.
 - File-editing tools ONLY for metadata/state files (.md) in .agents/teamwork/
-- Never reuse a subagent after it has delivered its handoff — always spawn fresh
+- Never reuse a subagent after it has delivered its handoff  always spawn fresh
 
 ## Current Parent
 - Conversation ID: 0b761dcb-fe0d-434c-94db-fbf43a21f52d
@@ -81,13 +81,13 @@ Perform a comprehensive, code-level audit and optimization of the entire public 
 - Safety timer: 4e686b8a-2e28-4b82-9b39-8b7a237105e3/task-922
 
 ## Artifact Index
-- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Original User Request
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\DISPATCH.md — Orchestrator Dispatch History
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md — Global project plan & architecture
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\AUDIT_INVENTORY.md — Complete Scoped File Audit Inventory
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\TEST_INFRA.md — E2E Test Infrastructure Specification
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\TEST_READY.md — E2E Test Suite Ready & Verification Report
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md — Gate Verdicts
-- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\progress.md — Orchestrator Progress
-- c:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md — Worker M1 Handoff Report
-- c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\handoff.md — Challenger M1_1 Handoff Report
+- c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md  Original User Request
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\DISPATCH.md  Orchestrator Dispatch History
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\PROJECT.md  Global project plan & architecture
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\AUDIT_INVENTORY.md  Complete Scoped File Audit Inventory
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\TEST_INFRA.md  E2E Test Infrastructure Specification
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\TEST_READY.md  E2E Test Suite Ready & Verification Report
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\GATE_STATUS.md  Gate Verdicts
+- c:\laragon\www\cooca_core\.agents\teamwork\orchestrator_1\progress.md  Orchestrator Progress
+- c:\laragon\www\cooca_core\.agents\teamwork\worker_m1\handoff.md  Worker M1 Handoff Report
+- c:\laragon\www\cooca_core\.agents\teamwork\challenger_m1_1\handoff.md  Challenger M1_1 Handoff Report

@@ -1,4 +1,4 @@
-# Progress Tracking — Audit & Docs Survey Explorer
+# Progress Tracking  Audit & Docs Survey Explorer
 
 Last visited: 2026-11-08T19:11:30Z
 - [x] Initialized DISPATCH.md and BRIEFING.md

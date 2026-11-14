@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-13T22:53:00Z
+# BRIEFING  2026-11-13T22:53:00Z
 
 ## Mission
 Empirically stress-test and verify chatbot widget deferral, DOM lazy mounting, background polling/WebSocket absence on initial load, mobile theme toggle accessibility (<640px), and blog show CSS contrast/integrity.
@@ -13,8 +13,8 @@ Empirically stress-test and verify chatbot widget deferral, DOM lazy mounting, b
 - Instance: 2 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Empirical challenge — must write and run tests/verification code directly, do not trust claims
+- Review-only  do NOT modify implementation code
+- Empirical challenge  must write and run tests/verification code directly, do not trust claims
 - Never place source code, tests, or data in .agents/teamwork/
 
 ## Current Parent

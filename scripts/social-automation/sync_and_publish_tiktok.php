@@ -58,7 +58,7 @@ Coba gratis sekarang di https://cooca.id (klik link di bio profil!)
 #trikbisnis #kasirtoko #aplikasikasir #umkmmaju #keamanantoko #COOCA #fyp #bisnisanakmuda #kelolatoko
 TXT;
 
-$cleanCaption = trim(str_replace(['—', '–'], '-', $caption));
+$cleanCaption = trim(str_replace(['', '–'], '-', $caption));
 
 $post->content = $cleanCaption;
 $post->media_type = 'image';

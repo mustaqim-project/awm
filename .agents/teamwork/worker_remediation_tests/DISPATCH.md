@@ -32,8 +32,8 @@ Resolve all issues identified in the Victory Audit Report (`c:\laragon\www\cooca
    - In `C:\laragon\www\cooca_my_own\test\ui_glitch_and_receipt_watermark_test.dart`:
      - Fix RenderFlex overflow and expectations in receipt watermark tests by setting realistic widget test surface sizes (e.g. `tester.view.physicalSize = Size(1080, 2400); tester.view.devicePixelRatio = 2.0; addTearDown(tester.view.resetPhysicalSize);`).
 3. **Execute Verification**:
-   - Run `flutter analyze` in `C:\laragon\www\cooca_my_own` — MUST report `No issues found!` (0 issues).
-   - Run `flutter test` in `C:\laragon\www\cooca_my_own` — ALL tests in the repository MUST PASS (0 failed).
+   - Run `flutter analyze` in `C:\laragon\www\cooca_my_own`  MUST report `No issues found!` (0 issues).
+   - Run `flutter test` in `C:\laragon\www\cooca_my_own`  ALL tests in the repository MUST PASS (0 failed).
 4. **Update Documentation**:
    - Update `mobile_testing_results.md` (in `orchestrator_1`, `cooca_core`, and `cooca_my_own`) with the exact final test counts and commands.
 5. **Deliverable**:

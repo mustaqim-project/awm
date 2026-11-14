@@ -3801,7 +3801,7 @@
         @php
             $heroDisplayImage = $landingPage->hero_image_url ?: ($business->logo_url ?: $landingPage->logo_url);
         @endphp
-        <section id="hero" class="relative pt-6 sm:pt-8 pb-12 sm:pb-16 overflow-hidden">
+        <section id="hero" class="relative pt-6 sm:pt-8 pb-12 sm:pb-16 overflow-hidden min-h-[calc(100svh-4rem)] flex flex-col justify-center">
             <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div
                     class="{{ $heroDisplayImage ? 'grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center' : 'max-w-3xl mx-auto text-center space-y-6' }}">
@@ -6018,6 +6018,7 @@
             <div class="max-w-4xl max-h-[70vh] sm:max-h-[78vh] flex items-center justify-center p-2">
                 <img :src="galleryImages[activeGalleryIndex]?.url"
                     :alt="galleryImages[activeGalleryIndex]?.caption || 'Foto Galeri'"
+                    width="1200" height="800" loading="lazy" decoding="async"
                     class="max-w-full max-h-[68vh] sm:max-h-[76vh] object-contain rounded-[18px] sm:rounded-[24px] shadow-2xl transition-all duration-300">
             </div>
 

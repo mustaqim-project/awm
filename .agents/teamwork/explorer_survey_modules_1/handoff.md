@@ -1,4 +1,4 @@
-# Handoff Report — explorer_survey_modules_1
+# Handoff Report  explorer_survey_modules_1
 
 **To:** `parent` (`73d9d035-59a2-45d3-a207-90bc9a5adcc4`)  
 **From:** `explorer_survey_modules_1` (Read-Only Specification Investigator & Auditor)  

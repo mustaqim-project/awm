@@ -11,9 +11,9 @@ Skill operasional ini memandu AI Agent dalam mengeksekusi **audit keamanan otori
 
 ## 🧭 File Referensi Pendukung
 
-* [`references/controller-middleware-migration-guide.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/controller-middleware-migration-guide.md) — Panduan teknis memindahkan middleware permission dari routes ke Controller (Modern `HasMiddleware` vs Constructor vs Method Guard).
-* [`references/rbac-database-and-seeder-matrix.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/rbac-database-and-seeder-matrix.md) — Skema database RBAC (`permissions`, `roles`, `permission_role`), Single Source of Truth `RbacSeeder.php`, dan matriks pemetaan role bawaan.
-* [`references/permission-audit-and-security-checklist.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/permission-audit-and-security-checklist.md) — Protokol audit 7-tahap, mitigasi celah keamanan IDOR, dan skrip pengujian otomatis (Feature Test).
+* [`references/controller-middleware-migration-guide.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/controller-middleware-migration-guide.md)  Panduan teknis memindahkan middleware permission dari routes ke Controller (Modern `HasMiddleware` vs Constructor vs Method Guard).
+* [`references/rbac-database-and-seeder-matrix.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/rbac-database-and-seeder-matrix.md)  Skema database RBAC (`permissions`, `roles`, `permission_role`), Single Source of Truth `RbacSeeder.php`, dan matriks pemetaan role bawaan.
+* [`references/permission-audit-and-security-checklist.md`](file:///c:/laragon/www/cooca_core/.agents/skills/laravel-permission/references/permission-audit-and-security-checklist.md)  Protokol audit 7-tahap, mitigasi celah keamanan IDOR, dan skrip pengujian otomatis (Feature Test).
 
 ---
 

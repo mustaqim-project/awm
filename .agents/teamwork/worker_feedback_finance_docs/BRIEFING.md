@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T14:47:00Z
+# BRIEFING  2026-11-08T14:47:00Z
 
 ## Mission
 Build comprehensive, Bento Apple HIG documentation partials for Feedback & Finance modules from the Business Owner POV across 20 industries in COOCA and integrate them into docs/index.blade.php.

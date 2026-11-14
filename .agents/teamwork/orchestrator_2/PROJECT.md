@@ -1,4 +1,4 @@
-# Project: COOCA SaaS ERP — Invoices & Labor-Machines Production Readiness
+# Project: COOCA SaaS ERP  Invoices & Labor-Machines Production Readiness
 
 ## Architecture
 - **Framework**: Laravel 11.x on PHP 8.2+, Blade, Alpine.js, Tailwind CSS, Lucide Icons.

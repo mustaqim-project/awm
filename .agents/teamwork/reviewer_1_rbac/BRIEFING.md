@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-08T20:28:00Z
+# BRIEFING  2026-11-08T20:28:00Z
 
 ## Mission
 Conduct an independent code and adversarial security review of RBAC enforcement across HRM, Import, and Inventory modules.
@@ -12,7 +12,7 @@ Conduct an independent code and adversarial security review of RBAC enforcement 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Check for integrity violations (hardcoded test results, facade implementations, shortcuts, fabricated verification)
 - Follow Handoff Protocol with 5 sections: Observation, Logic Chain, Caveats, Conclusion, Verification Method
 - Issue explicit verdict: APPROVE or REQUEST_CHANGES
@@ -68,7 +68,7 @@ Conduct an independent code and adversarial security review of RBAC enforcement 
 - Issued REQUEST_CHANGES due to mandatory integrity violation rule and genuine test failure.
 
 ## Artifact Index
-- DISPATCH.md — incoming dispatch records
-- progress.md — liveness heartbeat
-- BRIEFING.md — situational awareness index
-- handoff.md — final review report and verdict
+- DISPATCH.md  incoming dispatch records
+- progress.md  liveness heartbeat
+- BRIEFING.md  situational awareness index
+- handoff.md  final review report and verdict

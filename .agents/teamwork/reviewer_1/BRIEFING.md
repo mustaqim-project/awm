@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T15:32:00Z
+# BRIEFING  2026-11-07T15:32:00Z
 
 ## Mission
 Conduct security, RBAC, and adversarial review of Community, CRM, and Customers module changes in COOCA Core.
@@ -12,7 +12,7 @@ Conduct security, RBAC, and adversarial review of Community, CRM, and Customers 
 - Instance: 1 of 2
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
+- Review-only  do NOT modify implementation code
 - Adversarial critic: verify integrity, check for facades, hardcoding, bypasses, integrity violations
 - Independent test execution & evidence-based findings
 
@@ -64,4 +64,4 @@ Conduct security, RBAC, and adversarial review of Community, CRM, and Customers 
 - Issued APPROVE verdict for Security & RBAC milestone.
 
 ## Artifact Index
-- handoff.md — final review & adversarial challenge report
+- handoff.md  final review & adversarial challenge report

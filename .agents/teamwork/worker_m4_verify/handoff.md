@@ -1,4 +1,4 @@
-# Handoff Report — Milestone M4: Test Suite Verification & Production Readiness
+# Handoff Report  Milestone M4: Test Suite Verification & Production Readiness
 
 ## 1. Observation
 

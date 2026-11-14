@@ -5,7 +5,7 @@
 **Target Mobile Repo:** `C:\laragon\www\cooca_my_own`  
 **Target Backend Repo:** `C:\laragon\www\cooca_core`  
 **Live Production API:** `https://cooca.id`  
-**Scope:** Stage 1 Critical — Requirement R2: Android Security & Fake GPS Prevention for Attendance
+**Scope:** Stage 1 Critical  Requirement R2: Android Security & Fake GPS Prevention for Attendance
 
 ---
 

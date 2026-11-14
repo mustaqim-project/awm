@@ -1,6 +1,6 @@
 # Original User Request
 
-## Approved Task Prompt — 2026-11-13T21:36:43Z
+## Approved Task Prompt  2026-11-13T21:36:43Z
 
 Perform a comprehensive, code-level audit and optimization of the entire public frontend of the COOCA website across all specified marketing layouts, templates, and partials. Deliver a structured audit report with concrete findings and implement high-impact optimizations directly in the codebase.
 
@@ -97,7 +97,7 @@ Inspect the repository for existing build scripts, test suites, linters, static 
 - [ ] All existing automated tests and linting suites configured in the repository pass without regressions.
 
 
-## Follow-up — 2026-11-14T00:13:11Z
+## Follow-up  2026-11-14T00:13:11Z
 
 User Request / Additional Quality Requirements:
 

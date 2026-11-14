@@ -1,6 +1,6 @@
 # Mobile Bug Fix & Remediation Report: COOCA Mobile App & Backend Services
 
-**Document Version**: 1.0.0 — Production Bug Fix Documentation  
+**Document Version**: 1.0.0  Production Bug Fix Documentation  
 **Date**: 2026-11-03  
 **Auditor / Fix Worker**: Teamwork Quality & Documentation Worker (`worker_audit_reports_m5`)  
 **Repositories**: `C:\laragon\www\cooca_my_own` (Flutter) & `C:\laragon\www\cooca_core` (Laravel)  

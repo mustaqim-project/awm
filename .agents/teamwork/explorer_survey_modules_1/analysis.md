@@ -54,12 +54,12 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   2. *Simulated Account Recovery* (`auth_service.dart:405-467`):
      `submitAccountRecovery` generates a fake ticket `REC-${DateTime.now().year}-${1000 + Random().nextInt(9000)}` and simulates a 1-second delay without calling any backend endpoint.
 - **Live Backend Endpoints**:
-  - `POST /api/v1/auth/login` (`AuthController::login`) — Throttled to 10 req/min.
-  - `GET /api/v1/auth/me` (`AuthController::me`) — Returns user profile & role.
-  - `GET /api/v1/businesses` or `GET /api/v1/me/businesses` (`BusinessController::index`) — Returns tenant businesses.
-  - `POST /api/v1/businesses/switch` or `POST /api/v1/me/active-business` (`BusinessController::setActive`) — Sets active tenant session cookie/token context.
-  - `POST /api/v1/account-recovery` (`AccountRecoveryApiController::store`) — Real public endpoint for account recovery requests.
-  - `GET /api/v1/account-recovery/status/{ticket}` (`AccountRecoveryApiController::status`) — Real status checking endpoint.
+  - `POST /api/v1/auth/login` (`AuthController::login`)  Throttled to 10 req/min.
+  - `GET /api/v1/auth/me` (`AuthController::me`)  Returns user profile & role.
+  - `GET /api/v1/businesses` or `GET /api/v1/me/businesses` (`BusinessController::index`)  Returns tenant businesses.
+  - `POST /api/v1/businesses/switch` or `POST /api/v1/me/active-business` (`BusinessController::setActive`)  Sets active tenant session cookie/token context.
+  - `POST /api/v1/account-recovery` (`AccountRecoveryApiController::store`)  Real public endpoint for account recovery requests.
+  - `GET /api/v1/account-recovery/status/{ticket}` (`AccountRecoveryApiController::status`)  Real status checking endpoint.
 - **Remediation**:
   - Remove fake `REC-` ticket generator and fake business `b1`. Wire directly to `/api/v1/account-recovery` and `/api/v1/businesses`.
 
@@ -92,8 +92,8 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   4. *Missing Recent Orders Call*:
      `state.fetchRecentPosOrders()` is not called inside `_fetchDashboardData()`, causing the recent transactions card to remain empty unless the user first navigates into the POS screen.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/mobile/dashboard/pulse` (`MobileOwnerPulseApiController::pulse`) — Returns `revenue_today`, `pos_revenue`, `growth_pct`, `hourly_trend`, `active_shift`, and `recent_orders`.
-  - `GET /api/v1/mobile/dashboard/analytics` (`MobileOwnerPulseApiController::analytics`) — Returns comprehensive cockpit KPIs.
+  - `GET /api/v1/mobile/dashboard/pulse` (`MobileOwnerPulseApiController::pulse`)  Returns `revenue_today`, `pos_revenue`, `growth_pct`, `hourly_trend`, `active_shift`, and `recent_orders`.
+  - `GET /api/v1/mobile/dashboard/analytics` (`MobileOwnerPulseApiController::analytics`)  Returns comprehensive cockpit KPIs.
 - **Remediation**:
   - Bind hourly trend bars directly to `state.hourlyTrend[hour]['revenue'] / maxRevenue`.
   - Replace static Unsplash avatar with `state.currentUserName` initials and dynamic profile photo.
@@ -110,9 +110,9 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   1. *Massive Starter Products Mock* (`merchant_state.dart:1231-1576, 1612-1614`):
      `_getDefaultStarterProducts()` instantiates 24+ static products across 7 industry categories (`starter_ws_*`, `starter_ph_*`, `starter_ld_*`, `starter_srv_*`, `starter_mf_*`, `starter_rtl_*`, `starter_fb_*`) with fake prices, static stock levels, and hardcoded Unsplash image URLs. This method is invoked by `_loadOfflineCachedCatalog()` when local storage is empty, causing phantom products to appear on fresh installs.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/pos/terminal/bootstrap` (`PosTerminalController::terminalData`) — Returns authenticated cashier context, product catalog with modifiers, active categories, payment channels, and open shift details.
-  - `POST /api/v1/pos/terminal/checkout` (`PosTerminalController::checkout`) — Processes transactions, discounts, taxes, and multi-payment splits.
-  - `POST /api/v1/pos/sync/batch` (`PosSyncApiController::batchSync`) — Idempotent batch sync for offline-created transactions.
+  - `GET /api/v1/pos/terminal/bootstrap` (`PosTerminalController::terminalData`)  Returns authenticated cashier context, product catalog with modifiers, active categories, payment channels, and open shift details.
+  - `POST /api/v1/pos/terminal/checkout` (`PosTerminalController::checkout`)  Processes transactions, discounts, taxes, and multi-payment splits.
+  - `POST /api/v1/pos/sync/batch` (`PosSyncApiController::batchSync`)  Idempotent batch sync for offline-created transactions.
 - **Remediation**:
   - Eliminate `_getDefaultStarterProducts()`. When offline cache is empty and network is unavailable, show an empty state prompting the user to sync their store catalog online.
 
@@ -127,10 +127,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
      `_cashController.text = '100000';`
      Forces a default modal opening cash of Rp 100,000 instead of leaving the controller empty or initializing from the backend's previous closing cash float.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/pos/shifts/current` or `GET /api/v1/pos/shifts/active` (`PosShiftController::current`) — Returns the currently active register shift.
-  - `POST /api/v1/pos/shifts/open` (`PosShiftController::open`) — Body: `{'initial_cash': double, 'notes': string}`.
-  - `POST /api/v1/pos/shifts/{posShift}/close` (`PosShiftController::close`) — Body: `{'closing_cash': double, 'notes': string}`.
-  - `POST /api/v1/pos/shifts/{posShift}/cash-movement` (`PosShiftController::recordCashMovement`) — Records cash in / cash out.
+  - `GET /api/v1/pos/shifts/current` or `GET /api/v1/pos/shifts/active` (`PosShiftController::current`)  Returns the currently active register shift.
+  - `POST /api/v1/pos/shifts/open` (`PosShiftController::open`)  Body: `{'initial_cash': double, 'notes': string}`.
+  - `POST /api/v1/pos/shifts/{posShift}/close` (`PosShiftController::close`)  Body: `{'closing_cash': double, 'notes': string}`.
+  - `POST /api/v1/pos/shifts/{posShift}/cash-movement` (`PosShiftController::recordCashMovement`)  Records cash in / cash out.
 - **Remediation**:
   - Set `_cashController.text = ''` or prefill with verified previous shift float.
 
@@ -151,10 +151,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
      In backend `routes/api.php` line 1519, the route is:
      `POST /api/v1/commerce/orders/{order}/verify-payment` (`MerchantOrderApiController::verifyPayment`).
 - **Live Backend Endpoints**:
-  - `GET /api/v1/pos/orders` (`PosOrderController::index`) — Lists POS transaction history.
-  - `GET /api/v1/commerce/orders/incoming` (`PosIncomingOrderApiController::incomingOrders`) — Incoming omnichannel & QR orders.
-  - `POST /api/v1/commerce/orders/{order}/request-pickup` (`MerchantOrderApiController::requestPickup`) — Instant logistics dispatch.
-  - `POST /api/v1/pos/orders/{posOrder}/void` (`PosOrderController::void`) — Requires `pos.supervisor_pin`.
+  - `GET /api/v1/pos/orders` (`PosOrderController::index`)  Lists POS transaction history.
+  - `GET /api/v1/commerce/orders/incoming` (`PosIncomingOrderApiController::incomingOrders`)  Incoming omnichannel & QR orders.
+  - `POST /api/v1/commerce/orders/{order}/request-pickup` (`MerchantOrderApiController::requestPickup`)  Instant logistics dispatch.
+  - `POST /api/v1/pos/orders/{posOrder}/void` (`PosOrderController::void`)  Requires `pos.supervisor_pin`.
 - **Remediation**:
   - Update `pos_service.dart` to target `/api/v1/commerce/orders/$orderId/request-pickup` and `/api/v1/commerce/orders/$orderId/verify-payment`.
 
@@ -167,10 +167,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
 - **Observed Problems & Mocks**:
   - Products catalog offline fallback polluted by `_getDefaultStarterProducts()`.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/products` (`ProductController::index`) — Full product list with pagination.
-  - `GET /api/v1/product-categories` (`ProductCategoryController::index`) — Category taxonomy.
-  - `GET /api/v1/pos/terminal/search-products` (`PosTerminalController::searchProducts`) — Search by name/SKU/barcode.
-  - `GET /api/v1/pos/modifiers` (`PosModifierApiController::index`) — Modifier groups & options.
+  - `GET /api/v1/products` (`ProductController::index`)  Full product list with pagination.
+  - `GET /api/v1/product-categories` (`ProductCategoryController::index`)  Category taxonomy.
+  - `GET /api/v1/pos/terminal/search-products` (`PosTerminalController::searchProducts`)  Search by name/SKU/barcode.
+  - `GET /api/v1/pos/modifiers` (`PosModifierApiController::index`)  Modifier groups & options.
 - **Remediation**:
   - Persist only real product responses from `/api/v1/products` into local SQLite/SharedPreferences cache.
 
@@ -196,11 +196,11 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   3. *Valuation Calculation Contamination* (`inventory_screen.dart:281-284`):
      `_calculateTotalValuation` iterates over the hardcoded `_materials` array, displaying an inaccurate asset valuation in the UI.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/inventory/stocks` (`InventoryController::stocks`) — Real item stocks and alert levels.
-  - `GET /api/v1/inventory/movements` (`InventoryController::movements`) — Real audit trail of stock adjustments, sales deductions, and goods receipts.
-  - `POST /api/v1/inventory/adjustments` (`InventoryController::adjust`) — Adjust stock count.
-  - `GET /api/v1/inventory/opnames` & `POST /api/v1/inventory/opnames` (`StockOpnameController`) — Stock opname sessions.
-  - `POST /api/v1/inventory/opnames/{stockOpname}/reconcile` (`StockOpnameController::reconcile`) — Reconcile physical inventory.
+  - `GET /api/v1/inventory/stocks` (`InventoryController::stocks`)  Real item stocks and alert levels.
+  - `GET /api/v1/inventory/movements` (`InventoryController::movements`)  Real audit trail of stock adjustments, sales deductions, and goods receipts.
+  - `POST /api/v1/inventory/adjustments` (`InventoryController::adjust`)  Adjust stock count.
+  - `GET /api/v1/inventory/opnames` & `POST /api/v1/inventory/opnames` (`StockOpnameController`)  Stock opname sessions.
+  - `POST /api/v1/inventory/opnames/{stockOpname}/reconcile` (`StockOpnameController::reconcile`)  Reconcile physical inventory.
 - **Remediation**:
   - Purge `_materials` and `_movementLogs` mock lists from `inventory_screen.dart`.
   - Bind inventory table and valuation exclusively to `_inventoryService.getStocks()` and `_inventoryService.getMovements()`.
@@ -214,10 +214,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
 - **Observed Problems & Mocks**:
   - No dummy lists in `goods_receipt_screen.dart`. However, instant stock-in currently lacks full offline queuing support.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/purchasing/purchase-orders` (`PurchaseOrderController::index`) — Purchase orders.
-  - `GET /api/v1/inventory/purchase-orders/pending` (`InventoryPurchaseOrderController::pending`) — POs awaiting goods receipt.
-  - `POST /api/v1/inventory/goods-receipts` (`InventoryGoodsReceiptController::store`) — Inbound stock batch tracking.
-  - `POST /api/v1/purchasing/stock-in` (`GoodsReceiptController::instantStockIn`) — Instant receiving without PO.
+  - `GET /api/v1/purchasing/purchase-orders` (`PurchaseOrderController::index`)  Purchase orders.
+  - `GET /api/v1/inventory/purchase-orders/pending` (`InventoryPurchaseOrderController::pending`)  POs awaiting goods receipt.
+  - `POST /api/v1/inventory/goods-receipts` (`InventoryGoodsReceiptController::store`)  Inbound stock batch tracking.
+  - `POST /api/v1/purchasing/stock-in` (`GoodsReceiptController::instantStockIn`)  Instant receiving without PO.
 - **Remediation**:
   - Connect barcode scanner in `goods_receipt_screen.dart` to `/api/v1/inventory/purchase-orders/pending`.
 
@@ -230,10 +230,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
 - **Observed Problems & Mocks**:
   - No fake data found; direct REST endpoints are used.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/crm/customers` (`CustomerController::index`) — Customer directory.
-  - `GET /api/v1/suppliers` (`SupplierController::index`) — Supplier directory.
-  - `GET /api/v1/customers/{customer}/debts` (`CustomerDebtApiController::debts`) — Unpaid customer balances.
-  - `POST /api/v1/customers/{customer}/repay-debt` (`CustomerDebtApiController::repayDebt`) — Record debt payment.
+  - `GET /api/v1/crm/customers` (`CustomerController::index`)  Customer directory.
+  - `GET /api/v1/suppliers` (`SupplierController::index`)  Supplier directory.
+  - `GET /api/v1/customers/{customer}/debts` (`CustomerDebtApiController::debts`)  Unpaid customer balances.
+  - `POST /api/v1/customers/{customer}/repay-debt` (`CustomerDebtApiController::repayDebt`)  Record debt payment.
 - **Remediation**:
   - Ensure search input in customer selection utilizes debounce (300ms) to avoid request flooding.
 
@@ -249,10 +249,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   2. *Derivation from Local State on Failure* (`reports_screen.dart:98-115`):
      If `/api/v1/reports/cockpit` fails, the screen synthesizes cockpit data using local `MerchantState` metrics.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/reports/cockpit` or `GET /api/v1/mobile/dashboard/analytics` (`MobileOwnerPulseApiController::analytics`) — Complete profit/loss, revenue, and gross margin analytics.
-  - `GET /api/v1/finance/dashboard` (`FinanceController::dashboard`) — Financial health overview.
-  - `GET /api/v1/finance/expenses` & `POST /api/v1/finance/expenses` (`FinanceController`) — Operational expense tracking.
-  - `GET /api/v1/pos/reports/sales-summary` (`PosReportController::salesSummary`) — Shift & transaction breakdown.
+  - `GET /api/v1/reports/cockpit` or `GET /api/v1/mobile/dashboard/analytics` (`MobileOwnerPulseApiController::analytics`)  Complete profit/loss, revenue, and gross margin analytics.
+  - `GET /api/v1/finance/dashboard` (`FinanceController::dashboard`)  Financial health overview.
+  - `GET /api/v1/finance/expenses` & `POST /api/v1/finance/expenses` (`FinanceController`)  Operational expense tracking.
+  - `GET /api/v1/pos/reports/sales-summary` (`PosReportController::salesSummary`)  Shift & transaction breakdown.
 - **Remediation**:
   - Handle API failure by displaying an error state with a "Coba Lagi" (Retry) action instead of synthesizing numbers.
 
@@ -276,10 +276,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
      ```
      When offline or when the network call fails, this synthetic employee record is injected into the portal state.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/attendance/portal` (`AttendanceApiController::portal`) — Complete staff personal profile, active shift, today's attendance record, and 7-day stats.
-  - `POST /api/v1/attendance/clock-in` & `POST /api/v1/attendance/clock-out` (`AttendanceApiController::checkIn` / `checkOut`) — Clock in/out with geolocation and biometric selfie verification.
-  - `POST /api/v1/attendance/corrections` (`AttendanceApiController::storeCorrection`) — File attendance correction.
-  - `GET /api/v1/attendance/payslips` (`AttendanceApiController::payslips`) — Staff payroll slips.
+  - `GET /api/v1/attendance/portal` (`AttendanceApiController::portal`)  Complete staff personal profile, active shift, today's attendance record, and 7-day stats.
+  - `POST /api/v1/attendance/clock-in` & `POST /api/v1/attendance/clock-out` (`AttendanceApiController::checkIn` / `checkOut`)  Clock in/out with geolocation and biometric selfie verification.
+  - `POST /api/v1/attendance/corrections` (`AttendanceApiController::storeCorrection`)  File attendance correction.
+  - `GET /api/v1/attendance/payslips` (`AttendanceApiController::payslips`)  Staff payroll slips.
 - **Remediation**:
   - Cache the last valid response from `/api/v1/attendance/portal` in `LocalStorageService`. If no cache exists, display an explicit offline indicator rather than generating a fake profile.
 
@@ -294,11 +294,11 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   2. *Correction Approval Route Duplication*:
      `hrm_service.dart` defines `/api/v1/hrm/corrections/$id/approve`, while `routes/api.php` also exposes `/api/v1/attendance/corrections/{correction}/approve`. Both controllers exist, but consistency is needed.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/hrm/hub` (`HrmApiController::hub`) — Management overview: staff count, payroll THP, active loans, pending corrections.
-  - `POST /api/v1/hrm/employees` (`HrmApiController::storeEmployee`) — Create staff member.
-  - `PUT /api/v1/hrm/employees/{membership}` (`HrmApiController::updateEmployee`) — Update staff member.
-  - `POST /api/v1/hrm/shifts` (`HrmApiController::storeShift`) — Create shift schedule.
-  - `POST /api/v1/hrm/loans` (`HrmApiController::storeLoan`) — Record employee advance/loan.
+  - `GET /api/v1/hrm/hub` (`HrmApiController::hub`)  Management overview: staff count, payroll THP, active loans, pending corrections.
+  - `POST /api/v1/hrm/employees` (`HrmApiController::storeEmployee`)  Create staff member.
+  - `PUT /api/v1/hrm/employees/{membership}` (`HrmApiController::updateEmployee`)  Update staff member.
+  - `POST /api/v1/hrm/shifts` (`HrmApiController::storeShift`)  Create shift schedule.
+  - `POST /api/v1/hrm/loans` (`HrmApiController::storeLoan`)  Record employee advance/loan.
 - **Remediation**:
   - Pass the exact server error message to the UI instead of falling back to default zeroed data.
 
@@ -318,10 +318,10 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   3. *In-Memory Profile Edit* (`edit_user_profile_modal.dart:63-71` & `merchant_state.dart:41-45`):
      Updating user profile changes in-memory variables and executes `await Future.delayed(500ms)` without sending a PUT/POST request to `/api/v1/profile`.
 - **Live Backend Endpoints**:
-  - `GET /api/v1/profile` (`ProfileController::show`) — Current user profile.
-  - `PUT /api/v1/profile` (`ProfileController::update`) — Updates name, phone, avatar.
-  - `POST /api/v1/profile/change-password` (`ProfileController::changePassword`) — Updates password.
-  - `GET /api/v1/profile/businesses/{business}` & `PUT /api/v1/profile/businesses/{business}` (`ProfileController`) — Tenant business profile.
+  - `GET /api/v1/profile` (`ProfileController::show`)  Current user profile.
+  - `PUT /api/v1/profile` (`ProfileController::update`)  Updates name, phone, avatar.
+  - `POST /api/v1/profile/change-password` (`ProfileController::changePassword`)  Updates password.
+  - `GET /api/v1/profile/businesses/{business}` & `PUT /api/v1/profile/businesses/{business}` (`ProfileController`)  Tenant business profile.
 - **Remediation**:
   - Wire `_saveProfile` in `edit_user_profile_modal.dart` to `PUT /api/v1/profile`.
   - Implement actual cache clearing via `PaintingBinding.instance.imageCache.clear()` and `LocalStorageService.clearTempCache()`.
@@ -339,8 +339,8 @@ This audit provides a complete, line-by-line inspection of all 14 functional mob
   2. *Entirely Synthetic In-App Notification Center* (`notification_screen.dart:28-127`):
      The notification screen creates dynamic alerts entirely from client-side state (`outOfStockProducts`, `lowStockProducts`, `kdsOrders`, `pendingOfflineTxCount`, and `hasActiveShift`). While useful as reactive UI cues, true server-dispatched alerts and FCM pushes are unhandled.
 - **Live Backend Endpoints**:
-  - `POST /api/v1/devices/fcm-token` (`MobileDeviceTokenApiController::registerB2bToken`) — Registers FCM device token for push notifications.
-  - `DELETE /api/v1/devices/fcm-token` (`MobileDeviceTokenApiController::unregisterB2bToken`) — Unregisters token on logout.
+  - `POST /api/v1/devices/fcm-token` (`MobileDeviceTokenApiController::registerB2bToken`)  Registers FCM device token for push notifications.
+  - `DELETE /api/v1/devices/fcm-token` (`MobileDeviceTokenApiController::unregisterB2bToken`)  Unregisters token on logout.
 - **Remediation**:
   - Integrate Firebase Cloud Messaging (FCM) client in Flutter and register the device token against `POST /api/v1/devices/fcm-token`.
   - Add backend route for `/api/v1/notifications` if a persistent notification inbox is required.

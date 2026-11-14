@@ -1,4 +1,4 @@
-# Progress Tracking — Challenger Security
+# Progress Tracking  Challenger Security
 
 Last visited: 2026-11-08T20:27:00Z
 

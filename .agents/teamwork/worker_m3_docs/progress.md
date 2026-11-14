@@ -1,4 +1,4 @@
-# Progress — Milestone 3: Business Owner Documentation
+# Progress  Milestone 3: Business Owner Documentation
 
 Last visited: 2026-11-08T19:31:00Z
 

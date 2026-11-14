@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-02T06:25:00Z
+# BRIEFING  2026-11-02T06:25:00Z
 
 ## Mission
 Adversarially challenge and stress-test backend changes in Phase 1 (POS Expense and Owner Approval APIs) to empirically verify security, tenant isolation, closed shift boundaries, idempotency, ledger integrity, and test coverage.
@@ -12,8 +12,8 @@ Adversarially challenge and stress-test backend changes in Phase 1 (POS Expense 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify production implementation code directly unless authorized; if tests are missing or need writing, run verification code or standalone verification tests.
-- Never trust worker's claims or logs — verify empirically.
+- Review-only  do NOT modify production implementation code directly unless authorized; if tests are missing or need writing, run verification code or standalone verification tests.
+- Never trust worker's claims or logs  verify empirically.
 - Write reports in agent folder; communicate via send_message.
 
 ## Current Parent
@@ -31,11 +31,11 @@ Adversarially challenge and stress-test backend changes in Phase 1 (POS Expense 
 - Verdict: **APPROVE**.
 
 ## Artifact Index
-- .agents/teamwork/challenger_phase1_1/DISPATCH.md — Initial task dispatch
-- .agents/teamwork/challenger_phase1_1/BRIEFING.md — Persistent context & identity
-- .agents/teamwork/challenger_phase1_1/progress.md — Execution heartbeat
-- .agents/teamwork/challenger_phase1_1/handoff.md — Final verdict & empirical report
-- tests/Feature/Api/BackendPhase1AdversarialChallengeTest.php — Co-located adversarial stress test harness
+- .agents/teamwork/challenger_phase1_1/DISPATCH.md  Initial task dispatch
+- .agents/teamwork/challenger_phase1_1/BRIEFING.md  Persistent context & identity
+- .agents/teamwork/challenger_phase1_1/progress.md  Execution heartbeat
+- .agents/teamwork/challenger_phase1_1/handoff.md  Final verdict & empirical report
+- tests/Feature/Api/BackendPhase1AdversarialChallengeTest.php  Co-located adversarial stress test harness
 
 ## Attack Surface
 - **Hypotheses tested**:

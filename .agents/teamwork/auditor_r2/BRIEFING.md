@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T15:57:00Z
+# BRIEFING  2026-11-07T15:57:00Z
 
 ## Mission
 Forensic integrity audit of remediation changes in `lang/id/customers.php` and `lang/en/customers.php` following adversarial challenger round 2.
@@ -11,8 +11,8 @@ Forensic integrity audit of remediation changes in `lang/id/customers.php` and `
 - Target: lang/id/customers.php and lang/en/customers.php remediation
 
 ## 🔒 Key Constraints
-- Audit-only — do NOT modify implementation code
-- Trust NOTHING — verify everything independently
+- Audit-only  do NOT modify implementation code
+- Trust NOTHING  verify everything independently
 - Integrity mode: development (derived directly from ORIGINAL_REQUEST.md)
 - Verify 5 translation keys in lang/id/customers.php and lang/en/customers.php
 - Check for cheating, hardcoded test strings, facade implementations
@@ -34,7 +34,7 @@ Forensic integrity audit of remediation changes in `lang/id/customers.php` and `
   - [x] Phase 2: Behavioral verification (`php -l`, `view:cache`, PHPUnit execution)
   - [x] Phase 3: Integrity mode evaluation (development mode criteria)
 - **Checks remaining**: none
-- **Findings so far**: CLEAN — No integrity violations found. Genuine and accurate translations registered.
+- **Findings so far**: CLEAN  No integrity violations found. Genuine and accurate translations registered.
 
 ## Attack Surface
 - **Hypotheses tested**:
@@ -50,7 +50,7 @@ Forensic integrity audit of remediation changes in `lang/id/customers.php` and `
 - Confirmed verdict: CLEAN
 
 ## Artifact Index
-- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\DISPATCH.md` — Inbound instructions
-- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\BRIEFING.md` — Situational awareness
-- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\progress.md` — Liveness & status
-- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\handoff.md` — Final audit report
+- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\DISPATCH.md`  Inbound instructions
+- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\BRIEFING.md`  Situational awareness
+- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\progress.md`  Liveness & status
+- `c:\laragon\www\cooca_core\.agents\teamwork\auditor_r2\handoff.md`  Final audit report

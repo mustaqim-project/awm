@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-14T02:22:30Z
+# BRIEFING  2026-11-14T02:22:30Z
 
 ## Mission
 Orchestrate and verify remediation for M2 frontend issues: uncompiled translation keys in business_landing, dark mode checkmark contrast and inverted contrast in pricing, and light mode contrast in security.
@@ -26,7 +26,7 @@ Orchestrate and verify remediation for M2 frontend issues: uncompiled translatio
 
 ## 🔒 Key Constraints
 - NEVER write, modify, or create source code files directly.
-- NEVER run build/test commands yourself — require workers to do so.
+- NEVER run build/test commands yourself  require workers to do so.
 - NEVER cheat or circumvent tests.
 - Verify 100% genuine implementation.
 
@@ -57,6 +57,6 @@ Orchestrate and verify remediation for M2 frontend issues: uncompiled translatio
 - Safety timer: none
 
 ## Artifact Index
-- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\DISPATCH.md — Dispatch instructions
-- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\progress.md — Progress tracking
-- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\handoff.md — Final handoff
+- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\DISPATCH.md  Dispatch instructions
+- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\progress.md  Progress tracking
+- C:\laragon\www\cooca_core\.agents\teamwork\worker_m2_remediation\handoff.md  Final handoff

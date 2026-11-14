@@ -2,7 +2,7 @@
 
 **Agent ID:** worker_backend_m1  
 **Working Directory:** `c:\laragon\www\cooca_core\.agents\teamwork\worker_backend_m1\`  
-**Milestone:** Milestone 1 — Backend Petty Cash & Owner Approval Center APIs  
+**Milestone:** Milestone 1  Backend Petty Cash & Owner Approval Center APIs  
 **Date:** 2026-11-02  
 
 ---

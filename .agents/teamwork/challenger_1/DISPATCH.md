@@ -1,4 +1,4 @@
-# Dispatch: Challenger 1 — Empirical & Quantitative Verification of UI/UX Audit
+# Dispatch: Challenger 1  Empirical & Quantitative Verification of UI/UX Audit
 
 ## Objective
 Adversarially challenge and empirically verify the quantitative claims and file inventories presented in `c:\laragon\www\cooca_core\docs\UI_UX_AUDIT_REPORT.md`.

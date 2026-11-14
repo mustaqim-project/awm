@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-05T00:46:00Z
+# BRIEFING  2026-11-05T00:46:00Z
 
 ## Mission
 Empirically stress-test and challenge Milestone 1 backend normalization changes in `BusinessLandingPage.php` and `StorefrontThemeService.php`.
@@ -12,7 +12,7 @@ Empirically stress-test and challenge Milestone 1 backend normalization changes 
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code.
+- Review-only  do NOT modify implementation code.
 - Write only to my directory (`.agents/teamwork/teamwork_challenger_m1_1/`). Never place source code or tests in `.agents/teamwork/`.
 - Must empirically verify every claim with executable code/tests; unverified claims do not count.
 
@@ -58,8 +58,8 @@ None currently requested.
 - Final verdict: APPROVE.
 
 ## Artifact Index
-- `DISPATCH.md` — Inbound instructions log
-- `BRIEFING.md` — Working memory and identity
-- `progress.md` — Liveness heartbeat
-- `analysis.md` — Empirical test results and stress scenarios
-- `handoff.md` — Handoff report with verdict
+- `DISPATCH.md`  Inbound instructions log
+- `BRIEFING.md`  Working memory and identity
+- `progress.md`  Liveness heartbeat
+- `analysis.md`  Empirical test results and stress scenarios
+- `handoff.md`  Handoff report with verdict

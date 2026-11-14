@@ -1,4 +1,4 @@
-# BRIEFING — 2026-11-07T13:51:00Z
+# BRIEFING  2026-11-07T13:51:00Z
 
 ## Mission
 Investigate and survey Blade presentation layer in Community, CRM, and Customers modules for UI layout, responsiveness, double headers, button hierarchy, empty states, and simplification opportunities.
@@ -11,7 +11,7 @@ Investigate and survey Blade presentation layer in Community, CRM, and Customers
 - Milestone: Investigation & UI Survey (Community, CRM, Customers)
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement
+- Read-only investigation  do NOT implement
 - Inspect resources/views/app/community/, resources/views/app/crm/, resources/views/app/customers/
 - Produce survey_report.md and handoff.md in .agents/teamwork/explorer_ui_survey/
 
@@ -42,7 +42,7 @@ Investigate and survey Blade presentation layer in Community, CRM, and Customers
 - Authored detailed survey_report.md and 5-component handoff.md.
 
 ## Artifact Index
-- DISPATCH.md — Parent dispatch log
-- survey_report.md — Comprehensive UI survey report (330+ lines)
-- handoff.md — 5-component handoff report (280+ lines)
-- progress.md — Liveness heartbeat
+- DISPATCH.md  Parent dispatch log
+- survey_report.md  Comprehensive UI survey report (330+ lines)
+- handoff.md  5-component handoff report (280+ lines)
+- progress.md  Liveness heartbeat
