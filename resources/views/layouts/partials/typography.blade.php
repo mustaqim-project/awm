@@ -6,6 +6,7 @@
     serta perlakuan tabular-nums & artikel/prose.
 --}}
 <style id="cooca-typography-system">
+@layer base {
     /* ==========================================================================
        1. BASE HEADINGS (H1 - H6)
        ========================================================================== */
@@ -326,4 +327,5 @@
     .leading-title {
         line-height: 1.22;
     }
+}
 </style>

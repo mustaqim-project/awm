@@ -2,7 +2,7 @@
 
 ## Architecture
 - Framework: Laravel 11 Blade, Tailwind CSS (via Vite bundle), Alpine.js, Lucide Icons
-- Scope: 21 Public Marketing Blade views
+- Scope: 21 Public Marketing Blade views + shared partial and translations
   - Standalone Marketing Pages (10 files):
     1. `resources/views/landing.blade.php`
     2. `resources/views/public/business_landing.blade.php`
@@ -27,25 +27,31 @@
     19. `resources/views/public/solutions/services.blade.php`
     20. `resources/views/public/solutions/show.blade.php`
     21. `resources/views/public/solutions/workshop.blade.php`
+  - Shared & Translations:
+    22. `resources/views/layouts/public_marketing.blade.php` (hamburger touch target >= 44x44px)
+    23. `lang/id/public_discovery.php` ('Toko Tidak Ditemukan' alignment)
+    24. `lang/id/storefront.php` & `lang/en/storefront.php` (fallback keys defined)
 
 ## Feature Inventory (M2 Scope)
-| # | Feature | Target Files | Requirements | Source |
+| # | Feature | Target Files | Requirements | Status |
 |---|---------|--------------|--------------|--------|
-| 1 | Runtime Play CDN Elimination & TypeError Fix | `resources/views/public/business_landing.blade.php` | Remove Play CDN on line 149; fix line 8624 `__('storefront.tracking')` array to string TypeError `{{ __('storefront.tracking.title') }}` | AUDIT_INVENTORY Item 11 |
-| 2 | Heading Hierarchy Skip Elimination | `kasir_android`, `kasir_offline`, `about`, `privacy`, `terms`, solution bottom CTAs | Eliminate H1 -> H3 skips; enforce logical H1 -> H2 -> H3 semantic hierarchy | AUDIT_INVENTORY Items 12, 15, 19, 20, 22, 24-30 |
-| 3 | Explicit Media Dimensions for CLS Reduction | All 21 scoped views (hero images, app badges, logos, solution graphics) | Add explicit `width`, `height`, `decoding="async"`, and `fetchpriority="high"` on LCP hero images; keep CLS <= 0.1 | AUDIT_INVENTORY Items 10, 20-22 |
-| 4 | SEO Canonicals, Meta & Schema.org JSON-LD | `/pricing`, `/privacy`, `/terms`, `/security`, `/sitemap`, `/about`, `/demo`, commercial landings | Add canonical URLs, OpenGraph/Twitter cards, and Schema.org JSON-LD structured data | AUDIT_INVENTORY Items 12, 14-17 |
-| 5 | Theme Contrast & Dark Mode Hardening | All 21 scoped views | Harden Light and Dark theme contrast on badges, cards, comparison tables, and buttons | AUDIT_INVENTORY Items 10-30 |
-| 6 | Touch Target & Responsive Overflow Remediation | All 21 scoped views | Touch targets >= 44x44px; zero horizontal overflow across 8 viewports (320px–1920px) | AUDIT_INVENTORY Items 10-30 |
-| 7 | Performance Benchmarking & Cross-Viewport Quality | All 21 scoped views | Measure frontend performance (LCP <= 2.5s, TBT <= 200ms, CLS <= 0.1, Speed Index); test Light/Dark themes and ID/EN locales | ORIGINAL_REQUEST Follow-up |
+| 1 | Runtime Play CDN Elimination & TypeError Fix | `resources/views/public/business_landing.blade.php` | Remove Play CDN on line 149; connect to `@vite(['resources/css/app.css', 'resources/js/app.js'])`; fix `{{ __('storefront.tracking.title') }}` | DONE |
+| 2 | Heading Hierarchy Skip Elimination | `kasir_android`, `kasir_offline`, `about`, `privacy`, `terms`, solutions bottom CTAs | Eliminate H1 -> H3 skips; enforce logical H1 -> H2 -> H3 semantic hierarchy | DONE |
+| 3 | Explicit Media Dimensions for CLS Reduction | All 21 scoped views | Explicit `width`, `height`, `decoding="async"`, and `fetchpriority="high"` on LCP hero images; keep CLS <= 0.1 | DONE |
+| 4 | SEO Canonicals, Meta & Schema.org JSON-LD | `/pricing`, `/privacy`, `/terms`, `/security`, `/sitemap`, `/about`, `/demo`, solutions, commercial landings | Add canonical URLs, OpenGraph/Twitter cards, and Schema.org JSON-LD structured data with escaped `@@context` | DONE |
+| 5 | Theme Contrast & Dark Mode Hardening | All 21 scoped views | Harden Light and Dark theme contrast on badges, cards, comparison tables, and buttons (WCAG AA >= 4.5:1 text, >= 3:1 non-text) | DONE |
+| 6 | Touch Target & Responsive Overflow Remediation | All 21 scoped views | Touch targets >= 44x44px; responsive grid `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` on screens <= 390px; zero horizontal overflow | DONE |
+| 7 | Bilingual Localization Stability | All 21 scoped views | 0 uncompiled raw translation keys rendered in both Indonesian ('id') and English ('en') | DONE |
 
 ## Milestones / Iteration Workflow
 | Iteration | Stage | Description | Status |
 |-----------|-------|-------------|--------|
-| Iteration 1 | Exploration | 3 parallel Explorers: Standalone, Commercial, Solutions | IN_PROGRESS |
-| Iteration 1 | Implementation | Worker executes all high-impact fixes | PLANNED |
-| Iteration 1 | Review & Verification | 2 Reviewers + 2 Challengers + 1 Forensic Auditor | PLANNED |
-| Iteration 1 | Gate 2 | Comprehensive Gate evaluation | PLANNED |
+| Iteration 1 | Exploration | 3 parallel Explorers: Standalone, Commercial, Solutions | DONE |
+| Iteration 1 | Implementation | Worker executes all high-impact fixes | DONE |
+| Iteration 1 | Review & Verification | 2 Reviewers APPROVE, Auditor CLEAN, Challenger REJECT (4 blockers) | DONE |
+| Iteration 1 | Gate 2 | Gate Result: FAIL | DONE |
+| Iteration 2 | Remediation | Worker resolves 4 blockers; Adversarial test passes 4/4 | DONE |
+| Iteration 2 | Gate 2 Re-check | Gate Result: PASS | DONE |
 
 ## Code Layout
 - Marketing Views: `resources/views/landing.blade.php`, `resources/views/public/*.blade.php`
