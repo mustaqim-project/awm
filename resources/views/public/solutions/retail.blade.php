@@ -17,6 +17,12 @@
       "name": "COOCA Retail Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Windows, macOS",
+      "url": "{{ route('public.solutions.retail') }}",
+      "inLanguage": "id-ID",
+      "brand": {
+        "@type": "Brand",
+        "name": "COOCA"
+      },
       "description": "Sistem operasi bisnis retail, toko kelontong modern, minimarket, dan butik untuk kontrol ribuan SKU, barcode, dan multi-cabang.",
       "offers": {
         "@type": "Offer",
@@ -361,7 +367,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="boxes" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_multi_uom') }}</h3>
@@ -374,7 +380,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                             <i data-lucide="tag" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.ret_feat_wholesale_price') }}</h3>
@@ -441,28 +447,28 @@
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">Penerimaan Barang PO</h4>
+                        <h3 class="text-sm font-bold text-white">Penerimaan Barang PO</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Barang masuk dari distributor di-scan dan
                             langsung menambah kuota stok rak.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_fast_pos') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_fast_pos') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Kasir scan barcode, kupon loyalty member
                             terpasang, nota digital tercetak.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_perpetual_card') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.ret_step_perpetual_card') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Stok fisik berkurang secara live dan HPP
                             penjualan tercatat ke jurnal akuntansi.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-purple-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">Analisa Fast-Moving</h4>
+                        <h3 class="text-sm font-bold text-white">Analisa Fast-Moving</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Owner melihat laporan laba kotor dan produk
                             paling laku untuk restock berikutnya.</p>
                     </div>
@@ -482,7 +488,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah saya harus membeli alat scanner barcode khusus?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -499,7 +505,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana mencetak label barcode untuk barang yang tidak memiliki barcode pabrik?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -516,7 +522,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA bisa mentransfer stok barang antar cabang toko retail?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -533,7 +539,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana keamanan uang kas kasir dari potensi kecurangan karyawan?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -551,35 +557,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_wh_sku') }}</h4>
+                            {{ __('public_solutions.cross_title_wh_sku') }}</h3>
                     </a>
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_pos_speed') }}</h4>
+                            {{ __('public_solutions.cross_title_pos_speed') }}</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-warung') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_warung') }}</h4>
+                            {{ __('public_solutions.cross_title_warung') }}</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-kios') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_konter') }}</h4>
+                            {{ __('public_solutions.cross_title_konter') }}</h3>
                     </a>
                 </div>
             </section>
@@ -600,9 +606,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>Tersedia untuk Komputer Kasir, Laptop, Tablet, & HP Android</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                         {{ __('public_solutions.ret_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
                         Rasakan kemudahan transaksi scan barcode secepat kilat, akurasi stok otomatis, dan pembukuan toko
                         yang

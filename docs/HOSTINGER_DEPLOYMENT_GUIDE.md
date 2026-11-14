@@ -78,13 +78,23 @@ Gunakan binary PHP 8.3 hosting (Hostinger CLI path: `/opt/alt/php83/usr/bin/php`
 /opt/alt/php83/usr/bin/php artisan db:seed --class=PostSeeder --force
 ```
 
-### Langkah 6: Symlink Storage & Izin Folder
+### Langkah 6: Kompilasi & Penyiapan Asset Frontend (Vite / Manifest)
+Folder `public/build` berisi manifest dan asset Tailwind/JS yang telah dikompilasi.
+- **Rekomendasi (Otomatis via Git):** Folder `public/build` sudah disertakan di repositori sehingga asset langsung tersedia setelah `git pull`.
+- **Alternatif Kompilasi Manual di Server (jika Node.js terpasang):**
+  ```bash
+  npm install
+  npm run build
+  ```
+- **Alternatif Upload:** Jika tidak menggunakan git untuk build, upload folder `public/build/` dari lokal ke server di `/home/u218101292/domains/cooca.id/public_html/public/build/`.
+
+### Langkah 7: Symlink Storage & Izin Folder
 ```bash
 /opt/alt/php83/usr/bin/php artisan storage:link
 chmod -R 775 storage bootstrap/cache
 ```
 
-### Langkah 7: Optimasi Cache Laravel
+### Langkah 8: Optimasi Cache Laravel
 ```bash
 /opt/alt/php83/usr/bin/php artisan optimize:clear
 /opt/alt/php83/usr/bin/php artisan config:cache
@@ -92,14 +102,14 @@ chmod -R 775 storage bootstrap/cache
 /opt/alt/php83/usr/bin/php artisan view:cache
 ```
 
-### Langkah 8: Menggunakan Script Deploy Otomatis (`deploy.sh`)
-Di dalam repository telah disediakan script `deploy.sh` yang menjalankan langkah 2 s/d 7 secara otomatis:
+### Langkah 9: Menggunakan Script Deploy Otomatis (`deploy.sh`)
+Di dalam repository telah disediakan script `deploy.sh` yang menjalankan seluruh tahapan update secara otomatis:
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### Langkah 9: Setup Cron Job (Laravel Scheduler)
+### Langkah 10: Setup Cron Job (Laravel Scheduler)
 Buka menu **Cron Jobs** di hPanel Hostinger / cPanel, lalu tambahkan jadwal **Setiap Menit (`* * * * *`)**:
 ```bash
 cd /home/u218101292/domains/cooca.id/public_html && ./cron.sh >> /dev/null 2>&1

@@ -17,6 +17,12 @@
       "name": "COOCA F&B Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Windows, macOS",
+      "url": "{{ route('public.solutions.fnb') }}",
+      "inLanguage": "id-ID",
+      "brand": {
+        "@type": "Brand",
+        "name": "COOCA"
+      },
       "description": "Sistem operasi bisnis kuliner, kafe, restoran, dan cloud kitchen untuk kontrol meja, dapur, bahan baku resep, dan HPP.",
       "offers": {
         "@type": "Offer",
@@ -248,23 +254,23 @@
 
                             {{-- Operational Quick Actions --}}
                             <div class="grid grid-cols-2 gap-2.5 text-xs">
-                                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2">
-                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-[#00C4D8]" aria-hidden="true"></i>
-                                    <span class="font-medium text-slate-200 text-[11px]">KOT Dapur Otomatis</span>
+                                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 min-w-0">
+                                    <i data-lucide="printer" class="w-3.5 h-3.5 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
+                                    <span class="font-medium text-slate-200 text-[11px] truncate">KOT Dapur Otomatis</span>
                                 </div>
-                                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2">
-                                    <i data-lucide="split" class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true"></i>
-                                    <span class="font-medium text-slate-200 text-[11px]">Split Bill Siap</span>
+                                <div class="p-2.5 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center gap-2 min-w-0">
+                                    <i data-lucide="split" class="w-3.5 h-3.5 text-emerald-400 shrink-0" aria-hidden="true"></i>
+                                    <span class="font-medium text-slate-200 text-[11px] truncate">Split Bill Siap</span>
                                 </div>
                             </div>
 
                             {{-- Floating Badges --}}
                             <div class="hidden sm:flex absolute -top-3.5 -right-3.5 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#060B1E]/95 border border-emerald-500/40 shadow-xl backdrop-blur-md text-[11px] font-medium text-white">
-                                <i data-lucide="scale" class="w-3.5 h-3.5 text-emerald-400"></i>
+                                <i data-lucide="scale" class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true"></i>
                                 <span>BOM Recipe: <strong class="text-emerald-400">Auto-Deduct</strong></span>
                             </div>
                             <div class="hidden sm:flex absolute -bottom-3.5 -left-3.5 items-center gap-2 px-3 py-1.5 rounded-xl bg-[#060B1E]/95 border border-[#00C4D8]/40 shadow-xl backdrop-blur-md text-[11px] font-medium text-white">
-                                <i data-lucide="printer" class="w-3.5 h-3.5 text-[#00C4D8]"></i>
+                                <i data-lucide="printer" class="w-3.5 h-3.5 text-[#00C4D8]" aria-hidden="true"></i>
                                 <span>Multi-KOT Kitchen &amp; Bar</span>
                             </div>
                         </div>
@@ -345,7 +351,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                             <i data-lucide="layers" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_bom_title') }}</h3>
@@ -371,7 +377,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="layout-grid" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.fnb_feat_table_title') }}</h3>
@@ -438,28 +444,28 @@
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_order_title') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_order_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Pelayan input via tablet atau tamu scan QR
                             mandiri di meja.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Tiket Dapur Cetak</h4>
+                        <h3 class="text-sm font-bold text-white">Tiket Dapur Cetak</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">KOT tercetak di printer koki dapur & bar barista
                             secara otomatis.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">Bahan Baku Terpotong</h4>
+                        <h3 class="text-sm font-bold text-white">Bahan Baku Terpotong</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Inventaris bahan segar di gudang berkurang sesuai
                             gramatur resep.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-purple-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_cash_title') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.fnb_step_cash_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed">Pembayaran lunas langsung tercatat di laporan
                             laba rugi owner.</p>
                     </div>
@@ -479,7 +485,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA bisa mencetak ke printer Bluetooth thermal dan LAN dapur?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -496,7 +502,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana jika menu memiliki varian (contoh: Level Pedas, Less Sugar, Extra Shot)?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -513,7 +519,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA cocok untuk usaha kuliner yang memiliki banyak cabang kafe?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -530,7 +536,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana cara menangani bahan baku yang basi atau tumpah (spoilage/waste)?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -548,35 +554,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_pos_fast') }}</h4>
+                            {{ __('public_solutions.cross_title_pos_fast') }}</h3>
                     </a>
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_stock_bom') }}</h4>
+                            {{ __('public_solutions.cross_title_stock_bom') }}</h3>
                     </a>
                     <a href="{{ route('public.solutions.retail') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_retail') }}</h4>
+                            {{ __('public_solutions.cross_title_retail') }}</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-cafe-kecil') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_cafe') }}</h4>
+                            {{ __('public_solutions.cross_title_cafe') }}</h3>
                     </a>
                 </div>
             </section>
@@ -597,9 +603,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>Tersedia untuk Android, Tablet, Laptop & Printer Kasir</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                         {{ __('public_solutions.fnb_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
                         Daftar akun COOCA hari ini dan nikmati kemudahan mencatat pesanan meja, sinkronisasi tiket dapur,
                         dan

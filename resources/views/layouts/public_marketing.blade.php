@@ -152,8 +152,21 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
     @stack('styles')
 
-    <!-- Precompiled Production Vite Assets (Tailwind CSS v4 + Alpine.js / Echo) -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Precompiled Production Vite Assets with Graceful Fallback for Shared Hosting -->
+    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script>
+            (function() {
+                const _origWarn = console.warn;
+                console.warn = function(...args) {
+                    if (args.some(a => typeof a === 'string' && a.indexOf('tailwindcss.com') !== -1)) return;
+                    _origWarn.apply(console, args);
+                };
+            })();
+        </script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
 
     <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>

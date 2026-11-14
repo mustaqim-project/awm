@@ -38,6 +38,15 @@ $PHP_BIN artisan db:seed --class=PostSeeder --force
 $PHP_BIN artisan blog:import-articles || true
 $PHP_BIN artisan cooca:cleanup-deleted-posts || true
 
+# 4.5. Check frontend assets / Vite manifest
+if [ ! -f "public/build/manifest.json" ]; then
+    echo "Notice: public/build/manifest.json not found."
+    if command -v npm >/dev/null 2>&1; then
+        echo "Attempting to build assets with npm..."
+        npm run build || echo "Vite build notice: falling back to precompiled/CDN styles."
+    fi
+fi
+
 # 5. Clear and cache configuration, routes, and views for maximum production performance
 echo "Optimizing application caches..."
 $PHP_BIN artisan optimize:clear

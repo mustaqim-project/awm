@@ -12,39 +12,51 @@
 @section('og_type', 'product')
 
 @push('seo')
+@php
+    $softwareSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'SoftwareApplication',
+        'name' => 'COOCA ' . ($solution['badge'] ?? ''),
+        'applicationCategory' => 'BusinessApplication',
+        'operatingSystem' => 'Web, Android, iOS, Windows, macOS',
+        'url' => route('solusi.show', $solution['slug']),
+        'inLanguage' => 'id-ID',
+        'brand' => [
+            '@type' => 'Brand',
+            'name' => 'COOCA'
+        ],
+        'description' => $solution['subheadline'] ?? '',
+        'offers' => [
+            '@type' => 'Offer',
+            'price' => '0',
+            'priceCurrency' => 'IDR'
+        ]
+    ];
+@endphp
     <script type="application/ld+json">
-    {
-      "@@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "COOCA {{ $solution['badge'] }}",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web, Android, iOS, Windows, macOS",
-      "description": "{{ addslashes($solution['subheadline']) }}",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "IDR"
-      }
-    }
+    {!! json_encode($softwareSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
     @if (!empty($solution['faqs']))
+    @php
+        $faqItems = [];
+        foreach ($solution['faqs'] as $faq) {
+            $faqItems[] = [
+                '@type' => 'Question',
+                'name' => $faq['q'] ?? '',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => strip_tags($faq['a'] ?? '')
+                ]
+            ];
+        }
+        $faqSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => $faqItems
+        ];
+    @endphp
     <script type="application/ld+json">
-    {
-      "@@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        @foreach ($solution['faqs'] as $index => $faq)
-        {
-          "@type": "Question",
-          "name": "{{ addslashes($faq['q']) }}",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "{{ addslashes($faq['a']) }}"
-          }
-        }{{ $loop->last ? '' : ',' }}
-        @endforeach
-      ]
-    }
+    {!! json_encode($faqSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
     </script>
     @endif
 @endpush
@@ -359,9 +371,9 @@
                         <span class="text-xs font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#00C4D8] block">
                             Solusi Sektor Skala Menengah &amp; Lanjut
                         </span>
-                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
                             {{ $solution['parent_solution']['title'] }}
-                        </h3>
+                        </h2>
                         <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
                             {{ $solution['parent_solution']['desc'] }}
                         </p>
@@ -403,17 +415,17 @@
 
             {{-- Cross-Link to Other Verticals --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.show_other_solutions_title') }}</h3>
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.show_other_solutions_title') }}</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     @foreach ($otherSolutions as $os)
                         <a href="{{ route('solusi.show', $os['slug']) }}"
                             class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                             <span
                                 class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ $os['badge'] }}</span>
-                            <h4
+                            <h3
                                 class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors leading-snug">
                                 {{ $os['title'] }}
-                            </h4>
+                            </h3>
                         </a>
                     @endforeach
                 </div>
@@ -435,9 +447,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>{{ __('public_solutions.show_bottom_badge') }}</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
                         {{ __('public_solutions.show_bottom_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 max-w-xl mx-auto leading-relaxed text-pretty">
                         {{ __('public_solutions.show_bottom_desc') }}
                     </p>
@@ -452,8 +464,6 @@
                             <span>{{ __('public_solutions.show_bottom_cta_pricing') }}</span>
                         </a>
                     </div>
-                </div>
-            </section>
                 </div>
             </section>
 

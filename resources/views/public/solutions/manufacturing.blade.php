@@ -16,6 +16,12 @@
       "name": "COOCA Manufacturing Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Windows, macOS",
+      "url": "{{ route('public.solutions.manufacturing') }}",
+      "inLanguage": "id-ID",
+      "brand": {
+        "@type": "Brand",
+        "name": "COOCA"
+      },
       "description": "Sistem manajemen produksi dan manufaktur UMKM untuk kontrol BOM bahan baku, perintah kerja produksi, dan kalkulasi HPP.",
       "offers": {
         "@type": "Offer",
@@ -374,7 +380,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="calculator" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">Kalkulasi HPP Nyata & Presisi</h3>
@@ -414,7 +420,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                             <i data-lucide="package-check" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.mfg_feat_fg_stock') }}</h3>
@@ -442,28 +448,28 @@
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">Pengadaan Raw Material</h4>
+                        <h3 class="text-sm font-bold text-white">Pengadaan Raw Material</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">PO bahan mentah diterbitkan ke supplier dan masuk
                             gudang material.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-indigo-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Penerbitan Work Order</h4>
+                        <h3 class="text-sm font-bold text-white">Penerbitan Work Order</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">BOM formula ditarik dan bahan baku ditransfer ke
                             lini produksi.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">Eksekusi & Inspeksi QC</h4>
+                        <h3 class="text-sm font-bold text-white">Eksekusi & Inspeksi QC</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Barang diproses, diinspeksi, dan HPP final
                             terhitung otomatis.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">Siap Jual & Sinkron ERP</h4>
+                        <h3 class="text-sm font-bold text-white">Siap Jual & Sinkron ERP</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Produk jadi siap dijual di seluruh channel
                             omnichannel bisnis.</p>
                     </div>
@@ -483,7 +489,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA bisa mencatat pekerjaan maklon / CMT ke pihak ketiga?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -500,7 +506,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana jika terjadi perbedaan pemakaian bahan nyata vs takaran BOM?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -517,7 +523,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA cocok untuk usaha makanan olahan dengan expired date?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -534,7 +540,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana produk jadi terhubung ke modul penjualan?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -551,35 +557,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_raw_materials') }}</h4>
+                            {{ __('public_solutions.cross_title_raw_materials') }}</h3>
                     </a>
                     <a href="{{ route('public.erp.accounting') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Akuntansi</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Jurnal HPP Manufaktur</h4>
+                            Jurnal HPP Manufaktur</h3>
                     </a>
                     <a href="{{ route('public.solutions.retail') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Retail & Toko</h4>
+                            Retail & Toko</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-irt') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_irt') }}</h4>
+                            {{ __('public_solutions.cross_title_irt') }}</h3>
                     </a>
                 </div>
             </section>
@@ -600,9 +606,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>Tingkatkan Efisiensi Produksi & Margin Laba Pabrik Anda</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
                         {{ __('public_solutions.mfg_bottom_cta_alt') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA hari ini dan bangun formula Bill of Materials, pantau perintah kerja produksi,
                         serta hitung HPP riil secara otomatis dan presisi.

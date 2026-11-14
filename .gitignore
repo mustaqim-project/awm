@@ -40,7 +40,7 @@ _ide_helper_models.php
 # --- Node & Frontend Dependencies ---
 node_modules/
 **/node_modules/
-/public/build
+# /public/build (tracked for Hostinger/shared hosting production asset delivery)
 /public/hot
 /public/storage
 /public/bisnis

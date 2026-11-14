@@ -14,9 +14,15 @@
       "@@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "COOCA Workshop Operating System",
+      "url": "{{ route('public.solutions.workshop') }}",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Windows, macOS",
+      "inLanguage": "id-ID",
       "description": "Sistem manajemen operasional bengkel motor dan mobil untuk kontrol SPK, suku cadang, komisi mekanik, dan database kendaraan.",
+      "brand": {
+        "@type": "Brand",
+        "name": "COOCA"
+      },
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -365,7 +371,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                             <i data-lucide="car" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.wrk_feat_plate_title') }}
@@ -379,7 +385,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="package-search" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">{{ __('public_solutions.wrk_feat_parts_title') }}</h3>
@@ -448,28 +454,28 @@
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">Input Plat & Keluhan</h4>
+                        <h3 class="text-sm font-bold text-white">Input Plat & Keluhan</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Front desk mencatat KM kendaraan dan mencetak SPK
                             ke mekanik.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">Pengambilan Sparepart</h4>
+                        <h3 class="text-sm font-bold text-white">Pengambilan Sparepart</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Stok oli & part terpotong langsung dari gudang
                             saat dipasang.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.wrk_step_print_title') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.wrk_step_print_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Pelanggan membayar invoice dan komisi montir
                             otomatis tercatat.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-purple-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">Automated WA CRM</h4>
+                        <h3 class="text-sm font-bold text-white">Automated WA CRM</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Sistem menjadwalkan notifikasi WhatsApp servis
                             berkala secara cerdas.</p>
                     </div>
@@ -489,7 +495,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah satu SPK bisa dikerjakan oleh lebih dari satu mekanik?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -506,7 +512,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA cocok untuk bengkel motor maupun bengkel mobil?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -523,7 +529,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana cara mencatat oli curah (drum) yang dijual per liter?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -540,7 +546,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana mencetak struk nota servis agar terlihat resmi?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -558,35 +564,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.inventory') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_stock') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_spareparts') }}</h4>
+                            {{ __('public_solutions.cross_title_spareparts') }}</h3>
                     </a>
                     <a href="{{ route('public.erp.pos') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_pos') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_kasir_qris') }}</h4>
+                            {{ __('public_solutions.cross_title_kasir_qris') }}</h3>
                     </a>
                     <a href="{{ route('public.solutions.services') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_services') }}</h4>
+                            {{ __('public_solutions.cross_title_services') }}</h3>
                     </a>
                     <a href="{{ route('public.solutions.manufacturing') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_industry') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Manufaktur & Pabrikasi</h4>
+                            Manufaktur & Pabrikasi</h3>
                     </a>
                 </div>
             </section>
@@ -607,9 +613,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>Solusi Teruji untuk Ratusan Bengkel Motor & Mobil Indonesia</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
                         {{ __('public_solutions.wrk_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA hari ini dan rasakan kemudahan mengontrol SPK servis kendaraan, suku cadang, dan
                         upah montir secara otomatis.

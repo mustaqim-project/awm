@@ -16,6 +16,12 @@
       "name": "COOCA Services Operating System",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, Android, iOS, Windows, macOS",
+      "url": "{{ route('public.solutions.services') }}",
+      "inLanguage": "id-ID",
+      "brand": {
+        "@type": "Brand",
+        "name": "COOCA"
+      },
       "description": "Sistem manajemen operasional bisnis jasa dan servis untuk kontrol booking waktu, penugasan staf, invoice bertahap, dan komisi.",
       "offers": {
         "@type": "Offer",
@@ -378,7 +384,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
                             <i data-lucide="file-text" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">Invoicing Termin (DP & Pelunasan)
@@ -392,7 +398,7 @@
                     <div
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-6 rounded-[22px] space-y-3 shadow-sm hover:border-[#007AFF]/40 transition-all">
                         <div
-                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-500 flex items-center justify-center">
+                            class="w-10 h-10 rounded-[12px] bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
                             <i data-lucide="bell" class="w-5 h-5" aria-hidden="true"></i>
                         </div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white">Pengingat Janji Temu via WhatsApp
@@ -449,28 +455,28 @@
                     </h2>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10">
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-[#00C4D8]">Langkah 01</div>
-                        <h4 class="text-sm font-bold text-white">Reservasi Jadwal</h4>
+                        <h3 class="text-sm font-bold text-white">Reservasi Jadwal</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Slot waktu diamankan dan invoice uang muka (DP)
                             diterbitkan ke klien.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-violet-400">Langkah 02</div>
-                        <h4 class="text-sm font-bold text-white">{{ __('public_solutions.srv_step_assign_title') }}</h4>
+                        <h3 class="text-sm font-bold text-white">{{ __('public_solutions.srv_step_assign_title') }}</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Teknisi atau staf menerima surat tugas digital
                             dengan rincian kebutuhan.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-emerald-400">Langkah 03</div>
-                        <h4 class="text-sm font-bold text-white">Eksekusi & Checklist</h4>
+                        <h3 class="text-sm font-bold text-white">Eksekusi & Checklist</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Pekerjaan diselesaikan dengan bukti foto dan
                             verifikasi kepuasan klien.</p>
                     </div>
                     <div class="p-5 rounded-[18px] bg-white/5 border border-white/10 space-y-2 backdrop-blur-sm">
                         <div class="text-xs font-mono font-bold text-amber-400">Langkah 04</div>
-                        <h4 class="text-sm font-bold text-white">Pelunasan & Komisi</h4>
+                        <h3 class="text-sm font-bold text-white">Pelunasan & Komisi</h3>
                         <p class="text-xs text-slate-300 leading-relaxed text-pretty">Tagihan lunas tercatat di kas dan komisi staf
                             masuk rekap otomatis.</p>
                     </div>
@@ -489,7 +495,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA cocok untuk jasa panggilan (home service) maupun studio di tempat?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -506,7 +512,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana jika klien membutuhkan penambahan pekerjaan atau sparepart di lokasi?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -523,7 +529,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Bagaimana cara mengirim invoice dan kuitansi pembayaran resmi ke klien?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -539,7 +545,7 @@
                     <details
                         class="group bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 rounded-[18px] p-5 transition-all">
                         <summary
-                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white">
+                            class="flex justify-between items-center cursor-pointer font-bold text-sm sm:text-base text-slate-900 dark:text-white min-h-[44px] py-1">
                             <span>Apakah COOCA mendukung skema kontrak servis berkala (maintenance retainer)?</span>
                             <i data-lucide="chevron-down"
                                 class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"
@@ -556,35 +562,35 @@
 
             {{-- Related Modules & Vertical Cross Links --}}
             <section class="border-t border-slate-200/80 dark:border-white/10 pt-12 space-y-6">
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <h2 class="text-lg font-bold text-slate-900 dark:text-white">{{ __('public_solutions.cross_section_title') }}</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <a href="{{ route('public.erp.crm') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul CRM</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Database & Histori Klien</h4>
+                            Database & Histori Klien</h3>
                     </a>
                     <a href="{{ route('public.erp.finance') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">Modul Keuangan</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            Invoicing & Cash Flow</h4>
+                            Invoicing & Cash Flow</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-salon') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_salon') }}</h4>
+                            {{ __('public_solutions.cross_title_salon') }}</h3>
                     </a>
                     <a href="{{ route('solusi.show', 'kasir-barbershop') }}"
                         class="bg-white dark:bg-[#0E172F]/70 border border-slate-200/80 dark:border-white/10 p-5 rounded-[18px] group hover:border-[#007AFF]/40 hover:shadow-md transition-all">
                         <span class="text-xs uppercase font-bold text-[#007AFF] dark:text-[#00C4D8]">{{ __('public_solutions.cross_badge_micro') }}</span>
-                        <h4
+                        <h3
                             class="text-sm font-bold text-slate-900 dark:text-white mt-1.5 group-hover:text-[#007AFF] dark:group-hover:text-[#00C4D8] transition-colors">
-                            {{ __('public_solutions.cross_title_barber') }}</h4>
+                            {{ __('public_solutions.cross_title_barber') }}</h3>
                     </a>
                 </div>
             </section>
@@ -605,9 +611,9 @@
                         <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400" aria-hidden="true"></i>
                         <span>Tingkatkan Profesionalitas dan Ketepatan Waktu Layanan Anda</span>
                     </div>
-                    <h3 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug text-balance break-words">
                         {{ __('public_solutions.srv_bottom_cta_title') }}
-                    </h3>
+                    </h2>
                     <p class="text-sm sm:text-base text-slate-300 leading-relaxed text-pretty">
                         Daftar akun COOCA hari ini dan nikmati kemudahan menjadwalkan booking klien, menerbitkan invoice
                         termin, serta membagikan komisi staf secara transparan.

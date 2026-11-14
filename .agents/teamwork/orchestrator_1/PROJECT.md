@@ -47,7 +47,7 @@
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
 | 1 | M1: Core Layouts, Asset Pipeline & Chatbot Optimization | `resources/views/layouts/public_marketing.blade.php`, `help_chatbot_widget.blade.php`, `typography.blade.php`, `live_chat_widget.blade.php`, `cookie_consent_banner.blade.php`, `blog/show.blade.php` | none | DONE (Gate 1 Passed, 427 assertions, 0px dock collision across 8 viewports, Vite bundle connected) |
-| 2 | M2: Marketing Pages, Solutions & Commercial Views Optimization | `landing.blade.php`, `business_landing.blade.php`, `kasir_*.blade.php`, `discovery/`, `solutions/*.blade.php`, `about`, `demo`, `pricing`, `privacy`, `security`, `sitemap`, `support`, `terms` | M1 | PLANNED |
+| 2 | M2: Marketing Pages, Solutions & Commercial Views Optimization | `landing.blade.php`, `business_landing.blade.php`, `kasir_*.blade.php`, `discovery/`, `solutions/*.blade.php`, `about`, `demo`, `pricing`, `privacy`, `security`, `sitemap`, `support`, `terms` | M1 | IN_PROGRESS (sub_orch_m2 Conv ID: 1cadca40-8749-4a27-9009-f425d4420b3b) |
 | 3 | M3: Feature Directories, Deep Content & Tools Optimization | `blog/`, `business-operating-system/`, `calculators/`, `contact/`, `content-automation/`, `marketplace/`, `omnichannel/`, `omnichannel-erp/`, `resources/`, `templates/` | M1 | PLANNED |
 | 4 | M4: Localization (i18n), Missing Keys Repair & SEO Hardening | `lang/id/*.php`, `lang/en/*.php`, `common.php`, and localized views across marketing & feature templates | M2, M3 | PLANNED |
 | 5 | M5: Structured Audit Findings Report & Final Verification Gate | Structured audit findings report (`AUDIT_REPORT.md`), `php -l`, `npm run build`, regression test suites, forensic integrity audit | M1, M2, M3, M4 | PLANNED |
