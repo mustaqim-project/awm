@@ -10,7 +10,7 @@
 @section('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "Product",
     "name": "COOCA Omnichannel ERP",
     "description": "{{ __('public_marketing.pricing_seo_desc') }}",

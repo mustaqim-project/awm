@@ -13,7 +13,7 @@
 @section('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "WebPage",
     "name": "{{ $page->title ?? 'Syarat & Ketentuan Layanan' }}",
     "description": "{{ $page->meta_description ?? 'Syarat dan Ketentuan resmi COOCA.' }}",

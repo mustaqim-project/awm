@@ -10,7 +10,7 @@
 @section('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Peta Situs COOCA",
     "description": "{{ __('public_marketing.sitemap_seo_desc') }}",

@@ -11,7 +11,7 @@
 @section('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "WebPage",
     "name": "{{ $page->title ?? 'Kebijakan Privasi' }}",
     "description": "{{ $page->meta_description ?? 'Kebijakan privasi resmi COOCA.' }}",

@@ -78,7 +78,7 @@ Perform a comprehensive, code-level audit and optimization of the entire public 
 
 ## Active Timers
 - Heartbeat cron: 4e686b8a-2e28-4b82-9b39-8b7a237105e3/task-501
-- Safety timer: 4e686b8a-2e28-4b82-9b39-8b7a237105e3/task-840
+- Safety timer: 4e686b8a-2e28-4b82-9b39-8b7a237105e3/task-864
 
 ## Artifact Index
 - c:\laragon\www\cooca_core\.agents\teamwork\ORIGINAL_REQUEST.md — Original User Request

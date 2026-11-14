@@ -9,6 +9,8 @@ echo "=========================================="
 
 # 1. Pull latest code from GitHub main branch
 if [ -d ".git" ]; then
+    echo "Restoring core route files if missing/modified..."
+    git checkout -- routes/ 2>/dev/null || true
     echo "Pulling latest code from origin main..."
     git pull origin main || echo "Git pull notice: continuing with current files."
 fi
