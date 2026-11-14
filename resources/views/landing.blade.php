@@ -422,23 +422,18 @@
                                     :class="activeNode === 'hrm' ? 'text-sky-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
                             </svg>
 
-                            {{-- Central Core Podium: COOCA Official Square Logo --}}
-                            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center">
-                                <div class="w-24 h-24 xs:w-28 xs:h-28 sm:w-32 sm:h-32 rounded-full bg-[#071329]/95 backdrop-blur-md border-2 border-cyan-400 shadow-[0_0_35px_rgba(0,194,255,0.45)] flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:scale-105 transition-all duration-300"
+                            {{-- Central Core Podium: COOCA Official Square Logo (Fixed & Centered) --}}
+                            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center pointer-events-auto">
+                                <div class="w-24 h-24 xs:w-28 xs:h-28 sm:w-32 sm:h-32 rounded-full bg-[#071329]/95 backdrop-blur-md border-2 border-cyan-400 shadow-[0_0_35px_rgba(0,194,255,0.5)] flex items-center justify-center p-3.5 xs:p-4 sm:p-5 group cursor-pointer hover:scale-105 transition-all duration-300"
                                     @mouseenter="setNode('core', '{{ __('public_home.omni_mesh_default_tip') }}')"
                                     @mouseleave="resetNode()"
                                     @click="resetNode()">
                                     
-                                    {{-- Official COOCA Square Logo --}}
+                                    {{-- Official COOCA Square Logo (Centered & Fixed Ratio) --}}
                                     <img src="{{ asset('assets/image/cooca-logo-square.png') }}"
                                          alt="COOCA"
-                                         class="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 object-contain drop-shadow-[0_0_15px_rgba(0,194,255,0.7)] group-hover:scale-110 transition-transform duration-300">
-
-                                    {{-- Sync Status Indicator --}}
-                                    <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-[8px] xs:text-[9px] font-mono font-bold text-emerald-300">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                                        <span>{{ __('public_home.omni_mesh_center_badge') }}</span>
-                                    </div>
+                                         class="w-full h-full object-contain drop-shadow-[0_0_18px_rgba(0,194,255,0.75)] group-hover:scale-105 transition-transform duration-300"
+                                         width="128" height="128">
                                 </div>
                             </div>
 
