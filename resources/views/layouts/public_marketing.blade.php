@@ -2066,7 +2066,7 @@
                     </a>
 
                     <!-- Solusi Bisnis -->
-                    <a href="{{ route('public.solutions.index') }}" @click="mobileMenu = false"
+                    <a href="{{ route('public.solutions.fnb') }}" @click="mobileMenu = false"
                         class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
                         <i data-lucide="briefcase" class="w-4 h-4 text-[#34C759]"></i>
                         <div class="min-w-0">

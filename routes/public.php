@@ -157,6 +157,7 @@ Route::prefix('content-automation')->name('public.content.')->group(function ():
 });
 
 Route::prefix('solutions')->name('public.solutions.')->group(function (): void {
+    Route::get('/', fn() => redirect()->route('public.solutions.fnb'))->name('index');
     Route::get('/fnb', fn() => view('public.solutions.fnb'))->name('fnb');
     Route::get('/retail', fn() => view('public.solutions.retail'))->name('retail');
     Route::get('/workshop', fn() => view('public.solutions.workshop'))->name('workshop');
@@ -341,18 +342,18 @@ Route::get('/app/version', function () {
         'success' => true,
         'app_name' => 'COOCA My Own',
         'package_name' => 'com.cooca.myown.cooca_my_own',
-        'latest_version' => '1.0.5',
-        'latest_build' => 6,
+        'latest_version' => '1.0.7',
+        'latest_build' => 8,
         'min_supported_version' => '1.0.0',
         'force_update' => false,
         'download_url' => url('/cooca.apk'),
         'file_size' => $fileSize,
         'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
         'release_notes' => [
-            'Pembaruan versi dinamis pada profil dan sistem pengaturan (bebas hardcode).',
-            'Penyempurnaan seluruh tab dan filter periode: bebas mis-click atau ter-click tab di sebelahnya.',
-            'Penyempurnaan tampilan pengaturan perangkat kasir POS tanpa subtitle berantakan.',
-            'Executive Action Sheet Apple HIG di seluruh pop-up dan aksi cepat mobile.',
+            'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176) dan akses langsung panduan.',
+            'Perbaikan tampilan versi aplikasi pada Pengaturan Sistem agar bersih, proporsional, dan bebas tumpang tindih.',
+            'Penyederhanaan menu Pengaturan Sistem dengan menghapus eksposur teknis server engine.',
+            'Peningkatan kestabilan performa kasir dan sinkronisasi transaksi offline-online.',
         ],
     ]);
 });

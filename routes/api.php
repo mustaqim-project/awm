@@ -891,18 +891,18 @@ Route::prefix('v1')->group(function (): void {
             'success' => true,
             'app_name' => 'COOCA My Own',
             'package_name' => 'com.cooca.myown.cooca_my_own',
-            'latest_version' => '1.0.5',
-            'latest_build' => 6,
+            'latest_version' => '1.0.7',
+            'latest_build' => 8,
             'min_supported_version' => '1.0.0',
             'force_update' => false,
             'download_url' => url('/cooca.apk'),
             'file_size' => $fileSize,
             'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
             'release_notes' => [
-                'Pembaruan versi dinamis pada profil dan sistem pengaturan (bebas hardcode).',
-                'Penyempurnaan seluruh tab dan filter periode: bebas mis-click atau ter-click tab di sebelahnya.',
-                'Penyempurnaan tampilan pengaturan perangkat kasir POS tanpa subtitle berantakan.',
-                'Executive Action Sheet Apple HIG di seluruh pop-up dan aksi cepat mobile.',
+                'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176) dan akses langsung panduan.',
+                'Perbaikan tampilan versi aplikasi pada Pengaturan Sistem agar bersih, proporsional, dan bebas tumpang tindih.',
+                'Penyederhanaan menu Pengaturan Sistem dengan menghapus eksposur teknis server engine.',
+                'Peningkatan kestabilan performa kasir dan sinkronisasi transaksi offline-online.',
             ],
         ]);
     });
@@ -916,10 +916,10 @@ Route::prefix('v1')->group(function (): void {
         return response()->json([
             'success' => true,
             'data' => [
-                'version' => '1.0.4',
-                'build_number' => '5',
+                'version' => '1.0.7',
+                'build_number' => '8',
                 'download_url' => url('/cooca.apk'),
-                'release_notes' => 'Perbaikan login email/password & Google SSO, sinkronisasi bisnis, dan stabilitas performa.',
+                'release_notes' => 'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176), perbaikan tampilan versi sistem, dan kestabilan performa.',
                 'is_mandatory' => false,
                 'file_size' => $fileSize,
             ],
