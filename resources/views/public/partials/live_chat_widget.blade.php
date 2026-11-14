@@ -404,7 +404,7 @@ function coocaLiveChatWidget() {
         isSessionEnded: false,
         sessionEndedReason: '',
         errorMessage: '',
-        sessionToken: localStorage.getItem('cooca_livechat_session') || '',
+        sessionToken: (function() { try { return localStorage.getItem('cooca_livechat_session') || ''; } catch(e) { return ''; } })(),
         unreadCount: 0,
         newMessage: '',
         formData: {
@@ -414,9 +414,9 @@ function coocaLiveChatWidget() {
             message: '',
         },
         visitorData: {
-            name: localStorage.getItem('cooca_livechat_name') || '',
-            phone: localStorage.getItem('cooca_livechat_phone') || '',
-            email: localStorage.getItem('cooca_livechat_email') || '',
+            name: (function() { try { return localStorage.getItem('cooca_livechat_name') || ''; } catch(e) { return ''; } })(),
+            phone: (function() { try { return localStorage.getItem('cooca_livechat_phone') || ''; } catch(e) { return ''; } })(),
+            email: (function() { try { return localStorage.getItem('cooca_livechat_email') || ''; } catch(e) { return ''; } })(),
         },
         messages: [],
         pusherInstance: null,
@@ -445,7 +445,9 @@ function coocaLiveChatWidget() {
         dismissGreeting() {
             this.showGreeting = false;
             // 7 days dismissal: 7 * 24 * 60 * 60 * 1000 = 604800000 ms
-            localStorage.setItem('cooca_greeting_dismissed_until', String(Date.now() + 604800000));
+            try {
+                localStorage.setItem('cooca_greeting_dismissed_until', String(Date.now() + 604800000));
+            } catch (e) {}
         },
 
         init() {
@@ -455,7 +457,10 @@ function coocaLiveChatWidget() {
             if (this.visitorData.email) this.formData.email = this.visitorData.email;
 
             // Delayed greeting: 20s or 50% scroll, suppressed if dismissed in last 7 days or on mobile
-            const dismissedUntil = parseInt(localStorage.getItem('cooca_greeting_dismissed_until') || '0', 10);
+            let dismissedUntil = 0;
+            try {
+                dismissedUntil = parseInt(localStorage.getItem('cooca_greeting_dismissed_until') || '0', 10);
+            } catch (e) {}
             const isSuppressed = Date.now() < dismissedUntil;
 
             if (!isSuppressed && !this.sessionToken) {
@@ -581,7 +586,9 @@ function coocaLiveChatWidget() {
             }
 
             // Clear active session in localStorage so user can easily start a fresh session
-            localStorage.removeItem('cooca_livechat_session');
+            try {
+                localStorage.removeItem('cooca_livechat_session');
+            } catch (e) {}
             this.sessionToken = '';
             if (this.pusherInstance) {
                 try { this.pusherInstance.disconnect(); } catch (_) {}
@@ -596,7 +603,9 @@ function coocaLiveChatWidget() {
             this.messages = [];
             this.newMessage = '';
             this.formData.message = '';
-            localStorage.removeItem('cooca_livechat_session');
+            try {
+                localStorage.removeItem('cooca_livechat_session');
+            } catch (e) {}
             if (this.visitorData.name) this.formData.name = this.visitorData.name;
             if (this.visitorData.phone) this.formData.phone = this.visitorData.phone;
             if (this.visitorData.email) this.formData.email = this.visitorData.email;
@@ -643,10 +652,12 @@ function coocaLiveChatWidget() {
                     this.isWaitingReply = true;
 
                     // Store in localStorage
-                    localStorage.setItem('cooca_livechat_session', this.sessionToken);
-                    localStorage.setItem('cooca_livechat_name', this.visitorData.name);
-                    localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
-                    localStorage.setItem('cooca_livechat_email', this.visitorData.email);
+                    try {
+                        localStorage.setItem('cooca_livechat_session', this.sessionToken);
+                        localStorage.setItem('cooca_livechat_name', this.visitorData.name);
+                        localStorage.setItem('cooca_livechat_phone', this.visitorData.phone);
+                        localStorage.setItem('cooca_livechat_email', this.visitorData.email);
+                    } catch (e) {}
 
                     // Connect Reverb WebSocket and start live active polling
                     this.connectReverb();
