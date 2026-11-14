@@ -29,13 +29,13 @@
         {{-- Top Header: Module Label, Item Count & Collapse Button --}}
         <div class="h-14 flex items-center justify-between px-3.5 border-b border-black/5 dark:border-white/10 shrink-0">
             <div class="flex items-center gap-2 min-w-0">
-                <span class="w-6 h-6 rounded-[7px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/15 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
-                    <i data-lucide="{{ $activeModuleDef['icon'] ?? 'layers' }}" class="w-3.5 h-3.5"></i>
+                <span class="w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                    <i data-lucide="{{ $activeModuleDef['icon'] ?? 'layers' }}" class="w-4 h-4" stroke-width="2"></i>
                 </span>
-                <span class="text-[12.5px] font-bold tracking-tight text-black dark:text-white truncate">
+                <span class="text-[13px] font-bold tracking-tight text-black dark:text-white truncate">
                     {{ $activeModuleDef['label'] ?? ucfirst($activeModuleKey) }}
                 </span>
-                <span class="text-[10px] font-bold text-[#007AFF] dark:text-[#0A84FF] px-1.5 py-0.5 rounded-full bg-[#007AFF]/10 dark:bg-[#0A84FF]/15 shrink-0">
+                <span class="text-[10.5px] font-bold text-[#007AFF] dark:text-[#0A84FF] px-2 py-0.5 rounded-full bg-[#007AFF]/10 dark:bg-[#0A84FF]/20 shrink-0">
                     {{ count($secondaryNavTabs) }}
                 </span>
             </div>
@@ -54,27 +54,27 @@
                     data-subnav-key="{{ $tab['key'] }}"
                     data-active-secondary-nav="{{ $tab['is_active'] ? 'true' : 'false' }}"
                     aria-current="{{ $tab['is_active'] ? 'page' : 'false' }}"
-                    class="group w-full flex items-center justify-between px-2.5 py-2 rounded-[10px] text-[12.5px] transition-all active:scale-[0.98] {{ $tab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-[0_2px_8px_rgba(0,122,255,0.28)]' : 'text-black/75 dark:text-white/75 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-black dark:hover:text-white font-medium' }}">
-                    <div class="flex items-center gap-2.5 min-w-0">
+                    class="group w-full flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] transition-all active:scale-[0.98] {{ $tab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-sm shadow-[#007AFF]/25' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white font-medium' }}">
+                    <div class="flex items-center gap-2.5 min-w-0 flex-1">
                         @if (!empty($tab['icon']))
-                            <span class="w-6 h-6 rounded-[7px] flex items-center justify-center shrink-0 transition-colors {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/[0.04] text-black/60 dark:bg-white/[0.06] dark:text-white/60 group-hover:text-black dark:group-hover:text-white group-hover:bg-black/[0.08]' }}">
-                                <i data-lucide="{{ $tab['icon'] }}" class="w-3.5 h-3.5"></i>
+                            <span class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                                <i data-lucide="{{ $tab['icon'] }}" class="w-4 h-4 shrink-0 {{ $tab['is_active'] ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                             </span>
                         @else
-                            <span class="w-5 h-5 rounded-[6px] flex items-center justify-center text-[10.5px] font-mono shrink-0 {{ $tab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/[0.06] dark:bg-white/10 text-black/50 dark:text-white/50 font-medium group-hover:bg-black/10 dark:group-hover:bg-white/15' }}">
+                            <span class="w-6 h-6 rounded-[7px] flex items-center justify-center text-[11px] font-mono shrink-0 {{ $tab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] font-semibold group-hover:bg-[#007AFF]/15' }}">
                                 {{ $index + 1 }}
                             </span>
                         @endif
-                        <span class="truncate tracking-tight">{{ $tab['label'] }}</span>
+                        <span class="whitespace-nowrap truncate min-w-0 flex-1 tracking-tight">{{ $tab['label'] }}</span>
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                         @if (!empty($tab['badge']))
-                            <span class="px-1.5 py-0.5 rounded-full text-[9.5px] font-bold {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tabular-nums shrink-0 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]' }}">
                                 {{ $tab['badge'] }}
                             </span>
                         @endif
                         @if ($tab['is_active'])
-                            <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white/90 shrink-0 group-hover:translate-x-0.5 transition-transform"></i>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-white shrink-0 group-hover:translate-x-0.5 transition-transform" stroke-width="2"></i>
                         @endif
                     </div>
                 </a>

@@ -1,23 +1,24 @@
 {{-- Apple HIG (macOS Sonoma & iOS 18) Sidebar Rail Styles --}}
 <style>
-    /* Calm Apple-style rhythm for the expanded navigation rail. */
+    /* Calm Apple-style rhythm for the expanded navigation rail (Harmonized with Admin Panel). */
     :root {
-        --sidebar-row: 2.75rem;
-        --sidebar-subrow: 2.5rem;
-        --sidebar-icon: 1rem;
-        --sidebar-radius: 0.625rem;
-        --sidebar-group-gap: 0.75rem;
+        --sidebar-row: 2.375rem; /* 38px matching admin panel h-[38px] */
+        --sidebar-subrow: 2.125rem; /* 34px */
+        --sidebar-icon: 1rem; /* 16px matching admin w-4 h-4 */
+        --sidebar-icon-box: 1.75rem; /* 28px matching admin w-7 h-7 */
+        --sidebar-radius: 0.6875rem; /* 11px matching admin rounded-[11px] */
+        --sidebar-group-gap: 0.625rem;
     }
 
     .sidebar-nav {
-        padding: 1rem 0.75rem !important;
+        padding: 0.75rem 0.625rem !important;
         line-height: 1.25rem;
     }
 
     .sidebar-nav .sidebar-item {
         min-height: var(--sidebar-row) !important;
         height: var(--sidebar-row);
-        padding: 0.5rem 0.75rem !important;
+        padding: 0.3125rem 0.625rem !important;
         border-radius: var(--sidebar-radius) !important;
         line-height: 1.25rem;
         box-sizing: border-box;
@@ -27,11 +28,54 @@
         margin-bottom: var(--sidebar-group-gap);
     }
 
-    .sidebar-nav .sidebar-item>i,
-    .sidebar-nav .sidebar-item-inner>i,
+    /* Primary Sidebar Icon Badge (Matching Admin Panel w-7 h-7 rounded-[8px]) */
+    .sidebar-icon-box {
+        width: 1.75rem !important;
+        height: 1.75rem !important;
+        min-width: 1.75rem !important;
+        min-height: 1.75rem !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+        background-color: rgba(0, 122, 255, 0.10) !important;
+        color: #007AFF !important;
+        transition: all 0.15s ease !important;
+        box-sizing: border-box !important;
+    }
+
+    .dark .sidebar-icon-box {
+        background-color: rgba(0, 122, 255, 0.20) !important;
+        color: #0A84FF !important;
+    }
+
+    .sidebar-item:hover .sidebar-icon-box {
+        background-color: rgba(0, 122, 255, 0.15) !important;
+        transform: scale(1.05);
+    }
+
+    .sidebar-icon-box>i,
+    .sidebar-icon-box>svg {
+        width: 1rem !important; /* 16px */
+        height: 1rem !important;
+        min-width: 1rem !important;
+        min-height: 1rem !important;
+        flex-shrink: 0 !important;
+        color: #007AFF !important;
+        stroke-width: 2 !important;
+    }
+
+    .dark .sidebar-icon-box>i,
+    .dark .sidebar-icon-box>svg {
+        color: #0A84FF !important;
+    }
+
+    .sidebar-nav .sidebar-item>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]),
+    .sidebar-nav .sidebar-item-inner>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]),
     .sidebar-nav .sidebar-item-inner>div>i,
-    .sidebar-nav .sidebar-item>svg,
-    .sidebar-nav .sidebar-item-inner>svg {
+    .sidebar-nav .sidebar-item>svg:not(.lucide-chevron-down),
+    .sidebar-nav .sidebar-item-inner>svg:not(.lucide-chevron-down) {
         width: var(--sidebar-icon) !important;
         height: var(--sidebar-icon) !important;
         flex: 0 0 var(--sidebar-icon);
@@ -43,13 +87,13 @@
         align-items: center;
         padding-left: 0.75rem !important;
         padding-right: 0.75rem !important;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.05em;
     }
 
     /* Nested source-list groups: consistent inset, row height, and breathing room. */
     .sidebar-nav div[x-show*="Open && !sidebarCollapsed"] {
         margin-left: 1rem !important;
-        padding: 0.5rem 0.25rem 0.5rem 0.875rem !important;
+        padding: 0.375rem 0.25rem 0.375rem 0.875rem !important;
         border-left-color: var(--border) !important;
     }
 
@@ -57,8 +101,8 @@
         min-height: var(--sidebar-subrow) !important;
         height: var(--sidebar-subrow);
         margin: 0.125rem 0;
-        padding: 0.5rem 0.75rem !important;
-        border-radius: var(--sidebar-radius) !important;
+        padding: 0.375rem 0.625rem !important;
+        border-radius: 0.5625rem !important;
         gap: 0.625rem !important;
         line-height: 1.25rem;
         box-sizing: border-box;
@@ -66,13 +110,13 @@
 
     .sidebar-nav div[x-show*="Open && !sidebarCollapsed"]>a>i,
     .sidebar-nav div[x-show*="Open && !sidebarCollapsed"]>a>svg {
-        width: 0.875rem !important;
-        height: 0.875rem !important;
-        flex: 0 0 0.875rem;
+        width: 1rem !important; /* 16px crisp submenu icons */
+        height: 1rem !important;
+        flex: 0 0 1rem;
     }
 
     .sidebar-nav div[x-show*="Open && !sidebarCollapsed"]>div:not([x-show]) {
-        margin-top: 0.625rem;
+        margin-top: 0.5rem;
         margin-bottom: 0.25rem;
         padding: 0.25rem 0.75rem !important;
         min-height: 1.25rem;
@@ -88,8 +132,10 @@
     .sidebar-nav button:not(.sidebar-item) {
         min-height: var(--sidebar-row) !important;
         height: var(--sidebar-row);
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
+        padding-top: 0.3125rem !important;
+        padding-bottom: 0.3125rem !important;
+        padding-left: 0.625rem !important;
+        padding-right: 0.625rem !important;
         border-radius: var(--sidebar-radius) !important;
         font-size: 0.8125rem !important;
         line-height: 1.25rem !important;
@@ -138,18 +184,22 @@
         }
 
         .app-sidebar:not(.is-collapsed) .sidebar-nav {
-            padding: 0.875rem 0.75rem !important;
+            padding: 0.75rem 0.625rem !important;
         }
 
         .app-sidebar:not(.is-collapsed) .sidebar-item {
-            min-height: 2.75rem !important;
-            padding-top: 0.625rem !important;
-            padding-bottom: 0.625rem !important;
+            min-height: 2.375rem !important;
+            height: 2.375rem !important;
+            padding-top: 0.3125rem !important;
+            padding-bottom: 0.3125rem !important;
+            padding-left: 0.625rem !important;
+            padding-right: 0.625rem !important;
+            border-radius: 0.6875rem !important;
         }
 
         .app-sidebar:not(.is-collapsed) .sidebar-nav>div>div[x-show="!sidebarCollapsed"] {
-            margin-top: 0.75rem !important;
-            margin-bottom: 0.375rem !important;
+            margin-top: 0.625rem !important;
+            margin-bottom: 0.25rem !important;
         }
     }
 
@@ -650,81 +700,129 @@
         }
     }
 
-    /* Final source-list normalization: every expanded navigation row uses one geometry. */
+    /* Final source-list normalization: every expanded navigation row matches Admin Panel geometry. */
     .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item,
     .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item),
     .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item) {
         display: flex !important;
         align-items: center !important;
-        min-height: 2.75rem !important;
-        height: 2.75rem !important;
-        padding: 0.5rem 0.75rem !important;
-        border-radius: 0.625rem !important;
-        font-size: 0.8125rem !important;
+        min-height: 2.375rem !important; /* 38px matching admin h-[38px] */
+        height: 2.375rem !important;
+        padding: 0.3125rem 0.625rem !important; /* 5px 10px matching admin px-2.5 */
+        border-radius: 0.6875rem !important; /* 11px matching admin rounded-[11px] */
+        font-size: 0.8125rem !important; /* 13px matching admin text-[13px] */
         line-height: 1.25rem !important;
+        letter-spacing: -0.01em !important;
         box-sizing: border-box !important;
+        transition: all 0.15s ease !important;
     }
 
-    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item>i,
-    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item>svg,
-    .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item)>i,
-    .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item)>svg,
-    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item)>i,
-    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item)>svg {
-        width: 1rem !important;
+    /* Inactive text high-contrast Apple typography */
+    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item:not([aria-current="page"]):not(.bg-\[\#007AFF\]),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item):not([aria-current="page"]):not(.bg-\[\#007AFF\]),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item):not([aria-current="page"]):not(.bg-\[\#007AFF\]) {
+        color: rgba(28, 28, 30, 0.85) !important;
+        font-weight: 500 !important;
+    }
+
+    .dark .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item:not([aria-current="page"]):not(.bg-\[\#007AFF\]),
+    .dark .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item):not([aria-current="page"]):not(.bg-\[\#007AFF\]),
+    .dark .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item):not([aria-current="page"]):not(.bg-\[\#007AFF\]) {
+        color: rgba(242, 242, 247, 0.85) !important;
+    }
+
+    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item:not([aria-current="page"]):not(.bg-\[\#007AFF\]):hover {
+        background-color: rgba(0, 0, 0, 0.04) !important;
+        color: #000000 !important;
+    }
+
+    .dark .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item:not([aria-current="page"]):not(.bg-\[\#007AFF\]):hover {
+        background-color: rgba(255, 255, 255, 0.06) !important;
+        color: #FFFFFF !important;
+    }
+
+    /* Icon Sizing in Expanded Rail */
+    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-icon-box *),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item>svg:not(.lucide-chevron-down):not(.sidebar-icon-box *),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item)>i:not(.sidebar-icon-box *),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item)>svg:not(.sidebar-icon-box *),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item)>i:not(.lucide-chevron-down):not([data-lucide="chevron-down"]):not(.sidebar-icon-box *),
+    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item)>svg:not(.lucide-chevron-down):not(.sidebar-icon-box *) {
+        width: 1rem !important; /* 16px */
         height: 1rem !important;
         flex: 0 0 1rem !important;
     }
 
     .app-sidebar:not(.is-collapsed) .sidebar-nav div[x-show*="Open && !sidebarCollapsed"] {
-        padding-top: 0.5rem !important;
-        padding-bottom: 0.5rem !important;
+        padding-top: 0.375rem !important;
+        padding-bottom: 0.375rem !important;
     }
 
     .app-sidebar:not(.is-collapsed) .sidebar-nav div[x-show*="Open && !sidebarCollapsed"]>div:not([x-show]) {
-        height: 1.5rem !important;
-        min-height: 1.5rem !important;
+        height: 1.25rem !important;
+        min-height: 1.25rem !important;
         padding-top: 0.25rem !important;
         padding-bottom: 0.25rem !important;
-        margin-top: 0.5rem !important;
+        margin-top: 0.375rem !important;
         margin-bottom: 0.25rem !important;
         font-size: 0.6875rem !important;
         line-height: 1rem !important;
     }
 
-    /* ====== Apple HIG polish & responsive hardening (added) ====== */
-    /* 1. Seleksi sidebar ala Apple: tinted translusen, bukan pill solid + shadow */
+    /* ====== Apple HIG Active State: Matches Admin Panel Solid System Blue ====== */
     .sidebar-nav a[aria-current="page"],
-    .sidebar-nav button[aria-current="page"] {
-        background-color: rgba(0, 122, 255, 0.12) !important;
-        color: #007AFF !important;
-        box-shadow: none !important;
+    .sidebar-nav button[aria-current="page"],
+    .sidebar-nav a.bg-\[\#007AFF\],
+    .sidebar-nav button.bg-\[\#007AFF\] {
+        background-color: #007AFF !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        box-shadow: 0 1px 3px rgba(0, 122, 255, 0.25) !important;
     }
 
     .dark .sidebar-nav a[aria-current="page"],
-    .dark .sidebar-nav button[aria-current="page"] {
-        background-color: rgba(10, 132, 255, 0.18) !important;
-        color: #0A84FF !important;
+    .dark .sidebar-nav button[aria-current="page"],
+    .dark .sidebar-nav a.bg-\[\#007AFF\],
+    .dark .sidebar-nav button.bg-\[\#007AFF\] {
+        background-color: #007AFF !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 1px 3px rgba(0, 122, 255, 0.35) !important;
     }
 
+    .sidebar-nav a[aria-current="page"] .sidebar-icon-box,
+    .sidebar-nav button[aria-current="page"] .sidebar-icon-box,
+    .sidebar-nav a.bg-\[\#007AFF\] .sidebar-icon-box,
+    .sidebar-nav button.bg-\[\#007AFF\] .sidebar-icon-box {
+        background-color: rgba(255, 255, 255, 0.20) !important;
+        color: #FFFFFF !important;
+    }
+
+    .sidebar-nav a[aria-current="page"] .sidebar-icon-box>i,
+    .sidebar-nav a[aria-current="page"] .sidebar-icon-box>svg,
+    .sidebar-nav button[aria-current="page"] .sidebar-icon-box>i,
+    .sidebar-nav button[aria-current="page"] .sidebar-icon-box>svg,
+    .sidebar-nav a.bg-\[\#007AFF\] .sidebar-icon-box>i,
+    .sidebar-nav a.bg-\[\#007AFF\] .sidebar-icon-box>svg,
+    .sidebar-nav button.bg-\[\#007AFF\] .sidebar-icon-box>i,
+    .sidebar-nav button.bg-\[\#007AFF\] .sidebar-icon-box>svg,
     .sidebar-nav a[aria-current="page"]>i,
     .sidebar-nav a[aria-current="page"]>svg {
-        color: #007AFF !important;
+        color: #FFFFFF !important;
     }
 
-    .dark .sidebar-nav a[aria-current="page"]>i,
-    .dark .sidebar-nav a[aria-current="page"]>svg {
-        color: #0A84FF !important;
+    .sidebar-nav a[aria-current="page"] span,
+    .sidebar-nav button[aria-current="page"] span {
+        color: #FFFFFF !important;
     }
 
     .sidebar-nav a[aria-current="page"]>span[class*="ml-auto"] {
-        background-color: rgba(0, 122, 255, 0.14) !important;
-        color: #007AFF !important;
+        background-color: rgba(255, 255, 255, 0.2) !important;
+        color: #FFFFFF !important;
     }
 
     .dark .sidebar-nav a[aria-current="page"]>span[class*="ml-auto"] {
-        background-color: rgba(10, 132, 255, 0.2) !important;
-        color: #0A84FF !important;
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        color: #FFFFFF !important;
     }
 
     /* 2. Focus ring ala Apple untuk navigasi keyboard */

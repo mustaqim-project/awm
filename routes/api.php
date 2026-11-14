@@ -891,18 +891,19 @@ Route::prefix('v1')->group(function (): void {
             'success' => true,
             'app_name' => 'COOCA My Own',
             'package_name' => 'com.cooca.myown.cooca_my_own',
-            'latest_version' => '1.0.8',
-            'latest_build' => 9,
+            'latest_version' => '1.0.9',
+            'latest_build' => 10,
             'min_supported_version' => '1.0.0',
             'force_update' => false,
             'download_url' => url('/cooca.apk'),
             'file_size' => $fileSize,
             'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
             'release_notes' => [
-                'Pembaruan registrasi cepat via Google yang selaras dengan portal website cooca.id.',
-                'Penyematan logo resmi usaha pada struk bill kasir, printer thermal ESC/POS, dan PDF struk.',
+                'Replikasi penuh metode registrasi Google SSO selaras dengan portal website cooca.id.',
+                'Integrasi logo resmi bisnis otomatis ke seluruh cetakan struk kasir, bill preview, thermal printer ESC/POS, dan PDF.',
+                'Penyelarasan sertifikat rilis SHA-1 dan mitigasi penutupan sesi otorisasi Google dengan fallback Masuk Cepat.',
                 'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176) dan akses langsung panduan.',
-                'Peningkatan kestabilan sinkronisasi dan keamanan sertifikat rilis aplikasi.',
+                'Peningkatan kestabilan performa transaksi kasir POS serta optimalisasi cache.',
             ],
         ]);
     });
@@ -916,10 +917,10 @@ Route::prefix('v1')->group(function (): void {
         return response()->json([
             'success' => true,
             'data' => [
-                'version' => '1.0.8',
-                'build_number' => '9',
+                'version' => '1.0.9',
+                'build_number' => '10',
                 'download_url' => url('/cooca.apk'),
-                'release_notes' => 'Registrasi Google, tampilan logo usaha di struk bill & thermal printer, dan peningkatan keamanan sistem.',
+                'release_notes' => 'Pembaruan Google SSO, logo usaha di seluruh struk kasir POS, mitigasi sertifikat SHA-1, dan peningkatan performa.',
                 'is_mandatory' => false,
                 'file_size' => $fileSize,
             ],
