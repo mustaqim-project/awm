@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth cooca-public" data-theme-system="cooca-public">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth cooca-public overflow-x-hidden" data-theme-system="cooca-public">
 
 <head>
     <meta charset="utf-8">
@@ -461,9 +461,9 @@
                     });
                     this.$watch('mobileMenu', value => {
                         if (value) {
-                            document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+                            document.body.classList.add('overflow-hidden', 'xl:overflow-auto');
                         } else {
-                            document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+                            document.body.classList.remove('overflow-hidden', 'xl:overflow-auto');
                         }
                     });
                 }
@@ -504,9 +504,9 @@
             class="sticky top-0 z-50 backdrop-blur-2xl bg-[#060913]/95 text-white border-b border-white/10 relative transition-colors"
             @mouseleave="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false"
             @keydown.escape.window="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false; mobileMenu = false"
-            @resize.window="if (window.innerWidth >= 1024) mobileMenu = false">
+            @resize.window="if (window.innerWidth >= 1280) mobileMenu = false">
             <div
-                class="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 lg:h-[76px] flex items-center justify-between gap-3 xl:gap-6">
+                class="max-w-[1360px] mx-auto px-2.5 min-[360px]:px-4 sm:px-6 lg:px-8 xl:px-10 h-16 sm:h-20 lg:h-[76px] flex items-center justify-between gap-2 min-[360px]:gap-3 xl:gap-6">
 
                 <!-- Logo Cooca (Perbesar Skala Desktop & Mobile) -->
                 <a href="{{ route('landing') }}"
@@ -514,7 +514,7 @@
                     class="flex items-center gap-2.5 sm:gap-3 group shrink-0">
                     @if (!empty($siteLogoDarkUrl))
                         <img src="{{ $siteLogoDarkUrl }}" alt="{{ $siteAppName }}" width="160" height="40" fetchpriority="high" decoding="async"
-                            class="h-8 sm:h-9 lg:h-9 xl:h-10 w-auto object-contain transition-transform group-hover:scale-105">
+                            class="h-7 min-[360px]:h-8 sm:h-9 lg:h-9 xl:h-10 w-auto object-contain transition-transform group-hover:scale-105">
                     @else
                         <span
                             class="font-black text-2xl sm:text-3xl xl:text-4xl tracking-tighter text-white font-sans">COOCA</span>
@@ -523,7 +523,7 @@
 
                 <!-- Desktop Nav Menu (Perbesar Font & Target Sentuh) -->
                 <nav
-                    class="hidden lg:flex items-center gap-1 xl:gap-2 text-[14px] xl:text-[15px] font-medium text-slate-200">
+                    class="hidden xl:flex items-center gap-1 xl:gap-2 text-[14px] xl:text-[15px] font-medium text-slate-200">
 
                     <!-- 1. Platform Trigger -->
                     <button type="button"
@@ -624,8 +624,8 @@
                         </svg>
                     </button>
 
-                    <!-- Mobile Quick Action CTA (sm:hidden) -->
-                    <div class="sm:hidden flex items-center shrink-0">
+                    <!-- Mobile Quick Action CTA (Hidden on tiny <380px to prevent 320px overflow, visible min-[380px] to xl) -->
+                    <div class="hidden min-[380px]:flex xl:hidden items-center shrink-0">
                         @if (auth('admin')->check())
                             <a href="{{ route('admin.dashboard') }}"
                                 class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[10px] bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-xs shadow-xs active:scale-95 transition-all whitespace-nowrap">
@@ -646,8 +646,8 @@
                         @endif
                     </div>
 
-                    <!-- Desktop & Tablet Action Buttons (hidden sm:flex) -->
-                    <div class="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
+                    <!-- Desktop Action Buttons (hidden xl:flex) -->
+                    <div class="hidden xl:flex items-center gap-2 xl:gap-2.5 shrink-0">
                         @if (auth('admin')->check())
                             <a href="{{ route('admin.dashboard') }}"
                                 class="group inline-flex items-center gap-2 px-4 py-2 xl:px-5 xl:py-2.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm shadow-[0_4px_16px_rgba(0,194,255,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap">
@@ -679,7 +679,7 @@
                     <!-- Mobile Hamburger Button (Apple HIG Touch Target & Clean Responsive SVG) -->
                     <button type="button"
                         @click="mobileMenu = !mobileMenu; $nextTick(() => { if (typeof lucide !== 'undefined' && lucide.createIcons) lucide.createIcons(); })"
-                        class="lg:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-[11px] sm:rounded-[12px] bg-white/10 hover:bg-white/15 text-slate-200 hover:text-white active:scale-95 transition-all flex items-center justify-center shadow-xs focus:outline-none shrink-0 border border-white/10"
+                        class="xl:hidden w-11 h-11 min-w-[44px] min-h-[44px] rounded-[11px] sm:rounded-[12px] bg-white/10 hover:bg-white/15 text-slate-200 hover:text-white active:scale-95 transition-all flex items-center justify-center shadow-xs focus:outline-none shrink-0 border border-white/10"
                         :class="mobileMenu ? 'bg-white/20 text-[#00C2FF] border-[#00C2FF]/40 ring-2 ring-[#00C2FF]/30' : ''"
                         aria-label="Toggle Mobile Navigation" :aria-expanded="mobileMenu ? 'true' : 'false'">
                         <svg x-show="!mobileMenu" class="w-5 h-5 stroke-current stroke-2" fill="none"
@@ -1352,7 +1352,7 @@
                 x-transition:enter-start="opacity-0 -translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-2"
-                class="absolute top-full inset-x-0 w-full lg:hidden bg-[#060913] text-slate-200 border-t border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.95)] max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain p-3.5 sm:p-5 space-y-3 pb-28 z-50">
+                class="absolute top-full inset-x-0 w-full xl:hidden bg-[#060913] text-slate-200 border-t border-b border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.95)] max-h-[calc(100dvh-4rem)] sm:max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain p-3.5 sm:p-5 space-y-3 pb-28 z-50">
 
                 <!-- 0. Mobile Language Switcher & Quick Controls -->
                 <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 flex items-center justify-between gap-3">
@@ -2120,12 +2120,12 @@
             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0" @click="mobileMenu = false"
-            class="fixed inset-0 top-16 sm:top-20 lg:hidden z-40 bg-black/75 backdrop-blur-sm pointer-events-auto">
+            class="fixed inset-0 top-16 sm:top-20 xl:hidden z-40 bg-black/75 backdrop-blur-sm pointer-events-auto">
         </div>
     @endif
 
     <!-- ═══ MAIN CONTENT ═══ -->
-    <main class="flex-grow pb-16 lg:pb-0">
+    <main class="flex-grow pb-16 lg:pb-0 w-full max-w-full overflow-x-hidden">
         @yield('content')
     </main>
 

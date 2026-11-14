@@ -237,7 +237,7 @@
     <section class="py-10 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
         <div class="p-6 sm:p-8 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-xs space-y-6">
             <div>
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">KOMITMEN KEJUJURAN KONTEN</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">KOMITMEN KEJUJURAN KONTEN</span>
                 <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">
                     Prinsip Transparansi Keamanan COOCA
                 </h2>

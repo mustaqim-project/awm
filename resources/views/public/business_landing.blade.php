@@ -3504,7 +3504,7 @@
                 @endif
                 @if ($sectionVisibility['about'] && $hasAbout)
                     <a href="#tentang"
-                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.about') }}</a>
+                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.nav.about') }}</a>
                 @endif
                 @if ($sectionVisibility['gallery'] && !empty($landingPage->gallery_images))
                     <a href="#galeri"
@@ -3517,7 +3517,7 @@
                 @endif
                 @if ($sectionVisibility['contact'] && $hasContact)
                     <a href="#lokasi"
-                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.contact_location') }}</a>
+                        class="px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 hover:text-black dark:hover:text-white transition">{{ __('storefront.btn_contact_location') }}</a>
                 @endif
             </nav>
 
@@ -3747,7 +3747,7 @@
             @endif
             @if ($sectionVisibility['about'] && $hasAbout)
                 <a href="#tentang" @click="mobileMenuOpen = false"
-                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.about') }}</a>
+                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.nav.about') }}</a>
             @endif
             @if ($sectionVisibility['gallery'] && !empty($landingPage->gallery_images))
                 <a href="#galeri" @click="mobileMenuOpen = false"
@@ -3759,7 +3759,7 @@
             @endif
             @if ($sectionVisibility['contact'] && $hasContact)
                 <a href="#lokasi" @click="mobileMenuOpen = false"
-                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.contact_location') }}</a>
+                    class="block py-2 text-black/80 dark:text-white/80">{{ __('storefront.btn_contact_location') }}</a>
             @endif
             {{-- Mobile Theme Switcher --}}
             <div class="pt-3 pb-1 border-t border-black/5 dark:border-white/10 flex items-center justify-between">
@@ -4119,7 +4119,7 @@
                                     class="px-3.5 py-1.5 rounded-full text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                                     :class="serviceCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                         'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'">
-                                    {{ __('storefront.all') }} ({{ $services->count() }})
+                                    {{ __('common.all') }} ({{ $services->count() }})
                                 </button>
                                 @foreach ($serviceCategories as $sCat)
                                     @php
@@ -4530,7 +4530,7 @@
                                     class="px-3.5 py-1.5 rounded-full text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                                     :class="productCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                         'bg-black/[0.05] dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.08] dark:hover:bg-white/[0.12]'">
-                                    {{ __('storefront.all') }} ({{ $posProducts->count() }})
+                                    {{ __('common.all') }} ({{ $posProducts->count() }})
                                 </button>
                                 @foreach ($productCategories as $category)
                                     @php
@@ -5324,7 +5324,7 @@
                         class="text-[11px] sm:text-[12px] font-semibold uppercase tracking-wider text-black/40 dark:text-white/40 block mb-1">Alamat
                         &amp; Akses</span>
                     <h2
-                        class="text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight lg:tracking-[-0.025em] leading-[1.2] text-black dark:text-white">{{ __('storefront.contact_location') }}</h2>
+                        class="text-2xl sm:text-3xl lg:text-[36px] font-bold tracking-tight lg:tracking-[-0.025em] leading-[1.2] text-black dark:text-white">{{ __('storefront.btn_contact_location') }}</h2>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
@@ -5693,14 +5693,14 @@
                             :class="activeModal === 'all-products' ?
                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                            {{ __('storefront.products') }} ({{ $posProducts->count() }})
+                            {{ __('storefront.catalog.goods') }} ({{ $posProducts->count() }})
                         </button>
                         <button type="button" @click="openAllServicesModal()"
                             class="px-3 py-1 rounded-full transition cursor-pointer"
                             :class="activeModal === 'all-services' ?
                                 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' :
                                 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
-                            {{ __('storefront.services') }} ({{ $services->count() }})
+                            {{ __('storefront.nav_services') }} ({{ $services->count() }})
                         </button>
                     </div>
 
@@ -5756,7 +5756,7 @@
                             class="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11.5px] sm:text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                             :class="productCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                 'bg-white dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.12] border border-black/5 dark:border-white/10'">
-                            {{ __('storefront.all') }} ({{ $posProducts->count() }})
+                            {{ __('common.all') }} ({{ $posProducts->count() }})
                         </button>
                         @foreach ($productCategories as $cat)
                             @php
@@ -5782,7 +5782,7 @@
                             class="px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[11.5px] sm:text-[12px] font-semibold tracking-tight transition whitespace-nowrap active:scale-95 cursor-pointer"
                             :class="serviceCategory === 'all' ? 'bg-brand-primary text-white shadow-sm' :
                                 'bg-white dark:bg-white/[0.08] text-black/70 dark:text-white/70 hover:bg-black/[0.05] dark:hover:bg-white/[0.12] border border-black/5 dark:border-white/10'">
-                            {{ __('storefront.all') }} ({{ $services->count() }})
+                            {{ __('common.all') }} ({{ $services->count() }})
                         </button>
                         @foreach ($serviceCategories as $sCat)
                             @php
@@ -6206,10 +6206,10 @@
                                 {{ $landingPage->footer_navigation_title ?: 'Navigasi' }}</h3>
                             <nav class="space-y-2.5 text-[13px] font-normal tracking-tight">
                                 @if ($sectionVisibility['hero'] && $hasHero)
-                                    <a href="#hero" class="block hover:text-brand-primary transition">{{ __('storefront.home') }}</a>
+                                    <a href="#hero" class="block hover:text-brand-primary transition">{{ __('storefront.nav_home') }}</a>
                                 @endif
                                 @if ($sectionVisibility['about'] && $hasAbout)
-                                    <a href="#tentang" class="block hover:text-brand-primary transition">{{ __('storefront.about') }}</a>
+                                    <a href="#tentang" class="block hover:text-brand-primary transition">{{ __('storefront.nav.about') }}</a>
                                 @endif
                                 @if (
                                     ($sectionVisibility['services'] && $services->isNotEmpty()) ||
