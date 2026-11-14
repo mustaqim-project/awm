@@ -621,6 +621,14 @@ final class NavigationRegistry
                         'permission'    => 'products.view',
                     ],
                     [
+                        'key'           => 'finances',
+                        'label'         => 'Laporan Keuangan & Settlement',
+                        'icon'          => 'wallet-cards',
+                        'route'         => 'marketplace-hub.finances',
+                        'active_routes' => ['marketplace-hub.finances*'],
+                        'permission'    => 'products.view',
+                    ],
+                    [
                         'key'           => 'chat',
                         'label'         => 'Chat Omnichannel',
                         'icon'          => 'message-square',

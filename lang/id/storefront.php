@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'my_orders' => 'Pesanan Saya',
     'nav' => [
         'home' => 'Beranda',
         'catalog' => 'Katalog Produk',

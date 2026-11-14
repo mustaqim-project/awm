@@ -94,6 +94,11 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-[#34C759] animate-pulse"></span>
                 <span>Auto-sync Aktif</span>
             </div>
+            <a href="{{ route('marketplace-hub.finances') }}"
+                class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#2FB34F] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm">
+                <i data-lucide="wallet-cards" class="w-4 h-4"></i>
+                <span>Keuangan & Rekonsiliasi</span>
+            </a>
             <a href="{{ route('marketplace-hub.products') }}"
                 class="min-h-[44px] sm:min-h-0 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.97] transition-all flex items-center justify-center gap-1.5 w-full sm:w-auto shadow-sm">
                 <i data-lucide="tag" class="w-4 h-4"></i>

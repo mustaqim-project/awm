@@ -52,9 +52,9 @@ return [
         '/omnichannel-erp/finance' => [
             'title' => 'Aplikasi Pembukuan & Laporan Keuangan UMKM | COOCA',
             'h1' => 'Aplikasi Pembukuan UMKM: Laporan Keuangan Otomatis dari Kasir',
-            'description' => 'Setiap transaksi kasir otomatis jadi jurnal. Lihat laba rugi, arus kas, dan neraca real-time tanpa input ulang ke Excel. Coba gratis.',
+            'description' => 'Setiap transaksi kasir otomatis jadi jurnal. Lihat laba rugi, arus kas, dan neraca real-time tanpa input ulang ke Excel. Mulai sekarang gratis.',
             'og_title' => 'Aplikasi Pembukuan & Laporan Keuangan UMKM | COOCA',
-            'og_description' => 'Setiap transaksi kasir otomatis jadi jurnal. Lihat laba rugi, arus kas, dan neraca real-time tanpa input ulang ke Excel. Coba gratis.',
+            'og_description' => 'Setiap transaksi kasir otomatis jadi jurnal. Lihat laba rugi, arus kas, dan neraca real-time tanpa input ulang ke Excel. Mulai sekarang gratis.',
         ],
 
         '/omnichannel-erp/erp' => [
@@ -76,9 +76,9 @@ return [
         '/solutions/fnb' => [
             'title' => 'Aplikasi Kasir Restoran & Cafe dengan Stok Resep | COOCA',
             'h1' => 'Aplikasi Kasir Restoran: Meja, Dapur & Stok Resep Terhubung',
-            'description' => 'POS restoran dan cafe yang memotong stok bahan per resep, cetak tiket dapur (KOT), kelola meja, dan hitung HPP otomatis. Coba gratis sekarang.',
+            'description' => 'POS restoran dan cafe yang memotong stok bahan per resep, cetak tiket dapur (KOT), kelola meja, dan hitung HPP otomatis. Mulai sekarang gratis.',
             'og_title' => 'Aplikasi Kasir Restoran & Cafe dengan Stok Resep | COOCA',
-            'og_description' => 'POS restoran dan cafe yang memotong stok bahan per resep, cetak tiket dapur (KOT), kelola meja, dan hitung HPP otomatis. Coba gratis sekarang.',
+            'og_description' => 'POS restoran dan cafe yang memotong stok bahan per resep, cetak tiket dapur (KOT), kelola meja, dan hitung HPP otomatis. Mulai sekarang gratis.',
         ],
 
         '/solutions/retail' => [
@@ -100,9 +100,9 @@ return [
         '/solutions/laundry' => [
             'title' => 'Aplikasi Kasir Laundry Kiloan & Satuan | COOCA',
             'h1' => 'Aplikasi Kasir Laundry: Timbangan, Rak & Notifikasi WhatsApp',
-            'description' => 'Aplikasi laundry dengan timbangan desimal, label barcode per kantong, nomor rak, dan notifikasi WhatsApp saat cucian selesai. Coba gratis.',
+            'description' => 'Aplikasi laundry dengan timbangan desimal, label barcode per kantong, nomor rak, dan notifikasi WhatsApp saat cucian selesai. Mulai sekarang gratis.',
             'og_title' => 'Aplikasi Kasir Laundry Kiloan & Satuan | COOCA',
-            'og_description' => 'Aplikasi laundry dengan timbangan desimal, label barcode per kantong, nomor rak, dan notifikasi WhatsApp saat cucian selesai. Coba gratis.',
+            'og_description' => 'Aplikasi laundry dengan timbangan desimal, label barcode per kantong, nomor rak, dan notifikasi WhatsApp saat cucian selesai. Mulai sekarang gratis.',
         ],
 
         '/solutions/manufacturing' => [
@@ -124,9 +124,9 @@ return [
         '/omnichannel/whatsapp' => [
             'title' => 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA',
             'h1' => 'Kirim Struk Kasir Digital & Notifikasi Pesanan via WhatsApp',
-            'description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Coba gratis.',
+            'description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Mulai sekarang gratis.',
             'og_title' => 'Kirim Struk Kasir & Nota Digital via WhatsApp | COOCA',
-            'og_description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Coba gratis.',
+            'og_description' => 'Kirim nota belanja digital dan pengingat tagihan invoice resmi langsung ke WhatsApp pelanggan tanpa perlu simpan nomor di HP staf. Mulai sekarang gratis.',
         ],
 
         '/omnichannel/customer' => [
@@ -237,9 +237,9 @@ return [
         '/solusi/kasir-cafe-kecil' => [
             'title' => 'Aplikasi Kasir Cafe & Kedai Kopi | COOCA',
             'h1' => 'Aplikasi Kasir Cafe: Resep Kopi, Meja & QRIS Dinamis',
-            'description' => 'Aplikasi kasir cafe dan warkop modern. Kelola resep bahan baku per cup, meja & split bill, cetak tiket dapur, dan pantau HPP riil otomatis. Coba gratis.',
+            'description' => 'Aplikasi kasir cafe dan warkop modern. Kelola resep bahan baku per cup, meja & split bill, cetak tiket dapur, dan pantau HPP riil otomatis. Mulai sekarang gratis.',
             'og_title' => 'Aplikasi Kasir Cafe & Kedai Kopi | COOCA',
-            'og_description' => 'Aplikasi kasir cafe dan warkop modern. Kelola resep bahan baku per cup, meja & split bill, cetak tiket dapur, dan pantau HPP riil otomatis. Coba gratis.',
+            'og_description' => 'Aplikasi kasir cafe dan warkop modern. Kelola resep bahan baku per cup, meja & split bill, cetak tiket dapur, dan pantau HPP riil otomatis. Mulai sekarang gratis.',
         ],
 
         '/solusi/kasir-salon' => [
@@ -425,14 +425,6 @@ return [
             'description' => 'Misi COOCA menyatukan kasir POS, stok inventori, dan akuntansi riil dalam satu ekosistem terintegrasi untuk jutaan UMKM Indonesia.',
             'og_title' => 'Tentang COOCA: Visi Sistem Operasi Bisnis UMKM',
             'og_description' => 'Misi COOCA menyatukan kasir POS, stok inventori, dan akuntansi riil dalam satu ekosistem terintegrasi untuk jutaan UMKM Indonesia.',
-        ],
-
-        '/demo' => [
-            'title' => 'Demo Interaktif COOCA: Coba Kasir & Stok Gratis',
-            'h1' => 'Coba Demo Interaktif COOCA: Simulasi Kasir & Ekosistem Bisnis',
-            'description' => 'Uji coba simulasi kasir POS, barcode scanner, potong stok resep, dan laporan laba bersih otomatis tanpa perlu instalasi aplikasi.',
-            'og_title' => 'Demo Interaktif COOCA: Coba Kasir & Stok Gratis',
-            'og_description' => 'Uji coba simulasi kasir POS, barcode scanner, potong stok resep, dan laporan laba bersih otomatis tanpa perlu instalasi aplikasi.',
         ],
 
         '/support' => [

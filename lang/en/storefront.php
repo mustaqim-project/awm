@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'my_orders' => 'My Orders',
     'nav' => [
         'home' => 'Home',
         'catalog' => 'Products',

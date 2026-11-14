@@ -3,6 +3,24 @@
     Powered by Laravel Broadcasting with Reverb
     Mandatory Visitor Input: Nama, Nomor HP, Email, Pertanyaan
 --}}
+@php
+    $liveChatWaSetting = \App\Models\SystemSetting::get('social_whatsapp_number', '0852 8786 4176');
+    $liveChatWaUrl = \App\Models\SystemSetting::get('social_whatsapp_url');
+    $liveChatWaDigits = preg_replace('/[^0-9]/', '', (string) $liveChatWaSetting);
+    if (str_starts_with($liveChatWaDigits, '0')) {
+        $liveChatWaDigits = '62' . substr($liveChatWaDigits, 1);
+    } elseif (str_starts_with($liveChatWaDigits, '8')) {
+        $liveChatWaDigits = '62' . $liveChatWaDigits;
+    }
+    $liveChatWaMsg = urlencode('Halo Tim COOCA, saya ingin berkonsultasi mengenai platform dan operasional bisnis.');
+    if (!empty($liveChatWaUrl) && (str_contains($liveChatWaUrl, 'wa.me') || str_contains($liveChatWaUrl, 'whatsapp.com'))) {
+        $liveChatWaTarget = str_contains($liveChatWaUrl, 'text=') ? $liveChatWaUrl : ($liveChatWaUrl . (str_contains($liveChatWaUrl, '?') ? '&' : '?') . 'text=' . $liveChatWaMsg);
+    } elseif (!empty($liveChatWaDigits)) {
+        $liveChatWaTarget = 'https://api.whatsapp.com/send?phone=' . $liveChatWaDigits . '&text=' . $liveChatWaMsg;
+    } else {
+        $liveChatWaTarget = 'https://wa.me/6285287864176?text=' . $liveChatWaMsg;
+    }
+@endphp
 
 <script>
 window.coocaLiveChatWidget = coocaLiveChatWidget;
@@ -604,11 +622,11 @@ function coocaLiveChatWidget() {
 
             // 3. Define action button badge styles
             const btnClass = isIncoming
-                ? 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
-                : 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-white hover:bg-violet-50 text-violet-700 font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
+                ? 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-gradient-to-r from-[#128C7E] to-[#25D366] hover:from-[#0E7064] hover:to-[#20BD5A] text-white font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer'
+                : 'inline-flex items-center gap-1.5 px-3 py-1 my-1 rounded-xl bg-white hover:bg-emerald-50 text-[#128C7E] font-semibold text-[12px] shadow-xs hover:shadow transition-all active:scale-95 no-underline align-middle mx-1 cursor-pointer';
 
             const linkClass = isIncoming
-                ? 'text-violet-600 dark:text-violet-400 font-semibold underline hover:text-violet-700 break-all inline-flex items-center gap-1'
+                ? 'text-[#128C7E] dark:text-emerald-400 font-semibold underline hover:text-[#075E54] break-all inline-flex items-center gap-1'
                 : 'text-white font-semibold underline hover:opacity-90 break-all inline-flex items-center gap-1';
 
             const externalIcon = '<svg class="w-3.5 h-3.5 opacity-90 shrink-0 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>';
@@ -646,21 +664,21 @@ function coocaLiveChatWidget() {
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-y-0 scale-100"
              x-transition:leave-end="opacity-0 translate-y-2 scale-95"
-             class="hidden sm:block pointer-events-auto bg-white dark:bg-[#1E1B4B] border border-violet-100 dark:border-violet-900/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
+             class="hidden sm:block pointer-events-auto bg-white dark:bg-[#075E54]/95 border border-emerald-100 dark:border-emerald-800/50 shadow-xl rounded-2xl p-3 max-w-[260px] text-left relative cursor-pointer hover:shadow-2xl transition-shadow"
              @click="toggleChat()">
             <button type="button" @click.stop="dismissGreeting()" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 hover:text-gray-700 flex items-center justify-center text-xs shadow-xs" aria-label="{{ __('public_marketing.live_chat_close_greeting') }}">
                 <span aria-hidden="true">&times;</span>
             </button>
             <div class="flex items-center gap-2 mb-1">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300">{{ __('public_marketing.live_chat_support_online') }}</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-300">{{ __('public_marketing.live_chat_support_online') }}</span>
             </div>
             <p class="text-[12.5px] font-medium text-gray-800 dark:text-gray-100 leading-snug">
                 {{ __('public_marketing.live_chat_greeting_prompt') }}
             </p>
         </div>
 
-        {{-- Floating Action Button (FAB) --}}
+        {{-- Floating Action Button (FAB - WhatsApp Green Theme) --}}
         <div class="pointer-events-auto relative">
             {{-- Unread Message Counter Badge --}}
             <span x-show="unreadCount > 0 && !isOpen" x-text="unreadCount" 
@@ -671,16 +689,16 @@ function coocaLiveChatWidget() {
                     @click="toggleChat()" 
                     :aria-expanded="isOpen"
                     aria-label="{{ __('public_marketing.live_chat_open') }}"
-                    class="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-center shadow-[0_10px_35px_rgba(124,58,237,0.5)] hover:shadow-[0_14px_45px_rgba(124,58,237,0.7)] hover:scale-105 active:scale-95 transition-all">
+                    class="group relative w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#128C7E] via-[#25D366] to-[#25D366] hover:from-[#0E7064] hover:to-[#20BD5A] text-white flex items-center justify-center shadow-[0_8px_30px_rgba(37,211,102,0.45)] hover:shadow-[0_12px_38px_rgba(37,211,102,0.65)] hover:scale-105 active:scale-95 transition-all">
                 
                 {{-- Glowing pulse ring when closed --}}
-                <span x-show="!isOpen" class="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#7C3AED] to-[#4F46E5] opacity-40 blur-xs group-hover:opacity-60 animate-pulse"></span>
+                <span x-show="!isOpen" class="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#128C7E] to-[#25D366] opacity-40 blur-xs group-hover:opacity-60 animate-pulse"></span>
 
                 {{-- Online green indicator dot --}}
-                <span class="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-400 ring-2 ring-white dark:ring-gray-900 z-10"></span>
+                <span class="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-300 ring-2 ring-white dark:ring-gray-900 z-10"></span>
 
                 {{-- Icon: Chat Bubble (when closed) --}}
-                <svg x-show="!isOpen" class="w-7 h-7 sm:w-8 sm:h-8 relative z-10 transition-transform duration-200 group-hover:rotate-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg x-show="!isOpen" class="w-7 h-7 sm:w-8 sm:h-8 relative z-10 transition-transform duration-200 group-hover:rotate-6 drop-shadow-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     <path d="M8 10h.01"></path>
                     <path d="M12 10h.01"></path>
@@ -705,37 +723,38 @@ function coocaLiveChatWidget() {
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 translate-y-6 scale-95"
-         class="fixed floating-live-chat-window right-0 sm:right-6 lg:right-6 z-50 w-full sm:w-[410px] bg-white dark:bg-[#18181B] sm:rounded-[24px] rounded-t-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-violet-100 dark:border-white/10 flex flex-col overflow-hidden">
+         class="fixed floating-live-chat-window right-0 sm:right-6 lg:right-6 z-50 w-full sm:w-[410px] bg-white dark:bg-[#18181B] sm:rounded-[24px] rounded-t-[24px] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-emerald-100 dark:border-white/10 flex flex-col overflow-hidden">
         
-        {{-- HEADER BAR --}}
-        <div class="px-4 py-3.5 bg-gradient-to-r from-[#6D28D9] via-[#7C3AED] to-[#4F46E5] text-white flex items-center justify-between shadow-xs shrink-0">
+        {{-- HEADER BAR (WhatsApp Authentic Nuance Theme) --}}
+        <div class="px-4 py-3.5 bg-gradient-to-r from-[#075E54] via-[#128C7E] to-[#25D366] text-white flex items-center justify-between shadow-xs shrink-0">
             <div class="flex items-center gap-3 min-w-0">
                 <div class="relative w-10 h-10 rounded-full bg-white/20 p-0.5 backdrop-blur-xs flex items-center justify-center shrink-0 ring-1 ring-white/30">
                     <img src="{{ asset('assets/image/cooca-icon.png') }}" class="w-8 h-8 rounded-full object-cover" alt="Cooca Support" onerror="this.src='{{ asset('assets/image/cooca-logo-square.png') }}'">
-                    <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-violet-700"></span>
+                    <span class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 ring-2 ring-[#075E54]"></span>
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5">
                         <h3 class="text-[14.5px] font-bold text-white tracking-tight truncate">{{ __('public_marketing.live_chat_title') }}</h3>
                         <span class="px-1.5 py-0.2 rounded-full text-[9.5px] font-semibold bg-emerald-400/25 text-emerald-200 border border-emerald-400/30">{{ __('public_marketing.live_chat_status_online') }}</span>
                     </div>
-                    <p class="text-[11.5px] text-violet-100/90 truncate flex items-center gap-1">
+                    <p class="text-[11.5px] text-emerald-100/90 truncate flex items-center gap-1">
                         <span x-show="sessionToken" class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span>
                         <span x-text="sessionToken ? (isReverbConnected ? '{{ __('public_marketing.live_chat_connected_realtime') }}' : '{{ __('public_marketing.live_chat_active') }}') : '{{ __('public_marketing.live_chat_ready_to_help') }}'"></span>
                     </p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-1 shrink-0">
-                {{-- Direct WhatsApp Support Link --}}
-                <a href="https://wa.me/6285287864176?text=Halo%20COOCA%2C%20saya%20butuh%20bantuan%20seputar%20sistem%20kasir" 
+            <div class="flex items-center gap-1.5 shrink-0">
+                {{-- Direct WhatsApp Support Link (Prominent & Clear Pill Badge) --}}
+                <a href="{{ $liveChatWaTarget }}" 
                    target="_blank" 
                    rel="noopener noreferrer" 
                    title="{{ __('public_marketing.live_chat_wa_title') }}"
-                   class="w-8 h-8 rounded-full hover:bg-white/20 text-emerald-300 hover:text-emerald-200 flex items-center justify-center transition-colors">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.54 1.772.825 2.787.826h.004c3.182 0 5.768-2.586 5.768-5.766 0-3.18-2.586-5.766-5.768-5.766zm9.969 5.766c0 5.503-4.477 9.98-9.969 9.98-1.747 0-3.385-.453-4.819-1.246l-5.212 1.366 1.393-5.086c-.888-1.488-1.393-3.235-1.393-5.014 0-5.503 4.477-9.98 9.969-9.98 5.492 0 10.031 4.477 10.031 9.98z"/>
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-xs shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all border border-white/25 shrink-0">
+                    <svg class="w-4 h-4 fill-white shrink-0" viewBox="0 0 24 24">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                     </svg>
+                    <span class="text-[11.5px] font-bold text-white tracking-wide">WhatsApp</span>
                 </a>
 
                 {{-- Reset / New Chat Option if in session --}}
@@ -767,8 +786,8 @@ function coocaLiveChatWidget() {
         {{-- ========================================================================= --}}
         <div x-show="!sessionToken" class="flex-1 flex flex-col p-5 overflow-y-auto min-h-0 bg-slate-50/50 dark:bg-[#18181B]">
             
-            <div class="mb-4 text-center">
-                <div class="w-12 h-12 rounded-2xl bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 mx-auto flex items-center justify-center mb-2 shadow-xs">
+            <div class="mb-3 text-center">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/50 text-[#128C7E] dark:text-emerald-400 mx-auto flex items-center justify-center mb-2 shadow-xs">
                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
                     </svg>
@@ -777,6 +796,26 @@ function coocaLiveChatWidget() {
                 <p class="text-[12px] text-gray-500 dark:text-gray-400 mt-1 max-w-[320px] mx-auto leading-relaxed">
                     {{ __('public_marketing.live_chat_form_desc') }}
                 </p>
+            </div>
+
+            {{-- Direct WhatsApp Quick Connect Banner --}}
+            <div class="mb-3.5 p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/40 flex items-center justify-between gap-3 shadow-xs">
+                <div class="flex items-center gap-2.5 min-w-0">
+                    <div class="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shrink-0 shadow-xs">
+                        <svg class="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0 text-left">
+                        <p class="text-[12px] font-bold text-emerald-950 dark:text-emerald-100 leading-tight">{{ __('public_marketing.live_chat_wa_direct_title') }}</p>
+                        <p class="text-[11px] text-emerald-700 dark:text-emerald-300 truncate">{{ __('public_marketing.live_chat_wa_direct_sub') }}</p>
+                    </div>
+                </div>
+                <a href="{{ $liveChatWaTarget }}" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#25D366] hover:bg-[#20BD5A] text-white font-bold text-[11.5px] shadow-xs shrink-0 transition-transform active:scale-95">
+                    <span>{{ __('public_marketing.live_chat_wa_direct_btn') }}</span>
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </a>
             </div>
 
             {{-- Form Error Alert --}}
@@ -798,7 +837,7 @@ function coocaLiveChatWidget() {
                             </span>
                             <input type="text" x-model="formData.name" required
                                    placeholder="{{ __('public_marketing.live_chat_ph_name') }}"
-                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 transition-all">
                         </div>
                     </div>
 
@@ -813,7 +852,7 @@ function coocaLiveChatWidget() {
                             </span>
                             <input type="tel" x-model="formData.phone" required
                                    placeholder="{{ __('public_marketing.live_chat_ph_phone') }}"
-                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 transition-all">
                         </div>
                     </div>
 
@@ -828,7 +867,7 @@ function coocaLiveChatWidget() {
                             </span>
                             <input type="email" x-model="formData.email" required
                                    placeholder="{{ __('public_marketing.live_chat_ph_email') }}"
-                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                                   class="w-full h-10 pl-9 pr-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 transition-all">
                         </div>
                     </div>
 
@@ -839,13 +878,13 @@ function coocaLiveChatWidget() {
                         </label>
                         <textarea x-model="formData.message" required rows="3"
                                   placeholder="{{ __('public_marketing.live_chat_issue_placeholder') }}"
-                                  class="w-full p-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all resize-none"></textarea>
+                                  class="w-full p-3 rounded-xl bg-white dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 transition-all resize-none"></textarea>
                     </div>
                 </div>
 
                 <div class="pt-2">
                     <button type="submit" :disabled="isSubmitting"
-                            class="w-full h-11 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[13.5px] shadow-lg shadow-violet-500/25 disabled:opacity-50 flex items-center justify-center gap-2 transition-all">
+                            class="w-full h-11 rounded-xl bg-gradient-to-r from-[#128C7E] via-[#25D366] to-[#25D366] hover:from-[#0E7064] hover:to-[#20BD5A] text-white font-semibold text-[13.5px] shadow-lg shadow-emerald-500/25 disabled:opacity-50 flex items-center justify-center gap-2 transition-all">
                         <svg x-show="isSubmitting" class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity=".25"></circle><path d="M12 2a10 10 0 0 1 10 10" stroke-opacity=".75"></path></svg>
                         <span x-text="isSubmitting ? '{{ __('public_marketing.live_chat_connecting') }}' : '{{ __('public_marketing.live_chat_btn_start') }}'"></span>
                         <svg x-show="!isSubmitting" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -864,12 +903,12 @@ function coocaLiveChatWidget() {
         <div x-show="sessionToken" class="flex-1 flex flex-col min-h-0 bg-slate-50/70 dark:bg-[#18181B]">
             
             {{-- Notification Banner / Lead Summary --}}
-            <div class="px-4 py-2 bg-violet-50/80 dark:bg-violet-950/30 border-b border-violet-100 dark:border-violet-900/40 flex items-center justify-between text-[11.5px] text-violet-800 dark:text-violet-300 shrink-0">
+            <div class="px-4 py-2 bg-emerald-50/80 dark:bg-emerald-950/30 border-b border-emerald-100 dark:border-emerald-900/40 flex items-center justify-between text-[11.5px] text-emerald-800 dark:text-emerald-300 shrink-0">
                 <div class="flex items-center gap-1.5 truncate">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     <span>{{ __('public_marketing.live_chat_with') }} <strong x-text="visitorData.name || '{{ __('public_marketing.live_chat_you') }}'"></strong></span>
                 </div>
-                <div class="flex items-center gap-1 text-[10.5px] text-violet-600 dark:text-violet-400">
+                <div class="flex items-center gap-1 text-[10.5px] text-emerald-600 dark:text-emerald-400">
                     <span x-text="isReverbConnected ? 'Reverb Live' : 'Polling Mode'"></span>
                 </div>
             </div>
@@ -888,7 +927,7 @@ function coocaLiveChatWidget() {
                         
                         {{-- Sender Name & Time --}}
                         <div class="flex items-center gap-1.5 mb-1 px-1 text-[10.5px] text-gray-400">
-                            <span class="font-semibold" :class="msg.is_cooca || msg.is_from_page ? 'text-violet-600 dark:text-violet-400' : 'text-gray-600 dark:text-gray-300'" 
+                            <span class="font-semibold" :class="msg.is_cooca || msg.is_from_page ? 'text-[#128C7E] dark:text-emerald-400' : 'text-gray-600 dark:text-gray-300'" 
                                   x-text="msg.is_cooca || msg.is_from_page ? 'Cooca Support' : '{{ __('public_marketing.live_chat_you') }}'"></span>
                             <span>•</span>
                             <span x-text="msg.time"></span>
@@ -898,7 +937,7 @@ function coocaLiveChatWidget() {
                         <div class="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed shadow-xs"
                              :class="msg.is_cooca || msg.is_from_page 
                                      ? 'bg-white dark:bg-[#27272A] text-gray-800 dark:text-gray-100 border border-gray-200/80 dark:border-white/10 rounded-tl-xs' 
-                                     : 'bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-tr-xs'">
+                                     : 'bg-gradient-to-r from-[#075E54] to-[#128C7E] text-white rounded-tr-xs'">
                             
                             {{-- Attached Media Image if present --}}
                             <template x-if="msg.media_url">
@@ -915,15 +954,15 @@ function coocaLiveChatWidget() {
                 {{-- Typing Indicator Bubble (WhatsApp / Apple / Intercom Style) --}}
                 <div x-show="isWaitingReply" x-transition.opacity.duration.150ms class="flex flex-col items-start gap-1">
                     <div class="flex items-center gap-1.5 px-1 text-[10.5px] text-gray-400">
-                        <span class="font-semibold text-violet-600 dark:text-violet-400">Cooca Support</span>
+                        <span class="font-semibold text-[#128C7E] dark:text-emerald-400">Cooca Support</span>
                         <span>•</span>
-                        <span class="text-violet-500 font-medium animate-pulse">{{ __('public_marketing.live_chat_typing') }}</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-medium animate-pulse">{{ __('public_marketing.live_chat_typing') }}</span>
                     </div>
                     <div class="rounded-2xl rounded-tl-xs px-4 py-3 bg-white dark:bg-[#27272A] border border-gray-200/80 dark:border-white/10 shadow-xs flex items-center gap-2.5">
                         <div class="flex items-center gap-1.5 py-0.5">
-                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce [animation-delay:-0.32s]"></span>
-                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce [animation-delay:-0.16s]"></span>
-                            <span class="w-2 h-2 rounded-full bg-violet-600 dark:bg-violet-400 animate-bounce"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#128C7E] dark:bg-emerald-400 animate-bounce [animation-delay:-0.32s]"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#128C7E] dark:bg-emerald-400 animate-bounce [animation-delay:-0.16s]"></span>
+                            <span class="w-2 h-2 rounded-full bg-[#128C7E] dark:bg-emerald-400 animate-bounce"></span>
                         </div>
                         <span class="text-[12px] text-gray-500 dark:text-gray-400 italic">{{ __('public_marketing.live_chat_typing_reply') }}</span>
                     </div>
@@ -938,7 +977,7 @@ function coocaLiveChatWidget() {
                         <span x-text="sessionEndedReason || '{{ __('public_marketing.live_chat_session_timeout_default') }}'"></span>
                     </div>
                     <button type="button" @click="startNewChatSession()" 
-                            class="px-4 py-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-semibold text-[12.5px] shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
+                            class="px-4 py-2 rounded-xl bg-gradient-to-r from-[#128C7E] to-[#25D366] hover:from-[#0E7064] hover:to-[#20BD5A] text-white font-semibold text-[12.5px] shadow-sm flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                         <span>{{ __('public_marketing.live_chat_btn_new_session') }}</span>
                     </button>
@@ -951,11 +990,11 @@ function coocaLiveChatWidget() {
                         <input type="text" x-model="newMessage" 
                                placeholder="{{ __('public_marketing.live_chat_reply_placeholder') }}" 
                                :disabled="isSending"
-                               class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 transition-all">
+                               class="flex-1 h-10 px-3.5 rounded-xl bg-gray-50 dark:bg-[#27272A] border border-gray-200 dark:border-white/10 text-[13px] text-gray-900 dark:text-white placeholder-gray-400 focus:outline-hidden focus:border-[#25D366] focus:ring-2 focus:ring-[#25D366]/20 transition-all">
                         
                         <button type="submit" 
                                 :disabled="!newMessage || !newMessage.trim() || isSending"
-                                class="w-10 h-10 rounded-xl bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center disabled:opacity-40 transition-colors shadow-sm shrink-0">
+                                class="w-10 h-10 rounded-xl bg-[#128C7E] hover:bg-[#075E54] text-white flex items-center justify-center disabled:opacity-40 transition-colors shadow-sm shrink-0">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                         </button>
                     </form>
@@ -1006,16 +1045,6 @@ function coocaLiveChatWidget() {
             width: 410px !important;
             height: 600px !important;
             max-height: calc(100vh - 7.5rem) !important;
-        }
-        /* Elevate WhatsApp FAB when Live Chat is active on desktop */
-        .floating-wa-fab {
-            bottom: 6rem !important;
-        }
-    }
-    @media (max-width: 1023px) {
-        /* On mobile, elevate WhatsApp FAB above the Live Chat button */
-        .floating-wa-fab {
-            bottom: calc(10.25rem + env(safe-area-inset-bottom, 0px)) !important;
         }
     }
 </style>

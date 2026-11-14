@@ -1083,6 +1083,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::get('/orders/{order}/shipping-parameter', [MarketplaceWebController::class, 'getShippingParameter'])->name('orders.shipping-parameter');
                 Route::get('/chat', [MarketplaceWebController::class, 'chat'])->name('chat');
                 Route::get('/chat/{conversation}', [MarketplaceWebController::class, 'getConversationDetails'])->name('chat.details');
+                Route::get('/finances', [MarketplaceWebController::class, 'finances'])->name('finances');
                 Route::get('/logs', [MarketplaceWebController::class, 'logs'])->name('logs');
             });
 
@@ -1110,6 +1111,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
                 Route::post('/orders/pull', [MarketplaceWebController::class, 'pullOrders'])->middleware('throttle:10,1')->name('orders.pull');
                 Route::post('/orders/{order}/ship', [MarketplaceWebController::class, 'shipOrder'])->name('orders.ship');
                 Route::post('/orders/mass-ship', [MarketplaceWebController::class, 'massShipOrders'])->name('orders.mass-ship');
+
+                // Financial Settlements & Reconciliation
+                Route::post('/finances/sync', [MarketplaceWebController::class, 'syncFinances'])->middleware('throttle:10,1')->name('finances.sync');
+                Route::post('/finances/settlements/{settlement}/reconcile', [MarketplaceWebController::class, 'reconcileSettlement'])->name('finances.reconcile');
             });
 
         });

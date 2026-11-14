@@ -130,6 +130,14 @@ class MarketplaceAccount extends Model
     }
 
     /**
+     * @return HasMany<MarketplaceSettlement, $this>
+     */
+    public function settlements(): HasMany
+    {
+        return $this->hasMany(MarketplaceSettlement::class, 'marketplace_account_id');
+    }
+
+    /**
      * @return HasMany<MarketplaceConversation, $this>
      */
     public function conversations(): HasMany

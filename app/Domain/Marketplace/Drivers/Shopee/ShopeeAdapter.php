@@ -2154,5 +2154,130 @@ class ShopeeAdapter implements MarketplaceAdapterInterface
             'is_valid' => $isValid,
         ];
     }
+
+    /**
+     * Fetch order escrow and financial details from Shopee Open API v2.
+     * Endpoint: /api/v2/payment/get_escrow_detail
+     */
+    public function getEscrowDetail(MarketplaceAccount $account, string $orderId): array
+    {
+        if (! $this->hasCredentials() || empty($account->access_token)) {
+            return [];
+        }
+
+        $timestamp   = time();
+        $path        = '/api/v2/payment/get_escrow_detail';
+        $accessToken = (string) $account->access_token;
+        $sign        = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+
+        $url = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&order_sn=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign,
+            urlencode($orderId)
+        );
+
+        try {
+            $response = Http::timeout(15)->get($url);
+            $data     = $response->json();
+
+            if ($response->successful() && ! empty($data['response']['order_income'])) {
+                $income = $data['response']['order_income'];
+                return [
+                    'order_sn'              => $data['response']['order_sn'] ?? $orderId,
+                    'buyer_user_id'         => $data['response']['buyer_user_id'] ?? null,
+                    'buyer_username'        => $data['response']['buyer_username'] ?? null,
+                    'gross_amount'          => (float) ($income['buyer_total_amount'] ?? ($income['original_cost_of_goods_sold'] ?? 0)),
+                    'seller_discount'       => (float) ($income['seller_discount'] ?? ($income['voucher_from_seller'] ?? 0)),
+                    'platform_discount'     => (float) ($income['shopee_discount'] ?? ($income['voucher_from_shopee'] ?? 0)),
+                    'voucher_code'          => ! empty($income['seller_voucher_code'][0]) ? (string) $income['seller_voucher_code'][0] : null,
+                    'voucher_amount'        => (float) ($income['voucher_from_seller'] ?? 0),
+                    'commission_fee'        => (float) ($income['commission_fee'] ?? 0),
+                    'service_fee'           => (float) ($income['service_fee'] ?? 0),
+                    'transaction_fee'       => (float) ($income['transaction_fee'] ?? 0),
+                    'channel_fee'           => (float) (($income['commission_fee'] ?? 0) + ($income['service_fee'] ?? 0) + ($income['transaction_fee'] ?? 0)),
+                    'shipping_fee_buyer'    => (float) ($income['buyer_paid_shipping_fee'] ?? 0),
+                    'shipping_fee_seller'   => (float) ($income['actual_shipping_fee'] ?? 0),
+                    'shipping_subsidy'      => (float) ($income['shopee_shipping_rebate'] ?? 0),
+                    'refund_amount'         => (float) ($income['seller_return_refund'] ?? ($income['drc_adjustable_refund'] ?? 0)),
+                    'adjustment_amount'     => (float) ($income['drc_adjustable_refund'] ?? 0),
+                    'net_settlement_amount' => (float) ($income['escrow_amount'] ?? 0),
+                    'settlement_status'     => (float) ($income['escrow_amount'] ?? 0) > 0 ? \App\Models\MarketplaceOrder::SETTLEMENT_SETTLED : \App\Models\MarketplaceOrder::SETTLEMENT_ESCROW_HOLDING,
+                    'raw'                   => $income,
+                ];
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Shopee get_escrow_detail error: {$e->getMessage()}");
+        }
+
+        return [];
+    }
+
+    /**
+     * Fetch list of settled orders / escrow releases from Shopee.
+     * Endpoint: /api/v2/payment/get_escrow_list
+     */
+    public function getSettlements(MarketplaceAccount $account, array $params = []): array
+    {
+        if (! $this->hasCredentials() || empty($account->access_token)) {
+            return [];
+        }
+
+        $timestamp   = time();
+        $path        = '/api/v2/payment/get_escrow_list';
+        $accessToken = (string) $account->access_token;
+        $sign        = $this->generateSignature($path, $timestamp, $accessToken, $account->shop_id);
+
+        $releaseFrom = $params['release_time_from'] ?? (time() - 86400 * 15);
+        $releaseTo   = $params['release_time_to'] ?? time();
+        $pageSize    = min(50, (int) ($params['page_size'] ?? 50));
+        $pageNo      = (int) ($params['page_no'] ?? 1);
+
+        $url = sprintf(
+            '%s%s?partner_id=%s&timestamp=%s&access_token=%s&shop_id=%s&sign=%s&release_time_from=%s&release_time_to=%s&page_size=%s&page_no=%s',
+            $this->host,
+            $path,
+            $this->partnerId,
+            $timestamp,
+            $accessToken,
+            $account->shop_id,
+            $sign,
+            $releaseFrom,
+            $releaseTo,
+            $pageSize,
+            $pageNo
+        );
+
+        try {
+            $response = Http::timeout(15)->get($url);
+            $data     = $response->json();
+
+            if ($response->successful() && ! empty($data['response']['order_sn_list'])) {
+                $settlements = [];
+                foreach ($data['response']['order_sn_list'] as $orderSn) {
+                    $sn = is_array($orderSn) ? ($orderSn['order_sn'] ?? '') : (string) $orderSn;
+                    if (! empty($sn)) {
+                        $escrow = $this->getEscrowDetail($account, $sn);
+                        $settlements[] = [
+                            'settlement_sn' => 'SHP-SETTLE-' . $sn,
+                            'order_sn'      => $sn,
+                            'payout_date'   => now(),
+                            'details'       => $escrow,
+                        ];
+                    }
+                }
+                return $settlements;
+            }
+        } catch (\Throwable $e) {
+            Log::warning("Shopee get_escrow_list error: {$e->getMessage()}");
+        }
+
+        return [];
+    }
 }
 

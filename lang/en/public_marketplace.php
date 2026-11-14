@@ -234,6 +234,10 @@ return [
     'loc_cta_btn' => 'Open Free Store',
     'loc_cta_home' => 'Marketplace Home',
 
+    // Breadcrumb Defaults
+    'mkt_breadcrumb_home' => 'Home',
+    'mkt_breadcrumb_marketplace' => 'Marketplace',
+
     // Search Page
     'srch_meta_title_result' => 'Result: :search | COOCA',
     'srch_meta_title_default' => 'Product Catalog & MSME Directory | COOCA',

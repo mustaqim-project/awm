@@ -155,7 +155,7 @@
                                 <i data-lucide="download" class="w-5 h-5"></i>
                                 <span>{{ __('public_commercial.android_cta_download') }}</span>
                             </a>
-                            <a href="/register" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm sm:text-base border border-white/15 transition-all">
+                            <a href="https://cooca.id/register" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm sm:text-base border border-white/15 transition-all">
                                 <span>{{ __('public_commercial.android_cta_register') }}</span>
                             </a>
                         </div>
@@ -376,7 +376,7 @@
                         <i data-lucide="download" class="w-5 h-5"></i>
                         <span>{{ __('public_commercial.android_final_cta') }}</span>
                     </a>
-                    <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-base border border-white/15 transition-all">
+                    <a href="https://cooca.id/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-base border border-white/15 transition-all">
                         <span>{{ __('public_commercial.android_final_cta_secondary') }}</span>
                     </a>
                 </div>

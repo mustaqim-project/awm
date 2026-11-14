@@ -372,7 +372,14 @@
                                 'tracking_number' => $order->tracking_number ?? '',
                                 'recipient_address' => $recipientAddress ?: 'Sesuai pesanan di sistem marketplace',
                                 'total_amount' => (float) $order->total_amount,
-                                'channel_fee' => (float) $order->channel_fee,
+                                'gross_amount' => (float) ($order->gross_amount > 0 ? $order->gross_amount : $order->total_amount),
+                                'seller_discount' => (float) $order->seller_discount,
+                                'channel_fee' => (float) $order->getTotalFees(),
+                                'commission_fee' => (float) $order->commission_fee,
+                                'service_fee' => (float) $order->service_fee,
+                                'transaction_fee' => (float) $order->transaction_fee,
+                                'net_settlement_amount' => (float) $order->getCalculatedNetSettlement(),
+                                'settlement_status' => (string) $order->settlement_status,
                                 'order_status' => strtoupper((string) $order->order_status),
                                 'placed_at' => $order->placed_at ? $order->placed_at->format('d M Y, H:i') : $order->created_at->format('d M Y, H:i'),
                                 'items' => $orderItems,
@@ -755,17 +762,27 @@
                     <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-2 text-[12.5px]">
                         <div class="flex items-center justify-between text-black/60 dark:text-white/60">
                             <span>Total Belanja Pembeli:</span>
-                            <span class="font-bold text-black dark:text-white" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.total_amount || 0))"></span>
+                            <span class="font-bold text-black dark:text-white" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.gross_amount || selectedOrder?.total_amount || 0))"></span>
                         </div>
+                        <template x-if="selectedOrder?.seller_discount > 0">
+                            <div class="flex items-center justify-between text-red-500 text-[11.5px]">
+                                <span>Diskon Ditanggung Toko:</span>
+                                <span x-text="'-Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.seller_discount || 0))"></span>
+                            </div>
+                        </template>
                         <template x-if="selectedOrder?.channel_fee > 0">
                             <div class="flex items-center justify-between text-black/50 dark:text-white/50 text-[11.5px]">
-                                <span>Potongan Admin / Layanan Channel:</span>
+                                <span>Potongan Admin / Biaya Marketplace:</span>
                                 <span class="text-[#FF3B30] font-semibold" x-text="'-Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.channel_fee || 0))"></span>
                             </div>
                         </template>
                         <div class="flex items-center justify-between pt-2 border-t border-black/[0.06] dark:border-white/[0.08] text-[14px] font-bold text-black dark:text-white">
-                            <span>Pendapatan Bersih:</span>
-                            <span class="text-emerald-600 dark:text-emerald-400 font-extrabold" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(Math.max(0, (selectedOrder?.total_amount || 0) - (selectedOrder?.channel_fee || 0))))"></span>
+                            <span>Estimasi Net Settlement:</span>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-extrabold" x-text="'Rp ' + (new Intl.NumberFormat('id-ID').format(selectedOrder?.net_settlement_amount || Math.max(0, (selectedOrder?.total_amount || 0) - (selectedOrder?.channel_fee || 0))))"></span>
+                        </div>
+                        <div class="flex items-center justify-between pt-1 text-[11px] text-black/40 dark:text-white/40">
+                            <span>Status Escrow:</span>
+                            <span class="font-semibold text-[#007AFF]" x-text="selectedOrder?.settlement_status ? selectedOrder.settlement_status.toUpperCase() : 'PENDING'"></span>
                         </div>
                     </div>
                 </div>

@@ -41,6 +41,12 @@ class JournalEntry extends Model
 
     public const REF_SETTLEMENT = 'settlement';
 
+    public const REF_MARKETPLACE_ORDER = 'marketplace_order';
+
+    public const REF_MARKETPLACE_SETTLEMENT = 'marketplace_settlement';
+
+    public const REF_MARKETPLACE_PAYOUT = 'marketplace_payout';
+
     public const REF_STOCK_ADJUSTMENT = 'stock_adjustment';
 
     public const REF_CASH_TRANSFER = 'cash_transfer';

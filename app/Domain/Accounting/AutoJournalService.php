@@ -59,6 +59,14 @@ final class AutoJournalService
             ['code' => '6-6011', 'name' => 'Beban BPJS Ketenagakerjaan & Kesehatan (Perusahaan)', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '7-7004', 'name' => 'Pendapatan Selisih Stok', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
             ['code' => '7-7005', 'name' => 'Pendapatan Selisih Pembulatan Kasir', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
+            // Marketplace & Omnichannel Standard COA
+            ['code' => '1-1007', 'name' => 'Piutang Marketplace (Escrow)', 'type' => ChartOfAccount::TYPE_ASSET, 'normal_balance' => 'debit'],
+            ['code' => '4-4004', 'name' => 'Pendapatan Penjualan Marketplace', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
+            ['code' => '6-6006', 'name' => 'Beban Komisi & Admin Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
+            ['code' => '6-6007', 'name' => 'Beban Layanan & Transaksi Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
+            ['code' => '6-6008', 'name' => 'Beban Ongkir & Logistik Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
+            ['code' => '6-6009', 'name' => 'Beban Penalti & Penyesuaian Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
+            ['code' => '7-7006', 'name' => 'Pendapatan Subsidi Ongkir & Promosi Marketplace', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
         ];
 
 
@@ -473,6 +481,506 @@ final class AutoJournalService
                 'total_debit' => $totalDebit,
                 'total_credit' => $totalCredit,
             ]);
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Record double-entry journal for a Marketplace Order (Shopee, TikTok Shop, Tokopedia).
+     *
+     * Debits: 1-1007 Piutang Marketplace (Escrow)
+     * Debits: 6-6001 Beban Diskon Penjualan (if seller discount > 0)
+     * Credits: 4-4004 Pendapatan Penjualan Marketplace (Gross Amount)
+     */
+    public function recordMarketplaceOrderJournal(\App\Models\MarketplaceOrder $order): ?JournalEntry
+    {
+        $business = $order->business;
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $piutangMpAccount = $this->getAccount($business, '1-1007') ?? $this->getAccount($business, '1-1003');
+        $revenueMpAccount = $this->getAccount($business, '4-4004') ?? $this->getAccount($business, '4-4001');
+        $diskonAccount    = $this->getAccount($business, '6-6001');
+        $hppAccount       = $this->getAccount($business, '5-5001');
+        $persediaanAccount = $this->getAccount($business, '1-1004');
+
+        if (! $revenueMpAccount || ! $piutangMpAccount) {
+            return null;
+        }
+
+        $existing = JournalEntry::where('business_id', $business->id)
+            ->where('reference_type', JournalEntry::REF_MARKETPLACE_ORDER)
+            ->where('reference_id', $order->id)
+            ->first();
+        if ($existing) {
+            if (! $order->journal_entry_id) {
+                $order->journal_entry_id = $existing->id;
+                $order->saveQuietly();
+            }
+            return $existing;
+        }
+
+        return DB::transaction(function () use (
+            $business,
+            $order,
+            $piutangMpAccount,
+            $revenueMpAccount,
+            $diskonAccount,
+            $hppAccount,
+            $persediaanAccount
+        ) {
+            $grossAmount = (float) $order->gross_amount > 0 ? (float) $order->gross_amount : (float) $order->total_amount;
+            $sellerDiscount = (float) $order->seller_discount;
+            $netReceivable = max(0.0, $grossAmount - $sellerDiscount);
+
+            if ($netReceivable <= 0.0 && $grossAmount > 0.0) {
+                $netReceivable = $grossAmount;
+                $sellerDiscount = 0.0;
+            }
+
+            $orderRef = $order->external_order_sn ?: $order->external_order_id;
+            $channelLabel = $order->getChannelLabel();
+
+            $entry = JournalEntry::create([
+                'business_id'    => $business->id,
+                'entry_number'   => 'JRN-MP-' . strtoupper($order->channel) . '-' . substr($orderRef, -8),
+                'entry_date'     => $order->placed_at ? $order->placed_at->toDateString() : now()->toDateString(),
+                'reference_type' => JournalEntry::REF_MARKETPLACE_ORDER,
+                'reference_id'   => $order->id,
+                'description'    => "Penjualan {$channelLabel} #{$orderRef} ({$order->buyer_name})",
+                'total_debit'    => 0.0,
+                'total_credit'   => 0.0,
+                'created_by'     => null,
+            ]);
+
+            $totalDebit = 0.0;
+            $totalCredit = 0.0;
+
+            // 1. Debit Piutang Marketplace (Escrow)
+            if ($netReceivable > 0) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $piutangMpAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $netReceivable,
+                    'notes'            => "Piutang Penjualan {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $netReceivable;
+            }
+
+            // 2. Debit Beban Diskon Penjual (jika ada potongan dari penjual)
+            if ($sellerDiscount > 0 && $diskonAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $diskonAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $sellerDiscount,
+                    'notes'            => "Diskon Penjual {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $sellerDiscount;
+            }
+
+            // 3. Credit Pendapatan Penjualan Marketplace
+            if ($grossAmount > 0) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $revenueMpAccount->id,
+                    'type'             => JournalEntryLine::TYPE_CREDIT,
+                    'amount'           => $grossAmount,
+                    'notes'            => "Pendapatan Gross {$channelLabel} #{$orderRef}",
+                ]);
+                $totalCredit += $grossAmount;
+            }
+
+            // 4. HPP & Persediaan (bila item terhubung ke master katalog COOCA)
+            if ($hppAccount && $persediaanAccount && ! empty($order->items_summary) && is_array($order->items_summary)) {
+                $totalCogs = 0.0;
+                foreach ($order->items_summary as $item) {
+                    $qty = (int) ($item['quantity'] ?? 1);
+                    $cogsPerItem = 0.0;
+                    if (! empty($item['sku'])) {
+                        $prod = \App\Models\Product::where('business_id', $business->id)
+                            ->where('sku', (string) $item['sku'])
+                            ->first();
+                        if ($prod && (float) $prod->cost_price > 0) {
+                            $cogsPerItem = (float) $prod->cost_price;
+                        }
+                    }
+                    $totalCogs += ($qty * $cogsPerItem);
+                }
+
+                if ($totalCogs > 0) {
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id'       => $hppAccount->id,
+                        'type'             => JournalEntryLine::TYPE_DEBIT,
+                        'amount'           => $totalCogs,
+                        'notes'            => "HPP Pesanan {$channelLabel} #{$orderRef}",
+                    ]);
+                    $totalDebit += $totalCogs;
+
+                    JournalEntryLine::create([
+                        'journal_entry_id' => $entry->id,
+                        'account_id'       => $persediaanAccount->id,
+                        'type'             => JournalEntryLine::TYPE_CREDIT,
+                        'amount'           => $totalCogs,
+                        'notes'            => "Pengurangan Stok {$channelLabel} #{$orderRef}",
+                    ]);
+                    $totalCredit += $totalCogs;
+                }
+            }
+
+            $entry->update([
+                'total_debit'  => $totalDebit,
+                'total_credit' => $totalCredit,
+            ]);
+
+            $order->journal_entry_id = $entry->id;
+            $order->saveQuietly();
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Record journal entry for Marketplace Escrow Settlement & Fee Deductions.
+     *
+     * Debits: 6-6006 Beban Komisi & Admin Marketplace
+     * Debits: 6-6007 Beban Layanan & Transaksi Marketplace
+     * Debits: 6-6008 Beban Ongkir & Logistik Marketplace
+     * Debits: 6-6009 Beban Penalti / Penyesuaian (if any)
+     * Credits: 7-7006 Pendapatan Subsidi Ongkir (if any)
+     * Credits: 1-1007 Piutang Marketplace (Escrow deduction)
+     */
+    public function recordMarketplaceEscrowSettlementJournal(\App\Models\MarketplaceOrder $order): ?JournalEntry
+    {
+        $business = $order->business;
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $piutangMpAccount = $this->getAccount($business, '1-1007') ?? $this->getAccount($business, '1-1003');
+        $komisiAccount    = $this->getAccount($business, '6-6006') ?? $this->getAccount($business, '6-6002');
+        $layananAccount   = $this->getAccount($business, '6-6007') ?? $this->getAccount($business, '6-6003');
+        $ongkirAccount    = $this->getAccount($business, '6-6008') ?? $this->getAccount($business, '6-6002');
+        $penaltiAccount   = $this->getAccount($business, '6-6009') ?? $this->getAccount($business, '6-6002');
+        $subsidiAccount   = $this->getAccount($business, '7-7006') ?? $this->getAccount($business, '4-4004');
+
+        if (! $piutangMpAccount || ! $komisiAccount) {
+            return null;
+        }
+
+        $existing = JournalEntry::where('business_id', $business->id)
+            ->where('reference_type', JournalEntry::REF_MARKETPLACE_SETTLEMENT)
+            ->where('reference_id', $order->id)
+            ->first();
+        if ($existing) {
+            if (! $order->settlement_journal_entry_id) {
+                $order->settlement_journal_entry_id = $existing->id;
+                $order->saveQuietly();
+            }
+            return $existing;
+        }
+
+        return DB::transaction(function () use (
+            $business,
+            $order,
+            $piutangMpAccount,
+            $komisiAccount,
+            $layananAccount,
+            $ongkirAccount,
+            $penaltiAccount,
+            $subsidiAccount
+        ) {
+            $commissionFee = (float) $order->commission_fee;
+            $serviceFee    = (float) $order->service_fee;
+            $transFee      = (float) $order->transaction_fee;
+
+            if (($commissionFee + $serviceFee + $transFee) <= 0 && (float) $order->channel_fee > 0) {
+                $commissionFee = (float) $order->channel_fee;
+            }
+
+            $shippingSeller  = (float) $order->shipping_fee_seller;
+            $adjustmentFee   = (float) $order->adjustment_amount;
+            $shippingSubsidy = (float) $order->shipping_subsidy;
+
+            $totalDeductions = ($commissionFee + $serviceFee + $transFee + $shippingSeller + $adjustmentFee) - $shippingSubsidy;
+
+            if ($totalDeductions <= 0) {
+                return null;
+            }
+
+            $orderRef = $order->external_order_sn ?: $order->external_order_id;
+            $channelLabel = $order->getChannelLabel();
+
+            $entry = JournalEntry::create([
+                'business_id'    => $business->id,
+                'entry_number'   => 'JRN-MP-SETTLE-' . strtoupper($order->channel) . '-' . substr($orderRef, -8),
+                'entry_date'     => $order->settled_at ? $order->settled_at->toDateString() : now()->toDateString(),
+                'reference_type' => JournalEntry::REF_MARKETPLACE_SETTLEMENT,
+                'reference_id'   => $order->id,
+                'description'    => "Penyelesaian Biaya & Escrow {$channelLabel} #{$orderRef}",
+                'total_debit'    => 0.0,
+                'total_credit'   => 0.0,
+                'created_by'     => null,
+            ]);
+
+            $totalDebit = 0.0;
+            $totalCredit = 0.0;
+
+            // Debits: Komisi & Admin
+            if ($commissionFee > 0) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $komisiAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $commissionFee,
+                    'notes'            => "Komisi {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $commissionFee;
+            }
+
+            // Debits: Layanan & Transaksi / MDR
+            $combinedLayanan = $serviceFee + $transFee;
+            if ($combinedLayanan > 0 && $layananAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $layananAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $combinedLayanan,
+                    'notes'            => "Biaya Layanan & Pembayaran {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $combinedLayanan;
+            }
+
+            // Debits: Beban Ongkir Penjual
+            if ($shippingSeller > 0 && $ongkirAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $ongkirAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $shippingSeller,
+                    'notes'            => "Beban Pengiriman Penjual {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $shippingSeller;
+            }
+
+            // Debits: Penalti / Penyesuaian
+            if ($adjustmentFee > 0 && $penaltiAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $penaltiAccount->id,
+                    'type'             => JournalEntryLine::TYPE_DEBIT,
+                    'amount'           => $adjustmentFee,
+                    'notes'            => "Penalti / Penyesuaian {$channelLabel} #{$orderRef}",
+                ]);
+                $totalDebit += $adjustmentFee;
+            }
+
+            // Credits: Subsidi Ongkir Marketplace (jika ada kompensasi)
+            if ($shippingSubsidy > 0 && $subsidiAccount) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $subsidiAccount->id,
+                    'type'             => JournalEntryLine::TYPE_CREDIT,
+                    'amount'           => $shippingSubsidy,
+                    'notes'            => "Subsidi Ongkir {$channelLabel} #{$orderRef}",
+                ]);
+                $totalCredit += $shippingSubsidy;
+            }
+
+            // Credits: Pengurangan Piutang Escrow Marketplace
+            if ($totalDeductions > 0) {
+                JournalEntryLine::create([
+                    'journal_entry_id' => $entry->id,
+                    'account_id'       => $piutangMpAccount->id,
+                    'type'             => JournalEntryLine::TYPE_CREDIT,
+                    'amount'           => $totalDeductions,
+                    'notes'            => "Pemotongan Biaya Escrow {$channelLabel} #{$orderRef}",
+                ]);
+                $totalCredit += $totalDeductions;
+            }
+
+            $entry->update([
+                'total_debit'  => $totalDebit,
+                'total_credit' => $totalCredit,
+            ]);
+
+            $order->settlement_journal_entry_id = $entry->id;
+            $order->settlement_status = \App\Models\MarketplaceOrder::SETTLEMENT_SETTLED;
+            if (! $order->settled_at) {
+                $order->settled_at = now();
+            }
+            $order->saveQuietly();
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Record double-entry journal when Marketplace funds are disbursed to merchant's Bank Account.
+     *
+     * Debits: 1-1002 Bank / Kas Usaha
+     * Credits: 1-1007 Piutang Marketplace (Escrow)
+     */
+    public function recordMarketplacePayoutJournal(
+        \App\Models\MarketplaceSettlement $settlement,
+        ?\App\Models\CashAccount $destinationCashAccount = null
+    ): ?JournalEntry {
+        $business = $settlement->business;
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $piutangMpAccount = $this->getAccount($business, '1-1007') ?? $this->getAccount($business, '1-1003');
+
+        $bankCoaAccount = null;
+        if ($destinationCashAccount && $destinationCashAccount->chart_of_account_id) {
+            $bankCoaAccount = ChartOfAccount::find($destinationCashAccount->chart_of_account_id);
+        }
+        if (! $bankCoaAccount) {
+            $bankCoaAccount = $this->getAccount($business, '1-1002') ?? $this->getAccount($business, '1-1001');
+        }
+
+        if (! $piutangMpAccount || ! $bankCoaAccount) {
+            return null;
+        }
+
+        $existing = JournalEntry::where('business_id', $business->id)
+            ->where('reference_type', JournalEntry::REF_MARKETPLACE_PAYOUT)
+            ->where('reference_id', $settlement->id)
+            ->first();
+        if ($existing) {
+            if (! $settlement->journal_entry_id) {
+                $settlement->journal_entry_id = $existing->id;
+                $settlement->saveQuietly();
+            }
+            return $existing;
+        }
+
+        return DB::transaction(function () use (
+            $business,
+            $settlement,
+            $piutangMpAccount,
+            $bankCoaAccount,
+            $destinationCashAccount
+        ) {
+            $netPayout = (float) $settlement->net_payout_amount;
+            if ($netPayout <= 0) {
+                return null;
+            }
+
+            $channelLabel = $settlement->getChannelLabel();
+            $destName = $destinationCashAccount ? $destinationCashAccount->name : ($settlement->bank_name ? "{$settlement->bank_name} ({$settlement->bank_account_number})" : 'Bank Usaha');
+
+            $entry = JournalEntry::create([
+                'business_id'    => $business->id,
+                'entry_number'   => 'JRN-MP-PAYOUT-' . substr(preg_replace('/[^A-Za-z0-9]/', '', $settlement->settlement_sn), -10),
+                'entry_date'     => $settlement->payout_date ? $settlement->payout_date->toDateString() : now()->toDateString(),
+                'reference_type' => JournalEntry::REF_MARKETPLACE_PAYOUT,
+                'reference_id'   => $settlement->id,
+                'description'    => "Pencairan Dana {$channelLabel} SN #{$settlement->settlement_sn} ke {$destName}",
+                'total_debit'    => $netPayout,
+                'total_credit'   => $netPayout,
+                'created_by'     => null,
+            ]);
+
+            // 1. Debit Bank / Kas Usaha
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id'       => $bankCoaAccount->id,
+                'type'             => JournalEntryLine::TYPE_DEBIT,
+                'amount'           => $netPayout,
+                'notes'            => "Masuk Rekening dari {$channelLabel} SN #{$settlement->settlement_sn}",
+            ]);
+
+            // 2. Credit Piutang Marketplace (Escrow cleared)
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id'       => $piutangMpAccount->id,
+                'type'             => JournalEntryLine::TYPE_CREDIT,
+                'amount'           => $netPayout,
+                'notes'            => "Pencairan Piutang Escrow {$channelLabel}",
+            ]);
+
+            $settlement->journal_entry_id = $entry->id;
+            $settlement->status = \App\Models\MarketplaceSettlement::STATUS_COMPLETED;
+            $settlement->reconciled_at = now();
+            if ($destinationCashAccount) {
+                $settlement->cash_account_id = $destinationCashAccount->id;
+            }
+            $settlement->saveQuietly();
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Record refund journal for a Marketplace Order.
+     */
+    public function recordMarketplaceRefundJournal(\App\Models\MarketplaceOrder $order, float $refundAmount = 0.0): ?JournalEntry
+    {
+        $business = $order->business;
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $piutangMpAccount = $this->getAccount($business, '1-1007') ?? $this->getAccount($business, '1-1003');
+        $returAccount     = $this->getAccount($business, '4-4002');
+
+        if (! $piutangMpAccount || ! $returAccount) {
+            return null;
+        }
+
+        $amount = $refundAmount > 0 ? $refundAmount : (float) $order->refund_amount;
+        if ($amount <= 0) {
+            return null;
+        }
+
+        return DB::transaction(function () use ($business, $order, $piutangMpAccount, $returAccount, $amount) {
+            $orderRef = $order->external_order_sn ?: $order->external_order_id;
+            $channelLabel = $order->getChannelLabel();
+
+            $entry = JournalEntry::create([
+                'business_id'    => $business->id,
+                'entry_number'   => 'JRN-MP-REFUND-' . substr($orderRef, -8),
+                'entry_date'     => now()->toDateString(),
+                'reference_type' => JournalEntry::REF_MARKETPLACE_ORDER,
+                'reference_id'   => $order->id,
+                'description'    => "Retur / Pengembalian Dana {$channelLabel} #{$orderRef}",
+                'total_debit'    => $amount,
+                'total_credit'   => $amount,
+                'created_by'     => null,
+            ]);
+
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id'       => $returAccount->id,
+                'type'             => JournalEntryLine::TYPE_DEBIT,
+                'amount'           => $amount,
+                'notes'            => "Retur Penjualan {$channelLabel} #{$orderRef}",
+            ]);
+
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id'       => $piutangMpAccount->id,
+                'type'             => JournalEntryLine::TYPE_CREDIT,
+                'amount'           => $amount,
+                'notes'            => "Pengurangan Piutang {$channelLabel} #{$orderRef}",
+            ]);
+
+            $order->settlement_status = \App\Models\MarketplaceOrder::SETTLEMENT_REFUNDED;
+            $order->saveQuietly();
 
             return $entry;
         });

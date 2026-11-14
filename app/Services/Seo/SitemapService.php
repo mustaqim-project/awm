@@ -33,7 +33,6 @@ final class SitemapService
         '/' => ['name' => 'Beranda Cooca', 'category' => 'Halaman Utama', 'priority' => '1.0', 'changefreq' => 'daily', 'view' => 'landing'],
         '/pricing' => ['name' => 'Harga Aplikasi Kasir & ERP UMKM', 'category' => 'Harga & Paket', 'priority' => '0.9', 'changefreq' => 'weekly', 'view' => 'public.pricing'],
         '/about' => ['name' => 'Tentang Kami & Misi UMKM Cooca', 'category' => 'Tentang Kami', 'priority' => '0.8', 'changefreq' => 'monthly', 'view' => 'public.about'],
-        '/demo' => ['name' => 'Jadwal Demo & Uji Coba Gratis', 'category' => 'Demo Produk', 'priority' => '0.8', 'changefreq' => 'weekly', 'view' => 'public.demo'],
         '/support' => ['name' => 'Pusat Bantuan & Layanan Konsumen', 'category' => 'Bantuan & Support', 'priority' => '0.8', 'changefreq' => 'monthly', 'view' => 'public.support'],
         '/kontak' => ['name' => 'Hubungi Tim Cooca', 'category' => 'Informasi', 'priority' => '0.7', 'changefreq' => 'monthly', 'view' => 'public.contact.index'],
         '/terms' => ['name' => 'Syarat & Ketentuan Layanan', 'category' => 'Legalitas', 'priority' => '0.5', 'changefreq' => 'monthly', 'view' => 'public.terms'],

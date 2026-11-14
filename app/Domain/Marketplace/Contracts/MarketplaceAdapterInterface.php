@@ -88,5 +88,20 @@ interface MarketplaceAdapterInterface
      * @return array{event: string, shop_id: string, payload: array, is_valid: bool}
      */
     public function handleWebhook(Request $request, string $rawBody, array $headers): array;
+
+    /**
+     * Get itemized escrow and financial breakdown for a specific order.
+     *
+     * @return array<string, mixed>
+     */
+    public function getEscrowDetail(MarketplaceAccount $account, string $orderId): array;
+
+    /**
+     * Search and retrieve marketplace payout / settlement records.
+     *
+     * @param array<string, mixed> $params
+     * @return array<int, array<string, mixed>>
+     */
+    public function getSettlements(MarketplaceAccount $account, array $params = []): array;
 }
 

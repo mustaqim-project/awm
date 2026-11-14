@@ -1,0 +1,157 @@
+---
+title: "Fasilitas Bebas Pajak Omzet 500 Juta PP 20 2026 Pengusaha"
+meta_title: "Fasilitas Bebas Pajak Omzet 500 Juta PP 20 2026"
+meta_description: "Panduan fasilitas bebas pajak omzet 500 juta PP 20 2026 bagi wajib pajak orang pribadi, cara hitung kumulatif kasir, dan ketentuan setor PPh Final."
+slug: "fasilitas-bebas-pajak-omzet-500-juta-pp-20-tahun-2026"
+primary_keyword: "fasilitas bebas pajak omzet 500 juta pp 20 2026"
+secondary_keywords: "ketentuan pp nomor 20 tahun 2026 pajak umkm, cara hitung kumulatif omzet kasir tahunan, batasan pph final 0 koma 5 persen, pencatatan rekapitulasi omzet bulanan, perbedaan pajak orang pribadi dan perseroan perorangan"
+search_intent: "informational"
+category: "Pajak & Legalitas"
+reading_time: "8 menit"
+cover_image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
+published_at: "2026-11-15T01:25:00+07:00"
+---
+# Fasilitas Bebas Pajak Omzet 500 Juta PP 20 2026 Pengusaha
+
+Memahami pemanfaatan fasilitas bebas pajak omzet 500 juta pp 20 2026 merupakan kabar melegakan sekaligus kewajiban pembukuan krusial bagi seluruh pelaku usaha perseorangan di tanah air. Melalui penerbitan Peraturan Pemerintah Nomor 20 Tahun 2026 sebagai pembaruan atas regulasi perpajakan UMKM sebelumnya, negara secara tegas memberikan perlindungan modal bagi pengusaha mikro dan kecil. Wajib Pajak Orang Pribadi yang menjalankan kegiatan usaha dengan peredaran bruto tertentu diberikan pembebasan pengenaan Pajak Penghasilan (PPh) Final 0,5 persen atas omzet kumulatif hingga Rp500 juta pertama dalam satu tahun pajak.
+
+Meskipun omzet di bawah setengah miliar rupiah tersebut bebas dari setoran pajak bulanan, banyak pemilik toko yang salah kaprah mengira bahwa mereka tidak perlu melakukan pencatatan keuangan sama sekali. Ketidaktertiban rekapitulasi kasir bulanan dapat memicu perselisihan tafsir dengan petugas pajak saat pelaporan Surat Pemberitahuan (SPT) Tahunan tiba. Melalui panduan ini, kita akan membahas mekanisme perhitungan kumulatif omzet kasir, batasan subjek hukum yang berhak menerima fasilitas, serta cara mengamankan bukti pembukuan agar status kepatuhan pajak toko Anda tetap bersih.
+
+## Ketentuan Pokok Fasilitas Bebas Pajak Berdasarkan PP 20 Tahun 2026
+
+Pembaruan aturan melalui PP Nomor 20 Tahun 2026 memberikan kepastian hukum yang lebih kuat mengenai siapa saja yang berhak memanfaatkan insentif omzet tidak kena pajak ini:
+
+1. **Khusus Wajib Pajak Orang Pribadi (WP OP):** Fasilitas pembebasan pajak atas omzet Rp500 juta pertama per tahun ini berlaku eksklusif untuk Wajib Pajak Orang Pribadi yang menyelenggarakan usaha, baik toko kelontong, kafe, pedagang online, maupun bengkel.
+2. **Subjek Badan Tidak Memperoleh Pembebasan 500 Juta:** Badan usaha berbentuk CV, Firma, atau PT konvensional dikenakan tarif pajak sejak rupiah pertama penjualan dan tidak mendapatkan batas pengurangan Rp500 juta ini.
+3. **Perseroan Perorangan (PT Perorangan):** Berdasarkan PP 20/2026, PT Perorangan dapat memanfaatkan tarif PPh Final 0,5 persen, namun ketentuan pembebasan Rp500 juta omzet pertama dikhususkan bagi WP Orang Pribadi.
+
+Untuk memahami dasar hukum tarif setengah persen secara lebih luas, Anda dapat meninjau rujukan [tarif pph final umkm 0 5 persen pp 55](https://cooca.id/blog/tarif-pph-final-umkm-0-5-persen-pp-55) yang menjadi landasan regulasi sebelumnya. Selain itu, Anda juga dapat membaca artikel [aturan pph final umkm pp 20 tahun 2026](https://cooca.id/blog/aturan-pph-final-umkm-pp-20-tahun-2026) guna memahami hak dan kewajiban perpajakan usaha terbaru secara komprehensif.
+
+## Simulasi Perhitungan Kumulatif Omzet dan Kapan Mulai Setor Pajak
+
+Kunci dari penerapan fasilitas bebas pajak omzet 500 juta pp 20 2026 terletak pada pencatatan kumulatif dari bulan Januari hingga Desember dalam satu tahun takwim. Pengusaha hanya diwajibkan menyetorkan PPh Final 0,5 persen pada bulan di mana total peredaran bruto toko telah menembus angka ambang batas Rp500 juta, dan pajak hanya dikenakan atas nilai selisih kelebihannya.
+
+Perhatikan tabel simulasi perhitungan omzet kasir toko ritel berikut:
+
+| Bulan Berjalan | Omzet Bulanan Riil | Akumulasi Omzet Kasir | Status Pajak Terutang | Nominal Setoran PPh Final (0,5%) |
+| --- | --- | --- | --- | --- |
+| Januari | Rp 70.000.000 | Rp 70.000.000 | Bebas Pajak (Di Bawah 500 Juta) | Rp 0 (Nihil) |
+| Februari | Rp 80.000.000 | Rp 150.000.000 | Bebas Pajak (Di Bawah 500 Juta) | Rp 0 (Nihil) |
+| Maret | Rp 90.000.000 | Rp 240.000.000 | Bebas Pajak (Di Bawah 500 Juta) | Rp 0 (Nihil) |
+| April | Rp 100.000.000 | Rp 340.000.000 | Bebas Pajak (Di Bawah 500 Juta) | Rp 0 (Nihil) |
+| Mei | Rp 110.000.000 | Rp 450.000.000 | Bebas Pajak (Di Bawah 500 Juta) | Rp 0 (Nihil) |
+| Juni | Rp 120.000.000 | Rp 570.000.000 | Kena Pajak atas Kelebihan 70 Juta | Rp 350.000 (0,5% x 70 Juta) |
+| Juli | Rp 100.000.000 | Rp 670.000.000 | Kena Pajak Penuh atas Omzet Juli | Rp 500.000 (0,5% x 100 Juta) |
+
+Pada contoh di atas, dari bulan Januari hingga Mei, toko tidak perlu menyetorkan uang pajak sama sekali karena akumulasi omzet masih berada di angka Rp450 juta. Pada bulan Juni, saat omzet menembus angka Rp570 juta, pajak 0,5 persen hanya dibayarkan atas porsi Rp70 juta yang melampaui batas batas ambang. Mulai bulan Juli dan seterusnya hingga akhir tahun, seluruh omzet bulanan dikenakan tarif 0,5 persen secara penuh.
+
+Untuk memastikan kesesuaian data identitas usaha pada sistem perpajakan nasional, pelajari panduan [tata cara validasi nik npwp 16 digit transaksi b2b](https://cooca.id/blog/tata-cara-validasi-nik-npwp-16-digit-transaksi-b2b) yang menjelaskan integrasi data NIK KTP sebagai nomor pokok wajib pajak. Simak juga panduan [persiapan tutup buku tahun 2026 umkm sak emkm](https://cooca.id/blog/persiapan-tutup-buku-tahun-2026-umkm-sak-emkm) untuk menyusun rekapitulasi tahunan.
+
+## SOP Rekapitulasi Kasir dan Bukti Validasi SPT Tahunan
+
+Meskipun setoran bulanan berstatus nihil selama omzet belum menyentuh Rp500 juta, wajib pajak orang pribadi tetap memiliki kewajiban melaporkan rekapitulasi omzet peredaran bruto bulanan di dalam lampiran SPT Tahunan PPh Orang Pribadi pada awal tahun berikutnya.
+
+Toko ritel wajib menjalankan SOP pencatatan berikut:
+- **Simpan Rekap Penjualan Harian POS:** Cetak atau simpan laporan closing harian kasir sebagai arsip pendukung bahwa angka penjualan tidak dimanipulasi.
+- **Rekonsiliasi Mutasi Rekening Bank Toko:** Pisahkan rekening pribadi dengan rekening operasional usaha agar mutasi uang masuk murni berasal dari omzet penjualan barang.
+- **Formulir Rekapitulasi Peredaran Bruto Bulanan:** Buat rekapitulasi tabel bulanan yang merinci tanggal transaksi, nomor nota penjualan, dan total penerimaan kasir.
+
+## Otomasi Pembukuan Omzet Pajak Bersama Cooca
+
+Menghitung akumulasi omzet kasir secara manual dari tumpukan buku catatan sering kali membuat pemilik usaha lupa kapan tepatnya angka Rp500 juta terlampaui. Akibatnya, pengusaha terlambat menyetorkan pajak dan terkena denda administrasi.
+
+Platform Cooca hadir sebagai Business Operating System all-in-one yang dirancang untuk mendukung operasional UMKM Indonesia. Melalui sistem kasir POS Cooca, setiap transaksi tunai, transfer, dan QRIS langsung tercatat secara real-time ke dalam jurnal penjualan otomatis. Sistem Cooca menyediakan indikator pelacak kumulatif omzet tahunan yang secara otomatis memberi tahu Anda jika omzet toko mendekati ambang batas Rp500 juta, serta langsung mengkalkulasikan nilai PPh Final 0,5 persen secara transparan begitu batas tersebut terlewati.
+
+Bagi Anda pemilik usaha perorangan, Cooca menyediakan Paket Solo Owner Rp 0 yang dapat digunakan gratis selamanya tanpa batasan masa berlaku. Di samping sistem POS modern, Cooca dilengkapi manajemen inventori multi-gudang, kalkulasi HPP berbasis aktivitas (Activity-Based Costing), struk digital via WhatsApp Gateway resmi, serta laporan keuangan otomatis berstandar SAK EMKM. Bersama Cooca, pemanfaatan fasilitas bebas pajak omzet 500 juta pp 20 2026 menjadi tertib, transparan, dan usaha Anda terlindungi dari risiko denda pajak.
+
+## FAQ
+
+### Siapa saja yang berhak memanfaatkan fasilitas bebas pajak omzet Rp500 juta pertama?
+Fasilitas ini diberikan khusus kepada Wajib Pajak Orang Pribadi yang menjalankan kegiatan usaha mikro, kecil, dan menengah sesuai ketentuan PP Nomor 20 Tahun 2026.
+
+### Apakah badan usaha seperti CV atau PT mendapatkan fasilitas pembebasan omzet 500 juta?
+Tidak, fasilitas bebas pajak omzet Rp500 juta pertama hanya berlaku untuk wajib pajak orang pribadi. Badan usaha dikenakan pajak sejak rupiah pertama penjualan.
+
+### Apakah pemilik usaha yang omzetnya di bawah Rp500 juta masih wajib lapor SPT Tahunan?
+Ya, pemilik usaha tetap wajib melaporkan Surat Pemberitahuan (SPT) Tahunan dengan melampirkan rekapitulasi peredaran bruto bulanan yang berstatus tidak terutang pajak.
+
+### Bagaimana cara menghitung pajak pada bulan di mana omzet melewati batas Rp500 juta?
+Pajak PPh Final 0,5 persen hanya dikenakan atas nilai selisih yang melebihi batas Rp500 juta pada bulan tersebut, bukan atas seluruh omzet bulanan.
+
+### Apakah fasilitas bebas pajak ini dihitung ulang dari nol setiap awal tahun baru?
+Ya, perhitungan batas omzet Rp500 juta direset kembali ke nol pada setiap awal tahun pajak baru per 1 Januari.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Fasilitas Bebas Pajak Omzet 500 Juta PP 20 2026 Pengusaha",
+      "description": "Panduan fasilitas bebas pajak omzet 500 juta PP 20 2026 bagi wajib pajak orang pribadi, cara hitung kumulatif kasir, dan ketentuan setor PPh Final.",
+      "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
+      "datePublished": "2026-11-15T01:25:00+07:00",
+      "dateModified": "2026-11-15T01:25:00+07:00",
+      "url": "https://cooca.id/blog/fasilitas-bebas-pajak-omzet-500-juta-pp-20-tahun-2026",
+      "mainEntityOfPage": "https://cooca.id/blog/fasilitas-bebas-pajak-omzet-500-juta-pp-20-tahun-2026",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Siapa saja yang berhak memanfaatkan fasilitas bebas pajak omzet Rp500 juta pertama?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fasilitas ini diberikan khusus kepada Wajib Pajak Orang Pribadi yang menjalankan kegiatan usaha mikro, kecil, dan menengah sesuai ketentuan PP Nomor 20 Tahun 2026."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah badan usaha seperti CV atau PT mendapatkan fasilitas pembebasan omzet 500 juta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tidak, fasilitas bebas pajak omzet Rp500 juta pertama hanya berlaku untuk wajib pajak orang pribadi. Badan usaha dikenakan pajak sejak rupiah pertama penjualan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah pemilik usaha yang omzetnya di bawah Rp500 juta masih wajib lapor SPT Tahunan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, pemilik usaha tetap wajib melaporkan Surat Pemberitahuan (SPT) Tahunan dengan melampirkan rekapitulasi peredaran bruto bulanan yang berstatus tidak terutang pajak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara menghitung pajak pada bulan di mana omzet melewati batas Rp500 juta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pajak PPh Final 0,5 persen hanya dikenakan atas nilai selisih yang melebihi batas Rp500 juta pada bulan tersebut, bukan atas seluruh omzet bulanan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah fasilitas bebas pajak ini dihitung ulang dari nol setiap awal tahun baru?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya, perhitungan batas omzet Rp500 juta direset kembali ke nol pada setiap awal tahun pajak baru per 1 Januari."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

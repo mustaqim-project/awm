@@ -4,16 +4,23 @@ declare(strict_types=1);
 
 namespace App\Domain\Marketplace;
 
+use App\Domain\Accounting\AutoJournalService;
 use App\Models\Business;
 use App\Models\MarketplaceAccount;
 use App\Models\MarketplaceOrder;
 use App\Models\MarketplaceProductMapping;
 use App\Models\MarketplaceSyncLog;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MarketplaceOrderService
 {
-    public function __construct(protected MarketplaceManagerService $manager) {}
+    public function __construct(
+        protected MarketplaceManagerService $manager,
+        protected ?AutoJournalService $journalService = null
+    ) {
+        $this->journalService = $journalService ?? app(AutoJournalService::class);
+    }
 
     /**
      * Pull recent orders from marketplace and store them in database.
@@ -87,7 +94,53 @@ class MarketplaceOrderService
             if (! $order->exists) {
                 $order->placed_at = now();
             }
+
+            // Financial & Granular Fee Breakdown Extraction
+            $gross = (float) ($data['gross_amount'] ?? ($data['original_amount'] ?? $order->total_amount));
+            $order->gross_amount        = $gross > 0 ? $gross : $order->total_amount;
+            $order->seller_discount     = (float) ($data['seller_discount'] ?? ($order->seller_discount ?? 0));
+            $order->platform_discount   = (float) ($data['platform_discount'] ?? ($order->platform_discount ?? 0));
+            $order->voucher_code        = $data['voucher_code'] ?? $order->voucher_code;
+            $order->voucher_amount      = (float) ($data['voucher_amount'] ?? ($order->voucher_amount ?? 0));
+            $order->commission_fee      = (float) ($data['commission_fee'] ?? ($order->commission_fee ?? 0));
+            $order->service_fee         = (float) ($data['service_fee'] ?? ($order->service_fee ?? 0));
+            $order->transaction_fee     = (float) ($data['transaction_fee'] ?? ($order->transaction_fee ?? 0));
+            $order->shipping_fee_buyer  = (float) ($data['shipping_fee_buyer'] ?? ($order->shipping_fee_buyer ?? 0));
+            $order->shipping_fee_seller = (float) ($data['shipping_fee_seller'] ?? ($order->shipping_fee_seller ?? 0));
+            $order->shipping_subsidy    = (float) ($data['shipping_subsidy'] ?? ($order->shipping_subsidy ?? 0));
+            $order->refund_amount       = (float) ($data['refund_amount'] ?? ($order->refund_amount ?? 0));
+            $order->adjustment_amount   = (float) ($data['adjustment_amount'] ?? ($order->adjustment_amount ?? 0));
+
+            // Net settlement calculation
+            if (isset($data['net_settlement_amount'])) {
+                $order->net_settlement_amount = (float) $data['net_settlement_amount'];
+            } else {
+                $order->net_settlement_amount = $order->getCalculatedNetSettlement();
+            }
+
+            if (! empty($data['settlement_status'])) {
+                $order->settlement_status = (string) $data['settlement_status'];
+            } elseif (in_array($order->order_status, ['COMPLETED', 'FINISHED', 'DELIVERED'], true)) {
+                $order->settlement_status = MarketplaceOrder::SETTLEMENT_SETTLED;
+                $order->settled_at = $order->settled_at ?? now();
+            } elseif ($order->order_status === 'CANCELLED') {
+                $order->settlement_status = MarketplaceOrder::SETTLEMENT_REFUNDED;
+            }
+
             $order->save();
+
+            // Auto-Journaling Double-Entry Bookkeeping Integration
+            try {
+                if ($this->journalService && in_array($order->order_status, ['UNPAID', 'TO_CONFIRM_RECEIVE', 'READY_TO_SHIP', 'PROCESSED', 'SHIPPED', 'COMPLETED', 'FINISHED', 'DELIVERED'], true)) {
+                    $this->journalService->recordMarketplaceOrderJournal($order);
+
+                    if ($order->settlement_status === MarketplaceOrder::SETTLEMENT_SETTLED) {
+                        $this->journalService->recordMarketplaceEscrowSettlementJournal($order);
+                    }
+                }
+            } catch (\Throwable $e) {
+                Log::warning("Marketplace auto-journal error for order {$order->id}: {$e->getMessage()}");
+            }
 
             return $order;
         });

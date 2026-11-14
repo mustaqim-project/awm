@@ -296,5 +296,69 @@ return [
     'anl_mod_inv_desc' => 'Inventory turnover and COGS data for gross margin calculations.',
     'anl_mod_acc_desc' => 'Official accounting records validating net profit numbers.',
     'anl_mod_bos_desc' => 'How all business operational layers are controlled from a single core.',
+
+    // Accounting Hero Keys
+    'acc_hero_badge' => 'Simplified SAK EMKM Accounting Standard',
+    'acc_hero_title' => 'Automated Accounting: Trial Balance & Tax-Ready Profit and Loss',
+    'acc_hero_subtitle' => 'No expensive accountant required. The system automatically creates double-entry debit and credit journals for sales, purchases, and debt settlements.',
+    'acc_hero_cta_primary' => 'Start for free',
+    'acc_hero_cta_secondary' => 'Explore Cash Management',
+    'acc_rating_text' => 'Journal Accuracy & SAK EMKM Standards',
+    'acc_checkpoint_1' => 'Automated Double-Entry',
+    'acc_checkpoint_2' => 'SAK EMKM Standards',
+    'acc_checkpoint_3' => 'Audit-Ready Balance Sheet',
+
+    // Analytics Hero Keys
+    'analytics_hero_badge' => 'Analytics & Business Decision Dashboard',
+    'analytics_hero_title' => 'Cross-Branch Sales & Real Profit Analytics',
+    'analytics_hero_subtitle' => 'Track revenue trends, bestselling products, and net margins across all outlets on a single dashboard without spreadsheet consolidation.',
+    'analytics_hero_cta_primary' => 'Start for free',
+    'analytics_hero_cta_secondary' => 'View Plans & Features',
+    'analytics_rating_text' => 'Trusted by Hundreds of MSME Business Owners',
+    'analytics_checkpoint_1' => 'Real-Time Visualization',
+    'analytics_checkpoint_2' => 'PDF & Excel Export',
+    'analytics_checkpoint_3' => 'Secure Multi-User Access',
+
+    // CRM Hero Keys
+    'crm_hero_badge' => 'Customer Retention & Loyalty',
+    'crm_hero_title' => 'Unified Customer Database & Loyalty Automation',
+    'crm_hero_subtitle' => 'Automatically capture customer data from POS checkouts and web stores. Dispatch digital receipts and targeted WhatsApp campaigns.',
+    'crm_hero_cta_primary' => 'Start for free',
+    'crm_hero_cta_secondary' => 'Explore Full Features',
+    'crm_rating_text' => 'Boost Repeat Orders up to 3x',
+    'crm_checkpoint_1' => 'Centralized Customer Database',
+    'crm_checkpoint_2' => 'Automated WhatsApp Integration',
+    'crm_checkpoint_3' => 'Reward Points & Tier System',
+
+    // ERP Core Hero Keys
+    'erp_hero_badge' => 'Unified MSME ERP Operating System',
+    'erp_hero_title' => 'One Complete ERP System Without Fragmented Apps',
+    'erp_hero_subtitle' => 'Manage store cashier, warehouses, vendor purchasing, employee shifts, and P&L financial statements in one platform.',
+    'erp_hero_cta_primary' => 'Start for free',
+    'erp_hero_cta_secondary' => 'Consult Business Needs',
+    'erp_rating_text' => 'Indonesian Standard ERP System',
+    'erp_checkpoint_1' => 'Multi-Branch & Multi-User',
+    'erp_checkpoint_2' => 'Real-Time Sync < 1 sec',
+    'erp_checkpoint_3' => 'Responsive Technical Support',
+
+    // Finance Hero Keys
+    'fin_hero_badge' => 'Cash Book & Working Capital Control',
+    'fin_hero_subtitle' => 'Track daily cash inflows and outflows transparently. Record operational expenses, reconcile cashier shifts, and prevent budget leaks.',
+    'fin_hero_cta_primary' => 'Start for free',
+    'fin_hero_cta_secondary' => 'View Accounting Features',
+    'fin_rating_text' => 'Cash Accuracy & Auto-Reconciliation',
+    'fin_checkpoint_1' => 'Multi Cash & Bank Accounts',
+    'fin_checkpoint_2' => 'Automatic Cashier Reconciliation',
+    'fin_checkpoint_3' => 'Operational Budget Warnings',
+
+    // Inventory Hero Keys
+    'inv_hero_badge' => 'Unified Stock & Warehouse Management',
+    'inv_hero_subtitle' => 'Control stock movements across branches and warehouses in real-time. Backed by automated bill of materials (BOM) and low stock alerts.',
+    'inv_hero_cta_primary' => 'Start for free',
+    'inv_hero_cta_secondary' => 'View Procurement Features',
+    'inv_rating_text' => '99.8% Stock Accuracy Across Branches',
+    'inv_checkpoint_1' => 'Multi-Warehouse & Stock Transfers',
+    'inv_checkpoint_2' => 'Bill of Materials (BOM) Recipes',
+    'inv_checkpoint_3' => 'Low Stock Auto-Notifications',
 ];
 

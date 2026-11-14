@@ -296,5 +296,69 @@ return [
     'anl_mod_inv_desc' => 'Data perputaran barang dan harga pokok untuk kalkulasi margin kotor.',
     'anl_mod_acc_desc' => 'Pencatatan akuntansi resmi yang memvalidasi angka profit bersih perusahaan.',
     'anl_mod_bos_desc' => 'Bagaimana seluruh layer bisnis dikendalikan dari satu core sistem.',
+
+    // Accounting Hero Keys
+    'acc_hero_badge' => 'Standar Akuntansi SAK EMKM Tanpa Rumit',
+    'acc_hero_title' => 'Akuntansi Otomatis: Neraca Saldo & Laba Rugi Siap Pajak',
+    'acc_hero_subtitle' => 'Tanpa perlu menyewa akuntan mahal. Sistem menerbitkan jurnal debit dan kredit otomatis untuk setiap penjualan, pembelian bahan, dan pembayaran utang.',
+    'acc_hero_cta_primary' => 'Start for free',
+    'acc_hero_cta_secondary' => 'Lihat Manajemen Kas',
+    'acc_rating_text' => 'Akurasi Jurnal & Standar SAK EMKM',
+    'acc_checkpoint_1' => 'Double-Entry Otomatis',
+    'acc_checkpoint_2' => 'Standar SAK EMKM',
+    'acc_checkpoint_3' => 'Neraca Laba Rugi Siap Audit',
+
+    // Analytics Hero Keys
+    'analytics_hero_badge' => 'Dashboard Analitik & Keputusan Bisnis',
+    'analytics_hero_title' => 'Analisis Penjualan & Laba Riil Lintas Cabang',
+    'analytics_hero_subtitle' => 'Ketahui tren omzet, produk terlaris, dan margin keuntungan bersih setiap outlet dalam satu layar tanpa rekap spreadsheet.',
+    'analytics_hero_cta_primary' => 'Start for free',
+    'analytics_hero_cta_secondary' => 'Pelajari Paket & Fitur',
+    'analytics_rating_text' => 'Dipercaya Ratusan Pemilik Bisnis & UMKM',
+    'analytics_checkpoint_1' => 'Visualisasi Real-Time',
+    'analytics_checkpoint_2' => 'Ekspor PDF & Excel',
+    'analytics_checkpoint_3' => 'Akses Aman Multi-User',
+
+    // CRM Hero Keys
+    'crm_hero_badge' => 'Retensi Pelanggan & Loyalitas',
+    'crm_hero_title' => 'Database Pelanggan Terpusat & Otomasi Loyalitas',
+    'crm_hero_subtitle' => 'Kumpulkan data pembeli dari kasir fisik dan toko online secara otomatis. Kirim nota digital dan promo WhatsApp tepat sasaran.',
+    'crm_hero_cta_primary' => 'Start for free',
+    'crm_hero_cta_secondary' => 'Lihat Fitur Lengkap',
+    'crm_rating_text' => 'Tingkatkan Repeat Order hingga 3x Lipat',
+    'crm_checkpoint_1' => 'Database Pelanggan Terpusat',
+    'crm_checkpoint_2' => 'Integrasi WhatsApp Otomatis',
+    'crm_checkpoint_3' => 'Sistem Poin & Tier Member',
+
+    // ERP Core Hero Keys
+    'erp_hero_badge' => 'Sistem Operasi ERP UMKM Terpadu',
+    'erp_hero_title' => 'Satu Sistem ERP Lengkap Tanpa Aplikasi Tercecer',
+    'erp_hero_subtitle' => 'Kelola kasir toko, gudang, pembelian supplier, absensi karyawan, hingga laporan laba rugi dalam satu platform terintegrasi.',
+    'erp_hero_cta_primary' => 'Start for free',
+    'erp_hero_cta_secondary' => 'Konsultasi Kebutuhan',
+    'erp_rating_text' => 'Sistem ERP Standar Indonesia',
+    'erp_checkpoint_1' => 'Multi-Cabang & Multi-User',
+    'erp_checkpoint_2' => 'Sinkronisasi Real-Time < 1 dtk',
+    'erp_checkpoint_3' => 'Dukungan Teknis Siap Bantu',
+
+    // Finance Hero Keys
+    'fin_hero_badge' => 'Buku Kas & Pengendalian Arus Modal',
+    'fin_hero_subtitle' => 'Pantau arus kas masuk dan keluar setiap hari secara transparan. Catat biaya operasional, rekonsiliasi kasir kas, dan cegah kebocoran dana.',
+    'fin_hero_cta_primary' => 'Start for free',
+    'fin_hero_cta_secondary' => 'Lihat Fitur Akuntansi',
+    'fin_rating_text' => 'Akurasi Kas & Rekonsiliasi Otomatis',
+    'fin_checkpoint_1' => 'Multi Rekening Kas & Bank',
+    'fin_checkpoint_2' => 'Rekonsiliasi Kasir Otomatis',
+    'fin_checkpoint_3' => 'Peringatan Anggaran Operasional',
+
+    // Inventory Hero Keys
+    'inv_hero_badge' => 'Manajemen Stok & Pergudangan Terpadu',
+    'inv_hero_subtitle' => 'Kendalikan mutasi stok barang antar cabang dan gudang secara real-time. Didukung resep bahan baku (BOM) otomatis dan peringatan stok menipis.',
+    'inv_hero_cta_primary' => 'Start for free',
+    'inv_hero_cta_secondary' => 'Lihat Fitur Pengadaan',
+    'inv_rating_text' => 'Akurasi Stok 99.8% Lintas Cabang',
+    'inv_checkpoint_1' => 'Multi-Gudang & Transfer Stok',
+    'inv_checkpoint_2' => 'Resep Bahan Baku (BOM)',
+    'inv_checkpoint_3' => 'Notifikasi Minimum Stok',
 ];
 

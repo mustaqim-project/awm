@@ -107,8 +107,10 @@ return [
     'guide_btn_open_checklist' => 'Buka Template Checklist Tutup Shift',
     'guide_btn_open_waste_form' => 'Buka Template Formulir Bahan Rusak',
     'guide_btn_open_faq' => 'Buka Halaman FAQ',
+    'guide_cta_ready_kicker' => 'Operasional Tertib & Profesional',
     'guide_cta_ready_title' => 'Siap Menerapkan Sistem Operasional yang Rapi?',
-    'guide_btn_start_trial' => 'Mulai Gratis',
+    'guide_cta_ready_desc' => 'Terapkan SOP bisnis profesional tanpa proses rumit. Mulai akun bisnis gratis Anda sekarang dan rasakan kemudahan mengontrol gerai secara terpusat.',
+    'guide_btn_start_trial' => 'Start for free',
     'guide_btn_view_demo' => 'Daftar Akun Gratis',
     'guide_modal_sop_title' => 'Lembar Petunjuk SOP Kasir',
 ];

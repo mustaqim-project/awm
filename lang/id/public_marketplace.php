@@ -234,6 +234,10 @@ return [
     'loc_cta_btn' => 'Buka Toko Gratis',
     'loc_cta_home' => 'Beranda Marketplace',
 
+    // Breadcrumb Defaults
+    'mkt_breadcrumb_home' => 'Beranda',
+    'mkt_breadcrumb_marketplace' => 'Marketplace',
+
     // Search Page
     'srch_meta_title_result' => 'Hasil: :search | COOCA',
     'srch_meta_title_default' => 'Katalog Produk & Direktori UMKM | COOCA',

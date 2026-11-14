@@ -1037,6 +1037,85 @@ class TikTokShopAdapter implements MarketplaceAdapterInterface
     }
 
     /**
+     * Scope: seller.finance.info
+     * Fetch order financial statement and fee breakdown.
+     */
+    public function getEscrowDetail(MarketplaceAccount $account, string $orderId): array
+    {
+        $path        = "/finance/202309/orders/{$orderId}/statement_transactions";
+        $timestamp   = time();
+        $shopCipher  = $account->settings['shop_cipher'] ?? $account->shop_id;
+        $queryParams = [
+            'app_key'     => $this->appKey,
+            'timestamp'   => $timestamp,
+            'shop_cipher' => $shopCipher,
+        ];
+
+        $queryParams['sign'] = $this->generateSignature($path, $queryParams);
+        $url = $this->host . $path . '?' . http_build_query($queryParams);
+
+        try {
+            $response = Http::withHeaders([
+                'x-tts-access-token' => (string) $account->access_token,
+            ])->timeout(15)->get($url);
+
+            $data = $response->json();
+            if ($response->successful() && ! empty($data['data']['statement_transactions'])) {
+                $txList = $data['data']['statement_transactions'];
+                $gross = 0.0;
+                $commission = 0.0;
+                $transFee = 0.0;
+                $serviceFee = 0.0;
+                $shipping = 0.0;
+                $net = 0.0;
+                $sellerDiscount = 0.0;
+                $platformDiscount = 0.0;
+
+                foreach ($txList as $tx) {
+                    $amt = (float) ($tx['amount'] ?? 0);
+                    $type = strtolower((string) ($tx['type'] ?? ''));
+
+                    if (str_contains($type, 'revenue') || str_contains($type, 'subtotal')) {
+                        $gross += abs($amt);
+                    } elseif (str_contains($type, 'commission')) {
+                        $commission += abs($amt);
+                    } elseif (str_contains($type, 'transaction_fee') || str_contains($type, 'payment_fee')) {
+                        $transFee += abs($amt);
+                    } elseif (str_contains($type, 'service')) {
+                        $serviceFee += abs($amt);
+                    } elseif (str_contains($type, 'shipping')) {
+                        $shipping += abs($amt);
+                    } elseif (str_contains($type, 'seller_discount')) {
+                        $sellerDiscount += abs($amt);
+                    } elseif (str_contains($type, 'platform_discount')) {
+                        $platformDiscount += abs($amt);
+                    }
+                    $net += $amt;
+                }
+
+                return [
+                    'order_sn'              => $orderId,
+                    'gross_amount'          => $gross,
+                    'seller_discount'       => $sellerDiscount,
+                    'platform_discount'     => $platformDiscount,
+                    'commission_fee'        => $commission,
+                    'service_fee'           => $serviceFee,
+                    'transaction_fee'       => $transFee,
+                    'channel_fee'           => $commission + $serviceFee + $transFee,
+                    'shipping_fee_seller'   => $shipping,
+                    'net_settlement_amount' => $net > 0 ? $net : max(0.0, $gross - $commission - $transFee - $serviceFee - $sellerDiscount),
+                    'settlement_status'     => \App\Models\MarketplaceOrder::SETTLEMENT_SETTLED,
+                    'raw'                   => $data['data'],
+                ];
+            }
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning("TikTokShop get_statement_transactions error: {$e->getMessage()}");
+        }
+
+        return [];
+    }
+
+    /**
      * Scope: seller.promotion.info
      * Search promotion activities (discounts, flash sales).
      */

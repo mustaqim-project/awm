@@ -502,13 +502,13 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
         <div class="p-8 sm:p-12 rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-center space-y-6 shadow-sm">
             <div class="max-w-2xl mx-auto space-y-3">
                 <div class="text-[12px] font-bold uppercase tracking-wider text-[#007AFF] dark:text-[#0A84FF]">
-                    OPERASIONAL TERTIB &amp; PROFESIONAL
+                    {{ __('public_resources.guide_cta_ready_kicker') }}
                 </div>
                 <h3 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
                     {{ __('public_resources.guide_cta_ready_title') }}
                 </h3>
                 <p class="text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
-                    Terapkan SOP bisnis profesional tanpa proses rumit. Mulai uji coba gratis sekarang dan rasakan kemudahan mengontrol gerai secara terpusat.
+                    {{ __('public_resources.guide_cta_ready_desc') }}
                 </p>
             </div>
 

@@ -17,6 +17,8 @@ use App\Models\MarketplaceConversation;
 use App\Models\MarketplaceMessage;
 use App\Models\MarketplaceSyncLog;
 use App\Models\Product;
+use App\Domain\Marketplace\MarketplaceFinanceService;
+use App\Models\MarketplaceSettlement;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -31,8 +33,11 @@ class MarketplaceWebController extends Controller
         protected MarketplaceManagerService $manager,
         protected MarketplaceSyncService $syncService,
         protected MarketplaceOrderService $orderService,
-        protected MarketplaceChatService $chatService
-    ) {}
+        protected MarketplaceChatService $chatService,
+        protected ?MarketplaceFinanceService $financeService = null
+    ) {
+        $this->financeService = $financeService ?? app(MarketplaceFinanceService::class);
+    }
 
     /**
      * Marketplace Hub: Cockpit overview of all connected marketplace stores.
@@ -1245,6 +1250,177 @@ class MarketplaceWebController extends Controller
                 'message' => $msg,
                 'shipped_count' => $shippedCount,
                 'failed_count'  => $failedCount,
+            ]);
+        }
+
+        return back()->with('success', $msg);
+    }
+
+    /**
+     * Marketplace Financial Dashboard & Settlement Explorer.
+     */
+    public function finances(Request $request): View|JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $accounts = MarketplaceAccount::where('business_id', $business->id)->get();
+        $cashAccounts = \App\Models\CashAccount::where('business_id', $business->id)->get();
+
+        $filters = [
+            'channel'                => $request->input('channel'),
+            'marketplace_account_id' => $request->input('account_id'),
+            'settlement_status'      => $request->input('settlement_status'),
+            'start_date'             => $request->input('start_date'),
+            'end_date'               => $request->input('end_date'),
+        ];
+
+        $summary   = $this->financeService->getFinancialSummary($business, $filters);
+        $breakdown = $this->financeService->getChannelBreakdown($business, $filters);
+
+        // Filterable Order Financials
+        $ordersQuery = MarketplaceOrder::where('business_id', $business->id)
+            ->with(['account', 'journalEntry', 'settlementJournalEntry'])
+            ->latest('placed_at');
+
+        if (! empty($filters['channel'])) {
+            $ordersQuery->where('channel', $filters['channel']);
+        }
+        if (! empty($filters['marketplace_account_id'])) {
+            $ordersQuery->where('marketplace_account_id', $filters['marketplace_account_id']);
+        }
+        if (! empty($filters['settlement_status'])) {
+            $ordersQuery->where('settlement_status', $filters['settlement_status']);
+        }
+        if (! empty($filters['start_date'])) {
+            $ordersQuery->whereDate('placed_at', '>=', $filters['start_date']);
+        }
+        if (! empty($filters['end_date'])) {
+            $ordersQuery->whereDate('placed_at', '<=', $filters['end_date']);
+        }
+
+        $orders = $ordersQuery->paginate(15, ['*'], 'orders_page');
+
+        // Settlement Batches
+        $settlementsQuery = MarketplaceSettlement::where('business_id', $business->id)
+            ->with(['account', 'journalEntry', 'cashAccount'])
+            ->latest('payout_date');
+
+        if (! empty($filters['channel'])) {
+            $settlementsQuery->where('channel', $filters['channel']);
+        }
+        if (! empty($filters['marketplace_account_id'])) {
+            $settlementsQuery->where('marketplace_account_id', $filters['marketplace_account_id']);
+        }
+
+        $settlements = $settlementsQuery->paginate(10, ['*'], 'settlements_page');
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success'     => true,
+                'summary'     => $summary,
+                'breakdown'   => $breakdown,
+                'orders'      => $orders,
+                'settlements' => $settlements,
+            ]);
+        }
+
+        return view('app.marketplace.finances', compact(
+            'business',
+            'accounts',
+            'cashAccounts',
+            'summary',
+            'breakdown',
+            'orders',
+            'settlements',
+            'filters'
+        ));
+    }
+
+    /**
+     * Trigger financial & settlement data synchronization from marketplace APIs.
+     */
+    public function syncFinances(Request $request): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        $channel = $request->input('channel');
+        $accountId = $request->input('account_id');
+
+        $accountsQuery = MarketplaceAccount::where('business_id', $business->id)
+            ->where('status', MarketplaceAccount::STATUS_CONNECTED);
+
+        if (! empty($channel)) {
+            $accountsQuery->where('channel', $channel);
+        }
+        if (! empty($accountId)) {
+            $accountsQuery->where('id', $accountId);
+        }
+
+        $accounts = $accountsQuery->get();
+        $syncedOrders = 0;
+        $syncedSettlements = 0;
+
+        foreach ($accounts as $acc) {
+            // 1. Sync settlements
+            $batches = $this->financeService->syncAccountSettlements($acc);
+            $syncedSettlements += count($batches);
+
+            // 2. Sync pending orders financials
+            $unsettled = MarketplaceOrder::where('business_id', $business->id)
+                ->where('marketplace_account_id', $acc->id)
+                ->whereIn('settlement_status', [MarketplaceOrder::SETTLEMENT_PENDING, MarketplaceOrder::SETTLEMENT_ESCROW_HOLDING])
+                ->latest('placed_at')
+                ->limit(25)
+                ->get();
+
+            foreach ($unsettled as $ord) {
+                if ($this->financeService->syncOrderFinancials($ord)) {
+                    $syncedOrders++;
+                }
+            }
+        }
+
+        $msg = "Sinkronisasi keuangan selesai: {$syncedOrders} rincian pesanan dan {$syncedSettlements} batch settlement berhasil diperbarui.";
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success'            => true,
+                'message'            => $msg,
+                'synced_orders'      => $syncedOrders,
+                'synced_settlements' => $syncedSettlements,
+            ]);
+        }
+
+        return back()->with('success', $msg);
+    }
+
+    /**
+     * Reconcile a Marketplace Settlement Batch with a Physical Bank / Cash Account.
+     */
+    public function reconcileSettlement(Request $request, MarketplaceSettlement $settlement): JsonResponse|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+
+        if ($settlement->business_id !== $business->id) {
+            abort(403);
+        }
+
+        $cashAccountId = $request->input('cash_account_id');
+        $cashAccount = null;
+        if (! empty($cashAccountId)) {
+            $cashAccount = \App\Models\CashAccount::where('business_id', $business->id)->find($cashAccountId);
+        }
+
+        $journal = app(\App\Domain\Accounting\AutoJournalService::class)->recordMarketplacePayoutJournal($settlement, $cashAccount);
+
+        $msg = $journal
+            ? "Settlement #{$settlement->settlement_sn} berhasil direkonsiliasi ke jurnal keuangan ({$journal->entry_number})."
+            : "Settlement berhasil diperbarui.";
+
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'settlement' => $settlement->fresh(['journalEntry', 'cashAccount']),
             ]);
         }
 

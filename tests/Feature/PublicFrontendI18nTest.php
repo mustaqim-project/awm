@@ -599,8 +599,9 @@ class PublicFrontendI18nTest extends TestCase
                 $content = $response->getContent();
 
                 foreach (self::BANNED_TRIAL_TERMS as $term) {
-                    if (stripos($content, $term) !== false) {
-                        $violations[] = "Banned term '{$term}' found in '{$route}?lang={$lang}'";
+                    if (($pos = stripos($content, $term)) !== false) {
+                        $snippet = preg_replace('/\s+/', ' ', substr($content, max(0, $pos - 40), 100));
+                        $violations[] = "Banned term '{$term}' found in '{$route}?lang={$lang}': [{$snippet}]";
                     }
                 }
             }
