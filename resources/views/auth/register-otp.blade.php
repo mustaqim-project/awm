@@ -24,7 +24,7 @@
             </div>
 
             <!-- Structured Auth Card -->
-            <div class="bg-white dark:bg-[#151B2B] border border-slate-200/80 dark:border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-sm dark:shadow-2xl dark:shadow-black/40 transition-colors">
+            <div class="bg-white dark:bg-[#151B2B] border border-slate-200/80 dark:border-white/10 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-sm dark:shadow-2xl dark:shadow-black/40 transition-colors">
 
                 @if (session('status'))
                     <div class="mb-5 p-3.5 rounded-xl bg-[#34C759]/10 border border-[#34C759]/25 text-[#34C759] dark:text-[#30D158] text-xs sm:text-sm flex items-center gap-2">
@@ -90,7 +90,7 @@
                                     inputmode="numeric" maxlength="1" autocapitalize="off" spellcheck="false"
                                     :autocomplete="i === 0 ? 'one-time-code' : 'off'"
                                     :aria-label="{{ json_encode(__('auth.otp.digit_aria', ['number' => '__N__'])) }}.replace('__N__', i + 1)"
-                                    class="w-full h-12 sm:h-14 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-center text-xl sm:text-2xl font-mono font-bold text-slate-900 dark:text-white transition-all outline-none">
+                                    class="min-w-0 w-full h-11 sm:h-14 bg-slate-50 dark:bg-[#1E2638] border border-slate-200 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15 rounded-xl text-center text-lg sm:text-2xl font-mono font-bold text-slate-900 dark:text-white transition-all outline-none">
                             </template>
                         </div>
                         <div class="flex items-center justify-between mt-3 text-xs text-slate-500 dark:text-slate-400">

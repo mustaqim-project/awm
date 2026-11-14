@@ -9,9 +9,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'hero_kicker' => 'All-in-One Business Operating System for MSMEs',
-    'hero_title' => 'Fast POS Cashier, Recipe Stock Control & Automated Accounting for Your Business',
-    'hero_subtitle' => 'Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phone with no manual bookkeeping required.',
+    'hero_kicker' => 'All-in-One Omnichannel Ecosystem',
+    'hero_title' => 'One Platform for Your Store POS, WhatsApp & Marketplaces',
+    'hero_subtitle' => 'Sync physical store stock, WhatsApp orders, and online marketplaces in real time. Instant automated bookkeeping with zero manual recap.',
+    'hero_pill_pos' => 'Store POS & QRIS',
+    'hero_pill_omni' => 'WhatsApp & Marketplaces',
+    'hero_pill_sync' => 'Auto Stock & Net Profit',
     'hero_cta_primary' => 'Start Free Trial',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Try Interactive Demo',
@@ -233,7 +236,42 @@ return [
     'omni_fin_web_line' => 'Online Store & WA: Rp 1,000,000 (Full Margin)',
     'omni_fin_banner_text' => 'P&L statements and SAK EMKM bookkeeping are generated automatically across all channels without Excel spreadsheets.',
 
-    // Cockpit Footer
-    'omni_footer_reassurance' => 'Central Stock Sync Anti-Overselling',
-    'omni_footer_action' => 'Explore Omnichannel Solutions',
+    // Hero Right Grid: Circular Omnichannel Mesh Network
+    'omni_mesh_center_title' => 'Omnichannel',
+    'omni_mesh_center_sub' => '1 Core Engine',
+    'omni_mesh_center_badge' => 'Sync < 1s',
+
+    // 8 Radial Nodes
+    'omni_node_pos' => 'Store POS',
+    'omni_node_pos_desc' => 'Physical Store POS: Rapid checkout, dynamic QRIS & live inventory deduction.',
+
+    'omni_node_marketplace' => 'Shopee & Tokped',
+    'omni_node_marketplace_desc' => 'Multi-Marketplace: Auto-sync Shopee, Tokopedia & TikTok Shop inventory < 1s.',
+
+    'omni_node_web' => 'Online Web Store',
+    'omni_node_web_desc' => 'D2C Web Storefront: Accept customer orders from your official site with 0% commission.',
+
+    'omni_node_whatsapp' => 'WhatsApp Order',
+    'omni_node_whatsapp_desc' => 'WhatsApp Commerce: Official paperless digital receipts sent without saving phone numbers.',
+
+    'omni_node_social' => 'Social Media',
+    'omni_node_social_desc' => 'Social Commerce: Publish product catalogs across Instagram, TikTok, Facebook & Threads.',
+
+    'omni_node_app' => 'Mobile POS App',
+    'omni_node_app_desc' => 'Android App: Transform smartphones & tablets into portable cashier registers anywhere.',
+
+    'omni_node_inventory' => 'Multi-Warehouse',
+    'omni_node_inventory_desc' => 'Central Inventory Pool: Eliminate overselling and cancel penalties across all channels.',
+
+    'omni_node_accounting' => 'Automated P&L',
+    'omni_node_accounting_desc' => 'Automated Accounting: Real-time net profit and marketplace fee reconciliation without Excel.',
+
+    'omni_card_pos_title' => 'Store POS Cashier',
+    'omni_card_logistics_title' => 'Multi-Warehouse & Courier',
+    'omni_card_wa_title' => 'WhatsApp Commerce',
+    'omni_card_market_title' => 'Shopee & Tokped Sync',
+    'omni_image_alt' => 'COOCA Integrated Omnichannel Ecosystem: Store POS, WhatsApp, Marketplaces, and Multi-Warehouse',
+
+    'omni_mesh_default_tip' => 'All sales channels connected into 1 unified central stock & data engine in real time.',
+    'omni_mesh_explore_btn' => 'Explore Omnichannel Solutions',
 ];

@@ -19,7 +19,7 @@ return [
     'pages' => [
         '/' => [
             'title' => 'COOCA: Platform Omnichannel & ERP untuk UMKM Indonesia',
-            'h1' => 'Platform Omnichannel & ERP Modern: Kendalikan Seluruh Bisnis UMKM Anda',
+            'h1' => 'Kelola Kasir Toko, WhatsApp & Marketplace dalam Satu Sistem',
             'description' => 'Platform Omnichannel & ERP all-in-one untuk UMKM. Kelola kasir POS, sinkronisasi marketplace, stok multi-gudang, resep produksi BOM, akuntansi otomatis & WhatsApp CRM tanpa spreadsheet.',
             'og_title' => 'COOCA: Platform Omnichannel & ERP untuk UMKM Indonesia',
             'og_description' => 'Platform Omnichannel & ERP all-in-one untuk UMKM. Kelola kasir POS, sinkronisasi marketplace, stok multi-gudang, resep produksi BOM, akuntansi otomatis & WhatsApp CRM tanpa spreadsheet.',

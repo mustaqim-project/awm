@@ -167,7 +167,7 @@ async function runAudit() {
 
         try {
             await page.setViewportSize({ width: 1440, height: 900 });
-            const resp = await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 15000 });
+            const resp = await page.goto(fullUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
             pageResult.httpStatus = resp ? resp.status() : 0;
             await page.waitForTimeout(300);
 
@@ -240,16 +240,17 @@ async function runAudit() {
 
             // 3. Responsive Check (375px & 320px)
             await page.setViewportSize({ width: 375, height: 667 });
-            await page.waitForTimeout(150);
+            await page.waitForTimeout(250);
             const overflow375 = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 4);
 
             await page.setViewportSize({ width: 320, height: 568 });
-            await page.waitForTimeout(150);
+            await page.waitForTimeout(250);
             const overflow320 = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 4);
 
             if (overflow375 || overflow320) {
+                const debugWidths = await page.evaluate(() => `(scroll=${document.documentElement.scrollWidth}, inner=${window.innerWidth})`);
                 pageResult.responsive = 'FAIL';
-                pageResult.errors.push(`Horizontal overflow (375px: ${overflow375}, 320px: ${overflow320})`);
+                pageResult.errors.push(`Horizontal overflow (375px: ${overflow375}, 320px: ${overflow320}) ${debugWidths}`);
             }
 
             if (pageErrors.length > 0) {

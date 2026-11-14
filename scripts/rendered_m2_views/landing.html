@@ -82,7 +82,7 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
     
     <!-- Precompiled Production Vite Assets with Graceful Fallback for Shared Hosting -->
-            <link rel="preload" as="style" href="http://localhost/build/assets/app-BCcBsGeN.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-BCcBsGeN.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
+            <link rel="preload" as="style" href="http://localhost/build/assets/app-COv9Kwa3.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-COv9Kwa3.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
     <!-- Lucide Icons (Pinned v0.469.0) & Alpine.js (Pinned v3.14.8) -->
     <script defer src="https://cdn.jsdelivr.net/npm/lucide@0.469.0/dist/umd/lucide.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
@@ -2537,7 +2537,7 @@
                         <!-- Subtitle Copy -->
                         <p
                             class="text-sm sm:text-lg lg:text-xl text-slate-300 leading-relaxed sm:leading-loose max-w-[24rem] sm:max-w-[34rem] lg:max-w-2xl font-normal text-pretty break-words">
-                            Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phoneno manual bookkeeping required.
+                            Speed up checkout, automatically deduct raw ingredients per portion, send receipts to WhatsApp, and monitor daily net profit directly from your phone with no manual bookkeeping required.
                         </p>
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
@@ -2574,148 +2574,233 @@
                         
                     </div>
 
-                    <!-- KANAN: Live Interactive POS & Realtime Operations Cockpit (High Conversion Proof) -->
-                    <div class="lg:col-span-6 relative flex items-center justify-center w-full" x-data="{
-                        simTab: 'pos'
-                    }">
+                    <!-- KANAN: High-Tech Omnichannel Radial Mesh Network (Tampilan Jaring Terintegrasi COOCA) -->
+                    <div class="lg:col-span-6 relative flex flex-col items-center justify-center w-full" x-data="{
+                        activeNode: null,
+                        defaultTip: 'All sales channels connected into 1 unified central stock &amp; data engine in real time.',
+                        currentTip: 'All sales channels connected into 1 unified central stock &amp; data engine in real time.',
+                        setNode(key, tip) {
+                            this.activeNode = key;
+                            this.currentTip = tip;
+                        },
+                        resetNode() {
+                            this.activeNode = null;
+                            this.currentTip = this.defaultTip;
+                        }
+                    }" @click.outside="resetNode()">
+
                         
-                        <div class="absolute -inset-4 bg-gradient-to-tr from-[#007AFF]/25 via-[#00C2FF]/15 to-transparent rounded-[32px] blur-2xl pointer-events-none -z-0"></div>
-
-                        <div class="relative w-full max-w-[560px] bg-[#0A122C]/95 border border-white/15 rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.55)] backdrop-blur-2xl text-white space-y-4">
-                            
-                            
-                            <div class="absolute top-0 inset-x-8 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none"></div>
+                        <div class="relative w-full max-w-[420px] xs:max-w-[460px] sm:max-w-[500px] lg:max-w-[540px] aspect-square select-none mx-auto flex items-center justify-center">
 
                             
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
-                                    <span class="text-xs font-mono font-bold text-white tracking-wide truncate">Simulasi Kasir &amp; Stok Terhubung</span>
-                                </div>
-                                <div class="inline-flex items-center p-1 rounded-xl bg-white/[0.06] border border-white/10 text-xs font-semibold">
-                                    <button type="button" @click="simTab = 'pos'"
-                                        class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'pos' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Kasir POS
-                                    </button>
-                                    <button type="button" @click="simTab = 'stok'"
-                                        class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'stok' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Potong Resep
-                                    </button>
-                                    <button type="button" @click="simTab = 'laba'"
-                                        class="px-2.5 py-1 rounded-lg transition-all"
-                                        :class="simTab === 'laba' ? 'bg-[#007AFF] text-white shadow-xs' : 'text-slate-400 hover:text-white'">
-                                        Laba Bersih
-                                    </button>
-                                </div>
-                            </div>
+                            <div class="absolute inset-4 sm:inset-6 bg-gradient-to-tr from-[#007AFF]/20 via-[#00C2FF]/10 to-[#A855F7]/10 rounded-full blur-2xl pointer-events-none transform-gpu -z-0"></div>
 
                             
-                            <div x-show="simTab === 'pos'" class="space-y-3">
-                                <div class="space-y-2">
-                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
-                                        <div class="space-y-0.5 min-w-0 pr-2">
-                                            <div class="flex items-center gap-1.5">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Kopi Susu Gula Aren (16oz)</p>
-                                            </div>
-                                            <p class="text-[11px] text-slate-400">Resep: Espresso 18g • Susu 120ml • Aren 25ml</p>
-                                        </div>
-                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 18.000</span>
-                                    </div>
-                                    <div class="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/5 hover:border-cyan-400/30 transition-colors">
-                                        <div class="space-y-0.5 min-w-0 pr-2">
-                                            <div class="flex items-center gap-1.5">
-                                                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
-                                                <p class="text-xs sm:text-sm font-bold text-white truncate">1x Croissant Cokelat Keju</p>
-                                            </div>
-                                            <p class="text-[11px] text-slate-400">Resep: Pastry 1 pcs • Cokelat 15g • Keju 20g</p>
-                                        </div>
-                                        <span class="text-xs sm:text-sm font-bold text-[#00C2FF] tabular-nums shrink-0">Rp 15.000</span>
-                                    </div>
-                                </div>
+                            <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 500 500" fill="none">
+                                <defs>
+                                    <linearGradient id="spokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#00C2FF" stop-opacity="0.6" />
+                                        <stop offset="100%" stop-color="#007AFF" stop-opacity="0.15" />
+                                    </linearGradient>
+                                </defs>
 
                                 
-                                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-500/15 via-[#060B1E] to-[#007AFF]/15 border border-emerald-500/30 space-y-2">
-                                    <div class="flex items-center justify-between text-xs">
-                                        <span class="text-slate-300">Total Pembayaran (QRIS Dinamis)</span>
-                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 33.000</span>
-                                    </div>
-                                    <div class="flex items-center justify-between pt-1 border-t border-white/10 text-[11px]">
-                                        <div class="flex items-center gap-1.5 text-emerald-400 font-semibold">
-                                            <i data-lucide="message-circle" class="w-3.5 h-3.5 shrink-0"></i>
-                                            <span>Nota Terkirim Otomatis ke WhatsApp Tamu</span>
-                                        </div>
-                                        <span class="text-slate-400 font-mono">0812-****-8891</span>
-                                    </div>
-                                </div>
-                            </div>
+                                <circle cx="250" cy="250" r="175" stroke="#00C2FF" stroke-width="1.5" stroke-opacity="0.25" stroke-dasharray="6 8" />
+                                <circle cx="250" cy="250" r="115" stroke="#007AFF" stroke-width="1" stroke-opacity="0.2" />
+                                <circle cx="250" cy="250" r="62" stroke="#00C2FF" stroke-width="1.5" stroke-opacity="0.3" stroke-dasharray="4 4" />
+
+                                
+                                <polygon points="250,75 374,126 425,250 374,374 250,425 126,374 75,250 126,126"
+                                    stroke="#00C2FF" stroke-width="1.2" stroke-opacity="0.18" stroke-dasharray="4 6" fill="rgba(0,194,255,0.015)" />
+
+                                
+                                
+                                <line x1="250" y1="250" x2="250" y2="75"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'web' ? 'text-cyan-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="374" y2="126"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'marketplace' ? 'text-orange-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="425" y2="250"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'social' ? 'text-purple-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="374" y2="374"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'inventory' ? 'text-amber-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="250" y2="425"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'accounting' ? 'text-emerald-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="126" y2="374"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'whatsapp' ? 'text-emerald-400 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="75" y2="250"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'pos' ? 'text-sky-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+
+                                
+                                <line x1="250" y1="250" x2="126" y2="126"
+                                    stroke="currentColor" class="transition-all duration-300"
+                                    :class="activeNode === 'app' ? 'text-sky-300 stroke-[2.5] opacity-100' : 'text-cyan-400 stroke-[1.5] opacity-35'" />
+                            </svg>
 
                             
-                            <div x-show="simTab === 'stok'" x-cloak class="space-y-3">
-                                <p class="text-xs text-slate-300">
-                                    Setiap transaksi kasir menekan tombol bayar, stok bahan mentah otomatis berkurang presisi tanpa rekap manual:
-                                </p>
-                                <div class="space-y-2 text-xs">
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Biji Kopi Arabika House Blend</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-18 gram <span class="text-slate-400 font-normal">(Sisa: 4.820g)</span></span>
-                                    </div>
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Fresh Milk Pasteurisasi</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-120 ml <span class="text-slate-400 font-normal">(Sisa: 8.450ml)</span></span>
-                                    </div>
-                                    <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/5 flex items-center justify-between">
-                                        <span class="text-slate-200">Cup Sablon &amp; Sedotan Paper</span>
-                                        <span class="font-mono text-emerald-400 font-bold">-1 set <span class="text-slate-400 font-normal">(Sisa: 342 set)</span></span>
-                                    </div>
-                                </div>
-                                <div class="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-center gap-1.5">
-                                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
-                                    <span>Notifikasi stok menipis otomatis dikirim ke WhatsApp owner toko</span>
-                                </div>
-                            </div>
-
-                            
-                            <div x-show="simTab === 'laba'" x-cloak class="space-y-3">
-                                <div class="grid grid-cols-2 gap-2.5 text-left">
-                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                                        <span class="text-[11px] text-slate-400 block">Omzet Penjualan Hari Ini</span>
-                                        <span class="text-base font-extrabold text-white tabular-nums">Rp 2.450.000</span>
-                                        <span class="text-[10px] text-emerald-400 font-semibold block mt-0.5">84 Transaksi Selesai</span>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-white/[0.04] border border-white/5">
-                                        <span class="text-[11px] text-slate-400 block">Total HPP Bahan Baku</span>
-                                        <span class="text-base font-extrabold text-slate-300 tabular-nums">Rp 980.000</span>
-                                        <span class="text-[10px] text-slate-400 block mt-0.5">HPP Riil 40%</span>
-                                    </div>
-                                </div>
-                                <div class="p-3 rounded-xl bg-[#007AFF]/15 border border-[#007AFF]/30 flex items-center justify-between">
-                                    <div>
-                                        <span class="text-xs text-slate-300 block">Estimasi Laba Kotor Hari Ini</span>
-                                        <span class="text-lg font-black text-[#00C2FF] tabular-nums">Rp 1.470.000</span>
-                                    </div>
-                                    <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
-                                        Margin 60%
+                            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center justify-center">
+                                <div class="w-28 h-28 xs:w-32 xs:h-32 sm:w-36 sm:h-36 rounded-full bg-[#071329]/95 backdrop-blur-md border-2 border-cyan-400 shadow-[0_0_35px_rgba(0,194,255,0.45)] flex flex-col items-center justify-center p-2 text-center group cursor-pointer hover:scale-105 transition-transform duration-300"
+                                    @mouseenter="setNode('core', 'All sales channels connected into 1 unified central stock &amp; data engine in real time.')"
+                                    @mouseleave="resetNode()"
+                                    @click="resetNode()">
+                                    <span class="font-black text-base xs:text-lg sm:text-xl tracking-wider text-white font-sans drop-shadow-[0_0_12px_rgba(0,194,255,0.85)]">COOCA</span>
+                                    <span class="text-[9px] xs:text-[10px] sm:text-[11px] font-extrabold text-cyan-300 uppercase tracking-widest mt-0.5">
+                                        Omnichannel
                                     </span>
+                                    <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-[8.5px] xs:text-[9px] font-mono font-bold text-emerald-300">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        <span>Sync &lt; 1s</span>
+                                    </div>
                                 </div>
                             </div>
 
                             
-                            <div class="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-white/10 text-[11px] text-slate-300">
-                                <div class="flex items-center gap-1.5 text-cyan-400 font-medium">
-                                    <i data-lucide="check" class="w-3.5 h-3.5 shrink-0"></i>
-                                    <span>Cloud Terisolasi Multi-Tenant</span>
+
+                            
+                            <div class="absolute left-1/2 top-[15%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('web', 'D2C Web Storefront: Accept customer orders from your official site with 0% commission.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('web', 'D2C Web Storefront: Accept customer orders from your official site with 0% commission.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-cyan-400/60 group-hover:border-cyan-300 shadow-[0_4px_16px_rgba(0,194,255,0.25)] group-hover:shadow-[0_0_24px_rgba(0,194,255,0.7)] flex items-center justify-center p-2 text-cyan-300 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'web' ? 'scale-115 !border-cyan-300 !shadow-[0_0_26px_rgba(0,194,255,0.85)]' : ''">
+                                    <i data-lucide="globe" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
                                 </div>
-                                <a href="http://localhost/demo"
-                                    class="text-xs font-semibold text-white hover:text-cyan-300 inline-flex items-center gap-1 group">
-                                    <span>Buka Simulasi Penuh</span>
-                                    <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
-                                </a>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Online Web Store
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('marketplace', 'Multi-Marketplace: Auto-sync Shopee, Tokopedia &amp; TikTok Shop inventory &lt; 1s.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('marketplace', 'Multi-Marketplace: Auto-sync Shopee, Tokopedia &amp; TikTok Shop inventory &lt; 1s.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-[#FF5722]/60 group-hover:border-[#FF5722] shadow-[0_4px_16px_rgba(255,87,34,0.25)] group-hover:shadow-[0_0_24px_rgba(255,87,34,0.7)] flex items-center justify-center p-2 text-[#FF5722] transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'marketplace' ? 'scale-115 !border-[#FF5722] !shadow-[0_0_26px_rgba(255,87,34,0.85)]' : ''">
+                                    <i data-lucide="shopping-bag" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Shopee &amp; Tokped
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[85%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('social', 'Social Commerce: Publish product catalogs across Instagram, TikTok, Facebook &amp; Threads.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('social', 'Social Commerce: Publish product catalogs across Instagram, TikTok, Facebook &amp; Threads.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-purple-400/60 group-hover:border-purple-300 shadow-[0_4px_16px_rgba(168,85,247,0.25)] group-hover:shadow-[0_0_24px_rgba(168,85,247,0.7)] flex items-center justify-center p-2 text-purple-300 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'social' ? 'scale-115 !border-purple-300 !shadow-[0_0_26px_rgba(168,85,247,0.85)]' : ''">
+                                    <i data-lucide="share-2" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Social Media
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('inventory', 'Central Inventory Pool: Eliminate overselling and cancel penalties across all channels.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('inventory', 'Central Inventory Pool: Eliminate overselling and cancel penalties across all channels.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-amber-400/60 group-hover:border-amber-300 shadow-[0_4px_16px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_24px_rgba(245,158,11,0.7)] flex items-center justify-center p-2 text-amber-300 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'inventory' ? 'scale-115 !border-amber-300 !shadow-[0_0_26px_rgba(245,158,11,0.85)]' : ''">
+                                    <i data-lucide="package" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Multi-Warehouse
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-1/2 top-[85%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('accounting', 'Automated Accounting: Real-time net profit and marketplace fee reconciliation without Excel.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('accounting', 'Automated Accounting: Real-time net profit and marketplace fee reconciliation without Excel.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-emerald-400/60 group-hover:border-emerald-300 shadow-[0_4px_16px_rgba(16,185,129,0.25)] group-hover:shadow-[0_0_24px_rgba(16,185,129,0.7)] flex items-center justify-center p-2 text-emerald-300 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'accounting' ? 'scale-115 !border-emerald-300 !shadow-[0_0_26px_rgba(16,185,129,0.85)]' : ''">
+                                    <i data-lucide="bar-chart-3" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Automated P&amp;L
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('whatsapp', 'WhatsApp Commerce: Official paperless digital receipts sent without saving phone numbers.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('whatsapp', 'WhatsApp Commerce: Official paperless digital receipts sent without saving phone numbers.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-emerald-500/60 group-hover:border-emerald-400 shadow-[0_4px_16px_rgba(34,197,94,0.25)] group-hover:shadow-[0_0_24px_rgba(34,197,94,0.7)] flex items-center justify-center p-2 text-emerald-400 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'whatsapp' ? 'scale-115 !border-emerald-400 !shadow-[0_0_26px_rgba(34,197,94,0.85)]' : ''">
+                                    <i data-lucide="message-circle" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    WhatsApp Order
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[15%] top-[50%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('pos', 'Physical Store POS: Rapid checkout, dynamic QRIS &amp; live inventory deduction.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('pos', 'Physical Store POS: Rapid checkout, dynamic QRIS &amp; live inventory deduction.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-[#007AFF]/60 group-hover:border-[#007AFF] shadow-[0_4px_16px_rgba(0,122,255,0.25)] group-hover:shadow-[0_0_24px_rgba(0,122,255,0.7)] flex items-center justify-center p-2 text-sky-400 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'pos' ? 'scale-115 !border-sky-400 !shadow-[0_0_26px_rgba(0,122,255,0.85)]' : ''">
+                                    <i data-lucide="store" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Store POS
+                                </span>
+                            </div>
+
+                            
+                            <div class="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center group cursor-pointer"
+                                @mouseenter="setNode('app', 'Android App: Transform smartphones &amp; tablets into portable cashier registers anywhere.')"
+                                @mouseleave="resetNode()"
+                                @click="setNode('app', 'Android App: Transform smartphones &amp; tablets into portable cashier registers anywhere.')">
+                                <div class="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full bg-[#09152e]/95 backdrop-blur-md border-2 border-sky-400/60 group-hover:border-sky-300 shadow-[0_4px_16px_rgba(56,189,248,0.25)] group-hover:shadow-[0_0_24px_rgba(56,189,248,0.7)] flex items-center justify-center p-2 text-sky-300 transition-all duration-200 group-hover:scale-115"
+                                    :class="activeNode === 'app' ? 'scale-115 !border-sky-300 !shadow-[0_0_26px_rgba(56,189,248,0.85)]' : ''">
+                                    <i data-lucide="smartphone" class="w-5 h-5 sm:w-5.5 sm:h-5.5"></i>
+                                </div>
+                                <span class="mt-1 text-[8.5px] xs:text-[9.5px] sm:text-[10px] font-bold text-slate-200 group-hover:text-white transition-colors text-center whitespace-nowrap">
+                                    Mobile POS App
+                                </span>
                             </div>
 
                         </div>
+
+                        
+                        <div class="mt-3 sm:mt-4 p-2.5 sm:p-3 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs w-full max-w-[500px]">
+                            <div class="flex items-center gap-2 min-w-0 w-full sm:w-auto">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+                                <span class="text-slate-200 text-[11px] sm:text-xs leading-snug truncate" x-text="currentTip"></span>
+                            </div>
+                            <a href="http://localhost/omnichannel/orders"
+                                class="text-[11px] font-semibold text-cyan-400 hover:text-white shrink-0 inline-flex items-center gap-1 group self-end sm:self-auto">
+                                <span>Explore Omnichannel Solutions</span>
+                                <i data-lucide="arrow-right" class="w-3 h-3 group-hover:translate-x-0.5 transition-transform"></i>
+                            </a>
+                        </div>
+
                     </div>
 
                 </div>

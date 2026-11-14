@@ -879,29 +879,13 @@
     "url": "/b/mahakarya-roastery-prestige",
     "name": "Public - Business Landing",
     "file": "resources/views/public/business_landing.blade.php",
-    "httpStatus": 500,
-    "uiRendering": "FAIL",
+    "httpStatus": 200,
+    "uiRendering": "PASS",
     "lightTheme": "PASS",
     "darkTheme": "PASS",
     "responsive": "PASS",
-    "result": "FAIL",
-    "errors": [
-      "HTTP 500"
-    ]
-  },
-  {
-    "url": "/b/mahakarya-roastery-prestige",
-    "name": "Public - Business Landing",
-    "file": "resources/views/public/business_landing.blade.php",
-    "httpStatus": 500,
-    "uiRendering": "FAIL",
-    "lightTheme": "PASS",
-    "darkTheme": "PASS",
-    "responsive": "PASS",
-    "result": "FAIL",
-    "errors": [
-      "HTTP 500"
-    ]
+    "result": "PASS",
+    "errors": []
   },
   {
     "url": "/template-pembukuan-gratis",

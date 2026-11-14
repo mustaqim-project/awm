@@ -2454,7 +2454,7 @@
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">
                             <a href="{{ route('landing') }}"
-                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isHomeActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
+                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative {{ $isHomeActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
                                 <div
                                     class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isHomeActive ? 'bg-[#00C2FF]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
                                     <i data-lucide="home"
@@ -2477,7 +2477,7 @@
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">
                             <a href="{{ route('public.bos.overview') }}"
-                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isPlatformActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
+                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative {{ $isPlatformActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
                                 <div
                                     class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isPlatformActive ? 'bg-[#00C2FF]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
                                     <i data-lucide="layers"
@@ -2499,7 +2499,7 @@
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center relative -mt-5 sm:-mt-6">
                             <a href="{{ route('solusi.show', 'kasir-warung') }}"
-                                class="w-12 h-12 sm:w-13 sm:h-13 rounded-[20px] sm:rounded-[22px] bg-gradient-to-tr from-[#007AFF] via-[#0A84FF] to-[#5856D6] text-white flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,255,0.45)] ring-4 ring-[#060913] active:scale-90 active:shadow-inner transition-all duration-200 group"
+                                class="w-12 h-12 sm:w-13 sm:h-13 rounded-[20px] sm:rounded-[22px] bg-gradient-to-tr from-[#007AFF] via-[#0A84FF] to-[#5856D6] text-white flex items-center justify-center shadow-[0_8px_20px_rgba(0,122,255,0.45)] ring-4 ring-[#060913] active:scale-90 active:shadow-inner transition-all duration-200 touch-manipulation min-h-[44px] group"
                                 title="{{ __('public_marketing.solutions_and_pos_tooltip') }}">
                                 <i data-lucide="store"
                                     class="w-5 h-5 sm:w-5.5 sm:h-5.5 text-white transition-transform group-hover:scale-110 group-active:scale-90 stroke-[2.2]"></i>
@@ -2519,7 +2519,7 @@
                         @endphp
                         <div class="col-span-1 flex flex-col items-center justify-center">
                             <a href="{{ route('template.index') }}"
-                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isTemplateActive ? 'text-[#34C759]' : 'text-slate-400 hover:text-white' }}">
+                                class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative {{ $isTemplateActive ? 'text-[#34C759]' : 'text-slate-400 hover:text-white' }}">
                                 <div
                                     class="relative w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isTemplateActive ? 'bg-[#34C759]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
                                     <i data-lucide="file-spreadsheet"
@@ -2559,7 +2559,7 @@
                         <div class="col-span-1 flex flex-col items-center justify-center">
                             @if (!$isAuth)
                                 <a href="{{ route('register') }}"
-                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative text-[#00C2FF]">
+                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative text-[#00C2FF]">
                                     <div
                                         class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 bg-gradient-to-tr from-[#007AFF] to-[#00C2FF] text-white shadow-[0_2px_10px_rgba(0,194,255,0.4)] group-active:scale-90">
                                         <i data-lucide="sparkles"
@@ -2571,7 +2571,7 @@
                                 </a>
                             @else
                                 <a href="{{ $targetRoute }}"
-                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 group relative {{ $isAccountActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
+                                    class="w-full flex flex-col items-center justify-center py-1 px-1 rounded-[20px] transition-all duration-200 active:scale-95 min-h-[44px] touch-manipulation group relative {{ $isAccountActive ? 'text-[#00C2FF]' : 'text-slate-400 hover:text-white' }}">
                                     <div
                                         class="w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center transition-all duration-200 {{ $isAccountActive ? 'bg-[#00C2FF]/15 shadow-sm' : 'group-hover:bg-white/5' }}">
                                         <i data-lucide="{{ $tabIcon }}"

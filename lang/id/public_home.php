@@ -9,9 +9,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'hero_kicker' => 'Sistem Operasi Bisnis UMKM Indonesia',
-    'hero_title' => 'Aplikasi Kasir POS, Kontrol Stok Resep & Pembukuan Otomatis Toko Anda',
-    'hero_subtitle' => 'Kelola kasir kilat, otomatis potong stok bahan baku per porsi, kirim nota otomatis ke WhatsApp pelanggan, dan pantau laba bersih harian langsung dari HP tanpa rekap manual.',
+    'hero_kicker' => 'Ekosistem Omnichannel Terpadu',
+    'hero_title' => 'Kelola Kasir Toko, WhatsApp & Marketplace dalam Satu Sistem',
+    'hero_subtitle' => 'Sinkronisasi stok kasir offline, chat WhatsApp, dan e-commerce otomatis secara real-time. Laba bersih dan pembukuan terbit seketika tanpa rekap manual.',
+    'hero_pill_pos' => 'Kasir Toko & QRIS',
+    'hero_pill_omni' => 'WhatsApp & Marketplace',
+    'hero_pill_sync' => 'Stok & Laba Otomatis',
     'hero_cta_primary' => 'Mulai Coba Gratis',
     'hero_cta_download_app' => 'Download COOCA My Own',
     'hero_cta_secondary' => 'Coba Demo Interaktif',
@@ -233,7 +236,42 @@ return [
     'omni_fin_web_line' => 'Toko Online & WA: Rp 1.000.000 (Margin Penuh)',
     'omni_fin_banner_text' => 'Laporan laba rugi dan pembukuan SAK EMKM terbentuk otomatis dari seluruh saluran penjualan tanpa Excel.',
 
-    // Cockpit Footer
-    'omni_footer_reassurance' => 'Satu Stok Terpusat Anti-Overselling',
-    'omni_footer_action' => 'Jelajahi Solusi Omnichannel',
+    // Hero Right Grid: Circular Omnichannel Mesh Network (Jaring-Jaring Terintegrasi)
+    'omni_mesh_center_title' => 'Omnichannel',
+    'omni_mesh_center_sub' => '1 Core Engine',
+    'omni_mesh_center_badge' => 'Sinkron < 1 dtk',
+
+    // 8 Radial Nodes
+    'omni_node_pos' => 'Kasir POS Toko',
+    'omni_node_pos_desc' => 'Kasir Toko Fisik: Transaksi kilat, QRIS dinamis & potong stok instan per porsi.',
+
+    'omni_node_marketplace' => 'Shopee & Tokped',
+    'omni_node_marketplace_desc' => 'Multi-Marketplace: Sinkronisasi stok Shopee, Tokopedia, TikTok Shop otomatis < 1 dtk.',
+
+    'omni_node_web' => 'Toko Online Web',
+    'omni_node_web_desc' => 'Etalase Web D2C: Terima pesanan langsung dari website resmi tanpa potongan komisi.',
+
+    'omni_node_whatsapp' => 'WhatsApp Order',
+    'omni_node_whatsapp_desc' => 'WhatsApp Commerce: Kirim nota digital resmi langsung ke chat pelanggan tanpa simpan nomor.',
+
+    'omni_node_social' => 'Media Sosial',
+    'omni_node_social_desc' => 'Social Commerce: Publikasi katalog produk jualan ke Instagram, TikTok, Facebook & Threads.',
+
+    'omni_node_app' => 'Kasir Mobile',
+    'omni_node_app_desc' => 'Aplikasi Android: Ubah smartphone & tablet menjadi mesin kasir profesional fleksibel.',
+
+    'omni_node_inventory' => 'Multi-Gudang',
+    'omni_node_inventory_desc' => '1 Stok Terpusat: Cegah pembatalan pesanan (overselling) serentak di semua saluran toko.',
+
+    'omni_node_accounting' => 'Pembukuan SAK',
+    'omni_node_accounting_desc' => 'Akuntansi Otomatis: Omzet, potongan biaya marketplace & HPP terjurnal tanpa Excel.',
+
+    'omni_card_pos_title' => 'Kasir POS Toko',
+    'omni_card_logistics_title' => 'Multi-Gudang & Kurir',
+    'omni_card_wa_title' => 'WhatsApp Commerce',
+    'omni_card_market_title' => 'Shopee & Tokped Sync',
+    'omni_image_alt' => 'Ekosistem Omnichannel Terintegrasi COOCA: Kasir POS, WhatsApp, Marketplace, dan Multi-Gudang',
+
+    'omni_mesh_default_tip' => 'Semua saluran penjualan terhubung ke 1 pusat data & stok secara real-time.',
+    'omni_mesh_explore_btn' => 'Jelajahi Solusi Omnichannel',
 ];
