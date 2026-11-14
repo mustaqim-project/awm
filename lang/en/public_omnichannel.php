@@ -16,13 +16,13 @@ return [
 
     // Common Buttons
     'btn_dashboard' => 'Dashboard',
-    'btn_try_demo' => 'Try WhatsApp Notification Demo',
+    'btn_try_demo' => 'Start Free Trial',
     'btn_connect_pos' => 'Connect to POS Cashier',
     'btn_connect_marketplace' => 'Connect to Marketplaces',
-    'btn_social_demo' => 'Try Social Media Demo',
+    'btn_social_demo' => 'Start Free Trial',
     'btn_view_calendar' => 'View Content Calendar',
-    'btn_orders_demo' => 'Try Order Management Demo',
-    'btn_customer_demo' => 'Try Customer View Demo',
+    'btn_orders_demo' => 'Start Free Trial',
+    'btn_customer_demo' => 'Start Free Trial',
     'btn_consultation' => 'Store Consultation',
     'btn_free_account' => 'Start Free Trial',
 

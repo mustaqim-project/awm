@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_resources.faq_seo_title'))
 @section('description', __('public_resources.faq_seo_desc'))
@@ -575,7 +575,7 @@ class="w-full font-sans antialiased bg-[#F2F2F7] dark:bg-[#000000] text-[#1D1D1F
                             Uji coba antarmuka kasir POS langsung di peramban Anda tanpa perlu mendaftar akun terlebih dahulu.
                         </p>
                     </div>
-                    <a href="{{ route('public.demo') }}" class="h-11 px-4 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
+                    <a href="{{ route('register') }}" class="h-11 px-4 rounded-[12px] bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs flex items-center justify-center gap-1.5 transition">
                         <span>{{ __('public_resources.faq_card_demo_btn') }}</span>
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                     </a>

@@ -605,8 +605,8 @@
                 <!-- Action Controls & Theme Toggle -->
                 <div class="flex items-center gap-2 sm:gap-2.5 shrink-0"
                     @mouseenter="platformDropdown = false; solutionDropdown = false; omniDropdown = false; resourceDropdown = false">
-                    <!-- Bilingual Language Switcher (Desktop & Tablet) -->
-                    <div class="hidden sm:inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md shrink-0" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
+                    <!-- Bilingual Language Switcher (Desktop & Large Tablet Only) -->
+                    <div class="hidden md:inline-flex items-center p-0.5 rounded-full bg-white/10 border border-white/10 text-xs font-semibold backdrop-blur-md shrink-0" role="navigation" aria-label="{{ __('public_marketing.lang_selector_label') }}">
                         <a href="{{ request()->fullUrlWithQuery(['lang' => 'id']) }}"
                            class="px-2.5 py-1 rounded-full transition-all duration-200 {{ app()->getLocale() === 'id' ? 'bg-[#007AFF] text-white shadow-xs font-bold' : 'text-slate-300 hover:text-white' }}"
                            title="{{ __('public_marketing.lang_id') }}" aria-label="{{ __('public_marketing.lang_id') }}">
@@ -1012,7 +1012,7 @@
                                 </p>
 
                                 <!-- Showcase Banner Card -->
-                                <a href="{{ route('public.demo') }}"
+                                <a href="{{ route('register') }}"
                                     class="group block relative rounded-2xl overflow-hidden bg-[#0A0E1A] border border-slate-800/80 p-5 shadow-sm transition-all hover:scale-[1.01] hover:border-slate-700">
                                     <!-- Ambient Glow -->
                                     <div
@@ -1034,9 +1034,9 @@
 
                                 <!-- Sub-link below banner -->
                                 <div class="mt-4">
-                                    <a href="{{ route('public.demo') }}"
+                                    <a href="{{ route('register') }}"
                                         class="group inline-flex items-center gap-1.5 text-sm font-bold text-slate-900 dark:text-white hover:text-[#007AFF] dark:hover:text-[#00C2FF] transition-colors">
-                                        <span>{{ __('public_marketing.banner_demo_title') }}</span>
+                                        <span>{{ __('public_home.hero_cta_primary') }}</span>
                                         <i data-lucide="arrow-right"
                                             class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
                                     </a>
@@ -1791,19 +1791,19 @@
                             </div>
                         </div>
 
-                        <!-- Showcase Banner Card: Konsultasi Solusi -->
+                        <!-- Showcase Banner Card: Mulai Gratis -->
                         <div class="pt-1 border-t border-white/5">
-                            <a href="{{ route('public.demo') }}" @click="mobileMenu = false"
+                            <a href="{{ route('register') }}" @click="mobileMenu = false"
                                 class="block relative rounded-xl overflow-hidden bg-[#0A0E1A] border border-slate-800 p-3 shadow-xs">
                                 <div class="flex items-center justify-between gap-2">
                                     <div>
                                         <span
-                                            class="text-[9px] font-bold uppercase tracking-wider text-[#FF9500] block">{{ __('public_marketing.banner_demo_tag') }}</span>
-                                        <span class="text-xs font-bold text-white block">{{ __('public_marketing.banner_demo_mobile_title') }}</span>
-                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_marketing.banner_demo_mobile_desc') }}</span>
+                                            class="text-[9px] font-bold uppercase tracking-wider text-[#00C2FF] block">{{ __('public_marketing.badge_umkm_architecture') }}</span>
+                                        <span class="text-xs font-bold text-white block">{{ __('public_home.hero_cta_primary') }}</span>
+                                        <span class="text-[10px] text-slate-400 block leading-tight mt-0.5">{{ __('public_home.trust_badge_no_card') }} • {{ __('public_home.trust_badge_free') }}</span>
                                     </div>
                                     <div
-                                        class="w-6 h-6 rounded-full bg-[#FF9500]/20 text-[#FF9500] flex items-center justify-center shrink-0">
+                                        class="w-6 h-6 rounded-full bg-[#00C2FF]/20 text-[#00C2FF] flex items-center justify-center shrink-0">
                                         <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
                                     </div>
                                 </div>
@@ -2065,13 +2065,13 @@
                         </div>
                     </a>
 
-                    <!-- Live Demo -->
-                    <a href="{{ route('public.demo') }}" @click="mobileMenu = false"
+                    <!-- Solusi Bisnis -->
+                    <a href="{{ route('public.solutions.index') }}" @click="mobileMenu = false"
                         class="p-3 rounded-[14px] bg-white/[0.03] border border-white/10 hover:bg-white/[0.07] flex items-center gap-2.5 transition-colors">
-                        <i data-lucide="play" class="w-4 h-4 text-[#34C759]"></i>
+                        <i data-lucide="briefcase" class="w-4 h-4 text-[#34C759]"></i>
                         <div class="min-w-0">
-                            <span class="font-bold text-white block truncate">{{ __('public_marketing.btn_view_demo_short') }}</span>
-                            <span class="text-[9px] text-slate-400 block truncate">{{ __('public_marketing.btn_sub_demo') }}</span>
+                            <span class="font-bold text-white block truncate">{{ __('public_marketing.nav_solutions') }}</span>
+                            <span class="text-[9px] text-slate-400 block truncate">{{ __('public_marketing.badge_umkm_architecture') }}</span>
                         </div>
                     </a>
 
@@ -2364,8 +2364,8 @@
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_guides') }}</a>
                                 <a href="{{ route('public.resources.case-studies') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_case_studies') }}</a>
-                                <a href="{{ route('public.demo') }}"
-                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_demo') }}</a>
+                                <a href="{{ route('public.pricing') }}"
+                                    class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.nav_pricing') }}</a>
                                 <a href="{{ route('public.resources.faq') }}"
                                     class="hover:text-white hover:translate-x-0.5 transition-all inline-block">{{ __('public_marketing.footer_faq') }}</a>
                             </nav>

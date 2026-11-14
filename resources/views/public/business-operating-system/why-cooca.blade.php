@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_bos.why_seo_title'))
 @section('description', __('public_bos.why_seo_desc'))
@@ -646,7 +646,7 @@
                             kasir ke kartu gudang & laporan owner.</p>
                     </a>
 
-                    <a href="{{ route('public.demo') }}"
+                    <a href="{{ route('register') }}"
                         class="group p-3.5 sm:p-5 rounded-[16px] sm:rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] hover:border-[#FF9500]/40 hover:shadow-md transition-all">
                         <div
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-[10px] sm:rounded-[12px] bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center font-bold mb-2.5 sm:mb-3">

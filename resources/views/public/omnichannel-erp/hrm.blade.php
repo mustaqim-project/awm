@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_erp.hrm_seo_title'))
 @section('description', __('public_erp.hrm_seo_desc'))
@@ -125,7 +125,7 @@
 
                         <!-- Action Buttons (Row Left-Aligned on Mobile & Desktop) -->
                         <div class="pt-1 flex flex-row items-center justify-start gap-2 sm:gap-3.5 w-full sm:w-auto">
-                            <a href="{{ route('public.demo') }}"
+                            <a href="{{ route('register') }}"
                                 class="h-10 sm:h-12 px-4 sm:px-7 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
                                 <span>{{ __('public_erp.hrm_cta_try') }}</span>
                                 <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -771,7 +771,7 @@
                         transparan dengan COOCA HRM.
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3">
-                        <a href="{{ route('public.demo') }}"
+                        <a href="{{ route('register') }}"
                             class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm transition-all shadow-lg shadow-[#007AFF]/25">
                             Coba Demo Modul HRM
                         </a>

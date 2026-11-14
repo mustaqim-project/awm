@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_erp.erp_seo_title'))
 @section('description', __('public_erp.erp_seo_desc'))
@@ -638,7 +638,7 @@
                                 <span>{{ __('public_erp.btn_register_erp_free') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
-                            <a href="{{ route('public.demo') }}"
+                            <a href="{{ route('register') }}"
                                 class="w-full py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[44px]">
                                 <span>Coba Demo Interaktif</span>
                             </a>

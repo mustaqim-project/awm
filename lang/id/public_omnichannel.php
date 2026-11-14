@@ -16,13 +16,13 @@ return [
 
     // Common Buttons
     'btn_dashboard' => 'Dashboard',
-    'btn_try_demo' => 'Coba Demo Notifikasi WA',
+    'btn_try_demo' => 'Mulai Coba Gratis',
     'btn_connect_pos' => 'Koneksi ke Kasir POS',
     'btn_connect_marketplace' => 'Koneksi ke Marketplace',
-    'btn_social_demo' => 'Coba Demo Media Sosial',
+    'btn_social_demo' => 'Mulai Coba Gratis',
     'btn_view_calendar' => 'Lihat Kalender Konten',
-    'btn_orders_demo' => 'Coba Demo Manajemen Order',
-    'btn_customer_demo' => 'Coba Demo Customer View',
+    'btn_orders_demo' => 'Mulai Coba Gratis',
+    'btn_customer_demo' => 'Mulai Coba Gratis',
     'btn_consultation' => 'Konsultasi Kebutuhan Toko',
     'btn_free_account' => 'Mulai Coba Gratis',
 

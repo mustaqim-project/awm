@@ -118,7 +118,7 @@ Route::get('/direktori', [PublicDiscoveryController::class, 'index'])->name('pub
 
 // 6b. Core Public Ecosystem Pages (BOS, ERP, Omnichannel, Content Automation, Solutions, Resources)
 Route::get('/pricing', [\App\Http\Controllers\PublicPricingController::class, 'index'])->name('public.pricing');
-Route::get('/demo', fn() => view('public.demo'))->name('public.demo');
+Route::get('/demo', fn() => redirect()->route('register', status: 301))->name('public.demo');
 Route::get('/about', fn() => view('public.about'))->name('public.about');
 Route::get('/tentang', fn() => view('public.about'));
 Route::get('/support', fn() => view('public.support'))->name('public.support');

@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @php
     $caseStudyConfig = config('marketing.case_studies', []);
@@ -518,7 +518,7 @@
                         <span>{{ __('public_resources.cs_btn_start_free_trial') }}</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
-                    <a href="{{ route('public.demo') }}"
+                    <a href="{{ route('register') }}"
                         class="h-12 px-7 rounded-[14px] bg-[#F2F2F7] dark:bg-[#2C2C2E] hover:bg-slate-200/70 dark:hover:bg-[#38383A] text-slate-900 dark:text-white font-semibold text-sm inline-flex items-center gap-2 transition-all">
                         <i data-lucide="play" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
                         <span>{{ __('public_resources.cs_btn_view_demo') }}</span>

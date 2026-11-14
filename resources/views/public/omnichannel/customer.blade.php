@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_omnichannel.customer_seo_title'))
 @section('description', __('public_omnichannel.customer_seo_desc'))
@@ -132,7 +132,7 @@
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
                                 </a>
                             @else
-                                <a href="{{ route('public.demo') }}"
+                                <a href="{{ route('register') }}"
                                     class="h-10 sm:h-12 px-5 sm:px-8 rounded-[12px] sm:rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_25px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all min-h-[40px] sm:min-h-[48px] shrink-0 border border-white/20">
                                     <span>{{ __('public_omnichannel.btn_customer_demo') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -715,7 +715,7 @@
                         mengesankan bersama COOCA Omnichannel Customer.
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
-                        <a href="{{ route('public.demo') }}"
+                        <a href="{{ route('register') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
                             Coba Demo Single Customer View
                         </a>

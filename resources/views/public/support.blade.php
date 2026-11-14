@@ -91,10 +91,10 @@
                                 <i data-lucide="message-circle" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
                                 <span>{{ __('public_marketing.btn_chat_wa_support') }}</span>
                             </a>
-                            <a href="{{ route('public.demo') }}"
+                            <a href="{{ route('register') }}"
                                 class="h-12 px-6 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-sm transition active:scale-[0.98] backdrop-blur-sm min-h-[48px]">
-                                <i data-lucide="play" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
-                                <span>Coba Demo Interaktif</span>
+                                <i data-lucide="sparkles" class="w-4 h-4 text-[#00C4D8] shrink-0" aria-hidden="true"></i>
+                                <span>{{ __('public_home.hero_cta_primary') }}</span>
                             </a>
                         </div>
 

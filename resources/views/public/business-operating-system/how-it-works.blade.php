@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', 'Cara Kerja Business Operating System Terintegrasi | COOCA')
 @section('description', __('public_bos.how_seo_desc'))
@@ -688,7 +688,7 @@
                                 <span>{{ __("public_bos.btn_register_free_now") }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
                             </a>
-                            <a href="{{ route('public.demo') }}"
+                            <a href="{{ route('register') }}"
                                 class="w-full py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 border border-white/15 text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 transition-all min-h-[44px]">
                                 <span>Coba Demo Interaktif</span>
                             </a>

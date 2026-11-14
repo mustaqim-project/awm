@@ -1,4 +1,4 @@
-@extends('layouts.public_marketing')
+﻿@extends('layouts.public_marketing')
 
 @section('title', __('public_omnichannel.orders_seo_title'))
 @section('description', __('public_omnichannel.orders_seo_desc'))
@@ -111,7 +111,7 @@
 
                         {{-- Action CTAs (Left-aligned) --}}
                         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
-                            <a href="{{ route('public.demo') }}"
+                            <a href="{{ route('register') }}"
                                 class="inline-flex justify-center items-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 hover:shadow-xl hover:shadow-[#007AFF]/35 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 min-h-[48px]">
                                 <span>{{ __('public_omnichannel.btn_orders_demo') }}</span>
                                 <i data-lucide="arrow-right" class="w-4 h-4 shrink-0"></i>
@@ -256,7 +256,7 @@
                                     <i data-lucide="check-circle" class="w-3.5 h-3.5 text-[#00C4D8] shrink-0"></i>
                                     <span class="truncate">Stok langsung dialokasikan real-time ke masing-masing order</span>
                                 </span>
-                                <a href="{{ route('public.demo') }}"
+                                <a href="{{ route('register') }}"
                                     class="text-[#00C4D8] hover:text-white font-semibold transition-colors flex items-center gap-1 shrink-0">
                                     <span>{{ __('public_omnichannel.btn_open_pipeline') }}</span>
                                     <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
@@ -703,7 +703,7 @@
                         barang bersama COOCA Orders.
                     </p>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-3">
-                        <a href="{{ route('public.demo') }}"
+                        <a href="{{ route('register') }}"
                             class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm shadow-lg shadow-[#007AFF]/25 transition-all">
                             {{ __('public_omnichannel.btn_orders_demo') }}
                         </a>
