@@ -653,10 +653,10 @@ function coocaLiveChatWidget() {
             </button>
             <div class="flex items-center gap-2 mb-1">
                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span class="text-[11px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300">Live Support Online</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-violet-700 dark:text-violet-300">{{ __('public_marketing.live_chat_support_online') }}</span>
             </div>
             <p class="text-[12.5px] font-medium text-gray-800 dark:text-gray-100 leading-snug">
-                Ada yang bisa kami bantu seputar sistem <strong class="text-violet-600 dark:text-violet-400">COOCA</strong>? Chat langsung sekarang!
+                {{ __('public_marketing.live_chat_greeting_prompt') }}
             </p>
         </div>
 
