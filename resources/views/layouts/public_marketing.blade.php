@@ -174,7 +174,8 @@
 
     <style>
         :root,
-        .cooca-public {
+        .cooca-public,
+        [data-theme="light"] {
             --apple-blue: #007AFF;
             --apple-green: #34C759;
             --apple-orange: #FF9500;
@@ -191,7 +192,12 @@
         .dark,
         .dark.cooca-public,
         .cooca-public.dark,
-        .cooca-public .dark {
+        .cooca-public .dark,
+        html.dark,
+        html.dark body,
+        .dark body,
+        [data-theme="dark"],
+        [data-theme="dark"] body {
             --apple-blue: #0A84FF;
             --apple-green: #30D158;
             --apple-orange: #FF9F0A;
@@ -266,6 +272,13 @@
             -moz-osx-font-smoothing: grayscale;
             background-color: var(--apple-bg);
             color: var(--apple-text);
+        }
+
+        html.dark body,
+        .dark body,
+        [data-theme="dark"] body {
+            background-color: #000000;
+            color: #F5F5F7;
         }
 
         /* Apple Inset Glass Card (Squircle) */

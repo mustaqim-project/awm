@@ -1,1139 +1,19 @@
 {
-  "totalChecks": 915,
-  "passedChecks": 689,
+  "totalChecks": 875,
+  "passedChecks": 873,
   "failedChecks": [
-    {
-      "view": "landing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on landing @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "landing",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on landing @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
     {
       "view": "landing",
       "error": "CLS score 0.18788389101381653 exceeds 0.1 threshold"
     },
     {
-      "view": "about",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on about @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "about",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on about @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "demo",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on demo @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "demo",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on demo @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "pricing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on pricing @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "pricing",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on pricing @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on privacy @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on privacy @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on privacy @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "privacy",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on privacy @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "security",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on security @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "security",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on security @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1115px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "sitemap",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on sitemap @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "sitemap",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on sitemap @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "support",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on support @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "support",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on support @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on terms @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 1: Mobile XS (320px - iPhone SE1)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 2: Mobile Standard (360px - Galaxy S)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 2: Mobile Standard (360px - Galaxy S)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 3: Mobile iOS (390px - iPhone 12/13/14)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 3: Mobile iOS (390px - iPhone 12/13/14)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 4: Mobile Large (414px - iPhone Plus)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 4: Mobile Large (414px - iPhone Plus)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Print & Digital Rece] height 0px < 44px on terms @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 5: Tablet Portrait (768px - iPad)",
-      "error": "Legal button [Laundromats & Dry Cl] height 0px < 44px on terms @ Viewport 5: Tablet Portrait (768px - iPad)"
-    },
-    {
-      "view": "terms",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on terms @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
       "view": "business_landing",
-      "error": "CLS score 0.1903431526759688 exceeds 0.1 threshold"
-    },
-    {
-      "view": "kasir_android",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on kasir_android @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "kasir_android",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on kasir_android @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "kasir_gratis",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on kasir_gratis @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "kasir_gratis",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on kasir_gratis @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "kasir_offline",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on kasir_offline @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "kasir_offline",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on kasir_offline @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "discovery",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on discovery @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "discovery",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on discovery @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on fnb @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: grid grid-cols-2 gap-2.5 text-xs"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "fnb",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on fnb @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on laundry @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 4 cols caused overflow: grid grid-cols-4 gap-1.5 text-center text-[10px] font-semibold"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "laundry",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on laundry @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on manufacturing @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: grid grid-cols-2 gap-2.5 text-xs"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "manufacturing",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on manufacturing @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on retail @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: grid grid-cols-2 gap-2.5 text-xs"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "retail",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on retail @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on services @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: grid grid-cols-2 gap-2.5 text-xs"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "services",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on services @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "solutions_show",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on solutions_show @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "solutions_show",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on solutions_show @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Horizontal overflow detected on workshop @ Viewport 1: Mobile XS (320px - iPhone SE1): scrollWidth=324px > viewport=320px. Overflow elements: undefined"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: col-span-8 grid grid-cols-3 gap-8"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-12 gap-8 xl:gap-10 items-start"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-x-6 gap-y-4"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-3 gap-2"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-1 gap-1.5"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-1.5"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 3 cols caused overflow: grid grid-cols-2 gap-2 text-xs pt-1"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-left w-full"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: grid grid-cols-2 gap-2.5 text-xs"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 relative z-10"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 1 cols caused overflow: grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pb-12"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 2 cols caused overflow: lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-7 xl:gap-8 pt-4 lg:pt-0 border-t-0"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 1: Mobile XS (320px - iPhone SE1)",
-      "error": "Grid with 5 cols caused overflow: grid grid-cols-5 items-center w-full"
-    },
-    {
-      "view": "workshop",
-      "viewport": "Viewport 6: Tablet Landscape (1024px - iPad Pro)",
-      "error": "Horizontal overflow detected on workshop @ Viewport 6: Tablet Landscape (1024px - iPad Pro): scrollWidth=1090px > viewport=1024px. Overflow elements: undefined"
+      "error": "CLS score 0.19070543358571246 exceeds 0.1 threshold"
     }
   ],
   "findingsSummary": {
-    "overflowFailures": 40,
-    "touchTargetFailures": 40,
+    "overflowFailures": 0,
+    "touchTargetFailures": 0,
     "clsIssues": 2,
     "mediaDimensionIssues": 1
   },
@@ -1141,149 +21,149 @@
     {
       "view": "landing",
       "cls": 0.18788389101381653,
-      "domContentLoaded": 88,
-      "load": 89,
-      "duration": 89
-    },
-    {
-      "view": "about",
-      "cls": 0,
-      "domContentLoaded": 66,
-      "load": 67,
-      "duration": 67
-    },
-    {
-      "view": "demo",
-      "cls": 0,
-      "domContentLoaded": 64,
-      "load": 65,
-      "duration": 65
-    },
-    {
-      "view": "pricing",
-      "cls": 0,
-      "domContentLoaded": 71,
+      "domContentLoaded": 72,
       "load": 72,
       "duration": 72
     },
     {
+      "view": "about",
+      "cls": 0,
+      "domContentLoaded": 63,
+      "load": 64,
+      "duration": 64
+    },
+    {
+      "view": "demo",
+      "cls": 0,
+      "domContentLoaded": 75,
+      "load": 75,
+      "duration": 75
+    },
+    {
+      "view": "pricing",
+      "cls": 0,
+      "domContentLoaded": 68,
+      "load": 69,
+      "duration": 69
+    },
+    {
       "view": "privacy",
-      "cls": 0.00004404444230109739,
-      "domContentLoaded": 125,
-      "load": 126,
-      "duration": 126
+      "cls": 0.000011862086334019206,
+      "domContentLoaded": 81,
+      "load": 82,
+      "duration": 82
     },
     {
       "view": "security",
-      "cls": 0.010193603205844374,
-      "domContentLoaded": 77,
-      "load": 78,
-      "duration": 78
+      "cls": 0,
+      "domContentLoaded": 75,
+      "load": 76,
+      "duration": 76
     },
     {
       "view": "sitemap",
-      "cls": 0,
-      "domContentLoaded": 173,
-      "load": 173,
-      "duration": 173
-    },
-    {
-      "view": "support",
-      "cls": 0,
-      "domContentLoaded": 70,
-      "load": 71,
-      "duration": 71
-    },
-    {
-      "view": "terms",
-      "cls": 0.000891982308009688,
-      "domContentLoaded": 79,
-      "load": 80,
-      "duration": 80
-    },
-    {
-      "view": "business_landing",
-      "cls": 0.1903431526759688,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
-    },
-    {
-      "view": "kasir_android",
-      "cls": 0,
-      "domContentLoaded": 73,
-      "load": 74,
-      "duration": 74
-    },
-    {
-      "view": "kasir_gratis",
-      "cls": 0,
-      "domContentLoaded": 75,
-      "load": 76,
-      "duration": 76
-    },
-    {
-      "view": "kasir_offline",
-      "cls": 0,
-      "domContentLoaded": 67,
-      "load": 68,
-      "duration": 68
-    },
-    {
-      "view": "discovery",
-      "cls": 0.01596361802340535,
-      "domContentLoaded": 104,
-      "load": 105,
-      "duration": 105
-    },
-    {
-      "view": "fnb",
-      "cls": 0,
-      "domContentLoaded": 78,
-      "load": 79,
-      "duration": 79
-    },
-    {
-      "view": "laundry",
-      "cls": 0,
-      "domContentLoaded": 83,
-      "load": 84,
-      "duration": 84
-    },
-    {
-      "view": "manufacturing",
-      "cls": 0,
-      "domContentLoaded": 67,
-      "load": 68,
-      "duration": 68
-    },
-    {
-      "view": "retail",
-      "cls": 0,
-      "domContentLoaded": 66,
-      "load": 67,
-      "duration": 67
-    },
-    {
-      "view": "services",
-      "cls": 0.001031220746661737,
-      "domContentLoaded": 87,
-      "load": 88,
-      "duration": 88
-    },
-    {
-      "view": "solutions_show",
       "cls": 0,
       "domContentLoaded": 74,
       "load": 75,
       "duration": 75
     },
     {
+      "view": "support",
+      "cls": 0,
+      "domContentLoaded": 73,
+      "load": 74,
+      "duration": 74
+    },
+    {
+      "view": "terms",
+      "cls": 0.000011862086334019206,
+      "domContentLoaded": 79,
+      "load": 80,
+      "duration": 80
+    },
+    {
+      "view": "business_landing",
+      "cls": 0.19070543358571246,
+      "domContentLoaded": 104,
+      "load": 105,
+      "duration": 105
+    },
+    {
+      "view": "kasir_android",
+      "cls": 0,
+      "domContentLoaded": 76,
+      "load": 77,
+      "duration": 77
+    },
+    {
+      "view": "kasir_gratis",
+      "cls": 0,
+      "domContentLoaded": 84,
+      "load": 84,
+      "duration": 84
+    },
+    {
+      "view": "kasir_offline",
+      "cls": 0,
+      "domContentLoaded": 73,
+      "load": 74,
+      "duration": 74
+    },
+    {
+      "view": "discovery",
+      "cls": 0,
+      "domContentLoaded": 105,
+      "load": 106,
+      "duration": 106
+    },
+    {
+      "view": "fnb",
+      "cls": 0,
+      "domContentLoaded": 75,
+      "load": 76,
+      "duration": 76
+    },
+    {
+      "view": "laundry",
+      "cls": 0,
+      "domContentLoaded": 86,
+      "load": 87,
+      "duration": 87
+    },
+    {
+      "view": "manufacturing",
+      "cls": 0.00997657341767404,
+      "domContentLoaded": 83,
+      "load": 83,
+      "duration": 83
+    },
+    {
+      "view": "retail",
+      "cls": 0,
+      "domContentLoaded": 75,
+      "load": 76,
+      "duration": 76
+    },
+    {
+      "view": "services",
+      "cls": 0,
+      "domContentLoaded": 79,
+      "load": 79,
+      "duration": 79
+    },
+    {
+      "view": "solutions_show",
+      "cls": 0,
+      "domContentLoaded": 79,
+      "load": 79,
+      "duration": 79
+    },
+    {
       "view": "workshop",
       "cls": 0,
-      "domContentLoaded": 70,
-      "load": 71,
-      "duration": 71
+      "domContentLoaded": 82,
+      "load": 83,
+      "duration": 83
     }
   ]
 }
