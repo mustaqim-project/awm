@@ -46,6 +46,28 @@ class EscposFormatter
 
             // 3. Header
             $printer->setJustification(Printer::JUSTIFY_CENTER);
+
+            // Print Business Logo if configured & exists
+            if (!empty($business?->logo_path)) {
+                try {
+                    $clean = ltrim($business->logo_path, '/');
+                    if (str_starts_with($clean, 'public/')) {
+                        $clean = substr($clean, 7);
+                    }
+                    $fullPath = \Illuminate\Support\Facades\Storage::disk('public')->path($clean);
+                    if (!file_exists($fullPath)) {
+                        $fullPath = public_path($clean);
+                    }
+                    if (file_exists($fullPath)) {
+                        $logoImg = \Mike42\Escpos\EscposImage::load($fullPath);
+                        $printer->graphics($logoImg);
+                        $printer->feed(1);
+                    }
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning('[ESC/POS] Failed to render logo: ' . $e->getMessage());
+                }
+            }
+
             $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_EMPHASIZED);
             $printer->text(strtoupper($business->name ?? 'COOCA POS') . "\n");
             $printer->selectPrintMode();

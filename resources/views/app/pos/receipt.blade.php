@@ -168,6 +168,11 @@
 
         <!-- Header / Merchant Info -->
         <div class="text-center pb-2.5 border-b border-dashed border-gray-400">
+            @if ($business->logo_url)
+                <div class="mb-2 flex justify-center">
+                    <img src="{{ $business->logo_url }}" alt="{{ $business->name }}" class="h-12 w-auto max-w-[140px] object-contain filter grayscale contrast-125">
+                </div>
+            @endif
             <div class="font-bold text-[14px] tracking-tight uppercase">{{ $business->name }}</div>
             @if ($order->location)
                 <div class="text-[10px] text-gray-700 mt-0.5">{{ $order->location->name }}</div>
