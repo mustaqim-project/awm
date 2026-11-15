@@ -33,6 +33,48 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-15-659] Penerbitan 40 Konten Clickbait & Kontroversial Evergreen Fitur COOCA (IDs 659 - 698)
+
+- **Date:** 2026-11-15
+- **Status:** COMPLETED
+- **Module:** Content Marketing / SEO & Blog / Automation
+- **Feature:** 40 Evergreen Clickbait & Controversial Content Engine, Playwright Bento Cover Renderer, Automated Linter & Database Importer
+- **Work Type:** Feature | Content Strategy | SEO Engineering | Automation
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab instruksi pengguna untuk menghasilkan 40 konten evergreen dengan judul clickbait dan kontroversial yang memikat rasa penasaran pembaca UMKM, namun berlandaskan data dan fitur nyata COOCA (`resources/views/app/`).
+- **Target:**
+  1. Menghasilkan 40 artikel edukatif mendalam (panjang >= 1.200 kata per artikel, total 50.000+ kata) mencakup 40 fitur unggulan COOCA (POS, Kasir Offline, KDS, Shift Kasir, Multi-Gudang, BOM Resep, Barcode Opname, FEFO, Purchase Order, Surat Penawaran B2B, Sales Order Grosir, Surat Jalan, Aging Piutang, Laba Rugi SAK EMKM, Arus Kas & Rekonsiliasi Bank, Petty Cash, Invoice Tempo, Invoice WA Otomatis, QRIS Dinamis, PPh Final UMKM, WA Gateway Resmi, Struk WA Digital, Notifikasi Pesanan WA, Broadcast WA Resmi, Poin Loyalitas, Segmentasi RFM, Profil Pelanggan CRM, Promo Ultah Member, Absensi GPS Geofencing, Shift Karyawan, Payroll & Slip Gaji Digital, Kasbon Karyawan, Web D2C Bebas Komisi, Menu QR Pesan di Meja, Sinkronisasi Stok Marketplace, dan RBAC Multi-Role).
+  2. Judul artikel menggunakan formula psikologi clickbait tingkat tinggi ("Bohong Besar", "Bahaya Laten", "Skandal", "Bongkar Modus", "Malapetaka", "Jebakan", "Audit Konyol", "Gudang Kuburan Modal", dll.) yang menyorot risiko fatal sistem manual sebelum menyajikan fitur nyata COOCA sebagai penyelamat operasional bisnis.
+  3. Mematuhi standar editorial dan SEO ketat: Zero em dash (`—`) dan en dash (`–`), primary keyword di H1 dan 100 kata pertama, meta description 120-160 karakter, meta title <= 60 karakter, valid schema JSON-LD `Article` dan `FAQPage`, serta minimal 3 internal link terverifikasi dari `blog_links.json`.
+  4. Menghasilkan 40 cover bento custom (1200x675 JPG) yang dirender secara lokal menggunakan Playwright browser headless tanpa menggunakan stok foto eksternal.
+  5. Mengimpor ke database posts Laravel (`php artisan blog:import-articles --force`) dan memperbarui `sitemap_blog.xml` serta `blog_links.json`.
+
+#### 2. What Was Done
+- **Content Engineering & Generation:**
+  - Membuat generator data modular: `scripts/gen_clickbait_part1.py` (IDs 659-668), `scripts/gen_clickbait_part2.py` (IDs 669-678), `scripts/gen_clickbait_part3.py` (IDs 679-688), `scripts/gen_clickbait_part4.py` (IDs 689-698).
+  - Menyusun helper perakitan artikel di `scripts/clickbait_helpers.py` dengan proteksi ketat penghilangan em dash dan penyesuaian schema JSON-LD.
+  - Membangun 40 artikel markdown (`.md`) dan metadata JSON (`.json`) ke direktori `database/data/articles/` via `scripts/build_clickbait_articles.py`.
+- **Quality Assurance & Linting:**
+  - Menjalankan `scripts/lint_content.py` untuk seluruh 40 artikel: **100% PASS (40/40)** tanpa kesalahan heading, em dash, meta length, maupun internal links.
+- **Bento Cover Graphics Engine:**
+  - Membuat script generator render Playwright `scripts/make_clickbait_render_script.py` yang memproduksi `scripts/render_clickbait_covers.cjs`.
+  - Merender 40 cover visual bento grid beresolusi 1200x675 JPG ke `public/images/blog/cooca-{slug}.jpg`.
+- **Database Import & Live Sync:**
+  - Menjalankan `php artisan blog:import-articles --force` yang berhasil mengimpor seluruh 708 artikel aktif ke tabel `posts`.
+  - Memperbarui sitemap XML publik (`public/sitemap_blog.xml`) dan `blog_links.json` (696 artikel blog terindeks).
+  - Memvalidasi persistensi data menggunakan Eloquent via Tinker (40 postingan IDs 659-698 aktif).
+
+#### 3. Technical Changes
+- **Files Created/Modified:**
+  - `database/data/articles/659-*.md` s/d `698-*.md` (40 file markdown artikel lengkap)
+  - `database/data/articles/659-*.json` s/d `698-*.json` (40 file metadata artikel)
+  - `public/images/blog/cooca-*.jpg` (40 gambar cover editorial Bento Apple HIG)
+  - `scripts/clickbait_helpers.py`, `scripts/gen_clickbait_part1.py` .. `part4.py`, `scripts/build_clickbait_articles.py`
+  - `scripts/make_clickbait_render_script.py`, `scripts/render_clickbait_covers.cjs`
+  - `blog_links.json`, `database/data/blog_links.json`, `public/sitemap_blog.xml`
+  - `docs/AiWorkHistory.md`
+
 ### [WORK-2026-11-14-573] Redesign Grid Kanan Hero Section Landing Page: Pusat Kendali Omnichannel Terintegrasi COOCA
 
 - **Date:** 2026-11-14
