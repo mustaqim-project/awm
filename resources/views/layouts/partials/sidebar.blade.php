@@ -348,34 +348,34 @@
                                 :class="subNavOpen ? 'rotate-180' : ''"></i>
                         </div>
                     </button>
-                    <div x-show="subNavOpen" x-transition:enter="transition-all ease-out duration-150" class="px-2.5 pb-2.5 space-y-1">
+                    <div x-show="subNavOpen" x-transition:enter="transition-all ease-out duration-150" class="px-2.5 pb-2.5 flex flex-col gap-2">
                         @foreach ($secondaryNavTabs as $idx => $mTab)
                             <a href="{{ $mTab['url'] }}"
                                 @click="sidebarOpen = false"
                                 data-subnav-key="{{ $mTab['key'] }}"
                                 data-active-mobile-subnav="{{ $mTab['is_active'] ? 'true' : 'false' }}"
                                 aria-current="{{ $mTab['is_active'] ? 'page' : 'false' }}"
-                                class="flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] font-medium transition-all {{ $mTab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-xs' : 'text-black/80 dark:text-white/80 hover:bg-black/5 dark:hover:bg-white/5' }}">
+                                class="flex items-center justify-between px-3 h-[42px] rounded-[12px] text-[13px] font-medium transition-all active:scale-[0.98] {{ $mTab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-sm shadow-[#007AFF]/25' : 'text-black/85 dark:text-white/85 hover:bg-black/5 dark:hover:bg-white/5 bg-white/60 dark:bg-white/[0.04] border border-black/[0.04] dark:border-white/[0.05]' }}">
                                 <div class="flex items-center gap-2.5 min-w-0 flex-1">
                                     @if (!empty($mTab['icon']))
-                                        <span class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60' }}">
+                                        <span class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]' }}">
                                             <i data-lucide="{{ $mTab['icon'] }}" class="w-4 h-4" stroke-width="2"></i>
                                         </span>
                                     @else
-                                        <span class="w-6 h-6 rounded-[7px] flex items-center justify-center text-[11px] font-mono shrink-0 {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-black/10 dark:bg-white/10 text-black/60 dark:text-white/60 font-semibold' }}">
+                                        <span class="w-6 h-6 rounded-[7px] flex items-center justify-center text-[11px] font-mono shrink-0 {{ $mTab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] font-semibold' }}">
                                             {{ $idx + 1 }}
                                         </span>
                                     @endif
-                                    <span class="whitespace-nowrap truncate min-w-0 flex-1">{{ $mTab['label'] }}</span>
+                                    <span class="whitespace-nowrap truncate min-w-0 flex-1 tracking-tight">{{ $mTab['label'] }}</span>
                                 </div>
-                                <div class="flex items-center gap-1.5 shrink-0 ml-1">
+                                <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                                     @if (!empty($mTab['badge']))
-                                        <span class="px-1.5 py-0.5 rounded-full text-[9px] font-bold {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50' }}">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {{ $mTab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]' }}">
                                             {{ $mTab['badge'] }}
                                         </span>
                                     @endif
                                     @if ($mTab['is_active'])
-                                        <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-white shrink-0"></i>
+                                        <i data-lucide="chevron-right" class="w-4 h-4 text-white shrink-0"></i>
                                     @endif
                                 </div>
                             </a>

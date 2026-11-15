@@ -2,13 +2,12 @@
 <style>
     /* Calm Apple-style rhythm for the expanded navigation rail (Harmonized with Admin Panel & Secondary Sidebar). */
     :root {
-        --sidebar-row: 2.375rem; /* 38px matching admin panel & secondary sidebar h-[38px] */
+        --sidebar-row: 2.375rem; /* 38px matching admin panel h-[38px] */
         --sidebar-subrow: 2.125rem; /* 34px */
         --sidebar-icon: 1rem; /* 16px matching admin w-4 h-4 */
         --sidebar-icon-box: 1.75rem; /* 28px matching admin w-7 h-7 */
         --sidebar-radius: 0.6875rem; /* 11px matching admin rounded-[11px] */
-        --sidebar-item-gap: 0.375rem; /* 6px comfortable breathing gap between menu items (matching secondary sidebar) */
-        --sidebar-group-gap: 1.125rem; /* 18px clean separation between domain clusters */
+        --sidebar-group-gap: 0.625rem;
     }
 
     .sidebar-nav {
@@ -25,23 +24,8 @@
         box-sizing: border-box;
     }
 
-    /* Primary Navigation Rail: Apple HIG calm rhythm matching secondary sidebar spacing */
-    .app-sidebar:not(.is-collapsed) .sidebar-nav>div {
+    .sidebar-nav>div {
         margin-bottom: var(--sidebar-group-gap);
-        display: flex;
-        flex-direction: column;
-        gap: var(--sidebar-item-gap);
-    }
-
-    .app-sidebar:not(.is-collapsed) .sidebar-nav>div>* {
-        margin-top: 0 !important;
-    }
-
-    .app-sidebar:not(.is-collapsed) .sidebar-nav>div>div[x-show="!sidebarCollapsed"] {
-        margin-top: 0.375rem !important;
-        margin-bottom: 0.125rem !important;
-        padding-top: 0.25rem !important;
-        padding-bottom: 0.25rem !important;
     }
 
     /* Primary Sidebar Icon Badge (Matching Admin Panel w-7 h-7 rounded-[8px]) */
@@ -182,6 +166,33 @@
         .sidebar-tenant-wrapper {
             padding: 1rem 0.875rem !important;
         }
+
+        /* Mobile Module Sub-Menu: Jarak yang cukup dan ergonomis antar menu */
+        .sidebar-subnav-mobile div[x-show="subNavOpen"] {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.5rem !important; /* 8px jarak bersih antar sub-menu */
+        }
+
+        .sidebar-subnav-mobile div[x-show="subNavOpen"] > a {
+            min-height: 2.625rem !important; /* 42px touch target */
+            height: 2.625rem !important;
+            padding: 0.375rem 0.75rem !important;
+            border-radius: 0.75rem !important; /* 12px */
+            box-sizing: border-box !important;
+        }
+
+        /* Jarak antar menu di drawer navigasi mobile */
+        .app-sidebar .sidebar-nav > div {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.375rem !important; /* 6px jarak sentuh antar menu utama di mobile */
+            margin-bottom: 1.25rem !important;
+        }
+
+        .app-sidebar .sidebar-nav > div > * {
+            margin-top: 0 !important;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -214,8 +225,8 @@
         }
 
         .app-sidebar:not(.is-collapsed) .sidebar-nav>div>div[x-show="!sidebarCollapsed"] {
-            margin-top: 0.375rem !important;
-            margin-bottom: 0.125rem !important;
+            margin-top: 0.625rem !important;
+            margin-bottom: 0.25rem !important;
         }
     }
 
