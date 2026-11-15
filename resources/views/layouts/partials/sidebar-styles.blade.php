@@ -1,13 +1,14 @@
 {{-- Apple HIG (macOS Sonoma & iOS 18) Sidebar Rail Styles --}}
 <style>
-    /* Calm Apple-style rhythm for the expanded navigation rail (Harmonized with Admin Panel). */
+    /* Calm Apple-style rhythm for the expanded navigation rail (Harmonized with Admin Panel & Secondary Sidebar). */
     :root {
-        --sidebar-row: 2.375rem; /* 38px matching admin panel h-[38px] */
+        --sidebar-row: 2.375rem; /* 38px matching admin panel & secondary sidebar h-[38px] */
         --sidebar-subrow: 2.125rem; /* 34px */
         --sidebar-icon: 1rem; /* 16px matching admin w-4 h-4 */
         --sidebar-icon-box: 1.75rem; /* 28px matching admin w-7 h-7 */
         --sidebar-radius: 0.6875rem; /* 11px matching admin rounded-[11px] */
-        --sidebar-group-gap: 0.625rem;
+        --sidebar-item-gap: 0.375rem; /* 6px comfortable breathing gap between menu items (matching secondary sidebar) */
+        --sidebar-group-gap: 1.125rem; /* 18px clean separation between domain clusters */
     }
 
     .sidebar-nav {
@@ -24,8 +25,23 @@
         box-sizing: border-box;
     }
 
-    .sidebar-nav>div {
+    /* Primary Navigation Rail: Apple HIG calm rhythm matching secondary sidebar spacing */
+    .app-sidebar:not(.is-collapsed) .sidebar-nav>div {
         margin-bottom: var(--sidebar-group-gap);
+        display: flex;
+        flex-direction: column;
+        gap: var(--sidebar-item-gap);
+    }
+
+    .app-sidebar:not(.is-collapsed) .sidebar-nav>div>* {
+        margin-top: 0 !important;
+    }
+
+    .app-sidebar:not(.is-collapsed) .sidebar-nav>div>div[x-show="!sidebarCollapsed"] {
+        margin-top: 0.375rem !important;
+        margin-bottom: 0.125rem !important;
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
     }
 
     /* Primary Sidebar Icon Badge (Matching Admin Panel w-7 h-7 rounded-[8px]) */
@@ -198,8 +214,8 @@
         }
 
         .app-sidebar:not(.is-collapsed) .sidebar-nav>div>div[x-show="!sidebarCollapsed"] {
-            margin-top: 0.625rem !important;
-            margin-bottom: 0.25rem !important;
+            margin-top: 0.375rem !important;
+            margin-bottom: 0.125rem !important;
         }
     }
 
