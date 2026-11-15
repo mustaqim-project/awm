@@ -891,19 +891,18 @@ Route::prefix('v1')->group(function (): void {
             'success' => true,
             'app_name' => 'COOCA My Own',
             'package_name' => 'com.cooca.myown.cooca_my_own',
-            'latest_version' => '1.0.9',
-            'latest_build' => 10,
+            'latest_version' => '1.0.10',
+            'latest_build' => 11,
             'min_supported_version' => '1.0.0',
             'force_update' => false,
             'download_url' => url('/cooca.apk'),
             'file_size' => $fileSize,
             'updated_at' => $fileModTime ? date('c', $fileModTime) : null,
             'release_notes' => [
-                'Replikasi penuh metode registrasi Google SSO selaras dengan portal website cooca.id.',
+                'Pembaruan verifikasi biometrik wajah presensi: kalibrasi 3D anti-spoofing untuk mencegah penolakan palsu 2D pada foto langsung.',
+                'Pemisahan arsitektur modul Social Media Hub menjadi beberapa layar mandiri (Overview, Posts, Calendar, Inbox).',
+                'Optimalisasi performa pemindaian kamera biometrik in-app yang responsif dan instan.',
                 'Integrasi logo resmi bisnis otomatis ke seluruh cetakan struk kasir, bill preview, thermal printer ESC/POS, dan PDF.',
-                'Penyelarasan sertifikat rilis SHA-1 dan mitigasi penutupan sesi otorisasi Google dengan fallback Masuk Cepat.',
-                'Pembaruan nomor resmi WhatsApp Care COOCA (+62 852-8786-4176) dan akses langsung panduan.',
-                'Peningkatan kestabilan performa transaksi kasir POS serta optimalisasi cache.',
             ],
         ]);
     });
@@ -917,10 +916,10 @@ Route::prefix('v1')->group(function (): void {
         return response()->json([
             'success' => true,
             'data' => [
-                'version' => '1.0.9',
-                'build_number' => '10',
+                'version' => '1.0.10',
+                'build_number' => '11',
                 'download_url' => url('/cooca.apk'),
-                'release_notes' => 'Pembaruan Google SSO, logo usaha di seluruh struk kasir POS, mitigasi sertifikat SHA-1, dan peningkatan performa.',
+                'release_notes' => 'Pembaruan verifikasi wajah presensi anti penolakan palsu 2D, modularisasi Social Media Hub, dan optimasi performa.',
                 'is_mandatory' => false,
                 'file_size' => $fileSize,
             ],

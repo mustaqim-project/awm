@@ -15,8 +15,8 @@ class AppVersionTest extends TestCase
         $response->assertJson([
             'success' => true,
             'app_name' => 'COOCA My Own',
-            'latest_version' => '1.0.9',
-            'latest_build' => 10,
+            'latest_version' => '1.0.10',
+            'latest_build' => 11,
         ]);
 
         $data = $response->json();
@@ -32,8 +32,8 @@ class AppVersionTest extends TestCase
         $response->assertJson([
             'success' => true,
             'app_name' => 'COOCA My Own',
-            'latest_version' => '1.0.9',
-            'latest_build' => 10,
+            'latest_version' => '1.0.10',
+            'latest_build' => 11,
         ]);
 
         $data = $response->json();
