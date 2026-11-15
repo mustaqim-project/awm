@@ -1623,9 +1623,6 @@ document.addEventListener('alpine:init', () => {
                         <div>
                             <div class="flex items-center gap-2 flex-wrap">
                                 <h3 id="marketplace-mapping-modal-title" class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('marketplace.modal_mapping_title') }}</h3>
-                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
-                                    Bento XXL v2.0
-                                </span>
                             </div>
                             <p class="text-[12.5px] text-black/50 dark:text-white/50" x-text="selectedProduct ? (selectedProduct.name + ' • SKU: ' + (selectedProduct.code || '-')) : ''"></p>
                         </div>

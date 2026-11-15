@@ -227,8 +227,8 @@
                             </div>
                         </div>
 
-                        <!-- Primary Action Button (Single High-Converting CTA, No Demo) -->
-                        <div class="pt-2 w-full sm:w-auto">
+                        <!-- Primary Action Buttons (Start for Free & Plan/Pricing) -->
+                        <div class="pt-2 w-full sm:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-3.5">
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="w-full sm:w-auto h-12 px-7 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-2 shadow-[0_4px_25px_rgba(0,122,255,0.45)] hover:shadow-[0_6px_30px_rgba(0,122,255,0.6)] active:scale-[0.98] transition-all touch-action-manipulation">
@@ -243,11 +243,17 @@
                                 </a>
                             @else
                                 <a href="https://cooca.id/register"
-                                    class="w-full sm:w-auto h-12 sm:h-13 px-8 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-[0_6px_28px_rgba(0,122,255,0.5)] hover:shadow-[0_8px_35px_rgba(0,122,255,0.65)] active:scale-[0.98] transition-all border border-white/20 touch-action-manipulation group">
+                                    class="w-full sm:w-auto h-12 sm:h-13 px-7 sm:px-8 rounded-xl bg-[#007AFF] hover:bg-[#0066DF] text-white font-semibold text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-[0_6px_28px_rgba(0,122,255,0.5)] hover:shadow-[0_8px_35px_rgba(0,122,255,0.65)] active:scale-[0.98] transition-all border border-white/20 touch-action-manipulation group">
                                     <span>{{ __('public_home.hero_cta_primary') }}</span>
                                     <i data-lucide="arrow-right" class="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"></i>
                                 </a>
                             @endif
+
+                            <a href="{{ route('public.pricing') }}"
+                                class="w-full sm:w-auto h-12 sm:h-13 px-6 sm:px-7 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-semibold text-base sm:text-lg flex items-center justify-center gap-2 border border-white/20 hover:border-white/35 backdrop-blur-md shadow-xs active:scale-[0.98] transition-all touch-action-manipulation group">
+                                <i data-lucide="tag" class="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                                <span>{{ __('public_home.hero_cta_pricing') }}</span>
+                            </a>
                         </div>
 
                         <!-- Social Proof or Factual Trust Badge (Prompt 1 Compliant) -->
@@ -1488,7 +1494,7 @@
                         </div>
 
                         <!-- Auth-Aware Dual CTAs with Apple HIG Button Geometry -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 pt-2">
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 pt-2 w-full sm:w-auto">
                             @if (auth('admin')->check())
                                 <a href="{{ route('admin.dashboard') }}"
                                     class="w-full sm:w-auto px-7 py-3.5 rounded-[14px] bg-[#007AFF] hover:bg-[#0066DF] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(0,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation">
@@ -1508,6 +1514,12 @@
                                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                                 </a>
                             @endif
+
+                            <a href="{{ route('public.pricing') }}"
+                                class="w-full sm:w-auto px-6 py-3.5 rounded-[14px] bg-white/10 hover:bg-white/15 text-white font-bold text-sm flex items-center justify-center gap-2 border border-white/20 hover:border-white/35 backdrop-blur-md shadow-xs hover:scale-[1.02] active:scale-[0.98] transition-all min-h-[48px] touch-action-manipulation group">
+                                <i data-lucide="tag" class="w-4 h-4 text-cyan-300 group-hover:scale-110 transition-transform"></i>
+                                <span>{{ __('public_home.bottom_cta_btn_pricing') }}</span>
+                            </a>
                         </div>
                     </div>
 
