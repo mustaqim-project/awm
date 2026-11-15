@@ -411,7 +411,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('dashboard') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0 transition-all duration-150">
                             <i data-lucide="layout-dashboard" class="w-4 h-4 shrink-0 {{ request()->routeIs('dashboard') ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.dashboard_main') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.dashboard_main') }}</span>
                     </a>
                 </div>
             @endif
@@ -630,7 +630,7 @@
                             <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight">{{ __('navigation.storefront_orders') }}</span>
+                            <span class="truncate">{{ __('navigation.storefront_orders') }}</span>
                         </div>
                     </a>
 
@@ -672,7 +672,7 @@
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight">{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations')) }}</span>
+                            <span class="truncate">{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.booking_service') : ($activeBiz?->hasDineInFeature() ? __('navigation.reservations_resto') : __('navigation.reservations')) }}</span>
                         </div>
                     </a>
                 </div>
@@ -695,7 +695,7 @@
                             <i data-lucide="{{ ($activeBiz && $activeBiz->isWorkshop()) ? 'wrench' : 'briefcase' }}" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight">{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.services_spk') : __('navigation.services') }}</span>
+                            <span class="truncate">{{ ($activeBiz && $activeBiz->isWorkshop()) ? __('navigation.services_spk') : __('navigation.services') }}</span>
                         </div>
                     </a>
 
@@ -730,7 +730,7 @@
                             <i data-lucide="box" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight font-bold">3D Virtual Office</span>
+                            <span class="truncate font-bold">3D Virtual Office</span>
                         </div>
                     </a>
 
@@ -819,7 +819,7 @@
                             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight font-bold">AI Studio</span>
+                            <span class="truncate font-bold">AI Studio</span>
                             <span class="px-1.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider {{ request()->routeIs('ai-studio.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]' }}">NEW</span>
                         </div>
                     </a>
@@ -915,7 +915,7 @@
                         <i data-lucide="users-round" class="w-3.5 h-3.5"></i>
                     </span>
                     <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                        <span class="truncate tracking-tight">{{ __('navigation.owner_community') }}</span>
+                        <span class="truncate">{{ __('navigation.owner_community') }}</span>
                     </div>
                 </a>
             </div>
@@ -948,7 +948,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('inventory.stocks') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="boxes" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stocks_warehouse') }}</span>
+                            <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stocks_warehouse') }}</span>
                         </a>
                     </div>
                 @endif
@@ -965,7 +965,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('warehouse.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="warehouse" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.warehouse_locations') }}</span>
+                            <span class="truncate font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.warehouse_locations') }}</span>
                         </a>
                     </div>
                 @endif
@@ -981,7 +981,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('inventory.transfers.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="arrow-left-right" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_transfers') }}</span>
+                            <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_transfers') }}</span>
                         </a>
                     </div>
 
@@ -995,7 +995,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('inventory.opnames.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="clipboard-check" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_opnames') }}</span>
+                            <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_opnames') }}</span>
                         </a>
                     </div>
 
@@ -1009,7 +1009,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('inventory.movements') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="history" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_movements') }}</span>
+                            <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_movements') }}</span>
                         </a>
                     </div>
                 @endif
@@ -1130,7 +1130,7 @@
                             <i data-lucide="landmark" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight font-semibold">{{ __('navigation.cash_bank') }}</span>
+                            <span class="truncate font-semibold">{{ __('navigation.cash_bank') }}</span>
                             <span class="sr-only">{{ __('navigation.cash_bank_books') }}</span>
                         </div>
                     </a>
@@ -1146,7 +1146,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('finance.expenses.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.expenses') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.expenses') }}</span>
                     </a>
                 </div>
 
@@ -1160,7 +1160,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('finance.receivables') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-down-left" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.receivables') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.receivables') }}</span>
                     </a>
                 </div>
 
@@ -1174,7 +1174,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('finance.payables') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.payables') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.payables') }}</span>
                     </a>
                 </div>
 
@@ -1188,7 +1188,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('finance.settlements.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settlements') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settlements') }}</span>
                     </a>
                 </div>
             @endif
@@ -1424,7 +1424,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('customers.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="users" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.customers_data') }}</span>
+                        <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.customers_data') }}</span>
                     </a>
                 </div>
             @endif
@@ -1441,7 +1441,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('crm.members.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="award" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_members') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_members') }}</span>
                     </a>
                 </div>
 
@@ -1456,7 +1456,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('crm.vouchers.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="ticket" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_vouchers') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.crm_vouchers') }}</span>
                     </a>
                 </div>
             @endif
@@ -1487,7 +1487,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('portal') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="clock" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.portal_attendance') }}</span>
+                    <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.portal_attendance') }}</span>
                 </a>
             </div>
 
@@ -1502,7 +1502,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('hrm.index') || (request()->routeIs('hrm.*') && !request()->routeIs('hrm.payrolls.*')) ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="users-2" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.employees_hrm') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.employees_hrm') }}</span>
                 </a>
             </div>
 
@@ -1517,7 +1517,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('hrm.payrolls.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="badge-percent" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.hrm_payroll') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.hrm_payroll') }}</span>
                 </a>
             </div>
         </div>
@@ -1548,7 +1548,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('landing-page.edit') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="globe" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.landing_page') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.landing_page') }}</span>
                     </a>
                 </div>
 
@@ -1562,7 +1562,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('landing-page.popup.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="megaphone" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.popup_promo') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.popup_promo') }}</span>
                     </a>
                 </div>
 
@@ -1577,7 +1577,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('storefront.shipping.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="truck" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.shipping_settings') }}</span>
+                            <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.shipping_settings') }}</span>
                         </a>
                     </div>
                 @endif
@@ -1592,7 +1592,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('storefront.settings.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="store" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.storefront_settings') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.storefront_settings') }}</span>
                     </a>
                 </div>
             @endif
@@ -1609,7 +1609,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('whatsapp.index') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_business') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_business') }}</span>
                     </a>
                 </div>
 
@@ -1623,7 +1623,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('whatsapp.broadcast.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="send" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_broadcast') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_broadcast') }}</span>
                     </a>
                 </div>
 
@@ -1637,7 +1637,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('whatsapp.logs.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="list" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_logs') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.whatsapp_logs') }}</span>
                     </a>
                 </div>
 
@@ -1652,7 +1652,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('social-media.index') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_media_omni') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_media_omni') }}</span>
                     </a>
                 </div>
 
@@ -1666,7 +1666,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('social-media.posts.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_posts') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_posts') }}</span>
                     </a>
                 </div>
 
@@ -1680,7 +1680,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('social-media.calendar') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_calendar') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_calendar') }}</span>
                     </a>
                 </div>
 
@@ -1694,7 +1694,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('social-media.inbox.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="inbox" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_inbox') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.social_inbox') }}</span>
                     </a>
                 </div>
             @endif
@@ -1726,7 +1726,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('reports.index') && !request()->query('tab') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.reports_center') }}</span>
+                    <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.reports_center') }}</span>
                 </a>
             </div>
 
@@ -1741,7 +1741,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('analytics.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="line-chart" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.business_analytics') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.business_analytics') }}</span>
                 </a>
             </div>
 
@@ -1756,7 +1756,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->fullUrlIs('*tab=income_statement*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="trending-up" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.income_statement') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.income_statement') }}</span>
                 </a>
             </div>
 
@@ -1771,7 +1771,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->fullUrlIs('*tab=cash_flow*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="activity" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.cash_flow') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.cash_flow') }}</span>
                 </a>
             </div>
 
@@ -1787,7 +1787,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('pos.reports.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.pos_reports') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.pos_reports') }}</span>
                     </a>
                 </div>
             @endif
@@ -1803,7 +1803,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->fullUrlIs('*tab=stock*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="package" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_valuation') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.stock_valuation') }}</span>
                 </a>
             </div>
 
@@ -1819,7 +1819,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('tax.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="percent" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.tax_reports') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.tax_reports') }}</span>
                     </a>
                 </div>
             @endif
@@ -1853,7 +1853,7 @@
                             <i data-lucide="package" class="w-3.5 h-3.5"></i>
                         </span>
                         <div class="flex items-center justify-between flex-1 min-w-0" x-show="!sidebarCollapsed" x-transition.opacity>
-                            <span class="truncate tracking-tight font-semibold">{{ __('navigation.products_catalog') }}</span>
+                            <span class="truncate font-semibold">{{ __('navigation.products_catalog') }}</span>
                         </div>
                     </a>
                 </div>
@@ -1871,7 +1871,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('marketplace-hub.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.marketplace_hub') }}</span>
+                        <span class="truncate font-medium" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.marketplace_hub') }}</span>
                     </a>
                 </div>
             @endif
@@ -1888,7 +1888,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('materials.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="layers" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.materials_recipes') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.materials_recipes') }}</span>
                     </a>
                 </div>
             @endif
@@ -1905,7 +1905,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('suppliers.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="building-2" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.suppliers') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.suppliers') }}</span>
                     </a>
                 </div>
             @endif
@@ -1922,7 +1922,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('product-categories.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="tag" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.product_categories') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.product_categories') }}</span>
                     </a>
                 </div>
             @endif
@@ -1939,7 +1939,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('material-categories.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="tags" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.material_categories') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.material_categories') }}</span>
                     </a>
                 </div>
             @endif
@@ -1956,7 +1956,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('units.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="scale" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.measurement_units') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.measurement_units') }}</span>
                     </a>
                 </div>
             @endif
@@ -1973,7 +1973,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('import.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.excel_import') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.excel_import') }}</span>
                     </a>
                 </div>
             @endif
@@ -2006,7 +2006,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ (request()->routeIs('settings.*') && !request()->routeIs('settings.audit-logs.*') && !request()->routeIs('settings.approval-rules.*') && !request()->routeIs('settings.roles.*') && !request()->routeIs('settings.pos.printers.*')) ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="sliders" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settings_general') }}</span>
+                        <span class="truncate font-semibold" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.settings_general') }}</span>
                     </a>
                 </div>
             @endif
@@ -2022,7 +2022,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('profile.edit') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="user" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.user_profile') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.user_profile') }}</span>
                 </a>
             </div>
 
@@ -2038,7 +2038,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('approval-rules.*') || request()->routeIs('settings.approval-rules.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.mar_rules') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.mar_rules') }}</span>
                     </a>
                 </div>
             @endif
@@ -2056,7 +2056,7 @@
                             <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                                 <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
                             </span>
-                            <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.audit_anti_fraud') }}</span>
+                            <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.audit_anti_fraud') }}</span>
                         </div>
                         @if (isset($recentHighRiskCount) && $recentHighRiskCount > 0)
                             <span x-show="!sidebarCollapsed" class="px-1.5 py-0.5 rounded-full text-[10px] font-bold {{ request()->routeIs('settings.audit-logs.*') || request()->routeIs('audit-logs.*') ? 'bg-white/20 text-white border-white/30' : 'bg-[#FF3B30]/15 text-[#FF3B30] border-[#FF3B30]/30' }} border shrink-0">
@@ -2079,7 +2079,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('roles.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="shield" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.roles_permissions') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.roles_permissions') }}</span>
                     </a>
                 </div>
             @endif
@@ -2096,7 +2096,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('billing.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.billing_subscription') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.billing_subscription') }}</span>
                     </a>
                 </div>
             @endif
@@ -2111,7 +2111,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105 flex items-center justify-center shrink-0">
                         <i data-lucide="database" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight text-left" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('common.storage_pruning_title') }}</span>
+                    <span class="truncate text-left" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('common.storage_pruning_title') }}</span>
                 </button>
             </div>
 
@@ -2126,7 +2126,7 @@
                     <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('docs.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                         <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
                     </span>
-                    <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.nav_docs') }}</span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.nav_docs') }}</span>
                 </a>
             </div>
 
@@ -2142,7 +2142,7 @@
                         <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('feedback.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
                             <i data-lucide="life-buoy" class="w-3.5 h-3.5"></i>
                         </span>
-                        <span class="truncate tracking-tight" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.help_support') }}</span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.help_support') }}</span>
                     </a>
                 </div>
             @endif

@@ -703,18 +703,31 @@
     /* Final source-list normalization: every expanded navigation row matches Admin Panel geometry. */
     .app-sidebar:not(.is-collapsed) .sidebar-nav .sidebar-item,
     .app-sidebar:not(.is-collapsed) .sidebar-nav a:not(.sidebar-item),
-    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item) {
+    .app-sidebar:not(.is-collapsed) .sidebar-nav button:not(.sidebar-item),
+    .sidebar-nav .sidebar-item {
         display: flex !important;
         align-items: center !important;
         min-height: 2.375rem !important; /* 38px matching admin h-[38px] */
         height: 2.375rem !important;
         padding: 0.3125rem 0.625rem !important; /* 5px 10px matching admin px-2.5 */
         border-radius: 0.6875rem !important; /* 11px matching admin rounded-[11px] */
-        font-size: 0.8125rem !important; /* 13px matching admin text-[13px] */
+        font-size: 13px !important; /* 13px matching Costing & Profit Margin */
         line-height: 1.25rem !important;
-        letter-spacing: -0.01em !important;
+        letter-spacing: normal !important;
         box-sizing: border-box !important;
         transition: all 0.15s ease !important;
+    }
+
+    /* Standardize all sidebar item label typography to match Costing & Profit Margin */
+    .sidebar-nav .sidebar-item span.truncate,
+    .sidebar-nav .sidebar-item .sidebar-item-inner span:not(.sidebar-icon-box),
+    .sidebar-nav a.sidebar-item > span:not(.sidebar-icon-box),
+    .sidebar-nav a.sidebar-item > div > span:not(.sidebar-icon-box),
+    .sidebar-nav button.sidebar-item > span:not(.sidebar-icon-box),
+    .sidebar-nav button.sidebar-item > div > span:not(.sidebar-icon-box) {
+        font-size: 13px !important;
+        letter-spacing: normal !important;
+        line-height: 1.25rem !important;
     }
 
     /* Inactive text high-contrast Apple typography */
