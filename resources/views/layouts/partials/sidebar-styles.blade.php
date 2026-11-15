@@ -478,7 +478,7 @@
             display: block !important;
             visibility: visible !important;
             padding: 0.375rem 0.625rem 0.5rem 0.625rem !important;
-            font-size: 0.75rem !important; /* 12px */
+            font-size: 0.8125rem !important; /* 13px matching admin text-[13px] */
             font-weight: 700 !important;
             letter-spacing: -0.01em !important;
             color: rgba(0, 0, 0, 0.85) !important;
@@ -601,7 +601,7 @@
             width: auto !important;
             min-width: auto !important;
             padding: 0.375rem 0.75rem !important;
-            font-size: 0.75rem !important;
+            font-size: 0.8125rem !important; /* 13px matching admin */
             font-weight: 600 !important;
             border-radius: 0.625rem !important;
             white-space: nowrap !important;
@@ -765,7 +765,7 @@
         padding-bottom: 0.25rem !important;
         margin-top: 0.375rem !important;
         margin-bottom: 0.25rem !important;
-        font-size: 0.6875rem !important;
+        font-size: 0.65625rem !important; /* 10.5px matching admin text-[10.5px] */
         line-height: 1rem !important;
     }
 
