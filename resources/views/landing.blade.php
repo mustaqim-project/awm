@@ -68,6 +68,30 @@
         "operatingSystem": "Web, Cloud-based",
         "description": "{{ addslashes($landingMetaDescription) }}",
         "url": "{{ $landingCanonical }}",
+        "featureList": [
+            "Point of Sale Terminal Kasir Modern dengan Hold & Resume",
+            "Manajemen Shift Kasir & Rekonsiliasi Kas Laci",
+            "Cetak Struk Thermal Bluetooth USB & Struk Digital WhatsApp",
+            "Kitchen Display System (KDS) & Manajemen Meja Restoran",
+            "Otorisasi PIN Supervisor Anti-Fraud & Granular RBAC",
+            "Approval Rules Engine & Audit Trail Keamanan Real-Time",
+            "Bill of Materials (BOM) Resep Formula Otomatis & Kontrol HPP",
+            "Perhitungan Susut Bahan (Yield & Wastage) & Simulator BEP",
+            "Surat Penawaran Harga PDF & Pesanan Penjualan B2B Grosir",
+            "Faktur Termin Cicilan & Laporan Penuaan Piutang Usaha",
+            "Kartu Stok FIFO Real-Time & Peringatan Stok Minimum",
+            "Multi-Cabang & Surat Jalan Transfer Antar Cabang",
+            "Purchase Order Supplier & Manajemen Hutang Usaha",
+            "Pembukuan Jurnal Otomatis Standar SAK EMKM Tanpa Pusing Debit Kredit",
+            "Laporan Laba Rugi Komprehensif Neraca & Arus Kas",
+            "Rekonsiliasi Bank Otomatis & Settlement QRIS EDC",
+            "Toko Online Instan 0% Komisi & Sinkronisasi Marketplace Shopee Tokopedia",
+            "WhatsApp Blast Promosi & Kalender Konten Medsos Terpadu",
+            "CRM Program Loyalitas Member Poin & Kupon Diskon",
+            "Presensi Karyawan Berbasis GPS Geofencing & Penggajian Payroll Otomatis",
+            "Konektivitas Terbuka AI via Model Context Protocol (MCP) untuk Claude ChatGPT Gemini",
+            "Dashboard Eksekutif Real-Time di Ponsel & Analisis Jam Sibuk Peak Hours"
+        ],
         "offers": [
             {
                 "@@type": "Offer",
@@ -150,6 +174,54 @@
             "contactType": "customer support",
             "availableLanguage": ["id", "en"]
         }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@@context": "https://schema.org",
+        "@@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@@type": "Question",
+                "name": "Apa itu Cooca?",
+                "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "Cooca adalah platform Business Operating System (BOS) dan software kasir POS omnichannel berbasis cloud yang dirancang khusus untuk UMKM Indonesia, mencakup kasir digital, pembukuan laba rugi otomatis, manajemen stok FIFO, dan sinkronisasi marketplace."
+                }
+            },
+            {
+                "@@type": "Question",
+                "name": "Apakah aplikasi kasir Cooca gratis?",
+                "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "Ya, Cooca menyediakan paket Gratis Selamanya (Forever Free) untuk 1 outlet toko dengan 10 produk aktif, 500 transaksi per bulan, dan modul pembukuan otomatis tanpa biaya langganan."
+                }
+            },
+            {
+                "@@type": "Question",
+                "name": "Apakah Cooca bisa digunakan saat offline tanpa internet?",
+                "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "Bisa. Cooca memiliki kapabilitas kasir Offline-First yang memungkinkan pencatatan penjualan tetap berfungsi normal saat koneksi internet terputus, dan otomatis menyinkronkan data ke cloud saat online."
+                }
+            },
+            {
+                "@@type": "Question",
+                "name": "Apakah Cooca mendukung sinkronisasi stok marketplace Shopee dan Tokopedia?",
+                "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "Ya, Cooca mendukung integrasi omnichannel yang menyinkronkan stok produk toko fisik dengan toko online di Shopee dan Tokopedia secara real-time untuk mencegah selisih stok atau overselling."
+                }
+            },
+            {
+                "@@type": "Question",
+                "name": "Bagaimana Cooca menghitung HPP resep dan bahan baku kuliner?",
+                "acceptedAnswer": {
+                    "@@type": "Answer",
+                    "text": "Cooca memiliki modul resep otomatis (Bill of Materials) dan kalkulator HPP yang menghitung gramatur bahan per porsi, biaya kemasan, dan susut bahan, sehingga margin laba kotor selalu terpantau akurat."
+                }
+            }
+        ]
     }
     </script>
 @endpush

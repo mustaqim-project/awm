@@ -81,6 +81,9 @@
     <link rel="alternate" hreflang="en" href="{{ url()->current() }}?lang=en" />
     <link rel="alternate" hreflang="x-default" href="{{ url()->current() }}?lang=id" />
 
+    <!-- Generative Engine & LLM Discovery (GEO / AIO) -->
+    <link rel="help" type="text/markdown" href="{{ url('/llms.txt') }}" title="LLM Context for AI Agents" />
+
     <!-- Webmaster Verification -->
     @if (!empty($seoGoogleVerification))
         <meta name="google-site-verification" content="{{ $seoGoogleVerification }}">

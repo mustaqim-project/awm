@@ -81,4 +81,12 @@ final class PublicCalculatorController extends Controller
     {
         return view('public.calculators.simulasi_what_if');
     }
+
+    /**
+     * Embeddable HPP Calculator Widget (Iframe-ready for viral third-party backlink distribution).
+     */
+    public function embedHpp(): View
+    {
+        return view('public.calculators.embed_hpp');
+    }
 }

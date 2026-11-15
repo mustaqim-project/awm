@@ -1,0 +1,126 @@
+# Cooca (cooca.id) - Full Technical & Functional Specification
+
+> Business Operating System (BOS) All-in-One dan Platform ERP Cloud untuk UMKM Indonesia.
+
+## 1. Identitas Entitas & Arsitektur
+- **Nama Entitas**: COOCA (cooca.id)
+- **Domain**: https://cooca.id
+- **Target Audiens**: Pemilik Usaha Mikro, Kecil, dan Menengah (UMKM), Manajer Toko, Akuntan, dan Kasir di Indonesia.
+- **Standar Akuntansi**: SAK EMKM (Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah).
+- **Protokol Ekosistem AI**: Model Context Protocol (MCP) untuk integrasi bi-directional dengan LLM modern (Claude, ChatGPT, Gemini, Cursor).
+
+---
+
+## 2. Rincian Modul Fungsional Lengkap (A - L)
+
+### Modul A: Kasir & Operasional Toko / Resto (POS)
+1. **Terminal Kasir Cepat**: Mendukung layar sentuh, pintasan keyboard, barcode scanning, dan nota gantung (Hold & Resume).
+2. **Multi-Metode Pembayaran**: Tunai, QRIS dinamis/statis, Kartu Debit, Kartu Kredit, Transfer Bank, Piutang Usaha.
+3. **Manajemen Kas & Shift**: Buka/tutup shift kasir, modal kas kecil, rekonsiliasi kas harian laci kas vs sistem.
+4. **Cetak & Bagikan Struk**: Dukungan printer thermal (Bluetooth, USB, WiFi, LAN) dan kirim struk digital WhatsApp.
+5. **Kitchen Display System (KDS)**: Khusus F&B, tiket pesanan digital dapur/bar dengan status (Pesanan Baru, Dimasak, Siap Antar).
+6. **Manajemen Meja & Dine-In**: Denah visual tata letak meja restoran, status meja, gabung meja, dan split bill.
+7. **Katalog Jasa & SPK**: Penggabungan biaya jasa mekanik/terapis dengan suku cadang dalam 1 nota nota transaksi (salon, bengkel, reparasi).
+
+### Modul B: Anti-Fraud, Otorisasi & Keamanan Usaha
+1. **Otorisasi PIN Supervisor**: Otorisasi pembatalan nota (Void), retur barang, atau buka laci manual.
+2. **Approval Rules Engine**: Pembatasan wewenang diskon kasir bertingkat (>5% perlu remote approval owner), approval pengadaan barang (PO) bernilai tinggi, dan verifikasi selisih stok opname.
+3. **Audit Trail Real-Time**: Rekaman log forensik aktivitas pengguna: siapa, jam berapa, dari perangkat apa, nilai sebelum vs sesudah.
+4. **Granular RBAC**: Hak akses berbutir spesifik untuk Owner, Manager, Supervisor, Kasir, Gudang, dan Akuntan.
+
+### Modul C: Produksi, Resep Formula (BOM) & Kontrol HPP
+1. **Bill of Materials (BOM) Resep Otomatis**: Pengurangan stok bahan baku otomatis berdasarkan takaran gram/ml setiap kali produk jadi terjual.
+2. **Perhitungan Susut Bahan (Wastage & Yield)**: Menghitung persentase susut saat pemotongan atau proses masak untuk akurasi HPP.
+3. **Biaya Tenaga Kerja (Labor Cost)**: Upah pekerja berdasarkan jam kerja (man-hours) atau sistem borongan per unit.
+4. **Tarif Pemakaian Mesin**: Depresiasi alat, biaya listrik, dan jam kerja mesin ke dalam harga pokok.
+5. **Simulator Margin, BEP & Profitabilitas**: Simulasi Break-Even Point dan sensitivitas kenaikan biaya bahan baku terhadap profit.
+6. **Varian & Topping Modifiers**: Porsi Reguler/Large, tingkat kepedasan, variasi topping, dan jenis kemasan khusus.
+
+### Modul D: Penjualan B2B, Grosir & Manajemen Piutang
+1. **Surat Penawaran Harga Formal (Quotations)**: Dokumen penawaran harga PDF berlogo resmi perusahaan, konversi 1-klik ke Sales Order.
+2. **Pesanan Penjualan Grosir (Sales Orders)**: Alur pesanan grosir B2B dengan jadwal pengiriman multi-drop.
+3. **Faktur Penjualan & Invoice Bertahap**: Termin Down Payment (DP), Net 14, Net 30, dan skema COD.
+4. **Pelacakan Piutang Usaha (Aging Receivables)**: Pemantauan tagihan belum bayar, penuaan piutang, dan pengingat invoice jatuh tempo.
+5. **Retur Penjualan & Nota Kredit**: Penggantian produk cacat atau nota pemotongan tagihan selanjutnya.
+6. **Portal Pelanggan B2B**: Portal mandiri pelanggan korporat untuk melacak pesanan dan tagihan.
+
+### Modul E: Gudang, Inventori & Pengadaan (Procurement)
+1. **Kartu Stok Real-Time & Peringatan Stok Minimum**: Riwayat mutasi barang otomatis dan alert stok menipis.
+2. **Multi-Cabang & Multi-Lokasi Gudang**: Pengelolaan stok terpadu gudang pusat, gerai cabang, dan konsinyasi.
+3. **Surat Jalan Transfer Antar Cabang**: Mutasi barang dengan pelacakan status perjalanan (in-transit) dan verifikasi penerimaan cabang.
+4. **Stock Opname Fisik**: Perhitungan otomatis selisih fisik vs sistem dalam nilai nominal rupiah.
+5. **Manajemen Vendor & PO Pembelian**: Direktori supplier, cetak surat pesanan pembelian (PO), dan penerimaan barang datang (*Goods Receipts*).
+6. **Manajemen Hutang Usaha & Retur Pembelian**: Jadwal jatuh tempo tagihan vendor dan nota retur barang rusak ke vendor.
+
+### Modul F: Keuangan & Pembukuan Standar SAK EMKM
+1. **Kas & Multi-Rekening Bank**: Pantau petty cash outlet dan seluruh akun rekening operasional bank.
+2. **Beban Operasional Usaha (Expenses)**: Pencatatan sewa, listrik, air, internet, bensin, dan utilitas.
+3. **Jurnal Otomatis Double-Entry**: Seluruh transaksi kasir dan mutasi inventori otomatis membentuk jurnal akuntansi baku.
+4. **Bagan Akun Standar SAK EMKM (COA)**: Struktur bagan akun akuntansi baku siap pakai untuk UMKM Indonesia.
+5. **Laporan Keuangan Baku**: Buku Besar (General Ledger), Neraca Saldo, Laporan Laba Rugi Komprehensif, dan Neraca Posisi Keuangan.
+6. **Rekonsiliasi Bank & Settlement QRIS**: Pencocokan rekening koran dan verifikasi pencairan dana settlement EDC/QRIS setelah dipotong MDR.
+7. **Pengaturan Pajak Otomatis**: Perhitungan PPN (11%/12%) dan PB1 (10%) pada faktur transaksi.
+
+### Modul G: Toko Online (Storefront) & Omnichannel
+1. **Toko Online Instan (0% Komisi)**: Website katalog mandiri responsif beralamat web sendiri bebas potongan komisi pihak ketiga.
+2. **Theme & Branding Editor**: Kustomisasi warna tema, banner promosi, logo usaha, dan link media sosial.
+3. **Checkout Mandiri & Label Resi**: Alur pemesanan via Transfer Bank, QRIS, COD serta cetak label resi pengiriman siap tempel.
+4. **Sistem Reservasi & Booking Jadwal**: Booking meja resto atau jadwal salon/bengkel secara online.
+5. **Mini Bio-Link Builder & Hub Marketplace**: Pembuat bio-link medsos dan sinkronisasi stok lintas Shopee, Tokopedia, dan TikTok Shop.
+
+### Modul H: WhatsApp Gateway & Pemasaran Digital
+1. **Struk Digital Kasir via WhatsApp**: Pengiriman otomatis struk digital kasir berformat rapi langsung ke nomor WhatsApp pelanggan.
+2. **WhatsApp Blast & Broadcast Promosi**: Pengiriman pesan promosi terarah ke database pelanggan serentak dengan histori pengiriman.
+3. **Pusat Kalender Konten & Social Inbox**: Kalender konten medsos terpadu dan kotak masuk obrolan pelanggan lintas akun media sosial.
+
+### Modul I: CRM & Program Loyalitas Pelanggan
+1. **Database Pelanggan Terpusat**: Riwayat belanja (Customer Lifetime Value), preferensi produk, dan limit piutang.
+2. **Program Loyalitas Berjenjang**: Tingkatan member (Bronze, Silver, Gold, Platinum) berdasarkan akumulasi belanja.
+3. **Reward Poin Belanja & Kupon Voucher**: Poin belanja yang bisa ditukar diskon dan pembuatan kupon voucher promo bertarget.
+
+### Modul J: Manajemen Karyawan & Penggajian (HRM & Payroll)
+1. **Database Karyawan Multi-Outlet**: Pengelolaan data staf per cabang, posisi/jabatan, rekening gaji, dan identitas.
+2. **Roster Shift & Jadwal Kerja**: Pembagian jadwal kerja shift dan penetapan jadwal libur mingguan tim.
+3. **Presensi Absensi GPS (Geofencing)**: Validasi presensi masuk/pulang hanya bisa dilakukan di dalam radius koordinat lokasi toko.
+4. **Pencatatan Kasbon (Pinjaman Karyawan)**: Pengelolaan kasbon staf dengan pemotongan otomatis pada slip gaji.
+5. **Kalkulator Penggajian Otomatis**: Slip gaji digital instan: Gaji Pokok + Uang Kehadiran + Upah Lembur + Komisi Kasir – Potongan Kasbon.
+
+### Modul K: Konektivitas AI Bebas via Model Context Protocol (MCP)
+1. **Protokol Terbuka MCP**: Menghubungkan database operasional COOCA secara aman ke asisten AI eksternal (Claude, ChatGPT, Gemini, Cursor, Ollama).
+2. **Tanya Jawab Data Bisnis Real-Time**: Owner dapat bertanya langsung ke AI favoritnya mengenai data bisnis riil di COOCA secara aman melalui chat:
+   - *"Berapa laba bersih cabang Bandung minggu ini?"*
+   - *"Bahan baku apa saja yang menipis dan harus segera di-order ulang?"*
+   - *"Siapa 10 pelanggan dengan nilai belanja tertinggi bulan ini?"*
+3. **Automasi Perintah Bisnis Terpandu**: Menginstruksikan AI untuk membaca katalog dan membuatkan draf penawaran harga (Quotation), merangkum performa kasir harian, hingga menganalisis tren produk terlaris.
+
+### Modul L: Laporan Eksekutif, Analitik & Multi-Outlet
+1. **Dashboard Eksekutif Real-Time di Ponsel**: Pantau omzet harian, perkiraan laba kotor, dan volume transaksi dari ponsel.
+2. **Analitik Jam Paling Ramai (Peak Hours)**: Visualisasi jam-jam puncak transaksi untuk optimalisasi jumlah staf jaga.
+3. **Analitik Keranjang Belanja**: Produk terlaris, menu bermargin tertinggi, dan rata-rata belanja (basket size).
+4. **Konsolidasi Laporan Multi-Cabang**: Perbandingan kinerja penjualan antar outlet/cabang dalam satu layar.
+
+---
+
+## 3. Matriks Perbandingan Pasar (Cooca vs Kompetitor)
+
+| Fitur / Parameter | Cooca (cooca.id) | Moka POS | Majoo | Qasir | Pawoon |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Tier Gratis Selamanya** | ✅ (500 Trx/bln) | ❌ | ❌ | ✅ (Dasar) | ❌ |
+| **Harga Paket Bisnis** | Rp 39k - 199k/bln | Rp 250k - 299k/bln | Rp 129k - 249k/bln | Rp 50k - 100k/bln | Rp 149k - 299k/bln |
+| **Konektivitas AI via MCP** | ✅ (Claude/ChatGPT) | ❌ | ❌ | ❌ | ❌ |
+| **Anti-Fraud PIN Supervisor**| ✅ (Void/Diskon) | ✅ | ✅ | ❌ | ✅ |
+| **Resep Bahan Baku (BOM)** | ✅ (Terintegrasi) | Add-on Mahal | Add-on | ❌ | Add-on |
+| **Standar SAK EMKM Akuntansi**| ✅ (Otomatis) | Terbatas | Terbatas | ❌ | Terbatas |
+| **Kitchen Display System (KDS)**| ✅ (Termasuk) | Berbayar | Berbayar | ❌ | Berbayar |
+| **Sinkronisasi Marketplace** | ✅ (Shopee/Tokopedia)| ❌ | ✅ | ❌ | ❌ |
+| **Presensi GPS & Payroll HRM** | ✅ (Geofencing) | ❌ | Add-on | ❌ | ❌ |
+| **Struk Digital WhatsApp** | ✅ (Otomatis) | SMS/Email | Add-on WA | ❌ | SMS/Email |
+
+---
+
+## 4. Tautan Penting
+- Beranda: https://cooca.id
+- Aplikasi Kasir Gratis: https://cooca.id/aplikasi-kasir-gratis
+- Kalkulator HPP: https://cooca.id/kalkulator
+- Download Template Pembukuan: https://cooca.id/template-pembukuan-gratis
+- Blog Edukasi: https://cooca.id/blog

@@ -89,6 +89,7 @@ Route::get('/kalkulator-gaji-karyawan', [PublicCalculatorController::class, 'gaj
 Route::get('/kalkulator-pph-final', [PublicCalculatorController::class, 'pphFinal']);
 Route::get('/kalkulator-omzet-harian', [PublicCalculatorController::class, 'omzetHarian']);
 Route::get('/simulasi-what-if', [PublicCalculatorController::class, 'simulasiWhatIf']);
+Route::get('/embed/kalkulator-hpp', [PublicCalculatorController::class, 'embedHpp'])->name('kalkulator.embed.hpp');
 
 // 2. Template / Resource Downloads (Lead Capture)
 Route::permanentRedirect('/template', '/template-pembukuan-gratis');
@@ -104,6 +105,8 @@ Route::permanentRedirect('/solusi/kasir-bengkel-kecil', '/solutions/workshop');
 Route::get('/solusi/{slug}', [PublicSolutionController::class, 'show'])->name('solusi.show');
 
 // 4. Blog & Edukasi Bisnis
+Route::get('/feed/articles.xml', [PublicBlogController::class, 'feed'])->name('blog.feed');
+Route::get('/blog/feed.xml', [PublicBlogController::class, 'feed']);
 Route::get('/blog', [PublicBlogController::class, 'index'])->middleware('throttle:60,1')->name('blog.index');
 Route::get('/blog/{slug}', [PublicBlogController::class, 'show'])->middleware('throttle:30,1')->name('blog.show');
 

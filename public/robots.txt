@@ -7,6 +7,9 @@ User-agent: *
 
 # 1. Public Marketing, Tools, Calculators & Educational Hub (INDEX & FOLLOW)
 Allow: /
+Allow: /embed/
+Allow: /feed/
+Allow: /feed/articles.xml
 Allow: /kalkulator
 Allow: /kalkulator/
 Allow: /template-pembukuan-gratis
@@ -79,3 +82,30 @@ Sitemap: https://cooca.id/sitemap_pages.xml
 Sitemap: https://cooca.id/sitemap_blog.xml
 Sitemap: https://cooca.id/sitemap_marketplace.xml
 Sitemap: https://cooca.id/sitemap_tools.xml
+
+# 6. LLM & Generative Engine Protocol (GEO & AIO Optimization)
+# Allows ethical AI search bots to index public marketing, educational blogs, and tools
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: PerplexityBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: Google-Extended
+User-agent: Amazonbot
+User-agent: FacebookBot
+User-agent: Bytespider
+User-agent: Applebot
+User-agent: Applebot-Extended
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /blog/
+Allow: /kalkulator/
+Allow: /template/
+Allow: /solusi/
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /pos/
+Disallow: /api/
+Disallow: /auth/

@@ -129,4 +129,20 @@ final class PublicBlogController extends Controller
             'relatedPosts' => $relatedPosts,
         ]);
     }
+
+    /**
+     * RSS 2.0 Syndication Feed for automated content aggregators & backlink distribution.
+     */
+    public function feed(): \Illuminate\Http\Response
+    {
+        $posts = Post::published()->latest('published_at')->limit(50)->get();
+
+        $content = view('public.blog.rss', [
+            'posts' => $posts,
+        ])->render();
+
+        return response($content, 200, [
+            'Content-Type' => 'application/xml; charset=utf-8',
+        ]);
+    }
 }
