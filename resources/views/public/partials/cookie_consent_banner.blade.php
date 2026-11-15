@@ -35,7 +35,7 @@
      x-transition:leave-start="opacity-100 translate-y-0"
      x-transition:leave-end="opacity-0 translate-y-6"
      x-cloak
-     class="fixed sm:left-auto sm:right-6 lg:bottom-6 bottom-28 left-4 right-4 z-50 max-w-md bg-white/95 dark:bg-[#181B26]/95 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.2)] rounded-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 print:hidden">
+     class="fixed left-4 bottom-4 sm:left-6 sm:bottom-6 right-4 sm:right-auto z-40 max-w-md bg-white/95 dark:bg-[#181B26]/95 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-[0_16px_40px_rgba(0,0,0,0.2)] rounded-2xl p-4 sm:p-5 text-slate-800 dark:text-slate-100 print:hidden">
 
     <div class="flex items-start gap-3">
         <div class="w-8 h-8 rounded-xl bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 mt-0.5">
