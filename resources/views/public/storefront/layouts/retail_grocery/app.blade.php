@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema retail_grocery (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.retail_grocery.typography')
 
     @stack('styles')
 </head>

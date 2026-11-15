@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema portfolio_creative (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.portfolio_creative.typography')
 
     @stack('styles')
 </head>

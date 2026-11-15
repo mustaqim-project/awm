@@ -232,6 +232,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema bakery_cake (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.bakery_cake.typography')
 
     @stack('styles')
 </head>

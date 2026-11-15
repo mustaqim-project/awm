@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema coffee_beverage (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.coffee_beverage.typography')
 
     @stack('styles')
 </head>

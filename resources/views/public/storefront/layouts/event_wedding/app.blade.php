@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema event_wedding (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.event_wedding.typography')
 
     @stack('styles')
 </head>

@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema logistics_transportation (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.logistics_transportation.typography')
 
     @stack('styles')
 </head>

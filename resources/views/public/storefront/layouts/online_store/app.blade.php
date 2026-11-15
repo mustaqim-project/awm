@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema online_store (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.online_store.typography')
 
     @stack('styles')
 </head>

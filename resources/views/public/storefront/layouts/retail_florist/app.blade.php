@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema retail_florist (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.retail_florist.typography')
 
     @stack('styles')
 </head>

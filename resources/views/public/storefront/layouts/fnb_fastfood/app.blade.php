@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema fnb_fastfood (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.fnb_fastfood.typography')
 
     @stack('styles')
 </head>

@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema fnb_bakery (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.fnb_bakery.typography')
 
     @stack('styles')
 </head>

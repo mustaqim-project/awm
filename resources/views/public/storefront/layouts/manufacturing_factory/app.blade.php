@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema manufacturing_factory (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.manufacturing_factory.typography')
 
     @stack('styles')
 </head>

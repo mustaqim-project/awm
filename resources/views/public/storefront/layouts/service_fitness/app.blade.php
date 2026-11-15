@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema service_fitness (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.service_fitness.typography')
 
     @stack('styles')
 </head>

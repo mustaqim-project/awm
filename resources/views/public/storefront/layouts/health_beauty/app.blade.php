@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema health_beauty (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.health_beauty.typography')
 
     @stack('styles')
 </head>

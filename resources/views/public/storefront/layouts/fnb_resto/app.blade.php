@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema fnb_resto (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.fnb_resto.typography')
 
     @stack('styles')
 </head>

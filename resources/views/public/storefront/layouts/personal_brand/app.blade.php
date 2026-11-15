@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema personal_brand (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.personal_brand.typography')
 
     @stack('styles')
 </head>

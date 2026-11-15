@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema education_courses (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.education_courses.typography')
 
     @stack('styles')
 </head>

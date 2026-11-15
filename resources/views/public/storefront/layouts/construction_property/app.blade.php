@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema construction_property (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.construction_property.typography')
 
     @stack('styles')
 </head>

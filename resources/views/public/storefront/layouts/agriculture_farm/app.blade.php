@@ -235,6 +235,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema agriculture_farm (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.agriculture_farm.typography')
 
     @stack('styles')
 </head>

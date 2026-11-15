@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema modern_umkm (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.modern_umkm.typography')
 
     @stack('styles')
 </head>

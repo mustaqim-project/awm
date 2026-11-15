@@ -205,6 +205,8 @@
 
     {{-- Universal Typography Hierarchy --}}
     @include('layouts.partials.typography')
+    {{-- Typography khusus tema hospitality_accommodation (override ringan di atas hierarki universal) --}}
+    @include('public.storefront.layouts.hospitality_accommodation.typography')
 
     @stack('styles')
 </head>
