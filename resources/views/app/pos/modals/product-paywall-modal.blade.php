@@ -49,24 +49,6 @@
             Batas Kuota Paket Free: Maksimal 10 Produk Aktif
         </p>
 
-        {{-- Product Details Card --}}
-        <template x-if="lockedProductCandidate">
-            <div class="mt-4 p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 flex items-center gap-3 text-left">
-                <div class="w-12 h-12 rounded-xl bg-black/10 dark:bg-black/40 flex items-center justify-center shrink-0 text-amber-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                    </svg>
-                </div>
-                <div class="min-w-0 flex-1">
-                    <div class="text-xs font-bold text-neutral-900 dark:text-white truncate" x-text="lockedProductCandidate.name"></div>
-                    <div class="text-[11px] text-neutral-500 dark:text-neutral-400 font-mono" x-text="formatRupiah(getProductPrice(lockedProductCandidate))"></div>
-                </div>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0">
-                    LOCKED
-                </span>
-            </div>
-        </template>
-
         {{-- Explanation Note --}}
         <p class="mt-4 text-xs text-neutral-600 dark:text-neutral-300 leading-relaxed">
             Masa aktif paket unlimited toko Anda telah berakhir. Pada paket gratis, kasir hanya dapat mentransaksikan <strong>10 produk teratas</strong>.

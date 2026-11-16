@@ -5,7 +5,7 @@
     showAddModal: false,
     showEditModal: false,
     showManualDrawerModal: false,
-    isTesting{{ __('pos.printer_testing') ? '' : '' }}: false,
+    isTesting: false,
     testFeedback: '',
     testFeedbackSuccess: true,
     editPrinter: {

@@ -1,0 +1,97 @@
+{
+  "id": 716,
+  "title": "Panduan Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun",
+  "slug": "pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun",
+  "meta_title": "Pengajuan Sisa Plafon KUR 2026 Sektor Produksi",
+  "meta_description": "Panduan pengajuan sisa plafon kur 2026 sektor produksi tutup tahun sebelum kuota bank ditutup, bunga 6 persen, syarat NIB OSS, dan tips lolos verifikasi bank.",
+  "primary_keyword": "pengajuan sisa plafon kur 2026 sektor produksi tutup tahun",
+  "secondary_keywords": "syarat pinjaman kur mikro tanpa jaminan sektor pertanian perikanan industri rumahan, suku bunga subsidi pemerintah 6 persen kur 2026, cek status slik ojk dan sikp kemenkeu calon debitur, kelengkapan legalitas nomor induk berusaha nib oss, tips wawancara survei usaha petugas bank",
+  "search_intent": "informational",
+  "category": "Modal",
+  "reading_time": "9 menit",
+  "cover_image": "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80",
+  "published_at": "2026-11-16T08:51:00+07:00",
+  "faqs": [
+    {
+      "q": "Kapan batas waktu terakhir pengajuan KUR tahun 2026 ditutup oleh bank?",
+      "a": "Sebagian besar bank penyalur menutup pendaftaran berkas baru pada minggu pertama atau kedua bulan Desember setiap tahunnya guna menyelesaikan proses pencairan dana sebelum tutup buku akhir tahun anggaran."
+    },
+    {
+      "q": "Apakah pinjaman KUR Mikro plafon Rp 50 juta wajib menggunakan jaminan sertifikat tanah?",
+      "a": "Sesuai Peraturan Menko Perekonomian yang berlaku, pinjaman KUR Mikro dengan plafon hingga Rp 100 juta tidak dipersyaratkan agunan tambahan (tanpa jaminan fisik tanah atau BPKB). Usaha yang layak dan berjalan aktif menjadi agunan pokoknya."
+    },
+    {
+      "q": "Apakah riwayat tunggakan di pinjaman online (pinjol) bisa menggagalkan pengajuan KUR?",
+      "a": "Sangat bisa. Sistem SLIK OJK secara otomatis merekam seluruh riwayat pinjaman digital. Jika terdapat tagihan pinjol yang menunggak atau macet, pengajuan KUR Anda otomatis akan ditolak oleh sistem perbankan."
+    },
+    {
+      "q": "Bisakah pedagang makanan rumahan yang belum memiliki izin BPOM mengajukan KUR?",
+      "a": "Bisa. Untuk skala usaha mikro, kelengkapan izin dasar berupa Nomor Induk Berusaha (NIB) berbasis risiko rendah dari OSS sudah sah untuk memproses pinjaman KUR di bank penyalur."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Panduan Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun",
+        "description": "Panduan pengajuan sisa plafon kur 2026 sektor produksi tutup tahun sebelum kuota bank ditutup, bunga 6 persen, syarat NIB OSS, dan tips lolos verifikasi bank.",
+        "image": "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80",
+        "datePublished": "2026-11-16T08:51:00+07:00",
+        "dateModified": "2026-11-16T08:51:00+07:00",
+        "url": "https://cooca.id/blog/pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun",
+        "mainEntityOfPage": "https://cooca.id/blog/pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Kapan batas waktu terakhir pengajuan KUR tahun 2026 ditutup oleh bank?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sebagian besar bank penyalur menutup pendaftaran berkas baru pada minggu pertama atau kedua bulan Desember setiap tahunnya guna menyelesaikan proses pencairan dana sebelum tutup buku akhir tahun anggaran."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah pinjaman KUR Mikro plafon Rp 50 juta wajib menggunakan jaminan sertifikat tanah?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sesuai Peraturan Menko Perekonomian yang berlaku, pinjaman KUR Mikro dengan plafon hingga Rp 100 juta tidak dipersyaratkan agunan tambahan (tanpa jaminan fisik tanah atau BPKB). Usaha yang layak dan berjalan aktif menjadi agunan pokoknya."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah riwayat tunggakan di pinjaman online (pinjol) bisa menggagalkan pengajuan KUR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sangat bisa. Sistem SLIK OJK secara otomatis merekam seluruh riwayat pinjaman digital. Jika terdapat tagihan pinjol yang menunggak atau macet, pengajuan KUR Anda otomatis akan ditolak oleh sistem perbankan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bisakah pedagang makanan rumahan yang belum memiliki izin BPOM mengajukan KUR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bisa. Untuk skala usaha mikro, kelengkapan izin dasar berupa Nomor Induk Berusaha (NIB) berbasis risiko rendah dari OSS sudah sah untuk memproses pinjaman KUR di bank penyalur."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"Panduan Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun\"\nmeta_title: \"Pengajuan Sisa Plafon KUR 2026 Sektor Produksi\"\nmeta_description: \"Panduan pengajuan sisa plafon kur 2026 sektor produksi tutup tahun sebelum kuota bank ditutup, bunga 6 persen, syarat NIB OSS, dan tips lolos verifikasi bank.\"\nslug: \"pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun\"\nprimary_keyword: \"pengajuan sisa plafon kur 2026 sektor produksi tutup tahun\"\nsecondary_keywords: \"syarat pinjaman kur mikro tanpa jaminan sektor pertanian perikanan industri rumahan, suku bunga subsidi pemerintah 6 persen kur 2026, cek status slik ojk dan sikp kemenkeu calon debitur, kelengkapan legalitas nomor induk berusaha nib oss, tips wawancara survei usaha petugas bank\"\nsearch_intent: \"informational\"\ncategory: \"Modal\"\nreading_time: \"9 menit\"\ncover_image: \"https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80\"\npublished_at: \"2026-11-16T08:51:00+07:00\"\n---\n# Panduan Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun\n\nMengoptimalkan momentum pengajuan sisa plafon kur 2026 sektor produksi tutup tahun merupakan peluang emas bagi para pelaku UMKM pengolahan kuliner, konveksi busana, kerajinan mebel, perikanan, dan pertanian di seluruh nusantara. Menjelang akhir bulan November 2026, perbankan penyalur program Kredit Usaha Rakyat (seperti BRI, Bank Mandiri, dan BNI) sedang mempercepat penyerapan sisa kuota subsidi bunga tahun anggaran 2026 yang dialokasikan oleh pemerintah pusat.\n\nPemerintah secara khusus memprioritaskan penyaluran kredit berbunga murah 6 persen efektif per tahun ini kepada UMKM sektor produksi (bukan sekadar pedagang perantara eceran) untuk menggerakkan penciptaan lapangan kerja dan memperkuat ketahanan pangan nasional. Kuota subsidi tahunan ini biasanya akan ditutup resmi pada minggu pertama Desember untuk keperluan tutup buku perbankan. Artikel ini merangkum syarat pinjaman tanpa agunan tambahan hingga Rp 100 juta, dokumen perizinan NIB, pengecekan riwayat SLIK OJK, serta tips menjawab survei lapangan analis bank.\n\n## Langkah Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun\n\nDalam memproses pengajuan sisa plafon kur 2026 sektor produksi tutup tahun, Anda perlu memahami regulasi pedoman pelaksanaan KUR 2026. Pemerintah membagi debitur ke dalam dua kelompok besar: sektor perdagangan murni dan sektor produksi. Sektor produksi mendapatkan fasilitas yang jauh lebih longgar dan menguntungkan:\n\n1. **Batas Akumulasi Plafon Lebih Besar:** Pelaku usaha sektor produksi dapat mengajukan pinjaman KUR Mikro berulang kali hingga batas total akumulasi Rp 400 juta, sementara sektor perdagangan eceran umum dibatasi maksimal Rp 100 juta.\n2. **Kelonggaran Suku Bunga Subsidi:** Suku bunga tetap disubsidi sebesar 6 persen efektif per tahun untuk pinjaman pertama, dan berjenjang naik secara wajar (7 persen dan 8 persen) untuk pinjaman berikutnya.\n3. **Prioritas Pencairan di Akhir Tahun:** Kantor cabang bank penyalur memiliki target Key Performance Indicator (KPI) wajib menyerap minimal 60 persen portofolio KUR ke sektor produksi, sehingga pengajuan dari produsen olahan makanan atau bengkel manufaktur akan diproses jauh lebih cepat.\n\nYang termasuk sektor produksi yang diprioritaskan:\n- Usaha olahan pangan dan minuman (bakery, keripik kemasan, katering, pembuatan tahu tempe).\n- Industri kreatif dan tekstil (konveksi sablon, penjahit baju, kerajinan rotan kulit).\n- Usaha pertanian, perkebunan hidroponik, peternakan ayam, dan budidaya ikan tawar.\n- Bengkel perbaikan mesin, jasa las bubut, dan industri fabrikasi alat lokal.\n\nUntuk memahami detail plafon dan ketentuan subsidi pemerintah tahun berjalan, baca ulasan [pemanfaatan sisa plafon kur 2026 sektor produksi](https://cooca.id/blog/pemanfaatan-sisa-plafon-kur-2026-sektor-produksi) sebagai rujukan aturan lengkap.\n\n## Syarat Wajib Lolos Verifikasi SIKP Kemenkeu dan SLIK OJK\n\nSebelum mendatangi kantor bank penyalur, pastikan profil administratif Anda telah memenuhi kriteria kelayakan kredit (bankable):\n\n- **Wajib Memiliki Nomor Induk Berusaha (NIB) OSS:** Usaha Anda harus terdaftar resmi di sistem Online Single Submission (OSS). NIB berfungsi sebagai bukti legalitas izin usaha pengganti SIUP dan TDP kuno.\n- **Riwayat Bersih di Sistem Layanan Informasi Keuangan (SLIK OJK):** Calon debitur tidak boleh memiliki riwayat kredit macet (kolektibilitas 2 hingga 5) di bank lain atau di aplikasi pinjaman online (pinjol). Tagihan paylater belanja online wajib dilunasi tuntas sebelum pengajuan.\n- **Belum Pernah Menerima Kredit Komersial Perbankan:** Debitur tidak sedang menikmati fasilitas kredit modal kerja atau investasi komersial umum dari bank mana pun, kecuali kredit konsumtif seperti KPR rumah subsidi, kredit kendaraan bermotor (KKB), atau kartu kredit dengan status pembayaran lancar.\n- **Terdaftar di Sistem Informasi Kredit Program (SIKP):** Petugas bank akan memverifikasi NIK KTP Anda di portal SIKP Kementerian Keuangan untuk memastikan Anda belum melebihi batas kuota akumulasi subsidi pemerintah.\n\n| Kategori Fasilitas KUR | Rentang Plafon Pinjaman | Syarat Agunan Tambahan | Tingkat Suku Bunga Subsidi |\n| --- | --- | --- | --- |\n| KUR Super Mikro | Sampai dengan Rp 10.000.000 | Tanpa Agunan Tambahan | 3% Efektif per Tahun |\n| KUR Mikro | Di Atas Rp 10 Juta s/d Rp 100 Juta | Tanpa Agunan Tambahan | 6% Efektif per Tahun |\n| KUR Kecil | Di Atas Rp 100 Juta s/d Rp 500 Juta | Wajib Agunan Fisik (Sertifikat/BPKB) | 6% s/d 9% Berjenjang |\n| KUR Khusus Kelompok | Hingga Rp 500 Juta per Anggota | Sesuai Perjanjian Kelompok Mitra | 6% Efektif per Tahun |\n\nBagi pelaku usaha yang belum memiliki legalitas usaha resmi, pelajari panduan kilat [cara daftar nib online oss rba gratis umkm](https://cooca.id/blog/cara-daftar-nib-online-oss-rba-gratis-umkm) yang dapat selesai dalam hitungan menit lewat ponsel.\n\n## Tips Menghadapi Survei Lapangan Analis Kredit Perbankan\n\nPetugas mantri atau analis kredit perbankan akan melakukan kunjungan langsung (on the spot survey) ke lokasi tempat produksi usaha Anda. Terapkan persiapan matang berikut:\n\n1. **Tunjukkan Aktivitas Fisik Produksi yang Nyata:** Pastikan mesin berjalan, bahan baku tersedia, dan ada staf yang sedang bekerja saat petugas datang berkunjung. Jangan biarkan tempat usaha tampak sepi atau tutup.\n2. **Siapkan Buku Catatan Penjualan dan Kasir yang Rapi:** Analis bank sangat menyukai bukti pembukuan digital yang tercetak rapi dibandingkan bon kertas kucel yang berserakan. Tunjukkan rekap mutasi penjualan 6 bulan terakhir dari sistem kasir POS Anda.\n3. **Pisahkan Rekening Pribadi dengan Rekening Usaha:** Tunjukkan mutasi rekening bank khusus usaha yang mencerminkan perputaran arus kas masuk harian yang sinkron dengan omzet yang Anda klaim di formulir pengajuan.\n4. **Jelaskan Rencana Alokasi Penggunaan Dana Secara Rinci:** Tegaskan bahwa modal pinjaman akan digunakan untuk hal produktif yang menambah omzet (misal: membeli mesin oven berkapasitas besar atau menyetok bahan baku tepung untuk pesanan tahun baru), bukan untuk keperluan konsumtif pribadi.\n\nUntuk menyusun dokumen laporan keuangan sederhana yang disukai analis perbankan, baca panduan [laporan keuangan untuk pengajuan kredit kur bank](https://cooca.id/blog/laporan-keuangan-untuk-pengajuan-kredit-kur-bank) guna memenuhi standar perbankan.\n\nSistem operasional COOCA secara otomatis mencatat seluruh transaksi kasir, pembelian bahan baku, serta menghasilkan Laporan Laba Rugi dan Rekening Kas Bank yang siap diekspor ke format PDF profesional, sehingga Anda dapat membuktikan kapasitas kelayakan bayar cicilan usaha Anda dengan sangat meyakinkan di depan analis bank.\n\n## FAQ\n\n### Kapan batas waktu terakhir pengajuan KUR tahun 2026 ditutup oleh bank?\nSebagian besar bank penyalur menutup pendaftaran berkas baru pada minggu pertama atau kedua bulan Desember setiap tahunnya guna menyelesaikan proses pencairan dana sebelum tutup buku akhir tahun anggaran.\n\n### Apakah pinjaman KUR Mikro plafon Rp 50 juta wajib menggunakan jaminan sertifikat tanah?\nSesuai Peraturan Menko Perekonomian yang berlaku, pinjaman KUR Mikro dengan plafon hingga Rp 100 juta tidak dipersyaratkan agunan tambahan (tanpa jaminan fisik tanah atau BPKB). Usaha yang layak dan berjalan aktif menjadi agunan pokoknya.\n\n### Apakah riwayat tunggakan di pinjaman online (pinjol) bisa menggagalkan pengajuan KUR?\nSangat bisa. Sistem SLIK OJK secara otomatis merekam seluruh riwayat pinjaman digital. Jika terdapat tagihan pinjol yang menunggak atau macet, pengajuan KUR Anda otomatis akan ditolak oleh sistem perbankan.\n\n### Bisakah pedagang makanan rumahan yang belum memiliki izin BPOM mengajukan KUR?\nBisa. Untuk skala usaha mikro, kelengkapan izin dasar berupa Nomor Induk Berusaha (NIB) berbasis risiko rendah dari OSS sudah sah untuk memproses pinjaman KUR di bank penyalur.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"Panduan Pengajuan Sisa Plafon KUR 2026 Sektor Produksi Tutup Tahun\",\n      \"description\": \"Panduan pengajuan sisa plafon kur 2026 sektor produksi tutup tahun sebelum kuota bank ditutup, bunga 6 persen, syarat NIB OSS, dan tips lolos verifikasi bank.\",\n      \"image\": \"https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&w=1200&q=80\",\n      \"datePublished\": \"2026-11-16T08:51:00+07:00\",\n      \"dateModified\": \"2026-11-16T08:51:00+07:00\",\n      \"url\": \"https://cooca.id/blog/pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/pengajuan-sisa-plafon-kur-2026-sektor-produksi-tutup-tahun\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Kapan batas waktu terakhir pengajuan KUR tahun 2026 ditutup oleh bank?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Sebagian besar bank penyalur menutup pendaftaran berkas baru pada minggu pertama atau kedua bulan Desember setiap tahunnya guna menyelesaikan proses pencairan dana sebelum tutup buku akhir tahun anggaran.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah pinjaman KUR Mikro plafon Rp 50 juta wajib menggunakan jaminan sertifikat tanah?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Sesuai Peraturan Menko Perekonomian yang berlaku, pinjaman KUR Mikro dengan plafon hingga Rp 100 juta tidak dipersyaratkan agunan tambahan (tanpa jaminan fisik tanah atau BPKB). Usaha yang layak dan berjalan aktif menjadi agunan pokoknya.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah riwayat tunggakan di pinjaman online (pinjol) bisa menggagalkan pengajuan KUR?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Sangat bisa. Sistem SLIK OJK secara otomatis merekam seluruh riwayat pinjaman digital. Jika terdapat tagihan pinjol yang menunggak atau macet, pengajuan KUR Anda otomatis akan ditolak oleh sistem perbankan.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Bisakah pedagang makanan rumahan yang belum memiliki izin BPOM mengajukan KUR?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Bisa. Untuk skala usaha mikro, kelengkapan izin dasar berupa Nomor Induk Berusaha (NIB) berbasis risiko rendah dari OSS sudah sah untuk memproses pinjaman KUR di bank penyalur.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}

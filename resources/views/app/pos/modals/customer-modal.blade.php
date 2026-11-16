@@ -42,8 +42,8 @@
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>
                         <div>
-                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_phone') }} *</label>
-                            <input type="tel" x-model="newCustomer.phone" required maxlength="50" inputmode="tel"
+                            <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.customer_phone') }} <span class="text-black/40 dark:text-white/40 font-normal">({{ __('common.optional') ?? 'Opsional' }})</span></label>
+                            <input type="tel" x-model="newCustomer.phone" maxlength="50" inputmode="tel"
                                 placeholder="{{ __('pos.customer_phone_placeholder') }}"
                                 class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
                         </div>

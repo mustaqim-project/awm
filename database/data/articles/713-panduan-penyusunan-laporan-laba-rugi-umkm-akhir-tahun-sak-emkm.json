@@ -1,0 +1,97 @@
+{
+  "id": 713,
+  "title": "Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM",
+  "slug": "panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm",
+  "meta_title": "Panduan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM",
+  "meta_description": "Panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm, format sederhana pendapatan, rincian HPP, beban operasional, dan persiapan syarat kredit bank.",
+  "primary_keyword": "panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm",
+  "secondary_keywords": "format sederhana laporan laba rugi usaha kecil sak emkm, cara pisahkan rekening pribadi dan modal usaha dagang, penghitungan beban pokok penjualan hpp akhir periode, pos biaya operasional listrik gaji sewa tempat, persiapan syarat laporan keuangan pengajuan kredit bank",
+  "search_intent": "informational",
+  "category": "Keuangan & Pembukuan",
+  "reading_time": "9 menit",
+  "cover_image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+  "published_at": "2026-11-16T08:42:00+07:00",
+  "faqs": [
+    {
+      "q": "Apa perbedaan utama laporan laba rugi SAK EMKM dengan standar akuntansi umum?",
+      "a": "SAK EMKM dirancang jauh lebih sederhana dan hanya fokus pada pencatatan transaksi berbasis kas dan akrual sederhana yang relevan untuk usaha kecil, tanpa mewajibkan perhitungan instrumen keuangan yang rumit seperti derivatif atau pajak tangguhan."
+    },
+    {
+      "q": "Mengapa pengambilan uang pribadi pemilik (prive) tidak dimasukkan ke dalam beban operasional?",
+      "a": "Karena prive bukan merupakan biaya untuk menjalankan operasional toko, melainkan penarikan bagian laba oleh pemilik modal. Memasukkan prive ke dalam beban akan mendistorsi perhitungan laba operasional usaha yang sebenarnya."
+    },
+    {
+      "q": "Kapan waktu yang tepat untuk melakukan stok opname penentuan persediaan akhir?",
+      "a": "Stok opname fisik wajib dilakukan tepat di penghujung tahun buku, biasanya pada tanggal 30 atau 31 Desember saat toko tutup, untuk memastikan nilai saldo persediaan akhir di laporan neraca dan HPP akurat 100 persen."
+    },
+    {
+      "q": "Apakah laporan laba rugi buatan software POS diakui oleh pihak bank penyalur KUR?",
+      "a": "Diakui secara resmi, asalkan format laporannya memuat rincian pendapatan bersih, rincian HPP, dan beban operasional yang terstruktur logis serta didukung oleh rekening koran perbankan yang sinkron."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM",
+        "description": "Panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm, format sederhana pendapatan, rincian HPP, beban operasional, dan persiapan syarat kredit bank.",
+        "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        "datePublished": "2026-11-16T08:42:00+07:00",
+        "dateModified": "2026-11-16T08:42:00+07:00",
+        "url": "https://cooca.id/blog/panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm",
+        "mainEntityOfPage": "https://cooca.id/blog/panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Apa perbedaan utama laporan laba rugi SAK EMKM dengan standar akuntansi umum?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SAK EMKM dirancang jauh lebih sederhana dan hanya fokus pada pencatatan transaksi berbasis kas dan akrual sederhana yang relevan untuk usaha kecil, tanpa mewajibkan perhitungan instrumen keuangan yang rumit seperti derivatif atau pajak tangguhan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mengapa pengambilan uang pribadi pemilik (prive) tidak dimasukkan ke dalam beban operasional?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Karena prive bukan merupakan biaya untuk menjalankan operasional toko, melainkan penarikan bagian laba oleh pemilik modal. Memasukkan prive ke dalam beban akan mendistorsi perhitungan laba operasional usaha yang sebenarnya."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kapan waktu yang tepat untuk melakukan stok opname penentuan persediaan akhir?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Stok opname fisik wajib dilakukan tepat di penghujung tahun buku, biasanya pada tanggal 30 atau 31 Desember saat toko tutup, untuk memastikan nilai saldo persediaan akhir di laporan neraca dan HPP akurat 100 persen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah laporan laba rugi buatan software POS diakui oleh pihak bank penyalur KUR?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Diakui secara resmi, asalkan format laporannya memuat rincian pendapatan bersih, rincian HPP, dan beban operasional yang terstruktur logis serta didukung oleh rekening koran perbankan yang sinkron."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM\"\nmeta_title: \"Panduan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM\"\nmeta_description: \"Panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm, format sederhana pendapatan, rincian HPP, beban operasional, dan persiapan syarat kredit bank.\"\nslug: \"panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm\"\nprimary_keyword: \"panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm\"\nsecondary_keywords: \"format sederhana laporan laba rugi usaha kecil sak emkm, cara pisahkan rekening pribadi dan modal usaha dagang, penghitungan beban pokok penjualan hpp akhir periode, pos biaya operasional listrik gaji sewa tempat, persiapan syarat laporan keuangan pengajuan kredit bank\"\nsearch_intent: \"informational\"\ncategory: \"Keuangan & Pembukuan\"\nreading_time: \"9 menit\"\ncover_image: \"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80\"\npublished_at: \"2026-11-16T08:42:00+07:00\"\n---\n# Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM\n\nMemahami panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm adalah keterampilan wajib bagi setiap pemilik usaha mikro, kecil, dan menengah yang ingin bisnisnya naik kelas dan berumur panjang. Menjelang penutupan tahun buku 2026, banyak pengusaha kecil yang masih mencampuradukkan antara uang penjualan harian dengan keuntungan bersih usaha. Merasa kas di tangan selalu ada, namun saat harus membayar utang supplier atau belanja stok baru, saldo tabungan mendadak habis tak berbekas.\n\nIkatan Akuntan Indonesia (IAI) telah menerbitkan Standar Akuntansi Keuangan Entitas Mikro, Kecil, dan Menengah (SAK EMKM) sebagai pedoman pembukuan praktis tanpa rumus akuntansi yang rumit. Laporan keuangan yang disusun sesuai standar SAK EMKM bukan hanya berguna untuk evaluasi internal pemilik usaha, tetapi juga menjadi syarat wajib yang diminta oleh analis perbankan saat Anda mengajukan pinjaman Kredit Usaha Rakyat (KUR) atau pembiayaan modal kerja lainnya. Artikel ini mengupas struktur baku laporan laba rugi, pemisahan pos biaya, formula HPP periodik, serta simulasi perhitungan nyata toko ritel.\n\n## Tahapan Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM\n\nDalam menerapkan panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm, Anda wajib mengetahui bahwa laporan keuangan lengkap untuk usaha mikro dan kecil berdasarkan standar resmi terdiri dari tiga dokumen utama:\n1. **Laporan Posisi Keuangan (Neraca):** Menggambarkan aset (kas, persediaan, peralatan), kewajiban (utang dagang, utang bank), dan modal pemilik usaha.\n2. **Laporan Laba Rugi:** Menghitung selisih antara seluruh pendapatan penjualan dengan beban pokok barang dan biaya operasional selama satu tahun buku berjalan.\n3. **Catatan Atas Laporan Keuangan (CALK):** Ringkasan singkat mengenai identitas usaha dan kebijakan pencatatan yang dipakai.\n\nDi antara ketiga dokumen tersebut, Laporan Laba Rugi merupakan cerminan paling jujur mengenai kinerja kesehatan bisnis Anda. Dari laporan ini, Anda dapat mengetahui persis apakah model bisnis Anda benar-benar mencetak profit riil atau hanya sekadar sibuk memutar uang modal kerja.\n\nUntuk memahami kelengkapan dokumen keuangan saat mengajukan fasilitas modal usaha perbankan, Anda dapat membaca panduan [laporan keuangan untuk pengajuan kredit kur bank](https://cooca.id/blog/laporan-keuangan-untuk-pengajuan-kredit-kur-bank) yang membahas rasio keuangan yang dinilai analis bank.\n\n## Tiga Komponen Utama dalam Laporan Laba Rugi Standar\n\nMenyusun laporan laba rugi tidak boleh dilakukan secara acak. Tiga pos pembentuk laba rugi wajib dipisahkan dengan jelas:\n\n- **1. Pendapatan Penjualan Bersih (Net Revenue):** Seluruh penerimaan uang dari penjualan barang atau jasa, setelah dikurangi potongan diskon penjualan dan nilai retur barang rusak.\n- **2. Beban Pokok Penjualan (HPP):** Biaya langsung yang dikeluarkan untuk memproduksi atau membeli barang yang berhasil terjual.\n  - *Rumus HPP Periodik:*\n    $$\text{HPP} = \text{Persediaan Awal} + \text{Pembelian Bersih Barang Dagang} - \text{Persediaan Akhir}$$\n- **3. Beban Operasional Usaha (Operating Expenses):** Seluruh biaya rutin yang dikeluarkan untuk menjalankan kegiatan operasional toko sehari-hari:\n  - Gaji dan upah staf karyawan toko.\n  - Beban utilitas: listrik PLN, tagihan air PDAM, dan kuota internet WiFi toko.\n  - Beban sewa kios atau ruko tahunan.\n  - Beban pengemasan dan bahan perlengkapan kasir (kantong belanja, struk kertas).\n  - Beban penyusutan peralatan (alat pendingin kulkas, meja kasir, rak display).\n\nUntuk membedakan margin laba dengan persentase kenaikan harga modal, pelajari rumus dasar pada artikel [rumus markup dan margin keuntungan akurat](https://cooca.id/blog/rumus-markup-dan-margin-keuntungan-akurat) agar tidak keliru menetapkan harga jual.\n\n## Simulasi Laporan Laba Rugi Nyata Toko Ritel Sembako Modern\n\nBerikut adalah contoh penyusunan Laporan Laba Rugi untuk periode 1 Januari hingga 31 Desember 2026 pada Toko Berkah Mandiri:\n\n| Pos Akun Keuangan | Nilai Nominal (Rp) | Keterangan Akuntansi |\n| --- | --- | --- |\n| **Pendapatan Penjualan Kotor** | **Rp 850.000.000** | Total omzet penjualan kasir sepanjang tahun |\n| Dikurangi: Retur dan Diskon Penjualan | (Rp 15.000.000) | Pengembalian barang cacat & promo voucher |\n| **Pendapatan Penjualan Bersih** | **Rp 835.000.000** | Dasar perhitungan pendapatan riil |\n| Persediaan Barang Dagang Awal Tahun | Rp 80.000.000 | Nilai stok fisik per 1 Januari 2026 |\n| Ditambah: Pembelian Barang Dagang Bersih | Rp 560.000.000 | Belanja stok dari distributor grosir |\n| Dikurangi: Persediaan Barang Dagang Akhir | (Rp 95.000.000) | Hasil hitung fisik stok per 31 Desember 2026 |\n| **Beban Pokok Penjualan (HPP Total)** | **Rp 545.000.000** | Biaya modal langsung barang yang terjual |\n| **LABA KOTOR (GROSS PROFIT)** | **Rp 290.000.000** | Pendapatan bersih dikurangi HPP (Margin 34,7%) |\n| Beban Gaji 2 Karyawan Toko | Rp 72.000.000 | Upah bulanan staf kasir dan gudang |\n| Beban Listrik, Air, dan Internet | Rp 18.000.000 | Biaya utilitas operasional toko |\n| Beban Sewa Tempat Kios | Rp 36.000.000 | Alokasi biaya sewa tahun berjalan |\n| Beban Penyusutan Rak dan Mesin Kasir | Rp 8.000.000 | Penyusutan aset tetap inventaris |\n| Beban Pemasaran dan Struk Kemasan | Rp 12.000.000 | Promosi diskon dan kantong belanja |\n| **Total Beban Operasional** | **Rp 146.000.000** | Total seluruh biaya operasional harian |\n| **LABA BERSIH USAHA (NET PROFIT)** | **Rp 144.000.000** | Keuntungan bersih riil sebelum pajak |\n\nDari simulasi di atas, terlihat jelas bahwa dari omzet Rp 850 juta, laba bersih riil yang dihasilkan usaha adalah Rp 144 juta (margin laba bersih sekitar 17,2 persen). Uang laba bersih inilah yang secara sah boleh ditarik sebagai dividen pribadi pemilik atau diinvestasikan kembali untuk membuka cabang baru.\n\nBagi pemilik bisnis yang memiliki cicilan modal perbankan, pelajari pula panduan [cara mengelola angsuran kredit usaha agar arus kas aman](https://cooca.id/blog/cara-mengelola-angsuran-kredit-usaha-agar-arus-kas-aman) agar pembayaran pokok dan bunga tidak menunggak.\n\nSoftware Business Operating System COOCA secara otomatis menghasilkan Laporan Laba Rugi standar SAK EMKM dan Laporan Arus Kas secara real-time. Setiap transaksi penjualan di kasir dan pencatatan nota belanja bahan baku langsung terhubung ke buku besar, sehingga Anda dapat mengunduh laporan keuangan akhir tahun siap cetak hanya dalam hitungan detik.\n\n## FAQ\n\n### Apa perbedaan utama laporan laba rugi SAK EMKM dengan standar akuntansi umum?\nSAK EMKM dirancang jauh lebih sederhana dan hanya fokus pada pencatatan transaksi berbasis kas dan akrual sederhana yang relevan untuk usaha kecil, tanpa mewajibkan perhitungan instrumen keuangan yang rumit seperti derivatif atau pajak tangguhan.\n\n### Mengapa pengambilan uang pribadi pemilik (prive) tidak dimasukkan ke dalam beban operasional?\nKarena prive bukan merupakan biaya untuk menjalankan operasional toko, melainkan penarikan bagian laba oleh pemilik modal. Memasukkan prive ke dalam beban akan mendistorsi perhitungan laba operasional usaha yang sebenarnya.\n\n### Kapan waktu yang tepat untuk melakukan stok opname penentuan persediaan akhir?\nStok opname fisik wajib dilakukan tepat di penghujung tahun buku, biasanya pada tanggal 30 atau 31 Desember saat toko tutup, untuk memastikan nilai saldo persediaan akhir di laporan neraca dan HPP akurat 100 persen.\n\n### Apakah laporan laba rugi buatan software POS diakui oleh pihak bank penyalur KUR?\nDiakui secara resmi, asalkan format laporannya memuat rincian pendapatan bersih, rincian HPP, dan beban operasional yang terstruktur logis serta didukung oleh rekening koran perbankan yang sinkron.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"Panduan Penyusunan Laporan Laba Rugi UMKM Akhir Tahun SAK EMKM\",\n      \"description\": \"Panduan penyusunan laporan laba rugi umkm akhir tahun sak emkm, format sederhana pendapatan, rincian HPP, beban operasional, dan persiapan syarat kredit bank.\",\n      \"image\": \"https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80\",\n      \"datePublished\": \"2026-11-16T08:42:00+07:00\",\n      \"dateModified\": \"2026-11-16T08:42:00+07:00\",\n      \"url\": \"https://cooca.id/blog/panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/panduan-penyusunan-laporan-laba-rugi-umkm-akhir-tahun-sak-emkm\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apa perbedaan utama laporan laba rugi SAK EMKM dengan standar akuntansi umum?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"SAK EMKM dirancang jauh lebih sederhana dan hanya fokus pada pencatatan transaksi berbasis kas dan akrual sederhana yang relevan untuk usaha kecil, tanpa mewajibkan perhitungan instrumen keuangan yang rumit seperti derivatif atau pajak tangguhan.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Mengapa pengambilan uang pribadi pemilik (prive) tidak dimasukkan ke dalam beban operasional?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Karena prive bukan merupakan biaya untuk menjalankan operasional toko, melainkan penarikan bagian laba oleh pemilik modal. Memasukkan prive ke dalam beban akan mendistorsi perhitungan laba operasional usaha yang sebenarnya.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Kapan waktu yang tepat untuk melakukan stok opname penentuan persediaan akhir?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Stok opname fisik wajib dilakukan tepat di penghujung tahun buku, biasanya pada tanggal 30 atau 31 Desember saat toko tutup, untuk memastikan nilai saldo persediaan akhir di laporan neraca dan HPP akurat 100 persen.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah laporan laba rugi buatan software POS diakui oleh pihak bank penyalur KUR?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Diakui secara resmi, asalkan format laporannya memuat rincian pendapatan bersih, rincian HPP, dan beban operasional yang terstruktur logis serta didukung oleh rekening koran perbankan yang sinkron.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}

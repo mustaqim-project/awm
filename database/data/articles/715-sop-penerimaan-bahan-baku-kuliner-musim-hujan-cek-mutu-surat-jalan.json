@@ -1,0 +1,97 @@
+{
+  "id": 715,
+  "title": "Standar SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan",
+  "slug": "sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan",
+  "meta_title": "SOP Penerimaan Bahan Baku Kuliner Musim Hujan",
+  "meta_description": "Standar sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan, standar cek mutu sayur daging, suhu chiller, dokumen purchase order, dan FEFO.",
+  "primary_keyword": "sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan",
+  "secondary_keywords": "standar pengecekan kesesuaian purchase order po dan fisik barang, uji visual kesegaran sayuran daging bahan basah musim hujan, pencatatan expired date metode first expired first out fefo, berita acara penolakan bahan baku cacat supplier, kebersihan area bongkar muat gudang dapur",
+  "search_intent": "informational",
+  "category": "Solusi Per Industri",
+  "reading_time": "9 menit",
+  "cover_image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
+  "published_at": "2026-11-16T08:48:00+07:00",
+  "faqs": [
+    {
+      "q": "Apakah petugas gudang berhak menolak bahan baku jika suplier tidak membawa surat jalan resmi?",
+      "a": "Sangat berhak. Menerima barang tanpa dokumen surat jalan resmi berisiko menimbulkan selisih penagihan invoice fiktif dan menyulitkan pelacakan asal-usul bahan baku jika terjadi masalah mutu makanan."
+    },
+    {
+      "q": "Mengapa suhu daging beku harus diperiksa saat tiba di pintu gudang resto?",
+      "a": "Karena daging beku yang sempat mencair di perjalanan (akibat truk pendingin mati) mengalami pertumbuhan bakteri pembusuk yang sangat pesat. Membekukannya kembali tidak akan membunuh racun bakteri yang sudah terlanjur berkembang biak."
+    },
+    {
+      "q": "Apa yang harus dilakukan jika sebagian sayuran dalam karung basah terkena air hujan?",
+      "a": "Pisahkan bagian sayuran yang basah dan berlendir, timbang ulang hanya sayuran yang kering dan berkualitas baik. Tuliskan selisih berat penolakan di surat jalan suplier agar Anda hanya ditagih sesuai berat barang yang layak pakai."
+    },
+    {
+      "q": "Berapa lama batas waktu toleransi barang segar berada di area bongkar muat sebelum masuk chiller?",
+      "a": "Maksimal 15 hingga 20 menit. Membiarkan daging segar dan susu berlama-lama di suhu ruang area bongkar muat akan menaikkan suhu produk dan mempercepat proses pembusukan alami."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Standar SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan",
+        "description": "Standar sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan, standar cek mutu sayur daging, suhu chiller, dokumen purchase order, dan FEFO.",
+        "image": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
+        "datePublished": "2026-11-16T08:48:00+07:00",
+        "dateModified": "2026-11-16T08:48:00+07:00",
+        "url": "https://cooca.id/blog/sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan",
+        "mainEntityOfPage": "https://cooca.id/blog/sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Apakah petugas gudang berhak menolak bahan baku jika suplier tidak membawa surat jalan resmi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sangat berhak. Menerima barang tanpa dokumen surat jalan resmi berisiko menimbulkan selisih penagihan invoice fiktif dan menyulitkan pelacakan asal-usul bahan baku jika terjadi masalah mutu makanan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Mengapa suhu daging beku harus diperiksa saat tiba di pintu gudang resto?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Karena daging beku yang sempat mencair di perjalanan (akibat truk pendingin mati) mengalami pertumbuhan bakteri pembusuk yang sangat pesat. Membekukannya kembali tidak akan membunuh racun bakteri yang sudah terlanjur berkembang biak."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa yang harus dilakukan jika sebagian sayuran dalam karung basah terkena air hujan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Pisahkan bagian sayuran yang basah dan berlendir, timbang ulang hanya sayuran yang kering dan berkualitas baik. Tuliskan selisih berat penolakan di surat jalan suplier agar Anda hanya ditagih sesuai berat barang yang layak pakai."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Berapa lama batas waktu toleransi barang segar berada di area bongkar muat sebelum masuk chiller?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Maksimal 15 hingga 20 menit. Membiarkan daging segar dan susu berlama-lama di suhu ruang area bongkar muat akan menaikkan suhu produk dan mempercepat proses pembusukan alami."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"Standar SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan\"\nmeta_title: \"SOP Penerimaan Bahan Baku Kuliner Musim Hujan\"\nmeta_description: \"Standar sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan, standar cek mutu sayur daging, suhu chiller, dokumen purchase order, dan FEFO.\"\nslug: \"sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan\"\nprimary_keyword: \"sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan\"\nsecondary_keywords: \"standar pengecekan kesesuaian purchase order po dan fisik barang, uji visual kesegaran sayuran daging bahan basah musim hujan, pencatatan expired date metode first expired first out fefo, berita acara penolakan bahan baku cacat supplier, kebersihan area bongkar muat gudang dapur\"\nsearch_intent: \"informational\"\ncategory: \"Solusi Per Industri\"\nreading_time: \"9 menit\"\ncover_image: \"https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80\"\npublished_at: \"2026-11-16T08:48:00+07:00\"\n---\n# Standar SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan\n\nMenerapkan panduan ketat untuk sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan merupakan garis pertahanan terdepan bagi restoran, kafe, katering, dan gerai bakery di seluruh Indonesia. Kondisi jalanan yang becek, genangan air kotor, dan kelembapan udara tinggi selama musim penghujan membawa ancaman kontaminasi bakteri pembusuk yang sangat cepat merusak sayuran segar, daging mentah, susu, dan bahan baku kering lainnya.\n\nBahan makanan yang basah kuyup akibat terpal mobil pengirim bocor atau daging beku yang mencair di jalan karena truk pendingin tidak berfungsi optimal dapat menyebabkan keracunan makanan pada konsumen, merusak cita rasa menu, serta memicu kerugian finansial puluhan juta rupiah. Pembahasan ini merangkum protokol 5 menit penerimaan barang di pintu gudang, standar pengecekan suhu box pendingin, verifikasi dokumen Purchase Order (PO), serta prosedur pembuatan Berita Acara Penolakan barang cacat.\n\n## Tahapan SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan\n\nPelaksanaan standar sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan wajib dipahami oleh seluruh staf penerima dapur. Karakteristik cuaca basah memicu beberapa titik kritis penurunan mutu bahan baku pangan selama perjalanan dari perkebunan atau pasar induk menuju dapur Anda:\n\n1. **Sayuran Daun Busuk Cepat (Bacterial Soft Rot):** Daun selada, bayam, dan sawi yang basah saat dipanen rentan membusuk dan berlendir dalam hitungan jam jika ditumpuk di karung plastik tanpa sirkulasi udara.\n2. **Kenaikan Suhu Daging dan Susu (Cold Chain Break):** Kendaraan pengirim yang terjebak kemacetan banjir sering mematikan mesin pendingin untuk menghemat solar, menyebabkan suhu daging naik di atas ambang batas aman 4 derajat Celcius.\n3. **Karton Tepung dan Gula Pasir Menggumpal:** Kemasan karung terigu atau gula yang terkena percikan air hujan akan basah dan mengeras menjadi batu, serta berpotensi menumbuhkan spora jamur berbahaya.\n4. **Telur Ayam Terkontaminasi Kotoran Basah:** Cangkang telur yang basah memudahkan bakteri Salmonella menembus pori-pori kulit telur dan mencemari bagian dalam.\n\nUntuk memahami manajemen rantai pasok kuliner yang stabil di musim hujan, pelajari ulasan [rantai pasok bahan baku kuliner musim hujan hpp](https://cooca.id/blog/rantai-pasok-bahan-baku-kuliner-musim-hujan-hpp) agar kontinuitas stok dapur tetap terjamin.\n\n## Protokol Pemeriksaan 5 Menit di Pintu Penerimaan (Loading Dock)\n\nPetugas gudang penerima barang (receiving staff) dilarang menandatangani surat jalan sebelum melakukan 4 langkah verifikasi wajib berikut:\n\n- **1. Pemeriksaan Suhu Fisik (Temperature Check):**\n  - Daging sapi dan ayam segar: Suhu maksimal 0 hingga 4 derajat Celcius.\n  - Makanan beku (frozen food): Suhu maksimal minus 18 derajat Celcius (pastikan tidak ada kristal es tanda pernah mencair lalu dibekukan ulang).\n  - Susu pasteurisasi dan keju: Suhu maksimal 2 hingga 6 derajat Celcius.\n- **2. Uji Visual dan Organoleptik (Panca Indera):**\n  - Sayuran segar: Daun tidak layu, tidak berlendir, bebas ulat hama, dan akar bersih dari tanah becek berlebih.\n  - Daging dan ikan: Warna merah segar alami, tekstur kenyal membal saat ditekan jari, dan tidak berbau asam atau amonia menyengat.\n- **3. Uji Berat dan Timbangan (Weight Verification):**\n  - Timbang seluruh keranjang bahan basah menggunakan timbangan digital terkalibrasi. Kurangi berat tara wadah keranjang kosong untuk mendapatkan berat bersih (netto) riil.\n- **4. Pencocokan Surat Jalan dengan Purchase Order (PO):**\n  - Cocokkan jumlah unit dan jenis barang di Surat Jalan pengirim dengan salinan Purchase Order resmi yang diterbitkan bagian pembelian. Dilarang menerima barang yang tidak pernah dipesan.\n\n| Kategori Bahan Makanan | Standar Suhu Penerimaan | Indikator Mutu Wajib Lolos | Alasan Mutlak Penolakan Barang |\n| --- | --- | --- | --- |\n| Daging Ayam & Sapi Segar | 0 s/d 4 Derajat Celcius | Warna merah segar, kenyal elastis | Berbau asam, berlendir, suhu > 7°C |\n| Sayuran Daun Hijau | 8 s/d 12 Derajat Celcius | Daun kering segar, renyah | Daun berlendir basah, busuk hitam |\n| Tepung, Beras, & Gula | Suhu Ruang Kering (20-25°C) | Karung bersih, bebas kutu | Karung basah rembes air hujan, menggumpal |\n| Susu Segar & Dairy | 2 s/d 5 Derajat Celcius | Segel botol utuh, tanggal ED aman | Kemasan kembung, susu pecah mengental |\n\nUntuk memahami perbedaan dokumen pemesanan dan tagihan resmi antar pelaku usaha, silakan baca artikel [perbedaan purchase order dan invoice b2b](https://cooca.id/blog/perbedaan-purchase-order-dan-invoice-b2b) guna menghindari sengketa faktur.\n\n## Prosedur Penerbitan Berita Acara Penolakan Barang Cacat\n\nJika ditemukan bahan baku yang tidak memenuhi standar mutu atau kemasannya rusak terkena air hujan, petugas gudang berhak menolak barang tersebut di tempat:\n\n1. **Dokumentasikan dengan Foto dan Video Jelas:** Ambil foto kondisi barang yang cacat, foto jarum termometer pengukur suhu, dan nomor plat kendaraan suplier.\n2. **Coret Item Barang di Lembar Surat Jalan Asli:** Tuliskan jumlah riil yang diterima dan jumlah yang ditolak langsung di lembar surat jalan suplier dan lembar arsip toko.\n3. **Terbitkan Formulir Berita Acara Penolakan:** Buat catatan penolakan resmi yang ditandatangani oleh staf penerima gudang dan kurir pengirim barang, dengan mencantumkan alasan penolakan (misal: Kemasan basah bocor atau Daging berlendir asam).\n4. **Karantina Sementara Bahan Rusak:** Jangan pernah mencampur bahan baku yang ditolak dengan stok lama di dalam chiller untuk mencegah penularan bakteri pembusuk.\n\nBagi gerai yang ingin menjaga gudang bahan kering tetap higienis, baca ulasan [sop penyimpanan stok gudang musim hujan anti lembab](https://cooca.id/blog/sop-penyimpanan-stok-gudang-musim-hujan-anti-lembab) untuk penataan rak penyimpanan.\n\n## Penerapan Labeling Tanggal Kedatangan dan Metode FEFO\n\nSetelah bahan baku dinyatakan lolos inspeksi, segera tempelkan label stiker identitas kedatangan sebelum disimpan ke ruang pendingin:\n\n- Tuliskan: Nama Supplier, Tanggal Masuk Barang, Jam Tiba, dan Tanggal Kedaluwarsa (Expired Date).\n- Terapkan Metode FEFO (First Expired First Out): Letakkan bahan baku dengan tanggal kedaluwarsa paling dekat di posisi paling depan rak, agar juru masak menggunakan bahan tersebut terlebih dahulu.\n- Metode FIFO (First In First Out): Untuk bahan kering tahan lama, gunakan prinsip barang yang datang lebih dulu wajib dipakai lebih awal.\n\nUntuk menghitung food cost secara presisi agar tidak ada bahan sisa yang terbuang sia-sia, pelajari panduan [cara menghitung hpp produk makanan kuliner](https://cooca.id/blog/cara-menghitung-hpp-produk-makanan-kuliner) untuk kalkulasi resep.\n\nModul Manajemen Inventori Dapur COOCA dilengkapi fitur Goods Receipt dan Purchase Order Matching yang otomatis mencatat nomor batch bahan baku, tanggal kedaluwarsa, dan harga beli terakhir, sehingga jika ada barang yang ditolak di pintu gudang, saldo tagihan invoice suplier akan langsung disesuaikan secara otomatis.\n\n## FAQ\n\n### Apakah petugas gudang berhak menolak bahan baku jika suplier tidak membawa surat jalan resmi?\nSangat berhak. Menerima barang tanpa dokumen surat jalan resmi berisiko menimbulkan selisih penagihan invoice fiktif dan menyulitkan pelacakan asal-usul bahan baku jika terjadi masalah mutu makanan.\n\n### Mengapa suhu daging beku harus diperiksa saat tiba di pintu gudang resto?\nKarena daging beku yang sempat mencair di perjalanan (akibat truk pendingin mati) mengalami pertumbuhan bakteri pembusuk yang sangat pesat. Membekukannya kembali tidak akan membunuh racun bakteri yang sudah terlanjur berkembang biak.\n\n### Apa yang harus dilakukan jika sebagian sayuran dalam karung basah terkena air hujan?\nPisahkan bagian sayuran yang basah dan berlendir, timbang ulang hanya sayuran yang kering dan berkualitas baik. Tuliskan selisih berat penolakan di surat jalan suplier agar Anda hanya ditagih sesuai berat barang yang layak pakai.\n\n### Berapa lama batas waktu toleransi barang segar berada di area bongkar muat sebelum masuk chiller?\nMaksimal 15 hingga 20 menit. Membiarkan daging segar dan susu berlama-lama di suhu ruang area bongkar muat akan menaikkan suhu produk dan mempercepat proses pembusukan alami.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"Standar SOP Penerimaan Bahan Baku Kuliner Musim Hujan Cek Mutu Surat Jalan\",\n      \"description\": \"Standar sop penerimaan bahan baku kuliner musim hujan cek mutu surat jalan, standar cek mutu sayur daging, suhu chiller, dokumen purchase order, dan FEFO.\",\n      \"image\": \"https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80\",\n      \"datePublished\": \"2026-11-16T08:48:00+07:00\",\n      \"dateModified\": \"2026-11-16T08:48:00+07:00\",\n      \"url\": \"https://cooca.id/blog/sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/sop-penerimaan-bahan-baku-kuliner-musim-hujan-cek-mutu-surat-jalan\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah petugas gudang berhak menolak bahan baku jika suplier tidak membawa surat jalan resmi?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Sangat berhak. Menerima barang tanpa dokumen surat jalan resmi berisiko menimbulkan selisih penagihan invoice fiktif dan menyulitkan pelacakan asal-usul bahan baku jika terjadi masalah mutu makanan.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Mengapa suhu daging beku harus diperiksa saat tiba di pintu gudang resto?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Karena daging beku yang sempat mencair di perjalanan (akibat truk pendingin mati) mengalami pertumbuhan bakteri pembusuk yang sangat pesat. Membekukannya kembali tidak akan membunuh racun bakteri yang sudah terlanjur berkembang biak.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apa yang harus dilakukan jika sebagian sayuran dalam karung basah terkena air hujan?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Pisahkan bagian sayuran yang basah dan berlendir, timbang ulang hanya sayuran yang kering dan berkualitas baik. Tuliskan selisih berat penolakan di surat jalan suplier agar Anda hanya ditagih sesuai berat barang yang layak pakai.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Berapa lama batas waktu toleransi barang segar berada di area bongkar muat sebelum masuk chiller?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Maksimal 15 hingga 20 menit. Membiarkan daging segar dan susu berlama-lama di suhu ruang area bongkar muat akan menaikkan suhu produk dan mempercepat proses pembusukan alami.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}

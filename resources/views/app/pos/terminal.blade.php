@@ -2024,7 +2024,7 @@
                                 :max="discountType === 'percentage' ? 100 : subtotal" step="any"
                                 placeholder="0"
                                 class="h-8 min-w-0 flex-1 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[8px] px-2.5 text-[12px] tabular-nums text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                            <button type="button" @click="$refs.barcodeInput?.focus()"
+                            <button type="button" @click="applyOrderDiscountFeedback()"
                                 class="h-8 px-3 rounded-[8px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-[11px] font-semibold transition active:scale-[0.97]">
                                 {{ __('pos.apply_btn') }}
                             </button>
@@ -2569,6 +2569,32 @@
                     // Initialize fullscreen listeners
                     this.initFullscreen();
 
+                    // Global POS Keyboard Shortcuts (F2: Barcode search, F4: Payment, F8: Hold, F9: Held Orders)
+                    window.addEventListener('keydown', (e) => {
+                        const activeTag = document.activeElement?.tagName;
+                        const isInputActive = ['INPUT', 'TEXTAREA'].includes(activeTag);
+
+                        if (e.key === 'F2') {
+                            e.preventDefault();
+                            this.$refs.barcodeSearchInput?.focus();
+                            this.$refs.barcodeSearchInput?.select();
+                        } else if (e.key === 'F4') {
+                            e.preventDefault();
+                            if (this.cart.length > 0 && !this.showPaymentModal) {
+                                this.openPaymentModal();
+                            }
+                        } else if (e.key === 'F8') {
+                            e.preventDefault();
+                            if (this.cart.length > 0) {
+                                this.showHoldPromptModal = true;
+                                this.$nextTick(() => this.$refs.holdOrderLabelInput?.focus());
+                            }
+                        } else if (e.key === 'F9') {
+                            e.preventDefault();
+                            this.showHeldOrdersModal = true;
+                        }
+                    });
+
                     // Check URL query parameters for auto-selection (from Storefront Reservations / Tables floor plan)
                     const urlParams = new URLSearchParams(window.location.search);
                     const paramTableId = urlParams.get('table_id');
@@ -2867,6 +2893,7 @@
                 },
 
                 addToCart(product) {
+                    this.playBeepSound();
                     const existing = this.cart.find(item => item.product_id === product.id && (!item.selected_modifiers || item.selected_modifiers.length === 0));
                     if (existing) {
                         const current = parseFloat(existing.quantity) || 0;
@@ -2995,6 +3022,49 @@
 
                 get totalTendered() {
                     return Number(this.currentTenderAmount || 0);
+                },
+
+                get quickCashPresets() {
+                    const total = Math.ceil(this.grandTotal || 0);
+                    if (total <= 0) return [50000, 100000, 200000];
+                    const presets = [];
+
+                    // 1. Pembulatan ke 10.000 terdekat jika tidak bulat
+                    const round10k = Math.ceil(total / 10000) * 10000;
+                    if (round10k > total && !presets.includes(round10k)) presets.push(round10k);
+
+                    // 2. Pembulatan ke 50.000 terdekat
+                    const round50k = Math.ceil(total / 50000) * 50000;
+                    if (round50k > total && !presets.includes(round50k)) presets.push(round50k);
+
+                    // 3. Pembulatan ke 100.000 terdekat
+                    const round100k = Math.ceil(total / 100000) * 100000;
+                    if (round100k > total && !presets.includes(round100k)) presets.push(round100k);
+
+                    // 4. Fallback jika total sudah merupakan angka bulat
+                    const step = total >= 100000 ? 50000 : 10000;
+                    let next = (presets.length > 0 ? presets[presets.length - 1] : total) + step;
+                    while (presets.length < 3) {
+                        if (!presets.includes(next)) presets.push(next);
+                        next += step;
+                    }
+                    return presets.slice(0, 3);
+                },
+
+                applyOrderDiscountFeedback() {
+                    if (this.orderDiscountAmount > 0) {
+                        if (typeof AppAlert !== 'undefined') {
+                            AppAlert.success(window.COOCA_I18N?.discount_applied || '{{ __('pos.discount_applied') }}' || 'Diskon pesanan berhasil diterapkan');
+                        }
+                    } else if (this.discountValue > 0) {
+                        if (typeof AppAlert !== 'undefined') {
+                            AppAlert.success(window.COOCA_I18N?.discount_applied || '{{ __('pos.discount_applied') }}' || 'Diskon pesanan berhasil diterapkan');
+                        }
+                    } else {
+                        if (typeof AppAlert !== 'undefined') {
+                            AppAlert.info('Masukkan nominal diskon sebelum menerapkan');
+                        }
+                    }
                 },
 
                 get filteredCustomers() {
@@ -4011,6 +4081,7 @@
                 openProductPaywallModal(product) {
                     this.lockedProductCandidate = product;
                     this.showProductPaywallModal = true;
+                    this.playErrorBuzzer();
                 },
 
                 openModifierModal(product) {
@@ -4730,6 +4801,50 @@
                     } catch (e) {
                         console.warn('Audio chime error:', e);
                     }
+                },
+
+                playBeepSound() {
+                    try {
+                        if (!this.audioCtx) {
+                            this.audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                        }
+                        if (this.audioCtx.state === 'suspended') {
+                            this.audioCtx.resume();
+                        }
+                        const now = this.audioCtx.currentTime;
+                        const osc = this.audioCtx.createOscillator();
+                        const gain = this.audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(1400, now);
+                        gain.gain.setValueAtTime(0.18, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+                        osc.connect(gain);
+                        gain.connect(this.audioCtx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.07);
+                    } catch (e) {}
+                },
+
+                playErrorBuzzer() {
+                    try {
+                        if (!this.audioCtx) {
+                            this.audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                        }
+                        if (this.audioCtx.state === 'suspended') {
+                            this.audioCtx.resume();
+                        }
+                        const now = this.audioCtx.currentTime;
+                        const osc = this.audioCtx.createOscillator();
+                        const gain = this.audioCtx.createGain();
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(220, now);
+                        gain.gain.setValueAtTime(0.2, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                        osc.connect(gain);
+                        gain.connect(this.audioCtx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.25);
+                    } catch (e) {}
                 },
 
                 formatTimeAgo(dateStr) {

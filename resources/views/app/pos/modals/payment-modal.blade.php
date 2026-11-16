@@ -153,16 +153,16 @@
                         <span>{{ __('pos.qris_dynamic_generation_notice') }}</span>
                     </div>
 
-                    <!-- Quick Cash Presets (only for Cash) -->
+                    <!-- Quick Cash Presets (only for Cash) - Dynamic Smart Presets based on Bill -->
                     <div x-show="selectedPayMethod === 'cash'" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
                         <button type="button" @click="currentTenderAmount = grandTotal"
                             class="h-9 rounded-[10px] bg-[#007AFF]/12 hover:bg-[#007AFF]/20 text-xs font-bold text-[#007AFF] tabular-nums transition active:scale-[0.97]">{{ __('pos.exact_amount_btn') }}</button>
-                        <button type="button" @click="currentTenderAmount = 50000"
-                            class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/80 dark:text-white/80 tabular-nums transition active:scale-[0.97]">50.000</button>
-                        <button type="button" @click="currentTenderAmount = 100000"
-                            class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/80 dark:text-white/80 tabular-nums transition active:scale-[0.97]">100.000</button>
-                        <button type="button" @click="currentTenderAmount = 200000"
-                            class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/80 dark:text-white/80 tabular-nums transition active:scale-[0.97]">200.000</button>
+                        <template x-for="preset in quickCashPresets" :key="preset">
+                            <button type="button" @click="currentTenderAmount = preset"
+                                class="h-9 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-xs font-semibold text-black/80 dark:text-white/80 tabular-nums transition active:scale-[0.97]"
+                                x-text="formatRupiah(preset).replace('Rp\u00A0', '').replace('Rp ', '')">
+                            </button>
+                        </template>
                     </div>
                 </div>
 
