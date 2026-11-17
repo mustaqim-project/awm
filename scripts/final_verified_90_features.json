@@ -1,0 +1,1527 @@
+[
+  {
+    "id": 1,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "terminal-pos-modern.png",
+    "feature_name": "Terminal Kasir POS Modern & Barcode Scanner",
+    "primary_blade": "resources/views/app/pos/terminal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/barcode-scanner-modal.blade.php",
+      "resources/views/app/pos/modals/item-detail-modal.blade.php",
+      "resources/views/app/pos/modals/quick-customer.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Full-screen SPA layout (4,868 lines), barcode scanner integration, category pills, product grid, cart panel",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 2,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "pencarian-produk-instan.png",
+    "feature_name": "Pencarian Produk Instan & Filter Kategori POS",
+    "primary_blade": "resources/views/app/pos/terminal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/barcode-scanner-modal.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Real-time client-side live search with debouncing, category tabs, keyboard shortcut focus (/)",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 3,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "multi-metode-pembayaran.png",
+    "feature_name": "Multi-Metode Pembayaran (Tunai, QRIS, Transfer, EDC, Piutang)",
+    "primary_blade": "resources/views/app/pos/modals/payment-modal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/payment.blade.php",
+      "resources/views/app/pos/modals/dynamic-qris.blade.php",
+      "resources/views/app/pos/modals/qris-modal.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Multi-tender checkout modal with quick cash denominations, QRIS dynamic canvas, card slip input, member credit",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 4,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "hold-resume-order.png",
+    "feature_name": "Parkir & Lanjutkan Pesanan (Hold & Resume Order)",
+    "primary_blade": "resources/views/app/pos/modals/held-orders-modal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/hold-prompt-modal.blade.php",
+      "resources/views/app/pos/modals/held-orders.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Order parking system storing multi-cart drafts in localStorage & server session with customer tags",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 5,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "manajemen-shift-kasir-uang-laci.png",
+    "feature_name": "Manajemen Shift Kasir & Buka/Tutup Kas Laci (Drawer Balancing)",
+    "primary_blade": "resources/views/app/pos/shifts.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/open-shift-modal.blade.php",
+      "resources/views/app/pos/modals/close-shift-modal.blade.php",
+      "resources/views/app/pos/modals/cash-movement-modal.blade.php"
+    ],
+    "route_name": "pos.shifts.index",
+    "status": "Implemented",
+    "notes": "Cash register drawer tracking with expected vs actual cash count, float injection, petty cash drops",
+    "method": "GET|HEAD",
+    "uri": "pos/shifts",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosShiftWebController@index"
+  },
+  {
+    "id": 6,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "rekonsiliasi-kas-harian.png",
+    "feature_name": "Rekonsiliasi Kas Harian Kasir & Cash Balancing",
+    "primary_blade": "resources/views/app/pos/shifts.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/reports.blade.php",
+      "resources/views/app/pos/modals/close-shift.blade.php"
+    ],
+    "route_name": "pos.shifts.index",
+    "status": "Implemented",
+    "notes": "Daily shift closure reconciliation, discrepancy calculation, supervisor sign-off, audit trail",
+    "method": "GET|HEAD",
+    "uri": "pos/shifts",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosShiftWebController@index"
+  },
+  {
+    "id": 7,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "integrasi-printer-thermal.png",
+    "feature_name": "Integrasi Printer Thermal 58mm/80mm & Hardware Hub",
+    "primary_blade": "resources/views/app/pos/printers/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/settings-hardware.blade.php"
+    ],
+    "route_name": "pos.printers.index",
+    "status": "Partial",
+    "notes": "Web printer management UI complete; physical ESC/POS printing requires local hardware/Bluetooth pairing",
+    "method": "GET|HEAD",
+    "uri": "pos/printers",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosPrinterWebController@index"
+  },
+  {
+    "id": 8,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "pengiriman-struk-digital-whatsapp.png",
+    "feature_name": "Pengiriman Struk Digital Kasir via WhatsApp",
+    "primary_blade": "resources/views/app/pos/modals/receipt-success.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/orders.blade.php",
+      "resources/views/app/whatsapp/index.blade.php"
+    ],
+    "route_name": "pos.orders.index",
+    "status": "Implemented",
+    "notes": "Post-checkout modal with direct WhatsApp receipt trigger, formatted items summary, QR digital receipt link",
+    "method": "GET|HEAD",
+    "uri": "pos/orders",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosOrderWebController@index"
+  },
+  {
+    "id": 9,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "kitchen-display-system-kds.png",
+    "feature_name": "Kitchen Display System (KDS) Layar Dapur & Bar",
+    "primary_blade": "resources/views/app/pos/kitchen.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/incoming-orders-modal.blade.php"
+    ],
+    "route_name": "pos.kitchen.index",
+    "status": "Implemented",
+    "notes": "Full-screen kitchen display board with audio chimes, auto-polling, station routing (Kitchen/Bar/Grill)",
+    "method": "GET|HEAD",
+    "uri": "pos/kitchen",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosKitchenWebController@index"
+  },
+  {
+    "id": 10,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "alur-status-pesanan-dapur.png",
+    "feature_name": "Alur Status Pesanan Dapur & Timer Memasak KDS",
+    "primary_blade": "resources/views/app/pos/kitchen.blade.php",
+    "supporting_blades": [],
+    "route_name": "pos.kitchen.index",
+    "status": "Implemented",
+    "notes": "Multi-column ticket workflow (Queued -> Cooking -> Ready -> Served) with elapsed time color thresholds",
+    "method": "GET|HEAD",
+    "uri": "pos/kitchen",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosKitchenWebController@index"
+  },
+  {
+    "id": 11,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "denah-meja-interaktif-dine-in.png",
+    "feature_name": "Manajemen Denah Meja Interaktif Dine-In Restoran",
+    "primary_blade": "resources/views/app/pos/tables.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/restaurant-tables.blade.php",
+      "resources/views/app/pos/modals/tables-modal.blade.php"
+    ],
+    "route_name": "pos.tables.index",
+    "status": "Implemented",
+    "notes": "Visual floor plan grid, table capacity indicators, real-time occupancy status (Available, Occupied, Reserved, Billed)",
+    "method": "GET|HEAD",
+    "uri": "pos/tables",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTableWebController@index"
+  },
+  {
+    "id": 12,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "pindah-gabung-meja.png",
+    "feature_name": "Pindah & Gabung Meja Interaktif F&B",
+    "primary_blade": "resources/views/app/pos/tables.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/restaurant-tables.blade.php"
+    ],
+    "route_name": "pos.tables.index",
+    "status": "Implemented",
+    "notes": "Interactive drag-and-drop or modal-based table transfer and merge orders with audit logging",
+    "method": "GET|HEAD",
+    "uri": "pos/tables",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTableWebController@index"
+  },
+  {
+    "id": 13,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "split-bill.png",
+    "feature_name": "Pemisahan Tagihan Meja (Split Bill Bayar Terpisah)",
+    "primary_blade": "resources/views/app/pos/modals/table-payment-modal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/pay-table-order.blade.php",
+      "resources/views/app/pos/modals/payment-modal.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Item-by-item split billing or equal amount split with separate receipt generation per party",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 14,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "katalog-tarif-jasa.png",
+    "feature_name": "Katalog Tarif Jasa & Durasi Pengerjaan Bengkel/Servis",
+    "primary_blade": "resources/views/app/services/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "services.index",
+    "status": "Implemented",
+    "notes": "Service catalog table with hourly rates, flat labor costs, estimated completion times, technician skill requirements",
+    "method": "GET|HEAD",
+    "uri": "services",
+    "action": "App\\Http\\Controllers\\Web\\ServiceWebController@index"
+  },
+  {
+    "id": 15,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "perintah-kerja-spk.png",
+    "feature_name": "Surat Perintah Kerja (SPK) Servis & Antrean Unit",
+    "primary_blade": "resources/views/app/services/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/service-vertical-modal.blade.php",
+      "resources/views/app/pos/modals/service-vertical.blade.php"
+    ],
+    "route_name": "services.index",
+    "status": "Implemented",
+    "notes": "Work order modal tracking customer vehicle/device, odometer, complaint checklist, assigned mechanic",
+    "method": "GET|HEAD",
+    "uri": "services",
+    "action": "App\\Http\\Controllers\\Web\\ServiceWebController@index"
+  },
+  {
+    "id": 16,
+    "category_code": "A",
+    "category_name": "A-kasir-operasional",
+    "filename": "transaksi-jasa-sparepart-terintegrasi.png",
+    "feature_name": "Transaksi Kasir Jasa Servis & Sparepart Terpadu",
+    "primary_blade": "resources/views/app/pos/terminal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/services/index.blade.php",
+      "resources/views/app/pos/modals/service-vertical-modal.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Unified checkout bundling inventory spare parts and labor service lines into single invoice & accounting journal",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 17,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "otorisasi-pin-supervisor.png",
+    "feature_name": "Otorisasi PIN Supervisor POS (Void, Diskon, Refund)",
+    "primary_blade": "resources/views/app/pos/modals/supervisor-pin-modal.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/supervisor-pin.blade.php",
+      "resources/views/app/pos/terminal.blade.php"
+    ],
+    "route_name": "pos.terminal",
+    "status": "Implemented",
+    "notes": "Numpad PIN modal intercepting void item, bill cancel, and manual discount exceeding cashier limit",
+    "method": "GET|HEAD",
+    "uri": "pos",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosTerminalWebController@index"
+  },
+  {
+    "id": 18,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "aturan-persetujuan-diskon.png",
+    "feature_name": "Aturan Plafon Nominal Diskon & Matriks Approval",
+    "primary_blade": "resources/views/app/approvals/rules.blade.php",
+    "supporting_blades": [],
+    "route_name": "approval-rules.index",
+    "status": "Implemented",
+    "notes": "Approval rule matrix with discount percentage thresholds, role approver mapping, and automated bypass rules",
+    "method": "GET|HEAD",
+    "uri": "settings/approval-rules",
+    "action": "App\\Http\\Controllers\\Web\\Approval\\ApprovalWebController@rulesIndex"
+  },
+  {
+    "id": 19,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "approval-purchase-order-bertingkat.png",
+    "feature_name": "Approval Purchase Order Bertingkat (Maker-Checker)",
+    "primary_blade": "resources/views/app/approvals/inbox.blade.php",
+    "supporting_blades": [
+      "resources/views/app/purchase-orders/index.blade.php"
+    ],
+    "route_name": "approvals.inbox",
+    "status": "Implemented",
+    "notes": "Tiered multi-level document approval inbox (Purchasing Staff -> Finance Lead -> Business Owner)",
+    "method": "GET|HEAD",
+    "uri": "approvals",
+    "action": "App\\Http\\Controllers\\Web\\Approval\\ApprovalWebController@inbox"
+  },
+  {
+    "id": 20,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "approval-selisih-stock-opname.png",
+    "feature_name": "Approval Selisih Varian Stock Opname Gudang",
+    "primary_blade": "resources/views/app/approvals/inbox.blade.php",
+    "supporting_blades": [
+      "resources/views/app/inventory/opname.blade.php"
+    ],
+    "route_name": "approvals.inbox",
+    "status": "Implemented",
+    "notes": "Approval flow for inventory variance write-offs exceeding threshold values with reason auditing",
+    "method": "GET|HEAD",
+    "uri": "approvals",
+    "action": "App\\Http\\Controllers\\Web\\Approval\\ApprovalWebController@inbox"
+  },
+  {
+    "id": 21,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "audit-trail-keamanan-real-time.png",
+    "feature_name": "Audit Trail Keamanan Real-Time & Jejak Log Aktivitas",
+    "primary_blade": "resources/views/app/security/audit-logs/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/approvals/history.blade.php"
+    ],
+    "route_name": "settings.audit-logs.index",
+    "status": "Implemented",
+    "notes": "Granular activity logger capturing IP address, user agent, actor, before/after JSON state changes",
+    "method": "GET|HEAD",
+    "uri": "settings/audit-logs",
+    "action": "App\\Http\\Controllers\\Web\\Security\\AuditLogWebController@index"
+  },
+  {
+    "id": 22,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "manajemen-role-permission-granular-rbac.png",
+    "feature_name": "Manajemen Role & Permission Granular RBAC",
+    "primary_blade": "resources/views/app/roles/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "roles.index",
+    "status": "Implemented",
+    "notes": "Role permissions matrix table with checkboxes per module (Create, Read, Update, Delete, Export, Approve)",
+    "method": "GET|HEAD",
+    "uri": "roles",
+    "action": "App\\Http\\Controllers\\Web\\RoleWebController@index"
+  },
+  {
+    "id": 23,
+    "category_code": "B",
+    "category_name": "B-keamanan-otorisasi",
+    "filename": "matriks-hak-akses-karyawan.png",
+    "feature_name": "Matriks Hak Akses Karyawan & Pembagian Wewenang Staf",
+    "primary_blade": "resources/views/app/roles/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/index.blade.php"
+    ],
+    "route_name": "roles.index",
+    "status": "Implemented",
+    "notes": "Visual role-to-staff assignment view defining operational scopes across branches and departments",
+    "method": "GET|HEAD",
+    "uri": "roles",
+    "action": "App\\Http\\Controllers\\Web\\RoleWebController@index"
+  },
+  {
+    "id": 24,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "bill-of-materials-bom-resep-formula.png",
+    "feature_name": "Bill of Materials (BOM) Resep Produk & Formula Produksi",
+    "primary_blade": "resources/views/app/products/bom.blade.php",
+    "supporting_blades": [
+      "resources/views/app/calculator.blade.php"
+    ],
+    "route_name": "products.bom",
+    "status": "Implemented",
+    "notes": "Multi-tier BOM recipe builder with raw material quantities, unit conversions, and dynamic subtotal costing",
+    "method": "GET|HEAD",
+    "uri": "products/{product}/bom",
+    "action": "App\\Http\\Controllers\\Web\\ProductWebController@bom"
+  },
+  {
+    "id": 25,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "pengurangan-stok-bahan-baku-otomatis.png",
+    "feature_name": "Pengurangan Stok Bahan Baku Otomatis dari Produksi & POS",
+    "primary_blade": "resources/views/app/materials/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/products/bom.blade.php"
+    ],
+    "route_name": "materials.index",
+    "status": "Implemented",
+    "notes": "Automatic inventory depletion upon order fulfillment based on configured BOM recipes",
+    "method": "GET|HEAD",
+    "uri": "materials",
+    "action": "App\\Http\\Controllers\\Web\\MaterialWebController@index"
+  },
+  {
+    "id": 26,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "wastage-yield-calculation.png",
+    "feature_name": "Kalkulasi Persentase Wastage & Yield Bahan Baku",
+    "primary_blade": "resources/views/app/calculator.blade.php",
+    "supporting_blades": [
+      "resources/views/app/products/bom.blade.php"
+    ],
+    "route_name": "calculator.index",
+    "status": "Implemented",
+    "notes": "Ingredient yield percentage and waste factor calculation adjusting gross material cost to net usable portion",
+    "method": "GET|HEAD",
+    "uri": "calculator",
+    "action": "App\\Http\\Controllers\\Web\\CalculatorWebController@index"
+  },
+  {
+    "id": 27,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "labor-cost-calculation.png",
+    "feature_name": "Kalkulasi Biaya Tenaga Kerja Langsung (Labor Costing)",
+    "primary_blade": "resources/views/app/labor-machines/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/calculator.blade.php"
+    ],
+    "route_name": "labor-machines.index",
+    "status": "Implemented",
+    "notes": "Labor cost configuration table by worker skill tier, hourly wages, and production time allocations",
+    "method": "GET|HEAD",
+    "uri": "labor-machines",
+    "action": "App\\Http\\Controllers\\Web\\LaborMachineWebController@index"
+  },
+  {
+    "id": 28,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "machine-depreciation-rate.png",
+    "feature_name": "Tarif Beban Mesin & Depresiasi Operasional per Jam",
+    "primary_blade": "resources/views/app/labor-machines/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/calculator.blade.php"
+    ],
+    "route_name": "labor-machines.index",
+    "status": "Implemented",
+    "notes": "Machine hourly overhead rate calculation including depreciation, power consumption, and maintenance budget",
+    "method": "GET|HEAD",
+    "uri": "labor-machines",
+    "action": "App\\Http\\Controllers\\Web\\LaborMachineWebController@index"
+  },
+  {
+    "id": 29,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "simulator-margin-profitabilitas.png",
+    "feature_name": "Simulator Margin Profitabilitas & Rekomendasi Harga Jual",
+    "primary_blade": "resources/views/app/simulator/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "simulator.index",
+    "status": "Implemented",
+    "notes": "Interactive slider simulation adjusting target gross/net margins and previewing optimal retail prices",
+    "method": "GET|HEAD",
+    "uri": "simulator",
+    "action": "App\\Http\\Controllers\\Web\\SimulationWebController@index"
+  },
+  {
+    "id": 30,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "break-even-point-bep.png",
+    "feature_name": "Analisa Titik Impas Break-Even Point (BEP) Unit & Rupiah",
+    "primary_blade": "resources/views/app/profitability/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "profitability.index",
+    "status": "Implemented",
+    "notes": "BEP calculation dashboard with fixed cost allocation, contribution margin per unit, and target volume metrics",
+    "method": "GET|HEAD",
+    "uri": "profitability",
+    "action": "App\\Http\\Controllers\\Web\\ProfitabilityWebController@index"
+  },
+  {
+    "id": 31,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "simulasi-sensitivitas-harga-bahan-baku.png",
+    "feature_name": "Simulasi Sensitivitas Margin Terhadap Lonjakan Harga Bahan",
+    "primary_blade": "resources/views/app/simulator/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/materials/index.blade.php"
+    ],
+    "route_name": "simulator.index",
+    "status": "Implemented",
+    "notes": "Stress-test simulator showing impact of commodity price fluctuations (+10%, +25%, +50%) on profitability",
+    "method": "GET|HEAD",
+    "uri": "simulator",
+    "action": "App\\Http\\Controllers\\Web\\SimulationWebController@index"
+  },
+  {
+    "id": 32,
+    "category_code": "C",
+    "category_name": "C-produksi-hpp",
+    "filename": "varian-topping-modifiers.png",
+    "feature_name": "Varian Produk, Topping Tambahan & Modifier Add-ons",
+    "primary_blade": "resources/views/app/products/modifiers.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/modifier-modal.blade.php",
+      "resources/views/app/pos/modals/modifier-picker.blade.php"
+    ],
+    "route_name": "pos.modifiers.index",
+    "status": "Implemented",
+    "notes": "Modifier groups manager with extra pricing, recipe link per modifier, and POS popup selection sheets",
+    "method": "GET|HEAD",
+    "uri": "pos/modifiers",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\ModifierWebController@index"
+  },
+  {
+    "id": 33,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "surat-penawaran-harga-quotation.png",
+    "feature_name": "Surat Penawaran Harga Komersial (Quotation / SPH)",
+    "primary_blade": "resources/views/app/quotations/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/quotations/create.blade.php",
+      "resources/views/app/quotations/show.blade.php"
+    ],
+    "route_name": "sales.quotations.index",
+    "status": "Implemented",
+    "notes": "Commercial quotation builder with validity dates, payment terms, discounts, and PDF quotation generator",
+    "method": "GET|HEAD",
+    "uri": "sales/quotations",
+    "action": "App\\Http\\Controllers\\Web\\Sales\\QuotationWebController@index"
+  },
+  {
+    "id": 34,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "konversi-quotation-ke-sales-order.png",
+    "feature_name": "Konversi 1-Klik Quotation Menjadi Sales Order (SO)",
+    "primary_blade": "resources/views/app/quotations/show.blade.php",
+    "supporting_blades": [
+      "resources/views/app/sales-orders/create.blade.php"
+    ],
+    "route_name": "sales.quotations.show",
+    "status": "Implemented",
+    "notes": "One-click conversion workflow porting approved quotation items into confirmed Sales Order",
+    "method": "GET|HEAD",
+    "uri": "sales/quotations/{quotation}",
+    "action": "App\\Http\\Controllers\\Web\\Sales\\QuotationWebController@show"
+  },
+  {
+    "id": 35,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "pesanan-penjualan-grosir-sales-orders.png",
+    "feature_name": "Pesanan Penjualan Grosir B2B (Sales Orders / SO)",
+    "primary_blade": "resources/views/app/sales-orders/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/sales-orders/create.blade.php",
+      "resources/views/app/sales-orders/show.blade.php"
+    ],
+    "route_name": "sales.orders.index",
+    "status": "Implemented",
+    "notes": "Wholesale Sales Orders pipeline with fulfillment status, stock commitment, and payment milestone tracking",
+    "method": "GET|HEAD",
+    "uri": "sales/orders",
+    "action": "App\\Http\\Controllers\\Web\\Sales\\SalesOrderWebController@index"
+  },
+  {
+    "id": 36,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "jadwal-pengiriman-bertahap-multi-drop.png",
+    "feature_name": "Jadwal Pengiriman Bertahap & Multi-Drop Delivery",
+    "primary_blade": "resources/views/app/sales-orders/show.blade.php",
+    "supporting_blades": [
+      "resources/views/app/storefront/shipping/index.blade.php"
+    ],
+    "route_name": "sales.orders.show",
+    "status": "Implemented",
+    "notes": "Partial delivery dispatching, multi-warehouse allocations, and delivery receipt (surat jalan) printing",
+    "method": "GET|HEAD",
+    "uri": "sales/orders/{salesOrder}",
+    "action": "App\\Http\\Controllers\\Web\\Sales\\SalesOrderWebController@show"
+  },
+  {
+    "id": 37,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "faktur-penjualan-invoice-bertahap.png",
+    "feature_name": "Faktur Penjualan Komersial B2B & Termin Bertahap",
+    "primary_blade": "resources/views/app/invoices/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/invoices/create.blade.php",
+      "resources/views/app/invoices/show.blade.php"
+    ],
+    "route_name": "invoices.index",
+    "status": "Implemented",
+    "notes": "B2B progressive invoicing with tax calculation (PPN 11%), down payment, and installment schedules",
+    "method": "GET|HEAD",
+    "uri": "invoices",
+    "action": "App\\Http\\Controllers\\Web\\InvoiceWebController@index"
+  },
+  {
+    "id": 38,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "aging-receivables-piutang-usaha.png",
+    "feature_name": "Analisa Umur Piutang Usaha (AR Aging 30-60-90 Hari)",
+    "primary_blade": "resources/views/app/finance/receivables.blade.php",
+    "supporting_blades": [
+      "resources/views/app/invoices/index.blade.php"
+    ],
+    "route_name": "finance.receivables",
+    "status": "Implemented",
+    "notes": "Accounts receivable aging dashboard categorized by Current, 1-30 Days, 31-60 Days, 61-90 Days, >90 Days",
+    "method": "GET|HEAD",
+    "uri": "finance/receivables",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\CashLedgerWebController@receivables"
+  },
+  {
+    "id": 39,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "pengingat-tagihan-otomatis.png",
+    "feature_name": "Pengingat Tagihan Jatuh Tempo Otomatis via WhatsApp",
+    "primary_blade": "resources/views/app/invoices/show.blade.php",
+    "supporting_blades": [
+      "resources/views/app/whatsapp/index.blade.php"
+    ],
+    "route_name": "invoices.show",
+    "status": "Implemented",
+    "notes": "Automated WhatsApp payment reminder with clickable payment portal link and invoice PDF attachment",
+    "method": "GET|HEAD",
+    "uri": "invoices/{invoice}",
+    "action": "App\\Http\\Controllers\\Web\\InvoiceWebController@show"
+  },
+  {
+    "id": 40,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "retur-penjualan-nota-kredit.png",
+    "feature_name": "Retur Penjualan Barang & Penerbitan Nota Kredit",
+    "primary_blade": "resources/views/app/sales/returns/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/sales/returns/create.blade.php",
+      "resources/views/app/sales/returns/show.blade.php"
+    ],
+    "route_name": "sales.returns.index",
+    "status": "Implemented",
+    "notes": "Sales return workflow restoring inventory to quarantine or regular warehouse with credit note journal generation",
+    "method": "GET|HEAD",
+    "uri": "sales/returns",
+    "action": "App\\Http\\Controllers\\Web\\SalesReturnWebController@index"
+  },
+  {
+    "id": 41,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "portal-pelanggan-b2b.png",
+    "feature_name": "Portal Pelanggan B2B Mandiri (Self-Service Customer Portal)",
+    "primary_blade": "resources/views/customer/dashboard.blade.php",
+    "supporting_blades": [
+      "resources/views/customer/orders/index.blade.php"
+    ],
+    "route_name": "customer.dashboard",
+    "status": "Implemented",
+    "notes": "Dashboard portal mandiri pelanggan B2B dengan ringkasan status pesanan dan saldo reward",
+    "method": "GET|HEAD",
+    "uri": "customer/dashboard",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\CustomerPortalController@dashboard"
+  },
+  {
+    "id": 42,
+    "category_code": "D",
+    "category_name": "D-penjualan-distribusi-b2b",
+    "filename": "riwayat-tagihan-pelanggan-b2b.png",
+    "feature_name": "Riwayat Faktur, Tagihan & Pembayaran Pelanggan B2B",
+    "primary_blade": "resources/views/customer/orders/index.blade.php",
+    "supporting_blades": [
+      "resources/views/customer/orders/show.blade.php",
+      "resources/views/app/invoices/show.blade.php"
+    ],
+    "route_name": "customer.orders",
+    "status": "Implemented",
+    "notes": "Riwayat transaksi faktur, tagihan dan pesanan selesai pelanggan B2B",
+    "method": "GET|HEAD",
+    "uri": "customer/orders?status=completed",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\CustomerPortalController@orders"
+  },
+  {
+    "id": 43,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "kartu-stok-otomatis-real-time.png",
+    "feature_name": "Kartu Stok Digital & Jejak Mutasi Masuk/Keluar Real-Time",
+    "primary_blade": "resources/views/app/inventory/movements.blade.php",
+    "supporting_blades": [
+      "resources/views/app/inventory/stocks.blade.php"
+    ],
+    "route_name": "inventory.movements",
+    "status": "Implemented",
+    "notes": "Automated perpetual stock card displaying running balance, document references (PO, SO, POS, Opname), and cost",
+    "method": "GET|HEAD",
+    "uri": "inventory/movements",
+    "action": "App\\Http\\Controllers\\Web\\Inventory\\InventoryWebController@movements"
+  },
+  {
+    "id": 44,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "peringatan-stok-minimum-low-stock-alerts.png",
+    "feature_name": "Peringatan Stok Minimum & Notifikasi Low Stock Kritis",
+    "primary_blade": "resources/views/app/inventory/stocks.blade.php",
+    "supporting_blades": [],
+    "route_name": "inventory.stocks",
+    "status": "Implemented",
+    "notes": "Color-coded stock status badges (Critical, Reorder, Safe) with instant filter for reorder creation",
+    "method": "GET|HEAD",
+    "uri": "inventory/stocks",
+    "action": "App\\Http\\Controllers\\Web\\Inventory\\InventoryWebController@stocks"
+  },
+  {
+    "id": 45,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "multi-cabang-multi-lokasi-gudang.png",
+    "feature_name": "Manajemen Multi-Lokasi Gudang, Outlet & Cabang",
+    "primary_blade": "resources/views/app/warehouse/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/warehouse/show.blade.php"
+    ],
+    "route_name": "warehouse.index",
+    "status": "Implemented",
+    "notes": "Multi-location management with warehouse hierarchy, designated racks/bins, and branch isolation",
+    "method": "GET|HEAD",
+    "uri": "warehouse",
+    "action": "App\\Http\\Controllers\\Web\\Warehouse\\WarehouseWebController@index"
+  },
+  {
+    "id": 46,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "surat-jalan-transfer-antar-cabang.png",
+    "feature_name": "Surat Jalan & Transfer Stok Antar Gudang Dua Arah",
+    "primary_blade": "resources/views/app/inventory/transfers.blade.php",
+    "supporting_blades": [],
+    "route_name": "inventory.transfers.index",
+    "status": "Implemented",
+    "notes": "Inter-warehouse stock transfer with in-transit status tracking, delivery note printout, and receipt verification",
+    "method": "GET|HEAD",
+    "uri": "inventory/transfers",
+    "action": "App\\Http\\Controllers\\Web\\Inventory\\InventoryWebController@transfers"
+  },
+  {
+    "id": 47,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "stock-opname-fisik-berkala.png",
+    "feature_name": "Sesi Stok Opname Fisik Berkala & Penyesuaian Saldo",
+    "primary_blade": "resources/views/app/inventory/opname.blade.php",
+    "supporting_blades": [],
+    "route_name": "inventory.opnames.index",
+    "status": "Implemented",
+    "notes": "Physical inventory count session with barcode scanner counting, expected vs physical diff, and journal write-off",
+    "method": "GET|HEAD",
+    "uri": "inventory/opnames",
+    "action": "App\\Http\\Controllers\\Web\\Inventory\\InventoryWebController@opnames"
+  },
+  {
+    "id": 48,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "database-riwayat-supplier.png",
+    "feature_name": "Database Master Supplier & Riwayat Kemitraan Vendor",
+    "primary_blade": "resources/views/app/suppliers/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "suppliers.index",
+    "status": "Implemented",
+    "notes": "Vendor directory table with payment terms (TOP), bank account records, lead times, and purchase histories",
+    "method": "GET|HEAD",
+    "uri": "suppliers",
+    "action": "App\\Http\\Controllers\\Web\\SupplierWebController@index"
+  },
+  {
+    "id": 49,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "purchase-order-po-pembelian.png",
+    "feature_name": "Surat Pesanan Pembelian ke Vendor (Purchase Order / PO)",
+    "primary_blade": "resources/views/app/purchase-orders/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/purchase-orders/create.blade.php",
+      "resources/views/app/purchase-orders/show.blade.php"
+    ],
+    "route_name": "purchase-orders.index",
+    "status": "Implemented",
+    "notes": "Procurement PO manager with supplier quote matching, tiered maker-checker approvals, and status tracking",
+    "method": "GET|HEAD",
+    "uri": "purchase-orders",
+    "action": "App\\Http\\Controllers\\Web\\PurchaseOrderWebController@index"
+  },
+  {
+    "id": 50,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "penerimaan-barang-goods-receipts.png",
+    "feature_name": "Penerimaan Barang Gudang & Cek Fisik (Goods Receipts)",
+    "primary_blade": "resources/views/app/purchasing/receipts/create.blade.php",
+    "supporting_blades": [
+      "resources/views/app/purchase-orders/show.blade.php",
+      "resources/views/app/purchasing/bills/index.blade.php"
+    ],
+    "route_name": "purchasing.receipts.create",
+    "status": "Implemented",
+    "notes": "Warehouse goods receiving form with physical condition inspection, partial delivery handling, and batch logging",
+    "method": "GET|HEAD",
+    "uri": "purchasing/receipts/{purchaseOrder}/create",
+    "action": "App\\Http\\Controllers\\Web\\Purchasing\\GoodsReceiptWebController@create"
+  },
+  {
+    "id": 51,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "hutang-usaha-tagihan-vendor.png",
+    "feature_name": "Tagihan Pembelian Vendor (Vendor Bills) & Hutang Usaha",
+    "primary_blade": "resources/views/app/purchasing/bills/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/payables.blade.php"
+    ],
+    "route_name": "purchasing.bills.index",
+    "status": "Implemented",
+    "notes": "Vendor bill verification matching PO against Goods Receipt, calculating payment due dates, and tracking AP aging",
+    "method": "GET|HEAD",
+    "uri": "purchasing/bills",
+    "action": "App\\Http\\Controllers\\Web\\Purchasing\\SupplierInvoiceWebController@index"
+  },
+  {
+    "id": 52,
+    "category_code": "E",
+    "category_name": "E-inventory-supply-chain",
+    "filename": "retur-pembelian-ke-supplier.png",
+    "feature_name": "Retur Pembelian Barang Rusak ke Supplier",
+    "primary_blade": "resources/views/app/purchasing/returns/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/purchasing/returns/create.blade.php",
+      "resources/views/app/purchasing/returns/show.blade.php"
+    ],
+    "route_name": "purchase.returns.index",
+    "status": "Implemented",
+    "notes": "Purchase return management with debit note creation, vendor balance deductions, and return delivery notes",
+    "method": "GET|HEAD",
+    "uri": "purchasing/returns",
+    "action": "App\\Http\\Controllers\\Web\\PurchaseReturnWebController@index"
+  },
+  {
+    "id": 53,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "pencatatan-kas-multi-rekening-bank.png",
+    "feature_name": "Buku Kas & Bank Multi-Akun Transaksi Operasional",
+    "primary_blade": "resources/views/app/finance/cash-bank/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/cash-bank/ledger.blade.php"
+    ],
+    "route_name": "finance.cash-bank.index",
+    "status": "Implemented",
+    "notes": "Multi-account bank ledger (BCA, Mandiri, BRI, Petty Cash) with running balances and inflow/outflow tags",
+    "method": "GET|HEAD",
+    "uri": "finance/cash-bank",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\CashLedgerWebController@index"
+  },
+  {
+    "id": 54,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "mutasi-transfer-dana-internal.png",
+    "feature_name": "Mutasi Transfer Dana Internal Antar Rekening Kas & Bank",
+    "primary_blade": "resources/views/app/finance/cash-bank/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "finance.cash-bank.index",
+    "status": "Implemented",
+    "notes": "Internal fund transfer modal generating paired double-entry journal vouchers between liquid accounts",
+    "method": "GET|HEAD",
+    "uri": "finance/cash-bank",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\CashLedgerWebController@index"
+  },
+  {
+    "id": 55,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "manajemen-beban-operasional-expenses.png",
+    "feature_name": "Pencatatan Beban Biaya Operasional Usaha (Expenses)",
+    "primary_blade": "resources/views/app/finance/expenses.blade.php",
+    "supporting_blades": [],
+    "route_name": "finance.expenses.index",
+    "status": "Implemented",
+    "notes": "Operating expenses tracker with receipt upload, tax deductible categorization, and payment method attribution",
+    "method": "GET|HEAD",
+    "uri": "finance/expenses",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\PosFinanceWebController@expenses"
+  },
+  {
+    "id": 56,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "pembukuan-jurnal-otomatis-double-entry.png",
+    "feature_name": "Jurnal Pembukuan Berpasangan Otomatis (Double-Entry)",
+    "primary_blade": "resources/views/app/finance/journals.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/accounting/coa.blade.php"
+    ],
+    "route_name": "finance.journals.index",
+    "status": "Implemented",
+    "notes": "General journal ledger showing auto-generated balanced debit/credit lines from POS, bills, invoices, payroll",
+    "method": "GET|HEAD",
+    "uri": "finance/journals",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\PosFinanceWebController@journals"
+  },
+  {
+    "id": 57,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "bagan-akun-standar-chart-of-accounts.png",
+    "feature_name": "Bagan Akun Standar SAK EMKM (Chart of Accounts / COA)",
+    "primary_blade": "resources/views/app/finance/accounting/coa.blade.php",
+    "supporting_blades": [],
+    "route_name": "finance.coa.index",
+    "status": "Implemented",
+    "notes": "Hierarchical standard COA tailored for Indonesian SAK EMKM (Assets, Liabilities, Equity, Revenue, Expense)",
+    "method": "GET|HEAD",
+    "uri": "finance/chart-of-accounts",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\AccountingWebController@coaIndex"
+  },
+  {
+    "id": 58,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "buku-besar-neraca-saldo.png",
+    "feature_name": "Buku Besar Umum (General Ledger) & Neraca Saldo",
+    "primary_blade": "resources/views/app/finance/accounting/general-ledger.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/accounting/trial-balance.blade.php"
+    ],
+    "route_name": "finance.general-ledger",
+    "status": "Implemented",
+    "notes": "General ledger per account with drilldown to journal sources, and trial balance balancing verification",
+    "method": "GET|HEAD",
+    "uri": "finance/general-ledger",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\AccountingWebController@generalLedger"
+  },
+  {
+    "id": 59,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "laporan-neraca-posisi-keuangan.png",
+    "feature_name": "Laporan Posisi Keuangan (Neraca SAK EMKM)",
+    "primary_blade": "resources/views/app/finance/accounting/balance-sheet.blade.php",
+    "supporting_blades": [],
+    "route_name": "finance.balance-sheet",
+    "status": "Implemented",
+    "notes": "Formal SAK EMKM balance sheet report detailing current/fixed assets, short/long-term liabilities, retained earnings",
+    "method": "GET|HEAD",
+    "uri": "finance/balance-sheet",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\AccountingWebController@balanceSheet"
+  },
+  {
+    "id": 60,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "laporan-laba-rugi-profit-loss.png",
+    "feature_name": "Laporan Laba Rugi Komprehensif Berjalan (Income Statement)",
+    "primary_blade": "resources/views/app/reports/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/accounting/balance-sheet.blade.php"
+    ],
+    "route_name": "reports.index",
+    "status": "Implemented",
+    "notes": "Real-time Income Statement (Revenue, COGS, Gross Profit, OpEx, Net Income) with period comparisons",
+    "method": "GET|HEAD",
+    "uri": "reports",
+    "action": "App\\Http\\Controllers\\Web\\ReportWebController@index"
+  },
+  {
+    "id": 61,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "rekonsiliasi-bank-settlement-edc-qris.png",
+    "feature_name": "Rekonsiliasi Settlement EDC, QRIS Merchant & Escrow",
+    "primary_blade": "resources/views/app/finance/settlements/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/finance/edc-terminals/index.blade.php",
+      "resources/views/app/finance/external-reconciliation/index.blade.php"
+    ],
+    "route_name": "finance.settlements.index",
+    "status": "Implemented",
+    "notes": "Merchant settlement reconciler comparing batch settlement logs against bank statements with fee deductions",
+    "method": "GET|HEAD",
+    "uri": "finance/settlements",
+    "action": "App\\Http\\Controllers\\Web\\Finance\\PaymentSettlementWebController@index"
+  },
+  {
+    "id": 62,
+    "category_code": "F",
+    "category_name": "F-finance-accounting",
+    "filename": "pengaturan-pajak-usaha-otomatis.png",
+    "feature_name": "Laporan Kepatuhan Pajak PPh Final 0.5% & PPN 11%",
+    "primary_blade": "resources/views/app/tax/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "tax.index",
+    "status": "Implemented",
+    "notes": "Indonesian tax compliance engine computing PPh Final UMKM PP 55 (0.5%), Output PPN vs Input PPN, and SPT prep",
+    "method": "GET|HEAD",
+    "uri": "tax",
+    "action": "App\\Http\\Controllers\\Web\\TaxWebController@index"
+  },
+  {
+    "id": 63,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "toko-online-instan.png",
+    "feature_name": "Toko Online Instan & Website Katalog Publik (/b/{slug})",
+    "primary_blade": "resources/views/app/storefront/settings.blade.php",
+    "supporting_blades": [
+      "resources/views/public/storefront/home.blade.php"
+    ],
+    "route_name": "storefront.settings.index",
+    "status": "Implemented",
+    "notes": "Online store management dashboard configuring public e-commerce catalog, domain slugs, SEO meta, operating hours",
+    "method": "GET|HEAD",
+    "uri": "storefront/settings",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\MerchantStoreSettingController@index"
+  },
+  {
+    "id": 64,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "theme-branding-editor.png",
+    "feature_name": "Theme Branding Editor Visual & Personalisasi UMKM",
+    "primary_blade": "resources/views/app/storefront/theme_editor.blade.php",
+    "supporting_blades": [
+      "resources/views/app/storefront/tabs/tab-general.blade.php"
+    ],
+    "route_name": "landing-page.theme-editor.edit",
+    "status": "Implemented",
+    "notes": "Visual theme builder allowing logo uploads, color palette customization, banner slides, and font pairings",
+    "method": "GET|HEAD",
+    "uri": "landing-page/theme-editor",
+    "action": "App\\Http\\Controllers\\Web\\Storefront\\StorefrontThemeEditorWebController@edit"
+  },
+  {
+    "id": 65,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "checkout-mandiri-notifikasi-pesanan.png",
+    "feature_name": "Checkout Mandiri Pembeli & Notifikasi Pesanan Masuk",
+    "primary_blade": "resources/views/app/storefront/orders/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/storefront/orders/show.blade.php",
+      "resources/views/public/storefront/checkout.blade.php"
+    ],
+    "route_name": "storefront.orders.index",
+    "status": "Implemented",
+    "notes": "Storefront incoming orders table with real-time badges, order acceptance modal, and payment status verification",
+    "method": "GET|HEAD",
+    "uri": "storefront/orders",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\MerchantOrderController@index"
+  },
+  {
+    "id": 66,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "cetak-label-pengiriman-shipping-label.png",
+    "feature_name": "Integrasi Kurir Logistik & Cetak Label Pengiriman Resi",
+    "primary_blade": "resources/views/app/storefront/shipping/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/storefront/orders/shipping_label.blade.php"
+    ],
+    "route_name": "storefront.shipping.index",
+    "status": "Implemented",
+    "notes": "Thermal shipping label printout generator with Biteship/courier barcodes, recipient address, and tracking tokens",
+    "method": "GET|HEAD",
+    "uri": "storefront/shipping",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\MerchantShippingRuleController@index"
+  },
+  {
+    "id": 67,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "aturan-ongkos-kirim-fleksibel.png",
+    "feature_name": "Aturan Ongkos Kirim Fleksibel & Custom Shipping Rates",
+    "primary_blade": "resources/views/app/storefront/shipping/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/storefront/tabs/tab-fulfillment.blade.php"
+    ],
+    "route_name": "storefront.shipping.index",
+    "status": "Implemented",
+    "notes": "Courier rule manager configuring free shipping thresholds, flat rate city delivery, and API courier aggregators",
+    "method": "GET|HEAD",
+    "uri": "storefront/shipping",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\MerchantShippingRuleController@index"
+  },
+  {
+    "id": 68,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "reservasi-booking-jadwal-online.png",
+    "feature_name": "Sistem Reservasi Meja & Booking Jadwal Layanan Online",
+    "primary_blade": "resources/views/app/storefront/reservations/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "storefront.reservations.index",
+    "status": "Implemented",
+    "notes": "Online reservation manager for table bookings and service appointments with calendar and confirmation alerts",
+    "method": "GET|HEAD",
+    "uri": "storefront/reservations",
+    "action": "App\\Http\\Controllers\\Web\\Commerce\\MerchantReservationController@index"
+  },
+  {
+    "id": 69,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "mini-bio-link-landing-page-builder.png",
+    "feature_name": "Mini Bio-Link & Landing Page Builder UMKM",
+    "primary_blade": "resources/views/app/landing_page/edit.blade.php",
+    "supporting_blades": [
+      "resources/views/app/landing_page/popup.blade.php"
+    ],
+    "route_name": "landing-page.edit",
+    "status": "Implemented",
+    "notes": "High-conversion link-in-bio page builder (3,329 lines) with social buttons, featured products, and lead capture",
+    "method": "GET|HEAD",
+    "uri": "landing-page",
+    "action": "App\\Http\\Controllers\\Web\\BusinessLandingPageWebController@edit"
+  },
+  {
+    "id": 70,
+    "category_code": "G",
+    "category_name": "G-ecommerce-digital-store",
+    "filename": "hub-marketplace-terintegrasi.png",
+    "feature_name": "Hub Marketplace Terintegrasi Multi-Channel (Shopee, Tokopedia, TikTok)",
+    "primary_blade": "resources/views/app/marketplace/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/marketplace/products.blade.php",
+      "resources/views/app/marketplace/orders.blade.php",
+      "resources/views/app/marketplace/finances.blade.php"
+    ],
+    "route_name": "marketplace-hub.index",
+    "status": "Implemented",
+    "notes": "Omnichannel marketplace control center syncing products, inventory balances, orders, and payout settlements",
+    "method": "GET|HEAD",
+    "uri": "marketplace-hub",
+    "action": "App\\Http\\Controllers\\Web\\Marketplace\\MarketplaceWebController@index"
+  },
+  {
+    "id": 71,
+    "category_code": "H",
+    "category_name": "H-whatsapp-social-media",
+    "filename": "struk-digital-kasir-whatsapp.png",
+    "feature_name": "Katalog Template Pesan & Struk Kasir WhatsApp",
+    "primary_blade": "resources/views/app/whatsapp/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/modals/receipt-success.blade.php"
+    ],
+    "route_name": "whatsapp.index",
+    "status": "Implemented",
+    "notes": "WhatsApp messaging hub (969 lines) configuring digital receipt templates, dynamic variables, and Meta Cloud API",
+    "method": "GET|HEAD",
+    "uri": "whatsapp",
+    "action": "App\\Http\\Controllers\\Web\\WhatsApp\\WhatsAppWebController@index"
+  },
+  {
+    "id": 72,
+    "category_code": "H",
+    "category_name": "H-whatsapp-social-media",
+    "filename": "whatsapp-blast-broadcast-promosi.png",
+    "feature_name": "Broadcast Pesan Promosi Massal WhatsApp (Blast Marketing)",
+    "primary_blade": "resources/views/app/whatsapp/broadcast.blade.php",
+    "supporting_blades": [
+      "resources/views/app/whatsapp/broadcast_detail.blade.php",
+      "resources/views/app/whatsapp/logs.blade.php"
+    ],
+    "route_name": "whatsapp.broadcast.index",
+    "status": "Implemented",
+    "notes": "Mass promotional messaging wizard with customer audience filtering, quota estimation, and delivery logs",
+    "method": "GET|HEAD",
+    "uri": "whatsapp/broadcast",
+    "action": "App\\Http\\Controllers\\Web\\WhatsApp\\WhatsAppBroadcastWebController@index"
+  },
+  {
+    "id": 73,
+    "category_code": "H",
+    "category_name": "H-whatsapp-social-media",
+    "filename": "kalender-konten-media-sosial.png",
+    "feature_name": "Kalender Jadwal Publikasi Konten Terencana Media Sosial",
+    "primary_blade": "resources/views/app/social_media/calendar.blade.php",
+    "supporting_blades": [
+      "resources/views/app/social_media/posts.blade.php"
+    ],
+    "route_name": "social-media.calendar",
+    "status": "Implemented",
+    "notes": "Visual social media content calendar with weekly/monthly grids, channel badges (IG, FB, TikTok), and publish timers",
+    "method": "GET|HEAD",
+    "uri": "social-media/calendar",
+    "action": "App\\Http\\Controllers\\Web\\SocialMedia\\SocialMediaWebController@calendar"
+  },
+  {
+    "id": 74,
+    "category_code": "H",
+    "category_name": "H-whatsapp-social-media",
+    "filename": "kotak-masuk-medsos-terpadu-social-inbox.png",
+    "feature_name": "Kotak Masuk Medsos Terpadu (Social Inbox & DM Hub)",
+    "primary_blade": "resources/views/app/social_media/inbox.blade.php",
+    "supporting_blades": [
+      "resources/views/app/marketplace/chat.blade.php"
+    ],
+    "route_name": "social-media.inbox.index",
+    "status": "Implemented",
+    "notes": "Unified inbox consolidating customer DMs and comments across Instagram, Facebook, and Marketplace channels",
+    "method": "GET|HEAD",
+    "uri": "social-media/inbox",
+    "action": "App\\Http\\Controllers\\Web\\SocialMedia\\SocialMediaWebController@inbox"
+  },
+  {
+    "id": 75,
+    "category_code": "I",
+    "category_name": "I-crm-customer-loyalty",
+    "filename": "database-pelanggan-terpusat.png",
+    "feature_name": "Database Master Pelanggan & Riwayat Omnichannel Terpusat",
+    "primary_blade": "resources/views/app/customers/index.blade.php",
+    "supporting_blades": [],
+    "route_name": "customers.index",
+    "status": "Implemented",
+    "notes": "Customer master directory with lifetime transaction value (LTV), phone contacts, addresses, and purchase history",
+    "method": "GET|HEAD",
+    "uri": "customers",
+    "action": "App\\Http\\Controllers\\Web\\CustomerWebController@index"
+  },
+  {
+    "id": 76,
+    "category_code": "I",
+    "category_name": "I-crm-customer-loyalty",
+    "filename": "program-loyalitas-tingkatan-member.png",
+    "feature_name": "Program Loyalitas Tingkatan Membership (Silver, Gold, Platinum)",
+    "primary_blade": "resources/views/app/crm/members.blade.php",
+    "supporting_blades": [],
+    "route_name": "crm.members.index",
+    "status": "Implemented",
+    "notes": "Tiered membership dashboard (769 lines) configuring qualification spending brackets and tier-based discounts",
+    "method": "GET|HEAD",
+    "uri": "crm/members",
+    "action": "App\\Http\\Controllers\\Web\\Crm\\CrmWebController@members"
+  },
+  {
+    "id": 77,
+    "category_code": "I",
+    "category_name": "I-crm-customer-loyalty",
+    "filename": "reward-poin-belanja.png",
+    "feature_name": "Sistem Akumulasi Reward Poin Belanja & Penukaran Hadiah",
+    "primary_blade": "resources/views/app/crm/members.blade.php",
+    "supporting_blades": [],
+    "route_name": "crm.members.index",
+    "status": "Implemented",
+    "notes": "Points reward system with spending-to-points ratio, redemption rules, and customer ledger point deductions",
+    "method": "GET|HEAD",
+    "uri": "crm/members",
+    "action": "App\\Http\\Controllers\\Web\\Crm\\CrmWebController@members"
+  },
+  {
+    "id": 78,
+    "category_code": "I",
+    "category_name": "I-crm-customer-loyalty",
+    "filename": "kupon-voucher-diskon-promo.png",
+    "feature_name": "Kupon Diskon, Voucher Belanja & Kode Promo Omnichannel",
+    "primary_blade": "resources/views/app/crm/vouchers.blade.php",
+    "supporting_blades": [],
+    "route_name": "crm.vouchers.index",
+    "status": "Implemented",
+    "notes": "Voucher builder (368 lines) with code generation, min purchase limits, max quota uses, and expiry scheduling",
+    "method": "GET|HEAD",
+    "uri": "crm/vouchers",
+    "action": "App\\Http\\Controllers\\Web\\Crm\\CrmWebController@vouchers"
+  },
+  {
+    "id": 79,
+    "category_code": "J",
+    "category_name": "J-hrm-payroll",
+    "filename": "database-karyawan-multi-outlet.png",
+    "feature_name": "Database Karyawan Multi-Outlet & Profil Staf Terpadu",
+    "primary_blade": "resources/views/app/hrm/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/modals/add-employee.blade.php",
+      "resources/views/app/hrm/partials/tab-employees.blade.php"
+    ],
+    "route_name": "employees.index",
+    "status": "Implemented",
+    "notes": "Employee master directory tracking branch assignments, job titles, base salaries, and emergency contacts",
+    "method": "GET|HEAD",
+    "uri": "employees",
+    "action": "App\\Http\\Controllers\\Web\\Hrm\\HrmWebController@index"
+  },
+  {
+    "id": 80,
+    "category_code": "J",
+    "category_name": "J-hrm-payroll",
+    "filename": "roster-shift-jadwal-kerja.png",
+    "feature_name": "Roster Shift & Penjadwalan Kerja Staf Multi-Cabang",
+    "primary_blade": "resources/views/app/hrm/partials/tab-shifts.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/index.blade.php",
+      "resources/views/app/hrm/modals/add-shift.blade.php",
+      "resources/views/app/hrm/partials/tab-schedules.blade.php"
+    ],
+    "route_name": "hrm.index",
+    "status": "Implemented",
+    "notes": "Weekly shift scheduling matrix with shift hours (Pagi, Siang, Malam), rotation rules, and calendar views",
+    "method": "GET|HEAD",
+    "uri": "hrm",
+    "action": "App\\Http\\Controllers\\Web\\Hrm\\HrmWebController@index"
+  },
+  {
+    "id": 81,
+    "category_code": "J",
+    "category_name": "J-hrm-payroll",
+    "filename": "presensi-gps-geofencing.png",
+    "feature_name": "Presensi Karyawan GPS Geofencing & Biometrik Selfie Anti-Fraud",
+    "primary_blade": "resources/views/app/portal/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/partials/tab-attendance.blade.php",
+      "resources/views/app/hrm/modals/face-attendance.blade.php"
+    ],
+    "route_name": "portal",
+    "status": "Implemented",
+    "notes": "Mobile staff attendance portal verifying GPS location radius around branch coordinates and camera facial check",
+    "method": "GET|HEAD",
+    "uri": "portal",
+    "action": "App\\Http\\Controllers\\Web\\PortalWebController@index"
+  },
+  {
+    "id": 82,
+    "category_code": "J",
+    "category_name": "J-hrm-payroll",
+    "filename": "kasbon-pinjaman-karyawan.png",
+    "feature_name": "Manajemen Kasbon & Pinjaman Karyawan dengan Cicilan Otomatis",
+    "primary_blade": "resources/views/app/hrm/partials/tab-loans.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/index.blade.php",
+      "resources/views/app/hrm/modals/add-loan.blade.php"
+    ],
+    "route_name": "hrm.index",
+    "status": "Implemented",
+    "notes": "Employee advance loan tracker with approval workflows, balance tracking, and auto payroll installment cuts",
+    "method": "GET|HEAD",
+    "uri": "hrm",
+    "action": "App\\Http\\Controllers\\Web\\Hrm\\HrmWebController@index"
+  },
+  {
+    "id": 83,
+    "category_code": "J",
+    "category_name": "J-hrm-payroll",
+    "filename": "kalkulator-penggajian-payroll-engine.png",
+    "feature_name": "Kalkulator Penggajian Otomatis PPh 21 TER & Slip Gaji WhatsApp",
+    "primary_blade": "resources/views/app/hrm/payroll/payslip.blade.php",
+    "supporting_blades": [
+      "resources/views/app/hrm/payroll/create.blade.php",
+      "resources/views/app/hrm/payroll/show.blade.php"
+    ],
+    "route_name": "hrm.payrolls.index",
+    "status": "Implemented",
+    "notes": "Automated payroll calculator applying Indonesian PPh 21 TER, BPJS TK/Kes, deductions, generating PDF/WA slips",
+    "method": "GET|HEAD",
+    "uri": "hrm/payrolls",
+    "action": "App\\Http\\Controllers\\Web\\Hrm\\HrmWebController@index"
+  },
+  {
+    "id": 84,
+    "category_code": "K",
+    "category_name": "K-ai-agent-automation",
+    "filename": "mcp-connector-integrasi-multi-ai.png",
+    "feature_name": "MCP Connector & Integrasi Klien AI Multi-Platform (Claude, Cursor, OpenAI)",
+    "primary_blade": "resources/views/app/settings/integrations/mcp.blade.php",
+    "supporting_blades": [
+      "resources/views/app/mcp/oauth/consent.blade.php"
+    ],
+    "route_name": "settings.integrations.mcp.index",
+    "status": "Implemented",
+    "notes": "Model Context Protocol gateway dashboard showing SSE endpoint, OAuth bearer token, tool schema permissions",
+    "method": "GET|HEAD",
+    "uri": "settings/integrations/mcp",
+    "action": "App\\Http\\Controllers\\Web\\Mcp\\McpIntegrationWebController@index"
+  },
+  {
+    "id": 85,
+    "category_code": "K",
+    "category_name": "K-ai-agent-automation",
+    "filename": "tanya-jawab-data-bisnis-real-time-ai.png",
+    "feature_name": "Tanya Jawab Data Bisnis Real-Time AI Copilot (Virtual Executive Office)",
+    "primary_blade": "resources/views/app/ai/lobby.blade.php",
+    "supporting_blades": [
+      "resources/views/app/ai/offices/operations.blade.php",
+      "resources/views/layouts/partials/help_chatbot_widget.blade.php"
+    ],
+    "route_name": "cooca-ai.index",
+    "status": "Implemented",
+    "notes": "Interactive AI business copilot interface querying real-time sales, inventory, and margin analytics",
+    "method": "GET|HEAD",
+    "uri": "cooca-ai",
+    "action": "App\\Http\\Controllers\\Web\\Ai\\AiCompanyWebController@lobby"
+  },
+  {
+    "id": 86,
+    "category_code": "K",
+    "category_name": "K-ai-agent-automation",
+    "filename": "automasi-perintah-bisnis-berbasis-ai.png",
+    "feature_name": "Automasi Perintah Bisnis Berbasis AI & Konfirmasi Supervisor",
+    "primary_blade": "resources/views/app/ai/actions.blade.php",
+    "supporting_blades": [
+      "resources/views/app/ai-studio/create.blade.php"
+    ],
+    "route_name": "cooca-ai.actions",
+    "status": "Implemented",
+    "notes": "AI action queue allowing copilot to draft purchase orders, price adjustments, and promos pending human approval",
+    "method": "GET|HEAD",
+    "uri": "cooca-ai/actions",
+    "action": "App\\Http\\Controllers\\Web\\Ai\\AiCompanyWebController@actions"
+  },
+  {
+    "id": 87,
+    "category_code": "L",
+    "category_name": "L-analytics-business-intelligence",
+    "filename": "dashboard-eksekutif-real-time-ponsel.png",
+    "feature_name": "Dashboard Eksekutif Real-Time Ponsel & Ringkasan KPI Bisnis",
+    "primary_blade": "resources/views/app/dashboard.blade.php",
+    "supporting_blades": [
+      "resources/views/app/reports/index.blade.php"
+    ],
+    "route_name": "dashboard",
+    "status": "Implemented",
+    "notes": "Responsive executive dashboard with sales gauges, today's gross revenue, net cashflow, and active alerts",
+    "method": "GET|HEAD",
+    "uri": "dashboard",
+    "action": "App\\Http\\Controllers\\Web\\DashboardWebController@index"
+  },
+  {
+    "id": 88,
+    "category_code": "L",
+    "category_name": "L-analytics-business-intelligence",
+    "filename": "analitik-jam-paling-ramai-peak-hours.png",
+    "feature_name": "Analitika Jam Paling Ramai (Peak Hours & Heatmap Pelanggan)",
+    "primary_blade": "resources/views/app/pos/reports.blade.php",
+    "supporting_blades": [
+      "resources/views/app/pos/reports/tabs/hourly.blade.php"
+    ],
+    "route_name": "pos.reports.index",
+    "status": "Implemented",
+    "notes": "Hourly sales heatmap and transaction count graph highlighting busiest operational periods for staffing",
+    "method": "GET|HEAD",
+    "uri": "pos/reports",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosReportWebController@index"
+  },
+  {
+    "id": 89,
+    "category_code": "L",
+    "category_name": "L-analytics-business-intelligence",
+    "filename": "analitik-keranjang-belanja-produk-terlaris.png",
+    "feature_name": "Analitika Keranjang Belanja & Top 10 Produk Terlaris",
+    "primary_blade": "resources/views/app/pos/reports.blade.php",
+    "supporting_blades": [
+      "resources/views/app/analytics/index.blade.php"
+    ],
+    "route_name": "pos.reports.index",
+    "status": "Implemented",
+    "notes": "Top selling product charts, average basket size (AOV), cross-selling item association insights",
+    "method": "GET|HEAD",
+    "uri": "pos/reports",
+    "action": "App\\Http\\Controllers\\Web\\Pos\\PosReportWebController@index"
+  },
+  {
+    "id": 90,
+    "category_code": "L",
+    "category_name": "L-analytics-business-intelligence",
+    "filename": "konsolidasi-laporan-multi-cabang.png",
+    "feature_name": "Konsolidasi Laporan Multi-Cabang & Multi-Outlet Nasional",
+    "primary_blade": "resources/views/app/reports/index.blade.php",
+    "supporting_blades": [
+      "resources/views/app/inventory/movements.blade.php"
+    ],
+    "route_name": "reports.index",
+    "status": "Implemented",
+    "notes": "Multi-outlet rollup consolidating sales, inventory valuation, and P&L across all operational branches",
+    "method": "GET|HEAD",
+    "uri": "reports",
+    "action": "App\\Http\\Controllers\\Web\\ReportWebController@index"
+  }
+]

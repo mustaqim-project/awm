@@ -7,7 +7,7 @@
         content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#F2F2F7">
-    <meta name="csrf-token" content="cQhnC1wXpXfP6ni7MxsT7zl9QYtB79oUGhCDy24V">
+    <meta name="csrf-token" content="ixsXUoF5dT7FywW0L8oNlUmoJQLHKoO81pzambEw">
 
     
         <!-- Primary HTML Meta Tags -->
@@ -76,7 +76,7 @@
             try {
                 // Clear any legacy client overrides to ensure Website & Toko CMS is the authoritative Single Source of Truth
                 try {
-                    localStorage.removeItem('cooca_storefront_theme_390cb424-8327-4b23-a6b8-4257b30d517a');
+                    localStorage.removeItem('cooca_storefront_theme_3c8effe5-9e62-4c32-a0d7-705b62bbf587');
                     localStorage.removeItem('cooca_storefront_theme');
                 } catch (e) {}
 
@@ -98,7 +98,7 @@
     </script>
 
     
-            <link rel="preload" as="style" href="http://localhost/build/assets/app-C8KvBzAC.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-C8KvBzAC.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
+            <link rel="preload" as="style" href="http://localhost/build/assets/app-DK-8M5KQ.css" /><link rel="modulepreload" as="script" href="http://localhost/build/assets/app-rutYGsf-.js" /><link rel="stylesheet" href="http://localhost/build/assets/app-DK-8M5KQ.css" /><script type="module" src="http://localhost/build/assets/app-rutYGsf-.js"></script>    
     
     <style>
         [x-cloak] {
@@ -1586,7 +1586,7 @@
                     });
                 },
                 cart: null || JSON.parse(localStorage.getItem(
-                    'cooca_cart_390cb424-8327-4b23-a6b8-4257b30d517a') || '[]'),
+                    'cooca_cart_3c8effe5-9e62-4c32-a0d7-705b62bbf587') || '[]'),
                                 isCustomerLoggedIn: false,
                 customerLoginUrl: 'http://localhost/customer/login?redirect=' + encodeURIComponent(window.location.href),
                 isGroupOrderCheckout: false,
@@ -1603,7 +1603,7 @@
                     itemNotes: '',
                     createForm: {
                         title: '',
-                        scheduled_date: '2026-11-14',
+                        scheduled_date: '2026-11-17',
                         scheduled_time_slot: '09:00 - 12:00',
                         delivery_address: "",
                         delivery_notes: '',
@@ -1613,7 +1613,7 @@
                     actionLoading: false,
                     actionError: null
                 },
-                currentBatchDate: '2026-11-14',
+                currentBatchDate: '2026-11-17',
                 selectBatch(date) {
                     this.checkoutForm.scheduled_date = date;
                     this.currentBatchDate = date;
@@ -1679,7 +1679,7 @@
 
                     group_name: "",
                     is_scheduled: false,
-                    scheduled_date: '2026-11-14',
+                    scheduled_date: '2026-11-17',
                     scheduled_time_slot: '',
                 },
                 requestOrderForm: {
@@ -1688,7 +1688,7 @@
                     customer_email: "",
                     fulfillment_type: 'pickup',
                     shipping_address: "",
-                    scheduled_date: '2026-11-14',
+                    scheduled_date: '2026-11-17',
                     scheduled_time_slot: '',
                     notes: '',
                     item_name: '',
@@ -1715,7 +1715,7 @@
                     }],
                     batches: [{
                         batch_number: 1,
-                        scheduled_date: '2026-11-15',
+                        scheduled_date: '2026-11-18',
                         scheduled_time_slot: '09:00 - 12:00',
                         quantity: 1,
                         shipping_address: '',
@@ -1728,7 +1728,7 @@
                     customer_name: "",
                     customer_phone: "",
                     customer_email: "",
-                    reservation_date: '2026-11-14',
+                    reservation_date: '2026-11-17',
                     time_slot: '12:00 - 14:00',
                     guest_count: 2,
                     pos_table_id: '',
@@ -1736,7 +1736,7 @@
                     notes: '',
                 },
                 saveCart() {
-                    localStorage.setItem('cooca_cart_390cb424-8327-4b23-a6b8-4257b30d517a', JSON.stringify(this.cart));
+                    localStorage.setItem('cooca_cart_3c8effe5-9e62-4c32-a0d7-705b62bbf587', JSON.stringify(this.cart));
                 },
                 directCheckout(product, qty = 1) {
                     if (!product) return;
@@ -1850,7 +1850,7 @@
                 },
                 get minPreorderDate() {
                     if (!this.hasPreorderItems) {
-                        return '2026-11-14';
+                        return '2026-11-17';
                     }
                     const d = new Date();
                     d.setDate(d.getDate() + this.maxPreorderLeadDays);
@@ -1858,7 +1858,7 @@
                     const mm = String(d.getMonth() + 1).padStart(2, '0');
                     const dd = String(d.getDate()).padStart(2, '0');
                     const computedDate = `${yyyy}-${mm}-${dd}`;
-                    const baseMin = '2026-11-14';
+                    const baseMin = '2026-11-17';
                     return computedDate > baseMin ? computedDate : baseMin;
                 },
                 async setFulfillment(type) {
@@ -2623,7 +2623,7 @@
                     const num = this.customerPoForm.batches.length + 1;
                     this.customerPoForm.batches.push({
                         batch_number: num,
-                        scheduled_date: '2026-11-14',
+                        scheduled_date: '2026-11-17',
                         scheduled_time_slot: '09:00 - 12:00',
                         quantity: 1,
                         shipping_address: this.customerPoForm.shipping_address || '',
@@ -4520,48 +4520,6 @@
                                         </label>
                                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
                                                                                                                                             <button type="button"
-                                                     @click="checkoutForm.scheduled_date = '2026-11-14'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
-                                                    :class="checkoutForm.scheduled_date === '2026-11-14' ?
-                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
-                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
-                                                    <div class="flex items-center justify-between">
-                                                        <span
-                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">SABTU</span>
-                                                                                                            </div>
-                                                    <div
-                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
-                                                        14 Nov
-                                                    </div>
-                                                                                                    </button>
-                                                                                                                                            <button type="button"
-                                                     @click="checkoutForm.scheduled_date = '2026-11-15'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
-                                                    :class="checkoutForm.scheduled_date === '2026-11-15' ?
-                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
-                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
-                                                    <div class="flex items-center justify-between">
-                                                        <span
-                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">MINGGU</span>
-                                                                                                            </div>
-                                                    <div
-                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
-                                                        15 Nov
-                                                    </div>
-                                                                                                    </button>
-                                                                                                                                            <button type="button"
-                                                     @click="checkoutForm.scheduled_date = '2026-11-16'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
-                                                    :class="checkoutForm.scheduled_date === '2026-11-16' ?
-                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
-                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
-                                                    <div class="flex items-center justify-between">
-                                                        <span
-                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">SENIN</span>
-                                                                                                            </div>
-                                                    <div
-                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
-                                                        16 Nov
-                                                    </div>
-                                                                                                    </button>
-                                                                                                                                            <button type="button"
                                                      @click="checkoutForm.scheduled_date = '2026-11-17'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
                                                     :class="checkoutForm.scheduled_date === '2026-11-17' ?
                                                         'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
@@ -4615,6 +4573,48 @@
                                                     <div
                                                         class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
                                                         20 Nov
+                                                    </div>
+                                                                                                    </button>
+                                                                                                                                            <button type="button"
+                                                     @click="checkoutForm.scheduled_date = '2026-11-21'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
+                                                    :class="checkoutForm.scheduled_date === '2026-11-21' ?
+                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
+                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
+                                                    <div class="flex items-center justify-between">
+                                                        <span
+                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">SABTU</span>
+                                                                                                            </div>
+                                                    <div
+                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
+                                                        21 Nov
+                                                    </div>
+                                                                                                    </button>
+                                                                                                                                            <button type="button"
+                                                     @click="checkoutForm.scheduled_date = '2026-11-22'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
+                                                    :class="checkoutForm.scheduled_date === '2026-11-22' ?
+                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
+                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
+                                                    <div class="flex items-center justify-between">
+                                                        <span
+                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">MINGGU</span>
+                                                                                                            </div>
+                                                    <div
+                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
+                                                        22 Nov
+                                                    </div>
+                                                                                                    </button>
+                                                                                                                                            <button type="button"
+                                                     @click="checkoutForm.scheduled_date = '2026-11-23'"                                                     class="p-2.5 rounded-[12px] border text-left transition relative flex flex-col justify-between cursor-pointer active:scale-[0.98] "
+                                                    :class="checkoutForm.scheduled_date === '2026-11-23' ?
+                                                        'border-brand-primary bg-brand-primary/10 text-brand-primary ring-1 ring-brand-primary/30' :
+                                                        'border-black/10 dark:border-white/10 bg-white dark:bg-black/20 text-black/80 dark:text-white/80 hover:border-black/20 dark:hover:border-white/20'">
+                                                    <div class="flex items-center justify-between">
+                                                        <span
+                                                            class="text-[11px] font-bold uppercase tracking-wider opacity-80">SENIN</span>
+                                                                                                            </div>
+                                                    <div
+                                                        class="mt-1 font-bold text-[13px] tabular-nums tracking-tight">
+                                                        23 Nov
                                                     </div>
                                                                                                     </button>
                                                                                     </div>
@@ -5135,7 +5135,7 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                     Target Tanggal Dibutuhkan
                                 </label>
-                                <input type="date" min="2026-11-14"
+                                <input type="date" min="2026-11-17"
                                     x-model="requestOrderForm.scheduled_date"
                                     class="w-full h-11 px-3.5 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
                             </div>
@@ -5427,7 +5427,7 @@
                                             class="block text-[11px] font-semibold text-black/60 dark:text-white/60 mb-0.5">
                                             Target Tanggal Kirim <span class="text-red-500">*</span>
                                         </label>
-                                        <input type="date" min="2026-11-14"
+                                        <input type="date" min="2026-11-17"
                                             x-model="b.scheduled_date" required
                                             class="w-full h-10 px-3 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5856D6]">
                                     </div>
@@ -5646,7 +5646,7 @@
                                         <label
                                             class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">Tanggal
                                             Reservasi <span class="text-red-500">*</span></label>
-                                        <input type="date" min="2026-11-14"
+                                        <input type="date" min="2026-11-17"
                                             x-model="reservationForm.reservation_date" required
                                             class="w-full h-11 px-3.5 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                     </div>
@@ -5799,23 +5799,8 @@
                         </label>
                         <select x-model="groupOrder.createForm.scheduled_date"
                             class="w-full h-11 px-3 rounded-[14px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[13.5px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-primary">
-                                                            <option value="2026-11-14"
-                                    selected>
-                                    Sabtu, 2026-11-14
-                                    
-                                </option>
-                                                            <option value="2026-11-15"
-                                    >
-                                    Minggu, 2026-11-15
-                                    
-                                </option>
-                                                            <option value="2026-11-16"
-                                    >
-                                    Senin, 2026-11-16
-                                    
-                                </option>
                                                             <option value="2026-11-17"
-                                    >
+                                    selected>
                                     Selasa, 2026-11-17
                                     
                                 </option>
@@ -5832,6 +5817,21 @@
                                                             <option value="2026-11-20"
                                     >
                                     Jumat, 2026-11-20
+                                    
+                                </option>
+                                                            <option value="2026-11-21"
+                                    >
+                                    Sabtu, 2026-11-21
+                                    
+                                </option>
+                                                            <option value="2026-11-22"
+                                    >
+                                    Minggu, 2026-11-22
+                                    
+                                </option>
+                                                            <option value="2026-11-23"
+                                    >
+                                    Senin, 2026-11-23
                                     
                                 </option>
                                                     </select>

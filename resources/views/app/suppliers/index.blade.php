@@ -669,7 +669,7 @@
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
                 <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showAddModal = false">
-                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
                         @click.outside="showAddModal = false"
                         x-show="showAddModal"
                         x-transition:enter="transition ease-out duration-200"
@@ -848,7 +848,7 @@
                     class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md transition-opacity"></div>
 
                 <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showEditModal = false">
-                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
+                    <div class="relative w-full max-w-[94vw] md:max-w-2xl lg:max-w-3xl xl:max-w-4xl max-h-[88vh] rounded-[22px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden"
                         @click.outside="showEditModal = false"
                         x-show="showEditModal"
                         x-transition:enter="transition ease-out duration-200"

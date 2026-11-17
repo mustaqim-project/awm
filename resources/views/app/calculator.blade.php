@@ -1385,7 +1385,7 @@
                     <!-- 2. Centered Scroll & Dialog Container -->
                     <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="showQuickSaveModal = false">
                         <div @click.away="showQuickSaveModal = false"
-                            class="w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[92vh] rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
+                            class="w-full max-w-[95vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] max-h-[92vh] rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 flex flex-col shadow-[0_25px_60px_rgba(0,0,0,0.35)] overflow-hidden"
                         x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 scale-95"
                         x-transition:enter-end="opacity-100 scale-100"

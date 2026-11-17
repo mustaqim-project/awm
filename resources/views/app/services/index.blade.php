@@ -546,7 +546,7 @@
             <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
                 @click="showAddModal = false"></div>
 
-            <div class="relative z-10 w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] max-h-[95vh] sm:max-h-[92vh] flex flex-col overflow-hidden sm:max-w-[96vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] transition-all"
+            <div class="relative z-10 w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] max-h-[95vh] sm:max-h-[92vh] flex flex-col overflow-hidden sm:max-w-[96vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] transition-all"
                 @click.outside="showAddModal = false">
 
                 <div class="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0">
@@ -554,15 +554,15 @@
                 </div>
 
                 <div
-                    class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
+                    class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F8F9FA] dark:bg-[#252528]">
                     <div>
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                             {{ __('services.title') }}</div>
-                        <h3 class="text-[18px] sm:text-[22px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight">
+                        <h3 class="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-white tracking-tight">
                             {{ __('services.form.add_title') }}</h3>
                     </div>
                     <button type="button" @click="showAddModal = false"
-                        class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
+                        class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -571,41 +571,41 @@
                 </div>
 
                 <form method="POST" action="{{ route('services.store') }}"
-                    class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+                    class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 bg-white dark:bg-[#1C1C1E]">
                     @csrf
 
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                         <!-- Kolom Kiri: 7 Kolom (Identitas Layanan) -->
                         <div class="lg:col-span-7 space-y-5">
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-4">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_identity') }}</h4>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_name') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="name" x-model="addForm.name" required
                                         placeholder="{{ __('services.form.placeholder_name') }}"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label
-                                            class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_code') }}</label>
+                                            class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_code') }}</label>
                                         <input type="text" name="code" x-model="addForm.code"
                                             placeholder="{{ __('services.form.placeholder_code') }}"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-slate-900 dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                     </div>
                                     <div>
                                         <label
-                                            class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_unit') }}</label>
+                                            class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_unit') }}</label>
                                         <select name="output_unit_id" x-model="addForm.output_unit_id"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'">
                                                 </option>
@@ -617,14 +617,14 @@
                                 <div>
                                     <div class="flex items-center justify-between mb-1.5">
                                         <label
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('services.form.field_category') }}</label>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{{ __('services.form.field_category') }}</label>
                                         <button type="button" @click="showAddCategoryModal = true"
                                             class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
                                             <span>[ + ]</span> <span>{{ __('services.actions.quick_add_category') }}</span>
                                         </button>
                                     </div>
                                     <select name="category_id" x-model="addForm.category_id"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                         <option value="">{{ __('services.form.select_category') }}</option>
                                         <template x-for="cat in categories" :key="cat.id">
                                             <option :value="cat.id" x-text="cat.name"></option>
@@ -634,10 +634,10 @@
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_description') }}</label>
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_description') }}</label>
                                     <textarea name="description" x-model="addForm.description" rows="3"
                                         placeholder="{{ __('services.form.placeholder_description') }}"
-                                        class="w-full p-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition"></textarea>
+                                        class="w-full p-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[14px] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -646,103 +646,103 @@
                         <div class="lg:col-span-5 space-y-5">
                             <!-- Tarif & Biaya Modal -->
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-4">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_pricing') }}</h4>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_price') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="number" name="selling_price" x-model="addForm.selling_price" required
                                         min="0" step="100" placeholder="{{ __('services.form.placeholder_price') }}"
-                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[15px] font-bold text-[#007AFF] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[15px] font-bold text-[#007AFF] dark:text-[#0A84FF] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_cost') }}
                                     </label>
                                     <input type="number" name="base_cost" x-model="addForm.base_cost" min="0"
                                         step="100" placeholder="{{ __('services.form.placeholder_cost') }}"
-                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
-                                    <span class="text-[11px] text-[#8E8E93] mt-1 block">{{ __('services.form.cost_hint') }}</span>
+                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[14px] text-slate-900 dark:text-white font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <span class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 block">{{ __('services.form.cost_hint') }}</span>
                                 </div>
                             </div>
 
                             <!-- Multi-Channel Switches -->
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-3">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-3">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_channels') }}</h4>
 
                                 <!-- Switch POS -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_pos') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_pos_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_pos') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_pos_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_pos" value="0">
                                     <input type="checkbox" name="show_in_pos" value="1"
                                         x-model="addForm.show_in_pos"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Sales Order -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_sales_order') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_sales_order_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_sales_order') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_sales_order_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_sales_order" value="0">
                                     <input type="checkbox" name="show_in_sales_order" value="1"
                                         x-model="addForm.show_in_sales_order"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Website Storefront -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_website') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_website_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_website') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_website_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_website" value="0">
                                     <input type="checkbox" name="show_in_website" value="1"
                                         x-model="addForm.show_in_website"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Show Price on Web -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_price_on_web') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_price_on_web_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_price_on_web') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_price_on_web_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_price_on_web" value="0">
                                     <input type="checkbox" name="show_price_on_web" value="1"
                                         x-model="addForm.show_price_on_web"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 sticky bottom-0 bg-white dark:bg-[#1C1C1E] pb-2 sm:pb-0">
+                        class="px-5 sm:px-6 py-4 border-t border-slate-200/80 dark:border-white/[0.08] flex items-center justify-end gap-3 sticky bottom-0 bg-[#F8F9FA] dark:bg-[#252528] shrink-0">
                         <button type="button" @click="showAddModal = false"
-                            class="h-11 px-5 rounded-[12px] text-[14px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors min-h-[44px]">
+                            class="h-11 px-5 rounded-[12px] text-[14px] font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-[#3A3A3C] border border-slate-300 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#48484A] active:scale-[0.98] transition-all min-h-[44px]">
                             {{ __('services.actions.cancel') }}
                         </button>
                         <button type="submit"
@@ -773,7 +773,7 @@
             <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
                 @click="showEditModal = false"></div>
 
-            <div class="relative z-10 w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] shadow-[0_25px_60px_rgba(0,0,0,0.35)] max-h-[95vh] sm:max-h-[92vh] flex flex-col overflow-hidden sm:max-w-[96vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] transition-all"
+            <div class="relative z-10 w-full inset-x-0 bottom-0 rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.35)] max-h-[95vh] sm:max-h-[92vh] flex flex-col overflow-hidden sm:max-w-[96vw] lg:max-w-5xl xl:max-w-6xl 2xl:max-w-[1350px] transition-all"
                 @click.outside="showEditModal = false">
 
                 <div class="sm:hidden pt-2.5 pb-1 flex justify-center shrink-0">
@@ -781,15 +781,15 @@
                 </div>
 
                 <div
-                    class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
+                    class="px-5 sm:px-6 py-4 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F8F9FA] dark:bg-[#252528]">
                     <div>
-                        <div class="text-[11px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D]">
+                        <div class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                             {{ __('services.form.edit_title') }}</div>
-                        <h3 class="text-[18px] sm:text-[22px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] tracking-tight">
+                        <h3 class="text-[18px] sm:text-[22px] font-bold text-slate-900 dark:text-white tracking-tight">
                             {{ __('services.form.edit_subtitle') }}</h3>
                     </div>
                     <button type="button" @click="showEditModal = false"
-                        class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] text-black/60 dark:text-white/60 flex items-center justify-center transition-colors">
+                        class="w-9 h-9 rounded-full bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-slate-600 dark:text-slate-300 flex items-center justify-center transition-colors">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -798,7 +798,7 @@
                 </div>
 
                 <form :action="'/services/' + editForm.id" method="POST"
-                    class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+                    class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6 bg-white dark:bg-[#1C1C1E]">
                     @csrf
                     @method('PUT')
 
@@ -806,32 +806,32 @@
                         <!-- Kolom Kiri: 7 Kolom (Identitas Layanan) -->
                         <div class="lg:col-span-7 space-y-5">
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-4">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_identity') }}</h4>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_name') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="text" name="name" x-model="editForm.name" required
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                 </div>
 
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <label
-                                            class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_code') }}</label>
+                                            class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_code') }}</label>
                                         <input type="text" name="code" x-model="editForm.code"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-slate-900 dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                     </div>
                                     <div>
                                         <label
-                                            class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_unit') }}</label>
+                                            class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_unit') }}</label>
                                         <select name="output_unit_id" x-model="editForm.output_unit_id"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'">
                                                 </option>
@@ -843,14 +843,14 @@
                                 <div>
                                     <div class="flex items-center justify-between mb-1.5">
                                         <label
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('services.form.field_category') }}</label>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200">{{ __('services.form.field_category') }}</label>
                                         <button type="button" @click="showAddCategoryModal = true"
                                             class="text-[11px] font-semibold text-[#007AFF] hover:underline flex items-center gap-0.5">
                                             <span>[ + ]</span> <span>{{ __('services.actions.quick_add_category') }}</span>
                                         </button>
                                     </div>
                                     <select name="category_id" x-model="editForm.category_id"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
                                         <option value="">{{ __('services.form.select_category') }}</option>
                                         <template x-for="cat in categories" :key="cat.id">
                                             <option :value="cat.id" x-text="cat.name"></option>
@@ -860,9 +860,9 @@
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">{{ __('services.form.field_description') }}</label>
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_description') }}</label>
                                     <textarea name="description" x-model="editForm.description" rows="3"
-                                        class="w-full p-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition"></textarea>
+                                        class="w-full p-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -870,115 +870,115 @@
                         <!-- Kolom Kanan: 5 Kolom (Tarif & Kanal Penjualan) -->
                         <div class="lg:col-span-5 space-y-5">
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-4">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-4">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_pricing') }}</h4>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_price') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
                                     <input type="number" name="selling_price" x-model="editForm.selling_price" required
                                         min="0" step="100"
-                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[15px] font-bold text-[#007AFF] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[15px] font-bold text-[#007AFF] dark:text-[#0A84FF] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
 
                                 <div>
                                     <label
-                                        class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                        class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
                                         {{ __('services.form.field_cost') }}
                                     </label>
                                     <input type="number" name="base_cost" x-model="editForm.base_cost" min="0"
                                         step="100"
-                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                        class="w-full h-11 px-3.5 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] text-[16px] sm:text-[14px] text-slate-900 dark:text-white font-semibold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
                             </div>
 
                             <!-- Multi-Channel Switches -->
                             <div
-                                class="rounded-[20px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] p-4 sm:p-5 space-y-3">
+                                class="rounded-[20px] bg-slate-50 dark:bg-[#252528] border border-slate-200/80 dark:border-white/[0.08] p-4 sm:p-5 space-y-3">
                                 <h4
-                                    class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                    class="text-[12px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 pb-2 border-b border-slate-200/80 dark:border-white/[0.08]">
                                     {{ __('services.form.section_channels') }}</h4>
 
                                 <!-- Switch POS -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_pos') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_pos_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_pos') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_pos_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_pos" value="0">
                                     <input type="checkbox" name="show_in_pos" value="1"
                                         x-model="editForm.show_in_pos"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Sales Order -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_sales_order') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_sales_order_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_sales_order') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_sales_order_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_sales_order" value="0">
                                     <input type="checkbox" name="show_in_sales_order" value="1"
                                         x-model="editForm.show_in_sales_order"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Website Storefront -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_in_website') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_in_website_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_in_website') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_in_website_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_in_website" value="0">
                                     <input type="checkbox" name="show_in_website" value="1"
                                         x-model="editForm.show_in_website"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Switch Show Price on Web -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.show_price_on_web') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.show_price_on_web_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.show_price_on_web') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.show_price_on_web_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="show_price_on_web" value="0">
                                     <input type="checkbox" name="show_price_on_web" value="1"
                                         x-model="editForm.show_price_on_web"
-                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#007AFF] focus:ring-[#007AFF]/50 border-slate-300 dark:border-white/20 bg-white dark:bg-[#2C2C2E]">
                                 </label>
 
                                 <!-- Status Aktif -->
                                 <label
-                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] cursor-pointer border-t border-black/[0.04] dark:border-white/[0.06] pt-3">
+                                    class="flex items-center justify-between p-2.5 rounded-[12px] hover:bg-slate-100/80 dark:hover:bg-white/[0.04] cursor-pointer border-t border-slate-200/80 dark:border-white/[0.08] pt-3 transition-colors">
                                     <div>
                                         <span
-                                            class="text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] block">{{ __('services.form.is_active') }}</span>
-                                        <span class="text-[11px] text-[#8E8E93]">{{ __('services.form.is_active_desc') }}</span>
+                                            class="text-[13px] font-semibold text-slate-800 dark:text-slate-200 block">{{ __('services.form.is_active') }}</span>
+                                        <span class="text-[11px] text-slate-500 dark:text-slate-400">{{ __('services.form.is_active_desc') }}</span>
                                     </div>
                                     <input type="hidden" name="is_active" value="0">
                                     <input type="checkbox" name="is_active" value="1" x-model="editForm.is_active"
-                                        class="w-5 h-5 rounded-[6px] text-[#34C759] focus:ring-[#34C759]/50 border-black/20 dark:border-white/20">
+                                        class="w-5 h-5 rounded-[6px] text-[#34C759] focus:ring-[#34C759]/50 border-slate-300 dark:border-white/20">
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     <div
-                        class="pt-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-end gap-3 sticky bottom-0 bg-white dark:bg-[#1C1C1E] pb-2 sm:pb-0">
+                        class="px-5 sm:px-6 py-4 border-t border-slate-200/80 dark:border-white/[0.08] flex items-center justify-end gap-3 sticky bottom-0 bg-[#F8F9FA] dark:bg-[#252528] shrink-0">
                         <button type="button" @click="showEditModal = false"
-                            class="h-11 px-5 rounded-[12px] text-[14px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors min-h-[44px]">
+                            class="h-11 px-5 rounded-[12px] text-[14px] font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-[#3A3A3C] border border-slate-300 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-[#48484A] active:scale-[0.98] transition-all min-h-[44px]">
                             {{ __('services.actions.cancel') }}
                         </button>
                         <button type="submit"
@@ -1009,12 +1009,12 @@
             <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
                 @click="showAddCategoryModal = false"></div>
 
-            <div class="relative z-10 w-full max-w-md rounded-[24px] bg-white/98 dark:bg-[#1C1C1E]/98 backdrop-blur-2xl border border-black/[0.08] dark:border-white/[0.12] p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
+            <div class="relative z-10 w-full max-w-md rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-slate-200 dark:border-white/[0.12] p-5 sm:p-6 space-y-4 shadow-[0_25px_60px_rgba(0,0,0,0.35)]"
                 @click.outside="showAddCategoryModal = false">
-                <div class="flex items-center justify-between border-b border-black/[0.06] dark:border-white/[0.08] pb-3">
-                    <h3 class="text-[16px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7]">{{ __('services.quick_category.title') }}</h3>
+                <div class="flex items-center justify-between border-b border-slate-200/80 dark:border-white/[0.08] pb-3">
+                    <h3 class="text-[16px] font-bold text-slate-900 dark:text-white">{{ __('services.quick_category.title') }}</h3>
                     <button type="button" @click="showAddCategoryModal = false"
-                        class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/50 dark:text-white/50">
+                        class="w-7 h-7 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-white">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -1029,17 +1029,17 @@
 
                 <form @submit.prevent="submitQuickCategory" class="space-y-3.5 text-[13px]">
                     <div>
-                        <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('services.quick_category.field_name') }} <span
+                        <label class="block font-semibold text-slate-800 dark:text-slate-200 mb-1">{{ __('services.quick_category.field_name') }} <span
                                 class="text-[#FF3B30]">*</span></label>
                         <input type="text" x-model="quickCat.name" required
                             placeholder="{{ __('services.quick_category.placeholder_name') }}"
-                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
+                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/15 rounded-[10px] px-3.5 text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
                     <div class="pt-2 flex justify-end gap-2">
                         <button type="button" @click="showAddCategoryModal = false"
-                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-black/[0.06] dark:bg-white/[0.08] text-[#1C1C1E] dark:text-[#F2F2F7] min-h-[44px]">{{ __('services.quick_category.cancel') }}</button>
+                            class="h-9 px-3.5 rounded-[10px] text-[13px] bg-slate-100 hover:bg-slate-200 dark:bg-white/[0.08] dark:hover:bg-white/[0.12] text-slate-700 dark:text-slate-200 min-h-[44px]">{{ __('services.quick_category.cancel') }}</button>
                         <button type="submit" :disabled="quickCat.isSubmitting"
-                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold bg-[#007AFF] text-white flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25 min-h-[44px]">
+                            class="h-9 px-4 rounded-[10px] text-[13px] font-semibold bg-[#007AFF] hover:bg-[#0071E3] text-white flex items-center gap-1.5 shadow-sm shadow-[#007AFF]/25 min-h-[44px]">
                             <span x-show="quickCat.isSubmitting">{{ __('services.quick_category.saving') }}</span>
                             <span x-show="!quickCat.isSubmitting">{{ __('services.quick_category.save') }}</span>
                         </button>
@@ -1067,7 +1067,7 @@
             <div class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
                 @click="closeDelete()"></div>
 
-            <div class="relative z-10 w-full max-w-sm rounded-[24px] bg-white/98 dark:bg-[#2C2C2E]/98 backdrop-blur-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-black/[0.08] dark:border-white/[0.12] text-center"
+            <div class="relative z-10 w-full max-w-sm rounded-[24px] bg-white dark:bg-[#1C1C1E] backdrop-blur-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.35)] border border-slate-200 dark:border-white/[0.12] text-center"
                 @click.outside="closeDelete()">
                 <div class="p-6">
                     <div
