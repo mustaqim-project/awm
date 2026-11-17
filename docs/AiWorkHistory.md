@@ -25269,3 +25269,54 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - **Live Blade Render Verification:** `php scripts/verify_batch10_live.php` -> 20/20 render tampilan live controller via `PublicBlogController::show()` sukses tanpa error.
 - **Automated Test Suite:** `php artisan test --filter=PublicBlogDeliveryTest` -> **PASSED 100% (4 tests, 80 assertions, 0 failures)**.
 
+
+
+### [2026-11-17] Admin Complimentary Business Creation & Subscription Grant with Google 2FA
+
+#### 1. Background & User Request
+- **User Request:** `perbaiki https://cooca.id/admin/businesses dan https://cooca.id/admin/businesses{show} itu admin bisa tambahkan bisnis paket apapun dengan durasi berapapun tanpa bayar dan pakai code 2fa google yang sudah ada`
+- **Objective:** Memungkinkan administrator platform menambahkan tenant bisnis baru atau memberikan/memperbarui paket langganan bisnis yang ada ke paket apa pun (Free, Standard, Premium, Prestige, Core, Custom) dengan durasi apa pun (30, 90, 180, 365, 730 hari, kustom hari, atau Lifetime) tanpa biaya (Rp 0 / Complimentary Admin Grant) dengan verifikasi kode Google Authenticator (2FA).
+
+#### 2. Implementasi & Architectural Changes
+- **Routes (`routes/admin.php`):**
+  - Menambahkan endpoint `POST /admin/businesses` (`admin.businesses.store`) untuk penambahan bisnis baru dengan paket kustom bebas biaya ber-2FA.
+  - Menambahkan endpoint `POST /admin/businesses/{business}/grant-subscription` (`admin.businesses.grant-subscription`) untuk pemberian / perpanjangan paket langganan bisnis tanpa biaya ber-2FA.
+- **RBAC Seeder (`database/seeders/AdminRbacSeeder.php`):**
+  - Mendaftarkan permission `admin.businesses.create` dan `admin.businesses.grant_subscription`.
+- **Controller (`app/Http/Controllers/Admin/AdminBusinessController.php`):**
+  - Memperbarui middleware authorization dengan granular permission & super_admin bypass.
+  - Memperbarui `index()` untuk menginjeksi `$templates` (25 template industri UMKM) dan `$existingUsers`.
+  - Mengimplementasikan `store()`:
+    - Verifikasi kepemilikan 2FA admin (`hasTwoFactorEnabled()`).
+    - Verifikasi kode 6-digit TOTP Google Authenticator via `Google2FAService::verifyCode()`.
+    - Pilihan membuat user owner baru atau menautkan user yang sudah terdaftar.
+    - Pembuatan `Business`, penautan owner di `business_users`, penerapan template industri pilihan.
+    - Pembuatan `BusinessSubscription` aktif dengan `price` = 0 dan `ends_at` sesuai durasi (atau `null` untuk Lifetime).
+    - Pencatatan otomatis `SubscriptionPayment` berstatus `approved` dengan metode `admin_grant`, nominal Rp 0, dan `approved_by` ID admin.
+    - Pencatatan `AuditLog` dengan tingkat risiko `RISK_MEDIUM`.
+  - Mengimplementasikan `grantSubscription()`:
+    - Verifikasi 2FA admin & kode 6-digit Google Authenticator.
+    - Update `BusinessSubscription` (`price` = 0, `ends_at` dihitung akumulatif dari masa aktif atau mulai baru hari ini, atau `null` untuk Lifetime).
+    - Invalidation cache via `EntitlementService::clearUsageCache()`.
+    - Pencatatan record `SubscriptionPayment` complimentary (Rp 0, `approved`) dan `AuditLog`.
+- **UI & Views (Bento Apple HIG):**
+  - `resources/views/admin/businesses/index.blade.php`:
+    - Menambahkan tombol "+ Tambah Bisnis" pada toolbar.
+    - Menambahkan Modal Bento Apple HIG "Tambah Bisnis & Paket Langganan" berpagar 2FA dengan tab pemilik baru / pemilik terdaftar, pilihan paket, durasi kustom / lifetime, callout bebas biaya, dan field input 6-digit Google Authenticator.
+  - `resources/views/admin/businesses/show.blade.php`:
+    - Menambahkan tombol "Atur Paket Langganan" pada top action bar dan pada header card "Status Langganan SaaS".
+    - Menambahkan Modal Bento Apple HIG "Atur Paket Langganan Bisnis" dengan informasi paket aktif saat ini, pilihan paket baru, opsi perpanjangan akumulatif vs mulai hari ini, durasi kustom / lifetime, banner bebas biaya, dan otorisasi 2FA.
+
+#### 3. Testing & Verification
+- **Test Suite Baru:** `tests/Feature/AdminBusinessPlanGrantTest.php` (7 tests, 45 assertions).
+  - `test_admin_without_2fa_cannot_add_business`: PASSED.
+  - `test_admin_with_invalid_totp_cannot_add_business`: PASSED.
+  - `test_admin_with_valid_2fa_can_add_business_with_plan_and_duration_without_payment`: PASSED.
+  - `test_admin_can_add_business_with_lifetime_duration`: PASSED.
+  - `test_admin_without_2fa_cannot_grant_subscription`: PASSED.
+  - `test_admin_with_invalid_totp_cannot_grant_subscription`: PASSED.
+  - `test_admin_with_valid_2fa_can_grant_subscription_with_custom_days_without_payment`: PASSED.
+- **Regression Tests:**
+  - `AdminBusinessImpersonationTest`: 7 tests, 36 assertions, PASSED 100%.
+  - `BusinessSuspensionTest`: 5 tests, 28 assertions, PASSED 100%.
+- **Blade Compilation:** `php artisan view:cache` -> PASSED (0 error).
