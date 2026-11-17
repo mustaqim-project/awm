@@ -480,10 +480,25 @@ final class AdminBusinessController extends Controller implements HasMiddleware
 
             // 3. Create Complimentary SubscriptionPayment
             $targetUser = $business->owner ?: $business->users()->first();
+            $userId = $targetUser?->id;
+
+            if (! $userId) {
+                $fallbackUser = User::first();
+                if (! $fallbackUser) {
+                    $fallbackUser = User::create([
+                        'name' => 'System Merchant',
+                        'email' => 'system@' . ($business->slug ?: 'cooca') . '.local',
+                        'password' => Hash::make(Str::random(16)),
+                        'email_verified_at' => now(),
+                    ]);
+                    $business->users()->attach($fallbackUser->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
+                }
+                $userId = $fallbackUser->id;
+            }
 
             SubscriptionPayment::create([
                 'business_id' => $business->id,
-                'user_id' => $targetUser?->id,
+                'user_id' => $userId,
                 'payment_type' => 'subscription',
                 'package_name' => "Admin Grant: " . strtoupper($planCode),
                 'package_duration_days' => $durationDays,
