@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Billing\EntitlementService;
 use App\Domain\Business\Services\BusinessPurgeService;
 use App\Domain\OperatingMode\OperatingModeResolver;
+use App\Domain\Template\BusinessTemplateService;
+use App\Domain\Template\ModuleRegistry;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\AuditLog;
@@ -14,15 +17,22 @@ use App\Mail\BusinessSuspendedMail;
 use App\Models\Business;
 use App\Models\BusinessMembership;
 use App\Models\BusinessSubscription;
+use App\Models\BusinessTypeTemplate;
+use App\Models\SubscriptionPayment;
+use App\Models\User;
 use App\Services\Google2FAService;
 use App\Support\Context;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 final class AdminBusinessController extends Controller implements HasMiddleware
@@ -34,6 +44,8 @@ final class AdminBusinessController extends Controller implements HasMiddleware
     {
         return [
             new Middleware('require.admin.permission:admin.businesses.view', only: ['index', 'show', 'impersonate']),
+            new Middleware('require.admin.permission:admin.businesses.create,admin.businesses.view', only: ['store']),
+            new Middleware('require.admin.permission:admin.businesses.grant_subscription,admin.businesses.view', only: ['grantSubscription']),
             new Middleware('require.admin.permission:admin.businesses.toggle_status', only: ['toggleStatus', 'bulkStatus']),
             new Middleware('require.admin.permission:admin.businesses.delete', only: ['destroy', 'bulkDestroy']),
         ];
@@ -95,12 +107,17 @@ final class AdminBusinessController extends Controller implements HasMiddleware
             ->distinct('business_id')
             ->count('business_id');
 
+        $templates = BusinessTypeTemplate::orderBy('name')->get(['code', 'name', 'industry_category']);
+        $existingUsers = User::orderBy('name')->take(200)->get(['id', 'name', 'email', 'phone']);
+
         return view('admin.businesses.index', compact(
             'businesses',
             'totalBusinesses',
             'activeBusinesses',
             'suspendedBusinesses',
-            'coreBusinesses'
+            'coreBusinesses',
+            'templates',
+            'existingUsers'
         ));
     }
 
@@ -133,6 +150,386 @@ final class AdminBusinessController extends Controller implements HasMiddleware
             'posOrderCount',
             'totalAiTokensUsed'
         ));
+    }
+
+    /**
+     * Store a newly created business with custom subscription plan and duration without payment (2FA verified).
+     */
+    public function store(
+        Request $request,
+        BusinessTemplateService $templateService,
+        Google2FAService $google2FAService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->withInput()->with(
+                'error',
+                'Penambahan bisnis ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:businesses,name'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:businesses,slug'],
+            'currency' => ['nullable', 'string', 'max:3'],
+            'business_scale' => ['nullable', 'string', 'in:umkm,corporate'],
+            'template_code' => ['nullable', 'string', 'exists:business_type_templates,code'],
+            'owner_mode' => ['required', 'string', 'in:new_user,existing_user'],
+            'existing_user_id' => ['required_if:owner_mode,existing_user', 'nullable', 'string', 'exists:users,id'],
+            'owner_name' => ['required_if:owner_mode,new_user', 'nullable', 'string', 'max:255'],
+            'owner_email' => ['required_if:owner_mode,new_user', 'nullable', 'email', 'max:255', 'unique:users,email'],
+            'owner_phone' => ['nullable', 'string', 'max:30'],
+            'owner_password' => ['nullable', 'string', 'min:6', 'max:100'],
+            'plan_code' => ['required', 'string', 'max:60'],
+            'custom_plan_code' => ['nullable', 'string', 'max:60'],
+            'duration_type' => ['required', 'string', 'in:30,90,180,365,730,custom,lifetime'],
+            'custom_days' => ['required_if:duration_type,custom', 'nullable', 'integer', 'min:1', 'max:36500'],
+            'admin_notes' => ['nullable', 'string', 'max:1000'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'name.required' => 'Nama bisnis wajib diisi.',
+            'name.unique' => 'Nama bisnis sudah terdaftar.',
+            'slug.unique' => 'Slug bisnis sudah digunakan.',
+            'owner_name.required_if' => 'Nama pemilik akun baru wajib diisi.',
+            'owner_email.required_if' => 'Email pemilik akun baru wajib diisi.',
+            'owner_email.unique' => 'Email pemilik sudah digunakan oleh akun lain.',
+            'existing_user_id.required_if' => 'Pilih pengguna terdaftar sebagai pemilik bisnis.',
+            'plan_code.required' => 'Pilih paket langganan bisnis.',
+            'duration_type.required' => 'Pilih durasi paket langganan.',
+            'custom_days.required_if' => 'Jumlah hari kustom wajib diisi.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->withInput()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        $planCode = ($validated['plan_code'] === 'custom' && ! empty($validated['custom_plan_code']))
+            ? trim((string) $validated['custom_plan_code'])
+            : $validated['plan_code'];
+
+        $durationType = $validated['duration_type'];
+        $durationDays = 0;
+        $endsAt = null;
+
+        if ($durationType === 'lifetime') {
+            $endsAt = null;
+            $durationDays = 0;
+        } elseif ($durationType === 'custom') {
+            $durationDays = max(1, (int) $validated['custom_days']);
+            $endsAt = now()->addDays($durationDays);
+        } else {
+            $durationDays = max(1, (int) $durationType);
+            $endsAt = now()->addDays($durationDays);
+        }
+
+        $createdData = DB::transaction(function () use ($validated, $admin, $planCode, $endsAt, $durationDays, $templateService) {
+            // 1. Resolve or Create Owner User
+            $owner = null;
+            $generatedPassword = null;
+
+            if ($validated['owner_mode'] === 'existing_user') {
+                $owner = User::findOrFail($validated['existing_user_id']);
+            } else {
+                $rawPassword = ! empty($validated['owner_password'])
+                    ? (string) $validated['owner_password']
+                    : 'Cooca@' . random_int(100000, 999999);
+
+                $generatedPassword = empty($validated['owner_password']) ? $rawPassword : null;
+
+                $owner = User::create([
+                    'name' => trim((string) $validated['owner_name']),
+                    'email' => strtolower(trim((string) $validated['owner_email'])),
+                    'phone' => ! empty($validated['owner_phone']) ? trim((string) $validated['owner_phone']) : null,
+                    'password' => Hash::make($rawPassword),
+                    'email_verified_at' => now(),
+                    'phone_verified_at' => ! empty($validated['owner_phone']) ? now() : null,
+                    'onboarding_completed' => true,
+                    'onboarding_completed_at' => now(),
+                ]);
+            }
+
+            // 2. Resolve Template & disabled modules
+            $templateCode = $validated['template_code'] ?? null;
+            $tmpl = ! empty($templateCode) ? BusinessTypeTemplate::where('code', $templateCode)->first() : null;
+            $disabledModules = $tmpl ? ModuleRegistry::getDisabledModulesForTemplate($tmpl->code) : [];
+
+            $businessScale = ($validated['business_scale'] ?? Business::SCALE_UMKM) === Business::SCALE_CORPORATE
+                ? Business::SCALE_CORPORATE
+                : Business::SCALE_UMKM;
+
+            if ($businessScale === Business::SCALE_UMKM) {
+                $corporateModules = [
+                    ModuleRegistry::MODULE_B2B_SALES,
+                    ModuleRegistry::MODULE_LABOR_MACHINES,
+                    ModuleRegistry::MODULE_INVENTORY_WAREHOUSE,
+                    ModuleRegistry::MODULE_CUSTOMER_PO,
+                    ModuleRegistry::MODULE_ACCOUNTING_CORPORATE,
+                ];
+                $disabledModules = array_values(array_unique(array_merge($disabledModules, $corporateModules)));
+            }
+
+            // 3. Create Business
+            $customSlug = ! empty($validated['slug']) ? Str::slug($validated['slug']) : null;
+
+            $business = Business::create([
+                'name' => trim((string) $validated['name']),
+                'slug' => $customSlug,
+                'email' => $owner->email,
+                'phone' => $owner->phone,
+                'currency' => $validated['currency'] ?? 'IDR',
+                'currency_precision' => 0,
+                'rounding_strategy' => Business::ROUNDING_ROUND_100,
+                'industry_category' => $tmpl?->industry_category,
+                'template_code' => $tmpl?->code,
+                'business_scale' => $businessScale,
+                'disabled_modules' => $disabledModules,
+                'is_active' => true,
+            ]);
+
+            // 4. Attach Owner to Business
+            $business->users()->attach($owner->id, [
+                'id' => (string) Str::uuid(),
+                'role' => 'owner',
+            ]);
+
+            if (empty($owner->active_business_id)) {
+                $owner->update(['active_business_id' => $business->id]);
+            }
+
+            // 5. Apply Template if selected
+            if ($tmpl) {
+                try {
+                    $templateService->apply($business, $tmpl, seedProducts: false);
+                } catch (\Throwable $e) {
+                    Log::warning("Failed to apply template {$tmpl->code} to business {$business->id}: " . $e->getMessage());
+                }
+            }
+
+            // 6. Create BusinessSubscription
+            BusinessSubscription::create([
+                'business_id' => $business->id,
+                'plan_code' => $planCode,
+                'price' => 0, // Tanpa Bayar
+                'status' => BusinessSubscription::STATUS_ACTIVE,
+                'starts_at' => now(),
+                'ends_at' => $endsAt,
+                'ai_tokens_monthly_allowance' => 0,
+                'ai_tokens_remaining' => 0,
+                'last_token_reset_at' => Carbon::today()->toDateString(),
+            ]);
+
+            // 7. Create Complimentary SubscriptionPayment Record
+            $adminNotes = ! empty($validated['admin_notes']) ? trim((string) $validated['admin_notes']) : null;
+            $durationLabel = $durationDays > 0 ? "{$durationDays} Hari" : "Lifetime (Tanpa Batas)";
+
+            SubscriptionPayment::create([
+                'business_id' => $business->id,
+                'user_id' => $owner->id,
+                'payment_type' => 'subscription',
+                'package_name' => "Admin Grant: " . strtoupper($planCode),
+                'package_duration_days' => $durationDays,
+                'order_number' => 'ADM-SUB-' . strtoupper(Str::random(8)),
+                'plan_code' => $planCode,
+                'cycle' => ($durationDays >= 365) ? 'annual' : 'monthly',
+                'amount' => 0,
+                'subtotal' => 0,
+                'total_payable' => 0,
+                'payment_method' => 'admin_grant',
+                'payment_gateway' => 'manual',
+                'status' => SubscriptionPayment::STATUS_APPROVED,
+                'approved_by' => $admin->id,
+                'approved_at' => now(),
+                'admin_notes' => $adminNotes ?: "Bisnis dan paket dibuat langsung oleh Administrator {$admin->name} tanpa biaya (durasi: {$durationLabel}).",
+            ]);
+
+            // 8. Log Audit
+            try {
+                AuditLog::create([
+                    'business_id' => $business->id,
+                    'user_id' => $owner->id,
+                    'auditable_type' => Business::class,
+                    'auditable_id' => $business->id,
+                    'action' => 'admin_business_create_with_plan',
+                    'risk_level' => AuditLog::RISK_MEDIUM,
+                    'risk_reason' => 'Admin business creation with complimentary subscription',
+                    'notes' => "Administrator {$admin->name} ({$admin->email}) menambahkan bisnis \"{$business->name}\" dengan paket {$planCode} durasi {$durationLabel} tanpa biaya (2FA verified).",
+                    'new_values' => [
+                        'admin_id' => $admin->id,
+                        'business_id' => $business->id,
+                        'owner_id' => $owner->id,
+                        'owner_email' => $owner->email,
+                        'plan_code' => $planCode,
+                        'duration' => $durationLabel,
+                        'ends_at' => $endsAt?->toIso8601String(),
+                    ],
+                    'ip_address' => request()->ip(),
+                    'user_agent' => substr((string) request()->userAgent(), 0, 255),
+                    'created_at' => now(),
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('AuditLog creation error on admin create business: ' . $e->getMessage());
+            }
+
+            return [
+                'business' => $business,
+                'owner' => $owner,
+                'password' => $generatedPassword,
+                'duration_label' => $durationLabel,
+            ];
+        });
+
+        $successMsg = "Bisnis \"{$createdData['business']->name}\" berhasil ditambahkan dengan paket {$planCode} ({$createdData['duration_label']}) tanpa biaya.";
+        if ($createdData['password']) {
+            $successMsg .= " Akun pemilik baru: {$createdData['owner']->email} (Password: {$createdData['password']}).";
+        }
+
+        return redirect()->route('admin.businesses.show', $createdData['business']->id)
+            ->with('success', $successMsg);
+    }
+
+    /**
+     * Grant or update a business subscription with any package and duration without payment (2FA verified).
+     */
+    public function grantSubscription(
+        Request $request,
+        Business $business,
+        Google2FAService $google2FAService,
+        EntitlementService $entitlementService
+    ): RedirectResponse {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+
+        if (! $admin || ! $admin->hasTwoFactorEnabled()) {
+            return back()->with(
+                'error',
+                'Pemberian paket langganan ditolak: Akun administrator Anda belum mengaktifkan Google Authenticator (2FA). Silakan aktifkan 2FA di profil Anda terlebih dahulu.'
+            );
+        }
+
+        $validated = $request->validate([
+            'plan_code' => ['required', 'string', 'max:60'],
+            'custom_plan_code' => ['nullable', 'string', 'max:60'],
+            'duration_type' => ['required', 'string', 'in:30,90,180,365,730,custom,lifetime'],
+            'custom_days' => ['required_if:duration_type,custom', 'nullable', 'integer', 'min:1', 'max:36500'],
+            'calculation_mode' => ['required', 'string', 'in:extend,from_now'],
+            'admin_notes' => ['nullable', 'string', 'max:1000'],
+            'totp_code' => ['required', 'string'],
+        ], [
+            'plan_code.required' => 'Pilih paket langganan.',
+            'duration_type.required' => 'Pilih durasi paket langganan.',
+            'custom_days.required_if' => 'Jumlah hari kustom wajib diisi.',
+            'calculation_mode.required' => 'Pilih metode perhitungan tanggal mulai.',
+            'totp_code.required' => 'Kode 6 digit Google Authenticator wajib diisi.',
+        ]);
+
+        if (! $google2FAService->verifyCode((string) $admin->two_factor_secret, (string) $validated['totp_code'])) {
+            return back()->with(
+                'error',
+                'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Operasi dibatalkan demi keamanan data platform.'
+            );
+        }
+
+        $planCode = ($validated['plan_code'] === 'custom' && ! empty($validated['custom_plan_code']))
+            ? trim((string) $validated['custom_plan_code'])
+            : $validated['plan_code'];
+
+        $durationType = $validated['duration_type'];
+        $durationDays = 0;
+        $newEndsAt = null;
+
+        $subscription = $entitlementService->getSubscription($business);
+
+        if ($durationType === 'lifetime') {
+            $newEndsAt = null;
+            $durationDays = 0;
+        } else {
+            $durationDays = $durationType === 'custom'
+                ? max(1, (int) $validated['custom_days'])
+                : max(1, (int) $durationType);
+
+            $calculationMode = $validated['calculation_mode'];
+            $baseDate = ($calculationMode === 'extend' && $subscription->isActive() && $subscription->ends_at && $subscription->ends_at->isFuture())
+                ? $subscription->ends_at
+                : now();
+
+            $newEndsAt = $baseDate->copy()->addDays($durationDays);
+        }
+
+        $durationLabel = $durationDays > 0 ? "{$durationDays} Hari" : "Lifetime (Tanpa Batas)";
+        $adminNotes = ! empty($validated['admin_notes']) ? trim((string) $validated['admin_notes']) : null;
+
+        DB::transaction(function () use ($business, $subscription, $planCode, $newEndsAt, $durationDays, $durationLabel, $admin, $adminNotes, $entitlementService) {
+            // 1. Update subscription
+            $subscription->update([
+                'plan_code' => $planCode,
+                'price' => 0, // Tanpa Bayar
+                'status' => BusinessSubscription::STATUS_ACTIVE,
+                'starts_at' => now(),
+                'ends_at' => $newEndsAt,
+                'last_token_reset_at' => Carbon::today()->toDateString(),
+            ]);
+
+            // 2. Clear entitlement cache
+            $entitlementService->clearUsageCache($business);
+
+            // 3. Create Complimentary SubscriptionPayment
+            $targetUser = $business->owner ?: $business->users()->first();
+
+            SubscriptionPayment::create([
+                'business_id' => $business->id,
+                'user_id' => $targetUser?->id,
+                'payment_type' => 'subscription',
+                'package_name' => "Admin Grant: " . strtoupper($planCode),
+                'package_duration_days' => $durationDays,
+                'order_number' => 'ADM-GRNT-' . strtoupper(Str::random(8)),
+                'plan_code' => $planCode,
+                'cycle' => ($durationDays >= 365) ? 'annual' : 'monthly',
+                'amount' => 0,
+                'subtotal' => 0,
+                'total_payable' => 0,
+                'payment_method' => 'admin_grant',
+                'payment_gateway' => 'manual',
+                'status' => SubscriptionPayment::STATUS_APPROVED,
+                'approved_by' => $admin->id,
+                'approved_at' => now(),
+                'admin_notes' => $adminNotes ?: "Paket langganan diberikan langsung oleh Administrator {$admin->name} tanpa biaya (durasi: {$durationLabel}).",
+            ]);
+
+            // 4. Log Audit
+            try {
+                AuditLog::create([
+                    'business_id' => $business->id,
+                    'user_id' => $targetUser?->id,
+                    'auditable_type' => Business::class,
+                    'auditable_id' => $business->id,
+                    'action' => 'admin_grant_subscription',
+                    'risk_level' => AuditLog::RISK_MEDIUM,
+                    'risk_reason' => 'Admin manual complimentary subscription grant',
+                    'notes' => "Administrator {$admin->name} ({$admin->email}) memberikan paket {$planCode} untuk bisnis \"{$business->name}\" durasi {$durationLabel} tanpa biaya (2FA verified).",
+                    'new_values' => [
+                        'admin_id' => $admin->id,
+                        'business_id' => $business->id,
+                        'plan_code' => $planCode,
+                        'duration' => $durationLabel,
+                        'ends_at' => $newEndsAt?->toIso8601String(),
+                    ],
+                    'ip_address' => request()->ip(),
+                    'user_agent' => substr((string) request()->userAgent(), 0, 255),
+                    'created_at' => now(),
+                ]);
+            } catch (\Throwable $e) {
+                Log::warning('AuditLog creation error on grant subscription: ' . $e->getMessage());
+            }
+        });
+
+        return redirect()->route('admin.businesses.show', $business->id)
+            ->with('success', "Paket {$planCode} ({$durationLabel}) berhasil diberikan ke bisnis \"{$business->name}\" tanpa biaya.");
     }
 
     /**

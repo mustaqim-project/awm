@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6" x-data="{ showSuspendModal: false, suspendReason: '' }">
+    <div class="space-y-6" x-data="adminBusinessShowManager()">
 
         <!-- Top Navigation & Actions Bar -->
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -15,6 +15,13 @@
                 <span>{{ __('admin.kembali_ke_daftar_bisnis') }}</span>
             </a>
             <div class="flex flex-wrap items-center gap-2.5">
+                {{-- Tombol Atur / Beri Paket Bebas Biaya (2FA Verified) --}}
+                <button type="button" @click="openGrantModal()"
+                    class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#007AFF]/25 cursor-pointer">
+                    <i data-lucide="shield-plus" class="w-4 h-4" stroke-width="2"></i>
+                    <span>Atur Paket Langganan</span>
+                </button>
+
                 {{-- Gate Impersonasi: Masuk ke Workspace Bisnis untuk Cek Bug --}}
                 @if (Auth::guard('admin')->user()?->hasPermission('admin.businesses.impersonate') || Auth::guard('admin')->user()?->hasPermission('admin.businesses.view'))
                     <form method="POST" action="{{ route('admin.businesses.impersonate', $business->id) }}"
@@ -174,16 +181,26 @@
 
                 <!-- Subscription Status Bento Card -->
                 <div class="rounded-[22px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md p-6 shadow-sm">
-                    <div class="flex items-center justify-between pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-black/[0.06] dark:border-white/[0.08]">
                         <div class="flex items-center gap-3">
                             <div class="w-9 h-9 rounded-[12px] bg-[#34C759]/10 flex items-center justify-center text-[#34C759] dark:text-[#30D158]">
                                 <i data-lucide="shield-check" class="w-4.5 h-4.5" stroke-width="2"></i>
                             </div>
-                            <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.status_langganan_saas') }}</h3>
+                            <div>
+                                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('admin.status_langganan_saas') }}</h3>
+                                <div class="text-[11px] text-black/45 dark:text-white/45">Atur paket langganan bebas biaya dengan verifikasi 2FA</div>
+                            </div>
                         </div>
-                        <span class="text-[12px] text-black/55 dark:text-white/55 tabular-nums">
-                            Sisa Token AI: <strong class="text-[#AF52DE] dark:text-[#BF5AF2]">{{ number_format($business->subscription?->ai_tokens_remaining ?? 0) }}</strong>
-                        </span>
+                        <div class="flex items-center gap-2.5">
+                            <button type="button" @click="openGrantModal()"
+                                class="h-8.5 px-3 rounded-[10px] text-[12px] font-bold text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 active:scale-95 transition-all inline-flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="edit-3" class="w-3.5 h-3.5" stroke-width="2"></i>
+                                <span>Atur Paket</span>
+                            </button>
+                            <span class="text-[12px] text-black/55 dark:text-white/55 tabular-nums hidden md:inline">
+                                Sisa Token AI: <strong class="text-[#AF52DE] dark:text-[#BF5AF2]">{{ number_format($business->subscription?->ai_tokens_remaining ?? 0) }}</strong>
+                            </span>
+                        </div>
                     </div>
 
                     @if ($business->subscription)
