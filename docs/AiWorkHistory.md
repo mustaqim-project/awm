@@ -33,6 +33,83 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-17-740] MCP Full Owner Panel Capabilities Upgrade with Granular Multi-Tenant CRUD Permissions
+
+- **Date:** 2026-11-17
+- **Status:** COMPLETED
+- **Module:** Integration & AI / MCP (Model Context Protocol) / Owner Panel & Multi-Tenant Authorization
+- **Feature:** Upgrade Kemampuan MCP Kelola Seluruh Fitur Owner Panel (`resources/views/app`) dengan Matriks Hak Akses CRUD Granular (`mcp:{domain}:{action}`)
+- **Work Type:** Feature | Architecture | Security & RBAC | API & Protocol | UI/UX
+
+#### 1. Business Context & Objective
+- **Konteks:** Pemilik usaha (business owner) membutuhkan asisten AI atau agen eksternal (Cursor, Windsurf, Claude Desktop, Antigravity, custom agent) yang terhubung via Model Context Protocol (MCP) untuk dapat mengelola seluruh fungsi operasional bisnis di panel owner (`resources/views/app`), mulai dari multi-gudang, konversi satuan, POS, HRM/karyawan, persetujuan dokumen (approvals), hingga konfigurasi usaha.
+- **Masalah & Kebutuhan Keamanan:**
+  1. Sebelumnya MCP belum mencakup semua modul owner panel (misal: transfer gudang, presensi & slip gaji karyawan, pencatatan transaksi kasir POS, alur persetujuan dokumen, dan pengaturan profil toko).
+  2. Pemberian token MCP tidak boleh bersifat "all-or-nothing". Pemilik usaha wajib memiliki kontrol granular untuk mengatur izin Create (C), Read (R), Update (U), dan Delete (D) per domain bisnis, atau memberikan akses penuh (`*`), demi mencegah AI melakukan operasi berisiko tinggi tanpa persetujuan (prinsip Least Privilege).
+
+#### 2. What Was Done
+1. **Perluasan Arsitektur Hak Akses & Engine Protokol MCP:**
+   - Menambahkan pelacakan token MCP aktif pada `App\Support\Context::setMcpToken(?McpAccessToken $token)` dan `Context::mcpToken()`.
+   - Mengembangkan metode `McpAccessToken::hasDomainAccess(string $domain): bool` untuk mengevaluasi apakah token memiliki hak akses pada suatu domain bisnis (termasuk wildcard `*`, domain wildcard `mcp:{domain}:*`, `mcp:{domain}:manage`, atau aksi spesifik).
+   - Memutakhirkan `McpProtocolEngine` dan `McpToolRegistry::getToolsForToken` sehingga token dengan hak akses parsial (misal: hanya read atau hanya create) dapat melihat tool terkait dalam daftar tool MCP (`tools/list`) dan mengevaluasi izin pada level aksi.
+2. **Penciptaan Trait Granular CRUD Enforcement (`HandlesCrudPermissions`):**
+   - Membuat `App\Domain\Mcp\Tools\Traits\HandlesCrudPermissions` dengan method `assertCan(string $domain, string $actionType, Business $business, ?User $user)`.
+   - Menolak eksekusi dengan exception `-32001` (Akses ditolak) dan pesan edukatif berbahasa Indonesia jika token tidak memiliki kemampuan spesifik (`mcp:{domain}:{action}`).
+3. **Pengembangan 6 Tool MCP Baru untuk Melengkapi Seluruh Fitur Owner Panel:**
+   - `inventory_transfer_stock` (`InventoryTransferStockTool`): Transfer mutasi stok antar-gudang/lokasi (`list`, `create`, `complete`).
+   - `hrm_manage_employee` (`HrmManageEmployeeTool`): Manajemen direktori karyawan, presensi/absensi harian (clock-in), dan rekap estimasi slip gaji/payroll (`list`, `create`, `update`, `record_attendance`, `get_payroll`).
+   - `pos_manage_transaction` (`PosManageTransactionTool`): Transaksi penjualan kasir Point of Sale langsung, riwayat transaksi, dan rekap omset shift kasir (`list`, `get_summary`, `create`).
+   - `approval_manage_workflow` (`ApprovalManageWorkflowTool`): Alur persetujuan dokumen berjenjang (PO, Sales Order, Pengeluaran) (`list`, `approve`, `reject`).
+   - `settings_manage_business` (`SettingsManageBusinessTool`): Manajemen profil usaha, persentase pajak PPN kasir, alamat, dan catatan footer struk (`get`, `update`).
+   - `crm_manage_customer` (`CrmManageCustomerTool`): Manajemen data pelanggan, nomor telepon, email, catatan preferensi, dan saldo loyalty points (`list`, `get`, `create`, `update`, `delete`).
+4. **Pembaruan Tool Multi-Gudang & Konversi Satuan dengan Enforced CRUD:**
+   - `warehouse_manage_location` (`WarehouseManageLocationTool`): Manajemen multi-gudang dan sub-lokasi rak terintegrasi `HandlesCrudPermissions` (`mcp:warehouse:create/read/update/delete`).
+   - `master_data_manage_unit_conversion` (`MasterDataManageUnitConversionTool`): Manajemen satuan ukur dan rasio konversi BFS (misal Dus -> Pcs) terintegrasi `HandlesCrudPermissions` (`mcp:master_data:create/read/update/delete`).
+5. **Modernisasi Tampilan MCP Cockpit Dashboard (`resources/views/app/settings/integrations/mcp.blade.php`):**
+   - Memperluas matriks `$abilityDomains` menjadi 16 domain bisnis lengkap:
+     1. Produk, Varian & Resep BOM (`products`)
+     2. Stok Opname, Bahan Baku & Transfer Antar-Gudang (`inventory`)
+     3. Gudang & Multi-Lokasi Rak (`warehouse`)
+     4. Satuan Ukur & Konversi Satuan BFS (`master_data`)
+     5. Kasir POS & Transaksi Penjualan (`pos`)
+     6. Keuangan, Pengeluaran & Kas Bank (`finance`)
+     7. Pemasok, PO & Penerimaan Barang (`purchasing`)
+     8. Penjualan B2B, Penawaran & SO (`sales`)
+     9. Pelanggan, Member & CRM (`crm`)
+     10. Karyawan, Presensi & Payroll (`hrm`)
+     11. Persetujuan Dokumen Approvals (`approvals`)
+     12. Pengaturan Usaha, Cabang & Pajak (`settings`)
+     13. Jasa, Layanan & Tarif Operasional (`services`)
+     14. Media Sosial Omnichannel & AI Content (`social`)
+     15. WhatsApp Gateway & Notifikasi (`whatsapp`)
+     16. Laporan Keuangan, AI Forecast & Profil (`reports`)
+   - Setiap domain dilengkapi checkbox Create, Read, Update, Delete interaktif pada Modal Tambah Token, Edit Token, dan Tampilan Detail Token.
+6. **Pengujian Otomatis Komprehensif (100% Pass):**
+   - `tests/Feature/McpAllModulesCrudPermissionTest.php`: 4 test cases, 30 assertions PASSED (registrasi 33 tools, pemblokiran unauthorized action -32001, eksekusi authorized write, wildcard `*` full access).
+   - `tests/Feature/McpWarehouseAndUnitConversionTest.php`: 5 test cases, 33 assertions PASSED (multi-gudang, konversi satuan, penerimaan PO 3 dus = 90 pcs otomatis).
+
+#### 3. Technical Changes
+- **Files Created:**
+  - `app/Domain/Mcp/Tools/Traits/HandlesCrudPermissions.php`
+  - `app/Domain/Mcp/Tools/InventoryTransferStockTool.php`
+  - `app/Domain/Mcp/Tools/HrmManageEmployeeTool.php`
+  - `app/Domain/Mcp/Tools/PosManageTransactionTool.php`
+  - `app/Domain/Mcp/Tools/ApprovalManageWorkflowTool.php`
+  - `app/Domain/Mcp/Tools/SettingsManageBusinessTool.php`
+  - `app/Domain/Mcp/Tools/CrmManageCustomerTool.php`
+  - `tests/Feature/McpAllModulesCrudPermissionTest.php`
+- **Files Modified:**
+  - `app/Support/Context.php` (Binding MCP token)
+  - `app/Models/McpAccessToken.php` (`hasDomainAccess`)
+  - `app/Domain/Mcp/Protocol/McpProtocolEngine.php` (`checkTokenToolAccess`, context token setter)
+  - `app/Domain/Mcp/Tools/McpToolRegistry.php` (Registrasi seluruh 33 tool katalog MCP)
+  - `app/Domain/Mcp/Tools/WarehouseManageLocationTool.php` (CRUD permission trait integration)
+  - `app/Domain/Mcp/Tools/MasterDataManageUnitConversionTool.php` (CRUD permission trait integration)
+  - `resources/views/app/settings/integrations/mcp.blade.php` (16 ability domains matrix)
+  - `docs/AiWorkHistory.md` (Dokumentasi entri kerja)
+
+---
+
 ### [WORK-2026-11-17-739] Global Audit & Remediation of Copyrighted Netflix Logo Blog Cover Assets
 
 - **Date:** 2026-11-17

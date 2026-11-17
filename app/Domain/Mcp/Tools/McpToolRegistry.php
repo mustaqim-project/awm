@@ -43,6 +43,12 @@ final class McpToolRegistry
         $this->register(new SocialManageChannelsTool());
         $this->register(new WarehouseManageLocationTool());
         $this->register(new MasterDataManageUnitConversionTool());
+        $this->register(new InventoryTransferStockTool());
+        $this->register(new HrmManageEmployeeTool());
+        $this->register(new PosManageTransactionTool());
+        $this->register(new ApprovalManageWorkflowTool());
+        $this->register(new SettingsManageBusinessTool());
+        $this->register(new CrmManageCustomerTool());
     }
 
     public function register(McpToolInterface $tool): void
@@ -85,7 +91,14 @@ final class McpToolRegistry
 
         $allowed = [];
         foreach ($this->tools as $name => $tool) {
-            if ($token->hasAbility($tool->getRequiredAbility())) {
+            $requiredAbility = $tool->getRequiredAbility();
+            if ($token->hasAbility($requiredAbility)) {
+                $allowed[$name] = $tool;
+                continue;
+            }
+
+            $parts = explode(':', $requiredAbility);
+            if (count($parts) >= 2 && $parts[0] === 'mcp' && $token->hasDomainAccess($parts[1])) {
                 $allowed[$name] = $tool;
             }
         }

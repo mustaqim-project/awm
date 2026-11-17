@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Mcp\Tools;
 
+use App\Domain\Mcp\Tools\Traits\HandlesCrudPermissions;
 use App\Models\AuditLog;
 use App\Models\Business;
 use App\Models\Location;
@@ -13,6 +14,8 @@ use InvalidArgumentException;
 
 final class WarehouseManageLocationTool implements McpToolInterface
 {
+    use HandlesCrudPermissions;
+
     public function getName(): string
     {
         return 'warehouse_manage_location';
@@ -25,7 +28,7 @@ final class WarehouseManageLocationTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:warehouse:manage';
+        return 'mcp:warehouse:read';
     }
 
     public function getInputSchema(): array
@@ -35,9 +38,9 @@ final class WarehouseManageLocationTool implements McpToolInterface
             'properties' => [
                 'action' => [
                     'type' => 'string',
-                    'enum' => ['list', 'create', 'update', 'get'],
+                    'enum' => ['list', 'create', 'update', 'get', 'delete'],
                     'default' => 'list',
-                    'description' => 'Aksi: list (daftar lokasi & sub-gudang), create (tambah gudang/outlet baru), update (ubah gudang/outlet), get (detail lokasi & saldo stok).',
+                    'description' => 'Aksi: list (daftar lokasi & sub-gudang), create (tambah gudang/outlet baru), update (ubah gudang/outlet), get (detail lokasi & saldo stok), delete (hapus gudang).',
                 ],
                 'location_id' => [
                     'type' => 'string',
@@ -110,11 +113,78 @@ final class WarehouseManageLocationTool implements McpToolInterface
         $action = trim((string) ($arguments['action'] ?? 'list'));
 
         return match ($action) {
-            'create' => $this->createLocation($business, $user, $arguments),
-            'update' => $this->updateLocation($business, $user, $arguments),
-            'get'    => $this->getLocation($business, $arguments),
-            default  => $this->listLocations($business, $arguments),
+            'create' => $this->createLocationWithPermission($business, $user, $arguments),
+            'update' => $this->updateLocationWithPermission($business, $user, $arguments),
+            'delete' => $this->deleteLocationWithPermission($business, $user, $arguments),
+            'get'    => $this->getLocationWithPermission($business, $user, $arguments),
+            default  => $this->listLocationsWithPermission($business, $user, $arguments),
         };
+    }
+
+    private function listLocationsWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('warehouse', 'read', $business, $user);
+        return $this->listLocations($business, $args);
+    }
+
+    private function getLocationWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('warehouse', 'read', $business, $user);
+        return $this->getLocation($business, $args);
+    }
+
+    private function createLocationWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('warehouse', 'create', $business, $user);
+        return $this->createLocation($business, $user, $args);
+    }
+
+    private function updateLocationWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('warehouse', 'update', $business, $user);
+        return $this->updateLocation($business, $user, $args);
+    }
+
+    private function deleteLocationWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('warehouse', 'delete', $business, $user);
+
+        $id = $args['location_id'] ?? null;
+        if (! $id) {
+            throw new InvalidArgumentException('location_id wajib diisi untuk menghapus lokasi/gudang.');
+        }
+
+        $location = Location::where('business_id', $business->id)
+            ->where(function ($q) use ($id): void {
+                $q->where('id', $id)->orWhere('code', $id);
+            })
+            ->first();
+
+        if (! $location) {
+            throw new InvalidArgumentException("Lokasi [{$id}] tidak ditemukan.");
+        }
+
+        if ($location->is_primary) {
+            throw new InvalidArgumentException('Lokasi utama (primary) tidak dapat dihapus.');
+        }
+
+        $locName = $location->name;
+        $location->delete();
+
+        AuditLog::create([
+            'business_id' => $business->id,
+            'user_id' => $user?->id,
+            'action' => 'mcp_delete_location',
+            'auditable_type' => Location::class,
+            'auditable_id' => $id,
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'COOCA-MCP-Agent/1.0',
+        ]);
+
+        return [
+            'success' => true,
+            'message' => "Lokasi [{$locName}] berhasil dihapus.",
+        ];
     }
 
     private function listLocations(Business $business, array $args): array

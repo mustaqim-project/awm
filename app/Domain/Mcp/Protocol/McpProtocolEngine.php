@@ -133,8 +133,8 @@ final class McpProtocolEngine
 
         $tool = $this->toolRegistry->getTool($toolName);
 
-        // Scope check
-        if ($token !== null && ! $token->hasAbility($tool->getRequiredAbility())) {
+        // Scope check: token must have either the required ability, or at least one ability in this domain, or wildcard
+        if ($token !== null && ! $this->checkTokenToolAccess($token, $tool)) {
             throw new \RuntimeException("Access token lacks ability '{$tool->getRequiredAbility()}' for tool '{$toolName}'.", -32001);
         }
 
@@ -148,6 +148,7 @@ final class McpProtocolEngine
             throw new \RuntimeException("Konteks bisnis tidak ditemukan. Harap pastikan MCP Access Token valid dan terikat pada bisnis aktif.", -32000);
         }
         Context::setBusiness($business);
+        Context::setMcpToken($token);
 
         /** @var User|null $user */
         $user = Context::user() ?? $token?->user;
@@ -235,5 +236,23 @@ final class McpProtocolEngine
         }
 
         return $sanitized;
+    }
+
+    /**
+     * Check if token has access to execute the tool (ability match, domain access, or full wildcard).
+     */
+    private function checkTokenToolAccess(McpAccessToken $token, \App\Domain\Mcp\Tools\McpToolInterface $tool): bool
+    {
+        $required = $tool->getRequiredAbility();
+        if ($token->hasAbility($required)) {
+            return true;
+        }
+
+        if (preg_match('/^mcp:([a-z0-9_-]+):([a-z0-9_-]+)$/', $required, $m)) {
+            $domain = $m[1];
+            return $token->hasDomainAccess($domain);
+        }
+
+        return false;
     }
 }

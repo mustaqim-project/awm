@@ -110,6 +110,30 @@ final class McpAccessToken extends Model
     }
 
     /**
+     * Check if token has access to a domain (at least one CRUD ability or wildcard).
+     */
+    public function hasDomainAccess(string $domain): bool
+    {
+        $abilities = $this->abilities ?? [];
+
+        if (in_array('*', $abilities, true)) {
+            return true;
+        }
+
+        if (in_array("mcp:{$domain}:*", $abilities, true) || in_array("mcp:{$domain}:manage", $abilities, true)) {
+            return true;
+        }
+
+        foreach ($abilities as $pattern) {
+            if (str_starts_with($pattern, "mcp:{$domain}:")) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Determine if token has expired.
      */
     public function isExpired(): bool

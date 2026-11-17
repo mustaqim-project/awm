@@ -17,6 +17,8 @@ final class Context
 
     private static ?\App\Models\Location $location = null;
 
+    private static ?\App\Models\McpAccessToken $mcpToken = null;
+
     /**
      * Get the active business from context.
      */
@@ -257,6 +259,22 @@ final class Context
     }
 
     /**
+     * Get the active MCP token from context (if running via MCP request).
+     */
+    public static function mcpToken(): ?\App\Models\McpAccessToken
+    {
+        return self::$mcpToken;
+    }
+
+    /**
+     * Set the active MCP token in context.
+     */
+    public static function setMcpToken(?\App\Models\McpAccessToken $token): void
+    {
+        self::$mcpToken = $token;
+    }
+
+    /**
      * Flush current context state (useful for tests and octane-safe cleanup).
      */
     public static function flush(): void
@@ -264,6 +282,7 @@ final class Context
         self::$business = null;
         self::$membership = null;
         self::$location = null;
+        self::$mcpToken = null;
     }
 }
 

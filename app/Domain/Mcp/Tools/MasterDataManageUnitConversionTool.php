@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Mcp\Tools;
 
 use App\Domain\Material\UnitConversionService;
+use App\Domain\Mcp\Tools\Traits\HandlesCrudPermissions;
 use App\Models\AuditLog;
 use App\Models\Business;
 use App\Models\Material;
@@ -16,6 +17,8 @@ use InvalidArgumentException;
 
 final class MasterDataManageUnitConversionTool implements McpToolInterface
 {
+    use HandlesCrudPermissions;
+
     public function __construct(
         private readonly UnitConversionService $conversionService = new UnitConversionService()
     ) {}
@@ -32,7 +35,7 @@ final class MasterDataManageUnitConversionTool implements McpToolInterface
 
     public function getRequiredAbility(): string
     {
-        return 'mcp:inventory:create';
+        return 'mcp:master_data:read';
     }
 
     public function getInputSchema(): array
@@ -93,13 +96,49 @@ final class MasterDataManageUnitConversionTool implements McpToolInterface
         $action = trim((string) ($arguments['action'] ?? 'list_conversions'));
 
         return match ($action) {
-            'create_conversion' => $this->createConversion($business, $user, $arguments),
-            'convert'           => $this->convertLive($business, $arguments),
-            'list_units'        => $this->listUnits($business),
-            'create_unit'       => $this->createUnit($business, $user, $arguments),
-            'delete_conversion' => $this->deleteConversion($business, $user, $arguments),
-            default             => $this->listConversions($business, $arguments),
+            'create_conversion' => $this->createConversionWithPermission($business, $user, $arguments),
+            'create_unit'       => $this->createUnitWithPermission($business, $user, $arguments),
+            'delete_conversion' => $this->deleteConversionWithPermission($business, $user, $arguments),
+            'convert'           => $this->convertLiveWithPermission($business, $user, $arguments),
+            'list_units'        => $this->listUnitsWithPermission($business, $user),
+            default             => $this->listConversionsWithPermission($business, $user, $arguments),
         };
+    }
+
+    private function listUnitsWithPermission(Business $business, ?User $user): array
+    {
+        $this->assertCan('master_data', 'read', $business, $user);
+        return $this->listUnits($business);
+    }
+
+    private function listConversionsWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('master_data', 'read', $business, $user);
+        return $this->listConversions($business, $args);
+    }
+
+    private function convertLiveWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('master_data', 'read', $business, $user);
+        return $this->convertLive($business, $args);
+    }
+
+    private function createConversionWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('master_data', 'create', $business, $user);
+        return $this->createConversion($business, $user, $args);
+    }
+
+    private function createUnitWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('master_data', 'create', $business, $user);
+        return $this->createUnit($business, $user, $args);
+    }
+
+    private function deleteConversionWithPermission(Business $business, ?User $user, array $args): array
+    {
+        $this->assertCan('master_data', 'delete', $business, $user);
+        return $this->deleteConversion($business, $user, $args);
     }
 
     private function listUnits(Business $business): array
