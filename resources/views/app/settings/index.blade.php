@@ -538,18 +538,35 @@
                             </span>
                         </div>
 
+                        {{-- Bento Callout: Per-Branch PIN Independence --}}
+                        <div class="rounded-[12px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/15 p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                            <div class="flex items-start sm:items-center gap-2.5">
+                                <div class="w-7 h-7 rounded-[8px] bg-[#007AFF]/15 text-[#007AFF] flex items-center justify-center shrink-0">
+                                    <i data-lucide="store" class="w-4 h-4"></i>
+                                </div>
+                                <p class="text-[12px] text-slate-700 dark:text-slate-300 leading-relaxed">
+                                    {{ __('settings.callout_branch_pin_info') }}
+                                </p>
+                            </div>
+                            <button type="button" @click="activeTab = 'branches'"
+                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[11.5px] font-semibold text-[#007AFF] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all shrink-0 cursor-pointer">
+                                <span>{{ __('settings.btn_manage_branch_pins') }}</span>
+                                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <!-- PIN Input -->
                             <div>
                                 <label for="pos_supervisor_pin_input"
                                     class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
-                                    {{ __('settings.pos_supervisor_pin') }}
+                                    {{ __('settings.pos_supervisor_pin_main') }}
                                 </label>
                                 <input type="password" id="pos_supervisor_pin_input" name="pos_supervisor_pin"
                                     inputmode="numeric" pattern="[0-9]*" maxlength="8"
                                     placeholder="{{ !empty($business->pos_supervisor_pin) ? __('settings.pin_placeholder_masked') : __('settings.pin_placeholder_empty') }}"
                                     class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[15px] font-mono tracking-widest text-black dark:text-white placeholder:font-sans placeholder:tracking-normal placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                                <p class="mt-1 text-[11px] text-black/40 dark:text-white/40">{{ __('settings.pos_supervisor_pin_hint') }}</p>
+                                <p class="mt-1 text-[11px] text-black/40 dark:text-white/40">{{ __('settings.pos_supervisor_pin_main_desc') }}</p>
                             </div>
 
                             <!-- Max Cashier Discount -->
@@ -699,6 +716,17 @@
                                                 <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF9500]/15 text-[#D97706] dark:text-[#FBBF24] border border-[#FF9500]/30">
                                                     <i data-lucide="building" class="w-3 h-3"></i>
                                                     <span>{{ __('settings.branch_primary_badge') }}</span>
+                                                </span>
+                                            @endif
+                                            @if ($branch->hasCustomSupervisorPin())
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/25" title="{{ __('settings.branch_supervisor_pin') }}">
+                                                    <i data-lucide="key" class="w-3 h-3"></i>
+                                                    <span>{{ __('settings.pin_status_custom_branch') }}</span>
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50 border border-black/5 dark:border-white/5" title="{{ __('settings.branch_supervisor_pin') }}">
+                                                    <i data-lucide="shield" class="w-3 h-3"></i>
+                                                    <span>{{ __('settings.pin_status_inherit_business') }}</span>
                                                 </span>
                                             @endif
                                         </div>
@@ -2401,6 +2429,37 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {{-- ========================================================== --}}
+                            {{-- BAGIAN 4: KEAMANAN KASIR & PIN SUPERVISOR CABANG           --}}
+                            {{-- ========================================================== --}}
+                            <div class="space-y-4 pt-2">
+                                <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-[#34C759]/15 text-[#34C759] text-xs font-bold flex items-center justify-center">4</span>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_security_pin') }}</h3>
+                                    </div>
+                                    <span class="text-[11px] font-medium text-black/45 dark:text-white/45">Bcrypt &bull; Opsional</span>
+                                </div>
+
+                                <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-2">
+                                    <label class="block font-semibold text-black/80 dark:text-white/85 text-xs">
+                                        {{ __('settings.branch_supervisor_pin') }}
+                                    </label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
+                                            <i data-lucide="key" class="w-4 h-4"></i>
+                                        </div>
+                                        <input type="password" name="pos_supervisor_pin" x-model="branchForm.pos_supervisor_pin"
+                                               inputmode="numeric" pattern="[0-9]*" maxlength="8"
+                                               placeholder="{{ __('settings.branch_supervisor_pin_ph_create') }}"
+                                               class="w-full pl-10 pr-3.5 py-2.5 bg-white dark:bg-black/20 border border-black/10 dark:border-white/10 focus:border-[#34C759] focus:ring-4 focus:ring-[#34C759]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] font-mono tracking-widest outline-none">
+                                    </div>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">
+                                        {{ __('settings.branch_supervisor_pin_hint') }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         {{-- Footer --}}
@@ -2765,6 +2824,63 @@
                                             </div>
                                         </label>
                                     </div>
+                                </div>
+                            </div>
+
+                            {{-- ========================================================== --}}
+                            {{-- BAGIAN 4: KEAMANAN KASIR & PIN SUPERVISOR CABANG           --}}
+                            {{-- ========================================================== --}}
+                            <div class="space-y-4 pt-2">
+                                <div class="flex items-center justify-between pb-1.5 border-b border-black/5 dark:border-white/5">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-6 h-6 rounded-full bg-[#34C759]/15 text-[#34C759] text-xs font-bold flex items-center justify-center">4</span>
+                                        <h3 class="text-xs sm:text-sm font-bold text-black dark:text-white uppercase tracking-wider">{{ __('settings.sec_branch_security_pin') }}</h3>
+                                    </div>
+                                    <template x-if="branchEditData.has_custom_supervisor_pin">
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                            <i data-lucide="key" class="w-3 h-3"></i>
+                                            <span>{{ __('settings.pin_status_custom_branch') }}</span>
+                                        </span>
+                                    </template>
+                                    <template x-if="!branchEditData.has_custom_supervisor_pin">
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-black/5 dark:bg-white/10 text-black/50 dark:text-white/50">
+                                            <i data-lucide="shield" class="w-3 h-3"></i>
+                                            <span>{{ __('settings.pin_status_inherit_business') }}</span>
+                                        </span>
+                                    </template>
+                                </div>
+
+                                <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 space-y-3">
+                                    <div>
+                                        <label class="block font-semibold text-black/80 dark:text-white/85 text-xs mb-1.5">
+                                            {{ __('settings.branch_supervisor_pin') }}
+                                        </label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-black/40 dark:text-white/40">
+                                                <i data-lucide="key" class="w-4 h-4"></i>
+                                            </div>
+                                            <input type="password" name="pos_supervisor_pin" x-model="branchEditData.pos_supervisor_pin"
+                                                   :disabled="branchEditData.reset_pos_supervisor_pin"
+                                                   inputmode="numeric" pattern="[0-9]*" maxlength="8"
+                                                   :placeholder="branchEditData.has_custom_supervisor_pin ? '{{ __('settings.branch_supervisor_pin_ph_edit') }}' : '{{ __('settings.branch_supervisor_pin_ph_unset') }}'"
+                                                   class="w-full pl-10 pr-3.5 py-2.5 bg-white dark:bg-black/20 border border-black/10 dark:border-white/10 focus:border-[#34C759] focus:ring-4 focus:ring-[#34C759]/15 rounded-[12px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 transition-all text-xs sm:text-[13px] font-mono tracking-widest outline-none disabled:opacity-40">
+                                        </div>
+                                        <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed mt-1">
+                                            {{ __('settings.branch_supervisor_pin_hint') }}
+                                        </p>
+                                    </div>
+
+                                    <template x-if="branchEditData.has_custom_supervisor_pin">
+                                        <label class="flex items-start gap-2.5 p-2.5 rounded-[10px] bg-[#FF3B30]/5 border border-[#FF3B30]/15 cursor-pointer hover:bg-[#FF3B30]/10 transition">
+                                            <input type="checkbox" name="reset_pos_supervisor_pin" value="1"
+                                                   x-model="branchEditData.reset_pos_supervisor_pin"
+                                                   class="mt-0.5 w-4 h-4 rounded text-[#FF3B30] focus:ring-[#FF3B30]">
+                                            <div class="text-xs">
+                                                <span class="font-bold text-[#FF3B30] block">{{ __('settings.reset_branch_pin_label') }}</span>
+                                                <span class="text-[10.5px] text-black/55 dark:text-white/55 block mt-0.5">{{ __('settings.reset_branch_pin_desc') }}</span>
+                                            </div>
+                                        </label>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -3483,7 +3599,8 @@
                         geofence_radius_meters: 100,
                         is_primary: false,
                         is_online_fulfillment: true,
-                        allow_storefront_pickup: true
+                        allow_storefront_pickup: true,
+                        pos_supervisor_pin: ''
                     };
                     this.branchSearchQuery = '';
                     this.branchSearchResults = [];
@@ -3538,7 +3655,10 @@
                         is_primary: Boolean(branch.is_primary),
                         is_online_fulfillment: Boolean(branch.is_online_fulfillment !== false && branch.is_online_fulfillment !== 0),
                         allow_storefront_pickup: Boolean(branch.allow_storefront_pickup !== false && branch.allow_storefront_pickup !== 0),
-                        is_active: Boolean(branch.is_active !== false && branch.is_active !== 0)
+                        is_active: Boolean(branch.is_active !== false && branch.is_active !== 0),
+                        has_custom_supervisor_pin: Boolean(branch.has_custom_supervisor_pin),
+                        pos_supervisor_pin: '',
+                        reset_pos_supervisor_pin: false
                     };
                     this.branchSearchQuery = '';
                     this.branchSearchResults = [];

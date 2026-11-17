@@ -3249,7 +3249,8 @@
                                 'X-CSRF-TOKEN': this.csrfToken
                             },
                             body: JSON.stringify({
-                                pin: this.supervisorPinInput.trim()
+                                pin: this.supervisorPinInput.trim(),
+                                location_id: this.selectedLocationId
                             })
                         });
 

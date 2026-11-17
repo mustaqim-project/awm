@@ -831,6 +831,7 @@ final class SettingWebController extends Controller implements HasMiddleware
             'operating_hours'        => ['nullable', 'array'],
             'is_online_fulfillment'  => ['nullable', 'boolean'],
             'allow_storefront_pickup'=> ['nullable', 'boolean'],
+            'pos_supervisor_pin'     => ['nullable', 'string', 'digits_between:4,8'],
         ]);
 
         $locationType = $validated['type'] ?? 'outlet';
@@ -912,6 +913,7 @@ final class SettingWebController extends Controller implements HasMiddleware
             'operating_hours'         => $locOperatingHours,
             'is_online_fulfillment'   => $request->boolean('is_online_fulfillment', true),
             'allow_storefront_pickup' => $request->boolean('allow_storefront_pickup', true),
+            'pos_supervisor_pin'      => ! empty($validated['pos_supervisor_pin']) ? $validated['pos_supervisor_pin'] : null,
             'is_primary'              => $isPrimary,
             'is_active'               => true,
         ]);
@@ -992,6 +994,8 @@ final class SettingWebController extends Controller implements HasMiddleware
             'is_primary'             => ['nullable', 'boolean'],
             'is_online_fulfillment'  => ['nullable', 'boolean'],
             'allow_storefront_pickup'=> ['nullable', 'boolean'],
+            'pos_supervisor_pin'     => ['nullable', 'string', 'digits_between:4,8'],
+            'reset_pos_supervisor_pin' => ['nullable', 'boolean'],
         ]);
 
         $isPrimary = $request->boolean('is_primary');
@@ -1055,6 +1059,12 @@ final class SettingWebController extends Controller implements HasMiddleware
             }
         }
 
+        if ($request->boolean('reset_pos_supervisor_pin')) {
+            $updateData['pos_supervisor_pin'] = null;
+        } elseif ($request->filled('pos_supervisor_pin')) {
+            $updateData['pos_supervisor_pin'] = $request->input('pos_supervisor_pin');
+        }
+
         $location->update($updateData);
 
         if ($location->is_primary) {
@@ -1070,14 +1080,15 @@ final class SettingWebController extends Controller implements HasMiddleware
         }
 
         if (class_exists(\App\Models\AuditLog::class)) {
+            $pinChanged = array_key_exists('pos_supervisor_pin', $updateData);
             \App\Models\AuditLog::create([
                 'business_id'    => $business->id,
                 'user_id'        => $request->user()?->id,
                 'auditable_type' => \App\Models\Location::class,
                 'auditable_id'   => $location->id,
                 'action'         => 'settings.branch_updated',
-                'risk_level'     => \App\Models\AuditLog::RISK_MEDIUM,
-                'risk_reason'    => 'Pembaruan data cabang toko via Settings Hub.',
+                'risk_level'     => $pinChanged ? \App\Models\AuditLog::RISK_HIGH : \App\Models\AuditLog::RISK_MEDIUM,
+                'risk_reason'    => $pinChanged ? 'Pembaruan PIN Supervisor Cabang toko via Settings Hub.' : 'Pembaruan data cabang toko via Settings Hub.',
                 'notes'          => "Cabang '{$location->name}' diperbarui via Settings Hub",
                 'ip_address'     => $request->ip(),
                 'user_agent'     => (string) $request->userAgent(),

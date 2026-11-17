@@ -347,6 +347,12 @@ final class PosTerminalController extends Controller
             'operating_mode' => $operatingMode,
             'can_bypass_supervisor' => $canBypassSupervisor,
             'hide_cost_from_cashier' => $hideCostFromCashier,
+            'security' => [
+                'has_business_supervisor_pin' => $business->hasSupervisorPin(),
+                'pos_require_pin_for_void' => (bool) $business->pos_require_pin_for_void,
+                'pos_require_pin_for_refund' => (bool) $business->pos_require_pin_for_refund,
+                'cashier_max_discount_percent' => (float) ($business->cashier_max_discount_percent ?? 0),
+            ],
         ], Response::HTTP_OK);
     }
 
@@ -862,7 +868,11 @@ final class PosTerminalController extends Controller
             ], Response::HTTP_OK);
         }
 
-        if (! $business->hasSupervisorPin()) {
+        $locationId = $request->input('location_id') ?? Context::location()?->id;
+        $location = $locationId ? Location::where('business_id', $business->id)->find($locationId) : null;
+
+        $hasPin = $location ? $location->hasSupervisorPin() : $business->hasSupervisorPin();
+        if (! $hasPin) {
             return response()->json([
                 'verified' => false,
                 'message' => __('pos.supervisor_pin_not_configured'),
@@ -887,7 +897,8 @@ final class PosTerminalController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if ($business->verifySupervisorPin($pin)) {
+        $isVerified = $location ? $location->verifySupervisorPin($pin) : $business->verifySupervisorPin($pin);
+        if ($isVerified) {
             RateLimiter::clear($throttleKey);
             return response()->json([
                 'verified' => true,

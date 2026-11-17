@@ -413,4 +413,221 @@ final class PosSupervisorSecurityTest extends TestCase
         // Must return false and NOT throw RuntimeException
         $this->assertFalse($this->business->verifySupervisorPin('123456'));
     }
+
+    public function test_branch_with_custom_pin_verifies_branch_pin_and_master_pin_fallback(): void
+    {
+        $branch = \App\Models\Location::create([
+            'business_id' => $this->business->id,
+            'name' => 'Cabang Surabaya',
+            'slug' => 'cabang-surabaya',
+            'type' => 'outlet',
+            'pos_supervisor_pin' => '556677',
+        ]);
+
+        $this->assertTrue($branch->hasCustomSupervisorPin());
+        $this->assertTrue($branch->hasSupervisorPin());
+        $this->assertNotEquals('556677', $branch->pos_supervisor_pin);
+        $this->assertTrue(Hash::check('556677', $branch->pos_supervisor_pin));
+
+        // 1. Correct branch PIN verifies
+        $this->assertTrue($branch->verifySupervisorPin('556677'));
+
+        // 2. Master business PIN (8888) also verifies (hierarchical owner fallback)
+        $this->assertTrue($branch->verifySupervisorPin('8888'));
+
+        // 3. Incorrect PIN fails
+        $this->assertFalse($branch->verifySupervisorPin('111111'));
+        $this->assertFalse($branch->verifySupervisorPin(''));
+    }
+
+    public function test_branch_without_custom_pin_inherits_business_pin(): void
+    {
+        $branch = \App\Models\Location::create([
+            'business_id' => $this->business->id,
+            'name' => 'Cabang Bandung',
+            'slug' => 'cabang-bandung',
+            'type' => 'outlet',
+            'pos_supervisor_pin' => null,
+        ]);
+
+        $this->assertFalse($branch->hasCustomSupervisorPin());
+        $this->assertTrue($branch->hasSupervisorPin()); // Inherits from business
+        $this->assertNull($branch->pos_supervisor_pin);
+
+        // Verifies against master business PIN (8888)
+        $this->assertTrue($branch->verifySupervisorPin('8888'));
+        $this->assertFalse($branch->verifySupervisorPin('0000'));
+    }
+
+    public function test_owner_can_create_branch_with_custom_supervisor_pin_in_settings(): void
+    {
+        $response = $this->actingAs($this->owner)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->owner->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->post(route('settings.branches.store'), [
+                'name' => 'Cabang Malang',
+                'type' => 'outlet',
+                'code' => 'MLG-01',
+                'pos_supervisor_pin' => '334455',
+            ]);
+
+        $response->assertSessionHas('success');
+
+        $branch = \App\Models\Location::where('business_id', $this->business->id)
+            ->where('name', 'Cabang Malang')
+            ->firstOrFail();
+
+        $this->assertTrue($branch->hasCustomSupervisorPin());
+        $this->assertTrue(Hash::check('334455', $branch->pos_supervisor_pin));
+        $this->assertTrue($branch->verifySupervisorPin('334455'));
+    }
+
+    public function test_owner_can_update_and_reset_branch_supervisor_pin_in_settings(): void
+    {
+        $branch = \App\Models\Location::create([
+            'business_id' => $this->business->id,
+            'name' => 'Cabang Denpasar',
+            'slug' => 'cabang-denpasar',
+            'type' => 'outlet',
+            'pos_supervisor_pin' => '112233',
+        ]);
+
+        // 1. Update PIN to new value
+        $responseUpdate = $this->actingAs($this->owner)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->owner->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->put(route('settings.branches.update', $branch), [
+                'name' => 'Cabang Denpasar Updated',
+                'pos_supervisor_pin' => '998877',
+            ]);
+
+        $responseUpdate->assertSessionHas('success');
+        $branch->refresh();
+        $this->assertTrue(Hash::check('998877', $branch->pos_supervisor_pin));
+        $this->assertTrue($branch->verifySupervisorPin('998877'));
+
+        // 2. Reset PIN to inherit from business master PIN
+        $responseReset = $this->actingAs($this->owner)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->owner->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->put(route('settings.branches.update', $branch), [
+                'name' => 'Cabang Denpasar Updated',
+                'reset_pos_supervisor_pin' => '1',
+            ]);
+
+        $responseReset->assertSessionHas('success');
+        $branch->refresh();
+        $this->assertFalse($branch->hasCustomSupervisorPin());
+        $this->assertNull($branch->pos_supervisor_pin);
+        // Now it inherits business master PIN (8888)
+        $this->assertTrue($branch->verifySupervisorPin('8888'));
+    }
+
+    public function test_pos_terminal_verify_pin_endpoint_respects_branch_pin(): void
+    {
+        $branch = \App\Models\Location::create([
+            'business_id' => $this->business->id,
+            'name' => 'Cabang Solo',
+            'slug' => 'cabang-solo',
+            'type' => 'outlet',
+            'pos_supervisor_pin' => '445566',
+        ]);
+
+        // Wrong PIN -> 401
+        $responseFail = $this->actingAs($this->cashier)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->cashier->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->postJson(route('pos.verify-pin'), [
+                'pin' => '000000',
+                'location_id' => $branch->id,
+            ]);
+
+        $responseFail->assertStatus(401);
+
+        // Branch-specific supervisor PIN -> 200
+        $responseBranchOk = $this->actingAs($this->cashier)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->cashier->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->postJson(route('pos.verify-pin'), [
+                'pin' => '445566',
+                'location_id' => $branch->id,
+            ]);
+
+        $responseBranchOk->assertStatus(200);
+        $responseBranchOk->assertJson(['success' => true]);
+
+        // Master business PIN also accepted at branch -> 200
+        $responseMasterOk = $this->actingAs($this->cashier)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->cashier->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->postJson(route('pos.verify-pin'), [
+                'pin' => '8888',
+                'location_id' => $branch->id,
+            ]);
+
+        $responseMasterOk->assertStatus(200);
+        $responseMasterOk->assertJson(['success' => true]);
+    }
+
+    public function test_cashier_void_uses_order_branch_custom_pin(): void
+    {
+        $branch = \App\Models\Location::create([
+            'business_id' => $this->business->id,
+            'name' => 'Cabang Medan',
+            'slug' => 'cabang-medan',
+            'type' => 'outlet',
+            'pos_supervisor_pin' => '321654',
+        ]);
+
+        $order = PosOrder::create([
+            'business_id' => $this->business->id,
+            'location_id' => $branch->id,
+            'user_id' => $this->cashier->id,
+            'order_number' => 'POS-MEDAN-001',
+            'order_date' => now()->toDateString(),
+            'status' => PosOrder::STATUS_COMPLETED,
+            'subtotal' => 50000,
+            'total_amount' => 50000,
+            'payment_status' => 'paid',
+        ]);
+
+        // Wrong PIN -> Fails
+        $responseFail = $this->actingAs($this->cashier)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->cashier->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->post(url("/pos/orders/{$order->id}/void"), [
+                'reason' => 'Batal transaksi cabang',
+                'pin' => '999999',
+            ]);
+
+        $responseFail->assertSessionHasErrors('void');
+
+        // Branch PIN -> Succeeds
+        $responseOk = $this->actingAs($this->cashier)
+            ->withSession([
+                'auth_wa_otp_verified_user_id' => $this->cashier->id,
+                'active_business_id' => $this->business->id,
+            ])
+            ->post(url("/pos/orders/{$order->id}/void"), [
+                'reason' => 'Batal transaksi cabang',
+                'pin' => '321654',
+            ]);
+
+        $responseOk->assertSessionHas('success');
+        $this->assertEquals(PosOrder::STATUS_VOIDED, $order->fresh()->status);
+    }
 }

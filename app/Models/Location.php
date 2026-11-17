@@ -43,7 +43,106 @@ class Location extends Model
         'timezone_mode',
         'operating_hours_mode',
         'operating_hours',
+        'pos_supervisor_pin',
     ];
+
+    protected $hidden = [
+        'pos_supervisor_pin',
+    ];
+
+    protected $appends = [
+        'has_custom_supervisor_pin',
+    ];
+
+    /**
+     * Check if this location has its own custom supervisor PIN configured.
+     */
+    public function getHasCustomSupervisorPinAttribute(): bool
+    {
+        return ! empty($this->pos_supervisor_pin);
+    }
+
+    /**
+     * Check if supervisor PIN is active (either branch-specific or business default).
+     */
+    public function hasSupervisorPin(): bool
+    {
+        if (! empty($this->pos_supervisor_pin)) {
+            return true;
+        }
+
+        $business = $this->relationLoaded('business') ? $this->business : Business::find($this->business_id);
+        return $business?->hasSupervisorPin() ?? false;
+    }
+
+    /**
+     * Check specifically if this location has an explicit custom supervisor PIN.
+     */
+    public function hasCustomSupervisorPin(): bool
+    {
+        return ! empty($this->pos_supervisor_pin);
+    }
+
+    /**
+     * Mutator to ensure supervisor PIN is always stored as a Bcrypt hash.
+     */
+    public function setPosSupervisorPinAttribute($value): void
+    {
+        if (empty($value)) {
+            $this->attributes['pos_supervisor_pin'] = null;
+            return;
+        }
+
+        $val = (string) $value;
+        $info = password_get_info($val);
+        $isHashed = ($info['algoName'] ?? '') === 'bcrypt'
+            || str_starts_with($val, '$2y$')
+            || str_starts_with($val, '$2a$')
+            || str_starts_with($val, '$2b$');
+
+        $this->attributes['pos_supervisor_pin'] = $isHashed ? $val : \Illuminate\Support\Facades\Hash::make($val);
+    }
+
+    /**
+     * Validate supervisor PIN with branch-first hierarchy, resilient Bcrypt verification, and fallback to master business PIN.
+     */
+    public function verifySupervisorPin(string $pin): bool
+    {
+        if ($pin === '') {
+            return false;
+        }
+
+        // 1. If branch has its own custom PIN, verify branch PIN first
+        if (! empty($this->pos_supervisor_pin)) {
+            $stored = (string) $this->pos_supervisor_pin;
+            $info = password_get_info($stored);
+            $isBcrypt = ($info['algoName'] ?? '') === 'bcrypt'
+                || str_starts_with($stored, '$2y$')
+                || str_starts_with($stored, '$2a$')
+                || str_starts_with($stored, '$2b$');
+
+            if ($isBcrypt) {
+                try {
+                    if (\Illuminate\Support\Facades\Hash::check($pin, $stored)) {
+                        return true;
+                    }
+                } catch (\Throwable) {
+                    // Fall through to master business check
+                }
+            } elseif (hash_equals($stored, $pin)) {
+                try {
+                    $this->updateQuietly([
+                        'pos_supervisor_pin' => \Illuminate\Support\Facades\Hash::make($pin),
+                    ]);
+                } catch (\Throwable) {}
+                return true;
+            }
+        }
+
+        // 2. Fallback to business master PIN (or inherit if no custom PIN was set)
+        $business = $this->relationLoaded('business') ? $this->business : Business::find($this->business_id);
+        return $business?->verifySupervisorPin($pin) ?? false;
+    }
 
     /**
      * @return array<string, string>

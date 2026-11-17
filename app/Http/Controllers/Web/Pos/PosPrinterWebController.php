@@ -410,14 +410,17 @@ final class PosPrinterWebController extends Controller
             }
         }
 
-        if (! $business->hasSupervisorPin()) {
+        $location = $printer->location ?? Context::location();
+        $hasPin = $location ? $location->hasSupervisorPin() : $business->hasSupervisorPin();
+        if (! $hasPin) {
             return response()->json([
                 'success' => false,
                 'message' => __('printer.drawer_pin_unconfigured'),
             ], 422);
         }
 
-        if ($pin === '' || ! $business->verifySupervisorPin($pin)) {
+        $isVerified = $location ? $location->verifySupervisorPin($pin) : $business->verifySupervisorPin($pin);
+        if ($pin === '' || ! $isVerified) {
             return response()->json([
                 'success' => false,
                 'message' => __('printer.drawer_pin_invalid'),

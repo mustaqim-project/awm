@@ -1062,7 +1062,11 @@ final class PosTerminalWebController extends Controller
             ]);
         }
 
-        if (! $business->hasSupervisorPin()) {
+        $locationId = $request->input('location_id') ?? session('pos_location_id') ?? Context::location()?->id;
+        $location = $locationId ? Location::where('business_id', $business->id)->find($locationId) : null;
+
+        $hasPin = $location ? $location->hasSupervisorPin() : $business->hasSupervisorPin();
+        if (! $hasPin) {
             return response()->json([
                 'success' => false,
                 'message' => __('pos.supervisor_pin_not_configured'),
@@ -1087,7 +1091,8 @@ final class PosTerminalWebController extends Controller
             ], 422);
         }
 
-        if ($business->verifySupervisorPin($pin)) {
+        $isVerified = $location ? $location->verifySupervisorPin($pin) : $business->verifySupervisorPin($pin);
+        if ($isVerified) {
             RateLimiter::clear($throttleKey);
             return response()->json([
                 'success' => true,

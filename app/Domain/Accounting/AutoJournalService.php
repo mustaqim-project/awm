@@ -1079,6 +1079,8 @@ final class AutoJournalService
         $hppAccount = $this->getAccount($business, '5-5001');
         $ppnAccount = $this->getAccount($business, '2-2002');
         $diskonAccount = $this->getAccount($business, '6-6001');
+        $roundingRevenueAccount = $this->getAccount($business, '7-7005') ?? $this->getAccount($business, '4-4001');
+        $roundingExpenseAccount = $this->getAccount($business, '6-6008') ?? $this->getAccount($business, '6-6001');
 
         if (! $piutangAccount || ! $revenueAccount) {
             return null;
@@ -1092,7 +1094,9 @@ final class AutoJournalService
             $revenueAccount,
             $hppAccount,
             $ppnAccount,
-            $diskonAccount
+            $diskonAccount,
+            $roundingRevenueAccount,
+            $roundingExpenseAccount
         ) {
             $entry = JournalEntry::create([
                 'business_id' => $business->id,
@@ -1557,7 +1561,9 @@ final class AutoJournalService
             $serviceAccount,
             $revenueAccount,
             $hppAccount,
-            $diskonAccount
+            $diskonAccount,
+            $roundingExpenseAccount,
+            $roundingRevenueAccount
         ) {
             $entry = JournalEntry::create([
                 'business_id' => $business->id,

@@ -96,7 +96,8 @@ final class PosOrderWebController extends Controller
         $user = auth()->user();
 
         if ($business->pos_require_pin_for_void) {
-            $authCheck = $this->verifySupervisorAuthorization($request, $business, $user);
+            $location = $order->location ?? ($order->location_id ? \App\Models\Location::find($order->location_id) : null);
+            $authCheck = $this->verifySupervisorAuthorization($request, $business, $user, $location);
             if (! $authCheck['valid']) {
                 if ($request->wantsJson()) {
                     return response()->json(['success' => false, 'message' => $authCheck['message']], $authCheck['status']);
@@ -143,7 +144,8 @@ final class PosOrderWebController extends Controller
         $user = auth()->user();
 
         if ($business->pos_require_pin_for_refund) {
-            $authCheck = $this->verifySupervisorAuthorization($request, $business, $user);
+            $location = $order->location ?? ($order->location_id ? \App\Models\Location::find($order->location_id) : null);
+            $authCheck = $this->verifySupervisorAuthorization($request, $business, $user, $location);
             if (! $authCheck['valid']) {
                 if ($request->wantsJson()) {
                     return response()->json(['success' => false, 'message' => $authCheck['message']], $authCheck['status']);
@@ -208,13 +210,14 @@ final class PosOrderWebController extends Controller
      *
      * @return array{valid: bool, message: string, status: int}
      */
-    private function verifySupervisorAuthorization(Request $request, \App\Models\Business $business, ?\App\Models\User $user): array
+    private function verifySupervisorAuthorization(Request $request, \App\Models\Business $business, ?\App\Models\User $user, ?\App\Models\Location $location = null): array
     {
         if (app(\App\Domain\System\OperatingModeService::class)->canBypassSupervisor($business, $user)) {
             return ['valid' => true, 'message' => __('auth.supervisor_auth_allowed'), 'status' => 200];
         }
 
-        if (! $business->hasSupervisorPin()) {
+        $hasPin = $location ? $location->hasSupervisorPin() : $business->hasSupervisorPin();
+        if (! $hasPin) {
             return [
                 'valid' => false,
                 'message' => __('pos.supervisor_pin_invalid'),
@@ -242,7 +245,8 @@ final class PosOrderWebController extends Controller
             ];
         }
 
-        if ($business->verifySupervisorPin($pin)) {
+        $isVerified = $location ? $location->verifySupervisorPin($pin) : $business->verifySupervisorPin($pin);
+        if ($isVerified) {
             RateLimiter::clear($throttleKey);
             return ['valid' => true, 'message' => __('pos.supervisor_auth_verified'), 'status' => 200];
         }
