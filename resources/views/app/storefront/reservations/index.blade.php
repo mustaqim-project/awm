@@ -168,51 +168,51 @@
         </div>
 
         <!-- Filters, Tabs & Branch Selector -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none flex-wrap sm:flex-nowrap">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0 flex-nowrap -mx-4 px-4 sm:mx-0 sm:px-0">
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'all', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'all' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'all' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_all') }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'today', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'today' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'today' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_today', ['count' => $todayCount]) }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'pending', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'pending' ? 'bg-amber-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'pending' ? 'bg-amber-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_pending', ['count' => $pendingCount]) }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'dp_paid', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'dp_paid' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'dp_paid' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_dp_paid', ['count' => $dpPaidCount]) }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'unpaid', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'unpaid' ? 'bg-amber-600 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'unpaid' ? 'bg-amber-600 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_unpaid') }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'confirmed', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'confirmed' ? 'bg-[#5856D6] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'confirmed' ? 'bg-[#5856D6] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_confirmed') }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'completed', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'completed' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'completed' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_completed') }}
                 </a>
                 <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'cancelled', 'location_id' => $filterLocationId])) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'cancelled' ? 'bg-red-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    class="px-3.5 py-2 sm:py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap min-h-[36px] inline-flex items-center {{ $statusTab === 'cancelled' ? 'bg-red-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_cancelled') }}
                 </a>
             </div>
 
-            <div class="flex items-center gap-3">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-3 w-full lg:w-auto">
                 @if ($locations->count() > 1)
-                    <form method="GET" action="{{ route('storefront.reservations.index') }}">
+                    <form method="GET" action="{{ route('storefront.reservations.index') }}" class="w-full sm:w-auto">
                         <input type="hidden" name="tab" value="{{ $statusTab }}">
                         @if (request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
                         <select name="location_id" onchange="this.form.submit()"
-                            class="h-10 px-3 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            class="w-full sm:w-auto h-11 sm:h-10 px-3.5 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                             <option value="">-- {{ __('storefront.backoffice.reservations.label_branch') }}: Semua --</option>
                             @foreach ($locations as $loc)
                                 <option value="{{ $loc->id }}" {{ $filterLocationId === $loc->id ? 'selected' : '' }}>
@@ -223,7 +223,7 @@
                     </form>
                 @endif
 
-                <form method="GET" action="{{ route('storefront.reservations.index') }}" class="relative min-w-[220px] flex-1 sm:flex-none">
+                <form method="GET" action="{{ route('storefront.reservations.index') }}" class="relative w-full sm:min-w-[240px]">
                     <input type="hidden" name="tab" value="{{ $statusTab }}">
                     @if ($filterLocationId)
                         <input type="hidden" name="location_id" value="{{ $filterLocationId }}">
@@ -232,7 +232,7 @@
                         class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="{{ __('storefront.backoffice.reservations.search_placeholder') }}"
-                        class="w-full h-10 pl-9 pr-3 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        class="w-full h-11 sm:h-10 pl-9 pr-3.5 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 </form>
             </div>
         </div>
@@ -241,7 +241,7 @@
         <div
             class="bg-white dark:bg-[#1C1C1E] rounded-[24px] border border-black/5 dark:border-white/10 shadow-sm overflow-hidden">
             @if ($reservations->isEmpty())
-                <div class="p-12 text-center space-y-3">
+                <div class="p-8 sm:p-12 text-center space-y-3">
                     <div
                         class="w-12 h-12 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center mx-auto text-black/30 dark:text-white/30">
                         <i data-lucide="calendar-x" class="w-6 h-6"></i>
@@ -251,7 +251,7 @@
                         {{ __('storefront.backoffice.reservations.empty_desc') }}
                     </p>
                     <button type="button" @click="showCreateModal = true"
-                        class="mt-3 px-4 py-2 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition inline-flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        class="mt-3 min-h-[44px] px-5 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition inline-flex items-center gap-1.5 shadow-sm cursor-pointer active:scale-95">
                         <i data-lucide="plus" class="w-4 h-4"></i>
                         <span>{{ __('storefront.backoffice.reservations.btn_add_manual') }}</span>
                     </button>
@@ -683,16 +683,17 @@
                                 @endif
                             </div>
 
-                            {{-- Bottom row: Quick Actions --}}
-                            <div class="flex items-center justify-between gap-2 pt-1">
-                                <div class="flex items-center gap-2">
+                            {{-- Bottom row: Quick Actions (Apple HIG Touch Friendly) --}}
+                            <div class="flex items-center justify-between gap-2 pt-2 border-t border-black/5 dark:border-white/5">
+                                <div class="flex items-center gap-2 flex-wrap">
                                     @if ($rsv->status === 'pending_confirmation')
                                         <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="confirmed">
                                             <button type="submit"
-                                                class="px-3.5 py-1.5 rounded-[10px] bg-[#34C759] hover:bg-[#2EB04E] text-white font-bold text-xs transition">
-                                                {{ __('storefront.backoffice.reservations.action_confirm') }}
+                                                class="min-h-[40px] px-4 py-2 rounded-[12px] bg-[#34C759] hover:bg-[#2EB04E] text-white font-bold text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95">
+                                                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('storefront.backoffice.reservations.action_confirm') }}</span>
                                             </button>
                                         </form>
                                     @elseif($rsv->status === 'confirmed')
@@ -700,8 +701,9 @@
                                             @csrf
                                             <input type="hidden" name="status" value="seated">
                                             <button type="submit"
-                                                class="px-3.5 py-1.5 rounded-[10px] bg-[#5856D6] hover:bg-[#4745B8] text-white font-bold text-xs transition">
-                                                {{ __('storefront.backoffice.reservations.action_seat') }}
+                                                class="min-h-[40px] px-4 py-2 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white font-bold text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95">
+                                                <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('storefront.backoffice.reservations.action_seat') }}</span>
                                             </button>
                                         </form>
                                     @elseif($rsv->status === 'seated')
@@ -709,14 +711,15 @@
                                             @csrf
                                             <input type="hidden" name="status" value="completed">
                                             <button type="submit"
-                                                class="px-3.5 py-1.5 rounded-[10px] bg-black dark:bg-white text-white dark:text-black font-bold text-xs transition">
-                                                {{ __('storefront.backoffice.reservations.action_complete') }}
+                                                class="min-h-[40px] px-4 py-2 rounded-[12px] bg-black dark:bg-white text-white dark:text-black font-bold text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95">
+                                                <i data-lucide="check-check" class="w-3.5 h-3.5"></i>
+                                                <span>{{ __('storefront.backoffice.reservations.action_complete') }}</span>
                                             </button>
                                         </form>
                                     @endif
 
                                     <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
-                                        class="px-3 py-1.5 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] font-bold text-xs transition flex items-center gap-1">
+                                        class="min-h-[40px] px-3.5 py-2 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] font-bold text-xs transition flex items-center gap-1.5 active:scale-95 cursor-pointer">
                                         <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
                                         <span>POS</span>
                                     </a>
@@ -724,29 +727,30 @@
 
                                 <div class="relative">
                                     <button type="button" @click="openMenu = !openMenu"
-                                        class="p-2 rounded-[10px] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60">
+                                        class="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[12px] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 text-black/60 dark:text-white/60 flex items-center justify-center cursor-pointer transition active:scale-95"
+                                        aria-label="{{ __('common.actions') }}">
                                         <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                     </button>
                                     <div x-show="openMenu" @click.away="openMenu = false" x-transition
-                                        class="absolute right-0 bottom-full mb-1 w-44 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-xs space-y-0.5">
+                                        class="absolute right-0 bottom-full mb-1 w-48 bg-white dark:bg-[#2C2C2E] rounded-[16px] shadow-xl border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-xs space-y-0.5">
                                         <button type="button" @click="openMenu = false; openDp({{ Js::from($rsv) }})"
-                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-semibold flex items-center gap-2">
-                                            <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                                            class="w-full px-3 py-2 rounded-[10px] hover:bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-semibold flex items-center gap-2 cursor-pointer">
+                                            <i data-lucide="credit-card" class="w-4 h-4"></i>
                                             <span>{{ __('storefront.backoffice.reservations.btn_record_dp') }}</span>
                                         </button>
                                         @if ($isFnB)
                                             <button type="button"
                                                 @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
-                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white cursor-pointer">
-                                                <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+                                                class="w-full px-3 py-2 rounded-[10px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white cursor-pointer">
+                                                <i data-lucide="layout-grid" class="w-4 h-4"></i>
                                                 <span>{{ __('storefront.backoffice.reservations.btn_change_table') }}</span>
                                             </button>
                                         @endif
                                         @if (!in_array($rsv->status, ['cancelled', 'completed', 'no_show'], true))
                                             <button type="button"
                                                 @click="openMenu = false; reservationToCancel = {{ json_encode(['id' => $rsv->id, 'code' => $rsv->reservation_code, 'customer_name' => $rsv->customer_name]) }}; cancelModalOpen = true;"
-                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 dark:text-red-400 flex items-center gap-2 cursor-pointer transition">
-                                                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+                                                class="w-full px-3 py-2 rounded-[10px] hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 dark:text-red-400 flex items-center gap-2 cursor-pointer transition">
+                                                <i data-lucide="x-circle" class="w-4 h-4"></i>
                                                 <span>{{ __('storefront.backoffice.reservations.btn_cancel_rsv') }}</span>
                                             </button>
                                         @endif
@@ -822,7 +826,7 @@
                                     </label>
                                     <input type="text" name="customer_name" required
                                         placeholder="Contoh: Budi Santoso"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
 
                                 <div>
@@ -831,7 +835,7 @@
                                     </label>
                                     <input type="text" name="customer_phone" required
                                         placeholder="Contoh: 081234567890"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
 
                                 <div class="sm:col-span-2">
@@ -840,7 +844,7 @@
                                     </label>
                                     <input type="email" name="customer_email"
                                         placeholder="email@pelanggan.com"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
                             </div>
                         </div>
@@ -859,7 +863,7 @@
                                             {{ __('storefront.backoffice.reservations.label_branch') }}
                                         </label>
                                         <select name="location_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                             @foreach ($locations as $loc)
                                                 <option value="{{ $loc->id }}" {{ $loc->is_primary ? 'selected' : '' }}>
                                                     {{ $loc->name }}
@@ -875,7 +879,7 @@
                                     </label>
                                     <input type="date" name="reservation_date" required
                                         value="{{ date('Y-m-d') }}"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
 
                                 <div>
@@ -883,7 +887,7 @@
                                         {{ __('storefront.backoffice.reservations.label_time') }} <span class="text-red-500">*</span>
                                     </label>
                                     <select name="time_slot" required
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                         @foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'] as $slot)
                                             <option value="{{ $slot }}" {{ $slot === '12:00' ? 'selected' : '' }}>{{ $slot }}</option>
                                         @endforeach
@@ -895,7 +899,7 @@
                                         {{ $isWorkshop ? __('storefront.backoffice.reservations.col_units_workshop') : __('storefront.backoffice.reservations.label_guests') }}
                                     </label>
                                     <input type="number" name="guest_count" min="1" max="500" value="1"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 </div>
                             </div>
                         </div>
@@ -915,7 +919,7 @@
                                             {{ __('storefront.backoffice.reservations.modal_assign_select_table') }}
                                         </label>
                                         <select name="pos_table_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                             <option value="">{{ __('storefront.backoffice.reservations.modal_assign_choose_placeholder') }}</option>
                                             @foreach ($tables as $tbl)
                                                 <option value="{{ $tbl->id }}">
@@ -934,7 +938,7 @@
                                         </label>
                                         <input type="text" name="vehicle_plate"
                                             placeholder="{{ __('storefront.backoffice.reservations.label_vehicle_plate_ph') }}"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
                                     </div>
 
                                     <div>
@@ -943,7 +947,7 @@
                                         </label>
                                         <input type="text" name="vehicle_model"
                                             placeholder="{{ __('storefront.backoffice.reservations.label_vehicle_model_ph') }}"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
                                     </div>
                                 @endif
 
@@ -954,7 +958,7 @@
                                             {{ __('storefront.backoffice.reservations.label_service') }}
                                         </label>
                                         <select name="product_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                             <option value="">-- Bebas / Pilih di Tempat --</option>
                                             @foreach ($services as $srv)
                                                 <option value="{{ $srv->id }}">
@@ -972,7 +976,7 @@
                                             {{ $isWorkshop ? __('storefront.backoffice.reservations.label_mechanic') : ($isBarbershop ? __('storefront.backoffice.reservations.label_stylist') : 'Petugas / Staf') }}
                                         </label>
                                         <select name="staff_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                             <option value="">-- Bebas / Staf Tersedia --</option>
                                             @foreach ($staffList as $stf)
                                                 <option value="{{ $stf->id }}">
@@ -990,7 +994,7 @@
                                             {{ __('storefront.backoffice.reservations.label_service_duration') }}
                                         </label>
                                         <select name="service_duration_minutes"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
                                             <option value="30">30 Menit</option>
                                             <option value="45" selected>45 Menit</option>
                                             <option value="60">60 Menit</option>
@@ -1008,7 +1012,7 @@
                                         </label>
                                         <input type="text" name="event_venue"
                                             placeholder="Contoh: Ballroom Hotel Grand Sahid / Rumah Pengantin"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF2D55]">
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF2D55]">
                                     </div>
                                 @endif
                             </div>
@@ -1035,7 +1039,7 @@
                                         {{ __('storefront.backoffice.reservations.label_estimated_total') }}
                                     </label>
                                     <input type="number" name="estimated_total" min="0" step="1000" placeholder="0"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                 </div>
 
                                 <div x-show="payDpDirectly" x-cloak>
@@ -1043,7 +1047,7 @@
                                         {{ __('storefront.backoffice.reservations.label_dp_amount') }} <span class="text-red-500">*</span>
                                     </label>
                                     <input type="number" name="dp_amount" min="0" step="1000" placeholder="Contoh: 100000"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/40 text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/40 text-[16px] sm:text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                 </div>
 
                                 <div x-show="payDpDirectly" x-cloak>
@@ -1051,7 +1055,7 @@
                                         {{ __('storefront.backoffice.reservations.label_dp_method') }}
                                     </label>
                                     <select name="dp_payment_method"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                         <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
                                         <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
                                         <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
@@ -1066,7 +1070,7 @@
                                     </label>
                                     <input type="text" name="dp_payment_reference"
                                         placeholder="No. Slip EDC / Ref Transfer"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                 </div>
                             </div>
                         </div>
@@ -1078,7 +1082,7 @@
                             </label>
                             <textarea name="notes" rows="2"
                                 placeholder="Permintaan khusus pelanggan, alergi makanan, keluhan mesin, atau instruksi lainnya..."
-                                class="w-full p-3 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
+                                class="w-full p-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
                         </div>
 
                         {{-- Footer Action Buttons --}}
@@ -1167,7 +1171,7 @@
                                 </label>
                                 <input type="number" name="dp_amount" required min="1000" step="1000"
                                     placeholder="Contoh: 100000"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                             </div>
 
                             <div>
@@ -1175,7 +1179,7 @@
                                     {{ __('storefront.backoffice.reservations.label_dp_method') }} <span class="text-red-500">*</span>
                                 </label>
                                 <select name="dp_payment_method" required
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                                     <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
                                     <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
                                     <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
@@ -1190,7 +1194,7 @@
                                 </label>
                                 <input type="text" name="dp_payment_reference"
                                     placeholder="No. Bukti Transfer / Slip EDC / Struk"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                             </div>
 
                             <div>
@@ -1199,16 +1203,20 @@
                                 </label>
                                 <input type="text" name="notes"
                                     placeholder="Keterangan tambahan (opsional)"
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
                             </div>
 
                             <div class="flex items-center justify-end gap-2 pt-2">
                                 <button type="button" @click="showDpModal = false"
-                                    class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
+                                    class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
                                     {{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}
                                 </button>
                                 <button type="submit"
-                                    class="px-5 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-95">
+                                    class="min-h-[44px] px-5 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-95">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <span>{{ __('storefront.backoffice.reservations.btn_save_dp') }}</span>
+                                </button>
+                            </div>
                                     <i data-lucide="check" class="w-4 h-4"></i>
                                     <span>Simpan Pembayaran DP</span>
                                 </button>
@@ -1274,9 +1282,9 @@
 
                                 <div class="flex items-center justify-end gap-2 pt-2">
                                     <button type="button" @click="showAssignModal = false"
-                                        class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}</button>
+                                        class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}</button>
                                     <button type="submit"
-                                        class="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer">{{ __('storefront.backoffice.reservations.modal_assign_btn_save') }}</button>
+                                        class="min-h-[44px] px-5 py-2.5 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer active:scale-95">{{ __('storefront.backoffice.reservations.modal_assign_btn_save') }}</button>
                                 </div>
                             </form>
                         </template>

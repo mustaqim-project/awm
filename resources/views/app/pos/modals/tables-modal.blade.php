@@ -377,13 +377,13 @@
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Nama Tamu <span class="text-red-500">*</span></label>
                             <input type="text" x-model="manualReservationForm.customer_name" required placeholder="Budi Santoso"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">No. WhatsApp <span class="text-red-500">*</span></label>
                             <input type="text" x-model="manualReservationForm.customer_phone" required placeholder="08123456789"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
                     </div>
 
@@ -391,19 +391,19 @@
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Tanggal</label>
                             <input type="date" x-model="manualReservationForm.reservation_date" required
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Jam Datang</label>
                             <input type="text" x-model="manualReservationForm.time_slot" required placeholder="12:00"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
 
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Jumlah Tamu</label>
                             <input type="number" x-model="manualReservationForm.guest_count" min="1" max="100"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
                     </div>
 
@@ -412,7 +412,7 @@
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Meja (Opsional)</label>
                             <select x-model="manualReservationForm.pos_table_id"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                                 <option value="">-- Bebas / Tentukan Nanti --</option>
                                 <template x-for="tbl in tables" :key="tbl.id">
                                     <option :value="tbl.id" x-text="'Meja ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' Kursi'"></option>
@@ -426,12 +426,12 @@
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Plat Kendaraan (Khusus Bengkel)</label>
                             <input type="text" x-model="manualReservationForm.vehicle_plate" placeholder="B 1234 XYZ"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
                         </div>
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Model / Merk Kendaraan</label>
                             <input type="text" x-model="manualReservationForm.vehicle_model" placeholder="Avanza / Vario"
-                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
                         </div>
                     </div>
 
@@ -447,13 +447,13 @@
                             <div>
                                 <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Nominal DP (Rp)</label>
                                 <input type="number" x-model="manualReservationForm.dp_amount" min="1000" step="1000" placeholder="50000"
-                                    class="w-full h-9 px-3 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/30 text-xs text-black dark:text-white font-bold tabular-nums">
+                                    class="w-full h-10 px-3 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/30 text-[16px] sm:text-xs text-black dark:text-white font-bold tabular-nums">
                             </div>
 
                             <div>
                                 <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Metode Bayar DP</label>
                                 <select x-model="manualReservationForm.dp_payment_method"
-                                    class="w-full h-9 px-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white">
+                                    class="w-full h-10 px-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
                                     <option value="cash">Tunai (Cash)</option>
                                     <option value="transfer">Transfer Bank</option>
                                     <option value="qris">QRIS</option>
@@ -466,17 +466,17 @@
                     <div>
                         <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Catatan Tambahan</label>
                         <input type="text" x-model="manualReservationForm.notes" placeholder="Catatan permintaan khusus..."
-                            class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                     </div>
 
                     <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/10">
                         <button type="button" @click="showManualReservationModal = false"
-                            class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
+                            class="min-h-[44px] px-4 py-2.5 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
                             Batal
                         </button>
                         <button type="submit"
                             :disabled="isSubmittingManualReservation"
-                            class="px-5 py-2 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer disabled:opacity-50">
+                            class="min-h-[44px] px-5 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer disabled:opacity-50 flex items-center gap-1.5 active:scale-95">
                             <span x-text="isSubmittingManualReservation ? 'Menyimpan...' : 'Simpan Reservasi'"></span>
                         </button>
                     </div>
