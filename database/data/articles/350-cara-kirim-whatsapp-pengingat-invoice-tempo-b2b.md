@@ -8,7 +8,7 @@ secondary_keywords: "template pesan wa penagihan piutang h-3, etika menagih temp
 search_intent: "informational"
 category: "Marketing & WhatsApp"
 reading_time: "9 menit"
-cover_image: "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg"
+cover_image: "https://cooca.id/images/blog/cara-kirim-whatsapp-pengingat-invoice-tempo-b2b.jpg"
 published_at: "2026-11-10T10:00:00+07:00"
 ---
 # WhatsApp Pengingat Pembayaran Invoice Tempo B2B yang Sopan dan Cepat Cair
@@ -117,7 +117,7 @@ Ya. Berdasarkan Undang-Undang ITE di Indonesia, tangkapan layar percakapan elekt
       "@type": "Article",
       "headline": "WhatsApp Pengingat Pembayaran Invoice Tempo B2B yang Sopan dan Cepat Cair",
       "description": "Panduan mengirim whatsapp pengingat pembayaran invoice tempo b2b secara santun, template pesan H-3 jatuh tempo, tautan invoice digital, dan etika penagihan.",
-      "image": "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg",
+      "image": "https://cooca.id/images/blog/cara-kirim-whatsapp-pengingat-invoice-tempo-b2b.jpg",
       "datePublished": "2026-11-10T10:00:00+07:00",
       "dateModified": "2026-11-10T10:00:00+07:00",
       "url": "https://cooca.id/blog/cara-kirim-whatsapp-pengingat-invoice-tempo-b2b",

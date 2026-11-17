@@ -8,7 +8,7 @@ secondary_keywords: "rumus roas riil bersih potongan biaya, evaluasi efektivitas
 search_intent: "informational"
 category: "Marketing"
 reading_time: "9 menit"
-cover_image: "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg"
+cover_image: "https://cooca.id/images/blog/cara-mengukur-roas-riil-iklan-marketplace.jpg"
 published_at: "2026-11-11T08:00:00+07:00"
 ---
 # Cara Mengukur ROAS Riil Iklan Marketplace Pasca Diskon Agar Tidak Boncos
@@ -113,7 +113,7 @@ Iklan digital adalah akselerator pertumbuhan yang luar biasa bagi bisnis e-comme
       "@type": "Article",
       "headline": "Cara Mengukur ROAS Riil Iklan Marketplace Pasca Diskon Agar Tidak Boncos",
       "description": "Pelajari cara mengukur ROAS riil iklan marketplace pasca diskon bagi UMKM, rumus Net ROAS, perbandingan ACOS, dan audit efisiensi saldo promosi toko online.",
-      "image": "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg",
+      "image": "https://cooca.id/images/blog/cara-mengukur-roas-riil-iklan-marketplace.jpg",
       "datePublished": "2026-11-11T08:00:00+07:00",
       "dateModified": "2026-11-11T08:00:00+07:00",
       "url": "https://cooca.id/blog/cara-mengukur-roas-riil-iklan-marketplace",

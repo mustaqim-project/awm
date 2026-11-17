@@ -8,7 +8,7 @@ secondary_keywords: "kampanye bangga buatan indonesia bbi, ide diskon tematik ha
 search_intent: "informational"
 category: "Marketing"
 reading_time: "9 menit"
-cover_image: "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg"
+cover_image: "https://cooca.id/images/blog/strategi-promo-hari-pahlawan-produk-lokal-umkm.jpg"
 published_at: "2026-11-10T04:00:00+07:00"
 ---
 # Strategi Promo Hari Pahlawan Produk Lokal UMKM untuk Menaikkan Penjualan Brand
@@ -94,7 +94,7 @@ Sangat bisa. Anda dapat menjadikan tanggal sepuluh November sebagai puncak apres
       "@type": "Article",
       "headline": "Strategi Promo Hari Pahlawan Produk Lokal UMKM untuk Menaikkan Penjualan Brand",
       "description": "Pelajari strategi promo hari pahlawan produk lokal umkm, kampanye Bangga Buatan Indonesia, ide diskon tematik, dan teknik storytelling kenaikan omzet.",
-      "image": "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg",
+      "image": "https://cooca.id/images/blog/strategi-promo-hari-pahlawan-produk-lokal-umkm.jpg",
       "datePublished": "2026-11-10T04:00:00+07:00",
       "dateModified": "2026-11-10T04:00:00+07:00",
       "url": "https://cooca.id/blog/strategi-promo-hari-pahlawan-produk-lokal-umkm",

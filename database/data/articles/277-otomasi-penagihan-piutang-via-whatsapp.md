@@ -8,7 +8,7 @@ secondary_keywords: "template pesan pengingat jatuh tempo ramah, integrasi whats
 search_intent: "informational"
 category: "Marketing & WhatsApp"
 reading_time: "9 menit"
-cover_image: "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg"
+cover_image: "https://cooca.id/images/blog/otomasi-penagihan-piutang-via-whatsapp.jpg"
 created_at: "2026-11-07T10:30:00+07:00"
 published_at: "2026-11-07T10:30:00+07:00"
 ---
@@ -106,7 +106,7 @@ Batas tempo yang aman bagi arus kas UMKM umumnya berkisar antara 7 hingga 14 har
       "@type": "Article",
       "headline": "Otomasi Penagihan Piutang via WhatsApp agar Invoice Lunas",
       "description": "Cara mudah otomasi penagihan piutang via WhatsApp gateway ramah konsumen, integrasi link invoice QRIS, dan tips menurunkan rasio piutang macet toko.",
-      "image": "https://cooca.id/images/blog/photo-1611162617474-5b21e879e113.jpg",
+      "image": "https://cooca.id/images/blog/otomasi-penagihan-piutang-via-whatsapp.jpg",
       "datePublished": "2026-11-07T10:30:00+07:00",
       "dateModified": "2026-11-07T10:30:00+07:00",
       "url": "https://cooca.id/blog/otomasi-penagihan-piutang-via-whatsapp",

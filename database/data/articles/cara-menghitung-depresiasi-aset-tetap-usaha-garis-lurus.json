@@ -1,0 +1,111 @@
+{
+  "id": 5,
+  "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+  "title": "Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus",
+  "slug": "cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus",
+  "meta_title": "Cara Menghitung Depresiasi Aset Tetap Usaha",
+  "meta_description": "Pelajari cara menghitung depresiasi aset tetap usaha dengan metode garis lurus beserta rumus penyusutan mesin dan pencatatan akuntansinya.",
+  "primary_keyword": "cara menghitung depresiasi aset tetap",
+  "secondary_keywords": "metode garis lurus penyusutan, depresiasi peralatan usaha, masa manfaat aset tetap, akumulasi penyusutan, pencatatan beban penyusutan",
+  "search_intent": "Informational",
+  "category": "Keuangan & Pembukuan",
+  "reading_time": "10 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus.jpg",
+  "published_at": "2026-07-16T13:10:00+07:00",
+  "word_count": 1573,
+  "faqs": [
+    {
+      "q": "Apakah tanah dan bangunan toko disusutkan dengan cara yang sama?",
+      "a": "Tanah tidak pernah mengalami penyusutan nilai karena tanah memiliki masa manfaat tidak terbatas dan nilainya cenderung naik. Sedangkan bangunan tempat usaha disusutkan dengan masa manfaat 20 tahun untuk bangunan permanen dan 10 tahun untuk semi-permanen."
+    },
+    {
+      "q": "Apa yang terjadi pada pembukuan jika aset dijual sebelum masa manfaatnya habis?",
+      "a": "Selisih antara harga jual aset dengan nilai buku terakhir di neraca akan diakui sebagai Keuntungan (Gain) atau Kerugian (Loss) dari Penjualan Aset Tetap pada laporan laba rugi tahun berjalan."
+    },
+    {
+      "q": "Apakah nilai residu wajib ada dalam setiap perhitungan depresiasi?",
+      "a": "Tidak wajib. Dalam aturan perpajakan Indonesia, perhitungan penyusutan fiskal metode garis lurus umumnya mengasumsikan nilai sisa sebesar nol pada akhir masa manfaat kelompok aset."
+    },
+    {
+      "q": "Bisakah aset yang sudah disusutkan hingga nol rupiah tetap dipakai di toko?",
+      "a": "Tentu saja bisa. Jika mesin masih berfungsi dengan baik setelah melewati masa manfaatnya, mesin tetap dapat digunakan dalam operasional toko, namun beban depresiasinya tidak lagi dicatat karena nilai bukunya sudah mencapai nilai residu atau nol rupiah."
+    },
+    {
+      "q": "Kapan perhitungan depresiasi aset tetap dimulai?",
+      "a": "Perhitungan beban depresiasi dimulai pada bulan di mana aset tersebut selesai dipasang dan siap dioperasikan, bukan selalu pada tanggal nota pemesanan diterbitkan."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus",
+        "description": "Pelajari cara menghitung depresiasi aset tetap usaha dengan metode garis lurus beserta rumus penyusutan mesin dan pencatatan akuntansinya.",
+        "image": "https://cooca.id/images/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus.jpg",
+        "datePublished": "2026-07-16T13:10:00+07:00",
+        "dateModified": "2026-07-16T13:10:00+07:00",
+        "url": "https://cooca.id/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus",
+        "mainEntityOfPage": "https://cooca.id/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Apakah tanah dan bangunan toko disusutkan dengan cara yang sama?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tanah tidak pernah mengalami penyusutan nilai karena tanah memiliki masa manfaat tidak terbatas dan nilainya cenderung naik. Sedangkan bangunan tempat usaha disusutkan dengan masa manfaat 20 tahun untuk bangunan permanen dan 10 tahun untuk semi-permanen."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa yang terjadi pada pembukuan jika aset dijual sebelum masa manfaatnya habis?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Selisih antara harga jual aset dengan nilai buku terakhir di neraca akan diakui sebagai Keuntungan (Gain) atau Kerugian (Loss) dari Penjualan Aset Tetap pada laporan laba rugi tahun berjalan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah nilai residu wajib ada dalam setiap perhitungan depresiasi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tidak wajib. Dalam aturan perpajakan Indonesia, perhitungan penyusutan fiskal metode garis lurus umumnya mengasumsikan nilai sisa sebesar nol pada akhir masa manfaat kelompok aset."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bisakah aset yang sudah disusutkan hingga nol rupiah tetap dipakai di toko?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tentu saja bisa. Jika mesin masih berfungsi dengan baik setelah melewati masa manfaatnya, mesin tetap dapat digunakan dalam operasional toko, namun beban depresiasinya tidak lagi dicatat karena nilai bukunya sudah mencapai nilai residu atau nol rupiah."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kapan perhitungan depresiasi aset tetap dimulai?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Perhitungan beban depresiasi dimulai pada bulan di mana aset tersebut selesai dipasang dan siap dioperasikan, bukan selalu pada tanggal nota pemesanan diterbitkan."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus\"\nmeta_title: \"Cara Menghitung Depresiasi Aset Tetap Usaha\"\nmeta_description: \"Pelajari cara menghitung depresiasi aset tetap usaha dengan metode garis lurus beserta rumus penyusutan mesin dan pencatatan akuntansinya.\"\nslug: \"cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus\"\nprimary_keyword: \"cara menghitung depresiasi aset tetap\"\nsecondary_keywords: \"metode garis lurus penyusutan, depresiasi peralatan usaha, masa manfaat aset tetap, akumulasi penyusutan, pencatatan beban penyusutan\"\nsearch_intent: \"Informational\"\ncategory: \"Keuangan & Pembukuan\"\nreading_time: \"10 menit\"\ncover_image: \"https://cooca.id/images/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus.jpg\"\npublished_at: \"2026-07-16T13:10:00+07:00\"\n---\n# Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus\n\nSaat merintis atau mengembangkan bisnis, sebagian besar modal awal dialokasikan untuk membeli aset tetap berharga mahal, seperti mesin kopi espresso komersial, oven pemanggang roti, kendaraan roda tiga untuk pengantaran barang, freezer pendingin daging, hingga komputer kasir. Sayangnya, banyak pemilik usaha kecil tidak pernah mencatat penyusutan nilai dari barang-barang modal tersebut dalam laporan keuangan mereka. Memahami cara menghitung depresiasi aset tetap dengan metode garis lurus adalah kewajiban dasar agar laporan laba rugi usaha Anda mencerminkan biaya operasional yang sesungguhnya dan aset di neraca tidak dinilai terlalu tinggi (overstated).\n\nDepresiasi atau penyusutan adalah proses pengalokasian harga perolehan suatu aset tetap menjadi beban operasional sepanjang estimasi masa manfaat ekonomisnya. Mesin produksi tidak bisa dibebankan 100% sebagai biaya pada bulan pembeliannya karena mesin tersebut akan bekerja menghasilkan pendapatan selama bertahun-tahun ke depan. Jika Anda membebankan seluruh harga mesin di bulan pertama, laporan keuangan Anda akan tampak merugi parah di bulan itu, dan tampak untung besar secara semu di bulan-bulan berikutnya. Pengabaian beban penyusutan ini juga dapat menyebabkan pengusaha kaget saat mesin tiba-tiba rusak total tanpa ada tabungan penggantian.\n\n## Konsep Dasar dan Cara Menghitung Depresiasi Aset Tetap\n\nDari berbagai metode akuntansi yang ada, metode garis lurus adalah metode yang paling sederhana, paling mudah dipahami, dan paling banyak diakui oleh standar perpajakan Indonesia untuk skala usaha mikro dan kecil. Metode ini mengasumsikan bahwa aset tetap mengalami penurunan nilai secara konstan dan merata pada setiap periode selama masa pakainya.\n\nUntuk menghitung depresiasi metode garis lurus, Anda memerlukan tiga variabel data utama:\n1. Harga Perolehan (Cost of Asset): Total seluruh uang yang dikeluarkan untuk membeli aset hingga aset tersebut siap digunakan, mencakup harga beli barang, ongkos kirim ekspedisi, biaya pemasangan teknisi, dan bea uji coba mesin.\n2. Nilai Residu atau Nilai Sisa (Salvage Value): Estimasi nilai jual kembali aset tersebut ketika masa manfaat ekonomisnya telah habis di masa depan. Jika diperkirakan barang rongsok tidak memiliki nilai jual, nilai residu bisa diisi angka nol.\n3. Estimasi Masa Manfaat (Useful Life): Perkiraan berapa tahun atau bulan aset tersebut dapat beroperasi secara produktif menghasilkan barang atau jasa.\n\nRumus Depresiasi Garis Lurus Per Tahun:\n\nBeban Depresiasi Tahunan = (Harga Perolehan - Nilai Residu) / Estimasi Masa Manfaat (Tahun)\n\nJika Anda ingin mengetahui beban penyusutan yang harus diakui dalam laporan laba rugi bulanan, cukup bagi hasil tahunan tersebut dengan dua belas bulan:\n\nBeban Depresiasi Bulanan = Beban Depresiasi Tahunan / 12\n\nPencatatan beban ini memberikan kedisiplinan finansial yang berpadu selaras dengan pengawasan [cara mengelola kas kecil petty cash operasional toko](https://cooca.id/blog/cara-mengelola-kas-kecil-petty-cash-operasional-toko).\n\n## Simulasi Perhitungan Depresiasi Mesin Roasting Kopi\n\nMari kita telaah simulasi kasus nyata pada Coffee Roastery Sejahtera yang membeli sebuah mesin roasting kopi modern dengan rincian biaya sebagai berikut:\n- Harga Beli Mesin Roasting: Rp45.000.000\n- Ongkos Kirim dan Asuransi Ekspedisi: Rp2.500.000\n- Biaya Instalasi Cerobong Asap dan Kalibrasi Teknisi: Rp2.500.000\n- **Total Harga Perolehan Aset Tetap**: Rp50.000.000\n- Estimasi Masa Manfaat Ekonomis: 5 Tahun (60 Bulan)\n- Estimasi Nilai Residu (dijual besi tua setelah 5 tahun): Rp5.000.000\n\nMari kita hitung beban penyusutan mesin tersebut:\n1. Menghitung Nilai yang Dapat Disusutkan (Depreciable Base):  \nNilai Disusutkan = Rp50.000.000 - Rp5.000.000 = Rp45.000.000\n\n2. Menghitung Beban Depresiasi Tahunan:  \nBeban Tahunan = Rp45.000.000 / 5 Tahun = Rp9.000.000 per tahun\n\n3. Menghitung Beban Depresiasi Bulanan:  \nBeban Bulanan = Rp9.000.000 / 12 Bulan = Rp750.000 per bulan\n\nSetiap akhir bulan, akuntan atau pemilik roastery wajib mencatat jurnal penyesuaian:\n- Debit: Beban Depresiasi Mesin Roasting sebesar Rp750.000 (masuk ke laporan laba rugi)\n- Kredit: Akumulasi Depresiasi Mesin Roasting sebesar Rp750.000 (masuk sebagai pengurang aset tetap di neraca)\n\nBerikut adalah tabel skedul penyusutan mesin roasting selama 5 tahun masa manfaat:\n\n| Akhir Tahun Ke- | Beban Depresiasi Tahunan (Rp) | Akumulasi Depresiasi (Rp) | Nilai Buku Mesin di Neraca (Rp) |\n| :--- | :--- | :--- | :--- |\n| Tahun 0 (Saat Beli) | - | Rp0 | Rp50.000.000 |\n| Tahun 1 | Rp9.000.000 | Rp9.000.000 | Rp41.000.000 |\n| Tahun 2 | Rp9.000.000 | Rp18.000.000 | Rp32.000.000 |\n| Tahun 3 | Rp9.000.000 | Rp27.000.000 | Rp23.000.000 |\n| Tahun 4 | Rp9.000.000 | Rp36.000.000 | Rp14.000.000 |\n| Tahun 5 | Rp9.000.000 | Rp45.000.000 | Rp5.000.000 (Nilai Residu) |\n\nNilai buku mesin pada akhir tahun kelima persis setara dengan nilai sisa estimasi yaitu Rp5.000.000. Data ini sangat penting untuk disinkronkan dengan [cara menyusun laporan laba rugi bulanan umkm praktis](https://cooca.id/blog/cara-menyusun-laporan-laba-rugi-bulanan-umkm-praktis).\n\n## Manfaat Strategis Menghitung Depresiasi bagi Pemilik Usaha\n\nMencatat depresiasi bukan hanya urusan formalitas pembukuan pajak, melainkan strategi bertahan hidup jangka panjang:\n\n### 1. Menghitung HPP Produk secara Akurat\nJika Anda tidak memasukkan beban penyusutan mesin ke dalam biaya overhead pabrikasi, HPP yang Anda hitung menjadi terlalu rendah. Akibatnya, Anda menjual barang dengan harga terlalu murah tanpa menyadari bahwa mesin Anda perlahan aus dan rusak.\n\n### 2. Membentuk Cadangan Dana Penggantian Aset (Sinking Fund)\nDengan mencatat beban depresiasi bulanan sebesar Rp750.000, pemilik usaha secara psikologis diingatkan untuk menyisihkan uang tunai dalam jumlah yang sama ke rekening tabungan khusus. Ketika mesin rusak 5 tahun lagi, uang tunai Rp45.000.000 sudah terkumpul siap pakai tanpa perlu berutang.\n\n### 3. Penghematan Pajak Penghasilan Usaha yang Sah\nBeban depresiasi adalah beban non-tunai (non-cash expense) yang diakui secara sah oleh kantor pajak (DJP) sebagai pengurang penghasilan bruto kena pajak. Dengan mencatat depresiasi, laba kena pajak usaha Anda menjadi lebih kecil sehingga setoran pajak penghasilan menjadi lebih hemat secara legal. Hal ini sejalan dengan aturan dalam [cara membaca neraca keuangan sederhana pemilik usaha](https://cooca.id/blog/cara-membaca-neraca-keuangan-sederhana-pemilik-usaha).\n\n### 4. Mengetahui Nilai Riil Perusahaan Saat Ingin Dijual\nJika suatu saat Anda ingin menjual kepemilikan bisnis kepada investor, nilai buku aset tetap yang mencerminkan depresiasi wajar akan memberikan valuasi yang kredibel dan dapat diandalkan oleh auditor.\n\n### 5. Pengawasan Fisik dan Inventarisasi Aset Rutin\nPencatatan daftar depresiasi memaksa bagian operasional melakukan inspeksi fisik berkala terhadap kondisi mesin, mendeteksi kerusakan dini, serta mencegah kehilangan peralatan kerja akibat kelalaian staf.\n\n## SOP Penghapusan Aset Rusak Total (Write-Off Aset)\n\nDalam perjalanan operasional, ada kalanya aset tetap mengalami kerusakan fatal akibat kecelakaan kerja, kebakaran, atau korsleting listrik sehingga tidak lagi bisa diperbaiki meskipun masa manfaat ekonomisnya belum habis. Dalam akuntansi bisnis, kondisi ini memerlukan prosedur penghapusan aset (Asset Write-Off):\n1. Pembuatan Berita Acara Kerusakan: Manajer operasional dan teknisi membuat laporan investigasi fisik yang menyatakan mesin rusak total dan tidak ekonomis untuk diservis.\n2. Pengakuan Kerugian Penghapusan Aset: Sisa nilai buku aset yang belum disusutkan langsung diakui sebagai Beban Kerugian Penghentian Aset Tetap pada laporan laba rugi tahun berjalan.\n3. Penutupan Akun Aset dan Akumulasi: Akun aset tetap dan akun akumulasi depresiasi terkait dihapus dari pembukuan neraca sehingga neraca tetap menyajikan nilai aset riil yang masih produktif.\n\n## Pengelompokan Masa Manfaat Aset Menurut Regulasi Pajak\n\nUntuk memudahkan wajib pajak, peraturan perpajakan di Indonesia mengelompokkan harta berwujud bukan bangunan ke dalam empat golongan masa manfaat:\n- Kelompok 1 (Masa Manfaat 4 Tahun): Komputer kasir, printer thermal, barcode scanner, telepon seluler operasional, dan peralatan dapur ringan. Tarif penyusutan garis lurus adalah 25% per tahun.\n- Kelompok 2 (Masa Manfaat 8 Tahun): Mesin pendingin chiller komersial, oven besar, sepeda motor pengantaran, dan perabot etalase kayu. Tarif penyusutan adalah 12,5% per tahun.\n- Kelompok 3 (Masa Manfaat 16 Tahun): Mesin pabrikasi tekstil, mesin pengolah logam, dan instalasi pipa produksi berat. Tarif penyusutan adalah 6,25% per tahun.\n- Kelompok 4 (Masa Manfaat 20 Tahun): Peralatan industri berat berskala besar dengan tarif penyusutan 5% per tahun.\n\n## Pengelolaan Aset Tetap Terpadu Bersama Cooca\n\nMengelola jadwal penyusutan untuk puluhan aset yang dibeli pada tanggal berbeda-beda bisa membingungkan jika dilakukan secara manual. Cooca sebagai platform Business Operating System menyediakan modul manajemen aset yang memudahkan pencatatan aset tetap toko. Anda cukup memasukkan tanggal beli, nilai perolehan, dan kelompok aset, maka sistem Cooca akan menghitung beban depresiasi bulanan secara otomatis dan menyajikannya langsung di laporan laba rugi serta neraca keuangan periodik Anda.\n\n## Kesimpulan\n\nMenghitung depresiasi aset tetap dengan metode garis lurus adalah benteng perlindungan finansial bisnis Anda. Jangan biarkan mesin dan peralatan Anda bekerja keras hingga aus tanpa diakui nilainya di pembukuan. Mulailah mendata seluruh aset tetap yang dimiliki toko Anda hari ini, hitung beban penyusutannya, dan sisihkan dana peremajaan secara disiplin agar bisnis Anda terus bertumbuh tanpa terancam krisis alat rusak.\n\n## FAQ\n\n### Apakah tanah dan bangunan toko disusutkan dengan cara yang sama?\nTanah tidak pernah mengalami penyusutan nilai karena tanah memiliki masa manfaat tidak terbatas dan nilainya cenderung naik. Sedangkan bangunan tempat usaha disusutkan dengan masa manfaat 20 tahun untuk bangunan permanen dan 10 tahun untuk semi-permanen.\n\n### Apa yang terjadi pada pembukuan jika aset dijual sebelum masa manfaatnya habis?\nSelisih antara harga jual aset dengan nilai buku terakhir di neraca akan diakui sebagai Keuntungan (Gain) atau Kerugian (Loss) dari Penjualan Aset Tetap pada laporan laba rugi tahun berjalan.\n\n### Apakah nilai residu wajib ada dalam setiap perhitungan depresiasi?\nTidak wajib. Dalam aturan perpajakan Indonesia, perhitungan penyusutan fiskal metode garis lurus umumnya mengasumsikan nilai sisa sebesar nol pada akhir masa manfaat kelompok aset.\n\n### Bisakah aset yang sudah disusutkan hingga nol rupiah tetap dipakai di toko?\nTentu saja bisa. Jika mesin masih berfungsi dengan baik setelah melewati masa manfaatnya, mesin tetap dapat digunakan dalam operasional toko, namun beban depresiasinya tidak lagi dicatat karena nilai bukunya sudah mencapai nilai residu atau nol rupiah.\n\n### Kapan perhitungan depresiasi aset tetap dimulai?\nPerhitungan beban depresiasi dimulai pada bulan di mana aset tersebut selesai dipasang dan siap dioperasikan, bukan selalu pada tanggal nota pemesanan diterbitkan.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus\",\n      \"description\": \"Pelajari cara menghitung depresiasi aset tetap usaha dengan metode garis lurus beserta rumus penyusutan mesin dan pencatatan akuntansinya.\",\n      \"image\": \"https://cooca.id/images/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus.jpg\",\n      \"datePublished\": \"2026-07-16T13:10:00+07:00\",\n      \"dateModified\": \"2026-07-16T13:10:00+07:00\",\n      \"url\": \"https://cooca.id/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah tanah dan bangunan toko disusutkan dengan cara yang sama?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Tanah tidak pernah mengalami penyusutan nilai karena tanah memiliki masa manfaat tidak terbatas dan nilainya cenderung naik. Sedangkan bangunan tempat usaha disusutkan dengan masa manfaat 20 tahun untuk bangunan permanen dan 10 tahun untuk semi-permanen.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apa yang terjadi pada pembukuan jika aset dijual sebelum masa manfaatnya habis?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Selisih antara harga jual aset dengan nilai buku terakhir di neraca akan diakui sebagai Keuntungan (Gain) atau Kerugian (Loss) dari Penjualan Aset Tetap pada laporan laba rugi tahun berjalan.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah nilai residu wajib ada dalam setiap perhitungan depresiasi?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Tidak wajib. Dalam aturan perpajakan Indonesia, perhitungan penyusutan fiskal metode garis lurus umumnya mengasumsikan nilai sisa sebesar nol pada akhir masa manfaat kelompok aset.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Bisakah aset yang sudah disusutkan hingga nol rupiah tetap dipakai di toko?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Tentu saja bisa. Jika mesin masih berfungsi dengan baik setelah melewati masa manfaatnya, mesin tetap dapat digunakan dalam operasional toko, namun beban depresiasinya tidak lagi dicatat karena nilai bukunya sudah mencapai nilai residu atau nol rupiah.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Kapan perhitungan depresiasi aset tetap dimulai?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Perhitungan beban depresiasi dimulai pada bulan di mana aset tersebut selesai dipasang dan siap dioperasikan, bukan selalu pada tanggal nota pemesanan diterbitkan.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}

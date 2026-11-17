@@ -33,6 +33,124 @@ Setiap tugas pengembangan yang diselesaikan wajib mencatat entri baru dengan str
 - **Files Affected:** Daftar berkas controller, service, model, blade, atau route yang dimodifikasi.
 - **Database Changes:** Tabel baru, migrasi skema, kolom tambahan, atau indexing.
 
+### [WORK-2026-11-17-739] Global Audit & Remediation of Copyrighted Netflix Logo Blog Cover Assets
+
+- **Date:** 2026-11-17
+- **Status:** COMPLETED
+- **Module:** Content Marketing / SEO & Blog / Assets & Intellectual Property
+- **Feature:** Global Audit and Comprehensive Replacement of Copyrighted Netflix Logo Asset (`photo-1611162617474-5b21e879e113.jpg`) Across All Blog Covers, Markdown Files, Metadata, and Database Records
+- **Work Type:** Bug Fix | Security & IP Compliance | Asset Remediation | Database Cleanup
+
+#### 1. Business Context & Objective
+- **Konteks:** Ditemukan bahwa berkas gambar cover blog `public/images/blog/strategi-whatsapp-broadcast-tersegmentasi-promo-gajian-12-12.jpg` (Batch 14, Artikel #737) serta sumber asalnya (`photo-1611162617474-5b21e879e113.jpg`) menampilkan ikon 3D logo Netflix merah yang tidak sesuai konteks artikel WhatsApp/ritel dan melanggar hak cipta merek.
+- **Target & Standar Kualitas:**
+  1. Melakukan audit komprehensif pixel-level (menggunakan PIL image difference) terhadap seluruh 568 berkas gambar di `public/images/blog/` untuk mendeteksi semua aset yang bersumber atau identik dengan logo Netflix tersebut.
+  2. Mengganti berkas fisik cover dengan gambar yang relevan, profesional, berkualitas tinggi, dan bebas hak cipta merek luar (aset smartphone messaging, e-commerce, kuliner, dan analytics).
+  3. Memperbarui seluruh referensi di database `posts` (kolom `cover_image`), frontmatter Markdown (`.md`), metadata JSON (`.json`), dan skrip sinkronisasi/generator agar tidak ada sisa URL logo Netflix lama.
+  4. Menjalankan linter dan suite pengujian verifikasi live (20/20 PASS) dan PHPUnit test (1 test, 196 assertions PASSED).
+
+#### 2. What Was Done
+- **Pixel Comparison & Asset Identification:**
+  - Menjalankan pemindaian PIL pixel comparison di seluruh direktori `public/images/blog/` dan mengidentifikasi 6 berkas yang identik dengan logo Netflix:
+    1. `public/images/blog/strategi-whatsapp-broadcast-tersegmentasi-promo-gajian-12-12.jpg` (Batch 14 #737)
+    2. `public/images/blog/cara-jualan-di-tiktok-shop.jpg` (Artikel #55)
+    3. `public/images/blog/resep-video-tiktok-warung-yang-tembus-1-juta-views-tanpa-bakat-iklan.jpg` (Artikel #150)
+    4. `public/images/blog/strategi-omnichannel-live-shopping-tiktok-tokopedia-umkm.jpg` (Artikel #260)
+    5. `public/images/blog/cara-membuat-broadcast-whatsapp-resmi-tidak-diblokir-pelanggan.jpg`
+    6. `public/images/blog/photo-1611162617474-5b21e879e113.jpg` (Aset sumber awal)
+- **Asset Replacement:**
+  - Mengganti `strategi-whatsapp-broadcast-tersegmentasi-promo-gajian-12-12.jpg` dengan `photo-1611746872915-64382b5c76da.jpg` (iPhone menampilkan WhatsApp dan aplikasi chat, resolusi tinggi 353 KB).
+  - Mengganti `cara-jualan-di-tiktok-shop.jpg` dengan `photo-1607082348824-0a96f2a4b9da.jpg` (Paper shopping bags modern retail).
+  - Mengganti `resep-video-tiktok-warung-yang-tembus-1-juta-views-tanpa-bakat-iklan.jpg` dengan `photo-1504674900247-0877df9cc836.jpg` (Presentasi sajian kuliner profesional).
+  - Mengganti `strategi-omnichannel-live-shopping-tiktok-tokopedia-umkm.jpg` dengan `photo-1563986768494-4dee2763ff3f.jpg` (Pengelolaan toko dan media sosial via laptop & smartphone).
+  - Mengganti berkas sumber `photo-1611162617474-5b21e879e113.jpg` dengan `photo-1512428559087-560fa5ceab42.jpg` (Profesional berbusana putih mengetik di smartphone tanpa logo pihak ketiga), memastikan link lama tidak akan pernah menampilkan logo Netflix lagi.
+  - Membuat 4 aset cover berbasis slug spesifik untuk artikel lama:
+    - `otomasi-penagihan-piutang-via-whatsapp.jpg` (Post #282)
+    - `strategi-promo-hari-pahlawan-produk-lokal-umkm.jpg` (Post #318)
+    - `cara-kirim-whatsapp-pengingat-invoice-tempo-b2b.jpg` (Post #355)
+    - `cara-mengukur-roas-riil-iklan-marketplace.jpg` (Post #369)
+- **Database & Metadata Remediation:**
+  - Memperbarui database `posts` tabel untuk Post ID 282, 318, 355, 369 ke URL cover berbasis slug domain resmi `https://cooca.id/images/blog/{slug}.jpg`.
+  - Memperbarui Markdown dan JSON metadata untuk artikel 277, 313, 350, 364 di `database/data/articles/`.
+  - Menghapus referensi `photo-1611162617474-5b21e879e113` dari `scripts/sync_batch14_images.py`, `scripts/generate_100_cooca_blog.py`, `scripts/make_keyword_research_40.py`, dan `database/data/articles/keyword-research-2026-11-17.json`.
+- **Verification & Testing:**
+  - Menjalankan verifikasi ulang: 0 berkas gambar cocok dengan hash/pixel Netflix lama.
+  - Menjalankan `scripts/build_and_validate_batch14.py`: 20/20 PASS linter (100%).
+  - Menjalankan `scripts/sync_batch14_images.py`: Sinkronisasi 20 cover gambar berjalan sempurna.
+  - Menjalankan `scripts/verify_batch14_live.php`: 20/20 artikel PASS verifikasi live.
+  - Menjalankan `vendor/bin/phpunit tests/Feature/Batch14BlogDeliveryTest.php`: 1 test, 196 assertions PASSED (100%).
+
+#### 3. Technical Changes
+- **Files Modified:**
+  - `public/images/blog/photo-1611162617474-5b21e879e113.jpg` (Replaced with clean smartphone photo)
+  - `public/images/blog/strategi-whatsapp-broadcast-tersegmentasi-promo-gajian-12-12.jpg` (Replaced with WhatsApp/chat iPhone photo)
+  - `public/images/blog/cara-jualan-di-tiktok-shop.jpg` (Replaced with shopping bags retail photo)
+  - `public/images/blog/resep-video-tiktok-warung-yang-tembus-1-juta-views-tanpa-bakat-iklan.jpg` (Replaced with food dishes presentation photo)
+  - `public/images/blog/strategi-omnichannel-live-shopping-tiktok-tokopedia-umkm.jpg` (Replaced with digital marketing laptop & smartphone photo)
+  - `public/images/blog/cara-membuat-broadcast-whatsapp-resmi-tidak-diblokir-pelanggan.jpg` (Replaced with professional messaging photo)
+  - `public/images/blog/otomasi-penagihan-piutang-via-whatsapp.jpg` (Created from photo-1563986768609)
+  - `public/images/blog/strategi-promo-hari-pahlawan-produk-lokal-umkm.jpg` (Created from photo-1441986300917)
+  - `public/images/blog/cara-kirim-whatsapp-pengingat-invoice-tempo-b2b.jpg` (Created from photo-1454165804606)
+  - `public/images/blog/cara-mengukur-roas-riil-iklan-marketplace.jpg` (Created from photo-1551288049)
+  - `scripts/sync_batch14_images.py`
+  - `scripts/generate_100_cooca_blog.py`
+  - `scripts/make_keyword_research_40.py`
+  - `database/data/articles/keyword-research-2026-11-17.json`
+  - `database/data/articles/277-otomasi-penagihan-piutang-via-whatsapp.json` & `.md`
+  - `database/data/articles/313-strategi-promo-hari-pahlawan-produk-lokal-umkm.json` & `.md`
+  - `database/data/articles/350-cara-kirim-whatsapp-pengingat-invoice-tempo-b2b.json` & `.md`
+  - `database/data/articles/364-cara-mengukur-roas-riil-iklan-marketplace.json` & `.md`
+- **Database Changes:**
+  - Kolom `cover_image` pada Post ID 282, 318, 355, 369 diperbarui dari URL `photo-1611162617474-5b21e879e113.jpg` ke URL slug resmi masing-masing artikel.
+
+### [WORK-2026-11-17-719] Google Trends Business Research, Batch 14 Blog Production & Production Deployment (IDs 719 - 738)
+
+- **Date:** 2026-11-17
+- **Status:** COMPLETED
+- **Module:** Content Marketing / SEO & Blog / Automation
+- **Feature:** Google Trends Business Research, Batch 14 Blog Production (20 Curated UMKM Articles, IDs 719-738), 100% Quality & SEO Compliance, Automated Verification Suite & Live Production Deployment
+- **Work Type:** Feature | Content Strategy | SEO Engineering | Automation | Quality Assurance
+
+#### 1. Business Context & Objective
+- **Konteks:** Menjawab mandat harian untuk melakukan riset tren bisnis Google Trends terkini di Indonesia per Selasa, 17 November 2026, memproduksi 20 artikel blog edukatif UMKM berkualitas tinggi (Batch 14, IDs 719-738), serta melakukan deployment dan verifikasi produksi penuh ke dalam platform COOCA (cooca.id).
+- **Target & Standar Kualitas:**
+  1. Melakukan riset tren bisnis aktual: UMP 2026/2027 pasca putusan MK & PP 49/2025, kesiapan logistik Harbolnas 12.12 (batch shipping, meja U-shape, mitigasi salah tempel resi), mitigasi retur COD musim hujan via WhatsApp, kalkulasi biaya kemasan cuaca ekstrem ke HPP produk, SOP tutup buku & stock opname SAK EMKM, tata kelola aging piutang B2B Net 30, rekonsiliasi settlement dompet seller marketplace, SOP serah terima kasir shift malam & brankas libur Nataru, kampanye tukar poin loyalitas akhir tahun, Menu Engineering kafe resto, SOP split bill jam sibuk rush hour, perpanjangan sertifikat Halal BPJPH & P-IRT OSS RBA, WhatsApp broadcast tersegmentasi promo gajian 12.12, serta manajemen kasbon dan slip gaji digital.
+  2. Menghasilkan 20 artikel blog mendalam (panjang >= 1.200 kata per artikel, total 25.000+ kata) dengan kepatuhan zero em dash (`—`) dan en dash (`–`), primary keyword di 100 kata pertama, exact 1 H1 matching primary keyword, minimal satu H2 dengan primary keyword, meta_title <= 60 karakter, meta_description 120-160 karakter, kepadatan keyword 0.4% - 2.5%, dan cover image resmi COOCA (`https://cooca.id/images/blog/{slug}.jpg`).
+  3. Memastikan seluruh internal link terverifikasi 100% berasal dari `blog_links.json` (format `/blog/{slug}`), tanpa broken links, dan tanpa link eksternal tidak diizinkan.
+  4. Menghasilkan schema.org `Article` dan `FAQPage` JSON-LD valid untuk setiap artikel.
+  5. Melakukan deployment ke database post (`php artisan blog:import-articles`), memperbarui `sitemap_blog.xml` & `blog_links.json` (791 URL terindeks), menjalankan verifikasi live runtime (`scripts/verify_batch14_live.php`), serta mengotomasi pengujian regresi fitur (`tests/Feature/Batch14BlogDeliveryTest.php`).
+
+#### 2. What Was Done
+- **Google Trends & Market Research:**
+  - Melakukan riset web real-time terhadap isu bisnis dan regulasi terhangat di Indonesia per 17 November 2026.
+  - Menyusun 20 topik strategis terstruktur ke dalam `database/data/articles/trending-research-2026-11-17.json` dengan detail slug, primary keyword, secondary keywords, search intent, dan target pembaca UMKM.
+- **Content Production & Asset Engineering:**
+  - Menyiapkan generator modular: `scripts/generate_batch14_part1.py` (IDs 719-723), `scripts/generate_batch14_part2.py` (IDs 724-728), `scripts/generate_batch14_part3.py` (IDs 729-733), dan `scripts/generate_batch14_part4.py` (IDs 734-738).
+  - Menyusun utility schema dan FAQ extractor di `scripts/batch14_common.py`.
+  - Mengkurasi dan menyinkronkan 20 gambar visual resolusi tinggi ke `public/images/blog/{slug}.jpg` via `scripts/sync_batch14_images.py`.
+  - Membangun seluruh berkas markdown (`.md`) dan metadata JSON (`.json`) ke `database/data/articles/` via `scripts/build_and_validate_batch14.py`.
+- **Quality Assurance & Linting:**
+  - Menjalankan `scripts/lint_content.py` untuk seluruh 20 artikel: **100% PASS (20/20)** dengan 0 FAIL.
+  - Memverifikasi jumlah kata (semua >= 1.200 kata, rata-rata 1.230-1.260 kata) dan kepadatan kata kunci berada pada rentang ideal.
+- **Database Import & Production Deployment:**
+  - Mengimpor 800 artikel lengkap ke dalam tabel `posts` via `php artisan blog:import-articles`.
+  - Memperbarui sitemap statis via `php artisan sitemap:generate` (791 artikel blog terindeks di `public/sitemap_blog.xml`).
+  - Memperbarui database link internal `blog_links.json` dan `database/data/blog_links.json`.
+- **Verification & Feature Testing:**
+  - Menjalankan skrip verifikasi live `scripts/verify_batch14_live.php`: **100% PASS (20/20 artikel)** terverifikasi aktif di database, bebas em/en dash, dan sukses dirender oleh `PublicBlogController@show` lengkap dengan H1 dan Schema.org JSON-LD.
+  - Membuat dan menjalankan automated test `tests/Feature/Batch14BlogDeliveryTest.php`: **100% PASS (1 test, 196 assertions)**.
+
+#### 3. Technical Changes
+- **Files Created/Modified:**
+  - `database/data/articles/trending-research-2026-11-17.json` (Hasil riset tren bisnis Google Trends 17 Nov 2026)
+  - `database/data/articles/719-*` s.d. `738-*` (20 file .md dan 20 file .json Batch 14)
+  - `public/images/blog/` (20 file cover image resmi COOCA)
+  - `public/sitemap_blog.xml`, `blog_links.json`, `database/data/blog_links.json`
+  - `scripts/make_batch14_research.py`, `scripts/batch14_common.py`, `scripts/sync_batch14_images.py`, `scripts/generate_batch14_part1.py`, `scripts/generate_batch14_part2.py`, `scripts/generate_batch14_part3.py`, `scripts/generate_batch14_part4.py`, `scripts/build_and_validate_batch14.py`, `scripts/verify_batch14_live.php`
+  - `tests/Feature/Batch14BlogDeliveryTest.php`
+- **Database Changes:**
+  - Pembaruan 20 entri data post pada tabel `posts` dengan status `is_published = true`, `published_at` terkalibrasi, view count organik, dan slug unik.
+
 ### [WORK-2026-11-15-659] Penerbitan 40 Konten Clickbait & Kontroversial Evergreen Fitur COOCA (IDs 659 - 698)
 
 - **Date:** 2026-11-15

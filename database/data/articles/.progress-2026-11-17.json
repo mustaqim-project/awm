@@ -1,0 +1,408 @@
+{
+  "date": "2026-11-17",
+  "pipeline": "DAILY EVERGREEN SEO PIPELINE COOCA (40 ARTIKEL EDUKASI UMKM PER HARI)",
+  "total_articles": 40,
+  "status": "COMPLETED",
+  "summary": [
+    {
+      "id": 1,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Cara Menghitung Contribution Margin Produk UMKM untuk Prioritas Penjualan",
+      "slug": "cara-menghitung-contribution-margin-produk-umkm",
+      "published_at": "2026-07-02T08:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-contribution-margin-produk-umkm.jpg",
+      "word_count": 1719,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 2,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Analisis Rasio Likuiditas Usaha Kecil: Rumus Current dan Quick Ratio",
+      "slug": "analisis-rasio-likuiditas-usaha-kecil-current-quick-ratio",
+      "published_at": "2026-07-05T09:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/analisis-rasio-likuiditas-usaha-kecil-current-quick-ratio.jpg",
+      "word_count": 1570,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 3,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Cara Membuat Anggaran Operasional Tahunan dan Budgeting Usaha Kecil",
+      "slug": "cara-membuat-anggaran-operasional-tahunan-budgeting-umkm",
+      "published_at": "2026-07-09T10:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-anggaran-operasional-tahunan-budgeting-umkm.jpg",
+      "word_count": 1644,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 4,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Manajemen Piutang Usaha Dagang: Cara Membuat Aging Schedule Akurat",
+      "slug": "manajemen-piutang-usaha-dagang-aging-schedule-umur-piutang",
+      "published_at": "2026-07-12T11:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/manajemen-piutang-usaha-dagang-aging-schedule-umur-piutang.jpg",
+      "word_count": 1585,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 5,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Cara Menghitung Depresiasi Aset Tetap Usaha dengan Metode Garis Lurus",
+      "slug": "cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus",
+      "published_at": "2026-07-16T13:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-depresiasi-aset-tetap-usaha-garis-lurus.jpg",
+      "word_count": 1573,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 6,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Cara Mencatat Modal Awal Usaha dan Ekuitas Pemilik pada Pembukuan UMKM",
+      "slug": "cara-mencatat-modal-awal-usaha-dan-ekuitas-pemilik-umkm",
+      "published_at": "2026-07-19T14:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-mencatat-modal-awal-usaha-dan-ekuitas-pemilik-umkm.jpg",
+      "word_count": 1551,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 7,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Cara Menghitung ROI Investasi Usaha untuk Pembelian Alat dan Mesin",
+      "slug": "cara-menghitung-roi-investasi-alat-dan-mesin-usaha-umkm",
+      "published_at": "2026-07-23T15:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-roi-investasi-alat-dan-mesin-usaha-umkm.jpg",
+      "word_count": 1553,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 8,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "SOP Pencatatan Reimbursement Biaya Operasional Karyawan yang Akurat",
+      "slug": "sop-pencatatan-reimbursement-biaya-operasional-karyawan",
+      "published_at": "2026-07-26T08:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-pencatatan-reimbursement-biaya-operasional-karyawan.jpg",
+      "word_count": 1700,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 9,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Rumus Economic Order Quantity EOQ untuk Efisiensi Kulakan Toko",
+      "slug": "rumus-economic-order-quantity-eoq-efisiensi-kulakan-toko",
+      "published_at": "2026-07-30T09:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/rumus-economic-order-quantity-eoq-efisiensi-kulakan-toko.jpg",
+      "word_count": 1786,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 10,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Penerapan Analisis ABC Persediaan Barang Toko untuk Kontrol Stok",
+      "slug": "analisis-abc-persediaan-barang-toko-klasifikasi-stok",
+      "published_at": "2026-08-02T10:35:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/analisis-abc-persediaan-barang-toko-klasifikasi-stok.jpg",
+      "word_count": 1820,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 11,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Cara Menghitung Inventory Turnover Ratio untuk Menilai Perputaran Stok",
+      "slug": "cara-menghitung-inventory-turnover-ratio-perputaran-stok-toko",
+      "published_at": "2026-08-06T11:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-inventory-turnover-ratio-perputaran-stok-toko.jpg",
+      "word_count": 1680,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 12,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "SOP Karantina Barang Rusak dan Kedaluwarsa di Gudang Toko Ritel",
+      "slug": "sop-karantina-barang-rusak-dan-kedaluwarsa-di-gudang-toko",
+      "published_at": "2026-08-09T13:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-karantina-barang-rusak-dan-kedaluwarsa-di-gudang-toko.jpg",
+      "word_count": 1670,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 13,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Cara Menata Layout Gudang Toko Kecil agar Alur Picking Lebih Cepat",
+      "slug": "cara-menata-layout-gudang-toko-kecil-agar-cepat-picking",
+      "published_at": "2026-08-13T14:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menata-layout-gudang-toko-kecil-agar-cepat-picking.jpg",
+      "word_count": 1607,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 14,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "SOP Transfer Stok Antar Cabang Toko Menggunakan Surat Jalan Mutasi",
+      "slug": "sop-transfer-stok-antar-cabang-toko-dan-surat-jalan-mutasi",
+      "published_at": "2026-08-16T15:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-transfer-stok-antar-cabang-toko-dan-surat-jalan-mutasi.jpg",
+      "word_count": 1584,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 15,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Cara Menghitung Buffer Stock Bahan Baku Kuliner dan Manufaktur Kecil",
+      "slug": "cara-menghitung-buffer-stock-bahan-baku-kuliner-dan-manufaktur",
+      "published_at": "2026-08-20T08:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-buffer-stock-bahan-baku-kuliner-dan-manufaktur.jpg",
+      "word_count": 1792,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 16,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Panduan Metode Barcode Labeling Inventori Gudang dari SKU hingga Rak",
+      "slug": "metode-barcode-labeling-inventori-gudang-sku-kode-rak",
+      "published_at": "2026-08-23T09:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/metode-barcode-labeling-inventori-gudang-sku-kode-rak.jpg",
+      "word_count": 1612,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 17,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "SOP Blind Cash Drop Kasir untuk Mencegah Manipulasi Laci Uang",
+      "slug": "sop-blind-cash-drop-kasir-untuk-mencegah-manipulasi-laci-uang",
+      "published_at": "2026-08-27T10:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-blind-cash-drop-kasir-untuk-mencegah-manipulasi-laci-uang.jpg",
+      "word_count": 1667,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 18,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Pencegahan Fraud Kasir Metode Phantom Transaction dan Void Struk",
+      "slug": "pencegahan-fraud-kasir-metode-phantom-transaction-dan-void",
+      "published_at": "2026-08-30T11:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/pencegahan-fraud-kasir-metode-phantom-transaction-dan-void.jpg",
+      "word_count": 1550,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 19,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "SOP Penanganan Selisih Uang Kasir Kurang dan Lebih saat Closing Shift",
+      "slug": "sop-penanganan-selisih-uang-kasir-kurang-dan-lebih-closing",
+      "published_at": "2026-09-03T13:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-penanganan-selisih-uang-kasir-kurang-dan-lebih-closing.jpg",
+      "word_count": 1833,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 20,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Panduan Alur Transaksi Split Payment Kasir POS antara Tunai dan QRIS",
+      "slug": "alur-transaksi-split-payment-kasir-pos-tunai-dan-qris",
+      "published_at": "2026-09-06T14:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/alur-transaksi-split-payment-kasir-pos-tunai-dan-qris.jpg",
+      "word_count": 1619,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 21,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "SOP Pembatalan Pesanan Void Kasir: Wajib Otorisasi Supervisor",
+      "slug": "sop-pembatalan-pesanan-void-kasir-wajib-persetujuan-supervisor",
+      "published_at": "2026-09-10T15:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-pembatalan-pesanan-void-kasir-wajib-persetujuan-supervisor.jpg",
+      "word_count": 1657,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 22,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Cara Audit Log Kasir POS untuk Deteksi Transaksi Mencurigakan",
+      "slug": "cara-audit-log-kasir-pos-mendeteksi-aktivitas-mencurigakan",
+      "published_at": "2026-09-13T08:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-audit-log-kasir-pos-mendeteksi-aktivitas-mencurigakan.jpg",
+      "word_count": 1742,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 23,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "SOP Kas Kecil Kasir Laci Kas: Modal Awal dan Uang Kembalian",
+      "slug": "sop-kas-kecil-kasir-modal-awal-laci-kas-pecahan-uang-kembalian",
+      "published_at": "2026-09-17T09:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-kas-kecil-kasir-modal-awal-laci-kas-pecahan-uang-kembalian.jpg",
+      "word_count": 1850,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 24,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Panduan Integrasi EDC Bank Kasir dan Rekonsiliasi Slip Gesek Harian",
+      "slug": "panduan-integrasi-edc-bank-kasir-rekonsiliasi-slip-gesek",
+      "published_at": "2026-09-20T10:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-integrasi-edc-bank-kasir-rekonsiliasi-slip-gesek.jpg",
+      "word_count": 1977,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 25,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Cara Memilih Kode KBLI Usaha UMKM di OSS RBA agar Izin Tidak Salah",
+      "slug": "cara-memilih-kode-kbli-usaha-umkm-di-oss-rba-agar-tidak-salah-izin",
+      "published_at": "2026-09-24T11:35:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-memilih-kode-kbli-usaha-umkm-di-oss-rba-agar-tidak-salah-izin.jpg",
+      "word_count": 1592,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 26,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Syarat PIRT Pangan Olahan Risiko Rendah melalui SPP-IRT Online",
+      "slug": "syarat-pirt-pangan-olahan-risiko-rendah-dinas-kesehatan-spp-irt",
+      "published_at": "2026-09-27T13:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/syarat-pirt-pangan-olahan-risiko-rendah-dinas-kesehatan-spp-irt.jpg",
+      "word_count": 1636,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 27,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Tata Cara Pencatatan Pajak Peredaran Bruto UMKM Sesuai PP 55",
+      "slug": "tata-cara-pencatatan-pajak-peredaran-bruto-umkm-sesuai-pp-55",
+      "published_at": "2026-10-01T14:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/tata-cara-pencatatan-pajak-peredaran-bruto-umkm-sesuai-pp-55.jpg",
+      "word_count": 1870,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 28,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Cara Membuat Perjanjian Kerja Waktu Tertentu UMKM untuk Karyawan Toko",
+      "slug": "cara-membuat-perjanjian-kerja-waktu-tertentu-pkwtt-pkwt-karyawan-toko",
+      "published_at": "2026-10-04T15:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-perjanjian-kerja-waktu-tertentu-pkwtt-pkwt-karyawan-toko.jpg",
+      "word_count": 1881,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 29,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Prosedur Sertifikasi Halal SJPH UMKM: Panduan Manual Sistem Jaminan",
+      "slug": "prosedur-sertifikasi-halal-sjph-umkm-manual-sistem-jaminan-produk",
+      "published_at": "2026-10-08T08:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/prosedur-sertifikasi-halal-sjph-umkm-manual-sistem-jaminan-produk.jpg",
+      "word_count": 1740,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 30,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Cara Aktivasi Akun Coretax DJP bagi Pengusaha Badan dan Orang Pribadi",
+      "slug": "cara-aktivasi-akun-coretax-djp-bagi-pengusaha-badan-dan-orang-pribadi",
+      "published_at": "2026-10-11T09:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-aktivasi-akun-coretax-djp-bagi-pengusaha-badan-dan-orang-pribadi.jpg",
+      "word_count": 1686,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 31,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Aturan Nota Penjualan Berkekuatan Hukum sebagai Bukti Transaksi Sah",
+      "slug": "aturan-nota-penjualan-berkekuatan-hukum-sebagai-bukti-transaksi",
+      "published_at": "2026-10-15T10:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/aturan-nota-penjualan-berkekuatan-hukum-sebagai-bukti-transaksi.jpg",
+      "word_count": 1832,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 32,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Pembukuan Sederhana SAK EMKM untuk Usaha Kecil: 3 Laporan Wajib",
+      "slug": "pembukuan-sederhana-sak-emkm-untuk-usaha-kecil-tiga-laporan-wajib",
+      "published_at": "2026-10-18T11:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/pembukuan-sederhana-sak-emkm-untuk-usaha-kecil-tiga-laporan-wajib.jpg",
+      "word_count": 1811,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 33,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Cara Menghitung Customer Lifetime Value UMKM Ritel dan Kafe",
+      "slug": "cara-menghitung-customer-lifetime-value-clv-usaha-ritel",
+      "published_at": "2026-10-22T13:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-customer-lifetime-value-clv-usaha-ritel.jpg",
+      "word_count": 1768,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 34,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Strategi Membership Tier Loyalitas Pelanggan Toko Offline dan Online",
+      "slug": "strategi-membership-tier-loyalitas-pelanggan-toko-offline",
+      "published_at": "2026-10-25T14:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/strategi-membership-tier-loyalitas-pelanggan-toko-offline.jpg",
+      "word_count": 1848,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 35,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Alur Follow Up Keranjang Terbengkalai WhatsApp Katalog Toko",
+      "slug": "alur-follow-up-keranjang-terbengkalai-whatsapp-katalog-toko",
+      "published_at": "2026-10-29T15:35:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/alur-follow-up-keranjang-terbengkalai-whatsapp-katalog-toko.jpg",
+      "word_count": 1829,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 36,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "SOP Penanganan Ulasan Negatif di Google Maps dan Media Sosial Toko",
+      "slug": "sop-penanganan-ulasan-negatif-di-google-maps-dan-media-sosial",
+      "published_at": "2026-11-01T08:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sop-penanganan-ulasan-negatif-di-google-maps-dan-media-sosial.jpg",
+      "word_count": 1975,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 37,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Cara Membuat Program Referral Pelanggan Bawa Teman untuk Toko Ritel",
+      "slug": "cara-membuat-program-referral-pelanggan-bawa-teman-toko-ritel",
+      "published_at": "2026-11-05T09:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-program-referral-pelanggan-bawa-teman-toko-ritel.jpg",
+      "word_count": 1863,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 38,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Segmentasi Database Pelanggan Berdasarkan RFM untuk Toko Ritel",
+      "slug": "segmentasi-database-pelanggan-berdasarkan-rfm-recency-frequency-monetary",
+      "published_at": "2026-11-09T10:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/segmentasi-database-pelanggan-berdasarkan-rfm-recency-frequency-monetary.jpg",
+      "word_count": 1977,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 39,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Cara Membuat Broadcast WhatsApp Resmi Tidak Diblokir Pelanggan",
+      "slug": "cara-membuat-broadcast-whatsapp-resmi-tidak-diblokir-pelanggan",
+      "published_at": "2026-11-13T11:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-broadcast-whatsapp-resmi-tidak-diblokir-pelanggan.jpg",
+      "word_count": 2066,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 40,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Strategi Cross Selling dan Up Selling di Kasir Ritel dan FnB",
+      "slug": "strategi-cross-selling-dan-up-selling-di-kasir-ritel-dan-fnb",
+      "published_at": "2026-11-17T09:00:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/strategi-cross-selling-dan-up-selling-di-kasir-ritel-dan-fnb.jpg",
+      "word_count": 1996,
+      "lint_status": "PASS"
+    }
+  ]
+}

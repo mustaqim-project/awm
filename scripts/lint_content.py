@@ -95,6 +95,15 @@ def main():
     if slug:
         add("PASS" if re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", slug) else "FAIL", f"slug '{slug}' format valid")
 
+    cover = fm.get("cover_image", "")
+    if cover:
+        if "unsplash.com" in cover:
+            add("FAIL", f"cover_image tidak boleh menggunakan link eksternal Unsplash, wajib jadikan asset resmi Cooca: 'https://cooca.id/images/blog/{slug}.jpg'")
+        elif not cover.startswith("https://cooca.id/images/blog/"):
+            add("WARN", f"cover_image sebaiknya menggunakan domain resmi Cooca 'https://cooca.id/images/blog/{slug}.jpg', ditemukan: '{cover}'")
+        else:
+            add("PASS", "cover_image merupakan asset resmi Cooca")
+
     # 4. Heading
     h1 = re.findall(r"^# (?!#)(.+)$", body, re.M)
     h2 = re.findall(r"^## (?!#)(.+)$", body, re.M)
