@@ -588,21 +588,22 @@
                                     x-text="'M-' + selectedTable.table_number"></span>
                             </template>
                         </button>
+                    @endif
+                    @endif
 
-                        <!-- Reservasi Storefront Button -->
+                    @if (\App\Support\Context::hasPermission('pos.tables') && $business && $business->supportsReservation())
+                        <!-- Reservasi / Booking Storefront Button (Industry-Adaptive) -->
                         <button @click="openTablesModal('reservations')"
                             :class="todayReservations.length > 0 ? 'bg-[#5856D6] text-white ring-2 ring-white/20' : 'bg-white/10 hover:bg-white/15 text-white border border-white/10'"
                             class="h-8.5 sm:h-9 px-2.5 sm:px-3 rounded-[10px] active:scale-[0.97] text-[12px] font-medium transition flex items-center gap-1.5 relative"
-                            title="{{ __('pos.table_reservations_title') }}">
+                            title="{{ $business->isWorkshop() ? 'Booking Servis & Reservasi' : ($business->isBarbershop() ? 'Jadwal Treatment & Reservasi' : __('pos.table_reservations_title')) }}">
                             <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
                             </svg>
-                            <span class="hidden md:inline">Reservasi</span>
+                            <span class="hidden md:inline">{{ $business->isWorkshop() ? 'Booking' : ($business->isBarbershop() ? 'Jadwal' : 'Reservasi') }}</span>
                             <span x-show="todayReservations.length > 0" x-text="todayReservations.length"
                                 class="px-1.5 py-0.5 rounded-full bg-white text-[#5856D6] font-bold text-[9px] flex items-center justify-center tabular-nums"></span>
                         </button>
-                    @endif
-                    @endif
 
                     @if ($business && ($business->isFoodIndustry() || $business->hasDineInFeature()))
                         <!-- Auto KDS (Paperless Kitchen) Toggle Button -->
@@ -2262,6 +2263,9 @@
                 // Cart state
                 hasDineIn: {{ ($business && $business->hasDineInFeature()) ? 'true' : 'false' }},
                 isFoodIndustry: {{ ($business && $business->isFoodIndustry()) ? 'true' : 'false' }},
+                isWorkshop: {{ ($business && $business->isWorkshop() && !$business->isFoodIndustry()) ? 'true' : 'false' }},
+                isBarbershop: {{ ($business && $business->isBarbershop()) ? 'true' : 'false' }},
+                isEventService: {{ ($business && $business->isEventService()) ? 'true' : 'false' }},
                 cart: [],
                 selectedCustomerId: '',
                 activeCustomer: null,
@@ -2291,7 +2295,7 @@
                 tables: @json($tables ?? []),
                 todayReservations: {{ \Illuminate\Support\Js::from($todayReservations ?? []) }},
                 todayReservationsCount: {{ (int) ($todayReservationsCount ?? 0) }},
-                tableModalTab: 'tables',
+                tableModalTab: '{{ ($business && $business->hasDineInFeature()) ? 'tables' : 'reservations' }}',
                 isSeatingReservation: false,
                 pendingQrCount: {{ $pendingQrOrdersCount ?? 0 }},
                 incomingQrOrders: [],

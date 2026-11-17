@@ -31,10 +31,12 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-extrabold text-base leading-tight tracking-tight text-black dark:text-white">
+                        <h3 class="font-extrabold text-base leading-tight tracking-tight text-black dark:text-white"
+                            x-text="isWorkshop ? 'Antrean Booking Servis & Reservasi' : (isBarbershop ? 'Jadwal & Reservasi Pelanggan' : '{{ __('pos.table_and_storefront_reservations') }}')">
                             {{ __('pos.table_and_storefront_reservations') }}
                         </h3>
-                        <p class="text-[11px] text-black/50 dark:text-white/50">
+                        <p class="text-[11px] text-black/50 dark:text-white/50"
+                            x-text="isWorkshop ? 'Kelola jadwal masuk kendaraan, mekanik & pembayaran DP' : (isBarbershop ? 'Kelola jadwal booking treatment & pembayaran DP' : '{{ __('pos.monitor_dine_in_tables_and_guest_bookings') }}')">
                             {{ __('pos.monitor_dine_in_tables_and_guest_bookings') }}
                         </p>
                     </div>
@@ -63,15 +65,17 @@
             <!-- Apple HIG Segmented Bar -->
             <div class="flex items-center justify-between gap-2 p-1 bg-black/[0.04] dark:bg-white/[0.06] rounded-[14px] shrink-0">
                 <div class="flex items-center gap-1">
-                    <button type="button" @click="tableModalTab = 'tables'"
-                        :class="tableModalTab === 'tables' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
-                        class="px-3.5 py-1.5 rounded-[10px] text-xs transition flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                        </svg>
-                        <span>{{ __('pos.table_status_bill') }}</span>
-                        <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10" x-text="tables.length"></span>
-                    </button>
+                    <template x-if="hasDineIn">
+                        <button type="button" @click="tableModalTab = 'tables'"
+                            :class="tableModalTab === 'tables' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
+                            class="px-3.5 py-1.5 rounded-[10px] text-xs transition flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-[#34C759]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                            </svg>
+                            <span>{{ __('pos.table_status_bill') }}</span>
+                            <span class="text-[10px] px-1.5 py-0.2 rounded-full bg-black/5 dark:bg-white/10" x-text="tables.length"></span>
+                        </button>
+                    </template>
 
                     <button type="button" @click="tableModalTab = 'reservations'"
                         :class="tableModalTab === 'reservations' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-bold' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white font-medium'"
@@ -401,14 +405,15 @@
                         </div>
 
                         <div>
-                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Jumlah Tamu</label>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1"
+                                x-text="isWorkshop ? 'Jumlah Kendaraan' : 'Jumlah Tamu (Pax)'">Jumlah Tamu</label>
                             <input type="number" x-model="manualReservationForm.guest_count" min="1" max="100"
                                 class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                         </div>
                     </div>
 
-                    <!-- Pilihan Meja (Resto) -->
-                    <template x-if="tables && tables.length > 0">
+                    <!-- Pilihan Meja (Resto / F&B Saja - Auto Hide di Bengkel & Jasa) -->
+                    <template x-if="hasDineIn && tables && tables.length > 0">
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Meja (Opsional)</label>
                             <select x-model="manualReservationForm.pos_table_id"
@@ -421,19 +426,65 @@
                         </div>
                     </template>
 
-                    <!-- Plat Nomor (Bengkel / Workshop) -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Plat Kendaraan (Khusus Bengkel)</label>
-                            <input type="text" x-model="manualReservationForm.vehicle_plate" placeholder="B 1234 XYZ"
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                    <!-- Plat Nomor & Model (Bengkel / Workshop Saja - Auto Hide di Industri Lain) -->
+                    <template x-if="isWorkshop">
+                        <div class="space-y-3 p-3 rounded-[12px] bg-[#FF9500]/5 border border-[#FF9500]/20">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11.5px] font-semibold text-[#FF9500] mb-1">
+                                        Plat Nomor Kendaraan <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" x-model="manualReservationForm.vehicle_plate" placeholder="B 1234 XYZ"
+                                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-[#FF9500]/30 text-[16px] sm:text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                </div>
+                                <div>
+                                    <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Model / Merk Kendaraan</label>
+                                    <input type="text" x-model="manualReservationForm.vehicle_model" placeholder="Toyota Avanza / Vario"
+                                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Model / Merk Kendaraan</label>
-                            <input type="text" x-model="manualReservationForm.vehicle_model" placeholder="Avanza / Vario"
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                    </template>
+
+                    <!-- Layanan & Durasi (Barbershop / Salon Saja - Auto Hide di Industri Lain) -->
+                    <template x-if="isBarbershop">
+                        <div class="space-y-3 p-3 rounded-[12px] bg-[#AF52DE]/5 border border-[#AF52DE]/20">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11.5px] font-semibold text-[#AF52DE] mb-1">Paket Layanan / Treatment</label>
+                                    <input type="text" x-model="manualReservationForm.notes" placeholder="Potong Rambut & Styling"
+                                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-[#AF52DE]/30 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                </div>
+                                <div>
+                                    <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Estimasi Durasi</label>
+                                    <select x-model="manualReservationForm.service_duration_minutes"
+                                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                        <option value="">-- Standar --</option>
+                                        <option value="30">30 Menit</option>
+                                        <option value="45">45 Menit</option>
+                                        <option value="60">60 Menit (1 Jam)</option>
+                                        <option value="90">90 Menit</option>
+                                        <option value="120">120 Menit (2 Jam)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+
+                    <!-- Penugasan Staf / Mekanik / Stylist (Jika Ada Data Staf) -->
+                    <template x-if="technicians && technicians.length > 0">
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1"
+                                x-text="isWorkshop ? 'Tugaskan Mekanik / Teknisi' : (isBarbershop ? 'Pilihan Stylist / Kapster' : 'Petugas / Staf Penanggungjawab')"></label>
+                            <select x-model="manualReservationForm.staff_id"
+                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <option value="">-- Bebas / Staf Tersedia --</option>
+                                <template x-for="tech in technicians" :key="tech.id">
+                                    <option :value="tech.id" x-text="tech.name"></option>
+                                </template>
+                            </select>
+                        </div>
+                    </template>
 
                     <!-- Pembayaran DP Langsung -->
                     <div class="p-3.5 rounded-[14px] bg-[#34C759]/5 border border-[#34C759]/20 space-y-2.5">
