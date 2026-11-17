@@ -31,31 +31,25 @@
                         </svg>
                     </div>
                     <div>
-                        <h3 class="font-bold text-base text-black dark:text-white">{{ __('pos.table_reservations_mgmt_title') }}</h3>
-                        <p class="text-xs text-black/50 dark:text-white/50">{{ __('pos.table_reservations_mgmt_desc') }}</p>
+                        <h3 class="font-extrabold text-base leading-tight tracking-tight text-black dark:text-white">
+                            {{ __('pos.table_and_storefront_reservations') }}
+                        </h3>
+                        <p class="text-[11px] text-black/50 dark:text-white/50">
+                            {{ __('pos.monitor_dine_in_tables_and_guest_bookings') }}
+                        </p>
                     </div>
                 </div>
+
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('storefront.reservations.index') }}" target="_blank"
-                        class="text-xs font-semibold text-[#5856D6] hover:underline flex items-center gap-1 hidden sm:flex"
-                        title="{{ __('pos.open_reservation_module') }}">
+                    <button type="button" @click="fetchTables()"
+                        class="h-8 px-2.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] text-xs font-semibold text-black/70 dark:text-white/70 transition flex items-center gap-1.5"
+                        title="{{ __('pos.refresh_table_data') }}">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                         </svg>
-                        <span>{{ __('pos.reservations_data_link') }}</span>
-                    </a>
-                    <span class="text-black/20 dark:text-white/20 hidden sm:inline">•</span>
-                    @if (\App\Support\Context::hasPermission('pos.tables'))
-                        <a href="{{ route('pos.tables.index') }}" target="_blank"
-                            class="text-xs font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
-                            <span>{{ __('pos.manage_tables_qr') }}</span>
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2"
-                                viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                            </svg>
-                        </a>
-                    @endif
+                        <span>{{ __('pos.refresh_table_btn') }}</span>
+                    </button>
+
                     <button type="button" @click="showTablesModal = false"
                         class="w-8 h-8 rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
@@ -128,46 +122,36 @@
                                         </span>
                                         <span x-text="tbl.today_reservation?.time_slot"></span>
                                     </div>
-                                    <div class="text-[10px] text-black/70 dark:text-white/70 truncate"
-                                        x-text="(tbl.today_reservation?.customer_name || '') + ' (' + (tbl.today_reservation?.guest_count || 1) + ' org)'"></div>
+                                    <div class="truncate text-black/70 dark:text-white/70"
+                                        x-text="tbl.today_reservation?.customer_name"></div>
                                 </div>
 
-                                <!-- Session info if occupied -->
-                                <div x-show="tbl.active_session"
-                                    class="mt-2 pt-2 border-t border-black/5 dark:border-white/5 space-y-1">
-                                    <div class="text-[11px] font-bold text-black dark:text-white truncate"
-                                        x-text="tbl.active_session?.customer_name"></div>
-                                    <div class="text-xs font-extrabold text-[#007AFF] tabular-nums"
+                                <!-- Active Session Info -->
+                                <div x-show="tbl.active_session" class="mt-2.5 pt-2 border-t border-black/5 dark:border-white/5 space-y-1">
+                                    <div class="flex items-center justify-between text-[11px]">
+                                        <span class="text-black/50 dark:text-white/50 truncate"
+                                            x-text="tbl.active_session?.customer_name || 'Tamu Meja'"></span>
+                                        <span class="font-mono text-[10px] text-black/40 dark:text-white/40"
+                                            x-text="tbl.active_session?.session_number"></span>
+                                    </div>
+                                    <div class="font-extrabold text-xs text-[#007AFF] tabular-nums"
                                         x-text="formatRupiah(tbl.active_session?.total_amount || 0)"></div>
                                 </div>
                             </div>
 
-                            <!-- Card Actions -->
-                            <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/5 flex flex-col gap-1.5">
-                                <template
-                                    x-if="tbl.active_session && tbl.active_session.orders && tbl.active_session.orders.length > 0">
-                                    <div class="flex flex-col gap-1.5">
-                                        <button type="button" @click="loadTableOrderToCart(tbl)"
-                                            class="w-full h-8 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-[11px] font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
-                                            title="{{ __('pos.load_table_orders_tooltip') }}">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
-                                                stroke-width="2" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                            </svg>
-                                            <span>{{ __('pos.check_load_to_cart') }}</span>
-                                        </button>
-                                        <button type="button" @click="loadTableOrderToCart(tbl, true)"
-                                            class="w-full h-7 rounded-[7px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-[11px] font-bold transition flex items-center justify-center gap-1">
-                                            <span>{{ __('pos.quick_pay') }}</span>
-                                        </button>
-                                    </div>
-                                </template>
-                                <template
-                                    x-if="!tbl.active_session || !tbl.active_session.orders || tbl.active_session.orders.length === 0">
+                            <!-- Card Action Buttons -->
+                            <div class="mt-3 pt-2 border-t border-black/5 dark:border-white/5 flex items-center gap-1.5">
+                                <template x-if="tbl.status === 'available'">
                                     <button type="button" @click="selectTableForCart(tbl)"
-                                        class="w-full h-8 rounded-[8px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.1] text-black dark:text-white text-[11px] font-semibold transition">
-                                        {{ __('pos.select_this_table_dine_in') }}
+                                        class="w-full py-1.5 rounded-[8px] bg-[#34C759] hover:bg-[#28A745] text-white font-bold text-xs transition shadow-xs">
+                                        {{ __('pos.use_table_btn') }}
+                                    </button>
+                                </template>
+                                <template x-if="tbl.status !== 'available'">
+                                    <button type="button" @click="loadTableOrderToCart(tbl)"
+                                        class="flex-1 py-1.5 rounded-[8px] bg-[#007AFF] hover:bg-[#0071E3] text-white font-bold text-xs transition shadow-xs flex items-center justify-center gap-1">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" /></svg>
+                                        <span>{{ __('pos.cashier_bill_btn') }}</span>
                                     </button>
                                 </template>
                             </div>
@@ -178,6 +162,31 @@
 
             <!-- TAB 2: Today's Storefront Reservations -->
             <div x-show="tableModalTab === 'reservations'" class="flex-1 overflow-y-auto pr-1">
+                <!-- Action Bar: Add Reservation & Manage Link -->
+                <div class="flex items-center justify-between pb-3 mb-3 border-b border-black/5 dark:border-white/5 flex-wrap gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-black/80 dark:text-white/80">
+                            {{ __('pos.today_storefront_reservations') }}
+                        </span>
+                        <span class="px-2 py-0.5 rounded-full bg-[#5856D6]/15 text-[#5856D6] text-[11px] font-extrabold"
+                            x-text="todayReservations.length"></span>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button type="button" @click="openManualReservationModal()"
+                            class="px-3.5 py-1.5 rounded-[10px] bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer active:scale-95">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                            <span>+ Tambah Reservasi</span>
+                        </button>
+
+                        <a href="{{ route('storefront.reservations.index') }}" target="_blank"
+                            class="px-3 py-1.5 rounded-[10px] bg-black/5 dark:bg-white/10 hover:bg-black/10 text-black/70 dark:text-white/70 text-xs font-semibold transition flex items-center gap-1">
+                            <span>Kelola Lengkap</span>
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+                        </a>
+                    </div>
+                </div>
+
                 <!-- Empty State -->
                 <div x-show="!todayReservations || todayReservations.length === 0"
                     class="py-12 flex flex-col items-center justify-center text-center">
@@ -188,11 +197,11 @@
                     </div>
                     <h4 class="font-bold text-sm text-black dark:text-white">{{ __('pos.no_reservation_schedule_today') }}</h4>
                     <p class="text-xs text-black/50 dark:text-white/50 max-w-sm mt-1">{{ __('pos.no_today_storefront_bookings') }}</p>
-                    <a href="{{ route('storefront.reservations.index') }}" target="_blank"
-                        class="mt-4 px-3.5 py-1.5 rounded-[10px] bg-[#5856D6] hover:bg-[#4B49C2] text-white text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-sm">
-                        <span>{{ __('pos.open_reservation_module') }}</span>
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>
-                    </a>
+                    <button type="button" @click="openManualReservationModal()"
+                        class="mt-4 px-4 py-2 rounded-[10px] bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition inline-flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                        <span>Tambah Reservasi Manual</span>
+                    </button>
                 </div>
 
                 <!-- Reservations List -->
@@ -224,11 +233,23 @@
                                         }"
                                         x-text="rsv.status === 'seated' ? '{{ __('pos.seating_status_seated') }}' : (rsv.status === 'confirmed' ? '{{ __('pos.seating_status_confirmed') }}' : '{{ __('pos.seating_status_pending') }}')"></span>
 
+                                    <!-- DP Badge -->
+                                    <template x-if="rsv.dp_amount > 0">
+                                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] flex items-center gap-1">
+                                            <span>✓ DP Rp <span x-text="Number(rsv.dp_amount).toLocaleString('id-ID')"></span></span>
+                                        </span>
+                                    </template>
+                                    <template x-if="!rsv.dp_amount || rsv.dp_amount == 0">
+                                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                                            Belum DP
+                                        </span>
+                                    </template>
+
                                     <!-- Reservation Code -->
                                     <span class="font-mono text-[10px] text-black/40 dark:text-white/40" x-text="'#' + rsv.reservation_code"></span>
                                 </div>
 
-                                <div class="flex items-center gap-3">
+                                <div class="flex items-center gap-3 flex-wrap">
                                     <h4 class="font-bold text-sm text-black dark:text-white truncate" x-text="rsv.customer_name"></h4>
                                     <!-- WhatsApp Direct Link -->
                                     <template x-if="rsv.customer_phone">
@@ -238,6 +259,22 @@
                                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
                                             <span x-text="rsv.customer_phone"></span>
                                         </a>
+                                    </template>
+                                </div>
+
+                                <!-- Industry Tags: Vehicle plate, Staff, Service -->
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <template x-if="rsv.vehicle_plate">
+                                        <span class="text-[10.5px] font-mono font-bold px-2 py-0.5 rounded bg-[#FF9500]/15 text-[#FF9500]"
+                                            x-text="'🚗 ' + rsv.vehicle_plate + (rsv.vehicle_model ? ' (' + rsv.vehicle_model + ')' : '')"></span>
+                                    </template>
+                                    <template x-if="rsv.staff_name">
+                                        <span class="text-[10.5px] font-semibold px-2 py-0.5 rounded-full bg-[#AF52DE]/15 text-[#AF52DE]"
+                                            x-text="'👤 ' + rsv.staff_name"></span>
+                                    </template>
+                                    <template x-if="rsv.product_name">
+                                        <span class="text-[10.5px] font-semibold px-2 py-0.5 rounded-full bg-[#007AFF]/15 text-[#007AFF]"
+                                            x-text="'✨ ' + rsv.product_name"></span>
                                     </template>
                                 </div>
 
@@ -269,7 +306,7 @@
                                 <template x-if="rsv.status !== 'seated'">
                                     <button type="button" @click="seatReservation(rsv)"
                                         :disabled="isSeatingReservation"
-                                        class="h-9 px-4 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm disabled:opacity-50">
+                                        class="h-9 px-4 rounded-[10px] bg-[#34C759] hover:bg-[#28A745] active:scale-[0.98] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm disabled:opacity-50 cursor-pointer">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                                         </svg>
@@ -281,7 +318,7 @@
                                     <div class="flex items-center gap-2">
                                         <button type="button"
                                             @click="const tbl = tables.find(t => t.id === rsv.pos_table_id); if (tbl) { selectTableForCart(tbl); } else { showTablesModal = false; }"
-                                            class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm">
+                                            class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                             </svg>
@@ -295,6 +332,155 @@
                 </div>
             </div>
                 </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- ======================================================== -->
+    <!-- MODAL: QUICK MANUAL RESERVATION FROM POS CASHIER         -->
+    <!-- ======================================================== -->
+    <template x-teleport="body">
+        <div x-show="showManualReservationModal" x-cloak role="dialog" aria-modal="true"
+            class="fixed inset-0 z-[250] flex items-end sm:items-center justify-center p-0 sm:p-4"
+            @keydown.escape.window="showManualReservationModal = false">
+            
+            <div x-show="showManualReservationModal"
+                x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"
+                @click="showManualReservationModal = false"></div>
+
+            <div @click.away="showManualReservationModal = false"
+                class="relative z-10 w-full max-w-lg bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto text-black dark:text-white">
+                
+                <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
+
+                <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center shrink-0">
+                            <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-base font-bold text-black dark:text-white">Tambah Reservasi Kasir</h3>
+                            <p class="text-[11px] text-black/50 dark:text-white/50">Input reservasi manual langsung di kasir POS</p>
+                        </div>
+                    </div>
+                    <button type="button" @click="showManualReservationModal = false"
+                        class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <form @submit.prevent="submitManualReservation()" class="space-y-3.5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Nama Tamu <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="manualReservationForm.customer_name" required placeholder="Budi Santoso"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">No. WhatsApp <span class="text-red-500">*</span></label>
+                            <input type="text" x-model="manualReservationForm.customer_phone" required placeholder="08123456789"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Tanggal</label>
+                            <input type="date" x-model="manualReservationForm.reservation_date" required
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Jam Datang</label>
+                            <input type="text" x-model="manualReservationForm.time_slot" required placeholder="12:00"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Jumlah Tamu</label>
+                            <input type="number" x-model="manualReservationForm.guest_count" min="1" max="100"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+                    </div>
+
+                    <!-- Pilihan Meja (Resto) -->
+                    <template x-if="tables && tables.length > 0">
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Meja (Opsional)</label>
+                            <select x-model="manualReservationForm.pos_table_id"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <option value="">-- Bebas / Tentukan Nanti --</option>
+                                <template x-for="tbl in tables" :key="tbl.id">
+                                    <option :value="tbl.id" x-text="'Meja ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' Kursi'"></option>
+                                </template>
+                            </select>
+                        </div>
+                    </template>
+
+                    <!-- Plat Nomor (Bengkel / Workshop) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Plat Kendaraan (Khusus Bengkel)</label>
+                            <input type="text" x-model="manualReservationForm.vehicle_plate" placeholder="B 1234 XYZ"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                        </div>
+                        <div>
+                            <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Model / Merk Kendaraan</label>
+                            <input type="text" x-model="manualReservationForm.vehicle_model" placeholder="Avanza / Vario"
+                                class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                        </div>
+                    </div>
+
+                    <!-- Pembayaran DP Langsung -->
+                    <div class="p-3.5 rounded-[14px] bg-[#34C759]/5 border border-[#34C759]/20 space-y-2.5">
+                        <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                            <input type="checkbox" x-model="manualReservationForm.pay_dp_now"
+                                class="w-4 h-4 rounded text-[#34C759] focus:ring-[#34C759]">
+                            <span class="text-xs font-bold text-[#248A3D] dark:text-[#30D158]">Bayar DP (Uang Muka) Sekarang</span>
+                        </label>
+
+                        <div x-show="manualReservationForm.pay_dp_now" class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Nominal DP (Rp)</label>
+                                <input type="number" x-model="manualReservationForm.dp_amount" min="1000" step="1000" placeholder="50000"
+                                    class="w-full h-9 px-3 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/30 text-xs text-black dark:text-white font-bold tabular-nums">
+                            </div>
+
+                            <div>
+                                <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Metode Bayar DP</label>
+                                <select x-model="manualReservationForm.dp_payment_method"
+                                    class="w-full h-9 px-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white">
+                                    <option value="cash">Tunai (Cash)</option>
+                                    <option value="transfer">Transfer Bank</option>
+                                    <option value="qris">QRIS</option>
+                                    <option value="edc_debit">Kartu Debit</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Catatan Tambahan</label>
+                        <input type="text" x-model="manualReservationForm.notes" placeholder="Catatan permintaan khusus..."
+                            class="w-full h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                    </div>
+
+                    <div class="flex items-center justify-end gap-2 pt-2 border-t border-black/5 dark:border-white/10">
+                        <button type="button" @click="showManualReservationModal = false"
+                            class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="submit"
+                            :disabled="isSubmittingManualReservation"
+                            class="px-5 py-2 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer disabled:opacity-50">
+                            <span x-text="isSubmittingManualReservation ? 'Menyimpan...' : 'Simpan Reservasi'"></span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </template>

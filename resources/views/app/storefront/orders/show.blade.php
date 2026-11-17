@@ -31,7 +31,7 @@
         );
     @endphp
 
-    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8"
+    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-12 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8"
         x-data="{
             rejectModalOpen: false,
             cancelModalOpen: false,

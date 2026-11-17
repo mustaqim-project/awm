@@ -1,15 +1,23 @@
 @extends('layouts.app', ['title' => __('storefront.backoffice.reservations.page_title')])
 
 @section('content')
-    <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
+    <div class="space-y-5 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pb-28 sm:pb-32 lg:pb-10"
         x-data="{
             showAssignModal: false,
             selectedReservation: null,
             cancelModalOpen: false,
             reservationToCancel: null,
+            showCreateModal: false,
+            showDpModal: false,
+            reservationForDp: null,
+            payDpDirectly: false,
             openAssign(rsv) {
                 this.selectedReservation = rsv;
                 this.showAssignModal = true;
+            },
+            openDp(rsv) {
+                this.reservationForDp = rsv;
+                this.showDpModal = true;
             }
         }">
         {{-- UNIFIED STOREFRONT HUB NAVIGATION --}}
@@ -32,44 +40,35 @@
         @endif
 
         <!-- POS & Operations Quick Action Strip (Industry-Adaptive) -->
-        @if ($isFnB)
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#007AFF]/[0.06] border border-[#007AFF]/15">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <i data-lucide="monitor" class="w-4.5 h-4.5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_title') }}</h3>
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_desc') }}</p>
-                    </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[20px] {{ $isWorkshop ? 'bg-[#FF9500]/[0.07] border border-[#FF9500]/20' : ($isBarbershop ? 'bg-[#AF52DE]/[0.07] border border-[#AF52DE]/20' : 'bg-[#007AFF]/[0.06] border border-[#007AFF]/15') }}">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-[12px] {{ $isWorkshop ? 'bg-[#FF9500]' : ($isBarbershop ? 'bg-[#AF52DE]' : 'bg-[#007AFF]') }} text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : ($isFnB ? 'utensils' : 'calendar')) }}" class="w-5 h-5"></i>
                 </div>
-                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
-                    @if ($business && $business->hasDineInFeature())
+                <div>
+                    <h3 class="font-bold text-[14px] text-black dark:text-white">
+                        {{ $isWorkshop ? __('storefront.backoffice.reservations.pos_strip_workshop_title') : ($isBarbershop ? __('storefront.backoffice.reservations.pos_strip_barber_title') : ($isFnB ? __('storefront.backoffice.reservations.pos_strip_title') : __('storefront.backoffice.reservations.pos_strip_general_title'))) }}
+                    </h3>
+                    <p class="text-[12px] text-black/60 dark:text-white/60">
+                        {{ $isWorkshop ? __('storefront.backoffice.reservations.pos_strip_workshop_desc') : ($isBarbershop ? __('storefront.backoffice.reservations.pos_strip_barber_desc') : ($isFnB ? __('storefront.backoffice.reservations.pos_strip_desc') : __('storefront.backoffice.reservations.pos_strip_general_desc'))) }}
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto shrink-0 flex-wrap">
+                <!-- Tambah Reservasi Manual Button -->
+                <button type="button" @click="showCreateModal = true"
+                    class="h-9 px-4 rounded-[10px] bg-[#34C759] hover:bg-[#2EB04E] text-white text-[12px] font-bold flex items-center gap-1.5 transition shadow-xs active:scale-95 cursor-pointer">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span>{{ __('storefront.backoffice.reservations.btn_add_manual') }}</span>
+                </button>
+
+                @if ($isFnB && $business && $business->hasDineInFeature())
                     <a href="{{ route('pos.tables.index') }}"
                         class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
                         <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-[#5856D6]"></i>
                         <span>{{ __('storefront.backoffice.reservations.btn_pos_tables') }}</span>
                     </a>
-                    @endif
-                    <a href="{{ route('pos.terminal') }}"
-                        class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
-                    </a>
-                </div>
-            </div>
-        @elseif ($isWorkshop)
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#FF9500]/[0.08] border border-[#FF9500]/20">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-[10px] bg-[#FF9500] text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <i data-lucide="wrench" class="w-4.5 h-4.5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_workshop_title') }}</h3>
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_workshop_desc') }}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                @elseif ($isWorkshop)
                     <a href="{{ route('products.index', ['type' => 'service']) }}"
                         class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
                         <i data-lucide="wrench" class="w-3.5 h-3.5 text-[#FF9500]"></i>
@@ -77,65 +76,32 @@
                     </a>
                     <a href="{{ route('pos.terminal') }}"
                         class="h-9 px-3.5 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                        <i data-lucide="gauge" class="w-3.5 h-3.5"></i>
                         <span>{{ __('storefront.backoffice.reservations.btn_pos_workshop_terminal') }}</span>
                     </a>
-                </div>
-            </div>
-        @elseif ($isBarbershop)
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#AF52DE]/[0.08] border border-[#AF52DE]/20">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-[10px] bg-[#AF52DE] text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <i data-lucide="scissors" class="w-4.5 h-4.5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_barber_title') }}</h3>
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_barber_desc') }}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                @elseif ($isBarbershop)
                     <a href="{{ route('products.index', ['type' => 'service']) }}"
                         class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
-                        <i data-lucide="scissors" class="w-3.5 h-3.5 text-[#AF52DE]"></i>
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#AF52DE]"></i>
                         <span>{{ __('storefront.backoffice.reservations.btn_pos_treatment') }}</span>
                     </a>
-                    <a href="{{ route('pos.terminal') }}"
-                        class="h-9 px-3.5 rounded-[10px] bg-[#AF52DE] hover:bg-[#9945C5] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
-                    </a>
-                </div>
-            </div>
-        @else
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-[18px] bg-[#007AFF]/[0.06] border border-[#007AFF]/15">
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-[10px] bg-[#007AFF] text-white flex items-center justify-center shrink-0 shadow-sm">
-                        <i data-lucide="calendar" class="w-4.5 h-4.5"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-[13.5px] text-black dark:text-white">{{ __('storefront.backoffice.reservations.pos_strip_general_title') }}</h3>
-                        <p class="text-[11.5px] text-black/60 dark:text-white/60">{{ __('storefront.backoffice.reservations.pos_strip_general_desc') }}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
-                    <a href="{{ route('products.index', ['type' => 'service']) }}"
-                        class="h-9 px-3.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 text-black dark:text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs">
-                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#007AFF]"></i>
-                        <span>{{ __('storefront.backoffice.reservations.btn_pos_services') }}</span>
-                    </a>
-                    <a href="{{ route('pos.terminal') }}"
-                        class="h-9 px-3.5 rounded-[10px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
-                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                        <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
-                    </a>
-                </div>
-            </div>
-        @endif
+                @endif
 
-        <!-- Apple Bento Summary Cards (Industry-Adaptive) -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                @if (!$isWorkshop)
+                <a href="{{ route('pos.terminal') }}"
+                    class="h-9 px-3.5 rounded-[10px] {{ $isBarbershop ? 'bg-[#AF52DE] hover:bg-[#9B42C6]' : 'bg-[#007AFF] hover:bg-[#0071E3]' }} text-white text-[12px] font-semibold flex items-center gap-1.5 transition shadow-xs active:scale-95">
+                    <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                    <span>{{ __('storefront.backoffice.reservations.btn_pos_terminal') }}</span>
+                </a>
+                @endif
+            </div>
+        </div>
+
+        <!-- Apple Bento Summary Cards (Industry-Adaptive 4-Grid) -->
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:gap-4">
+            {{-- KPI 1: Hari Ini --}}
             <div
-                class="bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-2">
+                class="snap-start shrink-0 w-[240px] sm:w-auto bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-1.5">
                 <div class="flex items-center justify-between text-[#007AFF]">
                     <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_today') }}</span>
                     <i data-lucide="calendar" class="w-4 h-4"></i>
@@ -143,11 +109,12 @@
                 <div class="text-3xl font-extrabold text-black dark:text-white tabular-nums tracking-tight">
                     {{ $todayCount }}
                 </div>
-                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_today_desc') }}</p>
+                <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_today_desc') }}</p>
             </div>
 
+            {{-- KPI 2: Menunggu Konfirmasi --}}
             <div
-                class="bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-2">
+                class="snap-start shrink-0 w-[240px] sm:w-auto bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-1.5">
                 <div class="flex items-center justify-between text-amber-500">
                     <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_pending') }}</span>
                     <i data-lucide="clock" class="w-4 h-4"></i>
@@ -155,11 +122,25 @@
                 <div class="text-3xl font-extrabold text-amber-500 tabular-nums tracking-tight">
                     {{ $pendingCount }}
                 </div>
-                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_pending_desc') }}</p>
+                <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_pending_desc') }}</p>
             </div>
 
+            {{-- KPI 3: Total DP Terkumpul --}}
             <div
-                class="bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-2">
+                class="snap-start shrink-0 w-[240px] sm:w-auto bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-1.5">
+                <div class="flex items-center justify-between text-[#34C759]">
+                    <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_dp_collected') }}</span>
+                    <i data-lucide="wallet" class="w-4 h-4"></i>
+                </div>
+                <div class="text-2xl sm:text-3xl font-extrabold text-[#34C759] tabular-nums tracking-tight truncate">
+                    Rp {{ number_format($dpCollectedSum, 0, ',', '.') }}
+                </div>
+                <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_dp_collected_desc', ['count' => $dpPaidCount]) }}</p>
+            </div>
+
+            {{-- KPI 4: Kapasitas / Katalog Layanan --}}
+            <div
+                class="snap-start shrink-0 w-[240px] sm:w-auto bg-white dark:bg-[#1C1C1E] rounded-[22px] border border-black/5 dark:border-white/10 p-5 shadow-sm space-y-1.5">
                 @if ($isFnB)
                     <div class="flex items-center justify-between text-[#5856D6]">
                         <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables') }}</span>
@@ -168,7 +149,7 @@
                     <div class="text-3xl font-extrabold text-[#5856D6] tabular-nums tracking-tight">
                         {{ $tables->count() }}
                     </div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables_desc') }}</p>
+                    <p class="text-[11.5px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.kpi_tables_desc') }}</p>
                 @else
                     <div class="flex items-center justify-between text-[#5856D6]">
                         <span class="text-xs font-bold uppercase tracking-wider text-black/50 dark:text-white/50">
@@ -179,50 +160,81 @@
                     <div class="text-3xl font-extrabold text-[#5856D6] tabular-nums tracking-tight">
                         {{ $activeServicesCount }}
                     </div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50">
+                    <p class="text-[11.5px] text-black/50 dark:text-white/50">
                         {{ $isWorkshop ? __('storefront.backoffice.reservations.kpi_services_workshop_desc') : ($isBarbershop ? __('storefront.backoffice.reservations.kpi_services_barber_desc') : __('storefront.backoffice.reservations.kpi_services_general_desc')) }}
                     </p>
                 @endif
             </div>
         </div>
 
-        <!-- Filters & Tabs -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'all']) }}"
+        <!-- Filters, Tabs & Branch Selector -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none flex-wrap sm:flex-nowrap">
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'all', 'location_id' => $filterLocationId])) }}"
                     class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'all' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_all') }}
                 </a>
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'today']) }}"
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'today', 'location_id' => $filterLocationId])) }}"
                     class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'today' ? 'bg-[#007AFF] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_today', ['count' => $todayCount]) }}
                 </a>
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'pending']) }}"
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'pending', 'location_id' => $filterLocationId])) }}"
                     class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'pending' ? 'bg-amber-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_pending', ['count' => $pendingCount]) }}
                 </a>
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'confirmed']) }}"
-                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'confirmed' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'dp_paid', 'location_id' => $filterLocationId])) }}"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'dp_paid' ? 'bg-[#34C759] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    {{ __('storefront.backoffice.reservations.tab_dp_paid', ['count' => $dpPaidCount]) }}
+                </a>
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'unpaid', 'location_id' => $filterLocationId])) }}"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'unpaid' ? 'bg-amber-600 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
+                    {{ __('storefront.backoffice.reservations.tab_unpaid') }}
+                </a>
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'confirmed', 'location_id' => $filterLocationId])) }}"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'confirmed' ? 'bg-[#5856D6] text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_confirmed') }}
                 </a>
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'completed']) }}"
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'completed', 'location_id' => $filterLocationId])) }}"
                     class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'completed' ? 'bg-black dark:bg-white text-white dark:text-black shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_completed') }}
                 </a>
-                <a href="{{ route('storefront.reservations.index', ['tab' => 'cancelled']) }}"
+                <a href="{{ route('storefront.reservations.index', array_filter(['tab' => 'cancelled', 'location_id' => $filterLocationId])) }}"
                     class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition whitespace-nowrap {{ $statusTab === 'cancelled' ? 'bg-red-500 text-white shadow-sm' : 'bg-black/5 dark:bg-white/5 text-black/60 dark:text-white/60 hover:bg-black/10' }}">
                     {{ __('storefront.backoffice.reservations.tab_cancelled') }}
                 </a>
             </div>
 
-            <form method="GET" action="{{ route('storefront.reservations.index') }}" class="relative min-w-[240px]">
-                <input type="hidden" name="tab" value="{{ $statusTab }}">
-                <i data-lucide="search"
-                    class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
-                <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="{{ __('storefront.backoffice.reservations.search_placeholder') }}"
-                    class="w-full h-10 pl-9 pr-3 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-            </form>
+            <div class="flex items-center gap-3">
+                @if ($locations->count() > 1)
+                    <form method="GET" action="{{ route('storefront.reservations.index') }}">
+                        <input type="hidden" name="tab" value="{{ $statusTab }}">
+                        @if (request('search'))
+                            <input type="hidden" name="search" value="{{ request('search') }}">
+                        @endif
+                        <select name="location_id" onchange="this.form.submit()"
+                            class="h-10 px-3 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <option value="">-- {{ __('storefront.backoffice.reservations.label_branch') }}: Semua --</option>
+                            @foreach ($locations as $loc)
+                                <option value="{{ $loc->id }}" {{ $filterLocationId === $loc->id ? 'selected' : '' }}>
+                                    {{ $loc->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                @endif
+
+                <form method="GET" action="{{ route('storefront.reservations.index') }}" class="relative min-w-[220px] flex-1 sm:flex-none">
+                    <input type="hidden" name="tab" value="{{ $statusTab }}">
+                    @if ($filterLocationId)
+                        <input type="hidden" name="location_id" value="{{ $filterLocationId }}">
+                    @endif
+                    <i data-lucide="search"
+                        class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                    <input type="text" name="search" value="{{ request('search') }}"
+                        placeholder="{{ __('storefront.backoffice.reservations.search_placeholder') }}"
+                        class="w-full h-10 pl-9 pr-3 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                </form>
+            </div>
         </div>
 
         <!-- Reservations Table / Cards -->
@@ -238,6 +250,11 @@
                     <p class="text-xs text-black/50 dark:text-white/50 max-w-sm mx-auto">
                         {{ __('storefront.backoffice.reservations.empty_desc') }}
                     </p>
+                    <button type="button" @click="showCreateModal = true"
+                        class="mt-3 px-4 py-2 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition inline-flex items-center gap-1.5 shadow-sm cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('storefront.backoffice.reservations.btn_add_manual') }}</span>
+                    </button>
                 </div>
             @else
                 {{-- DESKTOP TABLE VIEW (>= md) --}}
@@ -250,6 +267,7 @@
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_customer') }}</th>
                                 <th class="py-3.5 px-4">{{ $isWorkshop ? __('storefront.backoffice.reservations.col_units_workshop') : ($isTailor ? __('storefront.backoffice.reservations.col_units_service') : __('storefront.backoffice.reservations.col_guests')) }}</th>
                                 <th class="py-3.5 px-4">{{ $isFnB ? __('storefront.backoffice.reservations.col_table_service') : ($isWorkshop ? __('storefront.backoffice.reservations.col_service_workshop') : ($isBarbershop ? __('storefront.backoffice.reservations.col_service_barber') : __('storefront.backoffice.reservations.col_service_general'))) }}</th>
+                                <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_payment_dp') }}</th>
                                 <th class="py-3.5 px-4">{{ __('storefront.backoffice.reservations.col_status') }}</th>
                                 <th class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-[#F9F9FA] dark:bg-[#1E1E20] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">{{ __('storefront.backoffice.reservations.col_action') }}</th>
                             </tr>
@@ -257,20 +275,28 @@
                         <tbody class="divide-y divide-black/5 dark:divide-white/5">
                             @foreach ($reservations as $rsv)
                                 <tr class="hover:bg-black/[0.01] dark:hover:bg-white/[0.01] transition-colors group">
+                                    {{-- Col 1: Code & Time --}}
                                     <td class="py-4 px-4 align-top">
-                                        <span
-                                            class="font-bold text-black dark:text-white font-mono text-[13px] block">{{ $rsv->reservation_code }}</span>
-                                        <span
-                                            class="text-black/60 dark:text-white/60 block mt-0.5">{{ $rsv->reservation_date->translatedFormat('d M Y') }}</span>
-                                        <span
-                                            class="inline-block px-2 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] font-bold text-[10.5px] mt-1">
+                                        <div class="flex items-center gap-1.5 flex-wrap">
+                                            <span class="font-bold text-black dark:text-white font-mono text-[13px] block">{{ $rsv->reservation_code }}</span>
+                                            @if ($rsv->source === 'manual')
+                                                <span class="px-1.5 py-0.2 rounded bg-black/5 dark:bg-white/10 text-[9px] font-bold text-black/60 dark:text-white/60">MANUAL</span>
+                                            @elseif ($rsv->source === 'pos')
+                                                <span class="px-1.5 py-0.2 rounded bg-[#007AFF]/10 text-[9px] font-bold text-[#007AFF]">POS</span>
+                                            @endif
+                                        </div>
+                                        <span class="text-black/60 dark:text-white/60 block mt-0.5">{{ $rsv->reservation_date->translatedFormat('d M Y') }}</span>
+                                        <span class="inline-block px-2 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] font-bold text-[10.5px] mt-1">
                                             {{ $rsv->time_slot }}
                                         </span>
+                                        @if ($rsv->location)
+                                            <span class="text-[10px] text-black/40 dark:text-white/40 block mt-0.5">📍 {{ $rsv->location->name }}</span>
+                                        @endif
                                     </td>
 
+                                    {{-- Col 2: Customer Info --}}
                                     <td class="py-4 px-4 align-top">
-                                        <span
-                                            class="font-bold text-black dark:text-white block">{{ $rsv->customer_name }}</span>
+                                        <span class="font-bold text-black dark:text-white block">{{ $rsv->customer_name }}</span>
                                         @php
                                             $cleanPhone = preg_replace('/[^0-9]/', '', $rsv->customer_phone);
                                             if (str_starts_with($cleanPhone, '0')) {
@@ -284,34 +310,48 @@
                                             <span>+{{ $rsv->customer_phone }}</span>
                                         </a>
                                         @if ($rsv->notes)
-                                            <p
-                                                class="text-[11.5px] text-black/50 dark:text-white/50 italic mt-1 max-w-xs line-clamp-2">
-                                                "{{ $rsv->notes }}"</p>
+                                            <p class="text-[11px] text-black/50 dark:text-white/50 italic mt-1 max-w-xs line-clamp-2">
+                                                "{{ $rsv->notes }}"
+                                            </p>
                                         @endif
                                     </td>
 
-                                    <td class="py-4 px-4 align-top font-semibold text-black dark:text-white">
-                                        <span class="inline-flex items-center gap-1">
-                                            <i data-lucide="{{ $isWorkshop ? 'car' : 'users' }}" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
-                                            <span class="tabular-nums">
-                                                @if ($isWorkshop)
-                                                    {{ __('storefront.backoffice.reservations.guest_count_vehicle', ['count' => $rsv->guest_count]) }}
-                                                @elseif ($isTailor || $isEvent)
-                                                    {{ __('storefront.backoffice.reservations.guest_count_session', ['count' => $rsv->guest_count]) }}
-                                                @else
-                                                    {{ __('storefront.backoffice.reservations.guest_count_format', ['count' => $rsv->guest_count]) }}
-                                                @endif
+                                    {{-- Col 3: Quantity / Vehicle / Pax --}}
+                                    <td class="py-4 px-4 align-top">
+                                        <div class="font-semibold text-black dark:text-white">
+                                            <span class="inline-flex items-center gap-1">
+                                                <i data-lucide="{{ $isWorkshop ? 'car' : 'users' }}" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
+                                                <span class="tabular-nums">
+                                                    @if ($isWorkshop)
+                                                        {{ __('storefront.backoffice.reservations.guest_count_vehicle', ['count' => $rsv->guest_count]) }}
+                                                    @elseif ($isTailor || $isEvent)
+                                                        {{ __('storefront.backoffice.reservations.guest_count_session', ['count' => $rsv->guest_count]) }}
+                                                    @else
+                                                        {{ __('storefront.backoffice.reservations.guest_count_format', ['count' => $rsv->guest_count]) }}
+                                                    @endif
+                                                </span>
                                             </span>
-                                        </span>
+                                        </div>
+
+                                        {{-- Vehicle Details for Workshop --}}
+                                        @if ($rsv->vehicle_plate)
+                                            <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#FF9500]/15 text-[#FF9500] font-mono text-[11px] font-bold">
+                                                <span>🚗</span>
+                                                <span>{{ $rsv->vehicle_plate }}</span>
+                                            </div>
+                                            @if ($rsv->vehicle_model)
+                                                <span class="text-[10.5px] text-black/50 dark:text-white/50 block mt-0.5">{{ $rsv->vehicle_model }}</span>
+                                            @endif
+                                        @endif
                                     </td>
 
-                                    <td class="py-4 px-4 align-top">
+                                    {{-- Col 4: Table / Service / Staff Allocation --}}
+                                    <td class="py-4 px-4 align-top space-y-1">
                                         @if ($rsv->posTable && $isFnB)
                                             <span
                                                 class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11.5px] font-bold bg-[#5856D6]/10 text-[#5856D6]">
                                                 <i data-lucide="layout-grid" class="w-3 h-3"></i>
-                                                <span>{{ __('storefront.backoffice.reservations.table_label', ['num' => $rsv->posTable->table_number, 'name' => $rsv->posTable->name]) }}
-                                                </span>
+                                                <span>{{ __('storefront.backoffice.reservations.table_label', ['num' => $rsv->posTable->table_number, 'name' => $rsv->posTable->name]) }}</span>
                                             </span>
                                         @elseif($rsv->product)
                                             <span
@@ -332,8 +372,65 @@
                                                 </span>
                                             @endif
                                         @endif
+
+                                        {{-- Staff / Mechanic / Stylist assigned --}}
+                                        @if ($rsv->staff)
+                                            <div class="flex items-center gap-1 text-[11px] text-black/65 dark:text-white/65 font-medium">
+                                                <i data-lucide="user-check" class="w-3 h-3 text-[#AF52DE]"></i>
+                                                <span>{{ $rsv->staff->name }}</span>
+                                                @if ($rsv->service_duration_minutes)
+                                                    <span class="text-black/40 dark:text-white/40">({{ $rsv->service_duration_minutes }}m)</span>
+                                                @endif
+                                            </div>
+                                        @endif
+
+                                        {{-- Event Venue --}}
+                                        @if ($rsv->event_venue)
+                                            <div class="flex items-center gap-1 text-[11px] text-black/65 dark:text-white/65">
+                                                <i data-lucide="map-pin" class="w-3 h-3 text-[#FF2D55]"></i>
+                                                <span class="truncate max-w-[180px]">{{ $rsv->event_venue }}</span>
+                                            </div>
+                                        @endif
                                     </td>
 
+                                    {{-- Col 5: DP & Payment Status (NEW) --}}
+                                    <td class="py-4 px-4 align-top">
+                                        @if ($rsv->isDpPaid())
+                                            <div class="space-y-1">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">
+                                                    <i data-lucide="check" class="w-3 h-3"></i>
+                                                    <span>{{ $rsv->isFullyPaid() ? __('storefront.backoffice.reservations.badge_full_paid') : __('storefront.backoffice.reservations.badge_dp_paid') }}</span>
+                                                </span>
+                                                <div class="font-extrabold text-[12px] text-black dark:text-white tabular-nums">
+                                                    Rp {{ number_format((float) $rsv->dp_amount, 0, ',', '.') }}
+                                                </div>
+                                                <div class="text-[10px] text-black/50 dark:text-white/50 uppercase font-mono">
+                                                    {{ $rsv->dp_payment_method }}
+                                                    @if ($rsv->dp_payment_reference)
+                                                        • Ref: {{ $rsv->dp_payment_reference }}
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="space-y-1.5">
+                                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px] font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-400">
+                                                    {{ __('storefront.backoffice.reservations.badge_unpaid') }}
+                                                </span>
+                                                @if ((float) $rsv->estimated_total > 0)
+                                                    <div class="text-[11px] text-black/60 dark:text-white/60 tabular-nums">
+                                                        Est: Rp {{ number_format((float) $rsv->estimated_total, 0, ',', '.') }}
+                                                    </div>
+                                                @endif
+                                                <button type="button" @click="openDp({{ Js::from($rsv) }})"
+                                                    class="inline-flex items-center gap-1 text-[11px] font-bold text-[#34C759] hover:underline cursor-pointer">
+                                                    <i data-lucide="credit-card" class="w-3 h-3"></i>
+                                                    <span>{{ __('storefront.backoffice.reservations.btn_record_dp') }}</span>
+                                                </button>
+                                            </div>
+                                        @endif
+                                    </td>
+
+                                    {{-- Col 6: Reservation Status --}}
                                     <td class="py-4 px-4 align-top">
                                         @if ($rsv->status === 'confirmed')
                                             <span
@@ -356,6 +453,7 @@
                                         @endif
                                     </td>
 
+                                    {{-- Col 7: Actions --}}
                                     <td class="py-4 px-4 align-top text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                         <div class="flex items-center justify-end gap-1" x-data="{ openMenu: false }">
                                             @if ($rsv->status === 'pending_confirmation')
@@ -364,7 +462,7 @@
                                                     @csrf
                                                     <input type="hidden" name="status" value="confirmed">
                                                     <button type="submit"
-                                                        class="w-8 h-8 rounded-[8px] bg-[#34C759] hover:bg-[#2EB04E] text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        class="w-8 h-8 rounded-[8px] bg-[#34C759] hover:bg-[#2EB04E] text-white transition flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
                                                         title="{{ __('storefront.backoffice.reservations.action_confirm') }}"
                                                         aria-label="{{ __('storefront.backoffice.reservations.action_confirm') }}">
                                                         <i data-lucide="check" class="w-4 h-4"></i>
@@ -376,7 +474,7 @@
                                                     @csrf
                                                     <input type="hidden" name="status" value="seated">
                                                     <button type="submit"
-                                                        class="w-8 h-8 rounded-[8px] bg-[#5856D6] hover:bg-[#4745B8] text-white transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        class="w-8 h-8 rounded-[8px] bg-[#5856D6] hover:bg-[#4745B8] text-white transition flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
                                                         title="{{ __('storefront.backoffice.reservations.action_seat') }}"
                                                         aria-label="{{ __('storefront.backoffice.reservations.action_seat') }}">
                                                         <i data-lucide="user-check" class="w-4 h-4"></i>
@@ -388,7 +486,7 @@
                                                     @csrf
                                                     <input type="hidden" name="status" value="completed">
                                                     <button type="submit"
-                                                        class="w-8 h-8 rounded-[8px] bg-black dark:bg-white text-white dark:text-black transition flex items-center justify-center shrink-0 cursor-pointer"
+                                                        class="w-8 h-8 rounded-[8px] bg-black dark:bg-white text-white dark:text-black transition flex items-center justify-center shrink-0 cursor-pointer shadow-xs"
                                                         title="{{ __('storefront.backoffice.reservations.action_complete') }}"
                                                         aria-label="{{ __('storefront.backoffice.reservations.action_complete') }}">
                                                         <i data-lucide="check-check" class="w-4 h-4"></i>
@@ -403,7 +501,7 @@
                                                     aria-label="{{ __('storefront.backoffice.reservations.btn_open_pos') }}">
                                                     <i data-lucide="calculator" class="w-4 h-4"></i>
                                                 </a>
-                                            @elseif (!$isFnB)
+                                            @else
                                                 <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
                                                     class="w-8 h-8 rounded-[8px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] transition flex items-center justify-center shrink-0 cursor-pointer"
                                                     title="{{ __('storefront.backoffice.reservations.btn_open_pos') }}"
@@ -421,20 +519,14 @@
                                                     <i data-lucide="more-vertical" class="w-4 h-4"></i>
                                                 </button>
                                                 <div x-show="openMenu" @click.away="openMenu = false" x-transition
-                                                    class="absolute right-0 mt-1 w-36 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-[11.5px] space-y-0.5">
-                                                    @if ($rsv->pos_table_id && $isFnB)
-                                                        <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
-                                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
-                                                            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                                                            <span>{{ __('storefront.backoffice.reservations.btn_open_pos') }}</span>
-                                                        </a>
-                                                    @elseif (!$isFnB)
-                                                        <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
-                                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
-                                                            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                                                            <span>{{ __('storefront.backoffice.reservations.btn_open_pos') }}</span>
-                                                        </a>
-                                                    @endif
+                                                    class="absolute right-0 mt-1 w-44 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-[11.5px] space-y-0.5">
+                                                    {{-- Record DP button in menu --}}
+                                                    <button type="button" @click="openMenu = false; openDp({{ Js::from($rsv) }})"
+                                                        class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-semibold flex items-center gap-2 cursor-pointer">
+                                                        <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                                                        <span>{{ __('storefront.backoffice.reservations.btn_record_dp') }}</span>
+                                                    </button>
+
                                                     @if ($isFnB)
                                                         <button type="button"
                                                             @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
@@ -443,6 +535,7 @@
                                                             <span>{{ __('storefront.backoffice.reservations.btn_change_table') }}</span>
                                                         </button>
                                                     @endif
+
                                                     @if (!in_array($rsv->status, ['cancelled', 'completed', 'no_show'], true))
                                                         <button type="button"
                                                             @click="openMenu = false; reservationToCancel = {{ json_encode(['id' => $rsv->id, 'code' => $rsv->reservation_code, 'customer_name' => $rsv->customer_name]) }}; cancelModalOpen = true;"
@@ -469,46 +562,41 @@
                             <div class="flex items-start justify-between gap-2">
                                 <div>
                                     <div class="flex items-center gap-2 flex-wrap">
-                                        <span
-                                            class="font-bold text-black dark:text-white font-mono text-[13px]">{{ $rsv->reservation_code }}</span>
-                                        <span
-                                            class="px-2 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] font-bold text-[10.5px]">
+                                        <span class="font-bold text-black dark:text-white font-mono text-[13px]">{{ $rsv->reservation_code }}</span>
+                                        <span class="px-2 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] font-bold text-[10.5px]">
                                             {{ $rsv->time_slot }}
                                         </span>
+                                        @if ($rsv->source === 'manual')
+                                            <span class="px-1.5 py-0.2 rounded bg-black/5 dark:bg-white/10 text-[9px] font-bold text-black/60 dark:text-white/60">MANUAL</span>
+                                        @endif
                                     </div>
-                                    <span
-                                        class="text-xs text-black/55 dark:text-white/55 block mt-0.5">{{ $rsv->reservation_date->translatedFormat('d M Y') }}</span>
+                                    <span class="text-xs text-black/55 dark:text-white/55 block mt-0.5">
+                                        {{ $rsv->reservation_date->translatedFormat('d M Y') }}
+                                        @if ($rsv->location) • 📍 {{ $rsv->location->name }} @endif
+                                    </span>
                                 </div>
-                                <div>
+                                <div class="flex items-center gap-1.5">
                                     @if ($rsv->status === 'confirmed')
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">{{ __('storefront.reservations.status_confirmed') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#34C759]/15 text-[#248A3D] dark:text-[#30D158]">{{ __('storefront.backoffice.reservations.status_confirmed') }}</span>
                                     @elseif($rsv->status === 'seated')
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#5856D6]/15 text-[#5856D6]">{{ __('storefront.reservations.status_seated') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[#5856D6]/15 text-[#5856D6]">{{ __('storefront.backoffice.reservations.status_seated') }}</span>
                                     @elseif($rsv->status === 'completed')
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">{{ __('storefront.reservations.status_completed') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">{{ __('storefront.backoffice.reservations.status_completed') }}</span>
                                     @elseif($rsv->status === 'cancelled')
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-red-500/15 text-red-600">{{ __('storefront.reservations.status_cancelled') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-red-500/15 text-red-600">{{ __('storefront.backoffice.reservations.status_cancelled') }}</span>
                                     @elseif($rsv->status === 'no_show')
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-gray-500/15 text-gray-600">{{ __('storefront.reservations.status_no_show') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-gray-500/15 text-gray-600">{{ __('storefront.backoffice.reservations.status_no_show') }}</span>
                                     @else
-                                        <span
-                                            class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400">{{ __('storefront.reservations.status_pending') }}</span>
+                                        <span class="px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-amber-500/15 text-amber-600 dark:text-amber-400">{{ __('storefront.backoffice.reservations.status_pending') }}</span>
                                     @endif
                                 </div>
                             </div>
 
-                            {{-- Middle row: Customer & Table info --}}
-                            <div
-                                class="p-3 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-1.5 text-xs">
+                            {{-- Middle Box: Customer, Industry & DP info --}}
+                            <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 space-y-2 text-xs">
                                 <div class="flex items-center justify-between">
-                                    <span class="font-bold text-black dark:text-white">{{ $rsv->customer_name }}</span>
-                                    <span
-                                        class="font-semibold text-black/70 dark:text-white/70 inline-flex items-center gap-1">
+                                    <span class="font-bold text-black dark:text-white text-sm">{{ $rsv->customer_name }}</span>
+                                    <span class="font-semibold text-black/70 dark:text-white/70 inline-flex items-center gap-1">
                                         <i data-lucide="{{ $isWorkshop ? 'car' : 'users' }}" class="w-3.5 h-3.5 text-black/40 dark:text-white/40"></i>
                                         <span class="tabular-nums">
                                             @if ($isWorkshop)
@@ -516,19 +604,31 @@
                                             @elseif ($isTailor || $isEvent)
                                                 {{ __('storefront.backoffice.reservations.guest_count_session', ['count' => $rsv->guest_count]) }}
                                             @else
-                                                {{ __('storefront.reservations.guest_count_mobile', ['count' => $rsv->guest_count]) }}
+                                                {{ __('storefront.backoffice.reservations.guest_count_mobile', ['count' => $rsv->guest_count]) }}
                                             @endif
                                         </span>
                                     </span>
                                 </div>
 
-                                @php
-                                    $cleanPhone = preg_replace('/[^0-9]/', '', $rsv->customer_phone);
-                                    if (str_starts_with($cleanPhone, '0')) {
-                                        $cleanPhone = '62' . substr($cleanPhone, 1);
-                                    }
-                                @endphp
-                                <div class="flex items-center justify-between">
+                                {{-- Vehicle plate / Staff tags --}}
+                                @if ($rsv->vehicle_plate)
+                                    <div class="flex items-center gap-1.5 flex-wrap">
+                                        <span class="font-mono font-bold text-[#FF9500] bg-[#FF9500]/15 px-2 py-0.5 rounded-md text-[11px]">🚗 {{ $rsv->vehicle_plate }}</span>
+                                        @if ($rsv->vehicle_model)
+                                            <span class="text-black/60 dark:text-white/60 text-[11px]">{{ $rsv->vehicle_model }}</span>
+                                        @endif
+                                    </div>
+                                @endif
+
+                                @if ($rsv->staff)
+                                    <div class="flex items-center gap-1 text-[#AF52DE] font-semibold text-[11px]">
+                                        <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+                                        <span>{{ $rsv->staff->name }}</span>
+                                    </div>
+                                @endif
+
+                                {{-- Contact & Service / Table --}}
+                                <div class="flex items-center justify-between pt-1 border-t border-black/5 dark:border-white/5">
                                     <a href="https://wa.me/{{ $cleanPhone }}?text=Halo%20{{ urlencode($rsv->customer_name) }},%20konfirmasi%20reservasi%20{{ $rsv->reservation_code }}..."
                                         target="_blank"
                                         class="inline-flex items-center gap-1 text-[#25D366] hover:underline text-[11.5px]">
@@ -538,36 +638,46 @@
 
                                     <div>
                                         @if ($rsv->posTable && $isFnB)
-                                            <span
-                                                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#5856D6]/10 text-[#5856D6]">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#5856D6]/10 text-[#5856D6]">
                                                 <i data-lucide="layout-grid" class="w-3 h-3"></i>
-                                                <span>{{ __('storefront.reservations.table_label_short', ['num' => $rsv->posTable->table_number, 'name' => $rsv->posTable->name]) }}</span>
+                                                <span>{{ __('storefront.backoffice.reservations.table_label_short', ['num' => $rsv->posTable->table_number, 'name' => $rsv->posTable->name]) }}</span>
                                             </span>
                                         @elseif($rsv->product)
-                                            <span
-                                                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF]">
                                                 <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : 'sparkles') }}" class="w-3 h-3"></i>
                                                 <span>{{ $rsv->product->name }}</span>
                                             </span>
-                                        @else
-                                            @if ($isFnB)
-                                                <button type="button" @click="openAssign({{ Js::from($rsv) }})"
-                                                    class="inline-flex items-center gap-1 text-[11.5px] font-semibold text-[#007AFF] hover:underline cursor-pointer">
-                                                    <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-                                                    <span>{{ __('storefront.reservations.btn_select_table') }}</span>
-                                                </button>
-                                            @else
-                                                <span class="text-black/50 dark:text-white/50 text-[11px] italic">
-                                                    {{ __('storefront.backoffice.reservations.booking_general_label') }}
-                                                </span>
-                                            @endif
                                         @endif
                                     </div>
                                 </div>
 
+                                {{-- DP Information row on mobile card --}}
+                                <div class="flex items-center justify-between pt-1 border-t border-black/5 dark:border-white/5">
+                                    <div>
+                                        @if ($rsv->isDpPaid())
+                                            <span class="inline-flex items-center gap-1 text-[#248A3D] dark:text-[#30D158] font-bold text-[11.5px]">
+                                                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                                <span>DP: Rp {{ number_format((float) $rsv->dp_amount, 0, ',', '.') }}</span>
+                                                <span class="text-black/40 dark:text-white/40 text-[10px]">({{ strtoupper($rsv->dp_payment_method) }})</span>
+                                            </span>
+                                        @else
+                                            <span class="text-amber-600 dark:text-amber-400 font-semibold text-[11px]">
+                                                {{ __('storefront.backoffice.reservations.badge_unpaid') }}
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    @if (!$rsv->isFullyPaid())
+                                        <button type="button" @click="openDp({{ Js::from($rsv) }})"
+                                            class="text-[#34C759] font-bold text-[11px] hover:underline flex items-center gap-1 cursor-pointer">
+                                            <i data-lucide="credit-card" class="w-3 h-3"></i>
+                                            <span>{{ __('storefront.backoffice.reservations.btn_record_dp') }}</span>
+                                        </button>
+                                    @endif
+                                </div>
+
                                 @if ($rsv->notes)
-                                    <p
-                                        class="text-[11.5px] text-black/50 dark:text-white/50 italic pt-1 border-t border-black/5 dark:border-white/5">
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 italic pt-1 border-t border-black/5 dark:border-white/5">
                                         "{{ $rsv->notes }}"
                                     </p>
                                 @endif
@@ -575,38 +685,41 @@
 
                             {{-- Bottom row: Quick Actions --}}
                             <div class="flex items-center justify-between gap-2 pt-1">
-                                <div>
+                                <div class="flex items-center gap-2">
                                     @if ($rsv->status === 'pending_confirmation')
-                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="confirmed">
                                             <button type="submit"
                                                 class="px-3.5 py-1.5 rounded-[10px] bg-[#34C759] hover:bg-[#2EB04E] text-white font-bold text-xs transition">
-                                                {{ __('storefront.reservations.action_confirm') }}
+                                                {{ __('storefront.backoffice.reservations.action_confirm') }}
                                             </button>
                                         </form>
                                     @elseif($rsv->status === 'confirmed')
-                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="seated">
                                             <button type="submit"
                                                 class="px-3.5 py-1.5 rounded-[10px] bg-[#5856D6] hover:bg-[#4745B8] text-white font-bold text-xs transition">
-                                                {{ __('storefront.reservations.action_seat') }}
+                                                {{ __('storefront.backoffice.reservations.action_seat') }}
                                             </button>
                                         </form>
                                     @elseif($rsv->status === 'seated')
-                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST"
-                                            class="inline">
+                                        <form action="{{ route('storefront.reservations.status', $rsv) }}" method="POST" class="inline">
                                             @csrf
                                             <input type="hidden" name="status" value="completed">
                                             <button type="submit"
                                                 class="px-3.5 py-1.5 rounded-[10px] bg-black dark:bg-white text-white dark:text-black font-bold text-xs transition">
-                                                {{ __('storefront.reservations.action_complete') }}
+                                                {{ __('storefront.backoffice.reservations.action_complete') }}
                                             </button>
                                         </form>
                                     @endif
+
+                                    <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
+                                        class="px-3 py-1.5 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] font-bold text-xs transition flex items-center gap-1">
+                                        <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+                                        <span>POS</span>
+                                    </a>
                                 </div>
 
                                 <div class="relative">
@@ -615,26 +728,18 @@
                                         <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                     </button>
                                     <div x-show="openMenu" @click.away="openMenu = false" x-transition
-                                        class="absolute right-0 bottom-full mb-1 w-40 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-xs space-y-0.5">
-                                        @if ($rsv->pos_table_id && $isFnB)
-                                            <a href="{{ route('pos.terminal', ['table_id' => $rsv->pos_table_id, 'reservation_id' => $rsv->id]) }}"
-                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
-                                                <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.reservations.btn_open_pos') }}</span>
-                                            </a>
-                                        @elseif (!$isFnB)
-                                            <a href="{{ route('pos.terminal', ['reservation_id' => $rsv->id]) }}"
-                                                class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-[#007AFF] font-semibold">
-                                                <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.reservations.btn_open_pos') }}</span>
-                                            </a>
-                                        @endif
+                                        class="absolute right-0 bottom-full mb-1 w-44 bg-white dark:bg-[#2C2C2E] rounded-[14px] shadow-lg border border-black/10 dark:border-white/10 p-1.5 z-20 text-left text-xs space-y-0.5">
+                                        <button type="button" @click="openMenu = false; openDp({{ Js::from($rsv) }})"
+                                            class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] font-semibold flex items-center gap-2">
+                                            <i data-lucide="credit-card" class="w-3.5 h-3.5"></i>
+                                            <span>{{ __('storefront.backoffice.reservations.btn_record_dp') }}</span>
+                                        </button>
                                         @if ($isFnB)
                                             <button type="button"
                                                 @click="openMenu = false; openAssign({{ Js::from($rsv) }})"
                                                 class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-black/5 flex items-center gap-2 text-black dark:text-white cursor-pointer">
                                                 <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.reservations.btn_change_table') }}</span>
+                                                <span>{{ __('storefront.backoffice.reservations.btn_change_table') }}</span>
                                             </button>
                                         @endif
                                         @if (!in_array($rsv->status, ['cancelled', 'completed', 'no_show'], true))
@@ -642,7 +747,7 @@
                                                 @click="openMenu = false; reservationToCancel = {{ json_encode(['id' => $rsv->id, 'code' => $rsv->reservation_code, 'customer_name' => $rsv->customer_name]) }}; cancelModalOpen = true;"
                                                 class="w-full px-2.5 py-1.5 rounded-[8px] hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 dark:text-red-400 flex items-center gap-2 cursor-pointer transition">
                                                 <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
-                                                <span>{{ __('storefront.reservations.btn_cancel_rsv') }}</span>
+                                                <span>{{ __('storefront.backoffice.reservations.btn_cancel_rsv') }}</span>
                                             </button>
                                         @endif
                                     </div>
@@ -657,6 +762,462 @@
                 </div>
             @endif
         </div>
+
+        {{-- ======================================================== --}}
+        {{-- MODAL: TAMBAH RESERVASI MANUAL (INDUSTRY-ADAPTIVE & DP) --}}
+        {{-- ======================================================== --}}
+        <template x-teleport="body">
+            <div x-show="showCreateModal" x-cloak
+                class="fixed inset-0 z-[210] flex items-end sm:items-center justify-center p-0 sm:p-4"
+                role="dialog"
+                aria-modal="true"
+                @keydown.escape.window="showCreateModal = false">
+
+                {{-- Backdrop Blur Overlay --}}
+                <div x-show="showCreateModal"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    @click="showCreateModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+                <div @click.away="showCreateModal = false"
+                    class="relative z-10 w-full max-w-2xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 sm:p-7 shadow-2xl border border-black/10 dark:border-white/10 space-y-5 max-h-[92vh] overflow-y-auto">
+                    
+                    {{-- Mobile Grab Bar --}}
+                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
+
+                    {{-- Modal Header --}}
+                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="plus-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.backoffice.reservations.modal_create_title') }}</h3>
+                                <p class="text-xs text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.modal_create_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showCreateModal = false"
+                            class="w-9 h-9 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    {{-- Create Reservation Form --}}
+                    <form action="{{ route('storefront.reservations.store') }}" method="POST" class="space-y-5">
+                        @csrf
+
+                        {{-- Section 1: Data Tamu / Pelanggan --}}
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-2 text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-wider">
+                                <i data-lucide="user" class="w-3.5 h-3.5 text-[#007AFF]"></i>
+                                <span>{{ __('storefront.backoffice.reservations.sec_customer_info') }}</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_customer_name') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="customer_name" required
+                                        placeholder="Contoh: Budi Santoso"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_customer_phone') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="customer_phone" required
+                                        placeholder="Contoh: 081234567890"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_customer_email') }}
+                                    </label>
+                                    <input type="email" name="customer_email"
+                                        placeholder="email@pelanggan.com"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Section 2: Jadwal & Lokasi --}}
+                        <div class="space-y-3 pt-3 border-t border-black/5 dark:border-white/10">
+                            <div class="flex items-center gap-2 text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-wider">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-[#5856D6]"></i>
+                                <span>{{ __('storefront.backoffice.reservations.sec_schedule_location') }}</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                @if ($locations->count() > 1)
+                                    <div class="sm:col-span-3">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_branch') }}
+                                        </label>
+                                        <select name="location_id"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            @foreach ($locations as $loc)
+                                                <option value="{{ $loc->id }}" {{ $loc->is_primary ? 'selected' : '' }}>
+                                                    {{ $loc->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_date') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="date" name="reservation_date" required
+                                        value="{{ date('Y-m-d') }}"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_time') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="time_slot" required
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        @foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'] as $slot)
+                                            <option value="{{ $slot }}" {{ $slot === '12:00' ? 'selected' : '' }}>{{ $slot }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ $isWorkshop ? __('storefront.backoffice.reservations.col_units_workshop') : __('storefront.backoffice.reservations.label_guests') }}
+                                    </label>
+                                    <input type="number" name="guest_count" min="1" max="500" value="1"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Section 3: Detail Khusus Industri (Adaptive) --}}
+                        <div class="space-y-3 pt-3 border-t border-black/5 dark:border-white/10">
+                            <div class="flex items-center gap-2 text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-wider">
+                                <i data-lucide="{{ $isWorkshop ? 'wrench' : ($isBarbershop ? 'scissors' : ($isFnB ? 'layout-grid' : 'sparkles')) }}" class="w-3.5 h-3.5 text-[#FF9500]"></i>
+                                <span>{{ __('storefront.backoffice.reservations.sec_industry_details') }}</span>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                {{-- Resto / Cafe: Meja --}}
+                                @if ($isFnB && $tables->isNotEmpty())
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.modal_assign_select_table') }}
+                                        </label>
+                                        <select name="pos_table_id"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="">{{ __('storefront.backoffice.reservations.modal_assign_choose_placeholder') }}</option>
+                                            @foreach ($tables as $tbl)
+                                                <option value="{{ $tbl->id }}">
+                                                    {{ __('storefront.backoffice.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+                                {{-- Workshop / Bengkel: Plat Nomor & Model Kendaraan --}}
+                                @if ($isWorkshop)
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_vehicle_plate') }} <span class="text-red-500">*</span>
+                                        </label>
+                                        <input type="text" name="vehicle_plate"
+                                            placeholder="{{ __('storefront.backoffice.reservations.label_vehicle_plate_ph') }}"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-mono uppercase focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_vehicle_model') }}
+                                        </label>
+                                        <input type="text" name="vehicle_model"
+                                            placeholder="{{ __('storefront.backoffice.reservations.label_vehicle_model_ph') }}"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF9500]">
+                                    </div>
+                                @endif
+
+                                {{-- Pilihan Layanan / Jasa --}}
+                                @if ($services->isNotEmpty())
+                                    <div class="{{ $staffList->isNotEmpty() ? '' : 'sm:col-span-2' }}">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_service') }}
+                                        </label>
+                                        <select name="product_id"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="">-- Bebas / Pilih di Tempat --</option>
+                                            @foreach ($services as $srv)
+                                                <option value="{{ $srv->id }}">
+                                                    {{ $srv->name }} (Rp {{ number_format((float) $srv->price, 0, ',', '.') }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+                                {{-- Pilihan Petugas / Staff / Mekanik / Barber --}}
+                                @if ($staffList->isNotEmpty())
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ $isWorkshop ? __('storefront.backoffice.reservations.label_mechanic') : ($isBarbershop ? __('storefront.backoffice.reservations.label_stylist') : 'Petugas / Staf') }}
+                                        </label>
+                                        <select name="staff_id"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="">-- Bebas / Staf Tersedia --</option>
+                                            @foreach ($staffList as $stf)
+                                                <option value="{{ $stf->id }}">
+                                                    {{ $stf->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
+
+                                {{-- Durasi Layanan (Barbershop / Salon) --}}
+                                @if ($isBarbershop)
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_service_duration') }}
+                                        </label>
+                                        <select name="service_duration_minutes"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                            <option value="30">30 Menit</option>
+                                            <option value="45" selected>45 Menit</option>
+                                            <option value="60">60 Menit</option>
+                                            <option value="90">90 Menit</option>
+                                            <option value="120">120 Menit (2 Jam)</option>
+                                        </select>
+                                    </div>
+                                @endif
+
+                                {{-- Event / Wedding: Venue --}}
+                                @if ($isEvent)
+                                    <div class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                            {{ __('storefront.backoffice.reservations.label_event_venue') }}
+                                        </label>
+                                        <input type="text" name="event_venue"
+                                            placeholder="Contoh: Ballroom Hotel Grand Sahid / Rumah Pengantin"
+                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF2D55]">
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Section 4: Estimasi Biaya & Pembayaran DP (Uang Muka) --}}
+                        <div class="space-y-3 pt-3 border-t border-black/5 dark:border-white/10 bg-[#34C759]/[0.03] -mx-6 sm:-mx-7 px-6 sm:px-7 py-4 border-b border-black/5 dark:border-white/10">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2 text-xs font-bold text-black/80 dark:text-white/80 uppercase tracking-wider">
+                                    <i data-lucide="wallet" class="w-3.5 h-3.5 text-[#34C759]"></i>
+                                    <span>{{ __('storefront.backoffice.reservations.sec_dp_payment') }}</span>
+                                </div>
+
+                                <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                                    <input type="checkbox" name="pay_dp_now" x-model="payDpDirectly" value="1"
+                                        class="w-4 h-4 rounded text-[#34C759] focus:ring-[#34C759] border-black/20 dark:border-white/20">
+                                    <span class="text-xs font-bold text-[#248A3D] dark:text-[#30D158]">{{ __('storefront.backoffice.reservations.label_pay_dp_now') }}</span>
+                                </label>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_estimated_total') }}
+                                    </label>
+                                    <input type="number" name="estimated_total" min="0" step="1000" placeholder="0"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                </div>
+
+                                <div x-show="payDpDirectly" x-cloak>
+                                    <label class="block text-[12px] font-semibold text-[#248A3D] dark:text-[#30D158] mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_dp_amount') }} <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" name="dp_amount" min="0" step="1000" placeholder="Contoh: 100000"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-[#34C759]/40 text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                </div>
+
+                                <div x-show="payDpDirectly" x-cloak>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_dp_method') }}
+                                    </label>
+                                    <select name="dp_payment_method"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
+                                        <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
+                                        <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
+                                        <option value="edc_debit">{{ __('storefront.backoffice.reservations.method_edc_debit') }}</option>
+                                        <option value="edc_credit">{{ __('storefront.backoffice.reservations.method_edc_credit') }}</option>
+                                    </select>
+                                </div>
+
+                                <div x-show="payDpDirectly" x-cloak>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
+                                        {{ __('storefront.backoffice.reservations.label_dp_ref') }}
+                                    </label>
+                                    <input type="text" name="dp_payment_reference"
+                                        placeholder="No. Slip EDC / Ref Transfer"
+                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Section 5: Catatan Tambahan --}}
+                        <div class="space-y-2">
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">
+                                {{ __('storefront.backoffice.reservations.label_notes') }}
+                            </label>
+                            <textarea name="notes" rows="2"
+                                placeholder="Permintaan khusus pelanggan, alergi makanan, keluhan mesin, atau instruksi lainnya..."
+                                class="w-full p-3 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]"></textarea>
+                        </div>
+
+                        {{-- Footer Action Buttons --}}
+                        <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/5 dark:border-white/10">
+                            <button type="button" @click="showCreateModal = false"
+                                class="px-5 py-2.5 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
+                                {{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}
+                            </button>
+                            <button type="submit"
+                                class="px-6 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-95">
+                                <i data-lucide="check" class="w-4 h-4"></i>
+                                <span>{{ __('storefront.backoffice.reservations.btn_save_reservation') }}</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </template>
+
+        {{-- ======================================================== --}}
+        {{-- MODAL: CATAT PEMBAYARAN DP (UANG MUKA) UNTUK RESERVASI   --}}
+        {{-- ======================================================== --}}
+        <template x-teleport="body">
+            <div x-show="showDpModal" x-cloak
+                class="fixed inset-0 z-[220] flex items-end sm:items-center justify-center p-0 sm:p-4"
+                role="dialog"
+                aria-modal="true"
+                @keydown.escape.window="showDpModal = false">
+
+                {{-- Backdrop Blur Overlay --}}
+                <div x-show="showDpModal"
+                    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    @click="showDpModal = false"
+                    class="fixed inset-0 bg-black/60 dark:bg-black/75 backdrop-blur-md"></div>
+
+                <div @click.away="showDpModal = false"
+                    class="relative z-10 w-full max-w-md bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] p-6 shadow-2xl border border-black/10 dark:border-white/10 space-y-4 max-h-[92vh] overflow-y-auto">
+                    
+                    {{-- Mobile Grab Bar --}}
+                    <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
+
+                    <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-[10px] bg-[#34C759]/15 text-[#34C759] flex items-center justify-center shrink-0">
+                                <i data-lucide="wallet" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.backoffice.reservations.modal_dp_title') }}</h3>
+                                <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.modal_dp_subtitle') }}</p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showDpModal = false"
+                            class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <template x-if="reservationForDp">
+                        <form :action="'/storefront/reservations/' + reservationForDp.id + '/record-dp'" method="POST"
+                            class="space-y-4">
+                            @csrf
+
+                            {{-- Summary Box --}}
+                            <div class="p-3.5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 space-y-1">
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-black/50 dark:text-white/50">{{ __('storefront.backoffice.reservations.modal_assign_rsv_label') }}</span>
+                                    <span class="font-mono font-bold text-[#007AFF]" x-text="'#' + reservationForDp.reservation_code"></span>
+                                </div>
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-black/50 dark:text-white/50">Pelanggan</span>
+                                    <span class="font-bold text-black dark:text-white" x-text="reservationForDp.customer_name"></span>
+                                </div>
+                                <template x-if="reservationForDp.estimated_total > 0">
+                                    <div class="flex items-center justify-between text-xs pt-1 border-t border-black/5 dark:border-white/5">
+                                        <span class="text-black/50 dark:text-white/50">Estimasi Total</span>
+                                        <span class="font-bold text-black dark:text-white tabular-nums" x-text="'Rp ' + Number(reservationForDp.estimated_total).toLocaleString('id-ID')"></span>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div>
+                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    {{ __('storefront.backoffice.reservations.label_dp_amount') }} <span class="text-red-500">*</span>
+                                </label>
+                                <input type="number" name="dp_amount" required min="1000" step="1000"
+                                    placeholder="Contoh: 100000"
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-bold tabular-nums focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                            </div>
+
+                            <div>
+                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    {{ __('storefront.backoffice.reservations.label_dp_method') }} <span class="text-red-500">*</span>
+                                </label>
+                                <select name="dp_payment_method" required
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
+                                    <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
+                                    <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
+                                    <option value="edc_debit">{{ __('storefront.backoffice.reservations.method_edc_debit') }}</option>
+                                    <option value="edc_credit">{{ __('storefront.backoffice.reservations.method_edc_credit') }}</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    {{ __('storefront.backoffice.reservations.label_dp_ref') }}
+                                </label>
+                                <input type="text" name="dp_payment_reference"
+                                    placeholder="No. Bukti Transfer / Slip EDC / Struk"
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                            </div>
+
+                            <div>
+                                <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
+                                    Catatan Pembayaran
+                                </label>
+                                <input type="text" name="notes"
+                                    placeholder="Keterangan tambahan (opsional)"
+                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                            </div>
+
+                            <div class="flex items-center justify-end gap-2 pt-2">
+                                <button type="button" @click="showDpModal = false"
+                                    class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
+                                    {{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}
+                                </button>
+                                <button type="submit"
+                                    class="px-5 py-2.5 rounded-full bg-[#34C759] hover:bg-[#2EB04E] text-white text-xs font-bold transition shadow-sm cursor-pointer flex items-center gap-1.5 active:scale-95">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                    <span>Simpan Pembayaran DP</span>
+                                </button>
+                            </div>
+                        </form>
+                    </template>
+                </div>
+            </div>
+        </template>
 
         <!-- Modal Assign Table (F&B Only - Apple HIG Multi-Device Dialog) -->
         @if ($isFnB)
@@ -680,7 +1241,7 @@
                         <div class="w-12 h-1.5 bg-black/20 dark:bg-white/20 rounded-full mx-auto mb-1 sm:hidden"></div>
 
                         <div class="flex items-center justify-between pb-3 border-b border-black/5 dark:border-white/10">
-                            <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.reservations.modal_assign_title') }}</h3>
+                            <h3 class="text-base font-bold text-black dark:text-white">{{ __('storefront.backoffice.reservations.modal_assign_title') }}</h3>
                             <button type="button" @click="showAssignModal = false"
                                 class="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/40 hover:text-black dark:text-white/40 dark:hover:text-white cursor-pointer transition">
                                 <i data-lucide="x" class="w-5 h-5"></i>
@@ -692,20 +1253,20 @@
                                 class="space-y-4">
                                 @csrf
                                 <div>
-                                    <span class="text-[12px] text-black/50 dark:text-white/50 block">{{ __('storefront.reservations.modal_assign_rsv_label') }}</span>
+                                    <span class="text-[12px] text-black/50 dark:text-white/50 block">{{ __('storefront.backoffice.reservations.modal_assign_rsv_label') }}</span>
                                     <p class="font-bold text-sm text-black dark:text-white"
-                                        x-text="selectedReservation.customer_name + ' (' + selectedReservation.guest_count + ' ' + ({{ Js::from(trim(str_replace(':count', '', __('storefront.reservations.guest_count_mobile', ['count' => ''])))) }}) + ')'">
+                                        x-text="selectedReservation.customer_name + ' (' + selectedReservation.guest_count + ' ' + ({{ Js::from(trim(str_replace(':count', '', __('storefront.backoffice.reservations.guest_count_mobile', ['count' => ''])))) }}) + ')'">
                                     </p>
                                 </div>
 
                                 <div>
-                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('storefront.reservations.modal_assign_select_table') }}</label>
+                                    <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('storefront.backoffice.reservations.modal_assign_select_table') }}</label>
                                     <select name="pos_table_id" required
                                         class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
-                                        <option value="">{{ __('storefront.reservations.modal_assign_choose_placeholder') }}</option>
+                                        <option value="">{{ __('storefront.backoffice.reservations.modal_assign_choose_placeholder') }}</option>
                                         @foreach ($tables as $tbl)
                                             <option value="{{ $tbl->id }}">
-                                                {{ __('storefront.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
+                                                {{ __('storefront.backoffice.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -713,9 +1274,9 @@
 
                                 <div class="flex items-center justify-end gap-2 pt-2">
                                     <button type="button" @click="showAssignModal = false"
-                                        class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_cancel') }}</button>
+                                        class="px-4 py-2 rounded-full text-xs font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">{{ __('storefront.backoffice.reservations.modal_assign_btn_cancel') }}</button>
                                     <button type="submit"
-                                        class="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer">{{ __('storefront.reservations.modal_assign_btn_save') }}</button>
+                                        class="px-5 py-2 rounded-full bg-[#007AFF] hover:bg-[#0071E3] text-white text-xs font-bold transition shadow-sm cursor-pointer">{{ __('storefront.backoffice.reservations.modal_assign_btn_save') }}</button>
                                 </div>
                             </form>
                         </template>
@@ -747,12 +1308,12 @@
                             <i data-lucide="calendar-x" class="w-5 h-5"></i>
                         </div>
                         <div class="min-w-0">
-                            <h3 class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.reservations.modal_cancel_title') }}</h3>
+                            <h3 class="text-[16px] font-bold text-black dark:text-white tracking-tight">{{ __('storefront.backoffice.reservations.modal_cancel_title') }}</h3>
                             <p class="text-[13px] text-black/60 dark:text-white/60 mt-1">
                                 {!! str_replace(
                                     [':code', ':name'],
                                     ['<strong class="text-black dark:text-white font-semibold" x-text="reservationToCancel?.code"></strong>', '<span class="font-medium text-black dark:text-white" x-text="reservationToCancel?.customer_name"></span>'],
-                                    e(__('storefront.reservations.modal_cancel_desc', ['code' => ':code', 'name' => ':name']))
+                                    e(__('storefront.backoffice.reservations.modal_cancel_desc', ['code' => ':code', 'name' => ':name']))
                                 ) !!}
                             </p>
                         </div>
@@ -762,13 +1323,13 @@
                     <div
                         class="p-3.5 rounded-[16px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/10 flex items-start gap-2.5 text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
                         <i data-lucide="shield-check" class="w-4 h-4 text-[#34C759] shrink-0 mt-0.5"></i>
-                        <span>{{ __('storefront.reservations.modal_cancel_peace_of_mind') }}</span>
+                        <span>{{ __('storefront.backoffice.reservations.modal_cancel_peace_of_mind') }}</span>
                     </div>
 
                     <div class="flex items-center justify-end gap-2 pt-2">
                         <button type="button" @click="cancelModalOpen = false"
                             class="px-4 py-2 rounded-full text-[13px] font-semibold text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition cursor-pointer">
-                            {{ __('storefront.reservations.modal_cancel_btn_close') }}
+                            {{ __('storefront.backoffice.reservations.modal_cancel_btn_close') }}
                         </button>
                         <template x-if="reservationToCancel">
                             <form :action="'/storefront/reservations/' + reservationToCancel.id + '/status'" method="POST">
@@ -776,7 +1337,7 @@
                                 <input type="hidden" name="status" value="cancelled">
                                 <button type="submit"
                                     class="px-5 py-2.5 rounded-full bg-[#FF3B30] hover:bg-[#E0352B] text-white text-[13px] font-bold transition shadow-sm cursor-pointer">
-                                    {{ __('storefront.reservations.modal_cancel_btn_confirm') }}
+                                    {{ __('storefront.backoffice.reservations.modal_cancel_btn_confirm') }}
                                 </button>
                             </form>
                         </template>

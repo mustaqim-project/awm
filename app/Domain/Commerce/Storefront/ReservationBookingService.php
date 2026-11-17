@@ -8,8 +8,10 @@ use App\Models\Business;
 use App\Models\CommerceOrder;
 use App\Models\CommerceReservation;
 use App\Models\CommerceStoreSetting;
+use App\Models\Location;
 use App\Models\PosTable;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use DomainException;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,13 +26,29 @@ final class ReservationBookingService
     ) {}
 
     /**
-     * Create a new reservation with table/service collision detection.
+     * Create a new reservation with table/service collision detection and multi-industry support.
      *
      * @param  array{
      *     name: string,
      *     phone: string,
      *     email?: string|null,
      * }  $customerData
+     * @param  array{
+     *     location_id?: string|null,
+     *     staff_id?: string|null,
+     *     created_by?: string|null,
+     *     vehicle_plate?: string|null,
+     *     vehicle_model?: string|null,
+     *     service_duration_minutes?: int|null,
+     *     event_venue?: string|null,
+     *     estimated_total?: float|int|string|null,
+     *     dp_amount?: float|int|string|null,
+     *     dp_payment_method?: string|null,
+     *     dp_payment_reference?: string|null,
+     *     payment_status?: string|null,
+     *     status?: string|null,
+     *     source?: string|null,
+     * }  $extraData
      */
     public function createReservation(
         Business $business,
@@ -40,11 +58,17 @@ final class ReservationBookingService
         int $guestCount = 1,
         ?string $tableId = null,
         ?string $productId = null,
-        ?string $notes = null
+        ?string $notes = null,
+        array $extraData = []
     ): CommerceReservation {
-        $setting = CommerceStoreSetting::where('business_id', $business->id)->first();
-        if ($setting && ! $setting->allow_reservation) {
-            throw new DomainException('Toko ini sedang tidak menerima layanan reservasi.');
+        $source = $extraData['source'] ?? CommerceReservation::SOURCE_ONLINE;
+
+        // Storefront setting check applies to online submissions
+        if ($source === CommerceReservation::SOURCE_ONLINE) {
+            $setting = CommerceStoreSetting::where('business_id', $business->id)->first();
+            if ($setting && ! $setting->allow_reservation) {
+                throw new DomainException('Toko ini sedang tidak menerima layanan reservasi.');
+            }
         }
 
         $custName = trim($customerData['name'] ?? '');
@@ -70,9 +94,11 @@ final class ReservationBookingService
             $guestCount,
             $tableId,
             $productId,
-            $notes
+            $notes,
+            $extraData,
+            $source
         ): CommerceReservation {
-            // 1. Collision detection for table
+            // 1. Collision detection for table (if assigned)
             if ($tableId) {
                 $table = PosTable::where('business_id', $business->id)->find($tableId);
                 if (! $table) {
@@ -104,15 +130,60 @@ final class ReservationBookingService
                 }
             }
 
-            // 3. Generate unique reservation code
+            // 3. Validate staff if provided
+            $staffId = $extraData['staff_id'] ?? null;
+            if ($staffId) {
+                $staff = User::find($staffId);
+                if (! $staff) {
+                    $staffId = null;
+                }
+            }
+
+            // 4. Validate location if provided
+            $locationId = $extraData['location_id'] ?? null;
+            if ($locationId) {
+                $loc = Location::where('business_id', $business->id)->find($locationId);
+                if (! $loc) {
+                    $locationId = null;
+                }
+            }
+
+            // 5. Down payment calculations
+            $estimatedTotal = max(0.0, (float) ($extraData['estimated_total'] ?? 0));
+            $dpAmount = max(0.0, (float) ($extraData['dp_amount'] ?? 0));
+            $dpPaymentMethod = $extraData['dp_payment_method'] ?? null;
+            $dpPaymentReference = $extraData['dp_payment_reference'] ?? null;
+            $dpPaidAt = null;
+
+            if ($dpAmount > 0) {
+                $dpPaidAt = now();
+                $dpPaymentMethod = $dpPaymentMethod ?: 'cash';
+                $paymentStatus = ($estimatedTotal > 0 && $dpAmount >= $estimatedTotal)
+                    ? CommerceReservation::PAYMENT_PAID_IN_FULL
+                    : CommerceReservation::PAYMENT_DP_PAID;
+            } else {
+                $paymentStatus = CommerceReservation::PAYMENT_UNPAID;
+            }
+
+            // Status: for manual submissions, if not explicitly provided, confirmed if DP is paid or if created by staff
+            $defaultStatus = ($dpAmount > 0 || $source === CommerceReservation::SOURCE_MANUAL || $source === CommerceReservation::SOURCE_POS)
+                ? CommerceReservation::STATUS_CONFIRMED
+                : CommerceReservation::STATUS_PENDING_CONFIRMATION;
+
+            $status = $extraData['status'] ?? $defaultStatus;
+
+            // 6. Generate unique reservation code
             $datePrefix = Carbon::parse($reservationDate)->format('Ymd');
             $randomCode = strtoupper(Str::random(4));
             $reservationCode = "RSV-{$datePrefix}-{$randomCode}";
 
             $reservation = new CommerceReservation();
             $reservation->business_id = $business->id;
+            $reservation->location_id = $locationId;
             $reservation->pos_table_id = $tableId;
             $reservation->product_id = $productId;
+            $reservation->staff_id = $staffId;
+            $reservation->created_by = $extraData['created_by'] ?? null;
             $reservation->reservation_code = $reservationCode;
             $reservation->customer_name = $custName;
             $reservation->customer_phone = $custPhone;
@@ -120,11 +191,48 @@ final class ReservationBookingService
             $reservation->reservation_date = $reservationDate;
             $reservation->time_slot = $timeSlot;
             $reservation->guest_count = max(1, $guestCount);
-            $reservation->status = CommerceReservation::STATUS_PENDING_CONFIRMATION;
+            $reservation->vehicle_plate = $extraData['vehicle_plate'] ?? null;
+            $reservation->vehicle_model = $extraData['vehicle_model'] ?? null;
+            $reservation->service_duration_minutes = isset($extraData['service_duration_minutes']) ? (int) $extraData['service_duration_minutes'] : null;
+            $reservation->event_venue = $extraData['event_venue'] ?? null;
+            $reservation->estimated_total = $estimatedTotal;
+            $reservation->dp_amount = $dpAmount;
+            $reservation->dp_payment_method = $dpPaymentMethod;
+            $reservation->dp_paid_at = $dpPaidAt;
+            $reservation->dp_payment_reference = $dpPaymentReference;
+            $reservation->payment_status = $paymentStatus;
+            $reservation->status = $status;
+            $reservation->source = $source;
             $reservation->notes = $notes;
             $reservation->save();
 
-            return $reservation->load(['posTable', 'product']);
+            return $reservation->load(['posTable', 'product', 'location', 'staff', 'creator']);
+        });
+    }
+
+    /**
+     * Record Down Payment (DP) for an existing reservation.
+     */
+    public function recordDpPayment(
+        CommerceReservation $reservation,
+        float $dpAmount,
+        string $paymentMethod,
+        ?string $reference = null,
+        ?string $notes = null
+    ): CommerceReservation {
+        if ($dpAmount <= 0) {
+            throw new InvalidArgumentException('Nominal DP harus lebih besar dari 0.');
+        }
+
+        return DB::transaction(function () use ($reservation, $dpAmount, $paymentMethod, $reference, $notes): CommerceReservation {
+            $reservation->markDpAsPaid($dpAmount, $paymentMethod, $reference);
+
+            if ($notes) {
+                $existingNotes = $reservation->notes ? $reservation->notes . "\n" : '';
+                $reservation->update(['notes' => $existingNotes . '[Catatan DP]: ' . $notes]);
+            }
+
+            return $reservation->fresh(['posTable', 'product', 'location', 'staff', 'creator']);
         });
     }
 
@@ -225,7 +333,7 @@ final class ReservationBookingService
                     throw new InvalidArgumentException("Status reservasi '{$status}' tidak valid.");
             }
 
-            return $reservation->fresh(['posTable', 'product']);
+            return $reservation->fresh(['posTable', 'product', 'location', 'staff', 'creator']);
         });
     }
 
@@ -257,6 +365,6 @@ final class ReservationBookingService
 
         $reservation->update(['pos_table_id' => $table->id]);
 
-        return $reservation->fresh(['posTable']);
+        return $reservation->fresh(['posTable', 'product', 'location', 'staff', 'creator']);
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['title' => __('storefront.backoffice.shipping_calculator.page_title')])
 
 @section('content')
-    <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
+    <div class="space-y-6 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-28 sm:pb-32 lg:pb-10"
         x-data="{
             isTestingRate: false,
             testPostalCode: '',
@@ -205,11 +205,11 @@
             </div>
         </div>
 
-        <!-- Bento Overview Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Bento Overview Stats (Adaptive Snap Slider Mobile / 3-Col Desktop) -->
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-3 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0">
             <!-- Delivery Mode Status Card -->
             <div
-                class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
+                class="snap-start shrink-0 w-[260px] sm:w-auto bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.delivery_mode_label') }}</span>
                     <span
@@ -229,7 +229,7 @@
 
             <!-- Origin Store Status with Branch Info -->
             <div
-                class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
+                class="snap-start shrink-0 w-[260px] sm:w-auto bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
                         <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.origin_pickup_label') }}</span>
@@ -254,7 +254,7 @@
 
             <!-- Active Couriers Count -->
             <div
-                class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
+                class="snap-start shrink-0 w-[260px] sm:w-auto bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[20px] p-5 shadow-xs">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium text-black/50 dark:text-white/50">{{ __('storefront.backoffice.shipping_calculator.active_couriers_label') }}</span>
                     <span class="p-2 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400">
@@ -531,8 +531,8 @@
                 </form>
             </div>
 
-            <!-- Right: Live Test Rate Simulator (4 Cols) -->
-            <div class="lg:col-span-4 space-y-6">
+            <!-- Right: Live Test Rate Simulator (4 Cols, Sticky on Desktop) -->
+            <div class="lg:col-span-4 space-y-6 lg:sticky lg:top-6">
                 <div
                     class="bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/5 dark:border-white/10 rounded-[24px] p-5 shadow-xs space-y-4">
                     <div class="flex items-center gap-2">

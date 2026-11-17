@@ -1263,6 +1263,7 @@ Route::prefix('v1')->group(function (): void {
                 Route::post('/orders/{posOrder}/hold', [PosTerminalController::class, 'holdOrder'])->middleware('require.permission:pos.terminal');
                 Route::post('/orders/{posOrder}/resume', [PosTerminalController::class, 'resumeOrder'])->middleware('require.permission:pos.terminal');
                 Route::get('/orders/{posOrder}/receipt', [PosTerminalController::class, 'receipt'])->middleware('require.permission:pos.terminal');
+                Route::post('/reservations/manual', [PosTerminalController::class, 'createManualReservation'])->middleware('require.permission:pos.terminal');
                 Route::post('/reservations/{reservation}/seat', [PosTerminalController::class, 'seatReservation'])->middleware('require.permission:pos.terminal');
                 Route::get('/orders/{order}/status', [PosTerminalController::class, 'checkOrderStatus'])->middleware('require.permission:pos.terminal');
                 Route::get('/orders/{order}/qr-image', [PosTerminalController::class, 'getQrisImage'])->middleware('require.permission:pos.terminal');

@@ -3,7 +3,7 @@
 ])
 
 @section('content')
-<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12" x-data="{
+<div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-12 px-4 sm:px-6 lg:px-8" x-data="{
     disconnectModal: false,
     submitting: false,
     toggling: false,
@@ -123,9 +123,9 @@
     <!-- ===================================================== -->
     <!-- 2. BENTO STATS SUMMARY (4 METRICS)                     -->
     <!-- ===================================================== -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:gap-4">
         <!-- Metric 1: Connected Channels -->
-        <div class="rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
+        <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
                 <span class="text-[12px] font-semibold">{{ __('marketplace.metric_connected_channels') }}</span>
                 <i data-lucide="plug-2" class="w-4 h-4 text-[#007AFF]"></i>
@@ -137,7 +137,7 @@
         </div>
 
         <!-- Metric 2: Mapped Products -->
-        <div class="rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
+        <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
                 <span class="text-[12px] font-semibold">{{ __('marketplace.metric_mapped_products') }}</span>
                 <i data-lucide="layers" class="w-4 h-4 text-[#34C759]"></i>
@@ -149,7 +149,7 @@
         </div>
 
         <!-- Metric 3: Synced Orders -->
-        <div class="rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
+        <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
                 <span class="text-[12px] font-semibold">{{ __('marketplace.metric_marketplace_orders') }}</span>
                 <i data-lucide="package-check" class="w-4 h-4 text-[#FF9500]"></i>
@@ -161,7 +161,7 @@
         </div>
 
         <!-- Metric 4: Sync Error Status -->
-        <div class="rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
+        <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[20px] p-4 sm:p-5 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 backdrop-blur-md shadow-xs space-y-2">
             <div class="flex items-center justify-between text-black/50 dark:text-white/50">
                 <span class="text-[12px] font-semibold">{{ __('marketplace.metric_sync_status') }}</span>
                 <i data-lucide="check-circle-2" class="w-4 h-4 text-[#34C759]"></i>

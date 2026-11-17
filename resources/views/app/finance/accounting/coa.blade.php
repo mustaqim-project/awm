@@ -4,7 +4,7 @@
     <div x-data="coaManager()" class="max-w-[1360px] mx-auto space-y-5 pb-28 sm:pb-32 lg:pb-10">
 
         {{-- ========================================================== --}}
-        {{-- TOOLBAR / PAGE HEADER                                      --}}
+        {{-- ZONA 1: TOOLBAR / PAGE HEADER & EXECUTIVE METRICS           --}}
         {{-- ========================================================== --}}
         <x-module-header
             title="{{ __('finance.coa_header_title') }}"
@@ -16,7 +16,7 @@
             </a>
             @if (\App\Support\Context::hasPermission('accounting.view') || \App\Support\Context::hasPermission('accounting.manage'))
             <a href="{{ route('finance.coa.export') }}"
-                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
                 title="{{ __('finance.tooltip_export_coa_excel') }}">
                 <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0"></i>
                 <span>{{ __('finance.btn_export_excel') }}</span>
@@ -24,14 +24,14 @@
             @endif
             @if(\App\Support\Context::hasPermission('accounting.manage'))
                 <button type="button" @click="showImportModal = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] transition-colors flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap"
                     title="{{ __('finance.tooltip_import_coa_excel') }}">
                     <i data-lucide="upload" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
                     <span>{{ __('finance.btn_import_excel') }}</span>
                 </button>
                 <button type="button" @click="createModalOpen = true"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] whitespace-nowrap">
-                    <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i>
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center justify-center gap-1.5 shadow-[0_2px_8px_rgba(0,122,255,0.35)] whitespace-nowrap cursor-pointer">
+                    <i data-lucide="plus" class="w-4 h-4 shrink-0"></i>
                     <span>{{ __('finance.btn_add_sub_account') }}</span>
                 </button>
             @endif
@@ -43,24 +43,26 @@
         <x-module-tabs module="accounting" />
 
         {{-- ========================================================== --}}
-        {{-- KPI STATS CARDS (BENTO)                                    --}}
+        {{-- KPI STATS CARDS (ADAPTIVE SNAP SLIDER MOBILE / BENTO DESK)  --}}
         {{-- ========================================================== --}}
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 flex items-center justify-between shadow-xs">
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:pb-0">
+            {{-- Card 1: Total Active Accounts --}}
+            <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-4.5 flex items-center justify-between shadow-xs">
                 <div>
                     <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.total_active_accounts') }}</p>
-                    <p class="text-[22px] font-bold tabular-nums text-black dark:text-white mt-1">{{ $stats['active'] }}</p>
-                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.from_total_accounts_registered', ['total' => $stats['total']]) }}</p>
+                    <p class="text-[20px] sm:text-[22px] font-bold tabular-nums text-black dark:text-white mt-1">{{ $stats['active'] }}</p>
+                    <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5 truncate">{{ __('finance.from_total_accounts_registered', ['total' => $stats['total']]) }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
                     <i data-lucide="book-marked" class="w-5 h-5 shrink-0"></i>
                 </div>
             </div>
 
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 flex items-center justify-between shadow-xs">
+            {{-- Card 2: Core System Accounts --}}
+            <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-4.5 flex items-center justify-between shadow-xs">
                 <div>
                     <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.core_system_accounts') }}</p>
-                    <p class="text-[22px] font-bold tabular-nums text-[#5856D6] dark:text-[#5E5CE6] mt-1">{{ $stats['system'] }}</p>
+                    <p class="text-[20px] sm:text-[22px] font-bold tabular-nums text-[#5856D6] dark:text-[#5E5CE6] mt-1">{{ $stats['system'] }}</p>
                     <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.locked_and_protected') }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] bg-[#5856D6]/10 text-[#5856D6] flex items-center justify-center shrink-0">
@@ -68,10 +70,11 @@
                 </div>
             </div>
 
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 flex items-center justify-between shadow-xs">
+            {{-- Card 3: Custom Sub-Accounts --}}
+            <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-4.5 flex items-center justify-between shadow-xs">
                 <div>
                     <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.custom_sub_accounts') }}</p>
-                    <p class="text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] mt-1">{{ $stats['custom'] }}</p>
+                    <p class="text-[20px] sm:text-[22px] font-bold tabular-nums text-[#34C759] dark:text-[#30D158] mt-1">{{ $stats['custom'] }}</p>
                     <p class="text-[11px] text-black/40 dark:text-white/40 mt-0.5">{{ __('finance.created_by_company') }}</p>
                 </div>
                 <div class="w-10 h-10 rounded-[12px] bg-[#34C759]/10 text-[#34C759] flex items-center justify-center shrink-0">
@@ -79,7 +82,8 @@
                 </div>
             </div>
 
-            <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4.5 flex items-center justify-between shadow-xs">
+            {{-- Card 4: Journal Integrity --}}
+            <div class="snap-start shrink-0 w-[240px] sm:w-auto rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-4 sm:p-4.5 flex items-center justify-between shadow-xs">
                 <div>
                     <p class="text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">{{ __('finance.journal_integrity') }}</p>
                     <div class="mt-1 flex items-center gap-1.5">
@@ -97,61 +101,61 @@
         </div>
 
         {{-- ========================================================== --}}
-        {{-- SEARCH & CATEGORY FILTER BAR                               --}}
+        {{-- ZONA 2: SEARCH & CATEGORY FILTER TOOLBAR                    --}}
         {{-- ========================================================== --}}
-        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 space-y-3 shadow-xs">
-            <form method="GET" action="{{ route('finance.coa.index') }}" class="flex flex-wrap items-center gap-2.5">
+        <div class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-3.5 shadow-xs space-y-3">
+            <form method="GET" action="{{ route('finance.coa.index') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 <div class="relative flex-1 min-w-[220px]">
-                    <i data-lucide="search" class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-black/40 dark:text-white/40"></i>
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="{{ __('finance.placeholder_search_coa') }}"
-                        class="w-full h-11 sm:h-9 pl-8 pr-3 text-[16px] sm:text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                        class="w-full h-11 sm:h-9 pl-9 pr-3 text-[16px] sm:text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
                 </div>
 
-                <div class="flex items-center gap-1 overflow-x-auto py-0.5 text-[12px]">
+                <div class="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 text-[12px] shrink-0">
                     <a href="{{ route('finance.coa.index', request()->except('type')) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ !request('type') ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ !request('type') ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('common.all') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'asset'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'asset' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'asset' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_asset') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'liability'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'liability' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'liability' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_liability') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'equity'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'equity' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'equity' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_equity') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'revenue'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'revenue' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'revenue' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_revenue') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'cogs'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'cogs' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'cogs' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_cogs') }}
                     </a>
                     <a href="{{ route('finance.coa.index', array_merge(request()->except('type'), ['type' => 'expense'])) }}"
-                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors {{ request('type') === 'expense' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
+                        class="px-3 py-1.5 rounded-[8px] font-medium transition-colors whitespace-nowrap {{ request('type') === 'expense' ? 'bg-[#007AFF] text-white shadow-xs' : 'bg-black/[0.04] dark:bg-white/[0.06] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white' }}">
                         {{ __('finance.type_expense') }}
                     </a>
                 </div>
 
                 <button type="submit"
-                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] text-black dark:text-white text-[13px] font-semibold hover:bg-black/[0.1] transition-colors flex items-center justify-center">
+                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] text-black dark:text-white text-[13px] font-semibold hover:bg-black/[0.1] transition-colors flex items-center justify-center shrink-0">
                     {{ __('common.filter') }}
                 </button>
             </form>
         </div>
 
         {{-- ========================================================== --}}
-        {{-- ACCOUNTS TABLE                                             --}}
+        {{-- ZONA 3: CHART OF ACCOUNTS TREE TABLE (STRUCTURED HIERARCHY)--}}
         {{-- ========================================================== --}}
         <div x-data="coocaTableSort()" class="rounded-[16px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden shadow-xs">
             <div class="overflow-x-auto">
-                <table class="w-full text-left text-[13px]">
+                <table class="w-full text-left text-[13px] border-collapse">
                     <thead>
                         <tr class="border-b border-black/[0.06] dark:border-white/[0.08] bg-black/[0.02] dark:bg-white/[0.02]">
                             <x-table-sort-th :col="0" type="string" :title="__('finance.col_account_code')" />
@@ -164,30 +168,73 @@
                     </thead>
                     <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                         @forelse($accounts as $acc)
-                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors group">
-                                <td data-sort-value="{{ $acc->code }}" class="px-4 sm:px-5 py-3.5 tabular-nums text-[13.5px] sm:text-[14px] font-mono font-bold {{ $acc->is_system ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-[#34C759] dark:text-[#30D158]' }}">
-                                    @if($acc->parent_id)
-                                        <span class="text-black/35 dark:text-white/35 mr-1 font-mono">↳</span>
-                                    @endif
-                                    {{ $acc->code }}
+                            @php
+                                $isParent = empty($acc->parent_id);
+                                $hasChildren = $acc->children && $acc->children->isNotEmpty();
+                            @endphp
+                            <tr class="transition-colors group {{ $isParent ? 'bg-black/[0.015] dark:bg-white/[0.015] hover:bg-black/[0.03] dark:hover:bg-white/[0.03]' : 'hover:bg-black/[0.02] dark:hover:bg-white/[0.02]' }}">
+                                {{-- 1. Account Code & Tree Guide --}}
+                                <td data-sort-value="{{ $acc->code }}" class="px-4 sm:px-5 py-3.5 tabular-nums text-[13.5px] sm:text-[14px] font-mono whitespace-nowrap">
+                                    <div class="flex items-center gap-1.5 {{ $isParent ? 'font-black' : 'pl-4 sm:pl-7 font-bold' }}">
+                                        @if($isParent)
+                                            <i data-lucide="folder-tree" class="w-4 h-4 text-[#007AFF] shrink-0"></i>
+                                            <span class="{{ $acc->is_system ? 'text-[#007AFF] dark:text-[#0A84FF]' : 'text-[#34C759] dark:text-[#30D158]' }}">{{ $acc->code }}</span>
+                                        @else
+                                            <span class="text-black/30 dark:text-white/30 font-mono text-[13px] select-none">└──</span>
+                                            <span class="{{ $acc->is_system ? 'text-black/80 dark:text-white/80' : 'text-[#34C759] dark:text-[#30D158]' }}">{{ $acc->code }}</span>
+                                        @endif
+                                    </div>
                                 </td>
-                                <td data-sort-value="{{ strtolower($acc->name) }}" class="px-4 sm:px-5 py-3.5 text-[13.5px] sm:text-[14px] font-medium text-black dark:text-white">
-                                    {{ $acc->name }}
+
+                                {{-- 2. Account Name & Parent Info --}}
+                                <td data-sort-value="{{ strtolower($acc->name) }}" class="px-4 sm:px-5 py-3.5 text-[13.5px] sm:text-[14px] min-w-[200px]">
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <span class="{{ $isParent ? 'font-bold text-black dark:text-white' : 'font-medium text-black/90 dark:text-white/90' }}">
+                                            {{ $acc->name }}
+                                        </span>
+                                        @if($isParent)
+                                            <span class="inline-flex items-center px-1.5 py-0.2 rounded-[5px] text-[10px] font-bold bg-[#007AFF]/10 text-[#007AFF] border border-[#007AFF]/20">
+                                                Induk
+                                            </span>
+                                        @else
+                                            <span class="inline-flex items-center px-1.5 py-0.2 rounded-[5px] text-[9.5px] font-medium bg-black/[0.04] dark:bg-white/[0.06] text-black/55 dark:text-white/55">
+                                                Posting
+                                            </span>
+                                        @endif
+                                    </div>
                                     @if($acc->parent)
-                                        <span class="block text-[12px] text-black/45 dark:text-white/45 font-normal mt-0.5">{{ __('finance.parent_prefix', ['code' => $acc->parent->code, 'name' => $acc->parent->name]) }}</span>
+                                        <span class="block text-[11.5px] text-black/45 dark:text-white/45 font-normal mt-0.5">
+                                            {{ __('finance.parent_prefix', ['code' => $acc->parent->code, 'name' => $acc->parent->name]) }}
+                                        </span>
                                     @endif
                                 </td>
-                                <td data-sort-value="{{ strtolower($acc->getTypeLabel()) }}" class="px-4 sm:px-5 py-3.5">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-[8px] text-[12px] font-medium bg-black/[0.04] dark:bg-white/[0.06] text-black/75 dark:text-white/75">
+
+                                {{-- 3. Category / Classification --}}
+                                <td data-sort-value="{{ strtolower($acc->getTypeLabel()) }}" class="px-4 sm:px-5 py-3.5 whitespace-nowrap">
+                                    @php
+                                        $typeBadgeStyle = match($acc->type) {
+                                            'asset' => 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] border-[#34C759]/20',
+                                            'liability' => 'bg-[#FF9500]/10 text-[#B26A00] dark:text-[#FF9F0A] border-[#FF9500]/20',
+                                            'equity' => 'bg-[#5856D6]/10 text-[#5856D6] dark:text-[#5E5CE6] border-[#5856D6]/20',
+                                            'revenue' => 'bg-[#007AFF]/10 text-[#007AFF] border-[#007AFF]/20',
+                                            'cogs' => 'bg-[#32ADE6]/10 text-[#007AFF] border-[#32ADE6]/20',
+                                            default => 'bg-[#FF2D55]/10 text-[#FF2D55] border-[#FF2D55]/20',
+                                        };
+                                    @endphp
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-[8px] text-[11.5px] font-semibold border {{ $typeBadgeStyle }}">
                                         {{ $acc->getTypeLabel() }}
                                     </span>
                                 </td>
-                                <td data-sort-value="{{ $acc->normal_balance }}" class="px-4 sm:px-5 py-3.5">
-                                    <span class="inline-flex items-center uppercase px-2.5 py-0.5 rounded-full text-[11px] font-bold tracking-wider {{ $acc->normal_balance === 'debit' ? 'bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#007AFF]/12 text-[#007AFF]' }}">
+
+                                {{-- 4. Normal Balance --}}
+                                <td data-sort-value="{{ $acc->normal_balance }}" class="px-4 sm:px-5 py-3.5 whitespace-nowrap">
+                                    <span class="inline-flex items-center uppercase px-2.5 py-0.5 rounded-full text-[10.5px] font-extrabold tracking-wider {{ $acc->normal_balance === 'debit' ? 'bg-[#34C759]/12 text-[#248A3D] dark:text-[#30D158] border border-[#34C759]/20' : 'bg-[#007AFF]/12 text-[#007AFF] border border-[#007AFF]/20' }}">
                                         {{ $acc->normal_balance }}
                                     </span>
                                 </td>
-                                <td data-sort-value="{{ $acc->is_system ? 'system' : 'custom' }}" class="px-4 sm:px-5 py-3.5">
+
+                                {{-- 5. Status: System or Custom --}}
+                                <td data-sort-value="{{ $acc->is_system ? 'system' : 'custom' }}" class="px-4 sm:px-5 py-3.5 whitespace-nowrap">
                                     <div class="flex items-center gap-1.5">
                                         @if($acc->is_system)
                                             <span class="inline-flex items-center gap-1.5 text-[12px] font-medium text-black/55 dark:text-white/55" title="{{ __('finance.tooltip_system_account_locked') }}">
@@ -195,13 +242,15 @@
                                                 {{ __('finance.badge_system') }}
                                             </span>
                                         @else
-                                            <span class="inline-flex items-center gap-1.5 text-[12px] font-medium text-[#34C759] dark:text-[#30D158]">
+                                            <span class="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#34C759] dark:text-[#30D158]">
                                                 <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
                                                 {{ __('finance.badge_custom') }}
                                             </span>
                                         @endif
                                     </div>
                                 </td>
+
+                                {{-- 6. Action Menu --}}
                                 <td class="px-4 sm:px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-1.5">
                                         <a href="{{ route('finance.general-ledger', ['account_id' => $acc->id]) }}"
@@ -253,7 +302,7 @@
         </div>
 
         {{-- ========================================================== --}}
-        {{-- MODAL CREATE SUB-ACCOUNT (BENTO APPLE HIG XXL SHEET)       --}}
+        {{-- MODAL CREATE SUB-ACCOUNT (BENTO APPLE HIG 2-COLUMN SHEET)  --}}
         {{-- ========================================================== --}}
         @if(\App\Support\Context::hasPermission('accounting.manage'))
         <template x-teleport="body">
@@ -274,85 +323,105 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="createModalOpen = false">
-                    <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
+                    <div class="relative w-full max-w-[96vw] lg:max-w-4xl xl:max-w-5xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
                         x-data="{ isSubmitting: false }">
-                    <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
-                                <i data-lucide="plus" class="w-5 h-5 shrink-0"></i>
+                        <div class="flex items-center justify-between px-6 sm:px-8 py-4.5 border-b border-black/5 dark:border-white/10 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
+                                    <i data-lucide="plus" class="w-5 h-5 shrink-0"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_create_sub_account_title') }}</h2>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_create_sub_account_subtitle') }}</p>
+                                </div>
                             </div>
-                            <div>
-                                <h2 class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_create_sub_account_title') }}</h2>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_create_sub_account_subtitle') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" @click="createModalOpen = false"
-                            class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition cursor-pointer"
-                            aria-label="{{ __('common.close_modal') }}"
-                            title="{{ __('common.close_modal') }}">
-                            <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
-                        </button>
-                    </div>
-
-                    <form method="POST" action="{{ route('finance.coa.store') }}" @submit="isSubmitting = true" class="flex-1 overflow-y-auto p-5 sm:p-8 space-y-5">
-                        @csrf
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="sm:col-span-2">
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_parent_account') }}</label>
-                                <select name="parent_id" class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                                    <option value="">{{ __('finance.no_parent_main_account') }}</option>
-                                    @foreach($parentCandidates as $p)
-                                        <option value="{{ $p->id }}">{{ $p->code }} – {{ $p->name }} ({{ $p->getTypeLabel() }})</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_code_required') }}</label>
-                                <input type="text" name="code" required placeholder="{{ __('finance.placeholder_account_code') }}"
-                                    class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                            </div>
-                            <div>
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_type_required') }}</label>
-                                <select name="type" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                                    <option value="asset">{{ __('finance.option_type_asset') }}</option>
-                                    <option value="liability">{{ __('finance.option_type_liability') }}</option>
-                                    <option value="equity">{{ __('finance.option_type_equity') }}</option>
-                                    <option value="revenue">{{ __('finance.option_type_revenue') }}</option>
-                                    <option value="cogs">{{ __('finance.option_type_cogs') }}</option>
-                                    <option value="expense">{{ __('finance.option_type_expense') }}</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_sub_account_name_required') }}</label>
-                                <input type="text" name="name" required placeholder="{{ __('finance.placeholder_sub_account_name') }}"
-                                    class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                            </div>
-
-                            <div>
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_normal_balance_required') }}</label>
-                                <select name="normal_balance" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
-                                    <option value="debit">{{ __('finance.option_debit') }}</option>
-                                    <option value="credit">{{ __('finance.option_credit') }}</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-black/5 dark:border-white/10">
-                            <button type="button" @click="createModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition whitespace-nowrap cursor-pointer">{{ __('common.cancel') }}</button>
-                            <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-[0_4px_16px_rgba(0,122,255,0.3)] transition flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
-                                <span x-text="isSubmitting ? '{{ __('finance.btn_saving') }}' : '{{ __('finance.btn_save_sub_account') }}'">{{ __('finance.btn_save_sub_account') }}</span>
+                            <button type="button" @click="createModalOpen = false"
+                                class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition cursor-pointer"
+                                aria-label="{{ __('common.close_modal') }}"
+                                title="{{ __('common.close_modal') }}">
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
-                    </form>
+
+                        <form method="POST" action="{{ route('finance.coa.store') }}" @submit="isSubmitting = true" class="flex-1 overflow-y-auto p-5 sm:p-8 space-y-6">
+                            @csrf
+                            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                                {{-- Kolom Kiri: Identitas Akun (7 Kolom) --}}
+                                <div class="lg:col-span-7 bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] rounded-[20px] p-5 space-y-4">
+                                    <div class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                        Identitas Akun Buku Besar
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_parent_account') }}</label>
+                                        <select name="parent_id" class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="">{{ __('finance.no_parent_main_account') }}</option>
+                                            @foreach($parentCandidates as $p)
+                                                <option value="{{ $p->id }}">{{ $p->code }} – {{ $p->name }} ({{ $p->getTypeLabel() }})</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_code_required') }}</label>
+                                        <input type="text" name="code" required placeholder="{{ __('finance.placeholder_account_code') }}"
+                                            class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] font-mono bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_sub_account_name_required') }}</label>
+                                        <input type="text" name="name" required placeholder="{{ __('finance.placeholder_sub_account_name') }}"
+                                            class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                    </div>
+                                </div>
+
+                                {{-- Kolom Kanan: Karakteristik Akun (5 Kolom) --}}
+                                <div class="lg:col-span-5 bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] rounded-[20px] p-5 space-y-4">
+                                    <div class="text-[12px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] pb-1 border-b border-black/[0.04] dark:border-white/[0.06]">
+                                        Klasifikasi & Saldo
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_type_required') }}</label>
+                                        <select name="type" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="asset">{{ __('finance.option_type_asset') }}</option>
+                                            <option value="liability">{{ __('finance.option_type_liability') }}</option>
+                                            <option value="equity">{{ __('finance.option_type_equity') }}</option>
+                                            <option value="revenue">{{ __('finance.option_type_revenue') }}</option>
+                                            <option value="cogs">{{ __('finance.option_type_cogs') }}</option>
+                                            <option value="expense">{{ __('finance.option_type_expense') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_normal_balance_required') }}</label>
+                                        <select name="normal_balance" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                            <option value="debit">{{ __('finance.option_debit') }}</option>
+                                            <option value="credit">{{ __('finance.option_credit') }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="pt-2 p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
+                                        <i data-lucide="info" class="w-4 h-4 text-[#007AFF] inline mr-1"></i>
+                                        Sub-akun ini akan langsung aktif dan dapat dipilih pada pencatatan jurnal umum double-entry.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-black/5 dark:border-white/10">
+                                <button type="button" @click="createModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[44px] px-6 rounded-[12px] text-[13.5px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition whitespace-nowrap cursor-pointer">{{ __('common.cancel') }}</button>
+                                <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[44px] px-8 rounded-[12px] text-[13.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm transition flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
+                                    <span x-text="isSubmitting ? '{{ __('finance.btn_saving') }}' : '{{ __('finance.btn_save_sub_account') }}'">{{ __('finance.btn_save_sub_account') }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         </template>
 
         {{-- ========================================================== --}}
-        {{-- MODAL EDIT ACCOUNT (BENTO APPLE HIG XXL SHEET)             --}}
+        {{-- MODAL EDIT ACCOUNT (BENTO APPLE HIG 2-COLUMN SHEET)        --}}
         {{-- ========================================================== --}}
         <template x-teleport="body">
             <div x-show="editModalOpen" x-cloak
@@ -372,66 +441,66 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="editModalOpen = false">
-                    <div class="relative w-full max-w-full sm:max-w-2xl lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
+                    <div class="relative w-full max-w-[96vw] lg:max-w-3xl bg-white dark:bg-[#1C1C1E] rounded-t-[28px] sm:rounded-[24px] shadow-[0_25px_70px_rgba(0,0,0,0.35)] border border-black/10 dark:border-white/10 overflow-hidden flex flex-col max-h-[92vh]"
                         x-data="{ isSubmitting: false }">
-                    <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-black/5 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.02]">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center shrink-0">
-                                <i data-lucide="pencil" class="w-5 h-5 shrink-0"></i>
-                            </div>
-                            <div>
-                                <h2 class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_edit_account_title') }}</h2>
-                                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_edit_account_subtitle') }}</p>
-                            </div>
-                        </div>
-                        <button type="button" @click="editModalOpen = false"
-                            class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition cursor-pointer"
-                            aria-label="{{ __('common.close_modal') }}"
-                            title="{{ __('common.close_modal') }}">
-                            <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
-                        </button>
-                    </div>
-
-                    <form method="POST" :action="'/finance/chart-of-accounts/' + editAccount.id" @submit="isSubmitting = true" class="flex-1 overflow-y-auto p-5 sm:p-8 space-y-5">
-                        @csrf
-                        @method('PUT')
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <template x-if="!editAccount.is_system">
-                                <div>
-                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.col_account_code') }}</label>
-                                    <input type="text" name="code" x-model="editAccount.code" required
-                                        class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                        <div class="flex items-center justify-between px-6 sm:px-8 py-4.5 border-b border-black/5 dark:border-white/10 bg-[#F2F2F7]/50 dark:bg-white/[0.02]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center shrink-0">
+                                    <i data-lucide="pencil" class="w-5 h-5 shrink-0"></i>
                                 </div>
-                            </template>
-
-                            <div :class="editAccount.is_system ? 'sm:col-span-2' : ''">
-                                <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.col_account_name') }}</label>
-                                <input type="text" name="name" x-model="editAccount.name" required
-                                    class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                <div>
+                                    <h2 class="text-[18px] font-bold text-black dark:text-white tracking-tight">{{ __('finance.modal_edit_account_title') }}</h2>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_edit_account_subtitle') }}</p>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="flex items-center gap-2.5 pt-1">
-                            <input type="checkbox" name="is_active" id="edit_is_active" value="1" x-model="editAccount.is_active"
-                                class="w-5 h-5 rounded text-[#007AFF] focus:ring-[#007AFF]">
-                            <label for="edit_is_active" class="text-[13px] font-semibold text-black/80 dark:text-white/80">{{ __('finance.checkbox_active_account_label') }}</label>
-                        </div>
-
-                        <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-black/5 dark:border-white/10">
-                            <button type="button" @click="editModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-6 rounded-[14px] text-[14px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition whitespace-nowrap cursor-pointer">{{ __('common.cancel') }}</button>
-                            <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[48px] px-8 rounded-[14px] text-[14.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-[0_4px_16px_rgba(0,122,255,0.3)] transition flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
-                                <span x-text="isSubmitting ? '{{ __('finance.btn_saving') }}' : '{{ __('finance.btn_update_account') }}'">{{ __('finance.btn_update_account') }}</span>
+                            <button type="button" @click="editModalOpen = false"
+                                class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/5 dark:bg-white/10 flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition cursor-pointer"
+                                aria-label="{{ __('common.close_modal') }}"
+                                title="{{ __('common.close_modal') }}">
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
                             </button>
                         </div>
-                    </form>
+
+                        <form method="POST" :action="'/finance/chart-of-accounts/' + editAccount.id" @submit="isSubmitting = true" class="flex-1 overflow-y-auto p-5 sm:p-8 space-y-5">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="space-y-4 bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.06] rounded-[20px] p-5">
+                                <template x-if="!editAccount.is_system">
+                                    <div>
+                                        <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.col_account_code') }}</label>
+                                        <input type="text" name="code" x-model="editAccount.code" required
+                                            class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] font-mono bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                    </div>
+                                </template>
+
+                                <div>
+                                    <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.col_account_name') }}</label>
+                                    <input type="text" name="name" x-model="editAccount.name" required
+                                        class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                </div>
+
+                                <div class="flex items-center gap-2.5 pt-2">
+                                    <input type="checkbox" name="is_active" id="edit_is_active" value="1" x-model="editAccount.is_active"
+                                        class="w-5 h-5 rounded text-[#007AFF] focus:ring-[#007AFF]">
+                                    <label for="edit_is_active" class="text-[13px] font-semibold text-black/80 dark:text-white/80">{{ __('finance.checkbox_active_account_label') }}</label>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 flex flex-col-reverse sm:flex-row items-center justify-end gap-3 border-t border-black/5 dark:border-white/10">
+                                <button type="button" @click="editModalOpen = false" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[44px] px-6 rounded-[12px] text-[13.5px] font-semibold text-black/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 transition whitespace-nowrap cursor-pointer">{{ __('common.cancel') }}</button>
+                                <button type="submit" :disabled="isSubmitting" class="w-full sm:w-auto min-h-[44px] px-8 rounded-[12px] text-[13.5px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] shadow-sm transition flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
+                                    <span x-text="isSubmitting ? '{{ __('finance.btn_saving') }}' : '{{ __('finance.btn_update_account') }}'">{{ __('finance.btn_update_account') }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
         </template>
 
         {{-- ========================================================== --}}
-        {{-- MODAL DELETE CONFIRMATION (APPLE HIG BENTO MODAL SHEET)    --}}
+        {{-- MODAL DELETE CONFIRMATION (APPLE HIG ALERT SHEET)          --}}
         {{-- ========================================================== --}}
         <template x-teleport="body">
             <div x-show="deleteModalOpen" x-cloak
@@ -472,7 +541,7 @@
                                 {{ __('common.cancel') }}
                             </button>
                             <button type="submit"
-                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] transition-all shadow-[0_2px_8px_rgba(255,59,48,0.35)] flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
+                                class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF3B30] hover:bg-[#D70015] active:scale-[0.98] transition-all shadow-sm flex items-center gap-1.5 whitespace-nowrap cursor-pointer">
                                 <i data-lucide="trash-2" class="w-4 h-4 shrink-0"></i>
                                 <span>{{ __('finance.btn_confirm_delete_sub_account') }}</span>
                             </button>
@@ -481,6 +550,7 @@
                 </div>
             </div>
         </template>
+
         {{-- ========================================================== --}}
         {{-- MODAL IMPORT COA PREVIEW (APPLE BENTO XXL MODAL)           --}}
         {{-- ========================================================== --}}
@@ -503,227 +573,223 @@
 
                 <!-- Centered Dialog Wrapper -->
                 <div class="relative z-10 min-h-full flex items-center justify-center p-3 sm:p-6" @click.self="if (!importExecuting) showImportModal = false">
-                    <div class="relative w-full max-w-5xl rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
-                @click.away="if (!importExecuting) showImportModal = false"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 scale-95"
-                x-transition:enter-end="opacity-100 scale-100"
-                x-transition:leave="transition ease-in duration-150"
-                x-transition:leave-start="opacity-100 scale-100"
-                x-transition:leave-end="opacity-0 scale-95">
+                    <div class="relative w-full max-w-[96vw] lg:max-w-5xl rounded-t-[28px] sm:rounded-[24px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.3)] flex flex-col max-h-[92vh] overflow-hidden"
+                        @click.away="if (!importExecuting) showImportModal = false"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95">
 
-                <!-- Header -->
-                <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
-                            <i data-lucide="book-open-check" class="w-5 h-5"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('finance.modal_import_coa_title') }}</h3>
-                            <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_import_coa_subtitle') }}</p>
-                        </div>
-                    </div>
-
-                    <button type="button" @click="if (!importExecuting) showImportModal = false"
-                        class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
-                        aria-label="{{ __('common.close_modal') }}"
-                        title="{{ __('common.close_modal') }}">
-                        <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
-                    </button>
-                </div>
-
-                <!-- Body -->
-                <div class="p-6 overflow-y-auto space-y-5 flex-1">
-                    
-                    <!-- State 1: Drop Zone -->
-                    <div x-show="!importPreview" class="space-y-4">
-                        <!-- Langkah 1: Unduh Template -->
-                        <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-2 text-[#B26A00] dark:text-[#FF9F0A] font-bold text-[13px]">
-                                    <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold shrink-0">1</span>
-                                    <span>{{ __('finance.step_1_download_coa_template_title') }}</span>
+                        <!-- Header -->
+                        <div class="px-6 py-4.5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-[12px] bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0">
+                                    <i data-lucide="book-open-check" class="w-5 h-5"></i>
                                 </div>
-                                <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('finance.step_1_download_coa_template_desc') }}</p>
+                                <div>
+                                    <h3 class="text-[17px] font-bold text-black dark:text-white">{{ __('finance.modal_import_coa_title') }}</h3>
+                                    <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.modal_import_coa_subtitle') }}</p>
+                                </div>
                             </div>
-                            <a href="{{ route('finance.coa.template') }}"
-                               class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98] whitespace-nowrap">
-                                <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
-                                <span>{{ __('finance.btn_download_template_xlsx') }}</span>
-                            </a>
+
+                            <button type="button" @click="if (!importExecuting) showImportModal = false"
+                                class="w-9 h-9 min-w-[44px] min-h-[44px] rounded-full bg-black/[0.05] dark:bg-white/[0.08] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition cursor-pointer"
+                                aria-label="{{ __('common.close_modal') }}"
+                                title="{{ __('common.close_modal') }}">
+                                <i data-lucide="x" class="w-4 h-4 shrink-0"></i>
+                            </button>
                         </div>
 
-                        <!-- Langkah 2: Upload Dropzone -->
-                        <div class="flex items-center justify-between pt-1">
-                            <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
-                                <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
-                                <span>{{ __('finance.step_2_upload_coa_title') }}</span>
-                            </div>
-                            <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('finance.max_file_size_xlsx_csv') }}</span>
-                        </div>
-
-                        <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#FF9500] dark:hover:border-[#FF9F0A] rounded-[20px] p-8 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01] hover:bg-[#FF9500]/[0.02]">
-                            <input type="file" class="hidden" accept=".xlsx, .xls, .csv" @change="handleImportFileSelect($event)" :disabled="importLoading">
+                        <!-- Body -->
+                        <div class="p-6 overflow-y-auto space-y-5 flex-1">
                             
-                            <div class="space-y-3">
-                                <div class="w-14 h-14 mx-auto rounded-full bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
-                                    <i data-lucide="upload-cloud" class="w-7 h-7" x-show="!importLoading"></i>
-                                    <i data-lucide="loader" class="w-7 h-7 animate-spin" x-show="importLoading"></i>
+                            <!-- State 1: Drop Zone -->
+                            <div x-show="!importPreview" class="space-y-4">
+                                <!-- Langkah 1: Unduh Template -->
+                                <div class="p-4 rounded-[16px] bg-[#FF9500]/[0.08] dark:bg-[#FF9500]/[0.12] border border-[#FF9500]/25 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div class="space-y-1">
+                                        <div class="flex items-center gap-2 text-[#B26A00] dark:text-[#FF9F0A] font-bold text-[13px]">
+                                            <span class="w-5 h-5 rounded-full bg-[#FF9500]/15 flex items-center justify-center text-[11px] font-bold shrink-0">1</span>
+                                            <span>{{ __('finance.step_1_download_coa_template_title') }}</span>
+                                        </div>
+                                        <p class="text-[12px] text-black/60 dark:text-white/60">{{ __('finance.step_1_download_coa_template_desc') }}</p>
+                                    </div>
+                                    <a href="{{ route('finance.coa.template') }}"
+                                       class="min-h-[44px] sm:min-h-0 h-10 sm:h-9 px-4 rounded-[10px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[12px] font-semibold transition flex items-center justify-center gap-1.5 shadow-sm shrink-0 active:scale-[0.98] whitespace-nowrap">
+                                        <i data-lucide="download" class="w-3.5 h-3.5 shrink-0"></i>
+                                        <span>{{ __('finance.btn_download_template_xlsx') }}</span>
+                                    </a>
                                 </div>
-                                <div class="space-y-1">
-                                    <div class="text-[15px] font-bold text-black dark:text-white" x-text="importLoading ? '{{ __('finance.reading_analyzing_coa') }}' : '{{ __('finance.select_coa_file_or_drag') }}'"></div>
-                                    <div class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.supports_official_coa_template') }}</div>
+
+                                <!-- Langkah 2: Upload Dropzone -->
+                                <div class="flex items-center justify-between pt-1">
+                                    <div class="flex items-center gap-2 text-black/80 dark:text-white/80 font-bold text-[13px]">
+                                        <span class="w-5 h-5 rounded-full bg-black/10 dark:bg-white/10 flex items-center justify-center text-[11px] font-bold">2</span>
+                                        <span>{{ __('finance.step_2_upload_coa_title') }}</span>
+                                    </div>
+                                    <span class="text-[11px] text-black/40 dark:text-white/40">{{ __('finance.max_file_size_xlsx_csv') }}</span>
                                 </div>
-                            </div>
-                        </label>
-                    </div>
 
-                    <!-- State 2: Pre-Commit Preview -->
-                    <div x-show="importPreview" class="space-y-5">
-                        
-                        <!-- KPI Summary Cards -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
-                                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('finance.kpi_total_rows') }}</span>
-                                <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importPreview ? importPreview.total_rows : 0"></div>
-                            </div>
-                            <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
-                                <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">{{ __('finance.kpi_ready_import') }}</span>
-                                <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importPreview ? importPreview.valid_count : 0"></div>
-                            </div>
-                            <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
-                                <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">{{ __('finance.kpi_duplicate_data') }}</span>
-                                <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importPreview ? importPreview.duplicate_count : 0"></div>
-                            </div>
-                            <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
-                                <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">{{ __('finance.kpi_error_invalid') }}</span>
-                                <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importPreview ? importPreview.error_count : 0"></div>
-                            </div>
-                        </div>
-
-                        <!-- Filter & Strategy Bar -->
-                        <div class="p-4 rounded-[18px] bg-[#F5F5F7] dark:bg-[#252528] border border-black/[0.05] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div class="flex items-center gap-1 bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-[12px] text-[12px] font-medium">
-                                <button type="button" @click="importFilter = 'all'"
-                                    class="px-3 py-1.5 rounded-[8px] transition"
-                                    :class="importFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
-                                    {{ __('common.all') }} (<span x-text="importPreview ? importPreview.total_rows : 0"></span>)
-                                </button>
-                                <button type="button" @click="importFilter = 'valid'"
-                                    class="px-3 py-1.5 rounded-[8px] transition"
-                                    :class="importFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                    {{ __('finance.badge_ready') }} (<span x-text="importPreview ? importPreview.valid_count : 0"></span>)
-                                </button>
-                                <button type="button" @click="importFilter = 'duplicate'"
-                                    class="px-3 py-1.5 rounded-[8px] transition"
-                                    :class="importFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                    {{ __('finance.badge_duplicate') }} (<span x-text="importPreview ? importPreview.duplicate_count : 0"></span>)
-                                </button>
-                                <button type="button" @click="importFilter = 'error'"
-                                    class="px-3 py-1.5 rounded-[8px] transition"
-                                    :class="importFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
-                                    {{ __('finance.badge_error') }} (<span x-text="importPreview ? importPreview.error_count : 0"></span>)
-                                </button>
-                            </div>
-
-                            <div class="flex items-center gap-3 text-[12px]">
-                                <span class="text-black/50 dark:text-white/50 font-medium">{{ __('finance.if_account_exists_label') }}</span>
-                                <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
-                                    <input type="radio" value="skip" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
-                                    <span>{{ __('finance.strategy_skip') }}</span>
-                                </label>
-                                <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
-                                    <input type="radio" value="update" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
-                                    <span>{{ __('finance.strategy_update') }}</span>
+                                <label class="border-2 border-dashed border-black/15 dark:border-white/15 hover:border-[#FF9500] dark:hover:border-[#FF9F0A] rounded-[20px] p-8 flex flex-col items-center justify-center text-center cursor-pointer transition bg-black/[0.01] dark:bg-white/[0.01] hover:bg-[#FF9500]/[0.02]">
+                                    <input type="file" class="hidden" accept=".xlsx, .xls, .csv" @change="handleImportFileSelect($event)" :disabled="importLoading">
+                                    
+                                    <div class="space-y-3">
+                                        <div class="w-14 h-14 mx-auto rounded-full bg-[#FF9500]/10 text-[#FF9500] flex items-center justify-center">
+                                            <i data-lucide="upload-cloud" class="w-7 h-7" x-show="!importLoading"></i>
+                                            <i data-lucide="loader" class="w-7 h-7 animate-spin" x-show="importLoading"></i>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <div class="text-[15px] font-bold text-black dark:text-white" x-text="importLoading ? '{{ __('finance.reading_analyzing_coa') }}' : '{{ __('finance.select_coa_file_or_drag') }}'"></div>
+                                            <div class="text-[12px] text-black/50 dark:text-white/50">{{ __('finance.supports_official_coa_template') }}</div>
+                                        </div>
+                                    </div>
                                 </label>
                             </div>
+
+                            <!-- State 2: Pre-Commit Preview -->
+                            <div x-show="importPreview" class="space-y-5">
+                                
+                                <!-- KPI Summary Cards -->
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                    <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-1">
+                                        <span class="text-[11px] font-semibold text-black/50 dark:text-white/50 uppercase tracking-wider">{{ __('finance.kpi_total_rows') }}</span>
+                                        <div class="text-2xl font-bold font-mono text-black dark:text-white" x-text="importPreview ? importPreview.total_rows : 0"></div>
+                                    </div>
+                                    <div class="p-3.5 rounded-[16px] bg-emerald-500/[0.08] border border-emerald-500/20 space-y-1">
+                                        <span class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">{{ __('finance.kpi_ready_import') }}</span>
+                                        <div class="text-2xl font-bold font-mono text-emerald-600 dark:text-emerald-400" x-text="importPreview ? importPreview.valid_count : 0"></div>
+                                    </div>
+                                    <div class="p-3.5 rounded-[16px] bg-amber-500/[0.08] border border-amber-500/20 space-y-1">
+                                        <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">{{ __('finance.kpi_duplicate_data') }}</span>
+                                        <div class="text-2xl font-bold font-mono text-amber-600 dark:text-amber-400" x-text="importPreview ? importPreview.duplicate_count : 0"></div>
+                                    </div>
+                                    <div class="p-3.5 rounded-[16px] bg-rose-500/[0.08] border border-rose-500/20 space-y-1">
+                                        <span class="text-[11px] font-semibold text-rose-700 dark:text-rose-400 uppercase tracking-wider">{{ __('finance.kpi_error_invalid') }}</span>
+                                        <div class="text-2xl font-bold font-mono text-rose-600 dark:text-rose-400" x-text="importPreview ? importPreview.error_count : 0"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Filter & Strategy Bar -->
+                                <div class="p-4 rounded-[18px] bg-[#F5F5F7] dark:bg-[#252528] border border-black/[0.05] dark:border-white/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                    <div class="flex items-center gap-1 bg-black/[0.05] dark:bg-white/[0.08] p-1 rounded-[12px] text-[12px] font-medium overflow-x-auto">
+                                        <button type="button" @click="importFilter = 'all'"
+                                            class="px-3 py-1.5 rounded-[8px] transition whitespace-nowrap"
+                                            :class="importFilter === 'all' ? 'bg-white dark:bg-[#1C1C1E] text-black dark:text-white shadow-sm font-semibold' : 'text-black/60 dark:text-white/60'">
+                                            {{ __('common.all') }} (<span x-text="importPreview ? importPreview.total_rows : 0"></span>)
+                                        </button>
+                                        <button type="button" @click="importFilter = 'valid'"
+                                            class="px-3 py-1.5 rounded-[8px] transition whitespace-nowrap"
+                                            :class="importFilter === 'valid' ? 'bg-white dark:bg-[#1C1C1E] text-emerald-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                            {{ __('finance.badge_ready') }} (<span x-text="importPreview ? importPreview.valid_count : 0"></span>)
+                                        </button>
+                                        <button type="button" @click="importFilter = 'duplicate'"
+                                            class="px-3 py-1.5 rounded-[8px] transition whitespace-nowrap"
+                                            :class="importFilter === 'duplicate' ? 'bg-white dark:bg-[#1C1C1E] text-amber-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                            {{ __('finance.badge_duplicate') }} (<span x-text="importPreview ? importPreview.duplicate_count : 0"></span>)
+                                        </button>
+                                        <button type="button" @click="importFilter = 'error'"
+                                            class="px-3 py-1.5 rounded-[8px] transition whitespace-nowrap"
+                                            :class="importFilter === 'error' ? 'bg-white dark:bg-[#1C1C1E] text-rose-600 font-semibold shadow-sm' : 'text-black/60 dark:text-white/60'">
+                                            {{ __('finance.badge_error') }} (<span x-text="importPreview ? importPreview.error_count : 0"></span>)
+                                        </button>
+                                    </div>
+
+                                    <div class="flex items-center gap-3 text-[12px]">
+                                        <span class="text-black/50 dark:text-white/50 font-medium">{{ __('finance.if_account_exists_label') }}</span>
+                                        <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                            <input type="radio" value="skip" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                            <span>{{ __('finance.strategy_skip') }}</span>
+                                        </label>
+                                        <label class="flex items-center gap-1.5 cursor-pointer font-medium text-black dark:text-white">
+                                            <input type="radio" value="update" x-model="importDuplicateStrategy" class="text-[#007AFF] focus:ring-0">
+                                            <span>{{ __('finance.strategy_update') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
+                                    <div class="max-h-[380px] overflow-auto">
+                                        <table class="w-full text-left text-[12px] border-collapse min-w-[640px]">
+                                            <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
+                                                <tr>
+                                                    <th class="py-2.5 px-3 w-16 text-center whitespace-nowrap">{{ __('common.status') }}</th>
+                                                    <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_code') }}</th>
+                                                    <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_name') }}</th>
+                                                    <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_classification') }}</th>
+                                                    <th class="py-2.5 px-3 text-center whitespace-nowrap">{{ __('finance.col_normal_position') }}</th>
+                                                    <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_parent_code') }}</th>
+                                                    <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_diagnostic_notes') }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                                                <template x-for="(row, idx) in (importPreview ? importPreview.rows.filter(r => importFilter === 'all' || r.status === importFilter) : [])" :key="idx">
+                                                    <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
+                                                        <td class="py-2.5 px-3 text-center whitespace-nowrap">
+                                                            <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">{{ __('finance.badge_ready') }}</span>
+                                                            <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">{{ __('finance.badge_duplicate') }}</span>
+                                                            <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">{{ __('finance.badge_error') }}</span>
+                                                        </td>
+                                                        <td class="py-2.5 px-3 font-mono font-bold text-black dark:text-white whitespace-nowrap" x-text="row.code || '-'"></td>
+                                                        <td class="py-2.5 px-3 font-medium text-black dark:text-white min-w-[140px]" x-text="row.name || '-'"></td>
+                                                        <td class="py-2.5 px-3 text-black/70 dark:text-white/70 whitespace-nowrap">
+                                                            <span class="inline-block uppercase text-[10px] px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/5 font-semibold" x-text="row.type || '-'"></span>
+                                                        </td>
+                                                        <td class="py-2.5 px-3 text-center font-mono font-medium text-black/80 dark:text-white/80 whitespace-nowrap" x-text="row.normal_balance ? row.normal_balance.toUpperCase() : '-'"></td>
+                                                        <td class="py-2.5 px-3 font-mono text-black/60 dark:text-white/60 whitespace-nowrap" x-text="row.parent_code || '-'"></td>
+                                                        <td class="py-2.5 px-3 min-w-[160px]">
+                                                            <div class="space-y-0.5">
+                                                                <template x-for="(msg, mi) in row.messages" :key="mi">
+                                                                    <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : (row.status === 'duplicate' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')" x-text="msg"></div>
+                                                                </template>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
 
-                        <!-- Table -->
-                        <div class="border border-black/[0.08] dark:border-white/[0.1] rounded-[18px] overflow-hidden bg-white dark:bg-[#1C1C1E]">
-                            <div class="max-h-[380px] overflow-auto">
-                                <table class="w-full text-left text-[12px] border-collapse min-w-[640px]">
-                                    <thead class="sticky top-0 bg-[#F5F5F7] dark:bg-[#252528] border-b border-black/[0.08] dark:border-white/[0.1] text-black/60 dark:text-white/60 font-semibold z-10">
-                                        <tr>
-                                            <th class="py-2.5 px-3 w-16 text-center whitespace-nowrap">{{ __('common.status') }}</th>
-                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_code') }}</th>
-                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_account_name') }}</th>
-                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_classification') }}</th>
-                                            <th class="py-2.5 px-3 text-center whitespace-nowrap">{{ __('finance.col_normal_position') }}</th>
-                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_parent_code') }}</th>
-                                            <th class="py-2.5 px-3 whitespace-nowrap">{{ __('finance.col_diagnostic_notes') }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
-                                        <template x-for="(row, idx) in (importPreview ? importPreview.rows.filter(r => importFilter === 'all' || r.status === importFilter) : [])" :key="idx">
-                                            <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition">
-                                                <td class="py-2.5 px-3 text-center whitespace-nowrap">
-                                                    <span x-show="row.status === 'valid'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">{{ __('finance.badge_ready') }}</span>
-                                                    <span x-show="row.status === 'duplicate'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 border border-amber-500/20">{{ __('finance.badge_duplicate') }}</span>
-                                                    <span x-show="row.status === 'error'" class="inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-600 border border-rose-500/20">{{ __('finance.badge_error') }}</span>
-                                                </td>
-                                                <td class="py-2.5 px-3 font-mono font-bold text-black dark:text-white whitespace-nowrap" x-text="row.code || '-'"></td>
-                                                <td class="py-2.5 px-3 font-medium text-black dark:text-white min-w-[140px]" x-text="row.name || '-'"></td>
-                                                <td class="py-2.5 px-3 text-black/70 dark:text-white/70 whitespace-nowrap">
-                                                    <span class="inline-block uppercase text-[10px] px-1.5 py-0.5 rounded bg-black/5 dark:bg-white/5 font-semibold" x-text="row.type || '-'"></span>
-                                                </td>
-                                                <td class="py-2.5 px-3 text-center font-mono font-medium text-black/80 dark:text-white/80 whitespace-nowrap" x-text="row.normal_balance ? row.normal_balance.toUpperCase() : '-'"></td>
-                                                <td class="py-2.5 px-3 font-mono text-black/60 dark:text-white/60 whitespace-nowrap" x-text="row.parent_code || '-'"></td>
-                                                <td class="py-2.5 px-3 min-w-[160px]">
-                                                    <div class="space-y-0.5">
-                                                        <template x-for="(msg, mi) in row.messages" :key="mi">
-                                                            <div class="text-[11px]" :class="row.status === 'error' ? 'text-rose-600 dark:text-rose-400' : (row.status === 'duplicate' ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400')" x-text="msg"></div>
-                                                        </template>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </template>
-                                    </tbody>
-                                </table>
+                        <!-- Footer -->
+                        <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528] gap-3">
+                            <div>
+                                <button type="button" x-show="importPreview" @click="resetImport()"
+                                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+                                    :disabled="importExecuting">
+                                    <i data-lucide="refresh-cw" class="w-4 h-4 shrink-0"></i>
+                                    <span>{{ __('finance.btn_change_file') }}</span>
+                                </button>
+                            </div>
+
+                            <div class="flex items-center gap-2.5">
+                                <button type="button" @click="if (!importExecuting) showImportModal = false"
+                                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer whitespace-nowrap"
+                                    :disabled="importExecuting">
+                                    {{ __('common.cancel') }}
+                                </button>
+
+                                <button type="button" x-show="importPreview" @click="executeCoaImport()"
+                                    class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                                    :disabled="importExecuting || !importPreview || (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) === 0">
+                                    <i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0" x-show="importExecuting"></i>
+                                    <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!importExecuting"></i>
+                                    <span x-text="importExecuting ? '{{ __('finance.btn_processing') }}' : ('{{ __('finance.btn_commit_import_accounts', ['count' => '']) }}'.replace(':count', (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count))))"></span>
+                                </button>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
-
-                <!-- Footer -->
-                <div class="px-6 py-4 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between shrink-0 bg-[#F9F9FB] dark:bg-[#252528] gap-3">
-                    <div>
-                        <button type="button" x-show="importPreview" @click="resetImport()"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-4 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
-                            :disabled="importExecuting">
-                            <i data-lucide="refresh-cw" class="w-4 h-4 shrink-0"></i>
-                            <span>{{ __('finance.btn_change_file') }}</span>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-2.5">
-                        <button type="button" @click="if (!importExecuting) showImportModal = false"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold transition cursor-pointer whitespace-nowrap"
-                            :disabled="importExecuting">
-                            {{ __('common.cancel') }}
-                        </button>
-
-                        <button type="button" x-show="importPreview" @click="executeCoaImport()"
-                            class="min-h-[44px] sm:min-h-0 h-11 sm:h-10 px-6 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-semibold shadow-sm shadow-[#007AFF]/25 active:scale-[0.98] transition cursor-pointer flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                            :disabled="importExecuting || !importPreview || (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count)) === 0">
-                            <i data-lucide="loader" class="w-4 h-4 animate-spin shrink-0" x-show="importExecuting"></i>
-                            <i data-lucide="check" class="w-4 h-4 shrink-0" x-show="!importExecuting"></i>
-                            <span x-text="importExecuting ? '{{ __('finance.btn_processing') }}' : ('{{ __('finance.btn_commit_import_accounts', ['count' => '']) }}'.replace(':count', (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count))))"></span>
-                        </button>
-                    </div>
-                </div>
-                            <span x-text="importExecuting ? '{{ __('finance.btn_processing') }}' : ('{{ __('finance.btn_commit_import_accounts', ['count' => '']) }}'.replace(':count', (importDuplicateStrategy === 'skip' ? importPreview.valid_count : (importPreview.valid_count + importPreview.duplicate_count))))"></span>
-                        </button>
-                    </div>
-                </div>
-
             </div>
-        </div>
-    </div>
-    </template>
-    @endif
+        </template>
+        @endif
 
     </div>
 

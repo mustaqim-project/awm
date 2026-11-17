@@ -2301,6 +2301,28 @@
                 activeTableCustomerName: null,
                 showIncomingOrdersModal: false,
                 showTablesModal: false,
+                showManualReservationModal: false,
+                isSubmittingManualReservation: false,
+                manualReservationForm: {
+                    customer_name: '',
+                    customer_phone: '',
+                    customer_email: '',
+                    reservation_date: '{{ date('Y-m-d') }}',
+                    time_slot: '12:00',
+                    guest_count: 1,
+                    pos_table_id: '',
+                    product_id: '',
+                    staff_id: '',
+                    vehicle_plate: '',
+                    vehicle_model: '',
+                    service_duration_minutes: '',
+                    notes: '',
+                    estimated_total: 0,
+                    pay_dp_now: false,
+                    dp_amount: 0,
+                    dp_payment_method: 'cash',
+                    dp_payment_reference: '',
+                },
                 showRejectReasonModal: false,
                 rejectingOrder: null,
                 rejectionReason: '',
@@ -4412,6 +4434,71 @@
                         AppAlert.error('{{ __('pos.checkin_error') }}');
                     } finally {
                         this.isSeatingReservation = false;
+                    }
+                },
+
+                openManualReservationModal() {
+                    this.manualReservationForm = {
+                        customer_name: '',
+                        customer_phone: '',
+                        customer_email: '',
+                        reservation_date: '{{ date('Y-m-d') }}',
+                        time_slot: '12:00',
+                        guest_count: 1,
+                        pos_table_id: '',
+                        product_id: '',
+                        staff_id: '',
+                        vehicle_plate: '',
+                        vehicle_model: '',
+                        service_duration_minutes: '',
+                        notes: '',
+                        estimated_total: 0,
+                        pay_dp_now: false,
+                        dp_amount: 0,
+                        dp_payment_method: 'cash',
+                        dp_payment_reference: '',
+                    };
+                    this.showManualReservationModal = true;
+                },
+
+                async submitManualReservation() {
+                    if (!this.manualReservationForm.customer_name || !this.manualReservationForm.customer_phone) {
+                        AppAlert.warning('Nama tamu dan nomor WhatsApp wajib diisi.');
+                        return;
+                    }
+
+                    if (this.isSubmittingManualReservation) return;
+                    this.isSubmittingManualReservation = true;
+
+                    try {
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+                            || '{{ csrf_token() }}';
+                        const res = await fetch('{{ route('pos.reservations.manual') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            body: JSON.stringify({
+                                ...this.manualReservationForm,
+                                location_id: this.selectedLocationId
+                            })
+                        });
+
+                        const data = await res.json();
+                        if (data.success) {
+                            AppAlert.success(data.message || 'Reservasi berhasil dibuat.');
+                            this.showManualReservationModal = false;
+                            await this.fetchTables();
+                        } else {
+                            AppAlert.error(data.message || 'Gagal membuat reservasi.');
+                        }
+                    } catch (e) {
+                        console.error('Submit manual reservation error:', e);
+                        AppAlert.error('Terjadi kesalahan saat menyimpan reservasi.');
+                    } finally {
+                        this.isSubmittingManualReservation = false;
                     }
                 },
 

@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6 max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-28 sm:pb-32 lg:pb-10" x-data="{
+    <div class="space-y-5 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pb-28 sm:pb-32 lg:pb-10" x-data="{
         activeTab: '{{ request('tab', 'general') }}',
         addMethodModalOpen: false,
         methodType: 'bank_transfer',
@@ -33,10 +33,10 @@
         @include('app.storefront.partials.navigation', ['title' => __('storefront.backoffice.settings.title')])
 
         {{-- BENTO OVERVIEW KPI METRIC CARDS --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:gap-4 lg:gap-5">
             {{-- Card 1: Status Toko --}}
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.settings.kpi_storefront_status') }}</span>
                     <div
@@ -55,7 +55,7 @@
 
             {{-- Card 2: Saldo Bersih Gateway --}}
             <div @click="activeTab = 'payment'"
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] cursor-pointer hover:border-[#007AFF]/40 transition">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)] cursor-pointer hover:border-[#007AFF]/40 transition">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.tab_payments.kpi_net_balance') }}</span>
                     <div
@@ -76,7 +76,7 @@
 
             {{-- Card 3: Pemenuhan Order --}}
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.settings.kpi_delivery_options') }}</span>
                     <div
@@ -102,7 +102,7 @@
 
             {{-- Card 4: Mode Transaksi --}}
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.settings.kpi_tx_modes') }}</span>
                     <div

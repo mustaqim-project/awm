@@ -593,6 +593,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::post('/pos/orders/{order}/cancel-qris', [PosTerminalWebController::class, 'cancelQrisOrder'])->middleware('require.permission:pos.terminal')->name('pos.orders.cancel-qris');
         Route::post('/pos/orders/{order}/simulate-qris', [PosTerminalWebController::class, 'simulateSandboxPayment'])->middleware('require.permission:pos.terminal')->name('pos.orders.simulate-qris');
         Route::post('/pos/verify-pin', [PosTerminalWebController::class, 'verifySupervisorPin'])->middleware('throttle:5,1')->name('pos.verify-pin');
+        Route::post('/pos/reservations/manual', [PosTerminalWebController::class, 'createManualReservation'])->middleware('require.permission:pos.terminal')->name('pos.reservations.manual');
         Route::post('/pos/reservations/{reservation}/seat', [PosTerminalWebController::class, 'seatReservation'])->middleware('require.permission:pos.terminal')->name('pos.reservations.seat');
 
         // POS Shifts
@@ -1057,8 +1058,10 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
             Route::middleware(['module:reservation', 'require.permission:storefront.reservations.manage'])->group(function (): void {
                 Route::get('/reservations', [MerchantReservationController::class, 'index'])->name('reservations.index');
+                Route::post('/reservations', [MerchantReservationController::class, 'store'])->name('reservations.store');
                 Route::post('/reservations/{reservation}/status', [MerchantReservationController::class, 'updateStatus'])->name('reservations.status');
                 Route::post('/reservations/{reservation}/assign-table', [MerchantReservationController::class, 'assignTable'])->name('reservations.assign_table');
+                Route::post('/reservations/{reservation}/record-dp', [MerchantReservationController::class, 'recordDp'])->name('reservations.record_dp');
             });
 
             Route::middleware('require.permission:storefront.manage')->group(function (): void {

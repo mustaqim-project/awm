@@ -40,10 +40,22 @@ final class PublicReservationController extends Controller
             'guest_count' => ['required', 'integer', 'min:1', 'max:50'],
             'pos_table_id' => ['nullable', 'uuid', 'exists:pos_tables,id'],
             'product_id' => ['nullable', 'uuid', 'exists:products,id'],
+            'vehicle_plate' => ['nullable', 'string', 'max:30'],
+            'vehicle_model' => ['nullable', 'string', 'max:100'],
+            'event_venue' => ['nullable', 'string', 'max:255'],
+            'location_id' => ['nullable', 'uuid', 'exists:locations,id'],
             'notes' => ['nullable', 'string', 'max:500'],
         ]);
 
         try {
+            $extraData = [
+                'location_id' => $validated['location_id'] ?? null,
+                'vehicle_plate' => $validated['vehicle_plate'] ?? null,
+                'vehicle_model' => $validated['vehicle_model'] ?? null,
+                'event_venue' => $validated['event_venue'] ?? null,
+                'source' => \App\Models\CommerceReservation::SOURCE_ONLINE,
+            ];
+
             $reservation = $this->reservationService->createReservation(
                 business: $business,
                 customerData: [
@@ -56,7 +68,8 @@ final class PublicReservationController extends Controller
                 guestCount: (int) $validated['guest_count'],
                 tableId: $validated['pos_table_id'] ?? null,
                 productId: $validated['product_id'] ?? null,
-                notes: $validated['notes'] ?? null
+                notes: $validated['notes'] ?? null,
+                extraData: $extraData
             );
 
             return response()->json([

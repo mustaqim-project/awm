@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10" x-data="landingPageEditor()">
+    <div class="max-w-[1360px] mx-auto space-y-6 pb-28 sm:pb-32 lg:pb-10 px-4 sm:px-6 lg:px-8" x-data="landingPageEditor()">
 
         {{-- ========================================================== --}}
         {{-- 1. UNIFIED MODULE HEADER (Bento Apple HIG v2.0 Standard)   --}}

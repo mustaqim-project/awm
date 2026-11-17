@@ -42,6 +42,8 @@
          guestCount: 2,
          posTableId: '',
          productId: '',
+         vehiclePlate: '',
+         vehicleModel: '',
          notes: '',
          isSubmitting: false,
          successData: null,
@@ -66,6 +68,8 @@
                  guest_count: this.guestCount,
                  pos_table_id: this.posTableId || null,
                  product_id: this.productId || null,
+                 vehicle_plate: this.vehiclePlate || null,
+                 vehicle_model: this.vehicleModel || null,
                  notes: this.notes
              };
 
@@ -202,6 +206,29 @@
                             <option value="{{ $srv->id }}">{{ $srv->name }} (Rp {{ number_format((float) $srv->selling_price, 0, ',', '.') }})</option>
                         @endforeach
                     </select>
+                </div>
+            @endif
+
+            {{-- Workshop / Bengkel: Plat Nomor & Model Kendaraan --}}
+            @if ($business->isWorkshop())
+                <div>
+                    <label class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                        Plat Nomor Kendaraan <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" 
+                           x-model="vehiclePlate" 
+                           placeholder="Contoh: B 1234 XYZ"
+                           class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm font-mono uppercase">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-neutral-700 dark:text-neutral-300 mb-1.5">
+                        Merk & Model Kendaraan
+                    </label>
+                    <input type="text" 
+                           x-model="vehicleModel" 
+                           placeholder="Contoh: Toyota Avanza / Honda Vario"
+                           class="w-full px-3.5 py-2.5 rounded-[12px] border border-black/10 dark:border-white/10 bg-neutral-50 dark:bg-neutral-900 text-[16px] sm:text-sm">
                 </div>
             @endif
 

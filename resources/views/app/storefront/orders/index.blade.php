@@ -5,7 +5,7 @@
 ])
 
 @section('content')
-    <div class="space-y-6 pb-28 sm:pb-32 lg:pb-10 max-w-[1250px] mx-auto px-3 sm:px-6 lg:px-8"
+    <div class="space-y-5 pb-28 sm:pb-32 lg:pb-10 max-w-[1360px] mx-auto px-3 sm:px-6 lg:px-8"
         x-data="{
             selectedOrderIds: [],
             pageOrderIds: @js($orders->pluck('id')),
@@ -124,9 +124,9 @@
         </div>
 
         {{-- BENTO METRIC CARDS --}}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
+        <div class="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-3 px-3 pb-1 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:mx-0 sm:px-0 sm:gap-4 lg:gap-5">
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.orders.kpi_total_orders') }}</span>
                     <div
@@ -143,7 +143,7 @@
             </div>
 
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.orders.tab_needs_verification') }}</span>
                     <div
@@ -161,7 +161,7 @@
             </div>
 
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.orders.kpi_order_mode') }}</span>
                     <div
@@ -178,7 +178,7 @@
             </div>
 
             <div
-                class="p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+                class="snap-start shrink-0 w-[240px] sm:w-auto p-4 sm:p-5 rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
                 <div class="flex items-center justify-between gap-3 mb-2">
                     <span class="text-[12px] sm:text-[13px] font-medium text-black/55 dark:text-white/55 truncate">{{ __('storefront.backoffice.orders.kpi_current_page') }}</span>
                     <div

@@ -300,7 +300,7 @@ final class PosTerminalWebController extends Controller
                     \App\Models\CommerceReservation::STATUS_CONFIRMED,
                     \App\Models\CommerceReservation::STATUS_SEATED,
                 ])
-                ->with(['posTable', 'product'])
+                ->with(['posTable', 'product', 'staff', 'location'])
                 ->orderBy('time_slot')
                 ->get()
                 ->map(fn ($r) => [
@@ -314,6 +314,16 @@ final class PosTerminalWebController extends Controller
                     'status'           => $r->status,
                     'pos_table_id'     => $r->pos_table_id,
                     'pos_table_name'   => $r->posTable ? ('Meja #' . $r->posTable->table_number . ($r->posTable->name ? ' (' . $r->posTable->name . ')' : '')) : null,
+                    'product_id'       => $r->product_id,
+                    'product_name'     => $r->product?->name,
+                    'staff_id'         => $r->staff_id,
+                    'staff_name'       => $r->staff?->name,
+                    'vehicle_plate'    => $r->vehicle_plate,
+                    'vehicle_model'    => $r->vehicle_model,
+                    'estimated_total'  => (float) $r->estimated_total,
+                    'dp_amount'        => (float) $r->dp_amount,
+                    'dp_payment_method'=> $r->dp_payment_method,
+                    'payment_status'   => $r->payment_status,
                     'notes'            => $r->notes,
                 ]);
             $todayReservationsCount = $todayReservations->count();
@@ -371,6 +381,98 @@ final class PosTerminalWebController extends Controller
             'storeEdcTerminals',
             'qrisStoreImageUrl'
         ));
+    }
+
+    /**
+     * Create manual reservation directly from POS terminal.
+     */
+    public function createManualReservation(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless(Context::hasPermission('pos.terminal'), 403);
+
+        $validated = $request->validate([
+            'customer_name' => ['required', 'string', 'min:2', 'max:150'],
+            'customer_phone' => ['required', 'string', 'min:8', 'max:30'],
+            'customer_email' => ['nullable', 'email', 'max:150'],
+            'reservation_date' => ['required', 'date'],
+            'time_slot' => ['required', 'string', 'max:50'],
+            'guest_count' => ['nullable', 'integer', 'min:1', 'max:500'],
+            'location_id' => ['nullable', 'uuid', 'exists:locations,id'],
+            'pos_table_id' => ['nullable', 'uuid', 'exists:pos_tables,id'],
+            'product_id' => ['nullable', 'uuid', 'exists:products,id'],
+            'staff_id' => ['nullable', 'uuid', 'exists:users,id'],
+            'vehicle_plate' => ['nullable', 'string', 'max:30'],
+            'vehicle_model' => ['nullable', 'string', 'max:100'],
+            'service_duration_minutes' => ['nullable', 'integer', 'min:5', 'max:720'],
+            'event_venue' => ['nullable', 'string', 'max:255'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'estimated_total' => ['nullable', 'numeric', 'min:0'],
+            'dp_amount' => ['nullable', 'numeric', 'min:0'],
+            'dp_payment_method' => ['nullable', 'string', 'max:50'],
+            'dp_payment_reference' => ['nullable', 'string', 'max:100'],
+        ]);
+
+        $dpAmount = (float) ($validated['dp_amount'] ?? 0);
+
+        try {
+            $service = new \App\Domain\Commerce\Storefront\ReservationBookingService();
+            $reservation = $service->createReservation(
+                business: $business,
+                customerData: [
+                    'name' => $validated['customer_name'],
+                    'phone' => $validated['customer_phone'],
+                    'email' => $validated['customer_email'] ?? null,
+                ],
+                date: $validated['reservation_date'],
+                timeSlot: $validated['time_slot'],
+                guestCount: (int) ($validated['guest_count'] ?? 1),
+                tableId: $validated['pos_table_id'] ?? null,
+                productId: $validated['product_id'] ?? null,
+                notes: $validated['notes'] ?? null,
+                extraData: [
+                    'location_id' => $validated['location_id'] ?? Context::location()?->id,
+                    'staff_id' => $validated['staff_id'] ?? null,
+                    'created_by' => $request->user()?->id,
+                    'vehicle_plate' => $validated['vehicle_plate'] ?? null,
+                    'vehicle_model' => $validated['vehicle_model'] ?? null,
+                    'service_duration_minutes' => isset($validated['service_duration_minutes']) ? (int) $validated['service_duration_minutes'] : null,
+                    'event_venue' => $validated['event_venue'] ?? null,
+                    'estimated_total' => (float) ($validated['estimated_total'] ?? 0),
+                    'dp_amount' => $dpAmount,
+                    'dp_payment_method' => $validated['dp_payment_method'] ?? 'cash',
+                    'dp_payment_reference' => $validated['dp_payment_reference'] ?? null,
+                    'status' => \App\Models\CommerceReservation::STATUS_CONFIRMED,
+                    'source' => \App\Models\CommerceReservation::SOURCE_POS,
+                ]
+            );
+
+            return response()->json([
+                'success' => true,
+                'message' => "Reservasi #{$reservation->reservation_code} ({$reservation->customer_name}) berhasil dibuat.",
+                'reservation' => [
+                    'id' => $reservation->id,
+                    'reservation_code' => $reservation->reservation_code,
+                    'customer_name' => $reservation->customer_name,
+                    'customer_phone' => $reservation->customer_phone,
+                    'guest_count' => $reservation->guest_count,
+                    'time_slot' => $reservation->time_slot,
+                    'status' => $reservation->status,
+                    'pos_table_id' => $reservation->pos_table_id,
+                    'pos_table_name' => $reservation->posTable ? ('Meja #' . $reservation->posTable->table_number . ($reservation->posTable->name ? ' (' . $reservation->posTable->name . ')' : '')) : null,
+                    'dp_amount' => (float) $reservation->dp_amount,
+                    'dp_payment_method' => $reservation->dp_payment_method,
+                    'payment_status' => $reservation->payment_status,
+                    'vehicle_plate' => $reservation->vehicle_plate,
+                    'vehicle_model' => $reservation->vehicle_model,
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 422);
+        }
     }
 
     /**
