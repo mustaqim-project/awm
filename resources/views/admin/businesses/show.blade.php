@@ -349,5 +349,278 @@
             </div>
         </div>
 
+        <!-- Apple HIG Bento Modal: Atur / Berikan Paket Langganan Bebas Biaya (2FA Verified) -->
+        <div x-show="showGrantModal" x-cloak class="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-black/50 backdrop-blur-md transition-opacity" @click="showGrantModal = false"></div>
+            <div class="flex min-h-full items-center justify-center p-3 sm:p-5">
+                <div class="relative w-full max-w-xl rounded-[28px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.12] p-5 sm:p-7 shadow-2xl space-y-5 my-6 max-h-[92vh] overflow-y-auto"
+                    @click.outside="showGrantModal = false">
+                    
+                    <!-- Header -->
+                    <div class="flex items-start justify-between gap-3 pb-3 border-b border-black/[0.06] dark:border-white/[0.08]">
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-12 h-12 rounded-[16px] bg-[#34C759]/10 text-[#34C759] dark:text-[#30D158] flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="shield-plus" class="w-6 h-6" stroke-width="2"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-[18px] font-bold text-black dark:text-white leading-snug">
+                                    Atur Paket Langganan Bisnis
+                                </h3>
+                                <p class="text-[12.5px] text-black/55 dark:text-white/55 mt-0.5">
+                                    Berikan atau perpanjang paket langganan untuk <strong class="text-black dark:text-white">{{ $business->name }}</strong> dengan durasi berapapun tanpa biaya via 2FA.
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" @click="showGrantModal = false"
+                            class="w-8 h-8 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 dark:hover:bg-white/20 text-black/60 dark:text-white/60 flex items-center justify-center transition cursor-pointer shrink-0">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+
+                    <!-- 2FA Check Condition -->
+                    <template x-if="!adminHas2FA">
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-[16px] bg-[#FF9500]/10 border border-[#FF9500]/25 text-[13px] text-black/80 dark:text-white/90 space-y-2">
+                                <div class="font-bold text-[#C93400] dark:text-[#FF9F0A] flex items-center gap-2">
+                                    <i data-lucide="shield-alert" class="w-4 h-4" stroke-width="2"></i>
+                                    <span>Google Authenticator (2FA) Wajib Diaktifkan</span>
+                                </div>
+                                <p class="text-[12px] text-black/60 dark:text-white/60 leading-relaxed">
+                                    Demi kepatuhan keamanan platform, pemberian paket khusus langsung dari admin console wajib menggunakan verifikasi kode 2FA. Silakan aktifkan 2FA di profil akun administrator Anda terlebih dahulu.
+                                </p>
+                            </div>
+
+                            <div class="flex items-center justify-end gap-3 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showGrantModal = false"
+                                    class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                                    Tutup
+                                </button>
+                                <a href="{{ route('admin.profile.index') }}"
+                                    class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#007AFF] hover:bg-[#0071E3] transition inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="key" class="w-4 h-4"></i>
+                                    <span>Aktifkan 2FA di Profil</span>
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+
+                    <template x-if="adminHas2FA">
+                        <form method="POST" action="{{ route('admin.businesses.grant-subscription', $business->id) }}" class="space-y-5">
+                            @csrf
+
+                            <!-- Current Subscription Bento Status Badge -->
+                            <div class="p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] flex items-center justify-between text-[12.5px]">
+                                <div>
+                                    <div class="text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Status Saat Ini</div>
+                                    <div class="font-bold text-black dark:text-white mt-0.5">
+                                        {{ strtoupper($business->subscription?->plan_code ?? 'FREE') }}
+                                        <span class="text-[11px] font-normal text-black/50 dark:text-white/50">
+                                            ({{ $business->subscription?->status ?? 'active' }})
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-[11px] font-bold uppercase tracking-wider text-black/45 dark:text-white/45">Berlaku Sampai</div>
+                                    <div class="font-bold text-[#34C759] dark:text-[#30D158] tabular-nums mt-0.5">
+                                        {{ $business->subscription?->ends_at?->format('d M Y') ?? 'Tanpa Batas / Free' }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 1: Paket & Durasi -->
+                            <div class="p-4 sm:p-4.5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.06] space-y-3.5">
+                                <div class="flex items-center gap-2 pb-1.5 border-b border-black/[0.04] dark:border-white/[0.05]">
+                                    <i data-lucide="package" class="w-4 h-4 text-[#007AFF] dark:text-[#0A84FF]"></i>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">Pilihan Paket &amp; Durasi</h4>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                            Paket Baru <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <select name="plan_code" x-model="grantPlanCode" required
+                                            class="w-full h-10 px-3 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                            <option value="standard_monthly">Paket Standard Bulanan (Rp 39.000 / bln)</option>
+                                            <option value="standard_annual">Paket Standard Tahunan (Rp 390.000 / thn)</option>
+                                            <option value="premium_monthly">Paket Premium Bulanan (Rp 89.000 / bln)</option>
+                                            <option value="premium_annual">Paket Premium Tahunan (Rp 890.000 / thn)</option>
+                                            <option value="prestige_monthly">Paket Prestige Bulanan (Rp 199.000 / bln)</option>
+                                            <option value="prestige_annual">Paket Prestige Tahunan (Rp 1.990.000 / thn)</option>
+                                            <option value="core_monthly">Cooca Core Bulanan</option>
+                                            <option value="core_annual">Cooca Core Tahunan</option>
+                                            <option value="free">Free Plan (Gratis Selamanya Solo Owner)</option>
+                                            <option value="custom">Paket Kustom (Input Kode Sendiri)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                            Durasi Paket <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <select name="duration_type" x-model="grantDurationType" required
+                                            class="w-full h-10 px-3 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                            <option value="30">1 Bulan (30 Hari)</option>
+                                            <option value="90">3 Bulan (90 Hari)</option>
+                                            <option value="180">6 Bulan (180 Hari)</option>
+                                            <option value="365">1 Tahun (365 Hari)</option>
+                                            <option value="730">2 Tahun (730 Hari)</option>
+                                            <option value="custom">Kustom Hari (Tentukan Sendiri)</option>
+                                            <option value="lifetime">Lifetime (Tanpa Batas Waktu)</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Custom Plan Code Input -->
+                                    <div x-show="grantPlanCode === 'custom'" class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                            Kode Paket Kustom <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="text" name="custom_plan_code" x-model="grantCustomPlanCode"
+                                            :required="grantPlanCode === 'custom'"
+                                            placeholder="Contoh: vip_partner_2026"
+                                            class="w-full h-10 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] font-mono text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                    </div>
+
+                                    <!-- Custom Days Input -->
+                                    <div x-show="grantDurationType === 'custom'" class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                            Jumlah Hari Kustom <span class="text-[#FF3B30]">*</span>
+                                        </label>
+                                        <input type="number" name="custom_days" x-model.number="grantCustomDays" min="1" max="36500"
+                                            :required="grantDurationType === 'custom'"
+                                            placeholder="Contoh: 45 (hari)"
+                                            class="w-full h-10 px-3.5 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] font-bold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50">
+                                    </div>
+
+                                    <!-- Calculation Mode -->
+                                    <div x-show="grantDurationType !== 'lifetime'" class="sm:col-span-2">
+                                        <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                            Metode Perhitungan Tanggal Mulai
+                                        </label>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12px]">
+                                            <label class="p-2.5 rounded-[12px] border cursor-pointer flex items-center gap-2 transition"
+                                                :class="grantCalculationMode === 'extend' ? 'border-[#34C759] bg-[#34C759]/5 font-semibold text-black dark:text-white' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60'">
+                                                <input type="radio" name="calculation_mode" value="extend" x-model="grantCalculationMode" class="text-[#34C759] focus:ring-[#34C759]/30">
+                                                <span>Perpanjang dari tanggal berakhir aktif saat ini (akumulasi)</span>
+                                            </label>
+                                            <label class="p-2.5 rounded-[12px] border cursor-pointer flex items-center gap-2 transition"
+                                                :class="grantCalculationMode === 'from_now' ? 'border-[#34C759] bg-[#34C759]/5 font-semibold text-black dark:text-white' : 'border-black/10 dark:border-white/10 text-black/60 dark:text-white/60'">
+                                                <input type="radio" name="calculation_mode" value="from_now" x-model="grantCalculationMode" class="text-[#34C759] focus:ring-[#34C759]/30">
+                                                <span>Mulai baru dari hari ini</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Free Callout Banner -->
+                                <div class="p-3.5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/25 flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-[#34C759]/20 text-[#248A3D] dark:text-[#30D158] flex items-center justify-center shrink-0">
+                                        <i data-lucide="gift" class="w-4 h-4"></i>
+                                    </div>
+                                    <div class="text-[12px] text-black/80 dark:text-white/90">
+                                        <span class="font-bold text-[#248A3D] dark:text-[#30D158]">Biaya: Rp 0 (Bebas Biaya / Admin Grant Tanpa Bayar)</span>
+                                        <div class="text-[11px] text-black/55 dark:text-white/55 mt-0.5">
+                                            Paket langsung diperbarui seketika dan tercatat resmi di riwayat tagihan sebagai grant administrator.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section 2: Catatan & 2FA Google Authenticator -->
+                            <div class="p-4 sm:p-4.5 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.06] space-y-3.5">
+                                <div class="flex items-center gap-2 pb-1.5 border-b border-black/[0.04] dark:border-white/[0.05]">
+                                    <i data-lucide="key" class="w-4 h-4 text-[#FF9500] dark:text-[#FF9F0A]"></i>
+                                    <h4 class="text-[13px] font-bold text-black dark:text-white">Catatan &amp; Otorisasi Google 2FA</h4>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12px] font-semibold text-black/75 dark:text-white/75 mb-1">
+                                        Alasan / Catatan Admin <span class="text-black/40 dark:text-white/40 font-normal">(Opsional)</span>
+                                    </label>
+                                    <textarea name="admin_notes" rows="2" x-model="grantAdminNotes"
+                                        placeholder="Contoh: Pemberian bonus perpanjangan / Kemitraan strategis / Uji coba fitur..."
+                                        class="w-full px-3.5 py-2.5 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[12.5px] font-semibold text-black/75 dark:text-white/75 mb-1.5">
+                                        Kode 6 Digit Google Authenticator <span class="text-[#FF3B30]">*</span>
+                                    </label>
+                                    <input type="text" name="totp_code" maxlength="6" pattern="[0-9]{6}" required x-model="grantTotpCode"
+                                        placeholder="000000"
+                                        class="w-full h-11 px-4 text-center font-mono text-[18px] tracking-[0.3em] font-bold bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]/50 transition">
+                                    <span class="text-[11px] text-black/45 dark:text-white/45 mt-1 block">
+                                        Buka aplikasi Google Authenticator di ponsel Anda dan masukkan kode 6-digit terkini.
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Modal Actions -->
+                            <div class="flex items-center justify-end gap-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.08]">
+                                <button type="button" @click="showGrantModal = false"
+                                    class="h-11 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition cursor-pointer">
+                                    {{ __('common.cancel') }}
+                                </button>
+                                <button type="submit"
+                                    :disabled="!isGrantFormValid()"
+                                    :class="isGrantFormValid() ? 'bg-[#34C759] hover:bg-[#30D158] active:scale-[0.98] cursor-pointer' : 'bg-black/20 dark:bg-white/20 text-black/40 dark:text-white/40 cursor-not-allowed'"
+                                    class="h-11 px-5 rounded-[12px] text-[13px] font-bold text-white transition-all inline-flex items-center gap-2 shadow-sm">
+                                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                                    <span>Berikan Paket Sekarang</span>
+                                </button>
+                            </div>
+                        </form>
+                    </template>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
+
+@push('scripts')
+<script>
+function adminBusinessShowManager() {
+    return {
+        showSuspendModal: false,
+        suspendReason: '',
+        showGrantModal: false,
+        grantPlanCode: '{{ $business->subscription?->plan_code ?: 'standard_monthly' }}',
+        grantCustomPlanCode: '',
+        grantDurationType: '30',
+        grantCustomDays: 30,
+        grantCalculationMode: 'extend',
+        grantAdminNotes: '',
+        grantTotpCode: '',
+        adminHas2FA: @js(Auth::guard('admin')->user()?->hasTwoFactorEnabled() ?? false),
+        openGrantModal() {
+            this.grantPlanCode = '{{ $business->subscription?->plan_code ?: 'standard_monthly' }}';
+            this.grantCustomPlanCode = '';
+            this.grantDurationType = '30';
+            this.grantCustomDays = 30;
+            this.grantCalculationMode = 'extend';
+            this.grantAdminNotes = '';
+            this.grantTotpCode = '';
+            this.showGrantModal = true;
+            this.$nextTick(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            });
+        },
+        isGrantFormValid() {
+            if (!this.adminHas2FA) return false;
+            if (this.grantPlanCode === 'custom' && (!this.grantCustomPlanCode || this.grantCustomPlanCode.trim().length === 0)) {
+                return false;
+            }
+            if (this.grantDurationType === 'custom' && (!this.grantCustomDays || this.grantCustomDays < 1)) {
+                return false;
+            }
+            const isTotpValid = (this.grantTotpCode.trim().length === 6 && /^\d+$/.test(this.grantTotpCode.trim()));
+            return isTotpValid;
+        }
+    };
+}
+</script>
+@endpush
