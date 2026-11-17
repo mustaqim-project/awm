@@ -41,6 +41,8 @@ final class McpToolRegistry
         $this->register(new SocialGenerateVisualTool());
         $this->register(new SocialManagePostTool());
         $this->register(new SocialManageChannelsTool());
+        $this->register(new WarehouseManageLocationTool());
+        $this->register(new MasterDataManageUnitConversionTool());
     }
 
     public function register(McpToolInterface $tool): void

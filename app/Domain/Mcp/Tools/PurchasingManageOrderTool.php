@@ -111,6 +111,18 @@ final class PurchasingManageOrderTool implements McpToolInterface
                                 'type' => 'number',
                                 'description' => 'Jumlah kuantitas barang.',
                             ],
+                            'unit' => [
+                                'type' => 'string',
+                                'description' => 'Satuan pembelian item pada PO (misal: "DUS", "KARTON", "PCS", "KG").',
+                            ],
+                            'unit_id' => [
+                                'type' => 'string',
+                                'description' => 'UUID satuan jika diketahui.',
+                            ],
+                            'conversion_factor' => [
+                                'type' => 'number',
+                                'description' => 'Faktor konversi ke satuan dasar inventori (misal: 30 artinya 1 Dus = 30 Pcs).',
+                            ],
                             'unit_price' => [
                                 'type' => 'number',
                                 'description' => 'Harga beli satuan (Rp).',
@@ -221,6 +233,58 @@ final class PurchasingManageOrderTool implements McpToolInterface
                 throw new InvalidArgumentException('Belum ada supplier terdaftar di bisnis ini. Silakan buat supplier terlebih dahulu melalui purchasing_manage_supplier.');
             }
         }
+
+        // Auto-resolve units and custom conversion factors
+        foreach ($items as &$item) {
+            if (! empty($item['unit']) && empty($item['unit_id'])) {
+                $uStr = trim((string) $item['unit']);
+                $resolvedUnit = \App\Models\Unit::available()
+                    ->where(function ($q) use ($uStr): void {
+                        $q->where('code', strtoupper($uStr))
+                            ->orWhere('name', $uStr)
+                            ->orWhere('id', $uStr);
+                    })
+                    ->first();
+
+                if ($resolvedUnit) {
+                    $item['unit_id'] = $resolvedUnit->id;
+                } else {
+                    $createdUnit = \App\Models\Unit::create([
+                        'business_id' => $business->id,
+                        'name' => ucfirst($uStr),
+                        'code' => strtoupper(substr($uStr, 0, 10)),
+                        'category' => \App\Models\Unit::CATEGORY_QUANTITY,
+                    ]);
+                    $item['unit_id'] = $createdUnit->id;
+                }
+            }
+
+            // If conversion factor is provided (e.g. 1 Dus = 30 Pcs), auto-record MaterialUnitConversion or UnitConversion
+            $convFactor = (float) ($item['conversion_factor'] ?? 0);
+            if ($convFactor > 0 && ! empty($item['unit_id'])) {
+                $matId = $item['material_id'] ?? null;
+                $baseUnitId = null;
+                if ($matId) {
+                    $mat = \App\Models\Material::where('business_id', $business->id)->find($matId);
+                    $baseUnitId = $mat?->unit_id;
+                    if ($baseUnitId && $baseUnitId !== $item['unit_id']) {
+                        \App\Models\MaterialUnitConversion::updateOrCreate(
+                            [
+                                'business_id' => $business->id,
+                                'material_id' => $mat->id,
+                                'from_unit_id' => $item['unit_id'],
+                                'to_unit_id' => $baseUnitId,
+                            ],
+                            [
+                                'factor' => $convFactor,
+                                'is_default' => true,
+                            ]
+                        );
+                    }
+                }
+            }
+        }
+        unset($item);
 
         $poData = [
             'po_type' => $poType,

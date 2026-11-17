@@ -25320,3 +25320,44 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   - `AdminBusinessImpersonationTest`: 7 tests, 36 assertions, PASSED 100%.
   - `BusinessSuspensionTest`: 5 tests, 28 assertions, PASSED 100%.
 - **Blade Compilation:** `php artisan view:cache` -> PASSED (0 error).
+
+---
+
+### [2026-11-17] MCP Multi-Warehouse & Unit Conversion Support (Multi-Gudang 1 Lokasi & PO Dus ke Stok Pcs)
+
+#### 1. Masalah & Kebutuhan
+- **Multi-Gudang dalam 1 Lokasi:** User membutuhkan kapabilitas untuk mendaftarkan dan mengelola beberapa ruangan/sub-gudang fungsional (misal: *Gudang Depan*, *Gudang Belakang*, *Chiller*) di bawah 1 lokasi fisik/outlet yang sama secara otonom via AI Agent (MCP).
+- **Konversi Satuan PO (Beli 3 Dus @30, Stok Masuk 90 Pcs):** Pembelian sering dilakukan dalam kemasan besar (Dus/Karton), namun kartu stok inventori dan HPP dihitung dalam satuan terkecil (Pcs). Sebelumnya, belum ada tool native MCP untuk mendaftarkan master konversi satuan, dan alur penerimaan barang (Goods Receipt) memerlukan penanganan konversi otomatis agar kuantitas fisik 90 pcs tercatat presisi di kartu stok dengan HPP per pcs yang tepat.
+
+#### 2. Implementasi & Penambahan Fitur
+- **MCP Tool Baru 1: `WarehouseManageLocationTool` (`warehouse_manage_location`)**
+  - Path: `app/Domain/Mcp/Tools/WarehouseManageLocationTool.php`
+  - Mendukung action: `list`, `create`, `update`, `get`.
+  - Mendukung pembuatan sub-gudang dalam 1 lokasi melalui `parent_id` atau resolusi otomatis nama lokasi induk `parent_name`.
+  - Menampilkan relasi hierarki lokasi induk dan anak gudang (`child_warehouses`).
+- **MCP Tool Baru 2: `MasterDataManageUnitConversionTool` (`master_data_manage_unit_conversion`)**
+  - Path: `app/Domain/Mcp/Tools/MasterDataManageUnitConversionTool.php`
+  - Mendukung action: `list_conversions`, `create_conversion`, `convert`, `list_units`, `create_unit`, `delete_conversion`.
+  - Mendaftarkan aturan konversi satuan global (`UnitConversion`) maupun khusus bahan baku tertentu (`MaterialUnitConversion`).
+  - Mengintegrasikan live calculator berbasis Graph BFS engine `UnitConversionService`.
+- **Registrasi Tool di MCP Registry:**
+  - `app/Domain/Mcp/Tools/McpToolRegistry.php`: Mendaftarkan kedua tool baru ke katalog token MCP.
+- **Peningkatan `PurchasingManageOrderTool` (`purchasing_manage_order`):**
+  - Mendukung input `unit` / `unit_id` dan `conversion_factor` pada pembuatan PO.
+  - Mempertahankan kuantitas konversi dan meneruskannya ke alur penerimaan fisik `receive_goods`.
+- **Peningkatan Engine Penerimaan Barang (`GoodsReceiptService`):**
+  - Path: `app/Domain/Purchasing/GoodsReceiptService.php`
+  - Mengintegrasikan `UnitConversionService` untuk mendeteksi rasio konversi antara satuan PO item (misal DUS) dan satuan dasar stok (misal PCS).
+  - Mendukung input penerimaan dalam satuan dasar (misal 90 pcs) tanpa gagal validasi batas sisa PO (3 dus).
+  - Mengonversi kuantitas masuk ke kartu stok secara presisi (+90 Pcs) dan membagi harga beli per unit (Rp 300.000 / 30 = Rp 10.000/pcs) secara otomatis.
+
+#### 3. Testing & Verifikasi
+- **Test Suite Baru:** `tests/Feature/McpWarehouseAndUnitConversionTest.php` (5 tests, 33 assertions, PASSED 100%).
+  - `test_mcp_registry_contains_new_tools`: PASSED.
+  - `test_mcp_can_create_sub_warehouse_within_single_outlet_location`: PASSED.
+  - `test_mcp_can_create_unit_conversion_and_convert_live`: PASSED.
+  - `test_end_to_end_mcp_po_3_dus_records_90_pcs_in_sub_warehouse_stock`: PASSED.
+  - `test_end_to_end_mcp_po_receive_in_po_unit_with_auto_conversion`: PASSED.
+- **Regression Tests:**
+  - `PurchasingSubmodulesIntegrationTest`: 4 tests, 22 assertions, PASSED 100%.
+

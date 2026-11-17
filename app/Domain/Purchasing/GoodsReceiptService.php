@@ -6,12 +6,14 @@ namespace App\Domain\Purchasing;
 
 use App\Domain\Calculation\HppPropagationService;
 use App\Domain\Inventory\StockService;
+use App\Domain\Material\UnitConversionService;
 use App\Models\GoodsReceipt;
 use App\Models\GoodsReceiptItem;
 use App\Models\Material;
 use App\Models\MaterialPrice;
 use App\Models\ProductBatch;
 use App\Models\PurchaseOrder;
+use App\Models\PurchaseOrderItem;
 use App\Models\StockMovement;
 use App\Support\Context;
 use Illuminate\Support\Collection;
@@ -25,6 +27,7 @@ final class GoodsReceiptService
         private readonly StockService $stockService = new StockService,
         private readonly SupplierInvoiceService $supplierInvoiceService = new SupplierInvoiceService,
         private readonly HppPropagationService $hppPropagationService = new HppPropagationService,
+        private readonly UnitConversionService $unitConversionService = new UnitConversionService,
     ) {}
 
     /**
@@ -70,7 +73,12 @@ final class GoodsReceiptService
                     throw ValidationException::withMessages(['items' => 'Item penerimaan tidak terdapat pada Purchase Order.']);
                 }
                 $remaining = $source ? (float) $source->quantity - (float) ($received[$itemKey] ?? 0) : 0.0;
-                if ($source && $quantity > $remaining + 0.00005) {
+
+                // Support unit conversion (e.g. PO 3 Dus, receiving 90 Pcs where 1 Dus = 30 Pcs)
+                $convFactor = $this->resolveItemConversionFactor($source, $item, $purchaseOrder);
+                $remainingMax = $convFactor > 1.0 ? max($remaining, $remaining * $convFactor) : $remaining;
+
+                if ($source && $quantity > $remainingMax + 0.00005) {
                     throw ValidationException::withMessages(['items' => "Quantity penerimaan melebihi sisa PO untuk {$source->item_name}."]);
                 }
                 if ($quantity < 0) {
@@ -96,12 +104,54 @@ final class GoodsReceiptService
                 'received_by' => $userId,
             ]);
 
+            $consumedPoQuantities = [];
+
             foreach ($items as $item) {
                 $item = (array) $item;
-                $quantity = (float) $item['quantity'];
-                if ($quantity <= 0) {
+                $rawQuantity = (float) ($item['quantity'] ?? 0);
+                if ($rawQuantity <= 0) {
                     continue;
                 }
+                $itemKey = $key($item);
+                $source = $purchaseOrder->items->first(fn ($poItem): bool =>
+                    ($itemKey === 'p:' . $poItem->product_id && $poItem->product_id !== null)
+                    || ($itemKey === 'm:' . $poItem->material_id && $poItem->material_id !== null)
+                    || ($itemKey === 'f:' . ($poItem->item_name ?? '') && str_starts_with($itemKey, 'f:'))
+                );
+
+                $convFactor = $this->resolveItemConversionFactor($source, $item, $purchaseOrder);
+                $remPo = $source ? (float) $source->quantity - (float) ($received[$itemKey] ?? 0) : 0.0;
+
+                // Determine whether input quantity is in base unit (e.g. 90 pcs) or PO unit (e.g. 3 dus)
+                $providedCost = (float) ($item['unit_cost'] ?? 0);
+                if ($convFactor > 1.0 && $rawQuantity > $remPo + 0.00005) {
+                    // Input is in base units (e.g. 90 pcs)
+                    $stockQty = $rawQuantity;
+                    $poQty = min($remPo, $rawQuantity / $convFactor);
+                    if ($source && abs($providedCost - (float) $source->unit_price) < 0.01) {
+                        $stockUnitCost = $providedCost / $convFactor;
+                    } elseif ($providedCost > 0) {
+                        $stockUnitCost = $providedCost;
+                    } else {
+                        $stockUnitCost = (float) ($source?->unit_price ?? 0) / $convFactor;
+                    }
+                } elseif ($convFactor > 1.0) {
+                    // Input is in PO units (e.g. 3 dus), convert to base units for inventory stock
+                    $poQty = $rawQuantity;
+                    $stockQty = $rawQuantity * $convFactor;
+                    if ($providedCost > 0) {
+                        $stockUnitCost = $providedCost / $convFactor;
+                    } else {
+                        $stockUnitCost = (float) ($source?->unit_price ?? 0) / $convFactor;
+                    }
+                } else {
+                    $poQty = $rawQuantity;
+                    $stockQty = $rawQuantity;
+                    $stockUnitCost = $providedCost > 0 ? $providedCost : (float) ($source?->unit_price ?? 0);
+                }
+
+                $consumedPoQuantities[$itemKey] = ($consumedPoQuantities[$itemKey] ?? 0.0) + $poQty;
+
                 $materialId = $item['material_id'] ?? null;
                 $productId = $item['product_id'] ?? null;
                 $itemNotes = $item['notes'] ?? null;
@@ -109,13 +159,16 @@ final class GoodsReceiptService
                 if ($damagedQty > 0) {
                     $itemNotes = trim(($itemNotes ? $itemNotes . ' ' : '') . "[Qty Rusak: {$damagedQty}]");
                 }
+                if ($convFactor > 1.0) {
+                    $itemNotes = trim(($itemNotes ? $itemNotes . ' ' : '') . "[Konversi: {$stockQty} base unit ({$poQty} x {$convFactor})]");
+                }
 
                 GoodsReceiptItem::create([
                     'goods_receipt_id' => $receipt->id,
                     'product_id' => $productId,
                     'material_id' => $materialId,
                     'item_name' => $item['item_name'] ?? null,
-                    'quantity' => $quantity,
+                    'quantity' => $poQty,
                     'unit_cost' => (float) $item['unit_cost'],
                     'batch_number' => $item['batch_number'] ?? null,
                     'expiry_date' => $item['expiry_date'] ?? null,
@@ -130,8 +183,8 @@ final class GoodsReceiptService
                         ->first();
 
                     if ($batch) {
-                        $batch->quantity = (float) $batch->quantity + $quantity;
-                        $batch->unit_cost = (float) $item['unit_cost'];
+                        $batch->quantity = (float) $batch->quantity + $stockQty;
+                        $batch->unit_cost = $stockUnitCost;
                         if (! empty($item['expiry_date'])) {
                             $batch->expiry_date = $item['expiry_date'];
                         }
@@ -144,8 +197,8 @@ final class GoodsReceiptService
                             'product_id' => $productId,
                             'batch_number' => (string) $item['batch_number'],
                             'expiry_date' => $item['expiry_date'] ?? null,
-                            'quantity' => $quantity,
-                            'unit_cost' => (float) $item['unit_cost'],
+                            'quantity' => $stockQty,
+                            'unit_cost' => $stockUnitCost,
                             'is_active' => true,
                         ]);
                     }
@@ -160,23 +213,23 @@ final class GoodsReceiptService
                     productId: $productId,
                     materialId: $materialId,
                     movementType: StockMovement::TYPE_GOODS_RECEIPT,
-                    quantityChange: $quantity,
-                    unitCost: (float) $item['unit_cost'],
+                    quantityChange: $stockQty,
+                    unitCost: $stockUnitCost,
                     referenceId: $receipt->id,
                     referenceNumber: $receiptNumber,
                     batchNumber: $item['batch_number'] ?? null,
                     expiryDate: $item['expiry_date'] ?? null,
-                    notes: "Penerimaan PO {$purchaseOrder->po_number}",
+                    notes: "Penerimaan PO {$purchaseOrder->po_number}" . ($convFactor > 1.0 ? " ({$stockQty} base unit)" : ''),
                     userId: $userId,
                 );
 
-                if ($materialId && (float) $item['unit_cost'] > 0) {
+                if ($materialId && $stockUnitCost > 0) {
                     $material = Material::find($materialId);
                     MaterialPrice::create([
                         'business_id' => $purchaseOrder->business_id,
                         'material_id' => $materialId,
                         'supplier_id' => $purchaseOrder->supplier_id,
-                        'purchase_price' => (float) $item['unit_cost'],
+                        'purchase_price' => $stockUnitCost,
                         'shipping_cost' => 0,
                         'handling_cost' => 0,
                         'import_cost' => 0,
@@ -191,13 +244,11 @@ final class GoodsReceiptService
                 }
             }
 
-            $current = $items->groupBy(fn ($item): string => $key((array) $item))
-                ->map(fn (Collection $rows): float => (float) $rows->sum('quantity'));
-            $fullyReceived = $purchaseOrder->items->every(function ($poItem) use ($received, $current, $key): bool {
+            $fullyReceived = $purchaseOrder->items->every(function ($poItem) use ($received, $consumedPoQuantities, $key): bool {
                 $itemKey = $poItem->product_id
                     ? 'p:' . $poItem->product_id
                     : ($poItem->material_id ? 'm:' . $poItem->material_id : 'f:' . ($poItem->item_name ?? ''));
-                return (float) ($received[$itemKey] ?? 0) + (float) ($current[$itemKey] ?? 0)
+                return (float) ($received[$itemKey] ?? 0) + (float) ($consumedPoQuantities[$itemKey] ?? 0)
                     >= (float) $poItem->quantity - 0.00005;
             });
             $purchaseOrder->update([
@@ -207,5 +258,48 @@ final class GoodsReceiptService
             $this->supplierInvoiceService->createFromGoodsReceipt($receipt);
             return $receipt;
         });
+    }
+
+    /**
+     * Resolve unit conversion factor between PO item unit and inventory base unit.
+     */
+    private function resolveItemConversionFactor(?PurchaseOrderItem $source, array $item, PurchaseOrder $po): float
+    {
+        if (isset($item['conversion_factor']) && (float) $item['conversion_factor'] > 0) {
+            return (float) $item['conversion_factor'];
+        }
+
+        if (! $source || ! $source->unit_id) {
+            return 1.0;
+        }
+
+        $matId = $item['material_id'] ?? $source->material_id;
+        $prodId = $item['product_id'] ?? $source->product_id;
+
+        $baseUnitId = null;
+        if ($matId) {
+            $mat = Material::find($matId);
+            $baseUnitId = $mat?->unit_id;
+        } elseif ($prodId) {
+            $prod = Product::find($prodId);
+            $baseUnitId = $prod?->output_unit_id;
+        }
+
+        if ($baseUnitId && $source->unit_id !== $baseUnitId) {
+            try {
+                $factor = $this->unitConversionService->convert(
+                    1.0,
+                    $source->unit_id,
+                    $baseUnitId,
+                    $matId,
+                    $po->supplier_id
+                );
+                return $factor > 0 ? $factor : 1.0;
+            } catch (\Throwable) {
+                return 1.0;
+            }
+        }
+
+        return 1.0;
     }
 }
