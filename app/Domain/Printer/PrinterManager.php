@@ -24,8 +24,17 @@ class PrinterManager
         private readonly CashDrawerService $cashDrawer = new CashDrawerService(),
         private readonly KitchenRoutingService $kitchenRouter = new KitchenRoutingService(),
         private readonly PrinterDiagnosticService $diagnostic = new PrinterDiagnosticService(),
-        private readonly PrintJobService $jobService = new PrintJobService()
+        private readonly PrintJobService $jobService = new PrintJobService(),
+        private readonly UniversalPrintRoutingService $universalRouter = new UniversalPrintRoutingService()
     ) {}
+
+    /**
+     * Dispatch multi-station order print jobs using intelligent universal routing.
+     */
+    public function routeOrderMultiStation(PosOrder $order, ?string $locationId = null, array $options = []): array
+    {
+        return $this->universalRouter->dispatchOrderPrintJobs($order, $locationId, $options);
+    }
 
     /**
      * Resolve default cashier printer for a business / location / register.

@@ -1316,6 +1316,7 @@ Route::prefix('v1')->group(function (): void {
                 Route::post('/orders/{posOrder}/void', [PosOrderController::class, 'void'])->middleware('require.permission:pos.supervisor_pin');
                 Route::post('/orders/{posOrder}/refund', [PosOrderController::class, 'refund'])->middleware('require.permission:pos.supervisor_pin');
                 Route::post('/orders/{posOrder}/send-whatsapp-receipt', [PosReceiptApiController::class, 'sendWhatsAppReceipt'])->middleware('require.permission:pos.terminal,pos.orders');
+                Route::post('/orders/{order}/route-print-jobs', [\App\Http\Controllers\Web\Pos\PosPrinterWebController::class, 'routeOrderPrintJobs'])->middleware('require.permission:pos.terminal,pos.orders');
                 Route::post('/orders/{id}/accept', [PosIncomingOrderApiController::class, 'acceptOrder'])->middleware('require.permission:pos.terminal,pos.orders');
                 Route::post('/orders/{id}/reject', [PosIncomingOrderApiController::class, 'rejectOrder'])->middleware('require.permission:pos.terminal,pos.orders');
 

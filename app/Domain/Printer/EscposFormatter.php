@@ -343,6 +343,287 @@ class EscposFormatter
     }
 
     /**
+     * Format SPK / Service Order Ticket for Workshop, Automotive, Salon, Repair, Laundry.
+     */
+    public function formatSpkServiceOrder(PosOrder $order, PosPrinter $printerModel, array $items = []): string
+    {
+        $order->loadMissing(['customer', 'user', 'location', 'business', 'technician']);
+        $connector = new DummyPrintConnector();
+        $profile = CapabilityProfile::load("default");
+        $printer = new Printer($connector, $profile);
+
+        $maxCols = $printerModel->getMaxColumns();
+
+        try {
+            $printer->initialize();
+
+            if ($printerModel->hasCapability(PosPrinter::CAP_BEEP)) {
+                $printer->text("\x1B\x42\x02\x02");
+            }
+
+            // Header
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_EMPHASIZED);
+            $printer->text("SURAT PERINTAH KERJA\n");
+            $printer->selectPrintMode();
+            $printer->text("(WORK ORDER / SPK)\n");
+            $printer->text($this->separator($maxCols, '=') . "\n");
+
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text($this->formatTwoColumn("No. SPK", "#" . $order->order_number, $maxCols) . "\n");
+            $printer->text($this->formatTwoColumn("Waktu Masuk", $order->order_date ? $order->order_date->format('d/m/Y H:i') : now()->format('d/m/Y H:i'), $maxCols) . "\n");
+            $printer->text($this->formatTwoColumn("Kasir/SA", $order->user?->name ?? 'Front Desk', $maxCols) . "\n");
+
+            if ($order->technician) {
+                $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+                $printer->text($this->formatTwoColumn("Teknisi/Mekanik", $order->technician->name, $maxCols) . "\n");
+                $printer->selectPrintMode();
+            }
+
+            // Customer
+            $custName = $order->customer?->name ?? $order->customer_name_guest ?? '-';
+            $custPhone = $order->customer?->phone ?? '-';
+            $printer->text($this->formatTwoColumn("Pelanggan", $custName, $maxCols) . "\n");
+            if ($custPhone !== '-') {
+                $printer->text($this->formatTwoColumn("No. Telepon", $custPhone, $maxCols) . "\n");
+            }
+
+            // Vehicle or Job Details
+            if (!empty($order->vehicle_license_plate)) {
+                $printer->text($this->separator($maxCols, '-') . "\n");
+                $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_EMPHASIZED);
+                $printer->text("PLAT: " . $order->vehicle_license_plate . "\n");
+                $printer->selectPrintMode();
+                if (!empty($order->vehicle_model)) {
+                    $printer->text($this->formatTwoColumn("Unit/Kendaraan", $order->vehicle_model, $maxCols) . "\n");
+                }
+                if (!empty($order->vehicle_mileage)) {
+                    $printer->text($this->formatTwoColumn("Odometer/KM", number_format($order->vehicle_mileage, 0, ',', '.') . " KM", $maxCols) . "\n");
+                }
+            }
+
+            // Laundry / Locker details
+            if (!empty($order->laundry_weight_kg)) {
+                $printer->text($this->formatTwoColumn("Berat Cucian", number_format((float) $order->laundry_weight_kg, 2, ',', '.') . " kg", $maxCols) . "\n");
+            }
+            if (!empty($order->rack_location)) {
+                $printer->text($this->formatTwoColumn("Posisi Rak", $order->rack_location, $maxCols) . "\n");
+            }
+
+            // Complaint / Notes
+            if (!empty($order->notes) || !empty($order->service_notes)) {
+                $notes = $order->service_notes ?: $order->notes;
+                $printer->text($this->separator($maxCols, '-') . "\n");
+                $printer->setEmphasis(true);
+                $printer->text("KELUHAN / INSTRUKSI KERJA:\n");
+                $printer->setEmphasis(false);
+                $printer->text($notes . "\n");
+            }
+
+            $printer->text($this->separator($maxCols, '=') . "\n");
+
+            // Service & Parts List
+            $itemsList = !empty($items) ? $items : $order->items;
+            $printer->setEmphasis(true);
+            $printer->text("DAFTAR PEKERJAAN & SPAREPART:\n");
+            $printer->setEmphasis(false);
+
+            foreach ($itemsList as $idx => $item) {
+                $qty = is_array($item) ? ($item['quantity'] ?? 1) : $item->quantity;
+                $name = is_array($item) ? ($item['product_name'] ?? $item['name'] ?? 'Item') : $item->product_name;
+                $notes = is_array($item) ? ($item['notes'] ?? null) : $item->notes;
+                $qtyFormatted = rtrim(rtrim((string) $qty, '0'), '.');
+
+                $printer->text("[ ] {$qtyFormatted}x " . $name . "\n");
+                if (!empty($notes)) {
+                    $printer->text("    Catatan: " . $notes . "\n");
+                }
+            }
+
+            $printer->text($this->separator($maxCols, '-') . "\n");
+            $printer->feed(1);
+
+            // Signatures
+            $halfCols = (int) floor($maxCols / 2);
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text($this->formatTwoColumn("Petugas/Mekanik", "Pelanggan", $maxCols) . "\n");
+            $printer->feed(3);
+            $printer->text($this->formatTwoColumn("(.............)", "(.............)", $maxCols) . "\n");
+            $printer->feed(1);
+
+            if ($printerModel->hasCapability(PosPrinter::CAP_CUT)) {
+                $printer->cut(Printer::CUT_PARTIAL);
+            }
+
+            $data = $connector->getData();
+            $printer->close();
+            return $data;
+        } catch (Throwable $e) {
+            $printer->close();
+            throw $e;
+        }
+    }
+
+    /**
+     * Format Packing Slip for Delivery / Takeaway Station.
+     */
+    public function formatPackingSlip(PosOrder $order, PosPrinter $printerModel, array $items = []): string
+    {
+        $order->loadMissing(['customer', 'user', 'location', 'business']);
+        $connector = new DummyPrintConnector();
+        $profile = CapabilityProfile::load("default");
+        $printer = new Printer($connector, $profile);
+
+        $maxCols = $printerModel->getMaxColumns();
+
+        try {
+            $printer->initialize();
+
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_DOUBLE_HEIGHT | Printer::MODE_EMPHASIZED);
+            $printer->text("SLIP PENGEMASAN\n");
+            $printer->selectPrintMode();
+            $printer->text("(PACKING & DISPATCH)\n");
+            $printer->text($this->separator($maxCols, '=') . "\n");
+
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text($this->formatTwoColumn("No. Order", "#" . $order->order_number, $maxCols) . "\n");
+            $printer->text($this->formatTwoColumn("Tipe", strtoupper((string) ($order->order_type ?? 'Takeaway')), $maxCols) . "\n");
+            $printer->text($this->formatTwoColumn("Waktu", now()->format('d/m/Y H:i'), $maxCols) . "\n");
+
+            $custName = $order->customer?->name ?? $order->customer_name_guest ?? 'Pelanggan';
+            $custPhone = $order->customer?->phone ?? '-';
+            $printer->text($this->formatTwoColumn("Penerima", $custName, $maxCols) . "\n");
+            if ($custPhone !== '-') {
+                $printer->text($this->formatTwoColumn("Telepon", $custPhone, $maxCols) . "\n");
+            }
+
+            if (!empty($order->delivery_address)) {
+                $printer->text("Alamat Kirim:\n" . $order->delivery_address . "\n");
+            }
+
+            $printer->text($this->separator($maxCols, '-') . "\n");
+
+            $itemsList = !empty($items) ? $items : $order->items;
+            $totalCount = 0;
+
+            foreach ($itemsList as $item) {
+                $qty = is_array($item) ? ($item['quantity'] ?? 1) : $item->quantity;
+                $name = is_array($item) ? ($item['product_name'] ?? $item['name'] ?? 'Item') : $item->product_name;
+                $notes = is_array($item) ? ($item['notes'] ?? null) : $item->notes;
+                $totalCount += (float) $qty;
+                $qtyFormatted = rtrim(rtrim((string) $qty, '0'), '.');
+
+                $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+                $printer->text("[  ] {$qtyFormatted}x " . $name . "\n");
+                $printer->selectPrintMode();
+
+                if (!empty($notes)) {
+                    $printer->text("     " . $notes . "\n");
+                }
+            }
+
+            $printer->text($this->separator($maxCols, '=') . "\n");
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text("TOTAL BARANG: " . $totalCount . " ITEM\n");
+            $printer->text("Checker: [____________________]\n");
+            $printer->feed(2);
+
+            if ($printerModel->hasCapability(PosPrinter::CAP_CUT)) {
+                $printer->cut(Printer::CUT_PARTIAL);
+            }
+
+            $data = $connector->getData();
+            $printer->close();
+            return $data;
+        } catch (Throwable $e) {
+            $printer->close();
+            throw $e;
+        }
+    }
+
+    /**
+     * Format Bill Summary (Pra-Bayar / Check bill) for table service & hospitality.
+     */
+    public function formatBillSummary(PosOrder $order, PosPrinter $printerModel): string
+    {
+        $order->loadMissing(['items.modifiers', 'customer', 'user', 'location', 'business']);
+        $business = $order->business;
+
+        $connector = new DummyPrintConnector();
+        $profile = CapabilityProfile::load("default");
+        $printer = new Printer($connector, $profile);
+
+        $maxCols = $printerModel->getMaxColumns();
+
+        try {
+            $printer->initialize();
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_EMPHASIZED);
+            $printer->text(strtoupper($business->name ?? 'COOCA POS') . "\n");
+            $printer->selectPrintMode();
+            $printer->text("INFORMASI TAGIHAN (PRE-BILL)\n");
+            $printer->text("*** BUKAN BUKTI PEMBAYARAN SAH ***\n");
+            $printer->text($this->separator($maxCols, '=') . "\n");
+
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text($this->formatTwoColumn("No. Order", "#" . $order->order_number, $maxCols) . "\n");
+            if (!empty($order->table_or_reference)) {
+                $printer->text($this->formatTwoColumn("Meja", $order->table_or_reference, $maxCols) . "\n");
+            }
+            $printer->text($this->formatTwoColumn("Waktu", now()->format('d/m/Y H:i'), $maxCols) . "\n");
+            $printer->text($this->formatTwoColumn("Pramusaji", $order->user?->name ?? 'Kasir', $maxCols) . "\n");
+
+            $printer->text($this->separator($maxCols, '-') . "\n");
+
+            foreach ($order->items as $item) {
+                $qty = rtrim(rtrim((string) $item->quantity, '0'), '.');
+                $priceStr = number_format((float) $item->unit_price, 0, ',', '.');
+                $totalStr = number_format((float) $item->total_price, 0, ',', '.');
+
+                $printer->text($item->product_name . "\n");
+                $printer->text($this->formatTwoColumn(" {$qty} x {$priceStr}", $totalStr, $maxCols) . "\n");
+            }
+
+            $printer->text($this->separator($maxCols, '=') . "\n");
+
+            $subtotal = number_format((float) $order->subtotal, 0, ',', '.');
+            $printer->text($this->formatTwoColumn("Subtotal", "Rp " . $subtotal, $maxCols) . "\n");
+
+            if ((float) $order->discount_amount > 0) {
+                $disc = number_format((float) $order->discount_amount, 0, ',', '.');
+                $printer->text($this->formatTwoColumn("Diskon", "-Rp " . $disc, $maxCols) . "\n");
+            }
+
+            if ((float) $order->tax_amount > 0) {
+                $tax = number_format((float) $order->tax_amount, 0, ',', '.');
+                $printer->text($this->formatTwoColumn("Pajak (PB1/PPN)", "Rp " . $tax, $maxCols) . "\n");
+            }
+
+            $total = number_format((float) $order->total_amount, 0, ',', '.');
+            $printer->selectPrintMode(Printer::MODE_DOUBLE_WIDTH | Printer::MODE_EMPHASIZED);
+            $printer->text($this->formatTwoColumn("TOTAL", "Rp " . $total, $maxCols) . "\n");
+            $printer->selectPrintMode();
+
+            $printer->text($this->separator($maxCols, '-') . "\n");
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text("Silakan lakukan pembayaran di kasir.\n");
+            $printer->feed(2);
+
+            if ($printerModel->hasCapability(PosPrinter::CAP_CUT)) {
+                $printer->cut(Printer::CUT_PARTIAL);
+            }
+
+            $data = $connector->getData();
+            $printer->close();
+            return $data;
+        } catch (Throwable $e) {
+            $printer->close();
+            throw $e;
+        }
+    }
+
+    /**
      * Format Cashier Shift Summary (Blind Cash Count Report).
      */
     public function formatCashierShiftReport(PosShift $shift, PosPrinter $printerModel): string

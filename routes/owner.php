@@ -788,6 +788,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::post('/pos/printers/{printer}/diagnose', [PosPrinterWebController::class, 'diagnose'])->name('pos.printers.diagnose');
             Route::post('/pos/orders/{order}/direct-print', [PosPrinterWebController::class, 'directPrint'])->name('pos.orders.direct-print');
             Route::post('/pos/orders/{order}/kitchen-print', [PosPrinterWebController::class, 'printKitchen'])->name('pos.orders.kitchen-print');
+            Route::post('/pos/orders/{order}/route-print-jobs', [PosPrinterWebController::class, 'routeOrderPrintJobs'])->name('pos.orders.route-print-jobs');
             Route::post('/pos/cash-drawer/manual-pop', [PosPrinterWebController::class, 'manualDrawerPop'])->middleware('throttle:5,1')->name('pos.cash-drawer.manual-pop');
 
             // Route Aliases under settings for settings navigation

@@ -7,10 +7,12 @@ namespace App\Http\Controllers\Web\Pos;
 use App\Domain\Printer\CashDrawerService;
 use App\Domain\Printer\PrinterIpValidator;
 use App\Domain\Printer\PrinterManager;
+use App\Domain\Printer\UniversalPrintRoutingService;
 use App\Http\Controllers\Controller;
 use App\Models\Location;
 use App\Models\PosOrder;
 use App\Models\PosPrinter;
+use App\Models\PosPrinterRoutingRule;
 use App\Models\ProductCategory;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +25,8 @@ final class PosPrinterWebController extends Controller
 {
     public function __construct(
         private readonly PrinterManager $printerManager = new PrinterManager(),
-        private readonly CashDrawerService $cashDrawerService = new CashDrawerService()
+        private readonly CashDrawerService $cashDrawerService = new CashDrawerService(),
+        private readonly UniversalPrintRoutingService $universalRouter = new UniversalPrintRoutingService()
     ) {}
 
     /**
@@ -81,11 +84,19 @@ final class PosPrinterWebController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
+            'alias' => ['nullable', 'string', 'max:100'],
+            'station' => ['nullable', 'string', 'in:cashier,kitchen,bar,pastry,packing,spk_service,office,checker'],
+            'fallback_printer_id' => ['nullable', 'uuid', 'exists:pos_printers,id'],
             'location_id' => ['nullable', 'uuid', 'exists:locations,id'],
             'connection_type' => ['required', 'string', 'in:lan,wifi,usb,bluetooth,windows,serial,agent'],
             'interface_address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
             'paper_width' => ['required', 'string', 'in:58mm,80mm'],
+            'copies' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'auto_cut' => ['nullable', 'boolean'],
+            'open_cash_drawer' => ['nullable', 'boolean'],
+            'print_density' => ['nullable', 'string', 'in:light,normal,dark,extra_dark'],
+            'paper_type' => ['nullable', 'string', 'in:thermal,impact,dot_matrix,a4_document'],
             'character_set' => ['nullable', 'string', 'max:50'],
             'is_active' => ['nullable', 'boolean'],
             'is_default' => ['nullable', 'boolean'],
@@ -136,10 +147,18 @@ final class PosPrinterWebController extends Controller
             'business_id' => $business->id,
             'location_id' => $validated['location_id'] ?? null,
             'name' => $validated['name'],
+            'alias' => $validated['alias'] ?? null,
+            'station' => $validated['station'] ?? PosPrinter::STATION_CASHIER,
+            'fallback_printer_id' => $validated['fallback_printer_id'] ?? null,
             'connection_type' => $validated['connection_type'],
             'interface_address' => $validated['interface_address'],
             'port' => $validated['port'] ?? 9100,
             'paper_width' => $validated['paper_width'],
+            'copies' => $validated['copies'] ?? 1,
+            'auto_cut' => $request->boolean('auto_cut', true),
+            'open_cash_drawer' => $request->boolean('open_cash_drawer', false),
+            'print_density' => $validated['print_density'] ?? 'normal',
+            'paper_type' => $validated['paper_type'] ?? 'thermal',
             'character_set' => $validated['character_set'] ?? 'CP437',
             'is_active' => $request->boolean('is_active', true),
             'is_default' => $request->boolean('is_default', false),
@@ -179,11 +198,19 @@ final class PosPrinterWebController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
+            'alias' => ['nullable', 'string', 'max:100'],
+            'station' => ['nullable', 'string', 'in:cashier,kitchen,bar,pastry,packing,spk_service,office,checker'],
+            'fallback_printer_id' => ['nullable', 'uuid', 'exists:pos_printers,id'],
             'location_id' => ['nullable', 'uuid', 'exists:locations,id'],
             'connection_type' => ['required', 'string', 'in:lan,wifi,usb,bluetooth,windows,serial,agent'],
             'interface_address' => ['required', 'string', 'max:255'],
             'port' => ['nullable', 'integer', 'min:1', 'max:65535'],
             'paper_width' => ['required', 'string', 'in:58mm,80mm'],
+            'copies' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'auto_cut' => ['nullable', 'boolean'],
+            'open_cash_drawer' => ['nullable', 'boolean'],
+            'print_density' => ['nullable', 'string', 'in:light,normal,dark,extra_dark'],
+            'paper_type' => ['nullable', 'string', 'in:thermal,impact,dot_matrix,a4_document'],
             'character_set' => ['nullable', 'string', 'max:50'],
             'is_active' => ['nullable', 'boolean'],
             'is_default' => ['nullable', 'boolean'],
@@ -233,10 +260,18 @@ final class PosPrinterWebController extends Controller
         $printer->update([
             'location_id' => $validated['location_id'] ?? null,
             'name' => $validated['name'],
+            'alias' => $validated['alias'] ?? $printer->alias,
+            'station' => $validated['station'] ?? $printer->station,
+            'fallback_printer_id' => array_key_exists('fallback_printer_id', $validated) ? $validated['fallback_printer_id'] : $printer->fallback_printer_id,
             'connection_type' => $validated['connection_type'],
             'interface_address' => $validated['interface_address'],
             'port' => $validated['port'] ?? 9100,
             'paper_width' => $validated['paper_width'],
+            'copies' => $validated['copies'] ?? $printer->copies,
+            'auto_cut' => $request->has('auto_cut') ? $request->boolean('auto_cut') : $printer->auto_cut,
+            'open_cash_drawer' => $request->has('open_cash_drawer') ? $request->boolean('open_cash_drawer') : $printer->open_cash_drawer,
+            'print_density' => $validated['print_density'] ?? $printer->print_density,
+            'paper_type' => $validated['paper_type'] ?? $printer->paper_type,
             'character_set' => $validated['character_set'] ?? 'CP437',
             'is_active' => $request->boolean('is_active', true),
             'is_default' => $request->boolean('is_default', false),
@@ -437,5 +472,50 @@ final class PosPrinterWebController extends Controller
                 'message' => $e->getMessage(),
             ], 422);
         }
+    }
+
+    /**
+     * Plan or dispatch intelligent multi-station print jobs for a POS Order.
+     * Accessible by both Web POS Terminal and Mobile POS client.
+     */
+    public function routeOrderPrintJobs(Request $request, PosOrder $order): JsonResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($order->business_id === $business->id, 403);
+
+        $options = [
+            'actor_id' => auth()->id(),
+            'single_printer_mode' => $request->boolean('single_printer_mode', false),
+            'print_receipt' => $request->boolean('print_receipt', true),
+            'print_stations' => $request->boolean('print_stations', true),
+            'print_spk' => $request->boolean('print_spk', true),
+            'print_packing' => $request->boolean('print_packing', false),
+            'open_drawer' => $request->has('open_drawer') ? $request->boolean('open_drawer') : null,
+            'is_reprint' => $request->boolean('is_reprint', false),
+        ];
+
+        $dispatchHardware = $request->boolean('dispatch_hardware', true);
+
+        if ($dispatchHardware) {
+            $dispatchResults = $this->universalRouter->dispatchOrderPrintJobs($order, $order->location_id, $options);
+            return response()->json([
+                'success' => true,
+                'message' => 'Multi-station print jobs dispatched successfully',
+                'jobs_count' => count($dispatchResults),
+                'jobs' => $dispatchResults,
+            ]);
+        }
+
+        $plannedJobs = $this->universalRouter->planPrintJobs($order, $order->location_id, $options);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Multi-station print jobs planned successfully',
+            'jobs_count' => count($plannedJobs),
+            'jobs' => array_map(function ($job) {
+                unset($job['printer'], $job['raw_bytes']);
+                return $job;
+            }, $plannedJobs),
+        ]);
     }
 }

@@ -26,8 +26,22 @@ class PosPrinter extends Model
     public const USAGE_CASHIER_RECEIPT = 'cashier_receipt';
     public const USAGE_KITCHEN_ORDER = 'kitchen_order';
     public const USAGE_BAR_ORDER = 'bar_order';
+    public const USAGE_PASTRY_ORDER = 'pastry_order';
+    public const USAGE_SPK_SERVICE = 'spk_service';
+    public const USAGE_PACKING_SLIP = 'packing_slip';
+    public const USAGE_BILL_SUMMARY = 'bill_summary';
     public const USAGE_SHIFT_REPORT = 'shift_report';
+    public const USAGE_INVOICE_OFFICE = 'invoice_office';
     public const USAGE_LABEL = 'label';
+
+    public const STATION_CASHIER = 'cashier';
+    public const STATION_KITCHEN = 'kitchen';
+    public const STATION_BAR = 'bar';
+    public const STATION_PASTRY = 'pastry';
+    public const STATION_PACKING = 'packing';
+    public const STATION_SPK = 'spk_service';
+    public const STATION_OFFICE = 'office';
+    public const STATION_CHECKER = 'checker';
 
     public const CAP_PRINT_TEXT = 'print_text';
     public const CAP_PRINT_IMAGE = 'print_image';
@@ -43,10 +57,18 @@ class PosPrinter extends Model
         'business_id',
         'location_id',
         'name',
+        'alias',
+        'station',
+        'fallback_printer_id',
         'connection_type',
         'interface_address',
         'port',
         'paper_width',
+        'copies',
+        'auto_cut',
+        'open_cash_drawer',
+        'print_density',
+        'paper_type',
         'character_set',
         'is_active',
         'is_default',
@@ -64,6 +86,9 @@ class PosPrinter extends Model
     {
         return [
             'port' => 'integer',
+            'copies' => 'integer',
+            'auto_cut' => 'boolean',
+            'open_cash_drawer' => 'boolean',
             'is_active' => 'boolean',
             'is_default' => 'boolean',
             'capabilities' => 'array',
@@ -91,6 +116,74 @@ class PosPrinter extends Model
     public function printJobs(): HasMany
     {
         return $this->hasMany(PosPrintJob::class, 'printer_id');
+    }
+
+    /**
+     * Fallback printer relationship (auto failover when printer is offline).
+     *
+     * @return BelongsTo<PosPrinter, $this>
+     */
+    public function fallbackPrinter(): BelongsTo
+    {
+        return $this->belongsTo(PosPrinter::class, 'fallback_printer_id');
+    }
+
+    /**
+     * Routing rules relationship.
+     *
+     * @return HasMany<PosPrinterRoutingRule, $this>
+     */
+    public function routingRules(): HasMany
+    {
+        return $this->hasMany(PosPrinterRoutingRule::class, 'printer_id');
+    }
+
+    /**
+     * Resolve effective fallback printer when offline.
+     */
+    public function resolveEffectiveFallback(): ?self
+    {
+        if ($this->fallback_printer_id) {
+            $fallback = $this->fallbackPrinter;
+            if ($fallback && $fallback->is_active && $fallback->id !== $this->id) {
+                return $fallback;
+            }
+        }
+
+        // Default to active cashier printer of same location or business
+        if ($this->station !== self::STATION_CASHIER) {
+            return self::where('business_id', $this->business_id)
+                ->where('is_active', true)
+                ->where(function ($q) {
+                    $q->where('station', self::STATION_CASHIER)
+                      ->orWhereJsonContains('assigned_usages', self::USAGE_CASHIER_RECEIPT)
+                      ->orWhere('is_default', true);
+                })
+                ->where('id', '!=', $this->id)
+                ->first();
+        }
+
+        return null;
+    }
+
+    public function isCashier(): bool
+    {
+        return $this->station === self::STATION_CASHIER || $this->supportsUsage(self::USAGE_CASHIER_RECEIPT);
+    }
+
+    public function isKitchen(): bool
+    {
+        return $this->station === self::STATION_KITCHEN || $this->supportsUsage(self::USAGE_KITCHEN_ORDER);
+    }
+
+    public function isBar(): bool
+    {
+        return $this->station === self::STATION_BAR || $this->supportsUsage(self::USAGE_BAR_ORDER);
+    }
+
+    public function isSpk(): bool
+    {
+        return $this->station === self::STATION_SPK || $this->supportsUsage(self::USAGE_SPK_SERVICE);
     }
 
     /**
