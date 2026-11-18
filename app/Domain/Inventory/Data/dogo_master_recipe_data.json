@@ -1,0 +1,1641 @@
+{
+    "ingredients": [
+        {
+            "code": "ING-001",
+            "name": "Apple Juice",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 15.87
+        },
+        {
+            "code": "ING-002",
+            "name": "Banana",
+            "alias": "Pisang",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 18.94
+        },
+        {
+            "code": "ING-003",
+            "name": "Blackberry",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 37.55
+        },
+        {
+            "code": "ING-004",
+            "name": "Chocolate",
+            "alias": "Choco",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 90
+        },
+        {
+            "code": "ING-005",
+            "name": "Coconut Frozen",
+            "alias": "Kelapa Frozen",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-006",
+            "name": "Collagen",
+            "alias": "Colagen",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 851
+        },
+        {
+            "code": "ING-007",
+            "name": "Creamer",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 30.6
+        },
+        {
+            "code": "ING-008",
+            "name": "DCC Powder",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 184
+        },
+        {
+            "code": "ING-009",
+            "name": "Dragon Fruit",
+            "alias": "Buah Naga",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-010",
+            "name": "Fructose",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 17
+        },
+        {
+            "code": "ING-011",
+            "name": "Grenadine Syrup",
+            "alias": "Syrup Grenadine",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 110.6
+        },
+        {
+            "code": "ING-012",
+            "name": "Honey",
+            "alias": "Madu",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-013",
+            "name": "Hydrococo",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 20.37
+        },
+        {
+            "code": "ING-014",
+            "name": "L-Man Platinum",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 610.5
+        },
+        {
+            "code": "ING-015",
+            "name": "Lemon Juice",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 18.12
+        },
+        {
+            "code": "ING-016",
+            "name": "Lychee Fruit",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 31.8
+        },
+        {
+            "code": "ING-017",
+            "name": "Lychee Juice",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 26.65
+        },
+        {
+            "code": "ING-018",
+            "name": "Mango",
+            "alias": "Mangga",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-019",
+            "name": "Mango Jam",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 59.27
+        },
+        {
+            "code": "ING-020",
+            "name": "Mango Juice",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 17.26
+        },
+        {
+            "code": "ING-021",
+            "name": "Matcha Powder",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 385.2
+        },
+        {
+            "code": "ING-022",
+            "name": "Melon Fruit",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-023",
+            "name": "Melon Syrup",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 48.9
+        },
+        {
+            "code": "ING-024",
+            "name": "Milk UHT",
+            "alias": "Susu UHT; Susu Uht",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 18.32
+        },
+        {
+            "code": "ING-025",
+            "name": "Mineral Water",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 1.34
+        },
+        {
+            "code": "ING-026",
+            "name": "Monin Syrup",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 110.6
+        },
+        {
+            "code": "ING-027",
+            "name": "Oats",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 68.75
+        },
+        {
+            "code": "ING-028",
+            "name": "Passion Fruit Jam",
+            "alias": "Pass.Fruit.Jam",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 59.28
+        },
+        {
+            "code": "ING-029",
+            "name": "Raspberry",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 37.6
+        },
+        {
+            "code": "ING-030",
+            "name": "Salt",
+            "alias": "Garam",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 15
+        },
+        {
+            "code": "ING-031",
+            "name": "Santan",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 66
+        },
+        {
+            "code": "ING-032",
+            "name": "Soursop",
+            "alias": "Sirsak",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 25
+        },
+        {
+            "code": "ING-033",
+            "name": "Soursop Juice",
+            "alias": "Juice Sirsak",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 27
+        },
+        {
+            "code": "ING-034",
+            "name": "Soy Milk",
+            "alias": "",
+            "unit": "ml",
+            "notes": "",
+            "unit_cost": 41.44
+        },
+        {
+            "code": "ING-035",
+            "name": "Soy Protein",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 283.1
+        },
+        {
+            "code": "ING-036",
+            "name": "Spinach",
+            "alias": "Bayam",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 10
+        },
+        {
+            "code": "ING-037",
+            "name": "Strawberry",
+            "alias": "Strawberry Fruit",
+            "unit": "gram",
+            "notes": "Strawberry Fruit dinormalisasi menjadi Strawberry.",
+            "unit_cost": 30
+        },
+        {
+            "code": "ING-038",
+            "name": "Strawberry Jam",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 49.51
+        },
+        {
+            "code": "ING-039",
+            "name": "Strawberry Juice",
+            "alias": "Juice Strawberry",
+            "unit": "ml",
+            "notes": "Juice Strawberry dinormalisasi menjadi Strawberry Juice.",
+            "unit_cost": 26.66
+        },
+        {
+            "code": "ING-040",
+            "name": "Strawberry Powder",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 178.6
+        },
+        {
+            "code": "ING-041",
+            "name": "Strawberry Yoghurt",
+            "alias": "Yoghurt Strawberry",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 72.15
+        },
+        {
+            "code": "ING-042",
+            "name": "Vanilla Syrup",
+            "alias": "",
+            "unit": "gram",
+            "notes": "Jangan digabung dengan Vanilla sebelum jenis bahan dikonfirmasi.",
+            "unit_cost": 48.9
+        },
+        {
+            "code": "ING-043",
+            "name": "Watermelon",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 35
+        },
+        {
+            "code": "ING-044",
+            "name": "Yakult",
+            "alias": "",
+            "unit": "pcs",
+            "notes": "",
+            "unit_cost": 1800
+        },
+        {
+            "code": "ING-045",
+            "name": "Yoghurt Plain",
+            "alias": "",
+            "unit": "gram",
+            "notes": "",
+            "unit_cost": 38.1
+        }
+    ],
+    "menus": [
+        {
+            "no": "01",
+            "name": "Tropical Mango",
+            "code": "TM",
+            "biaya_bahan": 7508,
+            "hpp": 10508,
+            "harga_jual": 13373,
+            "markup": 2865
+        },
+        {
+            "no": "02",
+            "name": "Power Berry",
+            "code": "PB",
+            "biaya_bahan": 7284,
+            "hpp": 10284,
+            "harga_jual": 13149,
+            "markup": 2865
+        },
+        {
+            "no": "03",
+            "name": "Berry Wild",
+            "code": "BW",
+            "biaya_bahan": 8308,
+            "hpp": 11308,
+            "harga_jual": 14173,
+            "markup": 2865
+        },
+        {
+            "no": "04",
+            "name": "Berry Tango Smoothies",
+            "code": "BTS",
+            "biaya_bahan": 7440,
+            "hpp": 10440,
+            "harga_jual": 13305,
+            "markup": 2865
+        },
+        {
+            "no": "05",
+            "name": "Seoul Berry Case Cake",
+            "code": "SBC",
+            "biaya_bahan": 10785,
+            "hpp": 13785,
+            "harga_jual": 16650,
+            "markup": 2865
+        },
+        {
+            "no": "06",
+            "name": "Kyoto Dream Matcha",
+            "code": "KMD",
+            "biaya_bahan": 7810,
+            "hpp": 10810,
+            "harga_jual": 13675,
+            "markup": 2865
+        },
+        {
+            "no": "07",
+            "name": "Lyche Cola Glow",
+            "code": "LCG",
+            "biaya_bahan": 11218,
+            "hpp": 14218,
+            "harga_jual": 17083,
+            "markup": 2865
+        },
+        {
+            "no": "08",
+            "name": "Watermelon Berry Breeze",
+            "code": "WBB",
+            "biaya_bahan": 10217,
+            "hpp": 13217,
+            "harga_jual": 16082,
+            "markup": 2865
+        },
+        {
+            "no": "09",
+            "name": "Watermelon Lychee Breeze",
+            "code": "WLB",
+            "biaya_bahan": 9426,
+            "hpp": 12426,
+            "harga_jual": 15291,
+            "markup": 2865
+        },
+        {
+            "no": "10",
+            "name": "King Mango Shake",
+            "code": "KMS",
+            "biaya_bahan": 8353,
+            "hpp": 11353,
+            "harga_jual": 14218,
+            "markup": 2865
+        },
+        {
+            "no": "11",
+            "name": "Queen Elizabeth Chocolate",
+            "code": "QEC",
+            "biaya_bahan": 7724,
+            "hpp": 10724,
+            "harga_jual": 13589,
+            "markup": 2865
+        },
+        {
+            "no": "12",
+            "name": "Cocodew",
+            "code": "CCD",
+            "biaya_bahan": 10635,
+            "hpp": 13635,
+            "harga_jual": 16500,
+            "markup": 2865
+        },
+        {
+            "no": "13",
+            "name": "Berry Shakes",
+            "code": "BS",
+            "biaya_bahan": 8362,
+            "hpp": 11362,
+            "harga_jual": 14227,
+            "markup": 2865
+        },
+        {
+            "no": "14",
+            "name": "Berry Cola Glow",
+            "code": "BCG",
+            "biaya_bahan": 9836,
+            "hpp": 12836,
+            "harga_jual": 15701,
+            "markup": 2865
+        },
+        {
+            "no": "15",
+            "name": "Super Berry",
+            "code": "SB",
+            "biaya_bahan": 6270,
+            "hpp": 9270,
+            "harga_jual": 12135,
+            "markup": 2865
+        },
+        {
+            "no": "15A",
+            "name": "Antioksida",
+            "code": "AO",
+            "biaya_bahan": 6494,
+            "hpp": 9494,
+            "harga_jual": 12359,
+            "markup": 2865
+        },
+        {
+            "no": "16",
+            "name": "Squat",
+            "code": "SQT",
+            "biaya_bahan": 13389,
+            "hpp": 16389,
+            "harga_jual": 19254,
+            "markup": 2865
+        },
+        {
+            "no": "17",
+            "name": "Sprint",
+            "code": "SPR",
+            "biaya_bahan": 11810,
+            "hpp": 14810,
+            "harga_jual": 17675,
+            "markup": 2865
+        },
+        {
+            "no": "18",
+            "name": "Marry Smoothie Bowl",
+            "code": "MSB",
+            "biaya_bahan": 8130,
+            "hpp": 11130,
+            "harga_jual": 13995,
+            "markup": 2865
+        },
+        {
+            "no": "19",
+            "name": "Choco Smoothie Bowl",
+            "code": "CSB",
+            "biaya_bahan": 8002,
+            "hpp": 11002,
+            "harga_jual": 13867,
+            "markup": 2865
+        },
+        {
+            "no": "20",
+            "name": "Classic Smoothie Bowl",
+            "code": "CLSB",
+            "biaya_bahan": 7742,
+            "hpp": 10742,
+            "harga_jual": 13607,
+            "markup": 2865
+        },
+        {
+            "no": "21",
+            "name": "Berry Wild PT",
+            "code": "BW PT",
+            "biaya_bahan": 5439,
+            "hpp": 8439,
+            "harga_jual": 11304,
+            "markup": 2865
+        },
+        {
+            "no": "22",
+            "name": "Tropical Mango PT",
+            "code": "TM PT",
+            "biaya_bahan": 5976,
+            "hpp": 8976,
+            "harga_jual": 11841,
+            "markup": 2865
+        },
+        {
+            "no": "23",
+            "name": "Spango PT",
+            "code": "SG PT",
+            "biaya_bahan": 5831,
+            "hpp": 8831,
+            "harga_jual": 11696,
+            "markup": 2865
+        }
+    ],
+    "recipes": [
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Mango",
+            "qty": 50,
+            "unit": "gram",
+            "cost": 1750
+        },
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Passion Fruit Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 593
+        },
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Lemon Juice",
+            "qty": 10,
+            "unit": "ml",
+            "cost": 181
+        },
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Mango Juice",
+            "qty": 160,
+            "unit": "ml",
+            "cost": 2762
+        },
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Yoghurt Plain",
+            "qty": 35,
+            "unit": "gram",
+            "cost": 1333
+        },
+        {
+            "menu_name": "Tropical Mango",
+            "material_name": "Mango Jam",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 889
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Banana",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1136
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Strawberry",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 900
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 2165
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Strawberry Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 495
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Apple Juice",
+            "qty": 130,
+            "unit": "ml",
+            "cost": 2063
+        },
+        {
+            "menu_name": "Power Berry",
+            "material_name": "Honey",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 525
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Strawberry",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 750
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Blackberry",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 938
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Apple Juice",
+            "qty": 160,
+            "unit": "ml",
+            "cost": 2540
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Strawberry Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 495
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 2886
+        },
+        {
+            "menu_name": "Berry Wild",
+            "material_name": "Honey",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 700
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Mango",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 2100
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Strawberry",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 1200
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Mango Juice",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 863
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Apple Juice",
+            "qty": 60,
+            "unit": "ml",
+            "cost": 952
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Yakult",
+            "qty": 1,
+            "unit": "pcs",
+            "cost": 1800
+        },
+        {
+            "menu_name": "Berry Tango Smoothies",
+            "material_name": "Honey",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 525
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Strawberry",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1800
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Strawberry Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 495
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Strawberry Powder",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 3572
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Oats",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 1375
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Creamer",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 306
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Milk UHT",
+            "qty": 150,
+            "unit": "ml",
+            "cost": 2747
+        },
+        {
+            "menu_name": "Seoul Berry Case Cake",
+            "material_name": "Vanilla Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Banana",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1136
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Matcha Powder",
+            "qty": 5,
+            "unit": "gram",
+            "cost": 1926
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Milk UHT",
+            "qty": 180,
+            "unit": "ml",
+            "cost": 3297
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Honey",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 350
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Creamer",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 612
+        },
+        {
+            "menu_name": "Kyoto Dream Matcha",
+            "material_name": "Vanilla Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Strawberry",
+            "qty": 50,
+            "unit": "gram",
+            "cost": 1500
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Lychee Fruit",
+            "qty": 55,
+            "unit": "gram",
+            "cost": 1749
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 50,
+            "unit": "gram",
+            "cost": 3608
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Strawberry Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 495
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Lychee Juice",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 2665
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Collagen",
+            "qty": 1,
+            "unit": "gram",
+            "cost": 851
+        },
+        {
+            "menu_name": "Lyche Cola Glow",
+            "material_name": "Honey",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 350
+        },
+        {
+            "menu_name": "Watermelon Berry Breeze",
+            "material_name": "Watermelon",
+            "qty": 130,
+            "unit": "gram",
+            "cost": 4550
+        },
+        {
+            "menu_name": "Watermelon Berry Breeze",
+            "material_name": "Strawberry",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 600
+        },
+        {
+            "menu_name": "Watermelon Berry Breeze",
+            "material_name": "Strawberry Juice",
+            "qty": 90,
+            "unit": "ml",
+            "cost": 2399
+        },
+        {
+            "menu_name": "Watermelon Berry Breeze",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 1443
+        },
+        {
+            "menu_name": "Watermelon Berry Breeze",
+            "material_name": "Honey",
+            "qty": 35,
+            "unit": "gram",
+            "cost": 1225
+        },
+        {
+            "menu_name": "Watermelon Lychee Breeze",
+            "material_name": "Watermelon",
+            "qty": 150,
+            "unit": "gram",
+            "cost": 5250
+        },
+        {
+            "menu_name": "Watermelon Lychee Breeze",
+            "material_name": "Lychee Fruit",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 636
+        },
+        {
+            "menu_name": "Watermelon Lychee Breeze",
+            "material_name": "Lychee Juice",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 2665
+        },
+        {
+            "menu_name": "Watermelon Lychee Breeze",
+            "material_name": "Honey",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 875
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Mango",
+            "qty": 100,
+            "unit": "gram",
+            "cost": 3500
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Mango Jam",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 1186
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Mango Juice",
+            "qty": 40,
+            "unit": "ml",
+            "cost": 690
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Milk UHT",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 1832
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Honey",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 350
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Creamer",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 306
+        },
+        {
+            "menu_name": "King Mango Shake",
+            "material_name": "Vanilla Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "Banana",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1136
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "DCC Powder",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 1840
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "Milk UHT",
+            "qty": 180,
+            "unit": "ml",
+            "cost": 3297
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "Honey",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 350
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "Creamer",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 612
+        },
+        {
+            "menu_name": "Queen Elizabeth Chocolate",
+            "material_name": "Vanilla Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Melon Fruit",
+            "qty": 90,
+            "unit": "gram",
+            "cost": 3150
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Melon Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Coconut Frozen",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 1400
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Hydrococo",
+            "qty": 110,
+            "unit": "ml",
+            "cost": 2241
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Santan",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 2640
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Salt",
+            "qty": 1,
+            "unit": "gram",
+            "cost": 15
+        },
+        {
+            "menu_name": "Cocodew",
+            "material_name": "Honey",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 700
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Strawberry",
+            "qty": 130,
+            "unit": "gram",
+            "cost": 3900
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Strawberry Jam",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 1485
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Milk UHT",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 1832
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Honey",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 350
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Creamer",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 306
+        },
+        {
+            "menu_name": "Berry Shakes",
+            "material_name": "Vanilla Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 489
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Raspberry",
+            "qty": 5,
+            "unit": "gram",
+            "cost": 188
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Blackberry",
+            "qty": 5,
+            "unit": "gram",
+            "cost": 188
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Banana",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 568
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Strawberry",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 900
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Monin Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 1106
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Milk UHT",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 1832
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Apple Juice",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 794
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 2886
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Honey",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 525
+        },
+        {
+            "menu_name": "Berry Cola Glow",
+            "material_name": "Collagen",
+            "qty": 1,
+            "unit": "gram",
+            "cost": 851
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Banana",
+            "qty": 50,
+            "unit": "gram",
+            "cost": 947
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Blackberry",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 938
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Strawberry",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1800
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Yoghurt Plain",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 762
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Strawberry Juice",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 1333
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Mineral Water",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 67
+        },
+        {
+            "menu_name": "Super Berry",
+            "material_name": "Fructose",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 425
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Soursop",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1500
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Dragon Fruit",
+            "qty": 50,
+            "unit": "gram",
+            "cost": 1750
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Soursop Juice",
+            "qty": 80,
+            "unit": "ml",
+            "cost": 2160
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Yoghurt Plain",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 762
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Mineral Water",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 67
+        },
+        {
+            "menu_name": "Antioksida",
+            "material_name": "Fructose",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 255
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Banana",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1136
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Strawberry",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 900
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 2165
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Apple Juice",
+            "qty": 130,
+            "unit": "ml",
+            "cost": 2063
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Strawberry Jam",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 495
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "L-Man Platinum",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 6105
+        },
+        {
+            "menu_name": "Squat",
+            "material_name": "Honey",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 525
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Banana",
+            "qty": 60,
+            "unit": "gram",
+            "cost": 1136
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Raspberry",
+            "qty": 5,
+            "unit": "gram",
+            "cost": 188
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Blackberry",
+            "qty": 5,
+            "unit": "gram",
+            "cost": 188
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Strawberry",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 900
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Grenadine Syrup",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 1106
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Soy Protein",
+            "qty": 10,
+            "unit": "gram",
+            "cost": 2831
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Apple Juice",
+            "qty": 50,
+            "unit": "ml",
+            "cost": 794
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Soy Milk",
+            "qty": 100,
+            "unit": "ml",
+            "cost": 4144
+        },
+        {
+            "menu_name": "Sprint",
+            "material_name": "Honey",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 525
+        },
+        {
+            "menu_name": "Marry Smoothie Bowl",
+            "material_name": "Banana",
+            "qty": 160,
+            "unit": "gram",
+            "cost": 3030
+        },
+        {
+            "menu_name": "Marry Smoothie Bowl",
+            "material_name": "Mango",
+            "qty": 100,
+            "unit": "gram",
+            "cost": 3500
+        },
+        {
+            "menu_name": "Marry Smoothie Bowl",
+            "material_name": "Strawberry",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 900
+        },
+        {
+            "menu_name": "Marry Smoothie Bowl",
+            "material_name": "Honey",
+            "qty": 20,
+            "unit": "gram",
+            "cost": 700
+        },
+        {
+            "menu_name": "Choco Smoothie Bowl",
+            "material_name": "Banana",
+            "qty": 280,
+            "unit": "gram",
+            "cost": 5302
+        },
+        {
+            "menu_name": "Choco Smoothie Bowl",
+            "material_name": "Chocolate",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 2700
+        },
+        {
+            "menu_name": "Classic Smoothie Bowl",
+            "material_name": "Banana",
+            "qty": 200,
+            "unit": "gram",
+            "cost": 3787
+        },
+        {
+            "menu_name": "Classic Smoothie Bowl",
+            "material_name": "Strawberry",
+            "qty": 40,
+            "unit": "gram",
+            "cost": 1200
+        },
+        {
+            "menu_name": "Classic Smoothie Bowl",
+            "material_name": "Blackberry",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 563
+        },
+        {
+            "menu_name": "Classic Smoothie Bowl",
+            "material_name": "Yoghurt Plain",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 1143
+        },
+        {
+            "menu_name": "Classic Smoothie Bowl",
+            "material_name": "Honey",
+            "qty": 30,
+            "unit": "gram",
+            "cost": 1050
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Strawberry",
+            "qty": 25,
+            "unit": "gram",
+            "cost": 750
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Blackberry",
+            "qty": 18,
+            "unit": "gram",
+            "cost": 675
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Apple Juice",
+            "qty": 115,
+            "unit": "ml",
+            "cost": 1825
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Strawberry Jam",
+            "qty": 7,
+            "unit": "gram",
+            "cost": 347
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Strawberry Yoghurt",
+            "qty": 22,
+            "unit": "gram",
+            "cost": 1587
+        },
+        {
+            "menu_name": "Berry Wild PT",
+            "material_name": "Fructose",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 255
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Mango",
+            "qty": 36,
+            "unit": "gram",
+            "cost": 1260
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Passion Fruit Jam",
+            "qty": 11,
+            "unit": "gram",
+            "cost": 652
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Lemon Juice",
+            "qty": 7,
+            "unit": "ml",
+            "cost": 127
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Mango Juice",
+            "qty": 129,
+            "unit": "ml",
+            "cost": 2227
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Yoghurt Plain",
+            "qty": 18,
+            "unit": "gram",
+            "cost": 686
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Mango Jam",
+            "qty": 15,
+            "unit": "gram",
+            "cost": 889
+        },
+        {
+            "menu_name": "Tropical Mango PT",
+            "material_name": "Fructose",
+            "qty": 8,
+            "unit": "gram",
+            "cost": 136
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Mango",
+            "qty": 29,
+            "unit": "gram",
+            "cost": 1015
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Passion Fruit Jam",
+            "qty": 11,
+            "unit": "gram",
+            "cost": 652
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Banana",
+            "qty": 36,
+            "unit": "gram",
+            "cost": 682
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Spinach",
+            "qty": 11,
+            "unit": "gram",
+            "cost": 110
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Mango Juice",
+            "qty": 61,
+            "unit": "ml",
+            "cost": 1053
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Santan",
+            "qty": 8,
+            "unit": "gram",
+            "cost": 528
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Hydrococo",
+            "qty": 58,
+            "unit": "ml",
+            "cost": 1181
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Mango Jam",
+            "qty": 8,
+            "unit": "gram",
+            "cost": 474
+        },
+        {
+            "menu_name": "Spango PT",
+            "material_name": "Fructose",
+            "qty": 8,
+            "unit": "gram",
+            "cost": 136
+        }
+    ]
+}

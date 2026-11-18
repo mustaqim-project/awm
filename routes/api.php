@@ -735,6 +735,33 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         ]);
     });
 
+    // Endpoint status sinkronisasi master data D0&GO
+    Route::match(['GET', 'POST'], '/dogo/sync-status', function (\Illuminate\Http\Request $request) {
+        if ($request->boolean('trigger')) {
+            \Illuminate\Support\Facades\Artisan::call('cooca:sync-dogo-data', ['--force' => true]);
+        }
+
+        $logFile = storage_path('logs/dogo_sync_output.json');
+        $summary = file_exists($logFile) ? json_decode((string) file_get_contents($logFile), true) : null;
+        $business = \App\Models\Business::where('name', 'like', '%D0%')->orWhere('name', 'like', '%DO%')->first();
+        $owner = \App\Models\User::where('email', 'srifennikapurba@gmail.com')->first();
+        $materialsCount = $business ? \App\Models\Material::where('business_id', $business->id)->count() : 0;
+        $productsCount = $business ? \App\Models\Product::where('business_id', $business->id)->count() : 0;
+        $bomItemsCount = $business ? \App\Models\BomItem::whereHas('header.costModel', fn($q) => $q->where('business_id', $business->id))->count() : 0;
+
+        return response()->json([
+            'status' => 'ok',
+            'business' => $business ? ['id' => $business->id, 'name' => $business->name] : null,
+            'owner' => $owner ? ['id' => $owner->id, 'name' => $owner->name, 'email' => $owner->email] : null,
+            'live_counts' => [
+                'materials' => $materialsCount,
+                'products' => $productsCount,
+                'bom_items' => $bomItemsCount,
+            ],
+            'sync_summary' => $summary,
+        ]);
+    });
+
     // TriPay Payment Gateway Incoming Webhook (Model B) - supports GET/HEAD ping and POST callback
     Route::match(['GET', 'POST', 'HEAD'], '/payments/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
     Route::match(['GET', 'POST', 'HEAD'], '/tripay/callback', [\App\Http\Controllers\Api\V1\Payment\TripayCallbackController::class, 'handle']);
