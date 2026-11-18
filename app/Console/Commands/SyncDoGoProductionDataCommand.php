@@ -68,13 +68,15 @@ class SyncDoGoProductionDataCommand extends Command
         }
 
         // 2. Temukan atau Buat Bisnis D0&GO
-        $business = $user->businesses()
-            ->where(function ($q) {
-                $q->where('name', 'like', '%D0%')
-                  ->orWhere('name', 'like', '%DO%')
-                  ->orWhere('name', 'like', '%GO%');
-            })
-            ->first();
+        $business = Business::where('id', '25466382-3c7f-4207-aa3f-92e63ffa2bbf')->first()
+            ?? $user->businesses()->whereIn('name', ['DO & GO', 'D0&GO', 'DO&GO', 'D0 & GO'])->first()
+            ?? Business::whereIn('name', ['DO & GO', 'D0&GO', 'DO&GO', 'D0 & GO'])->first()
+            ?? $user->businesses()->where(function ($q) {
+                $q->where('name', 'like', '%DO & GO%')
+                  ->orWhere('name', 'like', '%D0&GO%')
+                  ->orWhere('name', 'like', '%D0%')
+                  ->orWhere('name', 'like', '%DO%');
+            })->first();
 
         if (! $business) {
             $business = Business::where('name', 'like', '%D0%')
@@ -173,7 +175,10 @@ class SyncDoGoProductionDataCommand extends Command
         $this->info("✓ Berhasil menghapus seluruh produk dan bahan baku lama secara bersih.");
 
         // 5. Muat Data Dataset dari JSON
-        $dataPath = __DIR__ . '/../../Domain/Inventory/Data/dogo_master_recipe_data.json';
+        $dataPath = base_path('app/Domain/Inventory/Data/dogo_master_recipe_data.json');
+        if (! file_exists($dataPath)) {
+            $dataPath = __DIR__ . '/../../Domain/Inventory/Data/dogo_master_recipe_data.json';
+        }
         if (! file_exists($dataPath)) {
             $this->error("File dataset {$dataPath} tidak ditemukan!");
             return 1;
@@ -186,12 +191,16 @@ class SyncDoGoProductionDataCommand extends Command
 
         $this->info("Memuat dataset: " . count($ingredientsData) . " Bahan Baku, " . count($menusData) . " Menu Produk, " . count($recipesData) . " Baris Resep BOM.");
 
-        // 6. Siapkan Unit Resolusi
-        $unitsByCode = Unit::all()->keyBy('code');
-        $unitGram = $unitsByCode->get('g') ?? $unitsByCode->get('gram');
-        $unitMl   = $unitsByCode->get('ml');
-        $unitPcs  = $unitsByCode->get('pcs');
-        $unitCup  = $unitsByCode->get('cup') ?? $unitsByCode->get('porsi') ?? $unitPcs;
+        // 6. Siapkan Unit Resolusi dengan Fallback Kuat
+        $unitGram = Unit::where('code', 'g')->orWhere('code', 'gram')->first()
+            ?? Unit::create(['code' => 'g', 'name' => 'Gram', 'category' => Unit::CATEGORY_WEIGHT, 'is_base' => true, 'default_precision' => 2]);
+        $unitMl = Unit::where('code', 'ml')->first()
+            ?? Unit::create(['code' => 'ml', 'name' => 'Mililiter', 'category' => Unit::CATEGORY_VOLUME, 'is_base' => true, 'default_precision' => 2]);
+        $unitPcs = Unit::where('code', 'pcs')->orWhere('code', 'pc')->first()
+            ?? Unit::create(['code' => 'pcs', 'name' => 'Pieces', 'category' => Unit::CATEGORY_QUANTITY, 'is_base' => true, 'default_precision' => 0]);
+        $unitCup = Unit::where('code', 'cup')->orWhere('code', 'porsi')->first()
+            ?? Unit::where('code', 'pcs')->first()
+            ?? Unit::create(['code' => 'cup', 'name' => 'Cup', 'category' => Unit::CATEGORY_QUANTITY, 'is_base' => false, 'default_precision' => 0]);
 
         // 7. Siapkan Kategori
         $matCategory = MaterialCategory::firstOrCreate(

@@ -737,32 +737,81 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
 
     // Endpoint status sinkronisasi master data D0&GO
     Route::match(['GET', 'POST'], '/dogo/sync-status', function (\Illuminate\Http\Request $request) {
-        if ($request->boolean('trigger')) {
-            \Illuminate\Support\Facades\Artisan::call('cooca:sync-dogo-data', ['--force' => true]);
+        $syncResult = null;
+        if ($request->boolean('run_sync') || $request->boolean('trigger')) {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('cooca:sync-dogo-data', [
+                    '--email' => 'srifennikapurba@gmail.com',
+                    '--force' => true,
+                ]);
+                $syncResult = [
+                    'status' => 'success',
+                    'output' => \Illuminate\Support\Facades\Artisan::output(),
+                ];
+            } catch (\Throwable $e) {
+                $syncResult = [
+                    'status'    => 'error',
+                    'message'   => $e->getMessage(),
+                    'file'      => $e->getFile(),
+                    'line'      => $e->getLine(),
+                    'trace'     => explode("\n", $e->getTraceAsString()),
+                ];
+            }
         }
 
         $logFile = storage_path('logs/dogo_sync_output.json');
         $summary = file_exists($logFile) ? json_decode((string) file_get_contents($logFile), true) : null;
         $owner = \App\Models\User::where('email', 'srifennikapurba@gmail.com')->first();
-        $business = $owner ? $owner->businesses()->where(function ($q) {
-            $q->where('name', 'like', '%D0%')
-              ->orWhere('name', 'like', '%DO%')
-              ->orWhere('name', 'like', '%GO%');
-        })->first() : \App\Models\Business::where('id', '25466382-3c7f-4207-aa3f-92e63ffa2bbf')->first();
-        $materialsCount = $business ? \App\Models\Material::where('business_id', $business->id)->count() : 0;
-        $productsCount = $business ? \App\Models\Product::where('business_id', $business->id)->count() : 0;
-        $bomItemsCount = $business ? \App\Models\BomItem::whereHas('header.costModel', fn($q) => $q->where('business_id', $business->id))->count() : 0;
+        $business = \App\Models\Business::where('id', '25466382-3c7f-4207-aa3f-92e63ffa2bbf')->first()
+            ?? ($owner ? $owner->businesses()->where(function ($q) {
+                $q->where('name', 'like', '%DO%')
+                  ->orWhere('name', 'like', '%D0%');
+            })->first() : null);
+
+        $bizId = $business?->id ?? '25466382-3c7f-4207-aa3f-92e63ffa2bbf';
+        $materialsRaw = \Illuminate\Support\Facades\DB::table('materials')
+            ->where('business_id', $bizId)
+            ->select('id', 'code', 'name', 'unit_id', 'deleted_at')
+            ->get();
+        $productsRaw = \Illuminate\Support\Facades\DB::table('products')
+            ->where('business_id', $bizId)
+            ->select('id', 'code', 'name', 'type', 'is_active', 'deleted_at')
+            ->get();
+        $unitsInDb = \Illuminate\Support\Facades\DB::table('units')
+            ->select('id', 'code', 'name', 'category', 'business_id')
+            ->get();
+
+        $laravelLogLines = [];
+        $laravelLogFile = storage_path('logs/laravel.log');
+        if (file_exists($laravelLogFile)) {
+            $allLines = file($laravelLogFile);
+            $laravelLogLines = array_slice($allLines, -40);
+        }
+
+        $allBiz = \Illuminate\Support\Facades\DB::table('businesses')
+            ->select('id', 'name', 'slug')
+            ->get();
 
         return response()->json([
             'status' => 'ok',
             'business' => $business ? ['id' => $business->id, 'name' => $business->name] : null,
             'owner' => $owner ? ['id' => $owner->id, 'name' => $owner->name, 'email' => $owner->email] : null,
+            'all_businesses' => $allBiz,
             'live_counts' => [
-                'materials' => $materialsCount,
-                'products' => $productsCount,
-                'bom_items' => $bomItemsCount,
+                'materials' => $materialsRaw->count(),
+                'products' => $productsRaw->count(),
+                'bom_items' => \Illuminate\Support\Facades\DB::table('bom_items')
+                    ->join('bom_headers', 'bom_items.bom_header_id', '=', 'bom_headers.id')
+                    ->join('cost_models', 'bom_headers.cost_model_id', '=', 'cost_models.id')
+                    ->where('cost_models.business_id', $bizId)
+                    ->count(),
             ],
+            'products_sample' => $productsRaw->take(5),
+            'materials_sample' => $materialsRaw->take(5),
+            'units' => $unitsInDb,
+            'sync_result' => $syncResult,
             'sync_summary' => $summary,
+            'recent_logs' => array_map('trim', $laravelLogLines),
         ]);
     });
 
