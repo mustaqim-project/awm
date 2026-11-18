@@ -158,4 +158,96 @@ class SyncDoGoProductionDataTest extends TestCase
             ->value('quantity');
         $this->assertEquals(680.0, (float) $mangoJuiceStock); // 1000 - 320 = 680
     }
+
+    public function test_it_deducts_finished_goods_stock_first_when_available_and_prevents_double_deduction(): void
+    {
+        $this->artisan('cooca:sync-dogo-data', [
+            '--email' => 'srifennikapurba@gmail.com',
+            '--force' => true,
+        ])->assertExitCode(0);
+
+        $user = User::where('email', 'srifennikapurba@gmail.com')->first();
+        $business = $user->businesses()->first();
+        $location = Location::where('business_id', $business->id)->first();
+        $wlb = Product::where('business_id', $business->id)->where('code', 'WLB')->first();
+
+        $stockService = app(\App\Domain\Inventory\StockService::class);
+
+        // 1. Berikan stok awal barang jadi (Finished Goods): 455 cup Watermelon Lychee Breeze
+        $stockService->recordMovement(
+            businessId: $business->id,
+            locationId: $location->id,
+            productId: $wlb->id,
+            movementType: \App\Models\StockMovement::TYPE_INITIAL,
+            quantityChange: 455.0,
+            unitCost: $wlb->base_cost,
+            referenceNumber: 'INIT-FG-WLB',
+            notes: 'Stok Awal 455 Cup Siap Jual di Chiller'
+        );
+
+        // Berikan juga stok bahan baku mentah (Semangka, Buah Leci, Jus Leci)
+        $watermelon = Material::where('business_id', $business->id)->where('name', 'Watermelon')->first();
+        $stockService->recordMovement(
+            businessId: $business->id,
+            locationId: $location->id,
+            movementType: \App\Models\StockMovement::TYPE_INITIAL,
+            quantityChange: 50000.0, // 50 kg
+            unitCost: 15.0,
+            referenceNumber: 'INIT-RAW-01',
+            notes: 'Stok Awal Bahan Baku Mentah',
+            materialId: $watermelon->id
+        );
+
+        // 2. Kasir menjual 2 cup Watermelon Lychee Breeze di POS
+        $movements = $stockService->deductForPosSale(
+            businessId: $business->id,
+            locationId: $location->id,
+            product: $wlb,
+            quantity: 2.0,
+            unitCost: $wlb->base_cost,
+            orderId: 'ORD-FG-001',
+            orderNumber: 'POS-FG-001'
+        );
+
+        // 3. Verifikasi: Hanya 1 movement (pemotongan stok produk jadi), BUKAN pemotongan bahan baku
+        $this->assertCount(1, $movements);
+        $mov = $movements[0];
+        $this->assertEquals($wlb->id, $mov->product_id);
+        $this->assertNull($mov->material_id);
+        $this->assertEquals(-2.0, (float) $mov->quantity_change);
+
+        // Verifikasi sisa stok barang jadi: 455 - 2 = 453 cup
+        $wlbStock = \App\Models\InventoryStock::where('business_id', $business->id)
+            ->where('location_id', $location->id)
+            ->where('product_id', $wlb->id)
+            ->value('quantity');
+        $this->assertEquals(453.0, (float) $wlbStock);
+
+        // Verifikasi stok bahan baku mentah (Semangka) TETAP UTUH (tidak terpotong ganda!)
+        $watermelonStock = \App\Models\InventoryStock::where('business_id', $business->id)
+            ->where('location_id', $location->id)
+            ->where('material_id', $watermelon->id)
+            ->value('quantity');
+        $this->assertEquals(50000.0, (float) $watermelonStock);
+
+        // 4. Test Refund: Jika di-refund, stok barang jadi kembali bertambah 2 cup (453 + 2 = 455)
+        $refundMovements = $stockService->restoreForPosRefund(
+            businessId: $business->id,
+            locationId: $location->id,
+            product: $wlb,
+            quantity: 2.0,
+            unitCost: $wlb->base_cost,
+            orderId: 'ORD-FG-001',
+            orderNumber: 'POS-FG-001'
+        );
+        $this->assertCount(1, $refundMovements);
+        $this->assertNull($refundMovements[0]->material_id);
+        $this->assertEquals(2.0, (float) $refundMovements[0]->quantity_change);
+
+        $restoredStock = \App\Models\InventoryStock::where('business_id', $business->id)
+            ->where('location_id', $location->id)
+            ->where('product_id', $wlb->id)
+            ->value('quantity');
+        $this->assertEquals(455.0, (float) $restoredStock);
+    }
 }

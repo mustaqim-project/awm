@@ -258,6 +258,31 @@ final class StockService
             return $movements;
         }
 
+        // Cek ketersediaan stok fisik barang jadi (Finished Goods) di lokasi ini atau child sub-warehouse
+        $finishedStockLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
+        $availableFinishedStock = (float) (InventoryStock::where('business_id', $businessId)
+            ->where('location_id', $finishedStockLocationId)
+            ->where('product_id', $productModel->id)
+            ->value('quantity') ?? 0.0);
+
+        // Jika terdapat stok fisik produk jadi yang mencukupi (misal ada stok cup siap jual):
+        // Prioritaskan pemotongan stok produk jadi agar bahan baku tidak terpotong ganda (double deduction)!
+        if ($availableFinishedStock >= $productQuantity) {
+            $movements[] = $this->recordMovement(
+                businessId: $businessId,
+                locationId: $finishedStockLocationId,
+                productId: $productModel->id,
+                movementType: $movementType,
+                quantityChange: -abs($productQuantity),
+                unitCost: $unitCost,
+                referenceId: $orderId,
+                referenceNumber: $orderNumber,
+                notes: $notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber} (Stok Barang Jadi Siap Jual)",
+                userId: $userId
+            );
+            return $movements;
+        }
+
         $deductions = $productModel->getMaterialDeductions($productQuantity);
         $movements = [];
 
@@ -654,6 +679,31 @@ final class StockService
             return [];
         }
 
+        // Cek ketersediaan stok fisik barang jadi (Finished Goods) di lokasi ini atau child sub-warehouse
+        $finishedStockLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
+        $availableFinishedStock = (float) (InventoryStock::where('business_id', $businessId)
+            ->where('location_id', $finishedStockLocationId)
+            ->where('product_id', $productModel->id)
+            ->value('quantity') ?? 0.0);
+
+        // Jika terdapat stok fisik produk jadi yang mencukupi (misal ada stok cup siap jual):
+        // Prioritaskan pemotongan stok produk jadi agar bahan baku tidak terpotong ganda (double deduction)!
+        if ($availableFinishedStock >= $productQuantity) {
+            $movements[] = $this->recordMovement(
+                businessId: $businessId,
+                locationId: $finishedStockLocationId,
+                productId: $productModel->id,
+                movementType: $movementType,
+                quantityChange: -abs($productQuantity),
+                unitCost: $unitCost,
+                referenceId: $orderId,
+                referenceNumber: $orderNumber,
+                notes: $notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber} (Stok Barang Jadi Siap Jual)",
+                userId: $userId
+            );
+            return $movements;
+        }
+
         $deductions = $productModel->getMaterialDeductions($productQuantity);
         $movements = [];
 
@@ -773,6 +823,29 @@ final class StockService
                 );
                 $movements = array_merge($movements, $childMovements);
             }
+            return $movements;
+        }
+
+        // Cek apakah penjualan awal memotong stok barang jadi
+        $hasFinishedProductSale = StockMovement::where('business_id', $businessId)
+            ->where('reference_id', $orderId)
+            ->where('product_id', $productModel->id)
+            ->whereNull('material_id')
+            ->exists();
+
+        if ($hasFinishedProductSale) {
+            $movements[] = $this->recordMovement(
+                businessId: $businessId,
+                locationId: $locationId,
+                productId: $productModel->id,
+                movementType: StockMovement::TYPE_POS_REFUND,
+                quantityChange: abs($quantity),
+                unitCost: $unitCost,
+                referenceId: $orderId,
+                referenceNumber: $orderNumber,
+                notes: "Pengembalian / Retur POS Produk {$productModel->name} #{$orderNumber} (Stok Barang Jadi)",
+                userId: $userId
+            );
             return $movements;
         }
 
