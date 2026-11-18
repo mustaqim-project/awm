@@ -787,8 +787,13 @@ final class DashboardAnalyticsService
         // 10. Top 10 Stok hampir habis
         $lowStockCountQuery = InventoryStock::where('business_id', $business->id)
             ->where(function ($q) {
-                $q->where('quantity', '<=', 5)
-                  ->orWhereRaw('quantity <= COALESCE((SELECT min_stock FROM products WHERE products.id = inventory_stocks.product_id), 5)');
+                $q->where(function ($sub) {
+                    $sub->whereNotNull('product_id')
+                        ->whereRaw('quantity <= COALESCE((SELECT min_stock FROM products WHERE products.id = inventory_stocks.product_id AND min_stock > 0), 5)');
+                })->orWhere(function ($sub) {
+                    $sub->whereNotNull('material_id')
+                        ->whereRaw('quantity <= COALESCE((SELECT min_stock FROM materials WHERE materials.id = inventory_stocks.material_id AND min_stock > 0), 5)');
+                });
             });
         if ($locationId) {
             $lowStockCountQuery->where('location_id', $locationId);
@@ -813,7 +818,9 @@ final class DashboardAnalyticsService
             $isProduct = $s->product_id !== null;
             $name = $isProduct ? ($s->product?->name ?? 'Produk') : ($s->material?->name ?? 'Bahan Baku');
             $unit = $isProduct ? ($s->product?->outputUnit?->code ?? 'pcs') : ($s->material?->unit?->code ?? 'satuan');
-            $minStock = $isProduct && $s->product?->min_stock ? (float) $s->product->min_stock : 10.0;
+            $minStock = $isProduct
+                ? (float) ($s->product?->min_stock > 0 ? $s->product->min_stock : 5.0)
+                : (float) ($s->material?->min_stock > 0 ? $s->material->min_stock : 5.0);
             $cost = (float) ($s->last_cost > 0 ? $s->last_cost : $s->avg_purchase_cost);
             $value = round($available * $cost, 0);
             $isCritical = $available <= 1.0 || $available <= ($minStock * 0.5);
