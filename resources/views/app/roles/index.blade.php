@@ -734,10 +734,14 @@
                                                 <span class="text-[#FF3B30]" x-show="!editingPreset">*</span>
                                             </label>
                                             <input type="text" name="name" :required="!editingPreset"
-                                                :value="editingRole ? editingRole.name : ''" :disabled="editingPreset"
-                                                :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
+                                                :value="editingRole ? editingRole.name : ''"
+                                                :readonly="editingPreset"
+                                                :class="editingPreset ? 'opacity-60 cursor-not-allowed select-none bg-black/[0.02] dark:bg-white/[0.02]' : ''"
                                                 placeholder="{{ __('roles.field_role_name_placeholder') }}"
                                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <template x-if="editingPreset && editingRole">
+                                                <input type="hidden" name="name" :value="editingRole.name">
+                                            </template>
                                             <p class="text-[11px] text-[#FF9500] mt-1 flex items-center gap-1"
                                                 x-show="editingPreset">
                                                 <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor"
@@ -752,10 +756,14 @@
                                             <label
                                                 class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">{{ __('roles.field_role_description') }}</label>
                                             <input type="text" name="description"
-                                                :value="editingRole ? editingRole.description : ''" :disabled="editingPreset"
-                                                :class="editingPreset ? 'opacity-50 cursor-not-allowed' : ''"
+                                                :value="editingRole ? editingRole.description : ''"
+                                                :readonly="editingPreset"
+                                                :class="editingPreset ? 'opacity-60 cursor-not-allowed select-none bg-black/[0.02] dark:bg-white/[0.02]' : ''"
                                                 placeholder="{{ __('roles.field_role_description_placeholder') }}"
                                                 class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <template x-if="editingPreset && editingRole && editingRole.description">
+                                                <input type="hidden" name="description" :value="editingRole.description">
+                                            </template>
                                         </div>
                                     </div>
 

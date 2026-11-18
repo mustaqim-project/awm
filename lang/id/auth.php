@@ -95,6 +95,7 @@ return [
         'industry_label' => 'Jenis Bisnis & Industri',
         'industry_subtitle' => 'Pilih model industri yang paling sesuai. Modul fitur, resep/BOM HPP, dan alur kasir akan disesuaikan otomatis.',
         'industry_hint' => 'Alamat fisik, titik lokasi GPS, dan kurir pengiriman dapat diatur kapan saja di menu Pengaturan (cooca.id/settings).',
+        'industry_placeholder' => '-- Pilih Model Bisnis / Industri Anda --',
         'industry_search_placeholder' => 'Cari industri (contoh: Konveksi, Kafe, Bakery, Bengkel, Apotek)...',
         'industry_select_required' => 'Pilih model bisnis / industri untuk melanjutkan',
         'cat_all' => 'Semua',

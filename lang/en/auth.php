@@ -95,6 +95,7 @@ return [
         'industry_label' => 'Business Model & Industry',
         'industry_subtitle' => 'Select your business industry. Feature modules, BOM costing, and POS workflows will be automatically customized.',
         'industry_hint' => 'Store address, GPS pin, and courier settings can be configured anytime in system Settings (cooca.id/settings).',
+        'industry_placeholder' => '-- Select Your Business Model / Industry --',
         'industry_search_placeholder' => 'Search industry (e.g. Garment, Cafe, Bakery, Workshop, Pharmacy)...',
         'industry_select_required' => 'Select a business model / industry to continue',
         'cat_all' => 'All',

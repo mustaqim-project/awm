@@ -1,11 +1,13 @@
 # MASTER TASK: COOCA EVERGREEN SEO CONTENT ENGINE
-## 40 High-Quality Articles Daily | Topical Authority | High-CTR Headlines | SEO | Automated Publishing
+## 40 High-Quality Articles Daily | Topical Authority | High-CTR Headlines | SEO | AI Image Generation | Automated Publishing
 
-## MISSION & OBJECTIVES
+---
 
-Bangun topical authority COOCA sebagai platform Business Operating System dan pusat edukasi operasional UMKM Indonesia melalui sistem riset keyword, produksi konten evergreen, optimasi SEO, dan publikasi otomatis.
+# MISSION & OBJECTIVES
 
-Target produksi adalah maksimal 40 artikel per hari, dengan distribusi 8 artikel pada masing-masing dari 5 pilar utama.
+Bangun topical authority COOCA sebagai platform Business Operating System dan pusat edukasi operasional UMKM Indonesia melalui sistem riset keyword, produksi konten evergreen, optimasi SEO, visual asset acquisition, AI image generation, dan publikasi otomatis.
+
+Target produksi maksimal 40 artikel per hari, dengan distribusi ideal 8 artikel pada masing-masing dari 5 pilar utama.
 
 Seluruh artikel wajib memenuhi standar berikut:
 
@@ -14,49 +16,66 @@ Seluruh artikel wajib memenuhi standar berikut:
 3. Primary keyword terintegrasi secara natural dalam judul dan konten.
 4. Konten edukatif, faktual, mendalam, dan memberikan solusi praktis.
 5. Tidak memiliki keyword cannibalization.
-6. Menggunakan aset gambar mandiri yang tersimpan di repositori COOCA.
-7. Lulus seluruh validasi otomatis dengan target 0 FAIL dan 0 WARN.
-8. Memiliki struktur internal linking yang relevan.
-9. Tidak mengandung AI slop, repetisi, keyword stuffing, atau konten tipis.
-10. Memiliki nilai informasi yang lebih baik daripada artikel kompetitor pada search intent yang sama.
+6. Memiliki cover image terbaru, relevan, dan sesuai primary keyword.
+7. Jika gambar yang sesuai tidak ditemukan, wajib membuat gambar menggunakan AI Image Generator.
+8. Seluruh cover image tersimpan secara mandiri di repositori COOCA.
+9. Lulus seluruh validasi otomatis dengan target 0 FAIL dan 0 WARN.
+10. Memiliki struktur internal linking yang relevan.
+11. Tidak mengandung AI slop, repetisi, keyword stuffing, atau konten tipis.
+12. Memiliki nilai informasi yang lebih baik daripada artikel kompetitor pada search intent yang sama.
 
-**Prinsip utama:** Prioritaskan kualitas, search intent, manfaat pembaca, dan kredibilitas. Target 40 artikel bukan alasan untuk menurunkan standar editorial.
+**PRINSIP UTAMA:**
+
+Prioritaskan kualitas informasi, search intent, manfaat pembaca, kredibilitas, relevansi visual, dan pengalaman pengguna.
+
+Target 40 artikel bukan alasan untuk menurunkan standar editorial maupun kualitas gambar.
 
 ---
 
-## PROJECT CONFIGURATION
+# PROJECT CONFIGURATION
 
 **Direktori proyek:**
+
 `C:\laragon\www\cooca_core\`
 
 **Direktori artikel:**
+
 `database/data/articles/{slug}.md`
 
 **Metadata artikel:**
+
 `database/data/articles/{slug}.json`
 
 **Direktori cover image:**
+
 `public/images/blog/{slug}.jpg`
 
 **Master keyword registry:**
+
 `database/data/keyword-registry.json`
 
 **Riset keyword harian:**
+
 `database/data/articles/keyword-research-{YYYY-MM-DD}.json`
 
 **Progress produksi:**
+
 `database/data/articles/.progress-{YYYY-MM-DD}.json`
 
 **Internal link registry:**
+
 `database/data/blog_links.json`
 
 **Target publikasi:**
+
 - `https://cooca.id/admin/posts`
 - `https://cooca.id/blog`
 
 **Target utama:** Indonesia.
 
 **Target pembaca:** Pemilik UMKM, pengusaha F&B, pemilik toko retail, online seller, reseller, distributor, dan penyedia jasa.
+
+**Brand positioning:** COOCA adalah Business Operating System dan Omnichannel ERP untuk UMKM.
 
 ---
 
@@ -72,10 +91,14 @@ Sebelum memulai produksi:
 6. Periksa implementasi importer `blog:import-articles`.
 7. Periksa format frontmatter, JSON-LD, metadata, dan ketentuan validator.
 8. Periksa konfigurasi sitemap dan mekanisme publikasi produksi.
-9. Jalankan `git status` dan pastikan tidak ada perubahan pengguna yang akan tertimpa.
-10. Sinkronkan branch dengan `git pull --rebase origin main` hanya setelah memastikan perubahan lokal aman.
+9. Periksa struktur direktori `public/images/blog/`.
+10. Audit gambar yang sudah digunakan untuk menghindari duplikasi visual.
+11. Periksa implementasi image processing, kompresi, dan format gambar.
+12. Periksa ketersediaan Image Generator yang dapat digunakan dalam workflow.
+13. Periksa `git status` dan pastikan tidak ada perubahan pengguna yang akan tertimpa.
+14. Sinkronkan branch dengan `git pull --rebase origin main` hanya setelah memastikan perubahan lokal aman.
 
-### Duplicate Prevention
+## 0.1. Duplicate Prevention
 
 Jangan membuat artikel baru jika:
 
@@ -86,6 +109,26 @@ Jangan membuat artikel baru jika:
 - Artikel berpotensi bersaing dengan artikel COOCA yang sudah ada.
 
 Jika ditemukan topik serupa, evaluasi kemungkinan memperbarui artikel lama daripada membuat artikel baru.
+
+## 0.2. Image Inventory Audit
+
+Periksa seluruh cover image yang sudah ada.
+
+Identifikasi:
+
+- Nama file.
+- Artikel yang menggunakan gambar.
+- Primary keyword.
+- Topik visual.
+- Resolusi.
+- Format.
+- Ukuran file.
+- Sumber gambar.
+- Lisensi atau status hak penggunaan.
+- Apakah gambar masih relevan.
+- Apakah gambar pernah digunakan pada artikel lain.
+
+Jangan menggunakan satu gambar untuk banyak artikel yang berbeda hanya untuk mempercepat produksi.
 
 ---
 
@@ -111,9 +154,10 @@ Jangan mengarang search volume, keyword difficulty, atau tingkat persaingan apab
 
 Distribusikan 40 artikel dengan alokasi berikut.
 
-**Pilar 1: Manajemen Keuangan & Pembukuan (8 Artikel)**
+### Pilar 1: Manajemen Keuangan & Pembukuan (8 Artikel)
 
 Topik:
+
 - Perhitungan HPP kuliner, retail, dan jasa.
 - Food cost ratio.
 - Break Even Point.
@@ -123,9 +167,10 @@ Topik:
 - Pencatatan kasbon karyawan.
 - Laporan laba rugi UMKM.
 
-**Pilar 2: Inventori, Stok & Manajemen Gudang (8 Artikel)**
+### Pilar 2: Inventori, Stok & Manajemen Gudang (8 Artikel)
 
 Topik:
+
 - SOP stock opname.
 - Selisih stok kasir dan gudang.
 - FIFO dan FEFO.
@@ -135,9 +180,10 @@ Topik:
 - Barang rusak dan kedaluwarsa.
 - Pengendalian persediaan.
 
-**Pilar 3: Kasir, POS & Kontrol Fraud (8 Artikel)**
+### Pilar 3: Kasir, POS & Kontrol Fraud (8 Artikel)
 
 Topik:
+
 - SOP buka dan tutup shift.
 - Rekonsiliasi kas.
 - Blind cash drop.
@@ -147,9 +193,10 @@ Topik:
 - Sistem kasir offline.
 - Audit transaksi kasir.
 
-**Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak (8 Artikel)**
+### Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak (8 Artikel)
 
 Topik:
+
 - NIB dan OSS RBA.
 - Sertifikasi halal.
 - PIRT dan BPOM.
@@ -159,9 +206,10 @@ Topik:
 - Legalitas usaha patungan.
 - Administrasi dan kepatuhan usaha.
 
-**Pilar 5: CRM, Retensi Pelanggan & Omnichannel Marketing (8 Artikel)**
+### Pilar 5: CRM, Retensi Pelanggan & Omnichannel Marketing (8 Artikel)
 
 Topik:
+
 - Repeat order.
 - Customer retention.
 - Membership dan loyalty points.
@@ -173,8 +221,6 @@ Topik:
 
 ## 1.2. Evergreen Qualification
 
-Setiap kandidat topik harus melewati penilaian berikut.
-
 | Kriteria | Bobot |
 |---|---:|
 | Relevansi jangka panjang | 25% |
@@ -185,17 +231,16 @@ Setiap kandidat topik harus melewati penilaian berikut.
 
 Gunakan skor 1-5.
 
-<badge color="success">Minimal 4/5</badge> untuk setiap artikel yang dipilih.
+Minimal skor 4/5 untuk setiap artikel yang dipilih.
 
 ## 1.3. Evergreen Content Classification
-
-Klasifikasikan setiap topik menjadi:
 
 **A. Core Evergreen**
 
 Topik yang tidak bergantung pada perubahan waktu.
 
 Contoh:
+
 - Cara Menghitung HPP.
 - Cara Mengelola Arus Kas.
 - Cara Melakukan Stock Opname.
@@ -207,18 +252,18 @@ Contoh:
 Topik yang berulang pada periode tertentu dan tetap relevan setiap tahun.
 
 Contoh:
+
 - Persiapan Stok Ramadan.
 - Manajemen Persediaan Saat Harbolnas.
 - Pengelolaan Arus Kas Menjelang Lebaran.
 - Strategi Penjualan Saat Tahun Baru.
 
-Konten harus tetap bermanfaat meskipun periode musimannya telah berakhir.
-
 **C. Regulatory Evergreen**
 
-Topik regulasi yang mempunyai kebutuhan pencarian berulang tetapi berpotensi mengalami perubahan.
+Topik regulasi yang memiliki kebutuhan pencarian berulang tetapi berpotensi mengalami perubahan.
 
 Contoh:
+
 - Cara Mengurus NIB.
 - Cara Menghitung Pajak UMKM.
 - Persyaratan Sertifikasi Halal.
@@ -229,7 +274,9 @@ Wajib menyertakan tanggal pemeriksaan informasi, sumber resmi, cakupan aturan, d
 
 Konten berdasarkan fenomena atau tren aktual.
 
-Jenis ini tidak otomatis dikategorikan evergreen. Buat artikel hanya jika memiliki nilai edukasi jangka panjang atau relevansi aktual yang cukup kuat.
+Jenis ini tidak otomatis dikategorikan evergreen.
+
+Buat artikel hanya jika memiliki nilai edukasi jangka panjang atau relevansi aktual yang cukup kuat.
 
 Hindari mencampurkan berita sesaat ke dalam cluster evergreen hanya demi memenuhi kuota.
 
@@ -282,34 +329,36 @@ Judul harus membuat pembaca merasa ada informasi penting yang perlu diketahui, k
 
 Jangan menghasilkan judul generik yang hanya mendeskripsikan topik.
 
-Contoh judul generik:
+Contoh:
+
+Judul generik:
 
 - Cara Menghitung HPP UMKM.
 - Tips Mengelola Stok Barang.
 - Pengertian Arus Kas Bisnis.
 - Panduan Menggunakan Aplikasi Kasir.
 
-Ubah menjadi judul dengan daya tarik lebih tinggi:
+Judul yang lebih menarik:
 
 - HPP UMKM Sering Salah Hitung? Ini Penyebab Keuntungan Bisnis Terus Menipis
 - Stok Barang Sering Hilang Tanpa Disadari? Periksa Kesalahan Pengelolaan Ini
 - Omzet Terus Naik tetapi Uang Tidak Terkumpul? Kenali Masalah Arus Kas Bisnis
 - Aplikasi Kasir UMKM: Kesalahan Memilih Sistem yang Bisa Mengganggu Operasional Toko
 
-## 2.2. Psikologi Clickbait yang Wajib Digunakan
+## 2.2. Psikologi Clickbait
 
-Variasikan trigger psikologis berikut:
+Variasikan trigger:
 
-1. Curiosity Gap: membuat pembaca penasaran terhadap penyebab atau fakta tersembunyi.
-2. Loss Aversion: menunjukkan potensi kerugian finansial atau operasional.
-3. Fear of Missing Out: menunjukkan peluang yang mungkin terlewat.
-4. Unexpected Facts: menyampaikan fakta yang bertentangan dengan asumsi umum.
-5. Contrarian Angle: menantang kebiasaan bisnis yang dianggap benar.
-6. Specificity: menggunakan nominal, angka, atau kondisi konkret yang terverifikasi.
-7. Urgency: memanfaatkan batas waktu dan perubahan kebijakan yang benar-benar berlaku.
-8. Problem Recognition: menggambarkan situasi yang sering dialami pembaca.
-9. Transformation: menjanjikan pemahaman atau perbaikan proses yang realistis.
-10. Comparison: memperlihatkan perbedaan pilihan dan konsekuensinya.
+1. Curiosity Gap.
+2. Loss Aversion.
+3. Fear of Missing Out.
+4. Unexpected Facts.
+5. Contrarian Angle.
+6. Specificity.
+7. Urgency.
+8. Problem Recognition.
+9. Transformation.
+10. Comparison.
 
 ## 2.3. Bank Formula Clickbait
 
@@ -317,85 +366,83 @@ Gunakan variasi formula berikut.
 
 **A. Curiosity Gap**
 
-- Ternyata Ini Penyebab [Primary Keyword] Sering Menimbulkan Masalah pada Bisnis
-- Mengapa [Primary Keyword] Tidak Berjalan Sesuai Harapan? Ini Faktanya
-- Ada yang Salah dengan [Primary Keyword]? Periksa Hal yang Sering Terlewat Ini
+- Ternyata Ini Penyebab [Primary Keyword] Sering Menimbulkan Masalah pada Bisnis.
+- Mengapa [Primary Keyword] Tidak Berjalan Sesuai Harapan? Ini Faktanya.
+- Ada yang Salah dengan [Primary Keyword]? Periksa Hal yang Sering Terlewat Ini.
 
 **B. Financial Loss**
 
-- Omzet Besar tetapi Keuntungan Tipis? Periksa [Primary Keyword] Ini
-- Modal Terus Berkurang? Bisa Jadi [Primary Keyword] Belum Dikelola dengan Benar
-- Jangan Sampai Boncos! Kesalahan [Primary Keyword] yang Merugikan UMKM
+- Omzet Besar tetapi Keuntungan Tipis? Periksa [Primary Keyword] Ini.
+- Modal Terus Berkurang? Bisa Jadi [Primary Keyword] Belum Dikelola dengan Benar.
+- Jangan Sampai Boncos! Kesalahan [Primary Keyword] yang Merugikan UMKM.
 
 **C. Hidden Mistakes**
 
-- Kesalahan [Primary Keyword] Ini Sering Tidak Disadari Pemilik Usaha
-- Banyak Pengusaha Keliru Mengelola [Primary Keyword], Ini Dampaknya
-- Jangan Ulangi Kesalahan Ini Saat Menggunakan [Primary Keyword]
+- Kesalahan [Primary Keyword] Ini Sering Tidak Disadari Pemilik Usaha.
+- Banyak Pengusaha Keliru Mengelola [Primary Keyword], Ini Dampaknya.
+- Jangan Ulangi Kesalahan Ini Saat Menggunakan [Primary Keyword].
 
 **D. Unexpected Facts**
 
-- Ternyata [Primary Keyword] Tidak Selalu Menguntungkan, Ini Alasannya
-- Banyak yang Salah Paham tentang [Primary Keyword], Begini Faktanya
-- [Primary Keyword] Tidak Sesederhana yang Dibayangkan, Ini Penjelasannya
+- Ternyata [Primary Keyword] Tidak Selalu Menguntungkan, Ini Alasannya.
+- Banyak yang Salah Paham tentang [Primary Keyword], Begini Faktanya.
+- [Primary Keyword] Tidak Sesederhana yang Dibayangkan, Ini Penjelasannya.
 
 **E. Business Warning**
 
-- Awas, Kesalahan [Primary Keyword] Bisa Membuat Operasional Bisnis Terganggu
-- Sebelum Menggunakan [Primary Keyword], Pahami Risiko yang Sering Terlewat
-- Jangan Abaikan [Primary Keyword] Jika Tidak Ingin Mengalami Masalah Ini
+- Awas, Kesalahan [Primary Keyword] Bisa Membuat Operasional Bisnis Terganggu.
+- Sebelum Menggunakan [Primary Keyword], Pahami Risiko yang Sering Terlewat.
+- Jangan Abaikan [Primary Keyword] Jika Tidak Ingin Mengalami Masalah Ini.
 
 **F. Opportunity & FOMO**
 
-- Peluang [Primary Keyword] Ini Bisa Membantu UMKM Mengembangkan Bisnis
-- Ingin Bisnis Lebih Efisien? Kenali Cara Memanfaatkan [Primary Keyword]
-- [Primary Keyword] Bisa Membuka Peluang Baru, Ini Cara Memulainya
+- Peluang [Primary Keyword] Ini Bisa Membantu UMKM Mengembangkan Bisnis.
+- Ingin Bisnis Lebih Efisien? Kenali Cara Memanfaatkan [Primary Keyword].
+- [Primary Keyword] Bisa Membuka Peluang Baru, Ini Cara Memulainya.
 
 **G. Comparison**
 
 - [Metode A] vs [Metode B]: Mana yang Lebih Menguntungkan untuk UMKM?
-- Lebih Baik [Pilihan A] atau [Pilihan B]? Perhatikan Perbedaan Ini
-- Jangan Salah Memilih [Primary Keyword], Ini Perbandingan yang Perlu Diketahui
+- Lebih Baik [Pilihan A] atau [Pilihan B]? Perhatikan Perbedaan Ini.
+- Jangan Salah Memilih [Primary Keyword], Ini Perbandingan yang Perlu Diketahui.
 
 **H. Myth Busting**
 
-- Benarkah [Mitos Bisnis]? Ini Fakta yang Sering Terlewat Pengusaha
-- Jangan Mudah Percaya Anggapan tentang [Primary Keyword] Ini
-- [Primary Keyword] Tidak Selalu Seperti yang Dibayangkan, Ini Faktanya
+- Benarkah [Mitos Bisnis]? Ini Fakta yang Sering Terlewat Pengusaha.
+- Jangan Mudah Percaya Anggapan tentang [Primary Keyword] Ini.
+- [Primary Keyword] Tidak Selalu Seperti yang Dibayangkan, Ini Faktanya.
 
 **I. Practical Guide**
 
-- Cara Mengelola [Primary Keyword] agar Bisnis Tidak Terus Mengalami Kerugian
-- [Primary Keyword]: Langkah Penting yang Sering Terlewat Pemilik UMKM
-- Begini Cara Menghitung [Primary Keyword] agar Tidak Salah Mengambil Keputusan
+- Cara Mengelola [Primary Keyword] agar Bisnis Tidak Terus Mengalami Kerugian.
+- [Primary Keyword]: Langkah Penting yang Sering Terlewat Pemilik UMKM.
+- Begini Cara Menghitung [Primary Keyword] agar Tidak Salah Mengambil Keputusan.
 
 **J. Case Study**
 
 - Simulasi [Primary Keyword]: Berapa Sebenarnya Keuntungan yang Bisa Didapat?
-- Dari Omzet hingga Laba Bersih: Begini Perhitungan [Primary Keyword]
-- Belajar dari Kesalahan Bisnis: Cara Memperbaiki [Primary Keyword]
+- Dari Omzet hingga Laba Bersih: Begini Perhitungan [Primary Keyword].
+- Belajar dari Kesalahan Bisnis: Cara Memperbaiki [Primary Keyword].
 
 **K. Operational Problem**
 
-- Toko Ramai tetapi Pelayanan Kacau? Periksa Sistem Operasional Ini
-- Stok Sering Tidak Sesuai? Begini Cara Memperbaiki Pengelolaan Persediaan
-- Kasir Sering Selisih? Ini Bagian SOP yang Wajib Diperiksa
+- Toko Ramai tetapi Pelayanan Kacau? Periksa Sistem Operasional Ini.
+- Stok Sering Tidak Sesuai? Begini Cara Memperbaiki Pengelolaan Persediaan.
+- Kasir Sering Selisih? Ini Bagian SOP yang Wajib Diperiksa.
 
 **L. Evergreen Authority**
 
-- Panduan [Primary Keyword]: Kesalahan Penting yang Perlu Dihindari UMKM
-- Memahami [Primary Keyword]: Hal yang Sering Menentukan Keuntungan Bisnis
-- [Primary Keyword] untuk UMKM: Cara Kerja, Risiko, dan Solusi Praktis
+- Panduan [Primary Keyword]: Kesalahan Penting yang Perlu Dihindari UMKM.
+- Memahami [Primary Keyword]: Hal yang Sering Menentukan Keuntungan Bisnis.
+- [Primary Keyword] untuk UMKM: Cara Kerja, Risiko, dan Solusi Praktis.
 
 ## 2.4. Ketentuan Khusus Judul Evergreen
-
-Untuk artikel evergreen:
 
 - Hindari ketergantungan pada kata hari ini, minggu ini, terbaru, viral, dan sekarang jika tidak diperlukan.
 - Jangan memasukkan tahun ke dalam judul jika tidak memberikan manfaat pencarian.
 - Utamakan keyword yang tetap relevan dalam jangka panjang.
 - Gunakan situasi bisnis yang nyata dan berulang.
-- Judul boleh menggunakan angka jika isi artikel benar-benar mendukungnya.
+- Gunakan angka jika isi artikel benar-benar mendukungnya.
 - Hindari klaim bahwa suatu metode merupakan solusi terbaik untuk seluruh jenis bisnis.
 - Gunakan konteks UMKM, F&B, retail, online shop, atau jasa jika memperjelas relevansi.
 
@@ -403,7 +450,6 @@ Untuk artikel evergreen:
 
 Setiap H1 wajib memiliki primary keyword secara utuh dan natural.
 
-Aturan:
 1. Prioritaskan penempatan keyword pada bagian awal atau tengah awal judul.
 2. Jangan memaksakan exact match jika menyebabkan tata bahasa buruk.
 3. Jangan mengulang keyword secara berlebihan.
@@ -428,7 +474,7 @@ Untuk setiap artikel:
 1. Hasilkan minimal 10 alternatif judul.
 2. Gunakan minimal 5 jenis formula berbeda.
 3. Hindari menghasilkan 10 judul yang hanya mengganti beberapa kata.
-4. Berikan skor untuk setiap alternatif.
+4. Berikan skor setiap alternatif.
 
 | Penilaian | Bobot |
 |---|---:|
@@ -442,38 +488,16 @@ Pilih judul dengan nilai terbaik dan lakukan pemeriksaan editorial.
 
 Skor internal bukan jaminan CTR aktual. Evaluasi CTR sesungguhnya menggunakan data Search Console apabila tersedia.
 
-## 2.8. Anti-Repetitive Headline
-
-Periksa judul artikel sebelumnya.
+## 2.8. Honest Clickbait Policy
 
 Dilarang:
-- Menggunakan hook identik pada artikel yang berdekatan.
-- Mengulang kata pembuka secara berlebihan.
-- Menggunakan pola "Awas", "Jangan Sampai", "Bongkar", atau "Ternyata" pada hampir seluruh artikel.
-- Menggunakan judul yang hanya mengganti nama keyword.
-- Menggunakan gaya judul sensasional untuk topik sederhana yang tidak membutuhkan urgensi.
-
-Target variasi editorial:
-- 25% Curiosity dan hidden facts.
-- 20% Financial loss dan mistakes.
-- 15% Unexpected facts dan myth busting.
-- 15% Practical guide dan transformation.
-- 10% Comparison.
-- 10% Opportunity dan FOMO.
-- 5% Warning dan urgency.
-
-Distribusi dapat berubah sesuai karakter topik.
-
-## 2.9. Honest Clickbait Policy
-
-DILARANG KERAS:
 
 - Mengarang skandal, penipuan, atau modus kejahatan.
 - Mengklaim bisnis pasti bangkrut akibat satu kesalahan.
 - Menggunakan ancaman denda tanpa dasar hukum.
 - Mengarang angka kerugian dan persentase.
 - Menggunakan kata rahasia, terbongkar, atau mengejutkan tanpa substansi.
-- Mengklaim suatu fitur wajib dimiliki seluruh UMKM jika sebenarnya hanya opsional.
+- Mengklaim fitur wajib dimiliki seluruh UMKM jika sebenarnya opsional.
 - Menggunakan judul yang menjanjikan sesuatu yang tidak dibahas dalam artikel.
 
 **Golden Rule:** Judul harus lebih menarik daripada judul deskriptif biasa, tetapi isi artikel harus mampu membuktikan seluruh janji judul.
@@ -485,6 +509,7 @@ DILARANG KERAS:
 ## 3.1. Standar Penulisan
 
 Setiap artikel:
+
 - Panjang 1.500-2.000 kata, di luar frontmatter dan JSON-LD.
 - Tepat 1 H1.
 - 4-8 H2.
@@ -501,15 +526,17 @@ Setiap artikel:
 Mulai dengan situasi yang benar-benar dialami pelaku UMKM.
 
 Hindari:
+
 - Di era digital saat ini.
 - Dalam lanskap bisnis modern.
 - Seiring perkembangan teknologi yang semakin pesat.
 
-Gunakan pendekatan masalah nyata, ilustrasi singkat, atau pertanyaan yang relevan.
+Gunakan pendekatan masalah nyata, ilustrasi singkat, atau pertanyaan relevan.
 
 **2. Problem Explanation**
 
 Jelaskan:
+
 - Permasalahan utama.
 - Penyebab.
 - Dampak finansial dan operasional.
@@ -532,6 +559,7 @@ Jangan hanya menjelaskan teori.
 Setiap artikel wajib menyertakan tabel atau simulasi angka.
 
 Ketentuan:
+
 - Gunakan nominal rupiah.
 - Jelaskan asumsi.
 - Tampilkan rumus jika ada.
@@ -548,6 +576,7 @@ Jelaskan kesalahan yang umum terjadi dan cara menghindarinya.
 Jelaskan bagaimana sistem manajemen bisnis, pencatatan, POS, inventori, CRM, atau omnichannel dapat membantu menyelesaikan masalah terkait.
 
 Ketentuan:
+
 - Penyebutan COOCA natural.
 - Maksimal 1-2 bagian.
 - Tidak melakukan hard-selling.
@@ -566,7 +595,7 @@ Buat 4-6 pertanyaan berdasarkan kebutuhan pencarian pembaca.
 
 Sertakan Article dan FAQPage sesuai validitas implementasi schema.
 
-Pastikan informasi schema sama dengan konten yang terlihat oleh pembaca.
+Pastikan informasi schema sama dengan konten yang terlihat pembaca.
 
 ---
 
@@ -577,6 +606,7 @@ Artikel tidak boleh hanya menjadi kumpulan definisi dan paragraf generik.
 ## 4.1. Depth of Information
 
 Setiap artikel harus memiliki:
+
 - Penjelasan konsep yang lengkap.
 - Contoh yang relevan dengan bisnis Indonesia.
 - Perhitungan atau ilustrasi praktis.
@@ -587,7 +617,8 @@ Setiap artikel harus memiliki:
 
 ## 4.2. Anti-AI Footprint
 
-DILARANG:
+Dilarang:
+
 - Pembuka artikel yang berulang.
 - Kesimpulan yang hanya mengulang pendahuluan.
 - Pengulangan kata transisi secara berlebihan.
@@ -595,8 +626,8 @@ DILARANG:
 - Kalimat generik tanpa informasi.
 - Daftar poin yang tidak memberikan penjelasan.
 - Klaim tanpa bukti.
-- Penggunaan kata-kata promosi berlebihan.
-- Pola struktur yang identik pada seluruh 40 artikel.
+- Penggunaan kata promosi berlebihan.
+- Pola struktur identik pada seluruh 40 artikel.
 
 Setiap artikel wajib memiliki karakter penulisan yang disesuaikan dengan topik.
 
@@ -620,62 +651,308 @@ Setiap artikel harus memiliki metadata pemeliharaan:
 - `regulatory_dependency`
 - `update_notes`
 
-Untuk artikel yang bergantung pada regulasi atau teknologi, tentukan jadwal pemeriksaan ulang.
+Jadwal pemeriksaan:
 
-Contoh:
 - Core Evergreen: review setiap 12 bulan.
 - Seasonal Evergreen: review sebelum musim terkait.
-- Regulatory Evergreen: review setiap kali ada perubahan aturan dan secara berkala.
+- Regulatory Evergreen: review setiap terjadi perubahan aturan dan secara berkala.
 - Technology Evergreen: review ketika terjadi perubahan signifikan pada layanan atau teknologi.
 
-Artikel evergreen tidak berarti artikel tidak perlu diperbarui.
+Artikel evergreen bukan berarti tidak perlu diperbarui.
 
 ---
 
-# FASE 5: COVER IMAGE DAN ASET RESMI COOCA
+# FASE 5: ADVANCED IMAGE ACQUISITION & AI IMAGE GENERATION ENGINE
 
-Setiap artikel wajib memiliki gambar yang relevan dengan primary keyword.
+## MANDATORY REQUIREMENT
 
-## 5.1. Relevansi Gambar
+Setiap artikel WAJIB memiliki cover image yang:
+
+1. Sesuai primary keyword.
+2. Mewakili isi dan search intent artikel.
+3. Menggunakan visual yang relevan dengan kondisi bisnis Indonesia.
+4. Mengutamakan gambar aktual dan terbaru apabila topik membutuhkan representasi kondisi terkini.
+5. Tidak menggunakan gambar generik yang tidak berhubungan dengan topik.
+6. Memiliki hak penggunaan yang jelas.
+7. Tersimpan sebagai aset mandiri dalam repositori COOCA.
+8. Dapat diakses melalui URL internal COOCA.
+
+**DILARANG menyelesaikan artikel tanpa cover image yang telah diverifikasi.**
+
+## 5.1. IMAGE ACQUISITION PRIORITY
+
+Gunakan urutan pengadaan gambar berikut.
+
+**PRIORITY 1: CURRENT AND RELEVANT REAL-WORLD IMAGES**
+
+Lakukan pencarian gambar berdasarkan:
+
+- Primary keyword.
+- Secondary keyword.
+- Long-tail keyword.
+- Konteks visual artikel.
+- Objek utama yang dibahas.
+- Aktivitas bisnis yang relevan.
+- Kondisi atau teknologi terbaru apabila topik membutuhkannya.
+
+Gunakan pencarian gambar terbaru dari sumber visual yang kredibel.
 
 Contoh:
-- HPP: bahan baku, timbangan dapur, aktivitas produksi.
-- Kasir: mesin POS, barcode scanner, transaksi.
-- Gudang: rak persediaan, barcode scanner, proses stock opname.
-- Keuangan: pembukuan, kalkulator, laporan keuangan.
-- CRM: interaksi pelanggan, loyalty program, smartphone bisnis.
 
-Hindari gambar abstrak yang tidak menjelaskan topik.
+| Keyword Artikel | Target Visual |
+|---|---|
+| HPP UMKM | Bahan baku, timbangan digital, proses produksi kuliner |
+| Stock Opname | Petugas menghitung persediaan di rak gudang |
+| Sistem Kasir POS | Terminal kasir, barcode scanner, transaksi toko |
+| FIFO dan FEFO | Rak penyimpanan produk dengan label tanggal |
+| Arus Kas UMKM | Pembukuan, laporan keuangan, kalkulator |
+| WhatsApp Business | Smartphone dengan tampilan komunikasi bisnis |
+| CRM UMKM | Interaksi pelanggan dan pengelolaan database pelanggan |
+| Omnichannel | Operasional penjualan melalui beberapa kanal digital |
 
-## 5.2. Standar Teknis
+Jangan hanya mencocokkan nama file atau alt text. Periksa konten visual yang sebenarnya.
 
-- Resolusi minimal 1200 px.
-- Format JPG.
-- Maksimal 300 KB setelah kompresi.
-- Rasio gambar konsisten dan cocok untuk blog.
-- Tidak menggunakan watermark pihak ketiga.
-- Tidak menggunakan gambar yang tidak memiliki hak penggunaan.
-- Jangan menggunakan gambar yang tidak relevan hanya demi memenuhi jumlah artikel.
+**PRIORITY 2: VERIFIED LICENSED STOCK IMAGE**
 
-## 5.3. Aset Self-Hosted
+Jika gambar relevan tersedia dari sumber gambar berlisensi:
 
-Simpan pada:
+1. Periksa lisensi penggunaan.
+2. Pastikan penggunaan untuk website komersial diperbolehkan.
+3. Pastikan tidak terdapat watermark.
+4. Periksa apakah atribusi diperlukan.
+5. Unduh gambar resolusi tinggi.
+6. Simpan salinan lokal di repositori COOCA.
+7. Catat sumber dan lisensi gambar.
+
+Jangan menganggap gambar yang dapat diunduh otomatis bebas hak cipta.
+
+**PRIORITY 3: AI IMAGE GENERATION**
+
+Jika gambar yang sesuai tidak ditemukan, tidak cukup aktual, tidak relevan, memiliki lisensi yang tidak jelas, atau kualitasnya tidak memenuhi standar, WAJIB gunakan AI Image Generator.
+
+Jangan:
+
+- Menggunakan gambar yang tidak relevan sebagai pengganti.
+- Menggunakan gambar dari artikel lain.
+- Mengambil screenshot Google Images sebagai cover.
+- Menggunakan thumbnail ber-watermark.
+- Menggunakan URL gambar eksternal sebagai cover final.
+- Membiarkan cover image kosong.
+- Menunda pembuatan gambar tanpa alasan teknis yang jelas.
+
+AI Image Generator harus menjadi fallback otomatis, bukan opsi yang boleh dilewati.
+
+## 5.2. IMAGE FRESHNESS POLICY
+
+Kata terbaru tidak berarti harus selalu menggunakan foto yang baru diunggah.
+
+Yang wajib adalah kesesuaian waktu dan konteks visual.
+
+Terapkan ketentuan:
+
+**A. Topik yang Membutuhkan Visual Aktual**
+
+Contoh:
+
+- Perubahan teknologi POS.
+- Perangkat kasir terbaru.
+- Marketplace dan fitur baru.
+- Perubahan sistem pembayaran.
+- Perubahan tampilan aplikasi.
+- Kebijakan atau infrastruktur digital terbaru.
+
+Gunakan gambar yang merepresentasikan versi atau kondisi terkini.
+
+Jika gambar aktual tidak ditemukan, gunakan AI Image Generator untuk membuat visual ilustratif yang relevan.
+
+Jangan menggambarkan hasil generasi AI sebagai screenshot atau dokumentasi resmi produk.
+
+**B. Topik Evergreen**
+
+Contoh:
+
+- HPP.
+- Arus kas.
+- Stock opname.
+- FIFO.
+- Margin keuntungan.
+- Pembukuan.
+
+Gunakan gambar yang masih relevan secara visual dan tidak memiliki unsur usang yang menyesatkan.
+
+Tidak perlu mengganti gambar hanya karena tanggal unggahnya lama apabila konten visual masih akurat.
+
+**C. Topik Regulasi**
+
+Gunakan visual pendukung yang relevan dengan proses administrasi atau konteks layanan.
+
+Jangan menggunakan gambar dokumen palsu, sertifikat palsu, logo pemerintah yang tidak berizin, atau tampilan portal resmi hasil rekayasa.
+
+Jika menggunakan AI, buat ilustrasi konseptual tanpa mengklaimnya sebagai dokumen resmi.
+
+## 5.3. AI IMAGE GENERATION PROMPT ENGINE
+
+Jika masuk tahap AI generation, buat prompt khusus berdasarkan artikel.
+
+Prompt wajib mempertimbangkan:
+
+1. Primary keyword.
+2. Secondary keyword.
+3. Artikel title.
+4. Konteks bisnis Indonesia.
+5. Objek utama.
+6. Aktivitas atau interaksi.
+7. Lingkungan.
+8. Komposisi.
+9. Sudut kamera.
+10. Pencahayaan.
+11. Warna.
+12. Negative prompt.
+
+Contoh prompt untuk artikel HPP:
+
+"Create a premium photorealistic editorial photograph illustrating HPP calculation for an Indonesian small food business. Show a small business owner carefully weighing fresh ingredients on a digital kitchen scale beside organized ingredient containers, a calculator, and a simple cost notebook. Authentic Indonesian small business kitchen environment, realistic food ingredients, natural lighting, professional commercial photography, clear focal point, realistic human hands, detailed textures, clean composition, landscape 16:9 framing, no watermark, no logos, no readable text, no fake UI, no artificial infographic elements."
+
+Contoh prompt untuk artikel Stock Opname:
+
+"Create a highly realistic editorial photograph illustrating stock opname in an Indonesian retail warehouse. Show a warehouse employee scanning product barcodes and checking inventory on organized shelves, with realistic packaging, handheld barcode scanner, and inventory management workflow. Modern small business warehouse, natural professional lighting, authentic operational environment, landscape 16:9, sharp focus, realistic details, no watermark, no logos, no fabricated readable text."
+
+Prompt harus dibuat spesifik untuk setiap artikel.
+
+DILARANG menggunakan satu prompt generik untuk seluruh gambar.
+
+## 5.4. IMAGE GENERATION VISUAL STANDARDS
+
+Semua hasil AI harus mengikuti standar:
+
+- Photorealistic editorial photography atau visual illustration sesuai kebutuhan artikel.
+- Landscape 16:9.
+- Resolusi ideal 1600 x 900 px atau lebih tinggi.
+- Komposisi bersih.
+- Objek utama mudah dikenali.
+- Tidak menggunakan elemen dekoratif yang berlebihan.
+- Tidak menggunakan teks acak hasil AI.
+- Tidak menggunakan logo COOCA palsu.
+- Tidak menggunakan watermark.
+- Tidak menampilkan angka atau data yang tidak dapat dibaca dengan benar.
+- Tidak menggunakan anatomi manusia yang rusak.
+- Tidak menampilkan objek yang tidak sesuai konteks.
+
+Jika artikel membutuhkan diagram, alur kerja, atau infografik, buat sebagai visual terpisah yang memiliki akurasi informasi. Jangan memaksakan diagram sebagai cover fotografis.
+
+## 5.5. IMAGE SELECTION SCORING
+
+Setiap gambar yang ditemukan atau dihasilkan harus melewati evaluasi.
+
+| Kriteria | Bobot |
+|---|---:|
+| Relevansi dengan primary keyword | 30% |
+| Relevansi dengan isi artikel | 25% |
+| Akurasi objek dan konteks | 15% |
+| Kualitas visual | 15% |
+| Aktual dan sesuai konteks waktu | 10% |
+| Komposisi dan keterbacaan | 5% |
+
+Minimal skor kelayakan: 85/100.
+
+Jika di bawah 85, cari alternatif atau generate ulang.
+
+Skor ini merupakan pemeriksaan editorial internal, bukan ukuran performa SEO aktual.
+
+## 5.6. IMAGE RIGHTS & OWNERSHIP
+
+Bedakan dua jenis aset:
+
+**A. Licensed Third-Party Image**
+
+- Simpan sumber URL.
+- Simpan nama penyedia.
+- Simpan informasi lisensi.
+- Simpan informasi atribusi jika diwajibkan.
+- Jangan mengklaim hak cipta eksklusif COOCA.
+
+**B. COOCA Commissioned / AI-Generated Image**
+
+- Simpan prompt generasi.
+- Simpan tanggal pembuatan.
+- Simpan model atau penyedia generator jika tersedia.
+- Simpan informasi lisensi dan hak penggunaan sesuai ketentuan penyedia.
+- Catat status sebagai aset visual yang dibuat khusus untuk COOCA.
+
+Jangan menyatakan semua gambar milik COOCA secara hukum hanya karena disimpan di repositori sendiri.
+
+## 5.7. IMAGE STORAGE & NAMING
+
+Simpan seluruh cover image pada:
 
 `public/images/blog/{slug}.jpg`
 
-Frontmatter:
+Gunakan:
 
-`cover_image: "https://cooca.id/images/blog/{slug}.jpg"`
+- Filename berdasarkan slug artikel.
+- Format JPG.
+- Resolusi minimal 1200 px pada sisi horizontal.
+- Target maksimal 300 KB setelah optimasi jika kualitas tetap terjaga.
+- Rasio 16:9.
+- Kompresi yang tidak merusak kualitas.
+- Metadata file yang konsisten.
 
-JSON-LD:
+Jika gambar sumber berupa PNG atau WebP, lakukan konversi yang benar ke JPG apabila sesuai dan tidak menghilangkan detail penting.
 
-`"image": "https://cooca.id/images/blog/{slug}.jpg"`
+Jangan sekadar mengganti ekstensi file tanpa konversi format sebenarnya.
 
-Dilarang menggunakan URL gambar eksternal pada artikel final.
+## 5.8. IMAGE METADATA REGISTRY
 
-Pastikan sumber gambar memiliki lisensi atau izin penggunaan yang sesuai. Self-hosting tidak otomatis menjadikan COOCA pemilik hak cipta gambar pihak ketiga.
+Simpan metadata gambar pada JSON pendamping artikel.
 
-Untuk gambar yang dibuat khusus atau dimiliki COOCA, simpan informasi asal dan lisensinya jika diperlukan.
+Contoh:
+
+```json
+{
+  "image": {
+    "path": "public/images/blog/hpp-umkm-kesalahan-perhitungan-keuntungan.jpg",
+    "public_url": "https://cooca.id/images/blog/hpp-umkm-kesalahan-perhitungan-keuntungan.jpg",
+    "alt": "Pemilik usaha kuliner menimbang bahan baku untuk menghitung HPP",
+    "source_type": "ai_generated",
+    "source_url": null,
+    "provider": "image_generator",
+    "prompt": "Prompt lengkap yang digunakan untuk membuat gambar",
+    "generated_at": "2026-11-19",
+    "license_status": "verified_under_provider_terms",
+    "width": 1600,
+    "height": 900,
+    "format": "jpg",
+    "file_size_kb": 245,
+    "relevance_score": 96,
+    "verification_status": "verified"
+  }
+}
+```
+
+Sesuaikan struktur dengan implementasi metadata proyek.
+
+## 5.9. IMAGE FINAL VALIDATION
+
+Sebelum artikel dianggap selesai, pastikan:
+
+- [ ] Gambar ditemukan atau berhasil dihasilkan.
+- [ ] Gambar sesuai primary keyword.
+- [ ] Gambar sesuai isi artikel.
+- [ ] Gambar tidak usang untuk topik yang membutuhkan visual aktual.
+- [ ] Gambar tidak memiliki watermark.
+- [ ] Hak penggunaan telah diperiksa.
+- [ ] Resolusi memenuhi standar.
+- [ ] Rasio gambar sesuai.
+- [ ] File benar-benar JPG.
+- [ ] Ukuran file telah dioptimasi.
+- [ ] Nama file sesuai slug.
+- [ ] File tersimpan di repositori COOCA.
+- [ ] Alt text deskriptif.
+- [ ] Frontmatter menggunakan URL internal COOCA.
+- [ ] JSON-LD menggunakan URL gambar yang sama.
+- [ ] Gambar dapat dibuka melalui URL publik setelah deployment.
+
+**HARD STOP:** Jika gambar tidak tersedia, tidak relevan, gagal dihasilkan, atau tidak lolos validasi, artikel belum boleh dinyatakan selesai dan tidak boleh dipublikasikan.
 
 ---
 
@@ -688,6 +965,7 @@ Gunakan hanya link dari:
 Setiap artikel wajib memiliki 3-5 internal link unik yang relevan.
 
 Strategi:
+
 1. Hubungkan artikel dalam satu pilar.
 2. Hubungkan artikel dengan topik pendukung.
 3. Bangun hubungan antarartikel berdasarkan konteks.
@@ -710,17 +988,15 @@ Untuk 40 artikel yang dibuat pada hari yang sama:
 
 - Gunakan tanggal publikasi aktual.
 - Distribusikan jam publikasi secara bertahap apabila menggunakan fitur scheduled publishing.
-- Jangan mengklaim artikel sudah tersedia sejak Juli 2026 apabila baru dibuat pada November 2026.
+- Jangan mengklaim artikel sudah tersedia sejak periode sebelumnya apabila baru dibuat.
 - Jangan memundurkan `published_at` hanya untuk membuat histori website terlihat natural.
 - Simpan tanggal pembuatan, tanggal publikasi, dan tanggal pembaruan secara terpisah.
 
-Jika melakukan migrasi artikel lama yang benar-benar pernah dipublikasikan, gunakan tanggal publikasi historis hanya jika dapat diverifikasi.
+Gunakan tanggal aktual sesuai waktu eksekusi dan zona waktu Asia/Jakarta.
 
 Format:
 
-`published_at: "2026-11-17T09:00:00+07:00"`
-
-Gunakan tanggal aktual sesuai waktu eksekusi.
+`published_at: "2026-11-19T09:00:00+07:00"`
 
 Jika mendukung penjadwalan, gunakan status scheduled dan pastikan importer menangani status tersebut dengan benar.
 
@@ -747,13 +1023,16 @@ content_type: "evergreen"
 evergreen_score: 5
 reading_time: "9 menit"
 cover_image: "https://cooca.id/images/blog/hpp-umkm-kesalahan-perhitungan-keuntungan.jpg"
-published_at: "2026-11-17T09:00:00+07:00"
-last_verified_at: "2026-11-17"
-next_review_at: "2027-11-17"
+image_alt: "Pemilik usaha kuliner menimbang bahan baku untuk menghitung HPP"
+published_at: "2026-11-19T09:00:00+07:00"
+last_verified_at: "2026-11-19"
+next_review_at: "2027-11-19"
 ---
 ```
 
-Sesuaikan field dengan schema importer yang benar-benar digunakan proyek. Jangan mengubah format produksi sebelum memeriksa implementasi importer.
+Sesuaikan field dengan schema importer yang benar-benar digunakan proyek.
+
+Jangan mengubah format produksi sebelum memeriksa implementasi importer.
 
 Setiap file JSON pendamping harus mengikuti struktur metadata yang konsisten.
 
@@ -768,6 +1047,7 @@ Progress file:
 `database/data/articles/.progress-{YYYY-MM-DD}.json`
 
 Simpan:
+
 - Target produksi.
 - Artikel selesai.
 - Artikel gagal.
@@ -775,14 +1055,31 @@ Simpan:
 - Keyword yang telah digunakan.
 - Slug yang telah dibuat.
 - Status gambar.
+- Image source type.
+- Image generation status.
+- Image verification status.
 - Status linting.
 - Status import.
 - Status Git.
 - Error dan tindakan perbaikan.
 
-Pastikan proses dapat dilanjutkan tanpa mengulang artikel yang sudah selesai.
+Status produksi artikel:
+
+1. `researched`
+2. `keyword_approved`
+3. `headline_approved`
+4. `content_drafted`
+5. `image_searching`
+6. `image_generated`
+7. `image_verified`
+8. `content_validated`
+9. `imported`
+10. `published`
+11. `deployment_verified`
 
 Jangan menandai artikel selesai sebelum seluruh validasi berhasil.
+
+Pastikan proses dapat dilanjutkan tanpa mengulang artikel yang sudah selesai.
 
 ---
 
@@ -796,7 +1093,7 @@ python scripts/lint_content.py database/data/articles/{slug}.md --links database
 
 Target:
 
-<badge color="success">0 FAIL</badge> <badge color="success">0 WARN</badge>
+**0 FAIL dan 0 WARN.**
 
 Validasi mencakup:
 
@@ -815,6 +1112,12 @@ Validasi mencakup:
 13. Duplikasi slug.
 14. Metadata evergreen.
 15. Konsistensi kategori.
+16. Kesesuaian image URL.
+17. Keberadaan file gambar.
+18. Validitas format gambar.
+19. Resolusi dan rasio gambar.
+20. Alt text.
+21. Metadata sumber dan lisensi gambar.
 
 Tambahkan pemeriksaan editorial manual untuk:
 
@@ -825,6 +1128,8 @@ Tambahkan pemeriksaan editorial manual untuk:
 - Keaslian konten.
 - Validitas sumber.
 - Kelayakan evergreen.
+- Relevansi visual.
+- Kualitas gambar.
 
 Jangan memanipulasi validator atau menghapus aturan agar artikel terlihat lulus.
 
@@ -841,6 +1146,7 @@ php artisan blog:import-articles --force
 ```
 
 Verifikasi:
+
 - Seluruh artikel masuk database.
 - Status sesuai jadwal publikasi.
 - Tidak ada duplikasi record.
@@ -868,7 +1174,7 @@ git status
 git diff --check
 ```
 
-Stage file yang memang menjadi bagian dari pekerjaan:
+Stage file yang memang menjadi bagian pekerjaan:
 
 ```bash
 git add database/data/articles/
@@ -884,25 +1190,29 @@ Commit:
 git commit -m "feat(blog): publish evergreen umkm educational articles [YYYY-MM-DD]"
 ```
 
-Push:
+Sebelum push, periksa apakah ada commit remote baru dan pastikan seluruh perubahan lokal aman.
 
 ```bash
 git pull --rebase origin main
 git push origin main
 ```
 
-Jika terjadi konflik, periksa dan selesaikan secara hati-hati. Jangan melakukan force push.
+Jika terjadi konflik, periksa dan selesaikan secara hati-hati.
+
+Jangan melakukan force push.
 
 Server produksi COOCA menggunakan mekanisme deployment otomatis melalui scheduler yang menjalankan Git pull dan importer.
 
 Setelah push:
+
 1. Verifikasi commit berada pada remote branch.
 2. Verifikasi scheduler berjalan.
 3. Periksa log deployment jika tersedia.
 4. Periksa hasil import di server.
 5. Verifikasi halaman artikel publik.
-6. Verifikasi cover image melalui URL publik.
+6. Verifikasi setiap cover image melalui URL publik.
 7. Verifikasi sitemap.
+8. Pastikan gambar yang baru dibuat benar-benar ikut ter-deploy.
 
 Jangan mengklaim deployment berhasil hanya karena Git push berhasil.
 
@@ -918,12 +1228,14 @@ Setelah publikasi, lakukan pemeriksaan:
 - Canonical URL benar.
 - Structured data valid.
 - Cover image dapat diakses.
+- Cover image sesuai artikel.
 - Internal link bekerja.
 - Tidak ada halaman duplikat.
 - Sitemap memuat artikel yang seharusnya sudah terbit.
 - Tampilan mobile dan desktop layak.
 
 Jika tersedia akses Google Search Console, pantau:
+
 - Indexing status.
 - Impressions.
 - Clicks.
@@ -947,21 +1259,25 @@ Buat laporan eksekutif dengan format berikut.
 - Target artikel: 40.
 - Artikel selesai.
 - Artikel gagal.
+- Artikel pending.
 - Artikel berhasil diimpor.
 - Artikel berhasil dipublikasikan.
 - Total keyword terdaftar.
 - Total aset gambar.
+- Gambar hasil pencarian.
+- Gambar hasil AI generation.
 - Status deployment.
 
 ## B. Article Production Table
 
-| No | Judul Clickbait | Primary Keyword | Pilar | Evergreen Score | Word Count | Image | Lint | Production |
-|---|---|---|---|---|---:|---|---|---|
-| 1 | Judul artikel | Keyword | Keuangan | 5 | 1.750 | Verified | PASS | Published |
+| No | Judul Clickbait | Primary Keyword | Pilar | Evergreen Score | Word Count | Image Source | Image Status | Lint | Production |
+|---|---|---|---|---:|---:|---|---|---|---|
+| 1 | Judul artikel | Keyword | Keuangan | 5 | 1.750 | AI Generated | Verified | PASS | Published |
 
 ## C. Headline Evaluation
 
 Tampilkan:
+
 - Primary keyword.
 - 10 alternatif judul.
 - Judul terpilih.
@@ -973,6 +1289,7 @@ Tampilkan:
 ## D. Evergreen Distribution
 
 Tampilkan jumlah artikel berdasarkan:
+
 - Core Evergreen.
 - Seasonal Evergreen.
 - Regulatory Evergreen.
@@ -980,16 +1297,38 @@ Tampilkan jumlah artikel berdasarkan:
 
 ## E. Pillar Distribution
 
-Pastikan distribusi:
+Target distribusi:
+
 - Keuangan: 8 artikel.
 - Inventori: 8 artikel.
 - Kasir dan POS: 8 artikel.
 - Legalitas dan Pajak: 8 artikel.
 - CRM dan Omnichannel: 8 artikel.
 
-## F. Quality Assurance
+Jika jumlah artikel berkualitas tidak mencukupi, laporkan kekurangannya secara transparan.
+
+## F. Image Production Report
 
 Tampilkan:
+
+| No | Slug | Primary Keyword | Image Source | Freshness | Relevance Score | Resolution | File Size | Verification |
+|---|---|---|---|---|---:|---|---:|---|
+| 1 | article-slug | HPP UMKM | AI Generated | Current | 96 | 1600x900 | 245 KB | PASS |
+
+Jelaskan:
+
+- Jumlah gambar hasil pencarian.
+- Jumlah gambar hasil AI generation.
+- Jumlah gambar yang ditolak.
+- Alasan gambar ditolak.
+- Status lisensi.
+- Status penyimpanan lokal.
+- Status URL publik.
+
+## G. Quality Assurance
+
+Tampilkan:
+
 - Hasil linting.
 - Jumlah FAIL.
 - Jumlah WARN.
@@ -999,9 +1338,10 @@ Tampilkan:
 - Validasi JSON-LD.
 - Validasi keyword cannibalization.
 
-## G. Deployment Verification
+## H. Deployment Verification
 
 Berikan bukti:
+
 - Git commit hash.
 - Git push status.
 - Production import status.
@@ -1019,6 +1359,34 @@ Blog publik:
 
 ---
 
+# FASE 15: CONTINUOUS IMPROVEMENT
+
+Setelah produksi dan publikasi, evaluasi performa konten.
+
+Prioritaskan:
+
+1. Artikel yang mendapatkan impressions tetapi CTR rendah.
+2. Artikel dengan ranking yang berpotensi ditingkatkan.
+3. Artikel dengan internal linking yang masih lemah.
+4. Artikel yang mengalami perubahan regulasi.
+5. Artikel dengan informasi yang sudah tidak aktual.
+6. Artikel yang memiliki cover image kurang representatif.
+7. Artikel yang memiliki search intent tidak sesuai.
+
+Jangan membuat artikel baru untuk keyword yang sebenarnya lebih tepat ditangani dengan memperbarui artikel lama.
+
+Gunakan data aktual untuk memperbaiki:
+
+- Judul.
+- Meta description.
+- Struktur konten.
+- Internal linking.
+- Cover image.
+- Informasi faktual.
+- Search intent alignment.
+
+---
+
 # FINAL EXECUTION RULES
 
 1. Kerjakan seluruh tahapan secara berurutan.
@@ -1030,25 +1398,56 @@ Blog publik:
 7. Jangan menggunakan clickbait palsu.
 8. Jangan melakukan hard-selling COOCA.
 9. Jangan menggunakan gambar yang tidak memiliki hak penggunaan.
-10. Jangan mengubah file di luar ruang lingkup pekerjaan.
-11. Jangan melakukan deployment jika validasi belum berhasil.
-12. Jangan mengklaim keberhasilan tanpa bukti hasil eksekusi.
+10. Jangan menggunakan cover image yang tidak sesuai keyword.
+11. Jangan menggunakan gambar usang untuk topik yang membutuhkan representasi kondisi terbaru.
+12. Jika gambar relevan tidak ditemukan, WAJIB gunakan AI Image Generator.
+13. Jangan melewati image generation hanya karena proses pencarian gambar gagal.
+14. Jangan menyatakan gambar hasil AI sebagai foto dokumentasi nyata.
+15. Jangan mengklaim kepemilikan hak cipta eksklusif atas gambar pihak ketiga.
+16. Jangan mengubah file di luar ruang lingkup pekerjaan.
+17. Jangan melakukan deployment jika validasi belum berhasil.
+18. Jangan mengklaim keberhasilan tanpa bukti hasil eksekusi.
+19. Jangan mengorbankan kualitas artikel, gambar, atau akurasi informasi demi kuota produksi.
+20. Pastikan setiap aset gambar benar-benar masuk ke Git dan tersedia di server produksi.
 
-**DEFINITION OF DONE:**
+---
+
+# DEFINITION OF DONE
 
 Satu artikel baru dianggap selesai jika:
+
 - Keyword sudah tervalidasi.
 - Tidak mengalami cannibalization.
 - Judul clickbait lolos evaluasi editorial.
 - Konten evergreen memenuhi standar kualitas.
 - Artikel memiliki minimal 1.500 kata.
-- Gambar tersedia sebagai aset internal COOCA.
+- Gambar terbaru dan relevan tersedia.
+- Jika gambar relevan tidak ditemukan, gambar berhasil dibuat dengan AI Image Generator.
+- Gambar memenuhi standar kualitas visual.
+- Hak penggunaan gambar telah diperiksa.
+- Gambar tersimpan sebagai aset lokal COOCA.
 - Internal linking valid.
 - JSON-LD valid.
 - Linting 0 FAIL dan 0 WARN.
 - Database import berhasil.
 - Deployment berhasil diverifikasi.
+- URL artikel dan cover image dapat diakses pada production.
 
-**FINAL OBJECTIVE:**
+**HARD STOP:** Artikel yang tidak memiliki gambar relevan dan terverifikasi tidak boleh dinyatakan selesai atau dipublikasikan.
 
-Bangun perpustakaan edukasi bisnis COOCA yang tidak hanya memiliki banyak artikel, tetapi juga memiliki topical authority yang kuat, judul dengan daya tarik klik tinggi, konten evergreen yang terus relevan, dan kualitas editorial yang layak menjadi referensi pemilik UMKM Indonesia.
+---
+
+# FINAL OBJECTIVE
+
+Bangun perpustakaan edukasi bisnis COOCA yang tidak hanya memiliki banyak artikel, tetapi juga:
+
+1. Memiliki topical authority yang kuat.
+2. Memiliki judul dengan daya tarik klik tinggi.
+3. Memiliki konten evergreen yang terus relevan.
+4. Memiliki kualitas editorial yang layak menjadi referensi pemilik UMKM Indonesia.
+5. Memiliki visual berkualitas tinggi yang relevan dengan setiap topik.
+6. Memiliki sistem pengadaan gambar otomatis melalui pencarian aset aktual dan AI Image Generation.
+7. Memiliki aset visual mandiri yang terorganisasi dalam repositori COOCA.
+8. Memiliki proses produksi, validasi, import, dan deployment yang dapat diulang dan diaudit.
+
+**QUALITY OVER QUANTITY. RELEVANCE OVER GENERIC CONTENT. VERIFIED VISUALS OVER PLACEHOLDER IMAGES.**

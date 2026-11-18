@@ -378,11 +378,14 @@ final class RbacSeeder extends Seeder
             ],
             'warehouse' => [
                 'name'        => 'Staf Gudang / Logistik',
-                'description' => 'Penerimaan barang dari PO, mutasi inventori, dan stock opname fisik.',
+                'description' => 'Penerimaan barang dari PO, mutasi inventori, rilis bahan produksi, dan stock opname fisik.',
                 'permissions' => [
                     'dashboard.view',
                     'products.view',
                     'materials.view',
+                    'production.view',
+                    'production.execute',
+                    'production.complete',
                     'inventory.view',
                     'inventory.manage',
                     'warehouse.view',
@@ -459,6 +462,7 @@ final class RbacSeeder extends Seeder
                 'description' => 'Akses hanya lihat untuk peninjauan laporan dan transaksi tanpa hak edit.',
                 'permissions' => [
                     'dashboard.view',
+                    'production.view',
                     'reports.view',
                     'reports.financial',
                     'accounting.view',

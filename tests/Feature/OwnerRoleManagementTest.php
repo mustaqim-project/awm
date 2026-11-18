@@ -59,4 +59,39 @@ class OwnerRoleManagementTest extends TestCase
         $this->assertTrue(Context::hasPermission('pos.terminal'));
         $this->assertFalse(Context::hasPermission('costing.view_margin'));
     }
+
+    public function test_owner_can_update_preset_role_permissions_without_providing_name(): void
+    {
+        $ownerRole = Role::whereNull('business_id')->where('slug', 'owner')->firstOrFail();
+
+        // Simulate form submit from preset role modal where name input is readonly / not submitted
+        $response = $this->actingAs($this->owner)->put(route('roles.update', $ownerRole), [
+            'permissions' => ['pos.terminal', 'invoices.create', 'production.view'],
+        ]);
+
+        $response->assertSessionHas('success', 'Hak akses preset role berhasil diperbarui.');
+        $response->assertSessionDoesntHaveErrors();
+        $this->assertTrue($ownerRole->fresh()->permissions()->where('slug', 'production.view')->exists());
+    }
+
+    public function test_owner_can_update_custom_role(): void
+    {
+        $role = Role::create([
+            'business_id' => $this->business->id,
+            'name' => 'Staf Magang',
+            'slug' => 'staf-magang',
+        ]);
+
+        $response = $this->actingAs($this->owner)->put(route('roles.update', $role), [
+            'name' => 'Staf Magang Senior',
+            'description' => 'Deskripsi baru',
+            'permissions' => ['pos.terminal'],
+        ]);
+
+        $response->assertSessionHas('success', 'Role dan permission berhasil diperbarui.');
+        $role->refresh();
+        $this->assertSame('Staf Magang Senior', $role->name);
+        $this->assertSame('staf-magang-senior', $role->slug);
+        $this->assertTrue($role->permissions()->where('slug', 'pos.terminal')->exists());
+    }
 }

@@ -200,13 +200,13 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
 
         // Manufacturing & Production Orders (SPKP)
         Route::middleware(['module:manufacturing_production'])->group(function (): void {
-            Route::get('/production', [ProductionWebController::class, 'index'])->name('production.index');
-            Route::get('/production/create', [ProductionWebController::class, 'create'])->name('production.create');
-            Route::post('/production', [ProductionWebController::class, 'store'])->name('production.store');
-            Route::get('/production/{productionOrder}', [ProductionWebController::class, 'show'])->name('production.show');
-            Route::post('/production/{productionOrder}/issue-materials', [ProductionWebController::class, 'issueMaterials'])->name('production.issue-materials');
-            Route::post('/production/{productionOrder}/complete', [ProductionWebController::class, 'complete'])->name('production.complete');
-            Route::post('/production/{productionOrder}/cancel', [ProductionWebController::class, 'cancel'])->name('production.cancel');
+            Route::get('/production', [ProductionWebController::class, 'index'])->middleware('require.permission:production.view')->name('production.index');
+            Route::get('/production/create', [ProductionWebController::class, 'create'])->middleware('require.permission:production.create')->name('production.create');
+            Route::post('/production', [ProductionWebController::class, 'store'])->middleware('require.permission:production.create')->name('production.store');
+            Route::get('/production/{productionOrder}', [ProductionWebController::class, 'show'])->middleware('require.permission:production.view')->name('production.show');
+            Route::post('/production/{productionOrder}/issue-materials', [ProductionWebController::class, 'issueMaterials'])->middleware('require.permission:production.execute')->name('production.issue-materials');
+            Route::post('/production/{productionOrder}/complete', [ProductionWebController::class, 'complete'])->middleware('require.permission:production.complete')->name('production.complete');
+            Route::post('/production/{productionOrder}/cancel', [ProductionWebController::class, 'cancel'])->middleware('require.permission:production.cancel')->name('production.cancel');
         });
 
         // Jasa & Layanan Management

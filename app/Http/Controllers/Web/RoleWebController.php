@@ -79,15 +79,22 @@ final class RoleWebController extends Controller
         abort_unless($isCustom || $isPreset, 403, 'Role tidak dapat diedit.');
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:100'],
+            'name' => [$isPreset ? 'nullable' : 'required', 'string', 'max:100'],
             'description' => ['nullable', 'string', 'max:500'],
             'permissions' => ['nullable', 'array'],
             'permissions.*' => ['string', 'exists:permissions,slug'],
         ]);
 
-        if ($isCustom) {
-            // Custom role: boleh update nama, deskripsi, dan permissions
-            $role->update(['name' => $validated['name'], 'description' => $validated['description'] ?? null]);
+        if ($isCustom && ! empty($validated['name'])) {
+            $slug = Str::slug($validated['name']);
+            if (Role::where('business_id', $business->id)->where('slug', $slug)->where('id', '!=', $role->id)->exists()) {
+                return back()->withErrors(['name' => 'Nama role tersebut sudah digunakan di bisnis ini.']);
+            }
+            $role->update([
+                'name' => $validated['name'],
+                'slug' => $slug,
+                'description' => $validated['description'] ?? null,
+            ]);
         }
 
         $allowedIds = Permission::whereIn('slug', $validated['permissions'] ?? [])

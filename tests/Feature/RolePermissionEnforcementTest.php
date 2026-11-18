@@ -43,6 +43,7 @@ class RolePermissionEnforcementTest extends TestCase
         $owner = User::create(['name' => 'Owner', 'email' => 'owner-scope@test.local', 'password' => 'password']);
         $business = Business::create(['name' => 'Scope Business']);
         $business->users()->attach($owner->id, ['id' => (string) Str::uuid(), 'role' => 'owner', 'role_id' => Role::where('slug', 'owner')->value('id')]);
+        $owner->update(['active_business_id' => $business->id]);
         Context::setBusiness($business, BusinessMembership::where('business_id', $business->id)->where('user_id', $owner->id)->first());
         $otherBusiness = Business::create(['name' => 'Other Business']);
         $otherRole = Role::create(['business_id' => $otherBusiness->id, 'name' => 'Other Role', 'slug' => 'other-role']);
