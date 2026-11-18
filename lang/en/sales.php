@@ -473,6 +473,7 @@ return [
         'btn_void_invoice' => 'Void Invoice',
         'doc_badge_commercial' => 'Commercial Sales Invoice',
         'based_on_po' => 'Based on PO:',
+        'based_on_so' => 'Based on Sales Order (SO):',
         'seller_party_title' => 'Seller / Dispatcher Party',
         'sender_pic_label' => 'Sender / PIC:',
         'currency_info_label' => 'Currency:',

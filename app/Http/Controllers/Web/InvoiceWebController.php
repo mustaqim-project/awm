@@ -349,7 +349,7 @@ final class InvoiceWebController extends Controller implements HasMiddleware
         $business = Context::requireBusiness();
         abort_unless($invoice->business_id === $business->id, 403);
 
-        $invoice->load(['customer', 'purchaseOrder', 'items.product', 'items.unit', 'payments.creator']);
+        $invoice->load(['customer', 'purchaseOrder', 'salesOrder', 'items.product', 'items.unit', 'payments.creator']);
 
         return view('app.invoices.show', compact('business', 'invoice'));
     }

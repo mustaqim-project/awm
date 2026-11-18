@@ -148,6 +148,16 @@
             </a>
             @endcan
 
+            {{-- Surat Jalan (DO) Pengiriman jika terhubung dengan Sales Order --}}
+            @if($invoice->salesOrder)
+                @feature('logistics.delivery_order')
+                <a href="{{ route('sales.orders.delivery-order', $invoice->salesOrder) }}" target="_blank" class="hidden sm:inline-flex min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all items-center justify-center gap-1.5 shrink-0" title="Cetak Dokumen Surat Jalan Resmi Pengiriman">
+                    <i data-lucide="truck" class="w-4 h-4 text-[#007AFF]"></i>
+                    <span class="hidden md:inline">Surat Jalan (DO)</span>
+                </a>
+                @endfeature
+            @endif
+
             {{-- Overflow Menu (Apple HIG "⋯" Actions) --}}
             <div class="relative" x-data="{ open: false }" @click.away="open = false" @keydown.escape.window="open = false">
                 <button type="button" @click="open = !open"
@@ -198,6 +208,16 @@
                         <span>{{ __('sales.invoices.btn_print_a4') }}</span>
                     </a>
                     @endcan
+
+                    {{-- Cetak Surat Jalan (DO) --}}
+                    @if($invoice->salesOrder)
+                        @feature('logistics.delivery_order')
+                        <a href="{{ route('sales.orders.delivery-order', $invoice->salesOrder) }}" target="_blank" class="flex items-center gap-2.5 px-3.5 py-2 text-[#007AFF] hover:bg-[#007AFF]/10 transition">
+                            <i data-lucide="truck" class="w-4 h-4 text-[#007AFF]"></i>
+                            <span>Cetak Surat Jalan (DO)</span>
+                        </a>
+                        @endfeature
+                    @endif
 
                     {{-- Destructive Options --}}
                     @if($canVoid || $canDeleteDraft)
@@ -254,6 +274,15 @@
                     <div class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mt-1">
                         <span>{{ __('sales.invoices.based_on_po') }}</span>
                         <span class="font-medium text-black dark:text-white tabular-nums">{{ $invoice->purchaseOrder->po_number }}</span>
+                    </div>
+                @endif
+                @if($invoice->salesOrder)
+                    <div class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 mt-1">
+                        <span>{{ __('sales.invoices.based_on_so') ?? 'Berdasarkan Pesanan (SO):' }}</span>
+                        <a href="{{ route('sales.orders.show', $invoice->salesOrder) }}" class="font-medium text-[#007AFF] hover:underline tabular-nums inline-flex items-center gap-1">
+                            <span>{{ $invoice->salesOrder->so_number }}</span>
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                        </a>
                     </div>
                 @endif
             </div>

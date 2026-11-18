@@ -147,4 +147,56 @@ final class SalesOrderAndQuotationEditTest extends TestCase
         $response->assertSee('Manager Logistik');
         $response->assertSee('PIC Gudang Penerima');
     }
+
+    public function test_can_generate_invoice_and_stream_delivery_order_from_sales_order(): void
+    {
+        Context::setBusiness($this->business);
+        $this->business->update([
+            'settings' => [
+                'features' => [
+                    'logistics.delivery_order' => true,
+                ],
+            ],
+        ]);
+
+        $order = SalesOrder::create([
+            'business_id' => $this->business->id,
+            'customer_id' => $this->customer->id,
+            'so_number' => 'SO-202610-0099',
+            'order_date' => now()->toDateString(),
+            'status' => 'confirmed',
+            'subtotal' => 150000,
+            'total_amount' => 150000,
+        ]);
+
+        SalesOrderItem::create([
+            'sales_order_id' => $order->id,
+            'product_id' => $this->product->id,
+            'product_name' => $this->product->name,
+            'unit_price' => 50000,
+            'quantity' => 3,
+            'subtotal' => 150000,
+        ]);
+
+        // 1. Test streaming Surat Jalan (Delivery Order) PDF
+        $doResponse = $this->actingAs($this->owner)->get(route('sales.orders.delivery-order', $order->id));
+        $doResponse->assertStatus(200);
+        $this->assertStringContainsString('application/pdf', (string) $doResponse->headers->get('Content-Type'));
+
+        // 2. Test generate Invoice from Sales Order
+        $genResponse = $this->actingAs($this->owner)->post(route('sales.orders.generate-invoice', $order->id));
+        $genResponse->assertRedirect();
+        $this->assertDatabaseHas('invoices', [
+            'business_id' => $this->business->id,
+            'sales_order_id' => $order->id,
+        ]);
+
+        $invoice = \App\Models\Invoice::where('sales_order_id', $order->id)->firstOrFail();
+
+        // 3. Test Invoices show page displays SO link and Delivery Order button
+        $invShowResponse = $this->actingAs($this->owner)->get(route('invoices.show', $invoice->id));
+        $invShowResponse->assertStatus(200);
+        $invShowResponse->assertSee('SO-202610-0099');
+        $invShowResponse->assertSee('Surat Jalan (DO)');
+    }
 }

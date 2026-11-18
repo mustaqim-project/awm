@@ -473,6 +473,7 @@ return [
         'btn_void_invoice' => 'Batalkan Faktur',
         'doc_badge_commercial' => 'Faktur Penjualan Komersial',
         'based_on_po' => 'Berdasarkan PO:',
+        'based_on_so' => 'Berdasarkan Pesanan (SO):',
         'seller_party_title' => 'Pihak Penjual / Pengirim',
         'sender_pic_label' => 'Pengirim / PIC:',
         'currency_info_label' => 'Mata Uang:',
