@@ -743,8 +743,12 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
 
         $logFile = storage_path('logs/dogo_sync_output.json');
         $summary = file_exists($logFile) ? json_decode((string) file_get_contents($logFile), true) : null;
-        $business = \App\Models\Business::where('name', 'like', '%D0%')->orWhere('name', 'like', '%DO%')->first();
         $owner = \App\Models\User::where('email', 'srifennikapurba@gmail.com')->first();
+        $business = $owner ? $owner->businesses()->where(function ($q) {
+            $q->where('name', 'like', '%D0%')
+              ->orWhere('name', 'like', '%DO%')
+              ->orWhere('name', 'like', '%GO%');
+        })->first() : \App\Models\Business::where('id', '25466382-3c7f-4207-aa3f-92e63ffa2bbf')->first();
         $materialsCount = $business ? \App\Models\Material::where('business_id', $business->id)->count() : 0;
         $productsCount = $business ? \App\Models\Product::where('business_id', $business->id)->count() : 0;
         $bomItemsCount = $business ? \App\Models\BomItem::whereHas('header.costModel', fn($q) => $q->where('business_id', $business->id))->count() : 0;
