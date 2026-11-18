@@ -25438,3 +25438,71 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
 - **Regression Tests:**
   - `PurchasingSubmodulesIntegrationTest`: 4 tests, 22 assertions, PASSED 100%.
 
+---
+
+### [WORK-2026-11-18-739] Produksi & Deployment Batch 15 Blog SEO (20 Artikel ID 739-758) Berdasarkan Google Trends UMKM Indonesia 18 November 2026
+
+- **Date:** 2026-11-18
+- **Status:** COMPLETED
+- **Module:** Blog & Content Marketing SEO
+- **Feature:** Google Trends Business Research, Batch 15 High-Quality SEO Article Production, Local Image Synchronization, Live Controller & DB Verification
+- **Work Type:** Feature | Content Engineering | Quality Assurance
+
+#### 1. Konteks & Riset Tren Bisnis (18 November 2026)
+- **Kebutuhan:** Membangun 20 artikel blog pilar otoritatif bernilai tinggi untuk UMKM Indonesia berdasarkan tren pencarian real-time Google Trends & momentum bisnis akhir tahun (persiapan Coretax DJP 2026, lonjakan pesanan hampers Natal & Tahun Baru, strategi Harbolnas 12.12, logistik musim hujan, evaluasi KPI karyawan toko, regulasi Perpres 38/2026 kewirausahaan, serta pengadaan PaDi UMKM / E-Katalog v6).
+- **Deliverable Riset:**
+  - `database/data/articles/trending-research-2026-11-18.json`: Pemetaan 20 topik strategis, query tren, search intent, persona UMKM, dan sumber otoritas (DJP, KemenkopUKM, LKPP, Bank Indonesia).
+  - `database/data/articles/keyword-research-2026-11-18.json`: Ringkasan terstruktur keyword primer & sekunder, target H1, meta title, meta description, dan slug SEO.
+
+#### 2. Arsitektur Produksi & Standar Konten (Batch 15: ID 739–758)
+- **Standar Redaksional & SEO Zero-Defect:**
+  - Zero em dash (`—`) dan zero en dash (`–`) di 100% judul, deskripsi meta, konten markdown, dan skema FAQ.
+  - Panjang konten minimum 1200 kata per artikel (rentang 1200–1600 kata).
+  - Primary keyword muncul wajib di: H1 (exact match), 100 kata pertama, meta title (<= 60 karakter), meta description (120–160 karakter), dan minimal 1 subjudul H2.
+  - Internal link valid strictly dari `blog_links.json` (canonical URLs).
+  - Skema terstruktur ganda: JSON-LD `Article` dan `FAQPage` (4 pertanyaan mendalam dan jawaban aplikatif per artikel).
+- **Implementasi Generator & Asset Sync:**
+  - `scripts/batch15_common.py`: Mesin pembangun skema JSON-LD dan validasi parameter.
+  - `scripts/sync_batch15_images.py`: Sinkronisasi otomatis 20 aset foto lokal beresolusi tinggi dari `public/images/blog/photo-*.jpg` menjadi `public/images/blog/{slug}.jpg`.
+  - Generator modular: `scripts/generate_batch15_part1.py` (739–743), `scripts/generate_batch15_part2.py` (744–748), `scripts/generate_batch15_part3.py` (749–753), `scripts/generate_batch15_part4.py` (754–758).
+  - `scripts/build_and_validate_batch15.py`: Orkestrasi pembuatan file `.md` dan `.json`, update sitemap, pembaruan `blog_links.json`, serta eksekusi linter.
+- **Daftar 20 Artikel Batch 15:**
+  1. #739: `panduan-coretax-djp-umkm-kode-billing-pph-final` (Pajak & Legalitas)
+  2. #740: `cara-menghitung-hpp-hampers-natal-tahun-baru-kuliner` (Keuangan Bisnis)
+  3. #741: `cara-menyusun-proyeksi-arus-kas-q1-awal-tahun-umkm` (Manajemen Keuangan)
+  4. #742: `strategi-bundling-dan-flash-sale-harbolnas-12-12-umkm` (Penjualan & Pemasaran)
+  5. #743: `sop-pengemasan-paket-musim-hujan-ekspedisi-anti-rusak` (Operasional & Logistik)
+  6. #744: `format-evaluasi-kpi-karyawan-toko-dan-bonus-akhir-tahun` (HR & Manajemen Tim)
+  7. #745: `manfaat-perpres-38-2026-kewirausahaan-nasional-dan-nib-oss` (Legalitas & Perizinan)
+  8. #746: `sop-reservasi-meja-restoran-dan-kafe-libur-nataru` (Manajemen F&B)
+  9. #747: `cara-stock-opname-cepat-dengan-barcode-scanner-toko` (Manajemen Inventori)
+  10. #748: `manajemen-stok-toko-fisik-dan-live-shopping-video-commerce` (Omnichannel Retail)
+  11. #749: `cara-mencatat-biaya-barang-rusak-dan-kedaluwarsa-sak-emkm` (Akuntansi UMKM)
+  12. #750: `strategi-reaktivasi-pelanggan-dormant-whatsapp-akhir-tahun` (Customer Retention)
+  13. #751: `panduan-padisera-padi-umkm-dan-ekatalog-lkpp-v6` (B2B & Pengadaan Pemerintah)
+  14. #752: `sop-pengelolaan-kas-kembalian-dan-modal-awal-laci-kasir` (Operasional Kasir POS)
+  15. #753: `strategi-purchase-order-bahan-baku-antisipasi-libur-supplier` (Purchasing & Supply Chain)
+  16. #754: `menu-engineering-musim-hujan-substitusi-bahan-baku-kafe` (F&B & Menu Engineering)
+  17. #755: `tata-cara-pembagian-dividen-dan-laba-ditahan-akhir-tahun-cv-pt` (Hukum & Finansial Korporasi)
+  18. #756: `kampanye-kedaluwarsa-poin-loyalitas-member-dorong-repeat-order` (Loyalty & CRM)
+  19. #757: `audit-keamanan-kasir-pos-cegah-modus-void-pembatalan-palsu` (Keamanan Kasir & Anti-Fraud)
+  20. #758: `panduan-merekrut-karyawan-part-time-musiman-harbolnas-liburan` (Manajemen SDM & Rekrutmen)
+
+#### 3. Database Deployment, Verifikasi Live & Testing
+- **Linter Konten:** `scripts/lint_content.py` -> 20/20 PASS (0 FAIL, 0 warning).
+- **Database Import:** `php artisan blog:import-articles` berhasil memproses dan memperbarui 860/860 artikel.
+- **Sitemap & Link Sync:** `public/sitemap_blog.xml` & `blog_links.json` tersinkronisasi 850 artikel terindeks.
+- **Pembaruan & Penyesuaian Visual Cover Image Sesuai Keyword:**
+  - Menghapus gambar stok generik sebelumnya yang tidak selaras dengan kata kunci.
+  - Menghasilkan gambar fotorealistik AI bespoke via `image-generator` untuk topik spesifik (misal: Hampers Natal & Tahun Baru kuliner dengan toples Nastar, Kastengel, pita festive, dan keranjang rotan).
+  - Menyelaraskan seluruh 20 aset cover image di `public/images/blog/` dengan visual bertema spesifik: void kasir supervisor, serah terima modal laci kasir, kartu loyalitas poin, penanganan kedaluwarsa produk, PO supplier, WhatsApp broadcast resmi, e-katalog LKPP & PaDi UMKM, laporan dividen laba ditahan, kontrak kerja PKWT part-time, HPP kopi & menu kafe, barcode scanner stock opname, live streaming video commerce, perizinan NIB, evaluasi KPI karyawan, kemasan anti-hujan, batas diskon promo bundling, dan aktivasi Coretax DJP.
+  - Memperbarui skrip sinkronisasi permanen: `scripts/sync_batch15_images.py`.
+- **Verifikasi Live Runtime (`scripts/verify_batch15_live.php`):**
+  - Menguji pemuatan via `Post::published()->where('slug', $slug)->firstOrFail()`.
+  - Menguji rendering `BlogController::show()` dan view Blade `resources/views/blog/show.blade.php`.
+  - Seluruh 20/20 artikel lulus 100%.
+- **Automated Feature Testing:** `tests/Feature/Batch15BlogDeliveryTest.php`
+  - 1 test, 203 assertions, PASSED 100%.
+  - Memverifikasi keberadaan database, status `is_published = true`, ketiadaan em/en dash di kolom DB, serta live HTTP response 200, validitas Schema.org FAQPage & Article.
+
+
