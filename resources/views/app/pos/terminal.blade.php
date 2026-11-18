@@ -604,6 +604,7 @@
                             <span x-show="todayReservations.length > 0" x-text="todayReservations.length"
                                 class="px-1.5 py-0.5 rounded-full bg-white text-[#5856D6] font-bold text-[9px] flex items-center justify-center tabular-nums"></span>
                         </button>
+                    @endif
 
                     @if ($business && ($business->isFoodIndustry() || $business->hasDineInFeature()))
                         <!-- Auto KDS (Paperless Kitchen) Toggle Button -->
