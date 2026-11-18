@@ -11,6 +11,7 @@ final class ModuleRegistry
     public const MODULE_B2B_SALES = 'b2b_sales';
     public const MODULE_RECIPE_BOM = 'recipe_bom';
     public const MODULE_LABOR_MACHINES = 'labor_machines';
+    public const MODULE_MANUFACTURING_PRODUCTION = 'manufacturing_production';
     public const MODULE_INVENTORY_WAREHOUSE = 'inventory_warehouse';
     public const MODULE_PROCUREMENT = 'procurement';
     public const MODULE_CRM_LOYALTY = 'crm_loyalty';
@@ -102,6 +103,19 @@ final class ModuleRegistry
                 'permissions' => [
                     'labor_machines.view',
                     'labor_machines.manage',
+                ],
+            ],
+            self::MODULE_MANUFACTURING_PRODUCTION => [
+                'name' => 'Perintah Kerja Produksi (SPKP) & Manufaktur',
+                'description' => 'Jadwal perintah kerja produksi batch, pengeluaran bahan baku ke lantai pabrik (WIP), pencatatan yield aktual, dan penerimaan barang jadi.',
+                'icon' => 'factory',
+                'category' => 'Produksi & HPP',
+                'permissions' => [
+                    'production.view',
+                    'production.create',
+                    'production.execute',
+                    'production.complete',
+                    'production.cancel',
                 ],
             ],
             self::MODULE_INVENTORY_WAREHOUSE => [

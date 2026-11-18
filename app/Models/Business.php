@@ -473,6 +473,11 @@ class Business extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function productionOrders(): HasMany
+    {
+        return $this->hasMany(ProductionOrder::class);
+    }
+
     public function materials(): HasMany
     {
         return $this->hasMany(Material::class);

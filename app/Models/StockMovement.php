@@ -42,6 +42,14 @@ class StockMovement extends Model
 
     public const TYPE_SALES = 'online_sale';
 
+    public const TYPE_PRODUCTION_ISSUE = 'production_issue';
+
+    public const TYPE_PRODUCTION_RECEIPT = 'production_receipt';
+
+    public const TYPE_PRODUCTION_SCRAP = 'production_scrap';
+
+    public const TYPE_PRODUCTION_RETURN = 'production_return';
+
     protected $fillable = [
         'business_id',
         'location_id',

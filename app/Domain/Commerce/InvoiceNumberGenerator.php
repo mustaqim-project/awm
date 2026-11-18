@@ -19,7 +19,8 @@ final class InvoiceNumberGenerator
     {
         $prefix = 'INV-' . date('Ym') . '-';
 
-        $lastInvoice = Invoice::where('business_id', $business->id)
+        $lastInvoice = Invoice::withTrashed()
+            ->where('business_id', $business->id)
             ->where('invoice_number', 'like', "{$prefix}%")
             ->orderByDesc('invoice_number')
             ->first();
@@ -28,6 +29,13 @@ final class InvoiceNumberGenerator
         if ($lastInvoice) {
             $lastSuffix = (int) substr($lastInvoice->invoice_number, strlen($prefix));
             $nextNumber = $lastSuffix + 1;
+        }
+
+        while (Invoice::withTrashed()
+            ->where('business_id', $business->id)
+            ->where('invoice_number', sprintf('%s%04d', $prefix, $nextNumber))
+            ->exists()) {
+            $nextNumber++;
         }
 
         return sprintf('%s%04d', $prefix, $nextNumber);
@@ -41,7 +49,8 @@ final class InvoiceNumberGenerator
     {
         $prefix = ($type === 'supplier' ? 'VPO-' : 'PO-') . date('Ym') . '-';
 
-        $lastPo = PurchaseOrder::where('business_id', $business->id)
+        $lastPo = PurchaseOrder::withTrashed()
+            ->where('business_id', $business->id)
             ->where('po_number', 'like', "{$prefix}%")
             ->orderByDesc('po_number')
             ->first();
@@ -50,6 +59,13 @@ final class InvoiceNumberGenerator
         if ($lastPo) {
             $lastSuffix = (int) substr($lastPo->po_number, strlen($prefix));
             $nextNumber = $lastSuffix + 1;
+        }
+
+        while (PurchaseOrder::withTrashed()
+            ->where('business_id', $business->id)
+            ->where('po_number', sprintf('%s%04d', $prefix, $nextNumber))
+            ->exists()) {
+            $nextNumber++;
         }
 
         return sprintf('%s%04d', $prefix, $nextNumber);
@@ -72,6 +88,12 @@ final class InvoiceNumberGenerator
         if ($lastPayment) {
             $lastSuffix = (int) substr($lastPayment->payment_number, strlen($prefix));
             $nextNumber = $lastSuffix + 1;
+        }
+
+        while (InvoicePayment::where('business_id', $business->id)
+            ->where('payment_number', sprintf('%s%04d', $prefix, $nextNumber))
+            ->exists()) {
+            $nextNumber++;
         }
 
         return sprintf('%s%04d', $prefix, $nextNumber);

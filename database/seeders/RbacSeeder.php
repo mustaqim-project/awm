@@ -56,6 +56,13 @@ final class RbacSeeder extends Seeder
             'costing.view_margin'         => ['Lihat HPP & Margin',                     'costing',     'Melihat harga modal dasar (HPP) dan persentase margin laba.'],
             'costing.manage'              => ['Kalkulasi & Edit Resep HPP',              'costing',     'Membuat dan mengedit formula resep BOM serta menghitung HPP.'],
 
+            // ─── Manufacturing / Produksi Pabrik ───────────────────────
+            'production.view'             => ['Lihat Perintah Produksi',                'production',  'Melihat daftar jadwal dan status Surat Perintah Kerja Produksi (SPKP).'],
+            'production.create'           => ['Buat Perintah Produksi',                 'production',  'Membuat SPKP perintah kerja produksi baru dari resep BOM.'],
+            'production.execute'          => ['Rilis Bahan Baku Produksi',              'production',  'Mengeluarkan bahan baku gudang ke lantai produksi pabrik.'],
+            'production.complete'         => ['Catat Hasil & Selesaikan Produksi',      'production',  'Mencatat hasil barang jadi aktual, produk cacat/scrap, dan memasukkan stok ke gudang.'],
+            'production.cancel'           => ['Batalkan Perintah Produksi',             'production',  'Membatalkan SPKP produksi dan mengembalikan bahan baku ke gudang.'],
+
             // ─── Invoices / Faktur ────────────────────────────────────
             'invoices.view'               => ['Lihat Faktur',                           'invoices',    'Melihat daftar dan detail faktur penjualan.'],
             'invoices.create'             => ['Buat Faktur',                            'invoices',    'Menerbitkan faktur penjualan baru.'],
@@ -244,6 +251,11 @@ final class RbacSeeder extends Seeder
             'materials.edit',
             'costing.view_margin',
             'costing.manage',
+            'production.view',
+            'production.create',
+            'production.execute',
+            'production.complete',
+            'production.cancel',
             'invoices.view',
             'invoices.create',
             'invoices.edit',

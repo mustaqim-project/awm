@@ -1895,6 +1895,23 @@
                 </div>
             @endif
 
+            {{-- 8.3b Perintah Kerja Produksi (SPKP) & Manufaktur --}}
+            @if (\App\Support\Context::hasPermission('production.view') && ($activeBiz?->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_MANUFACTURING_PRODUCTION) ?? true))
+                <div class="relative group"
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'production'; setTooltip('Perintah Produksi (SPKP)', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
+                    <a href="{{ route('production.index') }}" id="tour-nav-production"
+                        {{ request()->routeIs('production.*') ? 'aria-current="page"' : '' }}
+                        :title="sidebarCollapsed ? 'Perintah Produksi (SPKP)' : ''"
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('production.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('production.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
+                            <i data-lucide="factory" class="w-3.5 h-3.5"></i>
+                        </span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>Perintah Produksi (SPKP)</span>
+                    </a>
+                </div>
+            @endif
+
             {{-- 8.4 Pemasok & Vendor --}}
             @if (\App\Support\Context::hasPermission('master_data.suppliers.view') || \App\Support\Context::hasPermission('purchasing.view') || \App\Support\Context::isOwner())
                 <div class="relative group"

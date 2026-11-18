@@ -421,18 +421,7 @@ final class SalesPipelineService
             $business = $salesOrder->business;
 
             // Generate invoice number
-            $invPrefix = 'INV-' . date('Ym') . '-';
-            $latest = Invoice::where('business_id', $business->id)
-                ->where('invoice_number', 'LIKE', $invPrefix . '%')
-                ->orderByDesc('invoice_number')
-                ->lockForUpdate()
-                ->value('invoice_number');
-
-            $nextSeq = 1;
-            if ($latest && preg_match('/-(\d+)$/', $latest, $m)) {
-                $nextSeq = ((int) $m[1]) + 1;
-            }
-            $invNumber = $invPrefix . str_pad((string) $nextSeq, 4, '0', STR_PAD_LEFT);
+            $invNumber = (new \App\Domain\Commerce\InvoiceNumberGenerator())->generateInvoiceNumber($business);
 
             $subtotal = 0.0;
             $totalHpp = 0.0;

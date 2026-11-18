@@ -55,7 +55,7 @@ final class InvoiceService
         }
 
         return DB::transaction(function () use ($business, $customer, $itemsData, $attributes) {
-            $invoiceNumber = $attributes['invoice_number'] ?? $this->numberGenerator->generateInvoiceNumber($business);
+            $invoiceNumber = ! empty($attributes['invoice_number']) ? $attributes['invoice_number'] : $this->numberGenerator->generateInvoiceNumber($business);
             $invoiceDate = ! empty($attributes['invoice_date']) ? Carbon::parse($attributes['invoice_date']) : Carbon::today();
 
             $termsDays = (int) ($attributes['payment_terms_days'] ?? $customer->payment_terms_days ?? 30);
@@ -150,6 +150,7 @@ final class InvoiceService
         }
 
         return DB::transaction(function () use ($invoice, $customer, $itemsData, $attributes) {
+            $business = $invoice->business;
             $invoiceDate = ! empty($attributes['invoice_date']) ? Carbon::parse($attributes['invoice_date']) : ($invoice->invoice_date ?? Carbon::today());
             $termsDays = (int) ($attributes['payment_terms_days'] ?? $customer->payment_terms_days ?? 30);
             $dueDate = ! empty($attributes['due_date'])

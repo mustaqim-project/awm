@@ -50,6 +50,7 @@ use App\Http\Controllers\Web\Pos\PosTableWebController;
 use App\Http\Controllers\Web\Pos\PosTerminalWebController;
 use App\Http\Controllers\Web\PortalWebController;
 use App\Http\Controllers\Web\ProductCategoryWebController;
+use App\Http\Controllers\Web\ProductionWebController;
 use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\Web\ProfileWebController;
 use App\Http\Controllers\Web\ProfitabilityWebController;
@@ -196,6 +197,17 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::delete('/bom-items/{bomItem}', [ProductWebController::class, 'removeBomItem'])->middleware('require.permission:products.edit')->name('bom.items.destroy');
         Route::delete('/products/{product}', [ProductWebController::class, 'destroy'])->middleware('require.permission:products.delete')->name('products.destroy');
         Route::delete('/products/{product}/gallery/{image}', [ProductWebController::class, 'deleteGalleryImage'])->middleware('require.permission:products.edit')->name('products.gallery.destroy');
+
+        // Manufacturing & Production Orders (SPKP)
+        Route::middleware(['module:manufacturing_production'])->group(function (): void {
+            Route::get('/production', [ProductionWebController::class, 'index'])->name('production.index');
+            Route::get('/production/create', [ProductionWebController::class, 'create'])->name('production.create');
+            Route::post('/production', [ProductionWebController::class, 'store'])->name('production.store');
+            Route::get('/production/{productionOrder}', [ProductionWebController::class, 'show'])->name('production.show');
+            Route::post('/production/{productionOrder}/issue-materials', [ProductionWebController::class, 'issueMaterials'])->name('production.issue-materials');
+            Route::post('/production/{productionOrder}/complete', [ProductionWebController::class, 'complete'])->name('production.complete');
+            Route::post('/production/{productionOrder}/cancel', [ProductionWebController::class, 'cancel'])->name('production.cancel');
+        });
 
         // Jasa & Layanan Management
         Route::middleware(['module:service_workshop'])->group(function (): void {

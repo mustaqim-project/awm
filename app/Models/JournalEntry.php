@@ -49,6 +49,8 @@ class JournalEntry extends Model
 
     public const REF_STOCK_ADJUSTMENT = 'stock_adjustment';
 
+    public const REF_PRODUCTION_ORDER = 'production_order';
+
     public const REF_CASH_TRANSFER = 'cash_transfer';
 
     public const REF_PAYROLL = 'payroll';

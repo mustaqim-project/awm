@@ -265,26 +265,34 @@ final class StockService
             ->where('product_id', $productModel->id)
             ->value('quantity') ?? 0.0);
 
-        // Jika terdapat stok fisik produk jadi yang mencukupi (misal ada stok cup siap jual):
-        // Prioritaskan pemotongan stok produk jadi agar bahan baku tidak terpotong ganda (double deduction)!
-        if ($availableFinishedStock >= $productQuantity) {
+        $movements = [];
+        $remainingProductQuantity = $productQuantity;
+
+        // 1. Prioritaskan pemotongan stok produk jadi siap jual (Finished Goods) jika tersedia
+        // Mencegah pemotongan bahan baku ganda (double deduction) dan mendukung pemenuhan parsial (split fulfillment)
+        if ($availableFinishedStock > 0) {
+            $deductFromFinished = min($availableFinishedStock, $remainingProductQuantity);
             $movements[] = $this->recordMovement(
                 businessId: $businessId,
                 locationId: $finishedStockLocationId,
                 productId: $productModel->id,
                 movementType: $movementType,
-                quantityChange: -abs($productQuantity),
+                quantityChange: -abs($deductFromFinished),
                 unitCost: $unitCost,
                 referenceId: $orderId,
                 referenceNumber: $orderNumber,
-                notes: $notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber} (Stok Barang Jadi Siap Jual)",
+                notes: ($notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber}") . ($deductFromFinished < $productQuantity ? " (Sebagian Barang Jadi Siap Jual: {$deductFromFinished})" : " (Stok Barang Jadi Siap Jual)"),
                 userId: $userId
             );
-            return $movements;
+
+            $remainingProductQuantity -= $deductFromFinished;
+            if ($remainingProductQuantity <= 0.00005) {
+                return $movements;
+            }
         }
 
-        $deductions = $productModel->getMaterialDeductions($productQuantity);
-        $movements = [];
+        // 2. Sisa kuantitas yang belum terpenuhi dari barang jadi diproses via Resep / BOM (On-Demand F&B / Made-to-Order)
+        $deductions = $productModel->getMaterialDeductions($remainingProductQuantity);
 
         if (!empty($deductions)) {
             foreach ($deductions as $d) {
@@ -307,7 +315,7 @@ final class StockService
                     unitCost: $unitCost,
                     referenceId: $orderId,
                     referenceNumber: $orderNumber,
-                    notes: $notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber}",
+                    notes: ($notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber}") . ($remainingProductQuantity < $productQuantity ? " (Sisa On-Demand: {$remainingProductQuantity})" : ""),
                     userId: $userId,
                     materialId: $matId
                 );
@@ -315,7 +323,7 @@ final class StockService
             return $movements;
         }
 
-        // Legacy product stock still uses the centralized stock gate.
+        // 3. Fallback: Potong stok produk standar langsung di lokasi target
         $targetLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
 
         $movements[] = $this->recordMovement(
@@ -323,7 +331,7 @@ final class StockService
             locationId: $targetLocationId,
             productId: $productModel->id,
             movementType: $movementType,
-            quantityChange: -abs($productQuantity),
+            quantityChange: -abs($remainingProductQuantity),
             unitCost: $unitCost,
             referenceId: $orderId,
             referenceNumber: $orderNumber,

@@ -21,6 +21,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -176,7 +177,12 @@ final class InvoiceWebController extends Controller implements HasMiddleware
                 'nullable',
                 Rule::exists('purchase_orders', 'id')->where('business_id', $business->id),
             ],
-            'invoice_number' => ['nullable', 'string', 'max:100'],
+            'invoice_number' => [
+                'nullable',
+                'string',
+                'max:100',
+                Rule::unique('invoices', 'invoice_number')->where('business_id', $business->id),
+            ],
             'sender_name' => ['nullable', 'string', 'max:150'],
             'recipient_name' => ['nullable', 'string', 'max:150'],
             'attachment_info' => ['nullable', 'string', 'max:150'],
@@ -554,9 +560,21 @@ final class InvoiceWebController extends Controller implements HasMiddleware
             'created_at' => now(),
         ]);
 
-        $invoice->delete();
+        DB::transaction(function () use ($invoice) {
+            if ($invoice->purchase_order_id && $po = $invoice->purchaseOrder) {
+                if ($po->status === PurchaseOrder::STATUS_FULLY_INVOICED) {
+                    $po->update(['status' => PurchaseOrder::STATUS_CONFIRMED]);
+                    foreach ($po->items as $poItem) {
+                        $poItem->update(['invoiced_quantity' => 0]);
+                    }
+                }
+            }
 
-        return redirect()->route('invoices.index')->with('success', "Draf Faktur {$invNumber} berhasil dihapus.");
+            $invoice->items()->delete();
+            $invoice->forceDelete();
+        });
+
+        return redirect()->route('invoices.index')->with('success', "Draf Faktur {$invNumber} berhasil dihapus permanen.");
     }
 
     /**

@@ -753,7 +753,7 @@ final class AdminB2bController extends Controller implements HasMiddleware
         $num = $invoice->invoice_number;
         $businessId = $invoice->business_id;
         $invoice->items()->delete();
-        $invoice->delete();
+        $invoice->forceDelete();
 
         return redirect()->route('admin.b2b.index', ['tab' => 'invoices', 'business_id' => $businessId])
             ->with('success', "Faktur {$num} berhasil dihapus.");

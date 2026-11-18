@@ -336,7 +336,61 @@ final class InvoiceModuleAuditTest extends TestCase
             'action' => 'invoices.invoice_deleted',
             'risk_level' => AuditLog::RISK_HIGH,
         ]);
-        $this->assertSoftDeleted('invoices', ['id' => $invoiceDraft->id]);
+        $this->assertDatabaseMissing('invoices', ['id' => $invoiceDraft->id]);
+        $this->assertDatabaseMissing('invoice_items', ['invoice_id' => $invoiceDraft->id]);
+    }
+
+    public function test_deleting_draft_invoice_allows_creating_new_invoice_without_duplicate_violation(): void
+    {
+        Context::setBusiness($this->business);
+
+        // 1. Create first draft invoice
+        $invoice1 = $this->invoiceService->createFromProducts(
+            $this->business,
+            $this->customer,
+            [
+                [
+                    'product_id' => $this->product->id,
+                    'item_name' => 'Produk A',
+                    'quantity' => 1,
+                    'unit_id' => $this->unit->id,
+                    'unit_price' => 50000,
+                ],
+            ],
+            ['status' => Invoice::STATUS_DRAFT]
+        );
+        $invoiceNumber1 = $invoice1->invoice_number;
+
+        // 2. Delete the draft invoice
+        $this->actingAs($this->owner, 'web')
+            ->delete(route('invoices.destroy', $invoice1->id))
+            ->assertRedirect(route('invoices.index'));
+
+        // Must be hard deleted
+        $this->assertDatabaseMissing('invoices', ['id' => $invoice1->id]);
+
+        // 3. Create another invoice - must succeed without SQL 1062 duplicate entry
+        $response = $this->actingAs($this->owner, 'web')
+            ->post(route('invoices.store'), [
+                'customer_id' => $this->customer->id,
+                'invoice_date' => now()->toDateString(),
+                'status' => 'draft',
+                'items' => [
+                    [
+                        'product_id' => $this->product->id,
+                        'item_name' => 'Produk Baru',
+                        'quantity' => 2,
+                        'unit_id' => $this->unit->id,
+                        'unit_price' => 60000,
+                    ],
+                ],
+            ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseCount('invoices', 1);
+        $newInvoice = Invoice::first();
+        $this->assertNotNull($newInvoice);
+        $this->assertEquals($invoiceNumber1, $newInvoice->invoice_number);
     }
 
     public function test_cross_tenant_isolation_prevents_idor(): void

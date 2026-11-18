@@ -460,6 +460,14 @@ class Product extends Model
     }
 
     /**
+     * @return HasMany<ProductionOrder, $this>
+     */
+    public function productionOrders(): HasMany
+    {
+        return $this->hasMany(ProductionOrder::class);
+    }
+
+    /**
      * @return HasMany<BranchProductPrice, $this>
      */
     public function branchPrices(): HasMany

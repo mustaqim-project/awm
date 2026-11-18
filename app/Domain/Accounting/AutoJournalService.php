@@ -67,6 +67,10 @@ final class AutoJournalService
             ['code' => '6-6008', 'name' => 'Beban Ongkir & Logistik Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '6-6009', 'name' => 'Beban Penalti & Penyesuaian Marketplace', 'type' => ChartOfAccount::TYPE_EXPENSE, 'normal_balance' => 'debit'],
             ['code' => '7-7006', 'name' => 'Pendapatan Subsidi Ongkir & Promosi Marketplace', 'type' => ChartOfAccount::TYPE_REVENUE, 'normal_balance' => 'credit'],
+            // Manufacturing & Production Standard COA
+            ['code' => '1-1030', 'name' => 'Persediaan Bahan Baku (Raw Materials)', 'type' => ChartOfAccount::TYPE_ASSET, 'normal_balance' => 'debit'],
+            ['code' => '1-1040', 'name' => 'Barang Dalam Proses (WIP)', 'type' => ChartOfAccount::TYPE_ASSET, 'normal_balance' => 'debit'],
+            ['code' => '5-5002', 'name' => 'Beban Kerugian / Selisih Produksi', 'type' => ChartOfAccount::TYPE_COGS, 'normal_balance' => 'debit'],
         ];
 
 
@@ -2060,6 +2064,127 @@ final class AutoJournalService
                     'notes' => "Pelunasan cicilan kasbon karyawan melalui pemotongan payroll",
                 ]);
             }
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Post journal entry for manufacturing raw material issuance into Work In Progress (WIP).
+     * Dr. Barang Dalam Proses (WIP)
+     *   Cr. Persediaan Bahan Baku (Raw Materials)
+     */
+    public function recordProductionIssueJournal(\App\Models\ProductionOrder $order): ?JournalEntry
+    {
+        $business = $order->business ?? \App\Models\Business::find($order->business_id);
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $materialCost = (float) $order->total_material_cost;
+        if ($materialCost <= 0) {
+            return null;
+        }
+
+        $wipAccount = ChartOfAccount::where('business_id', $business->id)->where('code', '1-1040')->first()
+            ?? ChartOfAccount::where('business_id', $business->id)->where('code', '1-1004')->first();
+        $rawMaterialAccount = ChartOfAccount::where('business_id', $business->id)->where('code', '1-1030')->first()
+            ?? ChartOfAccount::where('business_id', $business->id)->where('code', '1-1004')->first();
+
+        if (! $wipAccount || ! $rawMaterialAccount) {
+            return null;
+        }
+
+        return DB::transaction(function () use ($business, $order, $materialCost, $wipAccount, $rawMaterialAccount): JournalEntry {
+            $entry = JournalEntry::create([
+                'business_id' => $business->id,
+                'entry_number' => 'JRN-PROD-ISSUE-' . $order->order_number,
+                'date' => now()->toDateString(),
+                'description' => "Pengeluaran Bahan Baku ke Lantai Produksi #{$order->order_number} ({$order->product?->name})",
+                'reference_type' => JournalEntry::REF_PRODUCTION_ORDER,
+                'reference_id' => $order->id,
+                'status' => 'posted',
+            ]);
+
+            // Dr. Barang Dalam Proses (WIP)
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id' => $wipAccount->id,
+                'type' => JournalEntryLine::TYPE_DEBIT,
+                'amount' => $materialCost,
+                'notes' => "Bahan baku masuk proses produksi #{$order->order_number}",
+            ]);
+
+            // Cr. Persediaan Bahan Baku
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id' => $rawMaterialAccount->id,
+                'type' => JournalEntryLine::TYPE_CREDIT,
+                'amount' => $materialCost,
+                'notes' => "Pengurangan stok bahan baku untuk produksi #{$order->order_number}",
+            ]);
+
+            return $entry;
+        });
+    }
+
+    /**
+     * Post journal entry for manufacturing completion and finished goods receipt.
+     * Dr. Persediaan Barang Jadi (Finished Goods)
+     *   Cr. Barang Dalam Proses (WIP)
+     */
+    public function recordProductionCompletionJournal(\App\Models\ProductionOrder $order): ?JournalEntry
+    {
+        $business = $order->business ?? \App\Models\Business::find($order->business_id);
+        if (! $business) {
+            return null;
+        }
+
+        $this->ensureStandardAccounts($business);
+
+        $totalCost = (float) $order->total_production_cost;
+        if ($totalCost <= 0) {
+            return null;
+        }
+
+        $fgAccount = ChartOfAccount::where('business_id', $business->id)->where('code', '1-1004')->first();
+        $wipAccount = ChartOfAccount::where('business_id', $business->id)->where('code', '1-1040')->first()
+            ?? $fgAccount;
+
+        if (! $fgAccount || ! $wipAccount) {
+            return null;
+        }
+
+        return DB::transaction(function () use ($business, $order, $totalCost, $fgAccount, $wipAccount): JournalEntry {
+            $entry = JournalEntry::create([
+                'business_id' => $business->id,
+                'entry_number' => 'JRN-PROD-COMP-' . $order->order_number,
+                'date' => now()->toDateString(),
+                'description' => "Penyelesaian Hasil Produksi #{$order->order_number} ({$order->actual_quantity} {$order->product?->outputUnit?->name} {$order->product?->name})",
+                'reference_type' => JournalEntry::REF_PRODUCTION_ORDER,
+                'reference_id' => $order->id,
+                'status' => 'posted',
+            ]);
+
+            // Dr. Persediaan Barang Jadi (Finished Goods)
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id' => $fgAccount->id,
+                'type' => JournalEntryLine::TYPE_DEBIT,
+                'amount' => $totalCost,
+                'notes' => "Penerimaan {$order->actual_quantity} unit barang jadi #{$order->order_number}",
+            ]);
+
+            // Cr. Barang Dalam Proses (WIP)
+            JournalEntryLine::create([
+                'journal_entry_id' => $entry->id,
+                'account_id' => $wipAccount->id,
+                'type' => JournalEntryLine::TYPE_CREDIT,
+                'amount' => $totalCost,
+                'notes' => "Pembersihan akun WIP atas penyelesaian produksi #{$order->order_number}",
+            ]);
 
             return $entry;
         });

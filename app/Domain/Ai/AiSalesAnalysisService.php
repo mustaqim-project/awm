@@ -960,16 +960,7 @@ final class AiSalesAnalysisService
                 }
             }
 
-            $invPrefix = 'INV-' . date('Ym') . '-';
-            $latest = Invoice::where('business_id', $business->id)
-                ->where('invoice_number', 'LIKE', $invPrefix . '%')
-                ->orderByDesc('invoice_number')
-                ->value('invoice_number');
-            $seq = 1;
-            if ($latest && preg_match('/-(\d+)$/', $latest, $m)) {
-                $seq = ((int) $m[1]) + 1;
-            }
-            $invNumber = $invPrefix . str_pad((string) $seq, 4, '0', STR_PAD_LEFT);
+            $invNumber = (new \App\Domain\Commerce\InvoiceNumberGenerator())->generateInvoiceNumber($business);
 
             $qty = max(0.001, (float) ($payload['quantity'] ?? 1));
             $price = max(0.0, (float) ($payload['unit_price'] ?? 10000));

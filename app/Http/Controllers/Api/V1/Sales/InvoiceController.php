@@ -11,6 +11,7 @@ use App\Models\Invoice;
 use App\Support\Context;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 final class InvoiceController extends Controller
@@ -228,11 +229,13 @@ final class InvoiceController extends Controller
             return response()->json(['message' => 'Hanya faktur berstatus draft yang dapat dihapus.'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $invoice->items()->delete();
-        $invoice->delete();
+        DB::transaction(function () use ($invoice) {
+            $invoice->items()->delete();
+            $invoice->forceDelete();
+        });
 
         return response()->json([
-            'message' => 'Faktur berhasil dihapus.',
+            'message' => 'Faktur berhasil dihapus secara permanen.',
         ], Response::HTTP_OK);
     }
 }
