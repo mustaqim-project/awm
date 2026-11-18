@@ -267,7 +267,7 @@ class SyncDoGoProductionDataCommand extends Command
                     'code'               => $menu['code'],
                     'name'               => $menu['name'],
                     'slug'               => Str::slug($menu['name']) . '-' . Str::lower(Str::random(4)),
-                    'type'               => 'finished_goods',
+                    'type'               => Product::TYPE_GOODS,
                     'base_cost'          => (float) $menu['hpp'],
                     'selling_price'      => (float) $menu['harga_jual'],
                     'min_stock'          => 10.0,

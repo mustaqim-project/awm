@@ -263,7 +263,7 @@ class Product extends Model
     public function scopeGoods($query)
     {
         return $query->where(function ($q) {
-            $q->where('type', self::TYPE_GOODS)
+            $q->whereIn('type', [self::TYPE_GOODS, 'finished_goods'])
                 ->orWhereNull('type');
         });
     }
@@ -296,7 +296,7 @@ class Product extends Model
     public function scopeOutOfStock($query)
     {
         return $query->where(function ($q) {
-            $q->where('type', self::TYPE_GOODS)->orWhereNull('type');
+            $q->whereIn('type', [self::TYPE_GOODS, 'finished_goods'])->orWhereNull('type');
         })->where(function ($q) {
             $q->where(function ($sub) {
                 $sub->whereNotNull('direct_material_id')
@@ -311,7 +311,7 @@ class Product extends Model
     public function scopeInStock($query)
     {
         return $query->where(function ($q) {
-            $q->where('type', self::TYPE_GOODS)->orWhereNull('type');
+            $q->whereIn('type', [self::TYPE_GOODS, 'finished_goods'])->orWhereNull('type');
         })->where(function ($q) {
             $q->where(function ($sub) {
                 $sub->whereNotNull('direct_material_id')

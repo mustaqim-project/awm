@@ -41,9 +41,10 @@ class SyncDoGoProductionDataTest extends TestCase
         $materials = Material::where('business_id', $business->id)->get();
         $this->assertCount(45, $materials);
 
-        // Verify 24 Products
+        // Verify 24 Products and that scopeGoods includes them
         $products = Product::where('business_id', $business->id)->with('costModels.bomHeaders.items')->get();
         $this->assertCount(24, $products);
+        $this->assertCount(24, Product::goods()->where('business_id', $business->id)->get());
 
         // Verify formula Harga Jual = HPP + 2865
         foreach ($products as $p) {
