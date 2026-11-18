@@ -1,0 +1,113 @@
+{
+  "id": 1,
+  "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+  "title": "Cara Menghitung Food Cost Ideal Kafe dan Restoran agar Bebas Boncos",
+  "slug": "cara-menghitung-food-cost-ideal-kafe-dan-restoran",
+  "meta_title": "Cara Menghitung Food Cost Ideal Kafe Restoran",
+  "meta_description": "Pelajari cara menghitung food cost ideal kafe dan restoran, rumus persentase biaya bahan baku kuliner, serta cara menekan food waste operasional dapur.",
+  "primary_keyword": "cara menghitung food cost ideal",
+  "secondary_keywords": "rumus food cost restoran, standar persentase food cost kafe, cara menekan biaya bahan baku kuliner, manajemen waste dapur fnb, kontrol porsi menu makanan",
+  "search_intent": "Informational",
+  "category": "Keuangan & Pembukuan",
+  "reading_time": "9 menit",
+  "cover_image": "https://cooca.id/images/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran.jpg",
+  "local_image_asset": "public/images/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran.jpg",
+  "published_at": "2026-11-18T08:00:00+07:00",
+  "author": "Tim Edukasi COOCA",
+  "word_count": 1564,
+  "faqs": [
+    {
+      "q": "Berapa persentase food cost ideal yang sehat untuk kafe kopi?",
+      "a": "Untuk kafe kopi, persentase food cost ideal untuk kategori minuman kopi biasanya berkisar antara 15% hingga 22%, sedangkan untuk menu makanan pastry atau makanan berat berkisar antara 30% hingga 35%. Rata-rata gabungan keseluruhan menu kafe yang sehat adalah 25% hingga 28%."
+    },
+    {
+      "q": "Apa perbedaan antara food cost teoritis dan food cost aktual?",
+      "a": "Food cost teoritis adalah biaya bahan baku berdasarkan takaran resep standar dikalikan jumlah porsi yang terjual. Food cost aktual adalah nilai pemakaian bahan baku fisik yang benar-benar terpakai dari gudang, termasuk bahan yang tumpah, basi, gosong, atau dicuri."
+    },
+    {
+      "q": "Apakah bumbu dapur dan minyak goreng harus dihitung ke dalam food cost?",
+      "a": "Ya, bumbu dapur, garam, penyedap rasa, dan minyak goreng wajib dimasukkan ke dalam perhitungan biaya resep. Jika sulit menimbang per sendok teh, Anda dapat menambahkan persentase penyangga (buffer cost) sebesar 3% hingga 5% dari total harga bahan utama sebagai alokasi bumbu pelengkap."
+    },
+    {
+      "q": "Kapan waktu yang tepat bagi restoran untuk menaikkan harga menu?",
+      "a": "Restoran sebaiknya menaikkan harga menu ketika food cost aktual terus-menerus melebihi batas 35% selama dua bulan berturut-turut akibat kenaikan harga bahan baku pasar, dan setelah upaya negosiasi supplier serta efisiensi porsi sudah dilakukan maksimal."
+    },
+    {
+      "q": "Bagaimana cara mengatasi food cost menu yang terlalu tinggi tetapi sangat disukai pelanggan?",
+      "a": "Jangan langsung menaikkan harga secara drastis. Anda dapat mengurangi ukuran porsi sebesar 5% hingga 10% tanpa mengubah rasa, mengganti bahan pelengkap dengan alternatif yang lebih terjangkau, atau membuat paket bundling dengan menu minuman yang margin labanya sangat tebal."
+    }
+  ],
+  "schema_org": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "Cara Menghitung Food Cost Ideal Kafe dan Restoran agar Bebas Boncos",
+        "description": "Pelajari cara menghitung food cost ideal kafe dan restoran, rumus persentase biaya bahan baku kuliner, serta cara menekan food waste operasional dapur.",
+        "image": "https://cooca.id/images/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran.jpg",
+        "datePublished": "2026-11-18T08:00:00+07:00",
+        "dateModified": "2026-11-18T08:00:00+07:00",
+        "url": "https://cooca.id/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran",
+        "mainEntityOfPage": "https://cooca.id/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran",
+        "author": {
+          "@type": "Person",
+          "name": "Tim Edukasi COOCA"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "COOCA",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cooca.id/images/logo.png"
+          }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Berapa persentase food cost ideal yang sehat untuk kafe kopi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Untuk kafe kopi, persentase food cost ideal untuk kategori minuman kopi biasanya berkisar antara 15% hingga 22%, sedangkan untuk menu makanan pastry atau makanan berat berkisar antara 30% hingga 35%. Rata-rata gabungan keseluruhan menu kafe yang sehat adalah 25% hingga 28%."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa perbedaan antara food cost teoritis dan food cost aktual?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Food cost teoritis adalah biaya bahan baku berdasarkan takaran resep standar dikalikan jumlah porsi yang terjual. Food cost aktual adalah nilai pemakaian bahan baku fisik yang benar-benar terpakai dari gudang, termasuk bahan yang tumpah, basi, gosong, atau dicuri."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Apakah bumbu dapur dan minyak goreng harus dihitung ke dalam food cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Ya, bumbu dapur, garam, penyedap rasa, dan minyak goreng wajib dimasukkan ke dalam perhitungan biaya resep. Jika sulit menimbang per sendok teh, Anda dapat menambahkan persentase penyangga (buffer cost) sebesar 3% hingga 5% dari total harga bahan utama sebagai alokasi bumbu pelengkap."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Kapan waktu yang tepat bagi restoran untuk menaikkan harga menu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Restoran sebaiknya menaikkan harga menu ketika food cost aktual terus-menerus melebihi batas 35% selama dua bulan berturut-turut akibat kenaikan harga bahan baku pasar, dan setelah upaya negosiasi supplier serta efisiensi porsi sudah dilakukan maksimal."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Bagaimana cara mengatasi food cost menu yang terlalu tinggi tetapi sangat disukai pelanggan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Jangan langsung menaikkan harga secara drastis. Anda dapat mengurangi ukuran porsi sebesar 5% hingga 10% tanpa mengubah rasa, mengganti bahan pelengkap dengan alternatif yang lebih terjangkau, atau membuat paket bundling dengan menu minuman yang margin labanya sangat tebal."
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "content_markdown": "---\ntitle: \"Cara Menghitung Food Cost Ideal Kafe dan Restoran agar Bebas Boncos\"\nmeta_title: \"Cara Menghitung Food Cost Ideal Kafe Restoran\"\nmeta_description: \"Pelajari cara menghitung food cost ideal kafe dan restoran, rumus persentase biaya bahan baku kuliner, serta cara menekan food waste operasional dapur.\"\nslug: \"cara-menghitung-food-cost-ideal-kafe-dan-restoran\"\nprimary_keyword: \"cara menghitung food cost ideal\"\nsecondary_keywords: \"rumus food cost restoran, standar persentase food cost kafe, cara menekan biaya bahan baku kuliner, manajemen waste dapur fnb, kontrol porsi menu makanan\"\nsearch_intent: \"Informational\"\ncategory: \"Keuangan & Pembukuan\"\nreading_time: \"9 menit\"\ncover_image: \"https://cooca.id/images/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran.jpg\"\npublished_at: \"2026-11-18T08:00:00+07:00\"\nauthor: Tim Edukasi COOCA\n---\n\n# Cara Menghitung Food Cost Ideal Kafe dan Restoran agar Bebas Boncos\n\nBanyak pengusaha kuliner pemula terkejut saat melihat saldo rekening usaha di akhir bulan tetap kering, padahal antrean kasir selalu ramai pembeli setiap hari. Penyebab paling umum dari kebocoran finansial ini adalah kegagalan mengendalikan biaya bahan baku dapur. Mengetahui cara menghitung food cost ideal adalah fondasi utama bagi pemilik kafe, restoran, dan warung makan untuk memastikan setiap porsi hidangan yang keluar dari dapur memberikan keuntungan nyata dan bukan sekadar ilusi omzet semu.\n\nBiaya makanan bukan angka mati yang hanya dihitung sekali saat pertama kali mencetak buku menu. Di tengah fluktuasi harga bahan pokok pasar dan risiko penyusutan bahan mentah yang mudah busuk, pemilik bisnis wajib memantau persentase biaya bahan secara berkala. Tanpa pemahaman cara menghitung food cost ideal, bisnis kuliner Anda akan rentan mengalami kebocoran biaya tak kasat mata yang perlahan menguras modal kerja.\n\n## Konsep Dasar dan Rumus Menghitung Food Cost Ideal\n\nFood cost ideal adalah persentase biaya teoritis yang seharusnya dikeluarkan untuk bahan baku suatu menu berdasarkan resep standar dan harga kulakan yang berlaku. Perhitungan ini mengasumsikan tidak ada bahan baku yang terbuang sia-sia, tidak ada kesalahan takaran oleh juru masak, dan tidak ada bahan yang rusak atau dicuri.\n\nRumus dasar untuk menghitung food cost per porsi menu adalah:\n\nFood Cost Per Porsi = Total Biaya Bahan Baku Bersih Per Porsi / Harga Jual Menu x 100%\n\nSebagai contoh, jika satu porsi Nasi Goreng Spesial membutuhkan bahan baku beras, telur, ayam suwir, bumbu, dan minyak goreng senilai Rp10.500, lalu menu tersebut dijual dengan harga Rp30.000 di kasir, maka persentase food cost menu tersebut adalah:\n\n(Rp10.500 / Rp30.000) x 100% = 35%\n\nSecara industri kuliner Indonesia, persentase food cost ideal umumnya berada pada rentang 28% hingga 35%. Untuk kategori minuman seperti kopi susu kekinian atau teh artisan, food cost ideal sering kali lebih rendah, berkisar antara 15% hingga 25%. Sebaliknya, untuk hidangan berbahan dasar daging sapi impor atau seafood segar, persentase food cost bisa menyentuh angka 35% hingga 40%. Pemilik usaha harus menguasai panduan [cara mengunci HPP bahan baku kuliner](https://cooca.id/blog/cara-mengunci-hpp-bahan-baku-kuliner) agar kontrak harga dengan supplier tidak tiba-tiba melonjak di tengah jalan.\n\n## Simulasi Perhitungan Food Cost Ideal dan Analisis Variance\n\nKunci pengawasan operasional dapur terletak pada perbandingan antara Food Cost Ideal (teoritis) dan Food Cost Aktual (kenyataan pemakaian bahan di gudang). Perbedaan antara kedua angka ini disebut sebagai Food Cost Variance. Jika selisihnya melebihi 2% hingga 3%, berarti terdapat kebocoran serius di area persiapan dapur atau gudang bahan baku.\n\nMari kita pelajari simulasi bulanan pada Kafe Sedap Rasa yang menjual 2.500 porsi makanan per bulan:\n\n| Menu Utama | Porsi Terjual | Biaya Bahan Baku Per Porsi | Total Biaya Ideal | Harga Jual Per Porsi | Total Pendapatan Menu | Food Cost Ideal (%) |\n| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n| Ayam Bakar Madu | 1.000 | Rp12.000 | Rp12.000.000 | Rp35.000 | Rp35.000.000 | 34,29% |\n| Mie Goreng Jawa | 800 | Rp7.500 | Rp6.000.000 | Rp25.000 | Rp20.000.000 | 30,00% |\n| Kopi Susu Aren | 700 | Rp4.200 | Rp2.940.000 | Rp18.000 | Rp12.600.000 | 23,33% |\n| Total Akumulasi | 2.500 | - | Rp20.940.000 | - | Rp67.600.000 | 30,98% |\n\nBerdasarkan tabel simulasi di atas:\n1. Total belanja bahan baku teoritis seharusnya adalah Rp20.940.000 dari total omzet Rp67.600.000, sehingga rata-rata food cost ideal gabungan kafe adalah 30,98%.\n2. Namun, ketika pemilik memeriksa faktur belanja supplier aktual selama sebulan ditambah selisih stok awal dan akhir, tercatat pemakaian riil bahan baku mencapai Rp24.200.000 (35,80%).\n3. Selisih biaya sebesar Rp3.260.000 (selisih 4,82%) adalah pemborosan yang terjadi akibat porsi berlebih, saus tumpah, sayur layu dibuang, atau pencurian kecil oleh staf.\n\nPengusaha kuliner juga wajib mengantisipasi risiko musiman pada [rantai pasok bahan baku kuliner musim hujan HPP](https://cooca.id/blog/rantai-pasok-bahan-baku-kuliner-musim-hujan-hpp) agar kenaikan harga cabai rawit dan sayur mayur tidak merusak struktur margin usaha.\n\n## Faktor Utama Penyebab Food Cost Membengkak di Lapangan\n\nMengapa biaya makanan aktual sering kali jauh lebih tinggi daripada perhitungan di atas kertas? Berikut adalah faktor penyebab yang paling sering ditemukan:\n\n### 1. Ketiadaan Standar Porsi Masak (Portion Control)\nKoki atau juru masak menyendok potongan daging, saus, atau keju parut hanya mengandalkan perasaan tanpa timbangan digital atau sendok takar khusus. Perbedaan 15 gram daging per porsi pada 1.000 porsi penjualan sudah berarti pemborosan 15 kilogram daging gratis setiap bulan.\n\n### 2. Limbah Bahan Baku yang Tidak Tercatat (Unrecorded Waste)\nBahan makanan yang basi di kulkas, kulit buah yang dikupas terlalu tebal, atau daging yang gosong saat dipanggang langsung dibuang ke tempat sampah tanpa dicatat dalam log limbah dapur (waste sheet). Akibatnya, pemilik usaha tidak tahu penyebab pasti hilangnya stok bahan baku.\n\n### 3. Penerimaan Barang Tanpa Penimbangan Ulang\nStaf dapur langsung menandatangani surat jalan supplier tanpa menimbang ulang ayam potong atau sayuran yang dikirim. Sering kali terjadi bobot timbangan susut karena mencairnya es atau kecurangan vendor yang mengirim barang kurang dari pesanan.\n\n### 4. Harga Jual yang Terlalu Murah\nBanyak pemilik resto mematok harga jual menu hanya karena meniru kompetitor tanpa menghitung struktur biaya secara ilmiah. Pelajari teknik penentuan harga pada panduan [harga jual terlalu murah cara hitung margin ideal untuk setiap menu](https://cooca.id/blog/harga-jual-terlalu-murah-cara-hitung-margin-ideal-untuk-setiap-menu) agar harga yang tercantum di buku menu memberikan keuntungan yang memadai.\n\n## Langkah Strategis Menjaga Cara Menghitung Food Cost Ideal Tetap Terkendali\n\nAgar operasional bisnis kuliner Anda tetap menguntungkan dan terhindar dari pemborosan, terapkan lima langkah perbaikan berikut:\n\n1. Buat Buku Resep Standar (Standard Recipe Card): Dokumentasikan secara tertulis gramasi setiap bahan hingga satuan gram dan mililiter terkecil, lengkap dengan foto penyajian piring (plating guide).\n2. Sediakan Alat Ukur Presisi di Dapur: Wajibkan staf menggunakan timbangan digital, gelas ukur, dan sendok takar standar di setiap meja persiapan (prep station).\n3. Evaluasi Menu Engineering Berkala: Kelompokkan menu Anda ke dalam kategori Bintang (populer dan margin tebal) serta Kuda Beban (populer tapi margin tipis). Naikkan sedikit harga menu populer yang marginnya terlalu mepet.\n4. Lakukan Stock Opname Mingguan Bahan Kritis: Hitung stok bahan mahal seperti keju, daging sapi, dan kopi bubuk setiap awal pekan untuk mendeteksi selisih fisik lebih awal.\n5. Jalin Kontrak Pasokan Jangka Panjang: Buat kesepakatan harga tetap dengan supplier sayur dan daging untuk periode tiga hingga enam bulan ke depan guna menghindari lonjakan harga mendadak.\n\n### 5. Formulir Pencatatan Limbah Dapur Harian (Daily Waste Sheet)\nUntuk memotong kebocoran bahan baku, sediakan papan formulir limbah di area cuci piring dan area masak. Setiap kali ada bahan yang basi, tumpah, atau gosong karena kesalahan masak, staf wajib mencatat nama bahan, takaran gram, jam kejadian, dan paraf juru masak. Pada akhir pekan, rekapitulasi limbah ini dijumlahkan nilainya dalam rupiah. Ketika staf menyadari bahwa setiap bahan baku yang dibuang memiliki nilai uang yang dipantau oleh manajemen, kebiasaan ceroboh dalam penanganan bahan dapur akan berkurang drastis hingga 40 persen.\n\n## Peran Sistem Cooca dalam Mengunci Food Cost Kafe dan Restoran\n\nMenghitung biaya bahan baku dan menelusuri selisih pemakaian untuk ratusan menu makanan tentu sangat melelahkan jika dikerjakan manual di atas kertas. Di sinilah ekosistem Cooca hadir sebagai solusi terpadu. Cooca menyediakan modul resep kuliner yang otomatis mengaitkan setiap penjualan di kasir POS dengan pemotongan stok bahan baku di gudang dapur.\n\nSetiap kali kasir membukukan penjualan menu, Cooca secara real-time mengkalkulasi food cost aktual berdasarkan harga kulakan terakhir, menampilkan laporan selisih pemakaian bahan, dan memberikan sinyal peringatan jika persentase biaya makanan mulai melampaui batas toleransi yang Anda tetapkan.\n\n## Kesimpulan\n\nMemahami metode perhitungan kalkulasi terstandarisasi yang tepat adalah langkah krusial untuk mengubah usaha kuliner yang tampak ramai menjadi bisnis yang benar-benar menghasilkan keuntungan finansial sehat. Disiplin resep standar, kontrol porsi ketat, dan pencatatan limbah dapur harian adalah kunci menjaga persentase biaya bahan baku tetap di batas aman 28% hingga 35%. Terapkan audit food cost mulai hari ini agar arus kas bisnis Anda terlindungi dari kebocoran yang tidak perlu.\n\n## Pertanyaan Seputar Cara Menghitung Food Cost Ideal (FAQ)\n\n### Berapa persentase food cost ideal yang sehat untuk kafe kopi?\nUntuk kafe kopi, persentase food cost ideal untuk kategori minuman kopi biasanya berkisar antara 15% hingga 22%, sedangkan untuk menu makanan pastry atau makanan berat berkisar antara 30% hingga 35%. Rata-rata gabungan keseluruhan menu kafe yang sehat adalah 25% hingga 28%.\n\n### Apa perbedaan antara food cost teoritis dan food cost aktual?\nFood cost teoritis adalah biaya bahan baku berdasarkan takaran resep standar dikalikan jumlah porsi yang terjual. Food cost aktual adalah nilai pemakaian bahan baku fisik yang benar-benar terpakai dari gudang, termasuk bahan yang tumpah, basi, gosong, atau dicuri.\n\n### Apakah bumbu dapur dan minyak goreng harus dihitung ke dalam food cost?\nYa, bumbu dapur, garam, penyedap rasa, dan minyak goreng wajib dimasukkan ke dalam perhitungan biaya resep. Jika sulit menimbang per sendok teh, Anda dapat menambahkan persentase penyangga (buffer cost) sebesar 3% hingga 5% dari total harga bahan utama sebagai alokasi bumbu pelengkap.\n\n### Kapan waktu yang tepat bagi restoran untuk menaikkan harga menu?\nRestoran sebaiknya menaikkan harga menu ketika food cost aktual terus-menerus melebihi batas 35% selama dua bulan berturut-turut akibat kenaikan harga bahan baku pasar, dan setelah upaya negosiasi supplier serta efisiensi porsi sudah dilakukan maksimal.\n\n### Bagaimana cara mengatasi food cost menu yang terlalu tinggi tetapi sangat disukai pelanggan?\nJangan langsung menaikkan harga secara drastis. Anda dapat mengurangi ukuran porsi sebesar 5% hingga 10% tanpa mengubah rasa, mengganti bahan pelengkap dengan alternatif yang lebih terjangkau, atau membuat paket bundling dengan menu minuman yang margin labanya sangat tebal.\n\n```json\n{\n  \"@context\": \"https://schema.org\",\n  \"@graph\": [\n    {\n      \"@type\": \"Article\",\n      \"headline\": \"Cara Menghitung Food Cost Ideal Kafe dan Restoran agar Bebas Boncos\",\n      \"description\": \"Pelajari cara menghitung food cost ideal kafe dan restoran, rumus persentase biaya bahan baku kuliner, serta cara menekan food waste operasional dapur.\",\n      \"image\": \"https://cooca.id/images/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran.jpg\",\n      \"datePublished\": \"2026-11-18T08:00:00+07:00\",\n      \"dateModified\": \"2026-11-18T08:00:00+07:00\",\n      \"url\": \"https://cooca.id/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran\",\n      \"mainEntityOfPage\": \"https://cooca.id/blog/cara-menghitung-food-cost-ideal-kafe-dan-restoran\",\n      \"author\": {\n        \"@type\": \"Person\",\n        \"name\": \"Tim Edukasi COOCA\"\n      },\n      \"publisher\": {\n        \"@type\": \"Organization\",\n        \"name\": \"COOCA\",\n        \"logo\": {\n          \"@type\": \"ImageObject\",\n          \"url\": \"https://cooca.id/images/logo.png\"\n        }\n      }\n    },\n    {\n      \"@type\": \"FAQPage\",\n      \"mainEntity\": [\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Berapa persentase food cost ideal yang sehat untuk kafe kopi?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Untuk kafe kopi, persentase food cost ideal untuk kategori minuman kopi biasanya berkisar antara 15% hingga 22%, sedangkan untuk menu makanan pastry atau makanan berat berkisar antara 30% hingga 35%. Rata-rata gabungan keseluruhan menu kafe yang sehat adalah 25% hingga 28%.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apa perbedaan antara food cost teoritis dan food cost aktual?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Food cost teoritis adalah biaya bahan baku berdasarkan takaran resep standar dikalikan jumlah porsi yang terjual. Food cost aktual adalah nilai pemakaian bahan baku fisik yang benar-benar terpakai dari gudang, termasuk bahan yang tumpah, basi, gosong, atau dicuri.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Apakah bumbu dapur dan minyak goreng harus dihitung ke dalam food cost?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Ya, bumbu dapur, garam, penyedap rasa, dan minyak goreng wajib dimasukkan ke dalam perhitungan biaya resep. Jika sulit menimbang per sendok teh, Anda dapat menambahkan persentase penyangga (buffer cost) sebesar 3% hingga 5% dari total harga bahan utama sebagai alokasi bumbu pelengkap.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Kapan waktu yang tepat bagi restoran untuk menaikkan harga menu?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Restoran sebaiknya menaikkan harga menu ketika food cost aktual terus-menerus melebihi batas 35% selama dua bulan berturut-turut akibat kenaikan harga bahan baku pasar, dan setelah upaya negosiasi supplier serta efisiensi porsi sudah dilakukan maksimal.\"\n          }\n        },\n        {\n          \"@type\": \"Question\",\n          \"name\": \"Bagaimana cara mengatasi food cost menu yang terlalu tinggi tetapi sangat disukai pelanggan?\",\n          \"acceptedAnswer\": {\n            \"@type\": \"Answer\",\n            \"text\": \"Jangan langsung menaikkan harga secara drastis. Anda dapat mengurangi ukuran porsi sebesar 5% hingga 10% tanpa mengubah rasa, mengganti bahan pelengkap dengan alternatif yang lebih terjangkau, atau membuat paket bundling dengan menu minuman yang margin labanya sangat tebal.\"\n          }\n        }\n      ]\n    }\n  ]\n}\n```\n"
+}
