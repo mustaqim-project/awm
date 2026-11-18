@@ -771,11 +771,13 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         $bizId = $business?->id ?? '25466382-3c7f-4207-aa3f-92e63ffa2bbf';
         $materialsRaw = \Illuminate\Support\Facades\DB::table('materials')
             ->where('business_id', $bizId)
-            ->select('id', 'code', 'name', 'unit_id', 'deleted_at')
+            ->whereNull('deleted_at')
+            ->select('id', 'code', 'name', 'unit_id')
             ->get();
         $productsRaw = \Illuminate\Support\Facades\DB::table('products')
             ->where('business_id', $bizId)
-            ->select('id', 'code', 'name', 'type', 'is_active', 'deleted_at')
+            ->whereNull('deleted_at')
+            ->select('id', 'code', 'name', 'type', 'is_active')
             ->get();
         $unitsInDb = \Illuminate\Support\Facades\DB::table('units')
             ->select('id', 'code', 'name', 'category', 'business_id')

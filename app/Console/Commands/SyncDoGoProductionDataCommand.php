@@ -151,26 +151,30 @@ class SyncDoGoProductionDataCommand extends Command
         $this->info("Membersihkan produk lama, resep BOM, dan bahan baku lama...");
         DB::transaction(function () use ($business) {
             // Hapus BOM Items terkait Cost Model bisnis ini
-            $costModelIds = CostModel::where('business_id', $business->id)->pluck('id');
-            $bomHeaderIds = BomHeader::whereIn('cost_model_id', $costModelIds)->pluck('id');
-            BomItem::whereIn('bom_header_id', $bomHeaderIds)->delete();
-            BomHeader::whereIn('id', $bomHeaderIds)->delete();
-            CostModel::whereIn('id', $costModelIds)->delete();
+            $costModelIds = DB::table('cost_models')->where('business_id', $business->id)->pluck('id');
+            $bomHeaderIds = DB::table('bom_headers')->whereIn('cost_model_id', $costModelIds)->pluck('id');
+            DB::table('bom_items')->whereIn('bom_header_id', $bomHeaderIds)->delete();
+            DB::table('bom_headers')->whereIn('id', $bomHeaderIds)->delete();
+            DB::table('cost_models')->whereIn('id', $costModelIds)->delete();
 
             // Bersihkan harga, movement, dan relasi produk
-            $productIds = Product::where('business_id', $business->id)->pluck('id');
+            $productIds = DB::table('products')->where('business_id', $business->id)->pluck('id');
             DB::table('branch_product_prices')->whereIn('product_id', $productIds)->delete();
             DB::table('product_channel_prices')->whereIn('product_id', $productIds)->delete();
             DB::table('product_bundle_items')->whereIn('parent_product_id', $productIds)->orWhereIn('child_product_id', $productIds)->delete();
             DB::table('inventory_stocks')->where('business_id', $business->id)->whereIn('product_id', $productIds)->delete();
-            Product::where('business_id', $business->id)->delete();
+            
+            // Hard delete products untuk mencegah tabrakan unique constraint
+            DB::table('products')->where('business_id', $business->id)->delete();
 
             // Bersihkan harga dan bahan baku
-            $materialIds = Material::where('business_id', $business->id)->pluck('id');
-            MaterialPrice::where('business_id', $business->id)->delete();
-            MaterialUnitConversion::where('business_id', $business->id)->delete();
+            $materialIds = DB::table('materials')->where('business_id', $business->id)->pluck('id');
+            DB::table('material_prices')->where('business_id', $business->id)->delete();
+            DB::table('material_unit_conversions')->where('business_id', $business->id)->delete();
             DB::table('inventory_stocks')->where('business_id', $business->id)->whereIn('material_id', $materialIds)->delete();
-            Material::where('business_id', $business->id)->delete();
+            
+            // Hard delete materials untuk mencegah tabrakan unique constraint
+            DB::table('materials')->where('business_id', $business->id)->delete();
         });
         $this->info("✓ Berhasil menghapus seluruh produk dan bahan baku lama secara bersih.");
 
@@ -244,7 +248,6 @@ class SyncDoGoProductionDataCommand extends Command
                     'material_id'      => $material->id,
                     'purchase_unit_id' => $unitObj->id,
                     'purchase_price'   => (float) $ing['unit_cost'],
-                    'effective_cost'   => (float) $ing['unit_cost'],
                     'yield_percentage' => 100.0,
                     'waste_percentage' => 0.0,
                     'effective_date'   => now()->toDateString(),
