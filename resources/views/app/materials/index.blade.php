@@ -405,7 +405,7 @@
                                 <td data-sort-value="{{ strtolower($mat->name) }}" class="py-3.5 px-4 font-medium text-[#1C1C1E] dark:text-[#F2F2F7]">
                                     <div class="font-semibold text-[13.5px]">{{ $mat->name }}</div>
                                     <div class="text-[11px] text-[#8E8E93] dark:text-[#98989D] tabular-nums mt-0.5">
-                                        {{ $mat->sku ?? __('materials.no_sku') }} · {{ __('materials.supplier_prefix') }} <span
+                                        {{ $mat->code ?? ($mat->sku ?? __('materials.no_sku')) }} · {{ __('materials.supplier_prefix') }} <span
                                             class="font-medium text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80">{{ $mat->supplier?->name ?? '-' }}</span>
                                     </div>
                                 </td>
@@ -560,7 +560,7 @@
                             <h3 class="text-[15px] font-bold text-[#1C1C1E] dark:text-[#F2F2F7] leading-tight truncate">
                                 {{ $mat->name }}</h3>
                             <div class="text-[12px] text-[#8E8E93] dark:text-[#98989D] mt-0.5">
-                                {{ $mat->sku ?? __('materials.no_sku') }} · {{ $mat->category?->name ?? __('materials.general_category') }}
+                                {{ $mat->code ?? ($mat->sku ?? __('materials.no_sku')) }} · {{ $mat->category?->name ?? __('materials.general_category') }}
                             </div>
                         </div>
                         <div class="text-right shrink-0">

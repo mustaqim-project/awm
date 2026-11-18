@@ -909,5 +909,21 @@ class Product extends Model
             ->values()
             ->all();
     }
+
+    /**
+     * Alias for code column to support SKU references seamlessly.
+     */
+    public function getSkuAttribute(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set SKU attribute by mapping it to code.
+     */
+    public function setSkuAttribute(?string $value): void
+    {
+        $this->attributes['code'] = $value;
+    }
 }
 

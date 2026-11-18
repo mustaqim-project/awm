@@ -45,7 +45,6 @@ final class MaterialWebController extends Controller implements HasMiddleware
             $search = (string) $request->get('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('sku', 'like', "%{$search}%")
                     ->orWhere('code', 'like', "%{$search}%");
             });
         }
@@ -70,7 +69,7 @@ final class MaterialWebController extends Controller implements HasMiddleware
             $search = (string) $request->get('search');
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('sku', 'like', "%{$search}%");
+                    ->orWhere('code', 'like', "%{$search}%");
             });
         }
 

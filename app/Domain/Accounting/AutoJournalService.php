@@ -604,10 +604,11 @@ final class AutoJournalService
                     $cogsPerItem = 0.0;
                     if (! empty($item['sku'])) {
                         $prod = \App\Models\Product::where('business_id', $business->id)
-                            ->where('sku', (string) $item['sku'])
+                            ->where('code', (string) $item['sku'])
                             ->first();
-                        if ($prod && (float) $prod->cost_price > 0) {
-                            $cogsPerItem = (float) $prod->cost_price;
+                        $baseCost = (float) ($prod->base_cost ?? $prod->cost_price ?? 0);
+                        if ($prod && $baseCost > 0) {
+                            $cogsPerItem = $baseCost;
                         }
                     }
                     $totalCogs += ($qty * $cogsPerItem);

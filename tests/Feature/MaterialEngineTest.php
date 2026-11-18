@@ -251,4 +251,77 @@ final class MaterialEngineTest extends TestCase
         $this->assertEqualsWithDelta(160000.0, (float) $response->json('effective_cost.total_acquisition_cost'), 0.01);
         $this->assertEqualsWithDelta(160.0, (float) $response->json('effective_cost.effective_cost_per_target_unit'), 0.01);
     }
+
+    public function test_material_and_product_sku_accessor_and_search_queries(): void
+    {
+        $this->seed(\Database\Seeders\RbacSeeder::class);
+
+        $user = User::create([
+            'name' => 'Owner Material Search',
+            'email' => 'owner_mat_search@test.local',
+            'phone' => '62812' . rand(10000000, 99999999),
+            'password' => 'password',
+            'email_verified_at' => now(),
+            'phone_verified_at' => now(),
+        ]);
+
+        $biz = Business::create([
+            'name' => 'Bisnis Mat Search',
+            'currency' => 'IDR',
+            'currency_code' => 'IDR',
+            'currency_symbol' => 'Rp',
+            'business_scale' => Business::SCALE_GROWTH,
+            'disabled_modules' => [],
+        ]);
+
+        $biz->users()->attach($user->id, [
+            'id' => (string) Str::uuid(),
+            'role' => 'owner',
+            'is_active' => true,
+        ]);
+        $user->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
+
+        $kg = Unit::where('code', 'kg')->firstOrFail();
+
+        $material = Material::create([
+            'business_id' => $biz->id,
+            'name' => 'Tepung Terigu Segitiga',
+            'code' => 'MAT-PASSTRUE-01',
+            'unit_id' => $kg->id,
+        ]);
+
+        // Verify SKU accessor and mutator on Material
+        $this->assertSame('MAT-PASSTRUE-01', $material->sku);
+        $material->sku = 'MAT-NEW-02';
+        $this->assertSame('MAT-NEW-02', $material->code);
+
+        // Verify MaterialWebController@index with search query does not crash with unknown column 'sku'
+        $response = $this->actingAs($user, 'web')
+            ->get(route('materials.index', ['search' => 'pass']));
+        $response->assertOk();
+        $response->assertSee('Tepung Terigu Segitiga');
+
+        // Verify MaterialWebController@export with search query
+        $exportResponse = $this->actingAs($user, 'web')
+            ->get(route('materials.export', ['search' => 'pass']));
+        $exportResponse->assertOk();
+
+        // Verify Product SKU accessor & mutator
+        $product = \App\Models\Product::create([
+            'business_id' => $biz->id,
+            'name' => 'Roti Manis',
+            'code' => 'PRD-ROTI-01',
+            'output_unit_id' => $kg->id,
+            'type' => \App\Models\Product::TYPE_GOODS,
+        ]);
+        $this->assertSame('PRD-ROTI-01', $product->sku);
+        $product->sku = 'PRD-ROTI-02';
+        $this->assertSame('PRD-ROTI-02', $product->code);
+
+        // Verify ProductWebController@export with search query
+        $productExportResponse = $this->actingAs($user, 'web')
+            ->get(route('products.export', ['search' => 'roti']));
+        $productExportResponse->assertOk();
+    }
 }
