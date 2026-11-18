@@ -178,7 +178,8 @@
                 <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
             </a>
             <a href="{{ route('settings.integrations.mcp.index') }}"
-                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#AF52DE]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]">
+                class="snap-start shrink-0 w-[260px] sm:w-auto p-4 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 hover:border-[#AF52DE]/30 transition-all flex items-center justify-between group shadow-sm active:scale-[0.99]"
+                title="{{ __('settings.mcp_btn_open') }}">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center shrink-0">
                         <i data-lucide="bot" class="w-5 h-5"></i>
@@ -188,7 +189,13 @@
                         <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('settings.mcp_nav_sub') }}</p>
                     </div>
                 </div>
-                <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
+                <div class="flex items-center gap-1.5">
+                    <span class="hidden md:inline-flex items-center gap-1 text-[11px] font-medium text-[#AF52DE] bg-[#AF52DE]/10 px-2 py-0.5 rounded-[6px]">
+                        <i data-lucide="edit-3" class="w-3 h-3"></i>
+                        <span>{{ __('settings.mcp_btn_open') }}</span>
+                    </span>
+                    <i data-lucide="chevron-right" class="w-4 h-4 text-black/30 dark:text-white/30 group-hover:translate-x-0.5 transition-transform"></i>
+                </div>
             </a>
         </div>
 
@@ -1161,6 +1168,62 @@
                 @include('app.settings.integrations.social_media')
             </div>
         @endif
+
+        <!-- ===================================================== -->
+        <!-- TAB: MCP AI INTEGRATION (Deep-Link Hub)              -->
+        <!-- ===================================================== -->
+        <div x-show="activeTab === 'mcp'" class="space-y-6" style="display: none;">
+            <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 p-6 sm:p-8 space-y-6 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black/5 dark:border-white/5 pb-5">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-[14px] bg-[#AF52DE]/10 text-[#AF52DE] flex items-center justify-center shrink-0">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-black dark:text-white">{{ __('settings.mcp_tab_title') }}</h3>
+                            <p class="text-xs text-black/55 dark:text-white/55 mt-0.5 max-w-xl">{{ __('settings.mcp_tab_desc') }}</p>
+                        </div>
+                    </div>
+                    <a href="{{ route('settings.integrations.mcp.index') }}"
+                        class="min-h-[44px] px-5 py-2.5 rounded-[12px] bg-[#AF52DE] hover:bg-[#9B42C6] text-white text-xs font-semibold flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98]">
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                        <span>{{ __('settings.mcp_btn_open') }}</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                        <div class="flex items-center gap-2 text-xs font-semibold text-black dark:text-white">
+                            <i data-lucide="sparkles" class="w-4 h-4 text-[#AF52DE]"></i>
+                            <span>Multi-Provider AI Ready</span>
+                        </div>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">
+                            Terhubung langsung dengan Claude Desktop, ChatGPT Custom GPT Actions, Google Gemini Python SDK, dan Claude Code CLI.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                        <div class="flex items-center gap-2 text-xs font-semibold text-black dark:text-white">
+                            <i data-lucide="sliders" class="w-4 h-4 text-[#007AFF]"></i>
+                            <span>Granular CRUD Permissions</span>
+                        </div>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">
+                            Kontrol penuh izin Create, Read, Update, dan Delete secara modular per kunci akses MCP untuk mencegah perubahan tak diinginkan.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-[14px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-1.5">
+                        <div class="flex items-center gap-2 text-xs font-semibold text-black dark:text-white">
+                            <i data-lucide="edit-3" class="w-4 h-4 text-[#34C759]"></i>
+                            <span>Update Data & Mutasi Otomatis</span>
+                        </div>
+                        <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">
+                            AI asisten dapat melakukan update data profil toko, pajak PPN, rekening bank, jam operasional, dan parameter bisnis secara aman.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- ===================================================== -->
         <!-- TAB 4: 20 PRESET TEMPLATE INDUSTRI (§35)              -->

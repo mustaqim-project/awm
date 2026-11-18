@@ -738,6 +738,7 @@ final class DataImportService
             $purchasePrice = (float) ($row['purchase_price'] ?? $row['base_cost'] ?? 0);
             $supplierName = trim((string) ($row['supplier'] ?? ''));
             $description = trim((string) ($row['description'] ?? $row['notes'] ?? ''));
+            $minStock = (float) ($row['min_stock'] ?? $row['stok_minimum'] ?? 0);
 
             $errors = [];
             $status = 'valid';
@@ -829,6 +830,7 @@ final class DataImportService
                 'supplier_name' => $supplierName,
                 'supplier_id' => $resolvedSupplier?->id,
                 'supplier_code' => $resolvedSupplier?->slug,
+                'min_stock' => $minStock,
                 'description' => $description,
                 'status' => $status,
                 'status_reason' => $statusReason,
@@ -879,6 +881,7 @@ final class DataImportService
                 $supplierCode = trim((string) ($row['supplier_code'] ?? ''));
                 $unitCode = trim((string) ($row['unit_code'] ?? $row['unit'] ?? ''));
                 $purchasePrice = (float) ($row['purchase_price'] ?? 0);
+                $minStock = (float) ($row['min_stock'] ?? $row['stok_minimum'] ?? 0);
                 $description = trim((string) ($row['description'] ?? ''));
 
                 // Resolve only against existing tenant master data.
@@ -946,6 +949,7 @@ final class DataImportService
                             'category_id' => $categoryId ?: $existing->category_id,
                             'supplier_id' => $supplierId ?: $existing->supplier_id,
                             'unit_id' => $unitId ?: $existing->unit_id,
+                            'min_stock' => $minStock > 0 ? $minStock : $existing->min_stock,
                             'description' => $description ?: $existing->description,
                         ]);
 
@@ -982,6 +986,7 @@ final class DataImportService
                     'category_id' => $categoryId,
                     'supplier_id' => $supplierId,
                     'unit_id' => $unitId,
+                    'min_stock' => $minStock,
                     'description' => $description ?: null,
                 ]);
 

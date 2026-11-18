@@ -653,7 +653,11 @@
                                                 <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500" x-show="copiedPostId === '{{ $post->id }}'" x-cloak></i>
                                             </button>
 
-                                            @if ((string) $post->owner_id === (string) auth()->id() || \App\Support\Context::hasPermission('community.manage'))
+                                            @php
+                                                $canDeletePost = (string) $post->owner_id === (string) auth()->id() 
+                                                    || ((string) $post->business_id === (string) \App\Support\Context::businessId() && \App\Support\Context::hasPermission('community.manage'));
+                                            @endphp
+                                            @if ($canDeletePost)
                                                 <form method="POST" action="{{ route('community.destroy', $post) }}"
                                                     onsubmit="return confirm('Hapus postingan ini?')">
                                                     @csrf

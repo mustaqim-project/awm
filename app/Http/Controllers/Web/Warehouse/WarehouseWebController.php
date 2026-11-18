@@ -77,8 +77,12 @@ final class WarehouseWebController extends Controller implements HasMiddleware
 
                 $loc->low_stock_count = InventoryStock::where('business_id', $business->id)
                     ->where('location_id', $loc->id)
-                    ->whereHas('product', function ($q) {
-                        $q->whereRaw('inventory_stocks.quantity <= products.min_stock AND products.min_stock > 0');
+                    ->where(function ($query): void {
+                        $query->whereHas('product', function ($q): void {
+                            $q->whereRaw('inventory_stocks.quantity <= products.min_stock AND products.min_stock > 0');
+                        })->orWhereHas('material', function ($q): void {
+                            $q->whereRaw('inventory_stocks.quantity <= materials.min_stock AND materials.min_stock > 0');
+                        });
                     })
                     ->count();
 
@@ -297,8 +301,12 @@ final class WarehouseWebController extends Controller implements HasMiddleware
 
         $lowStockCount = InventoryStock::where('business_id', $business->id)
             ->where('location_id', $location->id)
-            ->whereHas('product', function ($q) {
-                $q->whereRaw('inventory_stocks.quantity <= products.min_stock AND products.min_stock > 0');
+            ->where(function ($query): void {
+                $query->whereHas('product', function ($q): void {
+                    $q->whereRaw('inventory_stocks.quantity <= products.min_stock AND products.min_stock > 0');
+                })->orWhereHas('material', function ($q): void {
+                    $q->whereRaw('inventory_stocks.quantity <= materials.min_stock AND materials.min_stock > 0');
+                });
             })
             ->count();
 

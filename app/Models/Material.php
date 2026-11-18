@@ -28,6 +28,7 @@ class Material extends Model
         'name',
         'slug',
         'description',
+        'min_stock',
         'discontinued_at',
     ];
 
@@ -48,6 +49,7 @@ class Material extends Model
     protected function casts(): array
     {
         return [
+            'min_stock' => 'float',
             'discontinued_at' => 'datetime',
         ];
     }

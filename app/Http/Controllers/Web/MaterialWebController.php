@@ -106,6 +106,7 @@ final class MaterialWebController extends Controller implements HasMiddleware
             'yield_percentage' => ['required', 'numeric', 'gte:1', 'lte:500'],
             'waste_percentage' => ['required', 'numeric', 'gte:0', 'lte:100'],
             'allow_yield_over_100' => ['nullable', 'boolean'],
+            'min_stock' => ['nullable', 'numeric', 'gte:0'],
             'purchase_price' => ['required', 'numeric', 'gt:0'],
             'shipping_cost' => ['nullable', 'numeric', 'gte:0'],
             'discount_amount' => ['nullable', 'numeric', 'gte:0'],
@@ -119,6 +120,7 @@ final class MaterialWebController extends Controller implements HasMiddleware
             'unit_id' => $validated['unit_id'],
             'code' => $validated['sku'] ?? null,
             'name' => $validated['name'],
+            'min_stock' => (float) ($validated['min_stock'] ?? 0.0),
         ]);
 
         $purchasePrice = (float) $validated['purchase_price'];
@@ -169,6 +171,7 @@ final class MaterialWebController extends Controller implements HasMiddleware
                     ->ignore($material->id)
                     ->where(fn ($query) => $query->where('business_id', $business->id)),
             ],
+            'min_stock' => ['nullable', 'numeric', 'gte:0'],
         ]);
 
         $material->update([
@@ -177,6 +180,7 @@ final class MaterialWebController extends Controller implements HasMiddleware
             'supplier_id' => $validated['supplier_id'] ?? null,
             'unit_id' => $validated['unit_id'],
             'code' => $validated['sku'] ?? $material->code,
+            'min_stock' => isset($validated['min_stock']) ? (float) $validated['min_stock'] : (float) ($material->min_stock ?? 0.0),
         ]);
 
         return redirect()->route('materials.index')->with('success', "Bahan baku '{$material->name}' berhasil diperbarui.");

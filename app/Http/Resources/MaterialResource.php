@@ -27,6 +27,7 @@ final class MaterialResource extends JsonResource
             'name' => $this->resource->name,
             'slug' => $this->resource->slug,
             'description' => $this->resource->description,
+            'min_stock' => (float) ($this->resource->min_stock ?? 0),
             'purchase_price' => (float) ($this->resource->latestPrice?->purchase_price ?? 0),
             'effective_cost' => (float) ($this->resource->latestPrice?->effective_cost ?? $this->resource->latestPrice?->purchase_price ?? 0),
             'unit_name' => $this->resource->unit?->code ?? $this->resource->unit?->name ?? 'kg',

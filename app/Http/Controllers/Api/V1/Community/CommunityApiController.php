@@ -41,7 +41,9 @@ final class CommunityApiController extends Controller implements HasMiddleware
 
     public static function middleware(): array
     {
-        return [];
+        return [
+            new Middleware('require.role:owner'),
+        ];
     }
 
     public function __construct(

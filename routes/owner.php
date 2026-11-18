@@ -537,26 +537,28 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         // Dokumentasi & Panduan Penggunaan Sistem Cooca (Dapat diakses oleh seluruh pengguna)
         Route::get('/docs', [DocumentationWebController::class, 'index'])->name('docs.index');
 
-        // Community Feed & Events (Active for all subscription tiers: Free, Standard, Premium, Prestige)
-        Route::get('/community', [CommunityWebController::class, 'index'])->name('community.index');
-        Route::post('/community', [CommunityWebController::class, 'store'])->name('community.store');
-        Route::post('/community/{post}/like', [CommunityWebController::class, 'toggleLike'])->name('community.like');
-        Route::post('/community/{post}/comment', [CommunityWebController::class, 'comment'])->name('community.comment');
-        Route::post('/community/{post}/repost', [CommunityWebController::class, 'toggleRepost'])->name('community.repost');
-        Route::post('/community/notifications/read', [CommunityWebController::class, 'markNotificationsRead'])->name('community.notifications.read');
-        Route::delete('/community/{post}', [CommunityWebController::class, 'destroy'])->name('community.destroy');
+        // Community Feed & Events (Khusus Role Owner)
+        Route::middleware('require.role:owner')->group(function (): void {
+            Route::get('/community', [CommunityWebController::class, 'index'])->name('community.index');
+            Route::post('/community', [CommunityWebController::class, 'store'])->name('community.store');
+            Route::post('/community/{post}/like', [CommunityWebController::class, 'toggleLike'])->name('community.like');
+            Route::post('/community/{post}/comment', [CommunityWebController::class, 'comment'])->name('community.comment');
+            Route::post('/community/{post}/repost', [CommunityWebController::class, 'toggleRepost'])->name('community.repost');
+            Route::post('/community/notifications/read', [CommunityWebController::class, 'markNotificationsRead'])->name('community.notifications.read');
+            Route::delete('/community/{post}', [CommunityWebController::class, 'destroy'])->name('community.destroy');
 
-        Route::get('/community/events', [CommunityWebController::class, 'events'])->name('community.events.index');
-        Route::post('/community/events/{event}/register', [CommunityWebController::class, 'registerEvent'])->name('community.events.register');
-        Route::post('/community/events/{event}/cancel', [CommunityWebController::class, 'cancelEventRegistration'])->name('community.events.cancel');
-        Route::get('/community/events/{event}/ticket', [CommunityWebController::class, 'getEventTicket'])->name('community.events.ticket');
-        Route::post('/community/events/{event}/checkin-location', [CommunityWebController::class, 'checkinLocation'])->name('community.events.checkin-location');
-        Route::post('/community/events/{event}/checkin-barcode', [CommunityWebController::class, 'checkinBarcode'])->name('community.events.checkin-barcode');
+            Route::get('/community/events', [CommunityWebController::class, 'events'])->name('community.events.index');
+            Route::post('/community/events/{event}/register', [CommunityWebController::class, 'registerEvent'])->name('community.events.register');
+            Route::post('/community/events/{event}/cancel', [CommunityWebController::class, 'cancelEventRegistration'])->name('community.events.cancel');
+            Route::get('/community/events/{event}/ticket', [CommunityWebController::class, 'getEventTicket'])->name('community.events.ticket');
+            Route::post('/community/events/{event}/checkin-location', [CommunityWebController::class, 'checkinLocation'])->name('community.events.checkin-location');
+            Route::post('/community/events/{event}/checkin-barcode', [CommunityWebController::class, 'checkinBarcode'])->name('community.events.checkin-barcode');
 
-        // Community Event QRIS Payment
-        Route::get('/community/events/registrations/{registration}/payment', [CommunityWebController::class, 'showEventPayment'])->name('community.events.payment.show');
-        Route::get('/community/events/registrations/{registration}/payment-status', [CommunityWebController::class, 'checkEventPaymentStatus'])->name('community.events.payment.status');
-        Route::post('/community/events/registrations/{registration}/simulate-pay', [CommunityWebController::class, 'simulateEventPayment'])->name('community.events.payment.simulate');
+            // Community Event QRIS Payment
+            Route::get('/community/events/registrations/{registration}/payment', [CommunityWebController::class, 'showEventPayment'])->name('community.events.payment.show');
+            Route::get('/community/events/registrations/{registration}/payment-status', [CommunityWebController::class, 'checkEventPaymentStatus'])->name('community.events.payment.status');
+            Route::post('/community/events/registrations/{registration}/simulate-pay', [CommunityWebController::class, 'simulateEventPayment'])->name('community.events.payment.simulate');
+        });
 
         // Dedicated SaaS Billing & Limits (RBAC & Multi-Tenant Secured)
         Route::get('/billing', [BillingAndLimitWebController::class, 'index'])->middleware('require.permission:billing.view')->name('billing');

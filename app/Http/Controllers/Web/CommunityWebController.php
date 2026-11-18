@@ -40,10 +40,12 @@ final class CommunityWebController extends Controller implements HasMiddleware
 
     /**
      * Daftarkan Controller-Level RBAC & Middleware.
+     * Komunitas Owner dibatasi secara ketat hanya untuk role Owner bisnis.
      */
     public static function middleware(): array
     {
         return [
+            new Middleware('require.role:owner'),
             new Middleware('require.permission:community.view', only: [
                 'index',
                 'events',

@@ -111,6 +111,7 @@ final class MaterialController extends Controller
             'category_id' => ['nullable', 'string', 'exists:material_categories,id'],
             'supplier_id' => ['nullable', 'string', 'exists:suppliers,id'],
             'description' => ['nullable', 'string'],
+            'min_stock' => ['nullable', 'numeric', 'min:0'],
             'purchase_price' => ['nullable', 'numeric', 'min:0'],
             'yield_percentage' => ['nullable', 'numeric', 'min:0'],
             'waste_percentage' => ['nullable', 'numeric', 'min:0'],
@@ -129,6 +130,7 @@ final class MaterialController extends Controller
             'category_id' => $validated['category_id'] ?? null,
             'supplier_id' => $validated['supplier_id'] ?? null,
             'description' => $validated['description'] ?? null,
+            'min_stock' => (float) ($validated['min_stock'] ?? 0.0),
         ]);
 
         // Create initial price if purchase_price provided
@@ -199,6 +201,7 @@ final class MaterialController extends Controller
             'category_id' => ['nullable', 'string', 'exists:material_categories,id'],
             'supplier_id' => ['nullable', 'string', 'exists:suppliers,id'],
             'description' => ['nullable', 'string'],
+            'min_stock' => ['nullable', 'numeric', 'min:0'],
             'is_discontinued' => ['boolean'],
         ]);
 

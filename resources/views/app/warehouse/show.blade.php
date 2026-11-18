@@ -521,17 +521,15 @@
                                     $categoryName = $stock->product?->category?->name ?? $stock->material?->category?->name ?? '-';
                                     $unitSymbol = $stock->product?->outputUnit?->symbol ?? $stock->material?->unit?->symbol ?? $stock->material?->unit?->name ?? '';
                                     $unitCost = $stock->last_cost > 0 ? (float) $stock->last_cost : (float) ($stock->avg_purchase_cost ?? 0);
-                                    $isLow =
-                                        $stock->product &&
-                                        $stock->product->min_stock > 0 &&
-                                        $stock->quantity <= $stock->product->min_stock;
+                                    $minStock = (float) ($stock->product?->min_stock ?? $stock->material?->min_stock ?? 0);
+                                    $isLow = $minStock > 0 && (float) $stock->quantity <= $minStock;
                                     $valuation = (float) $stock->quantity * $unitCost;
                                 @endphp
                                 <tr data-sort-row
                                     data-sort-0="{{ strtolower($itemName) }}"
                                     data-sort-1="{{ strtolower($categoryName) }}"
                                     data-sort-2="{{ (float) $stock->quantity }}"
-                                    data-sort-3="{{ (float) ($stock->product?->min_stock ?? 0) }}"
+                                    data-sort-3="{{ (float) $minStock }}"
                                     data-sort-4="{{ (float) $unitCost }}"
                                     data-sort-5="{{ (float) $valuation }}"
                                     data-sort-6="{{ $isLow ? 1 : ($stock->quantity <= 0 ? 0 : 2) }}"
@@ -630,10 +628,8 @@
                             $categoryName = $stock->product?->category?->name ?? $stock->material?->category?->name ?? '-';
                             $unitSymbol = $stock->product?->outputUnit?->symbol ?? $stock->material?->unit?->symbol ?? $stock->material?->unit?->name ?? '';
                             $unitCost = $stock->last_cost > 0 ? (float) $stock->last_cost : (float) ($stock->avg_purchase_cost ?? 0);
-                            $isLow =
-                                $stock->product &&
-                                $stock->product->min_stock > 0 &&
-                                $stock->quantity <= $stock->product->min_stock;
+                            $minStock = (float) ($stock->product?->min_stock ?? $stock->material?->min_stock ?? 0);
+                            $isLow = $minStock > 0 && (float) $stock->quantity <= $minStock;
                             $valuation = (float) $stock->quantity * $unitCost;
                         @endphp
                         <div x-show="!searchStock || '{{ strtolower($itemName . ' ' . $itemCode . ' ' . $categoryName) }}'.includes(searchStock.toLowerCase())"

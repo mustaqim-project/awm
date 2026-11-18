@@ -1617,9 +1617,9 @@ Route::prefix('v1')->group(function (): void {
             });
 
             // ──────────────────────────────────────────────────────────────────
-            // MOBILE APP API – Community Hub & Events
+            // MOBILE APP API – Community Hub & Events (Khusus Role Owner)
             // ──────────────────────────────────────────────────────────────────
-            Route::prefix('community')->group(function (): void {
+            Route::prefix('community')->middleware('require.role:owner')->group(function (): void {
                 Route::get('/feed', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'feed']);
                 Route::post('/posts', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'storePost']);
                 Route::delete('/posts/{post}', [\App\Http\Controllers\Api\V1\Community\CommunityApiController::class, 'destroyPost']);

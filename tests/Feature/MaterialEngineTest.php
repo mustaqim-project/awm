@@ -324,4 +324,54 @@ final class MaterialEngineTest extends TestCase
             ->get(route('products.export', ['search' => 'roti']));
         $productExportResponse->assertOk();
     }
+
+    public function test_material_can_set_and_update_min_stock(): void
+    {
+        $user = User::create(['name' => 'Owner MinStock', 'email' => 'minstock_test@example.com', 'password' => 'password123']);
+        $biz = Business::create(['name' => 'Resto MinStock']);
+        $biz->users()->attach($user->id, ['id' => (string) Str::uuid(), 'role' => 'owner']);
+        $user->update(['active_business_id' => $biz->id]);
+        Context::setBusiness($biz);
+
+        $ml = Unit::where('code', 'ml')->firstOrFail();
+
+        // 1. Create via Web with min_stock
+        $response = $this->actingAs($user, 'web')
+            ->post(route('materials.store'), [
+                'name' => 'Susu Segar UHT',
+                'unit_id' => $ml->id,
+                'min_stock' => 1500,
+                'purchase_price' => 30000,
+                'yield_percentage' => 100,
+                'waste_percentage' => 0,
+            ]);
+        $response->assertRedirect(route('materials.index'));
+
+        $material = Material::where('business_id', $biz->id)->where('name', 'Susu Segar UHT')->firstOrFail();
+        $this->assertEquals(1500.0, $material->min_stock);
+
+        // 2. Update min_stock
+        $updateResponse = $this->actingAs($user, 'web')
+            ->put(route('materials.update', $material), [
+                'name' => 'Susu Segar UHT Barista',
+                'unit_id' => $ml->id,
+                'min_stock' => 2500,
+            ]);
+        $updateResponse->assertRedirect(route('materials.index'));
+
+        $material->refresh();
+        $this->assertSame('Susu Segar UHT Barista', $material->name);
+        $this->assertEquals(2500.0, $material->min_stock);
+
+        // 3. API supports min_stock
+        $apiResponse = $this->actingAs($user, 'sanctum')
+            ->withHeader('X-Business-Id', $biz->id)
+            ->postJson('/api/v1/materials', [
+                'name' => 'Sirup Karamel',
+                'unit_id' => $ml->id,
+                'min_stock' => 500,
+            ]);
+        $apiResponse->assertCreated();
+        $this->assertEquals(500.0, $apiResponse->json('material.min_stock'));
+    }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app', [
     'title' => __('community.agenda_event_komunitas_cooca'),
-    'headerTitle' => 'Agenda Event Komunitas',
-    'headerSubtitle' => 'Seminar bisnis, pelatihan kasir POS, dan meetup eksklusif untuk seluruh pengguna Cooca',
+    'headerTitle' => 'Agenda Event Komunitas Owner',
+    'headerSubtitle' => 'Seminar bisnis, strategi ekspansi, dan meetup eksklusif untuk pemilik bisnis (Owner) Cooca',
 ])
 
 @section('content')

@@ -833,7 +833,7 @@ final class DataExchangeService
             $sheet->setCellValue("D{$rowIdx}", $m->category?->name ?: 'Umum');
             $sheet->setCellValue("E{$rowIdx}", $m->unit?->name ?: 'pcs');
             $sheet->setCellValue("F{$rowIdx}", (float) $latestPrice);
-            $sheet->setCellValue("G{$rowIdx}", (float) ($m->minimum_stock ?? 0));
+            $sheet->setCellValue("G{$rowIdx}", (float) ($m->min_stock ?? $m->minimum_stock ?? 0));
             $sheet->setCellValue("H{$rowIdx}", $m->supplier?->name ?: '-');
 
             $this->applyDataRowStyle($sheet, "A{$rowIdx}:H{$rowIdx}", $rowIdx % 2 === 0);

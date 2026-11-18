@@ -145,7 +145,7 @@
             'crud' => [
                 ['code' => 'mcp:settings:create', 'letter' => 'C', 'action' => 'Create', 'label' => 'Inisialisasi Konfigurasi & Cabang Usaha', 'hint' => 'settings_manage_business', 'color' => 'emerald'],
                 ['code' => 'mcp:settings:read', 'letter' => 'R', 'action' => 'Read', 'label' => 'Baca Pengaturan Profil, PPN & Struk', 'hint' => 'settings_manage_business', 'color' => 'blue'],
-                ['code' => 'mcp:settings:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Ubah Nama, PPN, Alamat & Footer Struk', 'hint' => 'settings_manage_business', 'color' => 'amber'],
+                ['code' => 'mcp:settings:update', 'letter' => 'U', 'action' => 'Update', 'label' => 'Update Data & Edit Profil, Bank, PPN, PIN & Struk', 'hint' => 'settings_manage_business', 'color' => 'amber'],
                 ['code' => 'mcp:settings:delete', 'letter' => 'D', 'action' => 'Delete', 'label' => 'Reset / Hapus Konfigurasi Kustom', 'hint' => 'settings_manage_business', 'color' => 'rose'],
             ],
         ],
@@ -582,14 +582,27 @@ bank_resp = requests.post(
     headers={"Authorization": f"Bearer {COOCA_TOKEN}"},
     json={}
 )
-print("{{ addslashes(__('mcp.py_sample_print_bank')) }}", bank_resp.json())`;
+print("{{ addslashes(__('mcp.py_sample_print_bank')) }}", bank_resp.json())
+
+{{ addslashes(__('mcp.py_sample_comment_settings')) }}
+settings_resp = requests.post(
+    f"{COOCA_API_BASE}/tools/settings_manage_business/execute",
+    headers={"Authorization": f"Bearer {COOCA_TOKEN}"},
+    json={
+        "action": "update",
+        "tax_percentage": 12,
+        "receipt_footer_note": "Terima kasih atas kunjungan Anda"
+    }
+)
+print("{{ addslashes(__('mcp.py_sample_print_settings')) }}", settings_resp.json())`;
         },
 
         getGeminiCurl() {
             const token = this.getToken();
-            return `curl -X POST "${apiBase}/tools/finance_get_cash_and_bank_balances/execute" \\
+            return `curl -X POST "${apiBase}/tools/settings_manage_business/execute" \\
   -H "Authorization: Bearer ${token}" \\
-  -H "Content-Type: application/json"`;
+  -H "Content-Type: application/json" \\
+  -d '{"action": "update", "tax_percentage": 12, "receipt_footer_note": "Terima kasih atas kunjungan Anda"}'`;
         }
     };
 }
@@ -1743,7 +1756,7 @@ document.addEventListener('alpine:init', () => {
                                 </p>
 
                                 {{-- Prompt Cards --}}
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                                     {{-- Prompt 1 --}}
                                     <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
                                         <div class="space-y-1">
@@ -1789,6 +1802,23 @@ document.addEventListener('alpine:init', () => {
                                         <button
                                             type="button"
                                             @click="copyText('{{ addslashes(__('mcp.chatgpt_test_prompt_3')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                                            class="w-full py-1.5 px-2.5 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
+                                            <i data-lucide="copy" class="w-3 h-3"></i>
+                                            <span>{{ __('mcp.chatgpt_btn_copy_prompt') }}</span>
+                                        </button>
+                                    </div>
+
+                                    {{-- Prompt 4: Update Data & Settings --}}
+                                    <div class="p-3.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900/80 border border-neutral-200/70 dark:border-neutral-800 flex flex-col justify-between gap-2.5">
+                                        <div class="space-y-1">
+                                            <div class="text-[10px] text-amber-500 uppercase font-semibold">Update Data & Settings</div>
+                                            <p class="text-xs text-neutral-800 dark:text-neutral-200 italic leading-relaxed">
+                                                "{{ __('mcp.chatgpt_test_prompt_4') }}"
+                                            </p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="copyText('{{ addslashes(__('mcp.chatgpt_test_prompt_4')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                                             class="w-full py-1.5 px-2.5 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white text-[11px] font-medium flex items-center justify-center gap-1.5 transition-colors">
                                             <i data-lucide="copy" class="w-3 h-3"></i>
                                             <span>{{ __('mcp.chatgpt_btn_copy_prompt') }}</span>
@@ -1898,6 +1928,7 @@ document.addEventListener('alpine:init', () => {
                                 <span>{{ __('mcp.claude_code_example_title') }}</span>
                             </div>
                             <pre class="p-2.5 rounded-[8px] bg-neutral-100 dark:bg-neutral-900 font-mono text-[11px] text-neutral-800 dark:text-neutral-200">claude "{{ __('mcp.claude_code_example_cmd') }}"</pre>
+                            <pre class="p-2.5 rounded-[8px] bg-neutral-100 dark:bg-neutral-900 font-mono text-[11px] text-neutral-800 dark:text-neutral-200">claude "{{ __('mcp.claude_code_example_cmd_update') }}"</pre>
                             <p class="text-[11px] text-neutral-500">{{ __('mcp.claude_code_example_desc') }}</p>
                         </div>
                     </div>
@@ -2495,6 +2526,28 @@ document.addEventListener('alpine:init', () => {
                         <button
                             type="button"
                             @click="copyText('{{ addslashes(__('mcp.tool_24_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
+                            class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
+                            {{ __('mcp.btn_copy_short') }}
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Tool 25: Settings Manage Business (Update Data & Edit Konfigurasi) --}}
+                <div class="p-4 rounded-[16px] bg-neutral-50/70 dark:bg-neutral-900/50 border border-neutral-200/80 dark:border-neutral-800 flex flex-col justify-between space-y-3">
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-mono text-xs font-semibold text-amber-600 dark:text-amber-400">settings_manage_business</span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">mcp:settings:update</span>
+                        </div>
+                        <p class="text-xs text-neutral-700 dark:text-neutral-300 mt-1.5 leading-relaxed">
+                            {{ __('mcp.tool_settings_desc') }}
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-2">
+                        <span class="text-[11px] text-neutral-500 truncate italic">"{{ __('mcp.tool_settings_prompt') }}"</span>
+                        <button
+                            type="button"
+                            @click="copyText('{{ addslashes(__('mcp.tool_settings_prompt')) }}', '{{ addslashes(__('mcp.toast_prompt_copied')) }}')"
                             class="px-2.5 py-1 rounded-[8px] bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-[11px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 transition-colors shrink-0">
                             {{ __('mcp.btn_copy_short') }}
                         </button>

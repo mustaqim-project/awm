@@ -23,6 +23,7 @@
             unit_id: '{{ $units->firstWhere('code', 'kg')?->id ?? ($units->first()?->id ?? '') }}',
             category_id: '',
             supplier_id: '',
+            min_stock: 0,
             yield_percentage: 100,
             waste_percentage: 0,
             purchase_price: '',
@@ -37,7 +38,7 @@
     
         // Edit and Price Modal State
         selectedMaterial: null,
-        editMaterial: { id: '', slug: '', name: '', sku: '', category_id: '', supplier_id: '', unit_id: '' },
+        editMaterial: { id: '', slug: '', name: '', sku: '', category_id: '', supplier_id: '', unit_id: '', min_stock: 0 },
     
         // Delete Alert State
         deleteModalOpen: false,
@@ -94,7 +95,8 @@
                 sku: mat.code || mat.sku || '',
                 category_id: mat.category_id || '',
                 supplier_id: mat.supplier_id || '',
-                unit_id: mat.unit_id
+                unit_id: mat.unit_id,
+                min_stock: mat.min_stock !== undefined ? mat.min_stock : 0
             };
             this.showEditModal = true;
         },
@@ -415,6 +417,11 @@
                                 <td data-sort-value="{{ strtolower($mat->unit?->name ?? '') }}" class="py-3.5 px-4 text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums font-medium">
                                     {{ $mat->unit?->name ?? __('materials.default_unit') }} <span
                                         class="text-[11px] text-[#8E8E93] dark:text-[#98989D]">({{ $mat->unit?->code }})</span>
+                                    @if (($mat->min_stock ?? 0) > 0)
+                                        <div class="text-[11px] text-[#FF9500] dark:text-[#FF9F0A] font-semibold tabular-nums mt-0.5">
+                                            Min: {{ rtrim(rtrim((string)$mat->min_stock, '0'), '.') }} {{ $mat->unit?->code }}
+                                        </div>
+                                    @endif
                                 </td>
                                 <td data-sort-value="{{ (float) ($latestPrice?->purchase_price ?? 0) }}"
                                     class="py-3.5 px-4 text-right tabular-nums font-semibold text-[#1C1C1E] dark:text-[#F2F2F7]">
@@ -561,6 +568,9 @@
                                 {{ $mat->name }}</h3>
                             <div class="text-[12px] text-[#8E8E93] dark:text-[#98989D] mt-0.5">
                                 {{ $mat->code ?? ($mat->sku ?? __('materials.no_sku')) }} · {{ $mat->category?->name ?? __('materials.general_category') }}
+                                @if (($mat->min_stock ?? 0) > 0)
+                                    · <span class="text-[#FF9500] dark:text-[#FF9F0A] font-semibold">Min: {{ rtrim(rtrim((string)$mat->min_stock, '0'), '.') }} {{ $mat->unit?->code }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="text-right shrink-0">
@@ -722,6 +732,19 @@
                                             <input type="text" name="sku" x-model="addForm.sku"
                                                 placeholder="{{ __('materials.placeholder_sku') }}"
                                                 class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        </div>
+
+                                        <div>
+                                            <label
+                                                class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                                Stok Minimum (Batas Aman / Safety Stock)
+                                            </label>
+                                            <input type="number" step="any" min="0" name="min_stock" x-model="addForm.min_stock"
+                                                placeholder="Contoh: 500 (dalam satuan dasar)"
+                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <p class="text-[11px] text-[#8E8E93] dark:text-[#98989D] mt-1">
+                                                Sistem akan memberi peringatan jika sisa stok bahan baku di gudang berada di bawah batas ini.
+                                            </p>
                                         </div>
 
                                         <div>
@@ -1104,6 +1127,19 @@
                                     </template>
                                 </select>
                             </div>
+                        </div>
+
+                        <div>
+                            <label
+                                class="block text-[13px] font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1.5">
+                                Stok Minimum (Batas Aman / Safety Stock)
+                            </label>
+                            <input type="number" step="any" min="0" name="min_stock" x-model="editMaterial.min_stock"
+                                placeholder="0"
+                                class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] tabular-nums focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <p class="text-[11px] text-[#8E8E93] dark:text-[#98989D] mt-1">
+                                Batas minimum stok fisik bahan baku untuk memicu peringatan restock.
+                            </p>
                         </div>
 
                         <div class="pt-3 flex justify-end gap-2.5 border-t border-black/[0.06] dark:border-white/[0.08]">

@@ -903,7 +903,8 @@
                 </div>
             @endif
 
-            {{-- 1.8 Komunitas & Event (Aktif Semua Jenis Subscribe) --}}
+            {{-- 1.8 Komunitas Owner & Event (Khusus Role Owner) --}}
+            @if (\App\Support\Context::isOwner())
             <div class="relative group"
                 @mouseenter="if(sidebarCollapsed) activeFlyout = 'community'"
                 @mouseleave="activeFlyout = null">
@@ -919,6 +920,7 @@
                     </div>
                 </a>
             </div>
+            @endif
         </div>
         @endif
 

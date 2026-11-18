@@ -229,22 +229,29 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
     }
 
     /**
-     * CHALLENGE 4: Staff CAN delete their OWN post.
+     * CHALLENGE 4: Non-owner (Staff) CANNOT delete posts, while Owner CAN delete their OWN post.
      */
-    public function test_staff_can_delete_their_own_post(): void
+    public function test_staff_cannot_delete_post_while_owner_can(): void
     {
-        $staffPost = CommunityPost::create([
-            'owner_id' => $this->staffA->id,
+        $ownerPost = CommunityPost::create([
+            'owner_id' => $this->ownerA->id,
             'business_id' => $this->businessA->id,
-            'content' => 'Postingan milik Staff Alpha',
+            'content' => 'Postingan milik Owner Alpha',
         ]);
 
-        $res = $this->actingAs($this->staffA)
+        // Staff attempting to delete is blocked by require.role:owner
+        $resStaff = $this->actingAs($this->staffA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->delete(route('community.destroy', $staffPost));
+            ->delete(route('community.destroy', $ownerPost));
+        $resStaff->assertRedirect(route('portal'));
+        $this->assertDatabaseHas('community_posts', ['id' => $ownerPost->id]);
 
-        $res->assertRedirect();
-        $this->assertDatabaseMissing('community_posts', ['id' => $staffPost->id]);
+        // Owner deletes their own post successfully
+        $resOwner = $this->actingAs($this->ownerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->delete(route('community.destroy', $ownerPost));
+        $resOwner->assertRedirect();
+        $this->assertDatabaseMissing('community_posts', ['id' => $ownerPost->id]);
     }
 
     /**
@@ -268,30 +275,37 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
     }
 
     /**
-     * CHALLENGE 6: Intra-Tenant Moderation: Manager with community.manage in Tenant A CAN moderate/delete Staff post in Tenant A.
+     * CHALLENGE 6: Non-owner (Manager) CANNOT access/moderate community posts, while Owner CAN moderate within Tenant A.
      */
-    public function test_intra_tenant_manager_can_moderate_and_delete_staff_post(): void
+    public function test_manager_cannot_moderate_while_owner_can(): void
     {
-        $staffPost = CommunityPost::create([
-            'owner_id' => $this->staffA->id,
+        $post = CommunityPost::create([
+            'owner_id' => $this->ownerA->id,
             'business_id' => $this->businessA->id,
-            'content' => 'Postingan spam staf yang perlu dimoderasi',
+            'content' => 'Postingan yang akan dimoderasi Owner',
         ]);
 
-        $res = $this->actingAs($this->managerA)
+        // Manager attempting to delete is blocked by require.role:owner
+        $resManager = $this->actingAs($this->managerA)
             ->withSession(['active_business_id' => $this->businessA->id])
-            ->delete(route('community.destroy', $staffPost));
+            ->delete(route('community.destroy', $post));
+        $resManager->assertRedirect(route('portal'));
+        $this->assertDatabaseHas('community_posts', ['id' => $post->id]);
 
-        $res->assertRedirect();
-        $this->assertDatabaseMissing('community_posts', ['id' => $staffPost->id]);
+        // Owner with community.manage deletes the post successfully
+        $resOwner = $this->actingAs($this->ownerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->delete(route('community.destroy', $post));
+        $resOwner->assertRedirect();
+        $this->assertDatabaseMissing('community_posts', ['id' => $post->id]);
 
         // Verify Audit Log was generated
         $this->assertDatabaseHas('audit_logs', [
             'action' => 'community.post.deleted',
             'business_id' => $this->businessA->id,
-            'user_id' => $this->managerA->id,
+            'user_id' => $this->ownerA->id,
             'auditable_type' => CommunityPost::class,
-            'auditable_id' => $staffPost->id,
+            'auditable_id' => $post->id,
         ]);
     }
 
@@ -407,7 +421,7 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
     }
 
     /**
-     * CHALLENGE 10: Community View Action Guarding: Delete button visibility across roles.
+     * CHALLENGE 10: Community View Action Guarding: Non-owners are blocked from feed; Owner views feed and actions.
      */
     public function test_community_view_delete_button_visibility(): void
     {
@@ -417,49 +431,42 @@ final class AdversarialCommunityCrmCustomerTest extends TestCase
             'content' => 'Postingan Owner Alpha Unik',
         ]);
 
-        $staffPost = CommunityPost::create([
-            'owner_id' => $this->staffA->id,
-            'business_id' => $this->businessA->id,
-            'content' => 'Postingan Staff Alpha Unik',
-        ]);
-
-        // 1. Kasir views community feed:
-        // Kasir cannot manage or delete, does not own either post.
-        // Neither post delete button should be visible to Kasir.
-        $resKasir = $this->actingAs($this->kasirA)
-            ->withSession(['active_business_id' => $this->businessA->id])
-            ->get(route('community.index'));
-        $resKasir->assertOk();
-        $resKasir->assertDontSee(route('community.destroy', $ownerPost));
-        $resKasir->assertDontSee(route('community.destroy', $staffPost));
-
-        // 2. Staff views community feed:
-        // Staff owns staffPost -> delete button visible for staffPost.
-        // Staff does NOT own ownerPost, and has NO community.manage -> delete button MUST NOT be visible for ownerPost.
-        $resStaff = $this->actingAs($this->staffA)
-            ->withSession(['active_business_id' => $this->businessA->id])
-            ->get(route('community.index'));
-        $resStaff->assertOk();
-        $resStaff->assertSee(route('community.destroy', $staffPost));
-        $resStaff->assertDontSee(route('community.destroy', $ownerPost));
-
-        // 3. Manager views community feed:
-        // Manager has community.manage in Business A -> delete button is visible for staffPost within Business A.
-        $resManager = $this->actingAs($this->managerA)
-            ->withSession(['active_business_id' => $this->businessA->id])
-            ->get(route('community.index'));
-        $resManager->assertOk();
-        $resManager->assertSee(route('community.destroy', $staffPost));
-
-        // 4. Cross-tenant post view observation:
-        // When postB belongs to Business B, what happens if Manager A views it?
         $postB = CommunityPost::create([
             'owner_id' => $this->ownerB->id,
             'business_id' => $this->businessB->id,
             'content' => 'Postingan Publik Bisnis Beta',
         ]);
-        // Controller strictly protects this: if Manager A tries to submit DELETE /community/{postB}, it aborts 403.
-        $resCrossDelete = $this->actingAs($this->managerA)
+
+        // 1. Kasir attempting to view community feed is redirected to portal (Owner only):
+        $resKasir = $this->actingAs($this->kasirA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resKasir->assertRedirect(route('portal'));
+
+        // 2. Staff attempting to view community feed is redirected to portal:
+        $resStaff = $this->actingAs($this->staffA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resStaff->assertRedirect(route('portal'));
+
+        // 3. Manager attempting to view community feed is redirected to portal:
+        $resManager = $this->actingAs($this->managerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resManager->assertRedirect(route('portal'));
+
+        // 4. Owner views community feed successfully:
+        // Owner sees delete button for their own post, but NOT for post from Business B.
+        $resOwner = $this->actingAs($this->ownerA)
+            ->withSession(['active_business_id' => $this->businessA->id])
+            ->get(route('community.index'));
+        $resOwner->assertOk();
+        $resOwner->assertSee(route('community.destroy', $ownerPost));
+        $resOwner->assertDontSee(route('community.destroy', $postB));
+
+        // 5. Cross-tenant delete protection:
+        // Controller strictly protects this: if Owner A tries to submit DELETE /community/{postB}, it aborts 403.
+        $resCrossDelete = $this->actingAs($this->ownerA)
             ->withSession(['active_business_id' => $this->businessA->id])
             ->deleteJson(route('community.destroy', $postB));
         $resCrossDelete->assertForbidden();
