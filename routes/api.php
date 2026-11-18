@@ -777,7 +777,7 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
         $productsRaw = \Illuminate\Support\Facades\DB::table('products')
             ->where('business_id', $bizId)
             ->whereNull('deleted_at')
-            ->select('id', 'code', 'name', 'type', 'is_active')
+            ->select('id', 'code', 'name', 'type', 'is_active', 'selling_price', 'base_cost')
             ->get();
         $unitsInDb = \Illuminate\Support\Facades\DB::table('units')
             ->select('id', 'code', 'name', 'category', 'business_id')
@@ -808,8 +808,8 @@ Route::prefix('v1')->middleware('throttle:600,1')->group(function (): void {
                     ->where('cost_models.business_id', $bizId)
                     ->count(),
             ],
-            'products_sample' => $productsRaw->take(5),
-            'materials_sample' => $materialsRaw->take(5),
+            'products_all' => $productsRaw,
+            'materials_all' => $materialsRaw,
             'units' => $unitsInDb,
             'sync_result' => $syncResult,
             'sync_summary' => $summary,
