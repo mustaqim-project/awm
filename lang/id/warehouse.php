@@ -67,6 +67,7 @@ return [
     ],
 
     'actions' => [
+        'edit' => 'Edit',
         'back' => 'Kembali',
         'back_to_list' => 'Daftar Gudang',
         'add_outlet' => 'Cabang / Outlet Baru',

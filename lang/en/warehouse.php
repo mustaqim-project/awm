@@ -67,6 +67,7 @@ return [
     ],
 
     'actions' => [
+        'edit' => 'Edit',
         'back' => 'Back',
         'back_to_list' => 'Warehouse List',
         'add_outlet' => 'New Branch / Outlet',

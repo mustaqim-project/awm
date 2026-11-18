@@ -949,7 +949,7 @@ function warehouseIndexHub() {
                 <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @foreach($recentMovements as $mv)
                     <tr data-sort-row
-                        data-sort-0="{{ strtolower($mv->product?->name ?? '') }}"
+                        data-sort-0="{{ strtolower($mv->product?->name ?? $mv->material?->name ?? '') }}"
                         data-sort-1="{{ strtolower($mv->location?->name ?? '') }}"
                         data-sort-2="{{ $mv->movement_type }}"
                         data-sort-3="{{ (float)$mv->quantity_change }}"
@@ -957,9 +957,9 @@ function warehouseIndexHub() {
                         data-sort-5="{{ $mv->created_at->timestamp }}"
                         class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors">
                         <td class="px-4 py-3.5">
-                            <div class="font-bold text-slate-900 dark:text-white">{{ $mv->product?->name ?? '-' }}</div>
-                            @if($mv->product?->code)
-                                <div class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">{{ $mv->product->code }}</div>
+                            <div class="font-bold text-slate-900 dark:text-white">{{ $mv->product?->name ?? $mv->material?->name ?? '-' }}</div>
+                            @if($mv->product?->code || $mv->material?->code)
+                                <div class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">{{ $mv->product?->code ?? $mv->material?->code }}</div>
                             @endif
                         </td>
                         <td class="px-4 py-3.5 text-slate-700 dark:text-slate-300 font-medium">{{ $mv->location?->name ?? '-' }}</td>
@@ -981,7 +981,7 @@ function warehouseIndexHub() {
                         </td>
                         <td class="px-4 py-3.5 text-right tabular-nums font-bold {{ $mv->quantity_change >= 0 ? 'text-[#34C759] dark:text-[#30D158]' : 'text-[#FF3B30] dark:text-[#FF453A]' }}">
                             {{ $mv->quantity_change >= 0 ? '+' : '' }}{{ number_format($mv->quantity_change, 2) }}
-                            <span class="text-[11px] text-slate-400 dark:text-slate-500 font-normal ml-0.5">{{ $mv->product?->outputUnit?->symbol }}</span>
+                            <span class="text-[11px] text-slate-400 dark:text-slate-500 font-normal ml-0.5">{{ $mv->product?->outputUnit?->symbol ?? $mv->material?->unit?->code }}</span>
                         </td>
                         <td class="px-4 py-3.5 text-right tabular-nums font-bold text-slate-900 dark:text-white">
                             {{ number_format($mv->balance_after, 2) }}
@@ -1012,9 +1012,9 @@ function warehouseIndexHub() {
             <div class="p-3.5 space-y-2 active:bg-black/[0.02] dark:active:bg-white/[0.02] transition-colors">
                 <div class="flex items-start justify-between gap-2">
                     <div>
-                        <div class="font-bold text-xs text-slate-900 dark:text-white">{{ $mv->product?->name ?? '-' }}</div>
+                        <div class="font-bold text-xs text-slate-900 dark:text-white">{{ $mv->product?->name ?? $mv->material?->name ?? '-' }}</div>
                         <div class="flex items-center gap-1.5 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                            <span class="font-mono tabular-nums">{{ $mv->product?->code ?? '-' }}</span>
+                            <span class="font-mono tabular-nums">{{ $mv->product?->code ?? $mv->material?->code ?? '-' }}</span>
                             <span>&bull;</span>
                             <span>{{ $mv->location?->name ?? '-' }}</span>
                         </div>
@@ -1025,7 +1025,7 @@ function warehouseIndexHub() {
                 </div>
                 <div class="flex items-center justify-between text-xs pt-1">
                     <span class="tabular-nums font-bold {{ $mv->quantity_change >= 0 ? 'text-[#34C759] dark:text-[#30D158]' : 'text-[#FF3B30] dark:text-[#FF453A]' }}">
-                        {{ $mv->quantity_change >= 0 ? '+' : '' }}{{ number_format($mv->quantity_change, 2) }} {{ $mv->product?->outputUnit?->symbol }}
+                        {{ $mv->quantity_change >= 0 ? '+' : '' }}{{ number_format($mv->quantity_change, 2) }} {{ $mv->product?->outputUnit?->symbol ?? $mv->material?->unit?->code }}
                     </span>
                     <span class="text-slate-500 dark:text-slate-400 text-[11px] tabular-nums">
                         {{ __('warehouse.movements_table.col_balance') }}: <strong class="text-slate-900 dark:text-white">{{ number_format($mv->balance_after, 2) }}</strong>
