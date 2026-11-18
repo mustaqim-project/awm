@@ -243,6 +243,134 @@
             <i data-lucide="search" class="w-4 h-4"></i>
         </button>
 
+        <!-- Real-Time Low Stock Alert Center (Bento Apple HIG Popover) -->
+        @if(\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('inventory.view'))
+        <div class="relative" x-data="{
+            open: false,
+            loading: false,
+            count: 0,
+            items: [],
+            hasFetched: false,
+            async fetchAlerts() {
+                this.loading = true;
+                try {
+                    const res = await fetch('{{ route('inventory.low-stock-notifications') }}');
+                    const json = await res.json();
+                    if (json.success) {
+                        this.count = json.count;
+                        this.items = json.items;
+                    }
+                } catch (e) {
+                    // silently handle
+                } finally {
+                    this.loading = false;
+                    this.hasFetched = true;
+                }
+            },
+            toggle() {
+                this.open = !this.open;
+                if (this.open && !this.hasFetched) {
+                    this.fetchAlerts();
+                }
+            }
+        }" x-init="fetchAlerts()" @click.outside="open = false" @keydown.esc.window="open = false">
+            <button type="button" @click="toggle()"
+                class="relative h-8.5 w-8.5 sm:h-8 sm:w-8 rounded-[9px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] border border-black/5 dark:border-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                title="Pemberitahuan Stok Menipis" aria-label="Peringatan Stok Menipis">
+                <i data-lucide="bell" class="w-4 h-4"></i>
+                <span x-show="count > 0" x-cloak
+                    class="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 rounded-full bg-[#FF3B30] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs"
+                    x-text="count > 99 ? '99+' : count">
+                </span>
+            </button>
+
+            <!-- Dropdown Popover (macOS / iOS Sheet) -->
+            <div x-show="open" x-cloak
+                x-transition:enter="transition ease-out duration-150"
+                x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-100"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                class="absolute right-0 mt-2 w-80 sm:w-96 rounded-[18px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-3 z-50 space-y-2 text-[13px]">
+                
+                <!-- Popover Header -->
+                <div class="flex items-center justify-between pb-2 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-[#FF9500]/12 text-[#FF9500] flex items-center justify-center shrink-0">
+                            <i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[13px] text-black dark:text-white leading-tight">Peringatan Stok Menipis</h4>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 leading-tight">Bahan baku & produk di bawah batas aman</p>
+                        </div>
+                    </div>
+                    <span x-show="count > 0" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FF3B30]/10 text-[#FF3B30] dark:text-[#FF453A]" x-text="count + ' Item'"></span>
+                </div>
+
+                <!-- Items List -->
+                <div class="max-h-72 overflow-y-auto space-y-1.5 custom-scrollbar py-1">
+                    <template x-if="loading">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs flex items-center justify-center gap-2">
+                            <div class="w-4 h-4 border-2 border-[#007AFF] border-t-transparent rounded-full animate-spin"></div>
+                            <span>Memeriksa saldo stok...</span>
+                        </div>
+                    </template>
+
+                    <template x-if="!loading && count === 0">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs space-y-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mx-auto">
+                                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            </div>
+                            <p class="font-semibold text-black/80 dark:text-white/80">Semua Persediaan Aman</p>
+                            <p class="text-[11px]">Tidak ada bahan baku atau produk yang berada di bawah batas minimum.</p>
+                        </div>
+                    </template>
+
+                    <template x-for="item in items" :key="item.id">
+                        <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between gap-2.5 transition">
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                                        :class="item.kind === 'Bahan Baku' ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'"
+                                        x-text="item.kind"></span>
+                                    <h5 class="font-semibold text-[12.5px] text-black dark:text-white truncate" x-text="item.name"></h5>
+                                </div>
+                                <div class="text-[11px] text-black/50 dark:text-white/50 mt-0.5 flex items-center gap-1.5">
+                                    <span x-text="item.location_name"></span>
+                                    <span>•</span>
+                                    <span>Min: <strong class="text-black/70 dark:text-white/70" x-text="item.min_stock + ' ' + item.unit"></strong></span>
+                                </div>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <span class="text-[13px] font-bold tabular-nums block"
+                                    :class="item.is_out_of_stock ? 'text-[#FF3B30] dark:text-[#FF453A]' : 'text-[#FF9500] dark:text-[#FF9F0A]'"
+                                    x-text="item.quantity + ' ' + item.unit"></span>
+                                <span class="text-[10px] font-semibold"
+                                    :class="item.is_out_of_stock ? 'text-[#FF3B30]' : 'text-[#FF9500]'"
+                                    x-text="item.is_out_of_stock ? 'Habis' : 'Menipis'"></span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-[11.5px]">
+                    <a href="{{ route('warehouse.index') }}" class="font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
+                        <span>Lihat di Gudang</span>
+                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </a>
+                    @if(\App\Support\Context::hasPermission('purchasing.manage'))
+                    <a href="{{ route('purchase-orders.create') }}" class="font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                        <i data-lucide="shopping-cart" class="w-3 h-3"></i>
+                        <span>+ PO Restock</span>
+                    </a>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+
 
         <!-- Unified System Controls Capsule (Desktop / Tablet sm+) -->
         <div class="hidden sm:flex items-center p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5 gap-0.5">

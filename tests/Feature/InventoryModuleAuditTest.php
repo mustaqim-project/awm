@@ -542,4 +542,39 @@ final class InventoryModuleAuditTest extends TestCase
             'action' => 'STOCK_TRANSFER_RECEIVED',
         ]);
     }
+
+    public function test_low_stock_notifications_endpoint_returns_low_stock_products_and_materials(): void
+    {
+        // 1. Setup product with low stock
+        $this->product->update(['min_stock' => 10]);
+        InventoryStock::where('business_id', $this->business->id)
+            ->where('product_id', $this->product->id)
+            ->update(['quantity' => 3]);
+
+        // 2. Setup material with low stock
+        $material = \App\Models\Material::create([
+            'business_id' => $this->business->id,
+            'name' => 'Susu Segar Barista',
+            'unit_id' => $this->unit->id,
+            'min_stock' => 500,
+        ]);
+        InventoryStock::create([
+            'business_id' => $this->business->id,
+            'location_id' => $this->location->id,
+            'material_id' => $material->id,
+            'quantity' => 200,
+            'last_cost' => 25,
+            'avg_purchase_cost' => 25,
+        ]);
+
+        $response = $this->actingAs($this->owner)
+            ->getJson(route('inventory.low-stock-notifications'));
+
+        $response->assertOk()
+            ->assertJsonPath('success', true);
+
+        $items = collect($response->json('items'));
+        $this->assertTrue($items->contains('name', 'Susu Segar Barista'));
+        $this->assertTrue($items->contains('name', $this->product->name));
+    }
 }

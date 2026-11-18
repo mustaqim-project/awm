@@ -47,6 +47,7 @@ final class InventoryWebController extends Controller implements HasMiddleware
                 'opnames',
                 'transfers',
                 'exportBlankOpname',
+                'lowStockNotifications',
             ]),
             new Middleware('require.permission:inventory.manage', only: [
                 'quickAdjust',
@@ -66,6 +67,61 @@ final class InventoryWebController extends Controller implements HasMiddleware
         private readonly StockService $stockService = new StockService,
         private readonly AutoJournalService $journalService = new AutoJournalService
     ) {}
+
+    /**
+     * Get low stock notification items for both products and materials (Real-time Alert Center).
+     */
+    public function lowStockNotifications(Request $request): JsonResponse
+    {
+        $business = Context::requireBusiness();
+
+        $stocks = InventoryStock::where('business_id', $business->id)
+            ->where(function ($query): void {
+                $query->where(function ($sub): void {
+                    $sub->whereNotNull('product_id')
+                        ->whereHas('product', function ($p): void {
+                            $p->whereRaw('inventory_stocks.quantity <= products.min_stock AND products.min_stock > 0');
+                        });
+                })->orWhere(function ($sub): void {
+                    $sub->whereNotNull('material_id')
+                        ->whereHas('material', function ($m): void {
+                            $m->whereRaw('inventory_stocks.quantity <= materials.min_stock AND materials.min_stock > 0');
+                        });
+                });
+            })
+            ->with(['product.outputUnit', 'material.unit', 'location'])
+            ->orderBy('quantity', 'asc')
+            ->limit(20)
+            ->get();
+
+        $items = $stocks->map(function ($st) {
+            $isProduct = $st->product_id !== null;
+            $name = $isProduct ? ($st->product?->name ?? 'Produk') : ($st->material?->name ?? 'Bahan Baku');
+            $code = $isProduct ? ($st->product?->code ?? '') : ($st->material?->code ?? '');
+            $unit = $isProduct ? ($st->product?->outputUnit?->code ?? 'pcs') : ($st->material?->unit?->code ?? 'satuan');
+            $minStock = (float) ($isProduct ? ($st->product?->min_stock ?? 0) : ($st->material?->min_stock ?? 0));
+            $qty = (float) $st->quantity;
+
+            return [
+                'id' => $st->id,
+                'name' => $name,
+                'code' => $code,
+                'kind' => $isProduct ? 'Produk' : 'Bahan Baku',
+                'location_name' => $st->location?->name ?? 'Gudang Utama',
+                'location_id' => $st->location_id,
+                'quantity' => round($qty, 2),
+                'min_stock' => round($minStock, 2),
+                'unit' => $unit,
+                'is_out_of_stock' => $qty <= 0,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'count' => $items->count(),
+            'items' => $items,
+        ]);
+    }
 
     /**
      * Real-time stock list across outlets & warehouses with low-stock alerts.

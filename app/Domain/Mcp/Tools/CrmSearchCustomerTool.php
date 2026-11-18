@@ -55,6 +55,9 @@ final class CrmSearchCustomerTool implements McpToolInterface
                     ->orWhere('phone', 'like', $term)
                     ->orWhere('email', 'like', $term)
                     ->orWhere('code', 'like', $term)
+                    ->orWhere('billing_address', 'like', $term)
+                    ->orWhere('shipping_address', 'like', $term)
+                    ->orWhere('notes', 'like', $term)
                     ->orWhere('vehicle_license_plate', 'like', $term);
             })
             ->take(20)
@@ -66,6 +69,10 @@ final class CrmSearchCustomerTool implements McpToolInterface
             'name' => $c->name,
             'phone' => $c->phone,
             'email' => $c->email,
+            'address' => $c->address,
+            'billing_address' => $c->billing_address,
+            'shipping_address' => $c->shipping_address,
+            'notes' => $c->notes,
             'membership_tier' => $c->membership_tier ?? 'reguler',
             'points_balance' => (int) ($c->points_balance ?? 0),
             'total_spent' => (float) ($c->total_spent ?? 0),

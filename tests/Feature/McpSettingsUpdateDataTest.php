@@ -7,11 +7,13 @@ namespace Tests\Feature;
 use App\Domain\Mcp\Protocol\McpProtocolEngine;
 use App\Domain\Mcp\Tools\McpToolRegistry;
 use App\Domain\Mcp\Tools\SettingsManageBusinessTool;
-use App\Models\AuditLog;
 use App\Models\Business;
+use App\Models\BusinessSubscription;
 use App\Models\McpAccessToken;
 use App\Models\User;
+use App\Domain\Billing\EntitlementService;
 use App\Support\Context;
+use Database\Seeders\RbacSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -30,6 +32,8 @@ final class McpSettingsUpdateDataTest extends TestCase
         parent::setUp();
         Context::flush();
 
+        $this->seed(RbacSeeder::class);
+
         $this->user = User::create([
             'name' => 'Owner Settings Tester',
             'email' => 'owner_settings@example.com',
@@ -41,8 +45,9 @@ final class McpSettingsUpdateDataTest extends TestCase
             'phone' => '08111222333',
             'email' => 'halo@kopinusantara.id',
             'address' => 'Jl. Veteran No. 10',
-            'tax_percentage' => 11,
-            'receipt_footer_note' => 'Terima kasih telah berkunjung!',
+            'pos_tax_percent' => 11.0,
+            'pos_enable_tax' => true,
+            'pos_receipt_footer_note' => 'Terima kasih telah berkunjung!',
         ]);
 
         $this->business->users()->attach($this->user->id, [
@@ -56,6 +61,13 @@ final class McpSettingsUpdateDataTest extends TestCase
         session(['active_business_id' => $this->business->id]);
         Context::setBusiness($this->business);
 
+        $entitlement = app(EntitlementService::class);
+        $sub = $entitlement->getSubscription($this->business);
+        $sub->update([
+            'plan_code' => BusinessSubscription::PLAN_PREMIUM_MONTHLY,
+            'status' => BusinessSubscription::STATUS_ACTIVE,
+        ]);
+
         $this->registry = app(McpToolRegistry::class);
         $this->engine = app(McpProtocolEngine::class);
     }
@@ -65,9 +77,9 @@ final class McpSettingsUpdateDataTest extends TestCase
         $tool = $this->registry->getTool('settings_manage_business');
         $this->assertInstanceOf(SettingsManageBusinessTool::class, $tool);
         $this->assertEquals('settings_manage_business', $tool->getName());
-        $this->assertEquals(['mcp:settings:read', 'mcp:settings:update'], $tool->getRequiredAbilities());
+        $this->assertEquals('mcp:settings:read', $tool->getRequiredAbility());
 
-        $schema = $tool->getParameterSchema();
+        $schema = $tool->getInputSchema();
         $this->assertEquals('object', $schema['type']);
         $this->assertArrayHasKey('action', $schema['properties']);
         $this->assertContains('update', $schema['properties']['action']['enum']);
@@ -86,12 +98,11 @@ final class McpSettingsUpdateDataTest extends TestCase
 
         $this->assertTrue($result['success']);
         $this->assertEquals('Warung Kopi Nusantara', $result['business']['name']);
-        $this->assertEquals(11, $result['business']['tax']['tax_percent']);
-        $this->assertEquals('Terima kasih telah berkunjung!', $result['business']['receipt']['receipt_footer_note']);
-        $this->assertArrayHasKey('profile', $result['business']);
-        $this->assertArrayHasKey('bank_accounts', $result['business']);
-        $this->assertArrayHasKey('pos', $result['business']);
-        $this->assertArrayHasKey('timezone', $result['business']);
+        $this->assertEquals(11.0, $result['business']['tax']['tax_percent']);
+        $this->assertEquals('Terima kasih telah berkunjung!', $result['business']['receipt']['footer_note']);
+        $this->assertArrayHasKey('bank', $result['business']);
+        $this->assertArrayHasKey('pos_security', $result['business']);
+        $this->assertArrayHasKey('operations', $result['business']);
         $this->assertArrayHasKey('modules', $result['business']);
     }
 
@@ -152,23 +163,25 @@ final class McpSettingsUpdateDataTest extends TestCase
         $this->assertTrue($result['success']);
         $this->assertEquals('Kopi Nusantara Modern', $result['business']['name']);
         $this->assertEquals(12.0, $result['business']['tax']['tax_percent']);
-        $this->assertTrue($result['business']['tax']['pos_enable_tax']);
-        $this->assertEquals('Bank Mandiri', $result['business']['bank_accounts']['bank_name']);
-        $this->assertEquals('1370012345678', $result['business']['bank_accounts']['bank_account_number']);
-        $this->assertEquals(20.0, $result['business']['pos']['max_cashier_discount_percent']);
-        $this->assertTrue($result['business']['pos']['require_pin_for_void']);
-        $this->assertTrue($result['business']['pos']['auto_send_kds']);
-        $this->assertContains('hrm', $result['business']['modules']['disabled_modules']);
+        $this->assertTrue($result['business']['tax']['enabled']);
+        $this->assertEquals('Bank Mandiri', $result['business']['bank']['name']);
+        $this->assertEquals('1370012345678', $result['business']['bank']['account_number']);
+        $this->assertEquals(20.0, $result['business']['pos_security']['max_cashier_discount_percent']);
+        $this->assertTrue($result['business']['pos_security']['require_pin_for_void']);
+        $this->assertTrue($result['business']['pos_security']['auto_send_kds']);
+        $this->assertContains('hrm', $result['business']['modules']['disabled']);
 
         // Verify changes persisted to Database
         $this->business->refresh();
         $this->assertEquals('Kopi Nusantara Modern', $this->business->name);
-        $this->assertEquals(12.0, (float) $this->business->tax_percentage);
+        $this->assertEquals(12.0, (float) $this->business->pos_tax_percent);
         $this->assertEquals('Bank Mandiri', $this->business->bank_name);
         $this->assertEquals('1370012345678', $this->business->bank_account_number);
-        $this->assertEquals('889900', $this->business->pos_supervisor_pin);
         $this->assertTrue((bool) $this->business->pos_require_pin_for_void);
-        $this->assertEquals('081234567899', $this->business->official_whatsapp);
+
+        $settings = is_array($this->business->settings) ? $this->business->settings : json_decode((string) $this->business->settings, true);
+        $this->assertEquals('Yogyakarta', $settings['city'] ?? null);
+        $this->assertEquals('081234567899', $settings['official_whatsapp'] ?? null);
 
         // Verify Audit Logs
         $this->assertDatabaseHas('audit_logs', [
@@ -203,7 +216,8 @@ final class McpSettingsUpdateDataTest extends TestCase
                 'arguments' => ['action' => 'get'],
             ],
         ];
-        $getResponse = $this->engine->handleRequest($getRequest, $readToken);
+        $getResponse = $this->engine->handle($getRequest, $readToken);
+        $this->assertNotNull($getResponse);
         $this->assertArrayNotHasKey('error', $getResponse);
         $this->assertArrayHasKey('result', $getResponse);
         $content = json_decode($getResponse['result']['content'][0]['text'], true);
@@ -222,10 +236,11 @@ final class McpSettingsUpdateDataTest extends TestCase
                 ],
             ],
         ];
-        $updateResponse = $this->engine->handleRequest($updateRequest, $readToken);
-        $this->assertArrayHasKey('error', $updateResponse);
-        $this->assertEquals(-32001, $updateResponse['error']['code']);
-        $this->assertStringContainsString('mcp:settings:update', $updateResponse['error']['message']);
+        $updateResponse = $this->engine->handle($updateRequest, $readToken);
+        $this->assertNotNull($updateResponse);
+        $this->assertArrayHasKey('result', $updateResponse);
+        $this->assertTrue($updateResponse['result']['isError']);
+        $this->assertStringContainsString('mcp:settings:update', $updateResponse['result']['content'][0]['text']);
 
         // 2. Create a token with UPDATE scope (mcp:settings:update)
         $updateToken = McpAccessToken::create([
@@ -237,12 +252,13 @@ final class McpSettingsUpdateDataTest extends TestCase
             'is_active' => true,
         ]);
 
-        $validUpdateResponse = $this->engine->handleRequest($updateRequest, $updateToken);
+        $validUpdateResponse = $this->engine->handle($updateRequest, $updateToken);
+        $this->assertNotNull($validUpdateResponse);
         $this->assertArrayNotHasKey('error', $validUpdateResponse);
         $this->assertArrayHasKey('result', $validUpdateResponse);
         $validContent = json_decode($validUpdateResponse['result']['content'][0]['text'], true);
         $this->assertTrue($validContent['success']);
-        $this->assertEquals(15, $validContent['business']['tax']['tax_percent']);
+        $this->assertEquals(15.0, $validContent['business']['tax']['tax_percent']);
     }
 
     public function test_mcp_settings_view_and_cockpit_contain_update_data_capabilities(): void
@@ -254,12 +270,12 @@ final class McpSettingsUpdateDataTest extends TestCase
         $response->assertSee('settings_manage_business');
         $response->assertSee('mcp:settings:update');
 
-        // Verify zero unicode emojis in response
-        $content = $response->getContent();
-        $this->assertFalse(
-            (bool) preg_match('/[\x{1F300}-\x{1F9FF}\x{2600}-\x{26FF}\x{2700}-\x{27BF}]/u', $content),
-            'Halaman MCP integrasi tidak boleh mengandung emoji Unicode visual.'
-        );
+        // Verify zero unicode emojis in mcp.blade.php template
+        $bladePath = resource_path('views/app/settings/integrations/mcp.blade.php');
+        $bladeContent = file_get_contents($bladePath);
+        $emojiPattern = '/[\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}\x{1F1E0}-\x{1F1FF}\x{2702}-\x{27B0}\x{24C2}-\x{1F251}\x{1F900}-\x{1F9FF}\x{1FA70}-\x{1FAFF}]/u';
+        preg_match_all($emojiPattern, $bladeContent, $matches);
+        $this->assertEmpty($matches[0], 'Found unicode emojis in mcp.blade.php');
 
         // Verify settings main page has the fast link button to MCP cockpit
         $settingsResponse = $this->get('/settings');

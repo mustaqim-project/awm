@@ -63,11 +63,23 @@ final class CrmManageCustomerTool implements McpToolInterface
                 ],
                 'address' => [
                     'type' => 'string',
-                    'description' => 'Alamat pengiriman / domisili pelanggan.',
+                    'description' => 'Alamat pengiriman / domisili pelanggan (otomatis tersimpan ke billing dan shipping address).',
+                ],
+                'billing_address' => [
+                    'type' => 'string',
+                    'description' => 'Alamat penagihan resmi pelanggan.',
+                ],
+                'shipping_address' => [
+                    'type' => 'string',
+                    'description' => 'Alamat tujuan pengiriman fisik pelanggan.',
                 ],
                 'points' => [
                     'type' => 'number',
-                    'description' => 'Poin loyalitas member.',
+                    'description' => 'Poin loyalitas member pelanggan.',
+                ],
+                'points_balance' => [
+                    'type' => 'number',
+                    'description' => 'Saldo poin loyalitas pelanggan.',
                 ],
                 'notes' => [
                     'type' => 'string',
@@ -112,7 +124,11 @@ final class CrmManageCustomerTool implements McpToolInterface
                 'phone' => $c->phone,
                 'email' => $c->email,
                 'company_name' => $c->company_name,
-                'points' => (int) ($c->points ?? 0),
+                'address' => $c->address,
+                'billing_address' => $c->billing_address,
+                'shipping_address' => $c->shipping_address,
+                'points' => (int) ($c->points_balance ?? 0),
+                'notes' => $c->notes,
                 'created_at' => $c->created_at?->format('Y-m-d'),
             ])->all(),
         ];
@@ -139,8 +155,10 @@ final class CrmManageCustomerTool implements McpToolInterface
                 'phone' => $customer->phone,
                 'email' => $customer->email,
                 'address' => $customer->address,
+                'billing_address' => $customer->billing_address,
+                'shipping_address' => $customer->shipping_address,
                 'company_name' => $customer->company_name,
-                'points' => (int) ($customer->points ?? 0),
+                'points' => (int) ($customer->points_balance ?? 0),
                 'notes' => $customer->notes,
             ],
         ];
@@ -155,14 +173,20 @@ final class CrmManageCustomerTool implements McpToolInterface
             throw new InvalidArgumentException('Nama pelanggan (name) wajib diisi.');
         }
 
+        $address = $args['address'] ?? null;
+        $billingAddress = $args['billing_address'] ?? $address;
+        $shippingAddress = $args['shipping_address'] ?? $address;
+        $points = (int) ($args['points'] ?? $args['points_balance'] ?? 0);
+
         $customer = Customer::create([
             'business_id' => $business->id,
             'name' => $name,
             'phone' => $args['phone'] ?? null,
             'email' => $args['email'] ?? null,
             'company_name' => $args['company_name'] ?? null,
-            'address' => $args['address'] ?? null,
-            'points' => (int) ($args['points'] ?? 0),
+            'billing_address' => $billingAddress,
+            'shipping_address' => $shippingAddress,
+            'points_balance' => $points,
             'notes' => $args['notes'] ?? null,
         ]);
 
@@ -172,7 +196,7 @@ final class CrmManageCustomerTool implements McpToolInterface
             'action' => 'mcp_create_customer',
             'auditable_type' => Customer::class,
             'auditable_id' => $customer->id,
-            'new_values' => ['name' => $customer->name, 'phone' => $customer->phone],
+            'new_values' => ['name' => $customer->name, 'phone' => $customer->phone, 'address' => $customer->address],
             'ip_address' => '127.0.0.1',
             'user_agent' => 'COOCA-MCP-Agent/1.0',
         ]);
@@ -185,7 +209,12 @@ final class CrmManageCustomerTool implements McpToolInterface
                 'name' => $customer->name,
                 'phone' => $customer->phone,
                 'email' => $customer->email,
-                'points' => (int) $customer->points,
+                'address' => $customer->address,
+                'billing_address' => $customer->billing_address,
+                'shipping_address' => $customer->shipping_address,
+                'company_name' => $customer->company_name,
+                'points' => (int) ($customer->points_balance ?? 0),
+                'notes' => $customer->notes,
             ],
         ];
     }
@@ -216,10 +245,18 @@ final class CrmManageCustomerTool implements McpToolInterface
             $customer->company_name = trim((string) $args['company_name']);
         }
         if (isset($args['address'])) {
-            $customer->address = trim((string) $args['address']);
+            $addr = trim((string) $args['address']);
+            $customer->billing_address = $addr;
+            $customer->shipping_address = $addr;
         }
-        if (isset($args['points'])) {
-            $customer->points = (int) $args['points'];
+        if (isset($args['billing_address'])) {
+            $customer->billing_address = trim((string) $args['billing_address']);
+        }
+        if (isset($args['shipping_address'])) {
+            $customer->shipping_address = trim((string) $args['shipping_address']);
+        }
+        if (isset($args['points']) || isset($args['points_balance'])) {
+            $customer->points_balance = (int) ($args['points'] ?? $args['points_balance']);
         }
         if (isset($args['notes'])) {
             $customer->notes = (string) $args['notes'];
@@ -234,7 +271,13 @@ final class CrmManageCustomerTool implements McpToolInterface
                 'id' => $customer->id,
                 'name' => $customer->name,
                 'phone' => $customer->phone,
-                'points' => (int) $customer->points,
+                'email' => $customer->email,
+                'address' => $customer->address,
+                'billing_address' => $customer->billing_address,
+                'shipping_address' => $customer->shipping_address,
+                'company_name' => $customer->company_name,
+                'points' => (int) ($customer->points_balance ?? 0),
+                'notes' => $customer->notes,
             ],
         ];
     }

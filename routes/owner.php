@@ -810,6 +810,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         // Inventory & Multi-Warehouse Operations
         Route::middleware('require.permission:inventory.view')->group(function (): void {
             Route::get('/inventory/stocks', [InventoryWebController::class, 'stocks'])->name('inventory.stocks');
+            Route::get('/inventory/low-stock-notifications', [InventoryWebController::class, 'lowStockNotifications'])->name('inventory.low-stock-notifications');
             Route::get('/inventory/movements', [InventoryWebController::class, 'movements'])->name('inventory.movements');
             Route::get('/inventory/opnames', [InventoryWebController::class, 'opnames'])->name('inventory.opnames.index');
             Route::get('/inventory/transfers', [InventoryWebController::class, 'transfers'])->name('inventory.transfers.index');

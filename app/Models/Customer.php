@@ -33,6 +33,7 @@ class Customer extends Authenticatable
         'phone',
         'phone_verified_at',
         'email_verified_at',
+        'address',
         'billing_address',
         'shipping_address',
         'tax_identification_number',
@@ -40,6 +41,8 @@ class Customer extends Authenticatable
         'segment',
         'membership_tier',
         'points_balance',
+        'points',
+        'loyalty_points',
         'total_spent',
         'total_orders_count',
         'birth_date',
@@ -48,6 +51,17 @@ class Customer extends Authenticatable
         'current_credit_balance',
         'notes',
         'is_active',
+    ];
+
+    /**
+     * The accessors to append to the model's array and JSON form.
+     *
+     * @var list<string>
+     */
+    protected $appends = [
+        'address',
+        'points',
+        'loyalty_points',
     ];
 
     /**
@@ -88,6 +102,28 @@ class Customer extends Authenticatable
             $query->where('id', $value)
                 ->orWhere('slug', $value);
         })->first();
+    }
+
+    public function getAddressAttribute(): ?string
+    {
+        return $this->shipping_address ?? $this->billing_address;
+    }
+
+    public function setAddressAttribute(?string $value): void
+    {
+        $trimmed = $value !== null ? trim((string) $value) : null;
+        $this->attributes['billing_address'] = $trimmed;
+        $this->attributes['shipping_address'] = $trimmed;
+    }
+
+    public function getPointsAttribute(): int
+    {
+        return (int) ($this->points_balance ?? 0);
+    }
+
+    public function setPointsAttribute($value): void
+    {
+        $this->attributes['points_balance'] = (int) $value;
     }
 
     public function getLoyaltyPointsAttribute(): int

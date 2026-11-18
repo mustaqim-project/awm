@@ -95,6 +95,10 @@ final class SettingsManageBusinessTool implements McpToolInterface
                     'type' => 'number',
                     'description' => 'Persentase tarif pajak PPN/PB1 (misal: 11 atau 12 persen).',
                 ],
+                'tax_percentage' => [
+                    'type' => 'number',
+                    'description' => 'Persentase tarif pajak PPN/PB1 (alias untuk pos_tax_percent).',
+                ],
                 // 3. Rekening Bank & Pembayaran
                 'bank_name' => [
                     'type' => 'string',
@@ -151,6 +155,10 @@ final class SettingsManageBusinessTool implements McpToolInterface
                 'pos_receipt_footer_note' => [
                     'type' => 'string',
                     'description' => 'Catatan pesan footer pada struk belanja kasir (misal: "Terima kasih atas kunjungan Anda").',
+                ],
+                'receipt_footer_note' => [
+                    'type' => 'string',
+                    'description' => 'Catatan pesan footer pada struk belanja kasir (alias untuk pos_receipt_footer_note).',
                 ],
                 'pos_receipt_wa_template' => [
                     'type' => 'string',
@@ -216,10 +224,11 @@ final class SettingsManageBusinessTool implements McpToolInterface
                 'description' => $business->description,
                 'email' => $business->email,
                 'phone' => $business->phone,
+                'official_whatsapp' => (is_array($business->settings) ? $business->settings : (json_decode((string) $business->settings, true) ?: []))['official_whatsapp'] ?? $business->phone,
                 'address' => $business->address,
-                'city' => $business->city,
-                'province' => $business->province,
-                'postal_code' => $business->postal_code,
+                'city' => (is_array($business->settings) ? $business->settings : (json_decode((string) $business->settings, true) ?: []))['city'] ?? null,
+                'province' => (is_array($business->settings) ? $business->settings : (json_decode((string) $business->settings, true) ?: []))['province'] ?? null,
+                'postal_code' => (is_array($business->settings) ? $business->settings : (json_decode((string) $business->settings, true) ?: []))['postal_code'] ?? null,
                 'tax' => [
                     'tax_identification_number' => $business->tax_identification_number,
                     'tax_entity_type' => $business->tax_entity_type ?? 'individual',
@@ -267,6 +276,7 @@ final class SettingsManageBusinessTool implements McpToolInterface
 
         $oldValues = $business->toArray();
         $isSensitiveUpdated = false;
+        $settingsJson = is_array($business->settings) ? $business->settings : (json_decode((string) $business->settings, true) ?: []);
 
         // 1. Profil & Kontak
         if (isset($args['name']) && trim((string) $args['name']) !== '') {
@@ -278,6 +288,9 @@ final class SettingsManageBusinessTool implements McpToolInterface
         if (isset($args['phone'])) {
             $business->phone = trim((string) $args['phone']);
         }
+        if (isset($args['official_whatsapp'])) {
+            $settingsJson['official_whatsapp'] = trim((string) $args['official_whatsapp']);
+        }
         if (isset($args['email'])) {
             $business->email = trim((string) $args['email']);
         }
@@ -285,14 +298,15 @@ final class SettingsManageBusinessTool implements McpToolInterface
             $business->address = trim((string) $args['address']);
         }
         if (isset($args['city'])) {
-            $business->city = trim((string) $args['city']);
+            $settingsJson['city'] = trim((string) $args['city']);
         }
         if (isset($args['province'])) {
-            $business->province = trim((string) $args['province']);
+            $settingsJson['province'] = trim((string) $args['province']);
         }
         if (isset($args['postal_code'])) {
-            $business->postal_code = trim((string) $args['postal_code']);
+            $settingsJson['postal_code'] = trim((string) $args['postal_code']);
         }
+        $business->settings = $settingsJson;
 
         // 2. Pajak & Badan Usaha
         if (array_key_exists('tax_identification_number', $args)) {
@@ -305,8 +319,8 @@ final class SettingsManageBusinessTool implements McpToolInterface
         if (array_key_exists('pos_enable_tax', $args)) {
             $business->pos_enable_tax = (bool) $args['pos_enable_tax'];
         }
-        if (isset($args['pos_tax_percent'])) {
-            $business->pos_tax_percent = (float) $args['pos_tax_percent'];
+        if (isset($args['tax_percentage']) || isset($args['pos_tax_percent'])) {
+            $business->pos_tax_percent = (float) ($args['tax_percentage'] ?? $args['pos_tax_percent']);
         }
 
         // 3. Rekening Bank & Finansial Sensitif
@@ -368,8 +382,8 @@ final class SettingsManageBusinessTool implements McpToolInterface
         }
 
         // 6. Struk Kasir & WhatsApp Struk
-        if (isset($args['pos_receipt_footer_note'])) {
-            $business->pos_receipt_footer_note = (string) $args['pos_receipt_footer_note'];
+        if (isset($args['pos_receipt_footer_note']) || isset($args['receipt_footer_note'])) {
+            $business->pos_receipt_footer_note = (string) ($args['pos_receipt_footer_note'] ?? $args['receipt_footer_note']);
         }
         if (isset($args['pos_receipt_wa_template'])) {
             $business->pos_receipt_wa_template = (string) $args['pos_receipt_wa_template'];
@@ -471,11 +485,12 @@ final class SettingsManageBusinessTool implements McpToolInterface
                 'name' => $business->name,
                 'description' => $business->description,
                 'phone' => $business->phone,
+                'official_whatsapp' => $settingsJson['official_whatsapp'] ?? $business->phone,
                 'email' => $business->email,
                 'address' => $business->address,
-                'city' => $business->city,
-                'province' => $business->province,
-                'postal_code' => $business->postal_code,
+                'city' => $settingsJson['city'] ?? null,
+                'province' => $settingsJson['province'] ?? null,
+                'postal_code' => $settingsJson['postal_code'] ?? null,
                 'pos_enable_tax' => (bool) $business->pos_enable_tax,
                 'pos_tax_percent' => (float) ($business->pos_tax_percent ?? 0),
                 'pos_receipt_footer_note' => $business->pos_receipt_footer_note,
@@ -510,6 +525,9 @@ final class SettingsManageBusinessTool implements McpToolInterface
                 'operations' => [
                     'timezone' => $business->getTimezone(),
                     'operating_hours' => $business->getOperatingHours(),
+                ],
+                'modules' => [
+                    'disabled' => $business->disabled_modules ?? [],
                 ],
             ],
         ];
