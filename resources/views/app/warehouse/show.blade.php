@@ -516,46 +516,51 @@
                         <tbody x-ref="tableBody" class="divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                             @forelse($stocks as $stock)
                                 @php
+                                    $itemName = $stock->product?->name ?? $stock->material?->name ?? '-';
+                                    $itemCode = $stock->product?->code ?? $stock->material?->code ?? '';
+                                    $categoryName = $stock->product?->category?->name ?? $stock->material?->category?->name ?? '-';
+                                    $unitSymbol = $stock->product?->outputUnit?->symbol ?? $stock->material?->unit?->symbol ?? $stock->material?->unit?->name ?? '';
+                                    $unitCost = $stock->last_cost > 0 ? (float) $stock->last_cost : (float) ($stock->avg_purchase_cost ?? 0);
                                     $isLow =
                                         $stock->product &&
                                         $stock->product->min_stock > 0 &&
                                         $stock->quantity <= $stock->product->min_stock;
-                                    $valuation = (float) $stock->quantity * (float) $stock->last_cost;
+                                    $valuation = (float) $stock->quantity * $unitCost;
                                 @endphp
                                 <tr data-sort-row
-                                    data-sort-0="{{ strtolower($stock->product?->name ?? '') }}"
-                                    data-sort-1="{{ strtolower($stock->product?->category?->name ?? '') }}"
+                                    data-sort-0="{{ strtolower($itemName) }}"
+                                    data-sort-1="{{ strtolower($categoryName) }}"
                                     data-sort-2="{{ (float) $stock->quantity }}"
                                     data-sort-3="{{ (float) ($stock->product?->min_stock ?? 0) }}"
-                                    data-sort-4="{{ (float) $stock->last_cost }}"
+                                    data-sort-4="{{ (float) $unitCost }}"
                                     data-sort-5="{{ (float) $valuation }}"
                                     data-sort-6="{{ $isLow ? 1 : ($stock->quantity <= 0 ? 0 : 2) }}"
-                                    x-show="!searchStock || '{{ strtolower($stock->product?->name . ' ' . $stock->product?->code . ' ' . ($stock->product?->category?->name ?? '')) }}'.includes(searchStock.toLowerCase())"
+                                    x-show="!searchStock || '{{ strtolower($itemName . ' ' . $itemCode . ' ' . $categoryName) }}'.includes(searchStock.toLowerCase())"
                                     class="hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors group {{ $isLow ? 'bg-[#FF9500]/5' : '' }}">
                                     <td class="px-4 py-3.5">
                                         <div class="font-bold text-slate-900 dark:text-white">
-                                            {{ $stock->product?->name ?? '-' }}
+                                            {{ $itemName }}
                                         </div>
-                                        @if ($stock->product?->code)
+                                        @if ($itemCode)
                                             <div class="text-[11px] font-mono tabular-nums text-slate-500 dark:text-slate-400">
-                                                {{ $stock->product->code }}
+                                                {{ $itemCode }}
                                             </div>
                                         @endif
                                     </td>
                                     <td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">
-                                        {{ $stock->product?->category?->name ?? '-' }}
+                                        {{ $categoryName }}
                                     </td>
                                     <td class="px-4 py-3.5 text-right">
                                         <span class="font-bold tabular-nums text-sm {{ $isLow ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-slate-900 dark:text-white' }}">
                                             {{ number_format($stock->quantity, 2) }}
                                         </span>
-                                        <span class="text-[11px] text-slate-400 dark:text-slate-500 ml-0.5">{{ $stock->product?->outputUnit?->symbol ?? '' }}</span>
+                                        <span class="text-[11px] text-slate-400 dark:text-slate-500 ml-0.5">{{ $unitSymbol }}</span>
                                     </td>
                                     <td class="px-4 py-3.5 text-right font-mono tabular-nums text-slate-500 dark:text-slate-400">
                                         {{ $stock->product ? number_format($stock->product->min_stock, 2) : '-' }}
                                     </td>
                                     <td class="px-4 py-3.5 text-right font-mono tabular-nums text-slate-700 dark:text-slate-300">
-                                        Rp {{ number_format($stock->last_cost, 0, ',', '.') }}
+                                        Rp {{ number_format($unitCost, 0, ',', '.') }}
                                     </td>
                                     <td class="px-4 py-3.5 text-right font-mono tabular-nums font-bold text-[#34C759] dark:text-[#30D158]">
                                         Rp {{ number_format($valuation, 0, ',', '.') }}
@@ -582,10 +587,11 @@
                                                     @click="openAdjust(@js([
                                                         'id' => $stock->id,
                                                         'product_id' => $stock->product_id,
+                                                        'material_id' => $stock->material_id,
                                                         'location_id' => $stock->location_id,
-                                                        'product_name' => $stock->product?->name ?? '',
+                                                        'product_name' => $itemName,
                                                         'quantity' => $stock->quantity,
-                                                        'last_cost' => $stock->last_cost,
+                                                        'last_cost' => $unitCost,
                                                     ]))"
                                                     class="min-w-[36px] min-h-[36px] sm:min-w-0 sm:min-h-0 w-9 h-9 sm:w-8 sm:h-8 rounded-[8px] text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 transition-colors flex items-center justify-center shrink-0 cursor-pointer"
                                                     title="{{ __('warehouse.actions.quick_adjust') }}"
@@ -619,25 +625,30 @@
                 <div class="sm:hidden divide-y divide-black/[0.04] dark:divide-white/[0.06]">
                     @forelse($stocks as $stock)
                         @php
+                            $itemName = $stock->product?->name ?? $stock->material?->name ?? '-';
+                            $itemCode = $stock->product?->code ?? $stock->material?->code ?? '';
+                            $categoryName = $stock->product?->category?->name ?? $stock->material?->category?->name ?? '-';
+                            $unitSymbol = $stock->product?->outputUnit?->symbol ?? $stock->material?->unit?->symbol ?? $stock->material?->unit?->name ?? '';
+                            $unitCost = $stock->last_cost > 0 ? (float) $stock->last_cost : (float) ($stock->avg_purchase_cost ?? 0);
                             $isLow =
                                 $stock->product &&
                                 $stock->product->min_stock > 0 &&
                                 $stock->quantity <= $stock->product->min_stock;
-                            $valuation = (float) $stock->quantity * (float) $stock->last_cost;
+                            $valuation = (float) $stock->quantity * $unitCost;
                         @endphp
-                        <div x-show="!searchStock || '{{ strtolower($stock->product?->name . ' ' . $stock->product?->code . ' ' . ($stock->product?->category?->name ?? '')) }}'.includes(searchStock.toLowerCase())"
+                        <div x-show="!searchStock || '{{ strtolower($itemName . ' ' . $itemCode . ' ' . $categoryName) }}'.includes(searchStock.toLowerCase())"
                             class="p-4 space-y-3 active:bg-black/[0.02] dark:active:bg-white/[0.02] transition-colors {{ $isLow ? 'bg-[#FF9500]/5' : '' }}">
                             <div class="flex items-start justify-between gap-2">
                                 <div>
                                     <h4 class="font-bold text-sm text-slate-900 dark:text-white">
-                                        {{ $stock->product?->name ?? '-' }}
+                                        {{ $itemName }}
                                     </h4>
                                     <div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                                        @if ($stock->product?->code)
-                                            <span class="font-mono tabular-nums">{{ $stock->product->code }}</span>
+                                        @if ($itemCode)
+                                            <span class="font-mono tabular-nums">{{ $itemCode }}</span>
                                             <span>&bull;</span>
                                         @endif
-                                        <span>{{ $stock->product?->category?->name ?? '-' }}</span>
+                                        <span>{{ $categoryName }}</span>
                                     </div>
                                 </div>
                                 <div>
@@ -663,7 +674,7 @@
                                     <span class="tabular-nums font-black text-sm {{ $isLow ? 'text-[#FF9500] dark:text-[#FF9F0A]' : 'text-slate-900 dark:text-white' }}">
                                         {{ number_format($stock->quantity, 2) }}
                                     </span>
-                                    <span class="text-[10px] text-slate-400 dark:text-slate-500">{{ $stock->product?->outputUnit?->symbol ?? '' }}</span>
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-500">{{ $unitSymbol }}</span>
                                 </div>
                                 <div>
                                     <span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block">{{ __('warehouse.stock_table.col_min_stock') }}</span>
@@ -674,7 +685,7 @@
                                 <div>
                                     <span class="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 block">{{ __('warehouse.stock_table.col_unit_cost') }}</span>
                                     <span class="tabular-nums text-slate-600 dark:text-slate-400 font-semibold">
-                                        Rp {{ number_format($stock->last_cost, 0, ',', '.') }}
+                                        Rp {{ number_format($unitCost, 0, ',', '.') }}
                                     </span>
                                 </div>
                                 <div>
@@ -691,10 +702,11 @@
                                         @click="openAdjust(@js([
                                             'id' => $stock->id,
                                             'product_id' => $stock->product_id,
+                                            'material_id' => $stock->material_id,
                                             'location_id' => $stock->location_id,
-                                            'product_name' => $stock->product?->name ?? '',
+                                            'product_name' => $itemName,
                                             'quantity' => $stock->quantity,
-                                            'last_cost' => $stock->last_cost,
+                                            'last_cost' => $unitCost,
                                         ]))"
                                         class="min-h-[44px] px-3.5 rounded-[8px] text-xs font-bold text-[#007AFF] bg-[#007AFF]/10 hover:bg-[#007AFF]/15 active:scale-[0.98] transition-all inline-flex items-center gap-1.5 cursor-pointer">
                                         <i data-lucide="sliders" class="w-3.5 h-3.5"></i>

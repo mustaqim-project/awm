@@ -57,15 +57,23 @@ final class WarehouseWebController extends Controller implements HasMiddleware
 
         $locations = Location::where('business_id', $business->id)
             ->with(['parent', 'children'])
-            ->withCount(['stocks as total_products' => function ($q) {
+            ->withCount(['stocks' => function ($q) {
                 $q->where('quantity', '>', 0);
             }])
             ->get()
             ->map(function (Location $loc) use ($business) {
-                $loc->total_valuation = InventoryStock::where('business_id', $business->id)
+                $stockAggregates = InventoryStock::where('business_id', $business->id)
                     ->where('location_id', $loc->id)
-                    ->selectRaw('SUM(quantity * last_cost) as val')
-                    ->value('val') ?? 0.0;
+                    ->selectRaw('
+                        COUNT(CASE WHEN quantity > 0 THEN 1 END) as active_sku_count,
+                        SUM(quantity) as total_units,
+                        SUM(quantity * COALESCE(NULLIF(last_cost, 0), avg_purchase_cost, 0)) as val
+                    ')
+                    ->first();
+
+                $loc->stocks_count = (int) ($stockAggregates?->active_sku_count ?? $loc->stocks_count ?? 0);
+                $loc->total_stock_units = (float) ($stockAggregates?->total_units ?? 0);
+                $loc->total_valuation = (float) ($stockAggregates?->val ?? 0.0);
 
                 $loc->low_stock_count = InventoryStock::where('business_id', $business->id)
                     ->where('location_id', $loc->id)
@@ -87,7 +95,10 @@ final class WarehouseWebController extends Controller implements HasMiddleware
         $totalLowStock   = $locations->sum('low_stock_count');
         $totalWarehouses = $locations->count();
         $activeWarehouses = $locations->where('is_active', true)->count();
-        $totalSkuCount = InventoryStock::where('business_id', $business->id)->where('quantity', '>', 0)->distinct('product_id')->count('product_id');
+        $totalSkuCount = (int) (InventoryStock::where('business_id', $business->id)
+            ->where('quantity', '>', 0)
+            ->selectRaw('COUNT(DISTINCT COALESCE(product_id, material_id)) as total_sku')
+            ->value('total_sku') ?? 0);
         $totalStockUnits = (float) (InventoryStock::where('business_id', $business->id)->sum('quantity') ?? 0);
 
         // Recent movements (last 10, all warehouses)
@@ -270,10 +281,10 @@ final class WarehouseWebController extends Controller implements HasMiddleware
         $business = Context::requireBusiness();
         abort_unless($location->business_id === $business->id, 403);
 
-        // Stok produk di gudang ini
+        // Stok produk & bahan baku di gudang ini
         $stocks = InventoryStock::where('business_id', $business->id)
             ->where('location_id', $location->id)
-            ->with(['product.outputUnit', 'product.category'])
+            ->with(['product.outputUnit', 'product.category', 'material.unit', 'material.category'])
             ->orderByDesc('quantity')
             ->paginate(20)
             ->withQueryString();
@@ -281,7 +292,7 @@ final class WarehouseWebController extends Controller implements HasMiddleware
         // Total aset di gudang ini
         $totalValuation = InventoryStock::where('business_id', $business->id)
             ->where('location_id', $location->id)
-            ->selectRaw('SUM(quantity * last_cost) as val')
+            ->selectRaw('SUM(quantity * COALESCE(NULLIF(last_cost, 0), avg_purchase_cost, 0)) as val')
             ->value('val') ?? 0.0;
 
         $lowStockCount = InventoryStock::where('business_id', $business->id)
