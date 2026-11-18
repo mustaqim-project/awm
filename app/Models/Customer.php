@@ -106,7 +106,18 @@ class Customer extends Authenticatable
 
     public function getAddressAttribute(): ?string
     {
-        return $this->shipping_address ?? $this->billing_address;
+        $addr = $this->shipping_address ?? $this->billing_address;
+        if (! empty($addr)) {
+            return $addr;
+        }
+
+        if (! empty($this->notes)) {
+            if (preg_match('/(?:Alamat|Address)\s*:\s*(.+)$/im', (string) $this->notes, $matches)) {
+                return trim($matches[1]);
+            }
+        }
+
+        return null;
     }
 
     public function setAddressAttribute(?string $value): void
