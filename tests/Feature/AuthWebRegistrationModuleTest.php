@@ -40,7 +40,7 @@ final class AuthWebRegistrationModuleTest extends TestCase
         $response->assertSee('name="password_confirmation"', false);
         $response->assertSee('name="business_name"', false);
         $response->assertSee('name="phone"', false);
-        $response->assertDontSee('name="template_code"', false);
+        $response->assertSee('name="template_code"', false);
         $response->assertSee('name="business_scale"', false);
         // Public registration should not expose internal technical module switch toggles
         $response->assertDontSee('name="enabled_modules[]"', false);
@@ -169,5 +169,77 @@ final class AuthWebRegistrationModuleTest extends TestCase
 
         // Critical: Verify NO dummy products are seeded upon registration
         $this->assertEquals(0, \App\Models\Product::where('business_id', $business->id)->count());
+
+        // Verify primary location was automatically created
+        $primaryLoc = $business->locations()->where('is_primary', true)->first();
+        $this->assertNotNull($primaryLoc);
+        $this->assertEquals('outlet', $primaryLoc->type);
+    }
+
+    public function test_google_register_page_renders_mandatory_industry_selector(): void
+    {
+        $response = $this->withSession([
+            'pending_google_registration' => [
+                'name' => 'Fakta 369',
+                'email' => 'fakta369.official@gmail.com',
+                'google_id' => 'google-uid-123',
+                'avatar' => null,
+            ],
+        ])->get(route('register.google'));
+
+        $response->assertStatus(200);
+        $response->assertSee('name="template_code"', false);
+        $response->assertSee('name="business_name"', false);
+        $response->assertSee('name="phone"', false);
+        $response->assertSee('name="business_scale"', false);
+        $response->assertSeeText('Jenis Bisnis & Industri');
+    }
+
+    public function test_google_register_validation_fails_without_template_code(): void
+    {
+        $response = $this->withSession([
+            'pending_google_registration' => [
+                'name' => 'Fakta 369',
+                'email' => 'fakta369.official@gmail.com',
+                'google_id' => 'google-uid-123',
+                'avatar' => null,
+            ],
+        ])->post(route('register.google.submit'), [
+            'business_name' => 'Fakta369 Store',
+            'phone' => '081234567890',
+            'business_scale' => 'umkm',
+            // template_code intentionally omitted
+        ]);
+
+        $response->assertSessionHasErrors(['template_code']);
+    }
+
+    public function test_google_register_success_with_template_code_creates_pending_session(): void
+    {
+        $this->mock(AdminWhatsAppService::class, function ($mock) {
+            $mock->shouldReceive('sendOtp')->andReturn([
+                'success' => true,
+            ]);
+        });
+
+        $response = $this->withSession([
+            'pending_google_registration' => [
+                'name' => 'Fakta 369',
+                'email' => 'fakta369.official@gmail.com',
+                'google_id' => 'google-uid-123',
+                'avatar' => null,
+            ],
+        ])->post(route('register.google.submit'), [
+            'business_name' => 'Fakta369 Store',
+            'phone' => '081234567890',
+            'business_scale' => 'umkm',
+            'template_code' => 'mfg_garment',
+        ]);
+
+        $response->assertRedirect(route('register.verify'));
+        $this->assertTrue(session()->has('pending_registration'));
+        $pending = session('pending_registration');
+        $this->assertEquals('mfg_garment', $pending['template_code']);
+        $this->assertEquals('Fakta369 Store', $pending['business_name']);
     }
 }

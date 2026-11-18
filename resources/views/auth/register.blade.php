@@ -5,6 +5,9 @@
         <div class="w-full max-w-xl mx-auto space-y-6 sm:space-y-8"
             x-data="{
                 businessScale: '{{ old('business_scale', 'umkm') }}',
+                templateCode: '{{ old('template_code', '') }}',
+                templateList: {{ Js::from($templateSummaries ?? []) }},
+                get currentTmpl() { return this.templateList[this.templateCode] || null; },
                 showPassword: false,
                 showPasswordConfirm: false
             }">
@@ -163,6 +166,89 @@
                         </p>
                     </div>
 
+                    <!-- Pilihan Jenis Bisnis & Industri (Wajib) -->
+                    <div class="space-y-2 pt-1">
+                        <div class="flex items-center justify-between">
+                            <label for="template_code" class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
+                                {{ __('auth.google_register.industry_label') }} <span class="text-[#FF3B30]">*</span>
+                            </label>
+                            <span x-show="templateCode" class="text-[11px] font-semibold text-[#34C759] dark:text-[#30D158] flex items-center gap-1">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                                <span>{{ __('auth.google_register.selected_industry_title') }}</span>
+                            </span>
+                        </div>
+
+                        <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-snug">
+                            {{ __('auth.google_register.industry_subtitle') }}
+                        </p>
+
+                        <!-- Select Input Grouped with Lucide Icon -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                                <i data-lucide="layers" class="w-4 h-4"></i>
+                            </div>
+                            <select name="template_code" id="template_code"
+                                x-model="templateCode"
+                                required
+                                class="w-full pl-10 pr-10 py-2.5 sm:py-3 bg-slate-50 dark:bg-[#2C2C2E] border rounded-xl text-[16px] sm:text-sm text-slate-900 dark:text-white transition-all outline-none cursor-pointer appearance-none"
+                                :class="templateCode ? 'border-[#34C759] focus:border-[#34C759] focus:ring-4 focus:ring-[#34C759]/15' : 'border-black/10 dark:border-white/10 focus:border-[#007AFF] focus:ring-4 focus:ring-[#007AFF]/15'">
+                                <option value="" disabled selected>{{ __('auth.google_register.industry_placeholder') }}</option>
+                                @php
+                                    $grouped = collect($templates ?? [])->groupBy('industry_category');
+                                    $catLabels = [
+                                        'fnb' => '🍔 Kuliner / F&B & Restoran',
+                                        'retail' => '🛍️ Retail & Toko Dagang',
+                                        'manufacturing' => '🏭 Manufaktur & Pabrik Produksi',
+                                        'trading' => '📦 Grosir & Distribusi FMCG',
+                                        'service' => '🔧 Jasa, Servis & Layanan',
+                                        'creative' => '🎨 Industri Kreatif & Kriya',
+                                        'agriculture' => '🌾 Pertanian & Peternakan',
+                                    ];
+                                @endphp
+                                @foreach ($grouped as $catKey => $tmplGroup)
+                                    <optgroup label="{{ $catLabels[$catKey] ?? strtoupper($catKey) }}">
+                                        @foreach ($tmplGroup as $tmpl)
+                                            <option value="{{ $tmpl->code }}" {{ old('template_code') === $tmpl->code ? 'selected' : '' }}>
+                                                {{ $tmpl->name }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
+                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+
+                        <!-- Realtime Bento Preview Card saat Industri Dipilih -->
+                        <template x-if="currentTmpl">
+                            <div class="rounded-xl p-3.5 sm:p-4 bg-gradient-to-br from-[#007AFF]/[0.04] to-[#34C759]/[0.04] dark:from-[#007AFF]/10 dark:to-[#34C759]/10 border border-[#007AFF]/25 space-y-2 text-xs transition-all">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-lg bg-[#007AFF]/15 text-[#007AFF] dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                                            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+                                        </div>
+                                        <span class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm" x-text="currentTmpl.name"></span>
+                                    </div>
+                                    <span class="px-2.5 py-0.5 rounded-full bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF] text-[10px] font-bold uppercase tracking-wider" x-text="currentTmpl.category"></span>
+                                </div>
+                                <div class="text-[11.5px] text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    <span class="font-semibold text-slate-800 dark:text-slate-100">{{ __('auth.google_register.selected_modules_label') }}</span>
+                                    <span class="text-slate-600 dark:text-slate-300" x-text="currentTmpl.enabled.map(i => i.name).slice(0, 4).join(', ') + (currentTmpl.enabled.length > 4 ? ' +' + (currentTmpl.enabled.length - 4) + ' modul lainnya' : '')"></span>
+                                </div>
+                                <div class="pt-2 border-t border-black/5 dark:border-white/5 text-[11px] text-slate-500 dark:text-slate-400 flex items-start gap-1.5 leading-snug">
+                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#007AFF] shrink-0 mt-0.5"></i>
+                                    <span>{{ __('auth.google_register.industry_hint') }}</span>
+                                </div>
+                            </div>
+                        </template>
+
+                        <div x-show="!templateCode" class="flex items-center gap-1.5 text-[11px] text-[#FF9500] dark:text-[#FF9F0A] font-medium pt-0.5">
+                            <i data-lucide="alert-circle" class="w-3.5 h-3.5 shrink-0"></i>
+                            <span>{{ __('auth.google_register.industry_select_required') }}</span>
+                        </div>
+                    </div>
+
                     <!-- Skala & Model Operasional Bisnis (Grid Kiri Kanan Baik Mobile Maupun Desktop) -->
                     <div class="space-y-2 pt-1">
                         <label class="block text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200">
@@ -211,7 +297,9 @@
                     <!-- Submit Button -->
                     <div class="pt-2">
                         <button type="submit"
-                            class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] hover:from-[#1cd0ff] hover:to-[#006fe6] text-white font-bold text-sm sm:text-[15px] shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25 cursor-pointer">
+                            :disabled="!templateCode"
+                            :class="!templateCode ? 'opacity-50 cursor-not-allowed filter grayscale-[25%]' : 'hover:from-[#1cd0ff] hover:to-[#006fe6] cursor-pointer shadow-[0_2px_12px_rgba(0,194,255,0.3)] hover:shadow-[0_4px_20px_rgba(0,194,255,0.5)] active:scale-[0.99]'"
+                            class="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[#00C2FF] via-[#00A3FF] to-[#007AFF] text-white font-bold text-sm sm:text-[15px] min-h-[50px] transition-all focus:outline-none focus:ring-4 focus:ring-[#007AFF]/25">
                             <span>{{ __('auth.register.submit_btn') }}</span>
                             <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>

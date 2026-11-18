@@ -309,10 +309,16 @@ final class AuthWebController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'business_name' => ['required', 'string', 'max:255', 'unique:businesses,name'],
             'business_scale' => ['nullable', 'string', 'in:umkm,corporate'],
-            'template_code' => ['nullable', 'string', 'exists:business_type_templates,code'],
+            'template_code' => ['required', 'string', 'exists:business_type_templates,code'],
             'enabled_modules' => ['nullable', 'array'],
             'enabled_modules.*' => ['string'],
             'has_module_selection' => ['nullable', 'in:0,1'],
+        ], [
+            'business_name.required' => 'Nama bisnis / usaha wajib diisi.',
+            'business_name.unique' => 'Nama bisnis / usaha ini sudah digunakan. Silakan pilih nama lain.',
+            'phone.required' => 'Nomor WhatsApp pemilik usaha wajib diisi.',
+            'template_code.required' => 'Model bisnis / jenis industri wajib dipilih.',
+            'template_code.exists' => 'Jenis industri yang dipilih tidak valid.',
         ]);
 
         $phone = $this->normalizePhone((string) $validated['phone']);
@@ -512,6 +518,25 @@ final class AuthWebController extends Controller
             ]);
 
             $user->update(['active_business_id' => $business->id]);
+
+            // Inisialisasi Cabang Utama default agar sistem POS & Inventori langsung siap pakai.
+            // Detail alamat lengkap, koordinat GPS & kurir pengiriman dapat diatur kapan saja di https://cooca.id/settings.
+            \App\Models\Location::firstOrCreate(
+                [
+                    'business_id' => $business->id,
+                    'is_primary' => true,
+                ],
+                [
+                    'id' => (string) Str::uuid(),
+                    'name' => 'Cabang Utama (' . $business->name . ')',
+                    'slug' => Str::slug($business->name . '-cabang-utama'),
+                    'type' => 'outlet',
+                    'phone' => $business->phone,
+                    'is_active' => true,
+                    'is_online_fulfillment' => true,
+                    'allow_storefront_pickup' => true,
+                ]
+            );
 
             // Apply preset template if selected (NEVER seed dummy products during registration)
             if ($tmpl) {
@@ -871,6 +896,25 @@ final class AuthWebController extends Controller
             ]);
 
             $user->update(['active_business_id' => $business->id]);
+
+            // Inisialisasi Cabang Utama default agar sistem POS & Inventori langsung siap pakai.
+            // Detail alamat lengkap, koordinat GPS & kurir pengiriman dapat diatur kapan saja di https://cooca.id/settings.
+            \App\Models\Location::firstOrCreate(
+                [
+                    'business_id' => $business->id,
+                    'is_primary' => true,
+                ],
+                [
+                    'id' => (string) Str::uuid(),
+                    'name' => 'Cabang Utama (' . $business->name . ')',
+                    'slug' => Str::slug($business->name . '-cabang-utama'),
+                    'type' => 'outlet',
+                    'phone' => $business->phone,
+                    'is_active' => true,
+                    'is_online_fulfillment' => true,
+                    'allow_storefront_pickup' => true,
+                ]
+            );
 
             // Apply preset template if selected (NEVER seed dummy products during registration)
             if ($tmpl) {
