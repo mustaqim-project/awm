@@ -1824,9 +1824,10 @@
                             'icon' => 'boxes',
                             'color' => 'text-[#AF52DE]',
                             'bg' => 'bg-[#AF52DE]/10',
-                            'keys' => ['recipe_bom', 'labor_machines', 'inventory_warehouse', 'procurement'],
+                            'keys' => ['recipe_bom', 'manufacturing_production', 'labor_machines', 'inventory_warehouse', 'procurement'],
                             'impacts' => [
                                 'recipe_bom' => 'Produk & Logistik: Bahan Baku & Resep (BOM), Kategori Bahan, Satuan Ukur',
+                                'manufacturing_production' => 'Produksi & Manufaktur: Surat Perintah Kerja Produksi (SPKP), Rilis Bahan Baku (WIP), Input Yield & Scrap, Penerimaan Barang Jadi',
                                 'labor_machines' => 'Produksi HPP: Upah Kerja & Mesin, Alokasi Biaya HPP',
                                 'inventory_warehouse' => 'Produk & Logistik: Saldo Stok Real-Time, Cabang & Gudang, Transfer Stok, Stock Opname, Mutasi Stok',
                                 'procurement' => 'Pembelian & Pengadaan: Pesanan Pembelian (PO), Tagihan Supplier (Bills), Supplier, Retur Pembelian',
