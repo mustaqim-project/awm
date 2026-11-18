@@ -1760,4 +1760,15 @@ return [
 
     'terminal' => 'POS Terminal',
     'touchscreen_cashier' => 'Touchscreen Cashier',
+    'shift_close_modal_sub' => 'Cash Reconciliation and Shift Session Closure',
+    'shift_summary_title' => 'System Cash Summary',
+    'physical_count_title' => 'Physical Cash Count',
+    'table_and_storefront_reservations' => 'Table & Storefront Reservations',
+    'monitor_dine_in_tables_and_guest_bookings' => 'Monitor dine-in tables and guest bookings in real time.',
+    'refresh_table_data' => 'Refresh Table Data',
+    'refresh_table_btn' => 'Refresh Tables',
+    'use_table_btn' => 'Use Table',
+    'cashier_bill_btn' => 'Print Bill',
+    'reports_channels_multi_platform_rate' => 'Multi-Platform Channel Fee Rates',
+    'discount_applied' => 'Order discount successfully applied',
 ];

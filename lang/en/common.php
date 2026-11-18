@@ -148,4 +148,7 @@ return array (
     'transactions' => 'Transactions',
     'home' => 'Home',
     'details' => 'Details',
+    'dashboard' => 'Dashboard',
+    'portal' => 'Employee Portal',
+    'more_actions' => 'More Actions',
 );

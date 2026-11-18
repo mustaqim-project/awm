@@ -861,6 +861,7 @@ return [
             'action_seat' => 'Tamu Hadir',
             'action_complete' => 'Selesaikan',
             'action_cancel' => 'Batalkan',
+            'btn_save_dp' => 'Simpan Uang Muka (DP)',
             'empty_title' => 'Belum ada data reservasi',
             'empty_desc' => 'Pemesanan meja atau janji temu dari toko online akan muncul di sini.',
             'page_title' => 'Reservasi & Booking Jadwal - Cooca',

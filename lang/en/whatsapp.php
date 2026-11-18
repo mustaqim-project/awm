@@ -337,7 +337,6 @@ return [
     'type_broadcast'                   => 'Promo Blast',
     'type_test'                        => 'Test Message',
     'status_sent'                      => 'Delivered',
-    'status_failed'                    => 'Failed',
     'status_sent_success'              => 'Successfully Sent',
     'status_failed_sent'               => 'Failed to Send',
     'col_type'                         => 'Communication Type',

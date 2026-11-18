@@ -861,6 +861,7 @@ return [
             'action_seat' => 'Mark Seated',
             'action_complete' => 'Complete',
             'action_cancel' => 'Cancel',
+            'btn_save_dp' => 'Save Down Payment (DP)',
             'empty_title' => 'No reservations found',
             'empty_desc' => 'Table reservations or appointment bookings from your store will appear here.',
             'page_title' => 'Reservations & Schedule Booking - Cooca',

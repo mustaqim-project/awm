@@ -1760,4 +1760,15 @@ return [
 
     'terminal' => 'Terminal POS',
     'touchscreen_cashier' => 'Kasir Layar Sentuh',
+    'shift_close_modal_sub' => 'Rekonsiliasi Kas dan Penutupan Sesi Kasir',
+    'shift_summary_title' => 'Ringkasan Kas Sistem',
+    'physical_count_title' => 'Hitung Kas Fisik',
+    'table_and_storefront_reservations' => 'Reservasi Meja & Toko Online',
+    'monitor_dine_in_tables_and_guest_bookings' => 'Pantau meja makan di tempat dan reservasi pelanggan secara langsung.',
+    'refresh_table_data' => 'Perbarui Data Meja',
+    'refresh_table_btn' => 'Perbarui Meja',
+    'use_table_btn' => 'Gunakan Meja',
+    'cashier_bill_btn' => 'Cetak Tagihan',
+    'reports_channels_multi_platform_rate' => 'Tarif Biaya Multi-Platform Saluran',
+    'discount_applied' => 'Diskon pesanan berhasil diterapkan',
 ];

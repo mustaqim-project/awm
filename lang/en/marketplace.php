@@ -493,7 +493,7 @@ return [
     'col_payout_amount' => 'Net Payout',
     'col_destination_bank' => 'Destination Bank',
     'action_reconcile' => 'Reconcile Bank',
-    'status_pending' => 'Pending Payment',
+    'action_view_channels' => 'View Sales Channels',
     'status_escrow_holding' => 'Escrow Holding',
     'status_settled' => 'Ready for Payout',
     'status_payout_completed' => 'Paid Out to Bank',

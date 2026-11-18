@@ -337,7 +337,6 @@ return [
     'type_broadcast'                   => 'Blast Promosi',
     'type_test'                        => 'Uji Tes',
     'status_sent'                      => 'Terkirim',
-    'status_failed'                    => 'Gagal',
     'status_sent_success'              => 'Terkirim Sukses',
     'status_failed_sent'               => 'Gagal Terkirim',
     'col_type'                         => 'Tipe Komunikasi',

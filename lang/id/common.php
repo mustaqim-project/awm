@@ -148,4 +148,7 @@ return array (
     'transactions' => 'Transaksi',
     'home' => 'Beranda',
     'details' => 'Rincian',
+    'dashboard' => 'Dashboard',
+    'portal' => 'Portal Karyawan',
+    'more_actions' => 'Tindakan Lainnya',
 );

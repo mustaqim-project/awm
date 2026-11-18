@@ -493,7 +493,7 @@ return [
     'col_payout_amount' => 'Nominal Cair',
     'col_destination_bank' => 'Rekening Tujuan',
     'action_reconcile' => 'Rekonsiliasi Bank',
-    'status_pending' => 'Menunggu Pembayaran',
+    'action_view_channels' => 'Lihat Saluran Penjualan',
     'status_escrow_holding' => 'Tertahan Escrow',
     'status_settled' => 'Siap Dicairkan',
     'status_payout_completed' => 'Cair ke Rekening',
