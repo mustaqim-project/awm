@@ -380,7 +380,7 @@
         <!-- ===================================================== -->
         <div x-data="coocaTableSort()"
             class="hidden sm:block rounded-[20px] bg-white/80 dark:bg-[#1C1C1E]/80 backdrop-blur-xl border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-xs">
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto" @scroll.passive="$dispatch('table-scrolled')">
                 <table class="w-full text-left text-[13px]">
                     <thead>
                         <tr
@@ -440,47 +440,80 @@
                                 </td>
                                 <td class="py-3.5 px-4 text-right whitespace-nowrap sticky right-0 bg-white dark:bg-[#1C1C1E] group-hover:bg-[#F9F9FB] dark:group-hover:bg-[#252528] z-10 border-l border-black/[0.04] dark:border-white/[0.06] shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.05)]">
                                     <div class="flex items-center justify-end gap-2">
-                                        @if (\App\Support\Context::hasPermission('materials.edit'))
-                                            <button type="button" @click="openPriceModal({{ Js::from($mat) }})"
-                                                class="inline-flex items-center min-h-[44px] sm:min-h-0 h-9 px-3 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-xs font-semibold text-[#007AFF] transition-colors cursor-pointer"
-                                                title="{{ __('materials.btn_update_price') }}">
-                                                <i data-lucide="badge-dollar-sign" class="w-3.5 h-3.5 mr-1.5 shrink-0"></i>
-                                                <span>{{ __('materials.btn_update_price') }}</span>
-                                            </button>
+                                        @if (\App\Support\Context::hasPermission('materials.edit') || \App\Support\Context::hasPermission('materials.delete'))
+                                            @if (\App\Support\Context::hasPermission('materials.edit'))
+                                                <button type="button" @click="openPriceModal({{ Js::from($mat) }})"
+                                                    class="inline-flex items-center min-h-[44px] sm:min-h-0 h-9 px-3 rounded-[10px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-xs font-semibold text-[#007AFF] transition-colors cursor-pointer"
+                                                    title="{{ __('materials.btn_update_price') }}">
+                                                    <i data-lucide="badge-dollar-sign" class="w-3.5 h-3.5 mr-1.5 shrink-0"></i>
+                                                    <span>{{ __('materials.btn_update_price') }}</span>
+                                                </button>
+                                            @endif
 
-                                            <div x-data="{ open: false }" class="relative inline-block text-left">
+                                            <div x-data="{ 
+                                                open: false,
+                                                coords: { top: 0, left: 0 },
+                                                toggle(e) {
+                                                    if (!this.open) {
+                                                        const rect = e.currentTarget.getBoundingClientRect();
+                                                        const spaceBelow = window.innerHeight - rect.bottom;
+                                                        const menuHeight = 100;
+                                                        this.coords = {
+                                                            top: spaceBelow < 140 
+                                                                ? Math.max(10, rect.top + window.scrollY - menuHeight - 6) 
+                                                                : (rect.bottom + window.scrollY + 6),
+                                                            left: Math.max(10, rect.right + window.scrollX - 192)
+                                                        };
+                                                        this.$nextTick(() => {
+                                                            if (window.lucide) window.lucide.createIcons();
+                                                        });
+                                                    }
+                                                    this.open = !this.open;
+                                                }
+                                            }" 
+                                            @scroll.window="open = false"
+                                            @resize.window="open = false"
+                                            @table-scrolled.window="open = false"
+                                            class="relative inline-block text-left">
                                                 <button type="button" 
-                                                        @click="open = !open" 
-                                                        @click.outside="open = false"
+                                                        @click="toggle($event)" 
                                                         aria-label="{{ __('common.more_actions') }}"
                                                         class="min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 w-9 h-9 rounded-[10px] flex items-center justify-center text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors cursor-pointer">
                                                     <i data-lucide="more-horizontal" class="w-4 h-4"></i>
                                                 </button>
 
-                                                <div x-show="open"
-                                                     x-cloak
-                                                     x-transition:enter="transition ease-out duration-100"
-                                                     x-transition:enter-start="transform opacity-0 scale-95"
-                                                     x-transition:enter-end="transform opacity-100 scale-100"
-                                                     x-transition:leave="transition ease-in duration-75"
-                                                     x-transition:leave-start="transform opacity-100 scale-100"
-                                                     x-transition:leave-end="transform opacity-0 scale-95"
-                                                     class="absolute right-0 mt-1.5 w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-30 text-left">
-                                                    <button type="button" @click="open = false; openEditModal({{ Js::from($mat) }})"
-                                                       class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-left cursor-pointer">
-                                                        <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
-                                                        <span>{{ __('materials.title_edit_spec') }}</span>
-                                                    </button>
-                                                    @if (\App\Support\Context::hasPermission('materials.delete'))
-                                                    <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
-                                                    <button type="button"
-                                                            @click="open = false; openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
-                                                            class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
-                                                        <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
-                                                        <span>{{ __('materials.title_delete_material') }}</span>
-                                                    </button>
-                                                    @endif
-                                                </div>
+                                                <template x-teleport="body">
+                                                    <div x-show="open"
+                                                         x-cloak
+                                                         @click.outside="open = false"
+                                                         :style="'top: ' + coords.top + 'px; left: ' + coords.left + 'px;'"
+                                                         x-transition:enter="transition ease-out duration-100"
+                                                         x-transition:enter-start="transform opacity-0 scale-95"
+                                                         x-transition:enter-end="transform opacity-100 scale-100"
+                                                         x-transition:leave="transition ease-in duration-75"
+                                                         x-transition:leave-start="transform opacity-100 scale-100"
+                                                         x-transition:leave-end="transform opacity-0 scale-95"
+                                                         class="absolute w-48 rounded-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 shadow-2xl py-1.5 z-[100] text-left">
+                                                        @if (\App\Support\Context::hasPermission('materials.edit'))
+                                                        <button type="button" @click="open = false; openEditModal({{ Js::from($mat) }})"
+                                                           class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors text-left cursor-pointer">
+                                                            <i data-lucide="pencil" class="w-4 h-4 text-gray-400"></i>
+                                                            <span>{{ __('materials.title_edit_spec') }}</span>
+                                                        </button>
+                                                        @endif
+                                                        @if (\App\Support\Context::hasPermission('materials.delete'))
+                                                            @if (\App\Support\Context::hasPermission('materials.edit'))
+                                                            <div class="h-px bg-black/5 dark:bg-white/10 my-1"></div>
+                                                            @endif
+                                                        <button type="button"
+                                                                @click="open = false; openDelete('{{ $mat->id }}', {{ Js::from($mat->name) }})"
+                                                                class="w-full flex items-center gap-2.5 px-3.5 py-2 text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors text-left cursor-pointer">
+                                                            <i data-lucide="trash-2" class="w-4 h-4 text-red-500"></i>
+                                                            <span>{{ __('materials.title_delete_material') }}</span>
+                                                        </button>
+                                                        @endif
+                                                    </div>
+                                                </template>
                                             </div>
                                         @endif
                                         @if (\App\Support\Context::hasPermission('materials.delete'))
