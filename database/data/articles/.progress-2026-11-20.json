@@ -1,0 +1,409 @@
+{
+  "date": "2026-11-20",
+  "pipeline": "DAILY EVERGREEN SEO PIPELINE COOCA (40 ARTIKEL EDUKASI UMKM PER HARI)",
+  "total_articles": 40,
+  "status": "COMPLETED",
+  "summary": [
+    {
+      "id": 1,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Aset Toko Rusak Tanpa Cadangan Dana? Begini Cara Menghitung Biaya Penyusutan Aset Toko yang Benar",
+      "slug": "cara-menghitung-biaya-penyusutan-aset-toko-umkm",
+      "published_at": "2026-07-07T08:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-biaya-penyusutan-aset-toko-umkm.jpg",
+      "word_count": 1612,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 2,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Uang di Buku dan Rekening Beda Jauh? Lakukan Rekonsiliasi Saldo Kas dan Bank UMKM Sebelum Bocor",
+      "slug": "panduan-rekonsiliasi-saldo-kas-dan-bank-umkm-cegah-selisih",
+      "published_at": "2026-07-11T09:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-rekonsiliasi-saldo-kas-dan-bank-umkm-cegah-selisih.jpg",
+      "word_count": 1565,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 3,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Omzet Puluhan Juta Ludes Buat Operasional? Simak Cara Menghitung Operating Expense Ratio Bisnis",
+      "slug": "cara-menghitung-operating-expense-ratio-bisnis-umkm",
+      "published_at": "2026-07-15T10:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-operating-expense-ratio-bisnis-umkm.jpg",
+      "word_count": 1642,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 4,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Pesanan Jahitan Membludak Tapi Malah Rugi? Bongkar Anggaran Biaya Overhead Pabrik Konveksi",
+      "slug": "menyusun-anggaran-biaya-overhead-pabrik-konveksi-umkm",
+      "published_at": "2026-07-19T13:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/menyusun-anggaran-biaya-overhead-pabrik-konveksi-umkm.jpg",
+      "word_count": 1628,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 5,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Barang Laris Manis Tapi Kas Toko Kosong? Cek Cara Menghitung Gross Profit Margin Toko yang Akurat",
+      "slug": "cara-menghitung-gross-profit-margin-toko-kelontong-ritel",
+      "published_at": "2026-07-23T14:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-gross-profit-margin-toko-kelontong-ritel.jpg",
+      "word_count": 1659,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 6,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Catatan Bon Menumpuk Tagihan Tak Kunjung Cair? Terapkan Manajemen Piutang Macet Pelanggan Toko",
+      "slug": "strategi-manajemen-piutang-macet-pelanggan-toko-grosir",
+      "published_at": "2026-07-26T15:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/strategi-manajemen-piutang-macet-pelanggan-toko-grosir.jpg",
+      "word_count": 1615,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 7,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Mesin Cuci Berputar Seharian Tapi Belum Balik Modal? Cara Menghitung Titik Impas Usaha Laundry Kiloan",
+      "slug": "cara-menghitung-titik-impas-usaha-laundry-kiloan-akurat",
+      "published_at": "2026-07-29T16:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-titik-impas-usaha-laundry-kiloan-akurat.jpg",
+      "word_count": 1618,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 8,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "title": "Ambil Laba Usaha Sesuka Hati Bikin Toko Kolaps? Tertibkan Pencatatan Dividen Pemilik Bisnis UMKM",
+      "slug": "aturan-pencatatan-dividen-pemilik-bisnis-umkm-tertib",
+      "published_at": "2026-07-31T11:00:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/aturan-pencatatan-dividen-pemilik-bisnis-umkm-tertib.jpg",
+      "word_count": 1634,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 9,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Stok Habis Saat Permintaan Meledak? Trik Cara Menghitung Safety Stock Barang Musiman Toko Ritel",
+      "slug": "cara-menghitung-safety-stock-barang-musiman-toko-ritel",
+      "published_at": "2026-08-04T08:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-safety-stock-barang-musiman-toko-ritel.jpg",
+      "word_count": 1633,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 10,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Uang Ratusan Juta Mati Terkunci di Gudang? Solusi Mengatasi Barang Dead Stock di Gudang Toko",
+      "slug": "solusi-mengatasi-barang-dead-stock-di-gudang-toko-ritel",
+      "published_at": "2026-08-08T09:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/solusi-mengatasi-barang-dead-stock-di-gudang-toko-ritel.jpg",
+      "word_count": 1596,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 11,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Barang Rusak dan Kurang Diterima Begitu Saja? Benahi SOP Penerimaan Barang dari Supplier Toko",
+      "slug": "standar-sop-penerimaan-barang-dari-supplier-toko-ritel",
+      "published_at": "2026-08-12T10:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/standar-sop-penerimaan-barang-dari-supplier-toko-ritel.jpg",
+      "word_count": 1758,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 12,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Selisih Barang Bikin Pusing Setiap Bulan? Cara Menghitung Rasio Inventory Shrinkage Toko Ritel",
+      "slug": "cara-menghitung-rasio-inventory-shrinkage-toko-eceran",
+      "published_at": "2026-08-16T13:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-rasio-inventory-shrinkage-toko-eceran.jpg",
+      "word_count": 1530,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 13,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Cari Satu Dus Butuh Waktu Berjam-jam? Terapkan Sistem Zonasi Penataan Barang Gudang Sempit",
+      "slug": "panduan-sistem-zonasi-penataan-barang-gudang-sempit-umkm",
+      "published_at": "2026-08-20T14:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-sistem-zonasi-penataan-barang-gudang-sempit-umkm.jpg",
+      "word_count": 1529,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 14,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Sayur dan Daging Busuk Buang Modal Jutaan? Cara Mencegah Kerusakan Bahan Baku Basah Kuliner",
+      "slug": "cara-mencegah-kerusakan-bahan-baku-basah-kuliner-kafe",
+      "published_at": "2026-08-23T15:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-mencegah-kerusakan-bahan-baku-basah-kuliner-kafe.jpg",
+      "word_count": 1745,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 15,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Sering Kehabisan Obat atau Kadaluwarsa di Rak? Gunakan Perhitungan Economic Order Quantity Toko Obat",
+      "slug": "rumus-perhitungan-economic-order-quantity-toko-obat-apotek",
+      "published_at": "2026-08-27T16:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/rumus-perhitungan-economic-order-quantity-toko-obat-apotek.jpg",
+      "word_count": 1565,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 16,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "title": "Barang Rusak Nyampur dengan Stok Siap Jual? Bikin Kacau! Buat SOP Karantina Barang Retur Cacat Toko",
+      "slug": "alur-sop-karantina-barang-retur-cacat-toko-ritel-gudang",
+      "published_at": "2026-08-30T10:00:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/alur-sop-karantina-barang-retur-cacat-toko-ritel-gudang.jpg",
+      "word_count": 1653,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 17,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Struk Kertas Diakali Omzet Melayang? Strategi Ampuh Mencegah Manipulasi Struk Kasir Manual",
+      "slug": "cara-mencegah-manipulasi-struk-kasir-manual-toko-ritel",
+      "published_at": "2026-09-03T08:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-mencegah-manipulasi-struk-kasir-manual-toko-ritel.jpg",
+      "word_count": 1686,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 18,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Uang Laci Kas Selisih Tanpa Ada yang Mau Ngaku? Wajibkan SOP Serah Terima Shift Kasir Toko",
+      "slug": "panduan-sop-serah-terima-shift-kasir-toko-bebas-selisih",
+      "published_at": "2026-09-07T09:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-sop-serah-terima-shift-kasir-toko-bebas-selisih.jpg",
+      "word_count": 1659,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 19,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Kasir Kasih Barang Gratis ke Teman Sendiri? Waspadai Modus Pencurian Uang Kasir Sweethearting",
+      "slug": "mengatasi-modus-pencurian-uang-kasir-sweethearting-toko",
+      "published_at": "2026-09-11T10:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/mengatasi-modus-pencurian-uang-kasir-sweethearting-toko.jpg",
+      "word_count": 1699,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 20,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Tombol Void Sering Ditekan Setelah Pembeli Pergi? Perketat Pengawasan Transaksi Batal Void Meja Kasir",
+      "slug": "sistem-pengawasan-transaksi-batal-void-meja-kasir-pos",
+      "published_at": "2026-09-15T13:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/sistem-pengawasan-transaksi-batal-void-meja-kasir-pos.jpg",
+      "word_count": 1593,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 21,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Pelanggan Sudah Scan Tapi Dana Gagal Masuk Rekening? Trik Audit Rekonsiliasi QRIS Kasir Toko",
+      "slug": "cara-audit-rekonsiliasi-qris-kasir-toko-anti-boncos",
+      "published_at": "2026-09-18T14:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-audit-rekonsiliasi-qris-kasir-toko-anti-boncos.jpg",
+      "word_count": 1648,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 22,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Simpan Uang Tunai Bertumpuk di Laci Kasir Bahaya! Terapkan SOP Blind Cash Drop Laci Kasir",
+      "slug": "prosedur-sop-blind-cash-drop-laci-kasir-toko-aman",
+      "published_at": "2026-09-22T15:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/prosedur-sop-blind-cash-drop-laci-kasir-toko-aman.jpg",
+      "word_count": 1640,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 23,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Satu Meja Banyak Tagihan Rawan Dicurangi? Cara Mencegah Manipulasi Split Bill Restoran dan Kafe",
+      "slug": "strategi-mencegah-manipulasi-split-bill-restoran-kafe",
+      "published_at": "2026-09-26T16:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/strategi-mencegah-manipulasi-split-bill-restoran-kafe.jpg",
+      "word_count": 1585,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 24,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "title": "Kasir Punya Akses Laporan Laba dan Hapus Data? Fatal! Atur Hak Akses Kasir Berbasis Role POS",
+      "slug": "pengaturan-hak-akses-kasir-berbasis-role-pos-toko-ritel",
+      "published_at": "2026-09-29T11:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/pengaturan-hak-akses-kasir-berbasis-role-pos-toko-ritel.jpg",
+      "word_count": 1644,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 25,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Produk Makanan Disita Petugas Karena Izin Bodong? Kenali Sanksi Usaha Kuliner Tanpa Izin PIRT",
+      "slug": "bahaya-dan-sanksi-usaha-kuliner-tanpa-izin-pirt-resmi",
+      "published_at": "2026-10-03T08:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/bahaya-dan-sanksi-usaha-kuliner-tanpa-izin-pirt-resmi.jpg",
+      "word_count": 1783,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 26,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Takut Boncos Urus Label Halal? Pelajari Tata Cara Sertifikasi Halal Self Declare FB Gratis",
+      "slug": "panduan-tata-cara-sertifikasi-halal-self-declare-fb-umkm",
+      "published_at": "2026-10-07T09:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-tata-cara-sertifikasi-halal-self-declare-fb-umkm.jpg",
+      "word_count": 1737,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 27,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Omzet Belum Tembus 500 Juta Ditagih Pajak? Pahami Cara Menghitung PPh Final PP 55 2022 yang Benar",
+      "slug": "aturan-dan-cara-menghitung-pph-final-pp-55-2022-umkm",
+      "published_at": "2026-10-11T10:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/aturan-dan-cara-menghitung-pph-final-pp-55-2022-umkm.jpg",
+      "word_count": 1643,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 28,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Nama Brand Dibajak dan Dituntut Pihak Lain? Ini Syarat Pendaftaran Hak Merek Dagang UMKM di DJKI",
+      "slug": "prosedur-dan-syarat-pendaftaran-hak-merek-dagang-umkm-djki",
+      "published_at": "2026-10-15T13:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/prosedur-dan-syarat-pendaftaran-hak-merek-dagang-umkm-djki.jpg",
+      "word_count": 1827,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 29,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Pengajuan Modal Bank Ditolak Karena Laporan Berantakan? Terapkan Kewajiban Pembukuan SAK EMKM bagi Toko",
+      "slug": "standar-kewajiban-pembukuan-sak-emkm-bagi-toko-ritel-umkm",
+      "published_at": "2026-10-19T14:35:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/standar-kewajiban-pembukuan-sak-emkm-bagi-toko-ritel-umkm.jpg",
+      "word_count": 1628,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 30,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Kena Tuntutan Pesangon Ratusan Juta? Dampak Hukum Mempekerjakan Karyawan Tanpa Kontrak di Bisnis Toko",
+      "slug": "risiko-dan-dampak-hukum-mempekerjakan-karyawan-tanpa-kontrak",
+      "published_at": "2026-10-23T15:45:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/risiko-dan-dampak-hukum-mempekerjakan-karyawan-tanpa-kontrak.jpg",
+      "word_count": 1886,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 31,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Produk Frozen Food Mau Masuk Swalayan? Lengkapi Syarat Pendaftaran BPOM Makanan Olahan Beku",
+      "slug": "panduan-syarat-pendaftaran-bpom-makanan-olahan-beku-umkm",
+      "published_at": "2026-10-27T16:30:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-syarat-pendaftaran-bpom-makanan-olahan-beku-umkm.jpg",
+      "word_count": 1670,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 32,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "title": "Sistem Pajak Baru Bikin Faktur Terblokir? Pelajari Pengelolaan Faktur Pajak Elektronik Coretax UMKM",
+      "slug": "panduan-pengelolaan-faktur-pajak-elektronik-coretax-umkm",
+      "published_at": "2026-10-30T10:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-pengelolaan-faktur-pajak-elektronik-coretax-umkm.jpg",
+      "word_count": 1559,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 33,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Pelanggan Setia Tiba-tiba Hilang Tanpa Kabar? Jalankan Strategi Winback Pelanggan yang Berhenti Belanja",
+      "slug": "resep-strategi-winback-pelanggan-yang-berhenti-belanja-toko",
+      "published_at": "2026-11-03T08:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/resep-strategi-winback-pelanggan-yang-berhenti-belanja-toko.jpg",
+      "word_count": 1574,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 34,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Sibuk Cari Pelanggan Baru Padahal Boncos? Coba Menghitung Customer Retention Rate Toko Ritel",
+      "slug": "cara-menghitung-customer-retention-rate-toko-ritel-akurat",
+      "published_at": "2026-11-06T09:25:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-customer-retention-rate-toko-ritel-akurat.jpg",
+      "word_count": 1544,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 35,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Member Card Cuma Masuk Dompet Tak Dipakai? Begini Cara Membuat Program Membership Tiering Usaha Kafe",
+      "slug": "cara-membuat-program-membership-tiering-usaha-kafe-loyal",
+      "published_at": "2026-11-09T10:35:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-program-membership-tiering-usaha-kafe-loyal.jpg",
+      "word_count": 1584,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 36,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Bintang Satu Hancurkan Reputasi Toko? Cara Bijak Menangani Ulasan Buruk Pelanggan di Google Maps",
+      "slug": "trik-menangani-ulasan-buruk-pelanggan-di-google-maps-toko",
+      "published_at": "2026-11-12T13:50:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/trik-menangani-ulasan-buruk-pelanggan-di-google-maps-toko.jpg",
+      "word_count": 1518,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 37,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Nomor Kontak Toko Langsung Banned Massal? Strategi Broadcast WhatsApp Bisnis Tanpa Kena Blokir",
+      "slug": "tips-broadcast-whatsapp-bisnis-tanpa-kena-blokir-akun",
+      "published_at": "2026-11-14T14:40:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/tips-broadcast-whatsapp-bisnis-tanpa-kena-blokir-akun.jpg",
+      "word_count": 1514,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 38,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Stok Terjual Dua Kali Kena Penalti Toko? Kunci Sinkronisasi Stok Toko Fisik dan Shopee Lazada",
+      "slug": "otomasi-sinkronisasi-stok-toko-fisik-dan-shopee-lazada",
+      "published_at": "2026-11-15T15:20:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/otomasi-sinkronisasi-stok-toko-fisik-dan-shopee-lazada.jpg",
+      "word_count": 1570,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 39,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Produk Lama Menumpuk Tak Laku Dijual? Trik Cerdas Strategi Bundling Produk Lambat dan Laris",
+      "slug": "penerapan-strategi-bundling-produk-lambat-dan-laris-ritel",
+      "published_at": "2026-11-16T16:10:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/penerapan-strategi-bundling-produk-lambat-dan-laris-ritel.jpg",
+      "word_count": 1565,
+      "lint_status": "PASS"
+    },
+    {
+      "id": 40,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "title": "Sibuk Pasang Iklan Tapi Pembeli Cuma Sekali Datang? Cara Mengukur Repeat Order Rate Toko Online",
+      "slug": "panduan-cara-mengukur-repeat-order-rate-toko-online-umkm",
+      "published_at": "2026-11-17T11:15:00+07:00",
+      "cover_image": "https://cooca.id/images/blog/panduan-cara-mengukur-repeat-order-rate-toko-online-umkm.jpg",
+      "word_count": 1552,
+      "lint_status": "PASS"
+    }
+  ],
+  "errors": []
+}

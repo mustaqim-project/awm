@@ -10,9 +10,7 @@ def make_json_ld(art):
     cover = art['cover_image']
     pub_date = art.get('published_at', '2026-11-17T09:00:00+07:00')
     
-    faq_match = re.search(r"## FAQ.*?\n+(.*)", art['body'], re.DOTALL)
-    if not faq_match:
-        faq_match = re.search(r"## Pertanyaan Seputar.*?\n+(.*)", art['body'], re.DOTALL)
+    faq_match = re.search(r"## (?:FAQ|Pertanyaan).*?\n+(.*)", art['body'], re.DOTALL)
         
     faqs = []
     if faq_match:
