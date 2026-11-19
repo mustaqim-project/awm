@@ -1,0 +1,284 @@
+{
+  "date": "2026-11-20",
+  "batch": 17,
+  "geo": "ID",
+  "category": "3",
+  "category_name": "Regulasi Permendag 19/2026 Kewajiban NIB Seller Marketplace, Diskon 50 Persen Biaya Layanan E-Commerce Permen UMKM 3/2026, dan Aturan Label Nutri-Level BPOM Makanan Minuman 2026",
+  "source": "Google Trends Indonesia 20 November 2026, Kementerian Perdagangan RI (Permendag No. 19/2026), Kementerian UMKM RI (Permen UMKM No. 3/2026 & Kepmen 398/2026), BPOM RI (Peraturan BPOM No. 10/2026 Nutri-Level), BPS",
+  "total_topics": 3,
+  "topics": [
+    {
+      "id": 762,
+      "topic": "Kewajiban Nomor Induk Berusaha (NIB) Seller Marketplace Online Sesuai Permendag 19/2026: Ancaman Pembekuan Akun Toko, Batas Masa Transisi, dan Cara Integrasi OSS RBA",
+      "trending_query": "kewajiban nib seller marketplace online permendag sanksi toko dibekukan",
+      "primary_keyword": "kewajiban nib seller marketplace online permendag",
+      "secondary_keywords": "sanksi toko online tanpa nib permendag 19 2026, cara daftar nib oss rba seller shopee tokopedia tiktok, batas masa transisi legalitas seller e commerce, syarat verifikasi toko official store star seller, integrasi data pelaku usaha pmse sistem oss",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Pemberlakuan Permendag No. 19/2026 mewajibkan setiap penjual di platform e-commerce memiliki NIB sektor PMSE melalui OSS. Masa transisi 18 bulan untuk pedagang lama dan 6 bulan untuk pedagang baru kini mendekati tenggat evaluasi platform, di mana toko yang belum mengunggah NIB berisiko dibekukan transaksinya dan dihapus dari marketplace.",
+      "credible_sources": [
+        "Kementerian Perdagangan Republik Indonesia - Permendag Nomor 19 Tahun 2026 tentang PMSE",
+        "Kementerian Investasi / BKPM - Sistem Online Single Submission (OSS RBA)",
+        "Pusat Edukasi Seller Marketplace (Shopee, Tokopedia, TikTok Shop, Lazada)"
+      ],
+      "msme_opportunity": "Mencegah pembekuan toko online, meningkatkan kepercayaan konsumen dengan status legal terverifikasi, membuka akses proteksi merek dan fasilitas Star Seller/Official Store resmi, serta mendapatkan kemudahan akses fasilitas pemerintah.",
+      "article_angle": "Bedah aturan Permendag 19/2026 pasal perizinan berusaha, batas masa transisi per kategori seller, risiko penutupan toko online (takedown), panduan step-by-step membuat NIB perorangan KBLI 4791 di OSS RBA secara gratis, dan sinkronisasi ke dashboard marketplace.",
+      "slug": "kewajiban-nib-seller-marketplace-online-permendag",
+      "assigned_category": "Legalitas",
+      "image": {
+        "filename": "kewajiban-nib-seller-marketplace-online-permendag.jpg",
+        "local_path": "public/images/blog/kewajiban-nib-seller-marketplace-online-permendag.jpg",
+        "public_url": "https://cooca.id/images/blog/kewajiban-nib-seller-marketplace-online-permendag.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        {
+          "headline": "Awas Toko Dibekukan! Kewajiban NIB Seller Marketplace Online Permendag dan Cara Daftarnya",
+          "score": 97,
+          "formula": "Warning & Risk",
+          "selected": true
+        },
+        {
+          "headline": "Jangan Sampai Kena Takedown! Kewajiban NIB Seller Marketplace Online Permendag",
+          "score": 91,
+          "formula": "Warning & Loss Aversion",
+          "selected": false
+        },
+        {
+          "headline": "Batas Waktu Makin Dekat: Kewajiban NIB Seller Marketplace Online Permendag Wajib Tahu",
+          "score": 90,
+          "formula": "Urgency & Timeliness",
+          "selected": false
+        },
+        {
+          "headline": "Ternyata Ini Alasan Kewajiban NIB Seller Marketplace Online Permendag Diberlakukan Ketat",
+          "score": 88,
+          "formula": "Curiosity Gap",
+          "selected": false
+        },
+        {
+          "headline": "Kewajiban NIB Seller Marketplace Online Permendag: Panduan Praktis Daftar OSS RBA",
+          "score": 92,
+          "formula": "Numbers & Practical Guide",
+          "selected": false
+        },
+        {
+          "headline": "Banyak Toko Belum Sadar! Kewajiban NIB Seller Marketplace Online Permendag dan Sanksinya",
+          "score": 89,
+          "formula": "Hidden Mistakes",
+          "selected": false
+        },
+        {
+          "headline": "Peluang Star Seller: Kewajiban NIB Seller Marketplace Online Permendag Bikin Toko Laris",
+          "score": 86,
+          "formula": "Opportunity & FOMO",
+          "selected": false
+        },
+        {
+          "headline": "Kewajiban NIB Seller Marketplace Online Permendag vs Toko Non-NIB: Mana yang Bertahan?",
+          "score": 85,
+          "formula": "Comparison & Versus",
+          "selected": false
+        },
+        {
+          "headline": "Fakta Mengejutkan di Balik Kewajiban NIB Seller Marketplace Online Permendag Tahun 2026",
+          "score": 87,
+          "formula": "Unexpected Facts",
+          "selected": false
+        },
+        {
+          "headline": "Simulasi Dampak Regulasi: Kewajiban NIB Seller Marketplace Online Permendag bagi UMKM",
+          "score": 86,
+          "formula": "Case Study & Reality Check",
+          "selected": false
+        }
+      ]
+    },
+    {
+      "id": 763,
+      "topic": "Pemotongan 50 Persen Biaya Layanan E-Commerce bagi Seller UMK Sesuai Permen UMKM No. 3/2026: Syarat Produk Lokal, Alur SAPA UMKM, dan Penghematan Margin",
+      "trending_query": "diskon 50 persen biaya layanan marketplace umkm permen 3 2026 hemat fee komisi",
+      "primary_keyword": "diskon 50 persen biaya layanan marketplace umkm",
+      "secondary_keywords": "permen umkm nomor 3 tahun 2026 potongan fee marketplace, cara daftar sapa umkm klaim diskon komisi toko online, syarat produk lokal dapat potongan biaya admin e commerce, simulasi penghematan fee seller shopee tokopedia tiktok, strategi tingkatkan margin laba bersih toko online",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Kementerian UMKM resmi memberlakukan Permen UMKM No. 3/2026 jo Kepmen UMKM No. 398/2026 yang mewajibkan seluruh marketplace memangkas minimal 50 persen biaya admin dan komisi transaksi bagi seller mikro dan kecil yang menjual produk lokal. Kebijakan ini menjadi penyelamat margin keuntungan penjual daring di tengah maraknya beban potongan fee platform.",
+      "credible_sources": [
+        "Kementerian Koperasi dan UKM Republik Indonesia - Permen UMKM Nomor 3 Tahun 2026",
+        "Keputusan Menteri UMKM Nomor 398 Tahun 2026 tentang Petunjuk Teknis Insentif PMSE",
+        "Portal Layanan SAPA UMKM KemenkopUKM"
+      ],
+      "msme_opportunity": "Memangkas beban fee komisi platform dari 10%-18% menjadi 5%-9%, menghemat pengeluaran operasional toko jutaan hingga belasan juta rupiah per bulan, dan memperkuat daya saing harga produk buatan dalam negeri.",
+      "article_angle": "Bedah pasal Permen UMKM 3/2026, kriteria omzet dan modal usaha penerima insentif, syarat kurasi produk lokal, panduan teknis registrasi toko melalui portal SAPA UMKM, simulasi kalkulasi penghematan margin fee per bulan, dan pencatatan akuntansi di sistem Cooca.",
+      "slug": "diskon-50-persen-biaya-layanan-marketplace-umkm",
+      "assigned_category": "Marketing",
+      "image": {
+        "filename": "diskon-50-persen-biaya-layanan-marketplace-umkm.jpg",
+        "local_path": "public/images/blog/diskon-50-persen-biaya-layanan-marketplace-umkm.jpg",
+        "public_url": "https://cooca.id/images/blog/diskon-50-persen-biaya-layanan-marketplace-umkm.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        {
+          "headline": "Hemat Jutaan Rupiah! Diskon 50 Persen Biaya Layanan Marketplace UMKM dan Cara Klaimnya",
+          "score": 98,
+          "formula": "Financial Loss & Opportunity",
+          "selected": true
+        },
+        {
+          "headline": "Kabar Gembira Seller! Diskon 50 Persen Biaya Layanan Marketplace UMKM Resmi Berlaku",
+          "score": 92,
+          "formula": "Opportunity & FOMO",
+          "selected": false
+        },
+        {
+          "headline": "Jangan Bayar Fee Penuh! Diskon 50 Persen Biaya Layanan Marketplace UMKM Lewat SAPA",
+          "score": 94,
+          "formula": "Hidden Mistakes",
+          "selected": false
+        },
+        {
+          "headline": "Diskon 50 Persen Biaya Layanan Marketplace UMKM: Aturan Permen 3/2026 Wajib Dimanfaatkan",
+          "score": 90,
+          "formula": "Regulation & Practical Guide",
+          "selected": false
+        },
+        {
+          "headline": "Omzet Terpotong Admin? Klaim Diskon 50 Persen Biaya Layanan Marketplace UMKM Sekarang",
+          "score": 89,
+          "formula": "Financial Loss",
+          "selected": false
+        },
+        {
+          "headline": "Ternyata Begini Syarat Diskon 50 Persen Biaya Layanan Marketplace UMKM Khusus Produk Lokal",
+          "score": 88,
+          "formula": "Curiosity Gap",
+          "selected": false
+        },
+        {
+          "headline": "Bongkar Simulasi Cuan: Diskon 50 Persen Biaya Layanan Marketplace UMKM Bikin Laba Naik",
+          "score": 87,
+          "formula": "Case Study & Reality Check",
+          "selected": false
+        },
+        {
+          "headline": "Cara Mudah Mendapatkan Diskon 50 Persen Biaya Layanan Marketplace UMKM di Marketplace",
+          "score": 91,
+          "formula": "Numbers & Practical Guide",
+          "selected": false
+        },
+        {
+          "headline": "Awas Salah Daftar! Panduan Diskon 50 Persen Biaya Layanan Marketplace UMKM Tanpa Ditolak",
+          "score": 86,
+          "formula": "Warning & Risk",
+          "selected": false
+        },
+        {
+          "headline": "Perubahan Besar Marketplace: Diskon 50 Persen Biaya Layanan Marketplace UMKM Resmi Dibuka",
+          "score": 87,
+          "formula": "Trend Hijacking",
+          "selected": false
+        }
+      ]
+    },
+    {
+      "id": 764,
+      "topic": "Aturan Label Nutri-Level BPOM 2026 pada Produk Minuman dan Pangan Kemasan: Klasifikasi Grade GGL, Risiko Sanksi Penarikan, dan Reformulasi Resep",
+      "trending_query": "aturan label nutri level bpom makanan minuman kemasan grade gula garam lemak",
+      "primary_keyword": "aturan label nutri level bpom makanan minuman",
+      "secondary_keywords": "peraturan bpom nomor 10 tahun 2026 informasi nilai gizi, klasifikasi nutri level grade a sampai d gula garam lemak, sanksi produk ditarik peredaran izin edar bpom dicabut, batas masa transisi label nutrisi makanan olahan umkm, cara reformulasi resep minuman kemasan lolos bpom",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "BPOM memberlakukan Peraturan BPOM No. 10/2026 mengenai label Nutri-Level depan kemasan (front-of-pack) Grade A sampai D untuk membatasi konsumsi gula, garam, dan lemak (GGL). Produsen minuman botol, susu olahan, dan makanan kemasan UMKM wajib memahami kategori label ini agar tidak terkena sanksi peringatan keras atau penarikan produk dari rak ritel modern.",
+      "credible_sources": [
+        "Badan Pengawas Obat dan Makanan (BPOM RI) - Peraturan BPOM Nomor 10 Tahun 2026",
+        "Kementerian Kesehatan Republik Indonesia - Panduan Batas Konsumsi Gula Garam Lemak",
+        "Standar Informasi Nilai Gizi Pangan Olahan Indonesia"
+      ],
+      "msme_opportunity": "Melakukan reformulasi resep minuman atau makanan kemasan lebih awal guna meraih predikat Grade A atau B (warna hijau), yang meningkatkan daya tarik penjualan di kalangan konsumen peduli kesehatan dan mempermudah penetrasi ke jaringan minimarket/supermarket.",
+      "article_angle": "Ulasan matriks ambang batas Grade A, B, C, D untuk kandungan gula per 100 ml, tahapan sanksi administratif BPOM bagi label yang tidak sesuai izin edar, panduan reformulasi bahan pemanis alami pada kartu resep, simulasi HPP formulasi baru, dan kepatuhan stok FEFO.",
+      "slug": "aturan-label-nutri-level-bpom-makanan-minuman",
+      "assigned_category": "Solusi Per Industri",
+      "image": {
+        "filename": "aturan-label-nutri-level-bpom-makanan-minuman.jpg",
+        "local_path": "public/images/blog/aturan-label-nutri-level-bpom-makanan-minuman.jpg",
+        "public_url": "https://cooca.id/images/blog/aturan-label-nutri-level-bpom-makanan-minuman.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        {
+          "headline": "Awas Produk Ditarik! Aturan Label Nutri Level BPOM Makanan Minuman dan Resep Lolos Uji",
+          "score": 97,
+          "formula": "Warning & Risk",
+          "selected": true
+        },
+        {
+          "headline": "Jangan Sampai Izin Dicabut! Aturan Label Nutri Level BPOM Makanan Minuman Kemasan",
+          "score": 92,
+          "formula": "Warning & Risk",
+          "selected": false
+        },
+        {
+          "headline": "Wajib Tahu! Aturan Label Nutri Level BPOM Makanan Minuman dan Arti Grade A Sampai D",
+          "score": 91,
+          "formula": "Numbers & Practical Guide",
+          "selected": false
+        },
+        {
+          "headline": "Ternyata Ini Penyebab Aturan Label Nutri Level BPOM Makanan Minuman Bikin Produsen Waswas",
+          "score": 88,
+          "formula": "Curiosity Gap",
+          "selected": false
+        },
+        {
+          "headline": "Aturan Label Nutri Level BPOM Makanan Minuman: Trik Reformulasi Resep Rendah Gula",
+          "score": 93,
+          "formula": "Numbers & Practical Guide",
+          "selected": false
+        },
+        {
+          "headline": "Banyak UMKM Belum Siap! Aturan Label Nutri Level BPOM Makanan Minuman Mulai Diterapkan",
+          "score": 87,
+          "formula": "Hidden Mistakes",
+          "selected": false
+        },
+        {
+          "headline": "Peluang Masuk Minimarket: Aturan Label Nutri Level BPOM Makanan Minuman Grade Hijau",
+          "score": 89,
+          "formula": "Opportunity & FOMO",
+          "selected": false
+        },
+        {
+          "headline": "Grade A vs Grade D: Dampak Aturan Label Nutri Level BPOM Makanan Minuman pada Omzet",
+          "score": 86,
+          "formula": "Comparison & Versus",
+          "selected": false
+        },
+        {
+          "headline": "Fakta di Balik Aturan Label Nutri Level BPOM Makanan Minuman dan Batas Masa Transisi",
+          "score": 86,
+          "formula": "Unexpected Facts",
+          "selected": false
+        },
+        {
+          "headline": "Simulasi Biaya Cetak Kemasan Baru: Aturan Label Nutri Level BPOM Makanan Minuman",
+          "score": 85,
+          "formula": "Case Study & Reality Check",
+          "selected": false
+        }
+      ]
+    }
+  ]
+}
