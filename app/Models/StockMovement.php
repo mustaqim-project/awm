@@ -59,9 +59,14 @@ class StockMovement extends Model
         'reference_id',
         'reference_number',
         'quantity_change',
+        'balance_before',
         'balance_after',
         'unit_cost',
+        'cost_before',
+        'cost_after',
         'total_cost',
+        'purchase_unit_id',
+        'purchase_quantity',
         'batch_number',
         'expiry_date',
         'notes',
@@ -76,9 +81,13 @@ class StockMovement extends Model
         return [
             'expiry_date' => 'date',
             'quantity_change' => 'float',
+            'balance_before' => 'float',
             'balance_after' => 'float',
             'unit_cost' => 'float',
+            'cost_before' => 'float',
+            'cost_after' => 'float',
             'total_cost' => 'float',
+            'purchase_quantity' => 'float',
         ];
     }
 
@@ -104,6 +113,14 @@ class StockMovement extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * @return BelongsTo<Unit, $this>
+     */
+    public function purchaseUnit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class, 'purchase_unit_id');
     }
 
     /**

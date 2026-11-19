@@ -218,6 +218,12 @@
                                 @if($item->sku)
                                     <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums">SKU: {{ $item->sku }}</div>
                                 @endif
+                                @if($item->conversion_factor && (float)$item->conversion_factor != 1.0 && $item->baseUnit)
+                                    <div class="inline-flex items-center gap-1.5 mt-1 px-2 py-0.5 rounded-[6px] bg-[#007AFF]/10 text-[#007AFF] text-[11px] font-medium tabular-nums">
+                                        <i data-lucide="arrow-right-left" class="w-3 h-3"></i>
+                                        <span>1 {{ $item->unit?->name }} = {{ (float)$item->conversion_factor }} {{ $item->baseUnit?->name }} &bull; Total: {{ number_format((float)$item->base_quantity, 2, ',', '.') }} {{ $item->baseUnit?->name }} (Est. {{ $business->currency_symbol }} {{ number_format((float)$item->estimated_base_cost, 2, ',', '.') }}/{{ $item->baseUnit?->name }})</span>
+                                    </div>
+                                @endif
                                 @if($item->notes)
                                     <div class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">{{ $item->notes }}</div>
                                 @endif
@@ -250,6 +256,11 @@
                             <h4 class="text-[15px] font-semibold text-black dark:text-white">{{ $item->item_name }}</h4>
                             @if($item->sku)
                                 <p class="text-[12px] text-black/45 dark:text-white/45 tabular-nums">SKU: {{ $item->sku }}</p>
+                            @endif
+                            @if($item->conversion_factor && (float)$item->conversion_factor != 1.0 && $item->baseUnit)
+                                <p class="text-[11px] text-[#007AFF] font-medium tabular-nums mt-0.5">
+                                    1 {{ $item->unit?->name }} = {{ (float)$item->conversion_factor }} {{ $item->baseUnit?->name }} ({{ number_format((float)$item->base_quantity, 2, ',', '.') }} {{ $item->baseUnit?->name }})
+                                </p>
                             @endif
                         </div>
                         <span class="text-[13px] font-bold tabular-nums text-black dark:text-white">

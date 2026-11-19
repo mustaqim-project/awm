@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Product;
 
+use App\Domain\Inventory\CostingEngine;
 use App\Domain\Material\MaterialCostService;
 use App\Models\BomHeader;
 use App\Models\BomItem;
@@ -13,7 +14,10 @@ final class BomExplosionService
 {
     public const MAX_DEPTH = 10;
 
-    public function __construct(private readonly MaterialCostService $materialCostService = new MaterialCostService) {}
+    public function __construct(
+        private readonly MaterialCostService $materialCostService = new MaterialCostService,
+        private readonly CostingEngine $costingEngine = new CostingEngine
+    ) {}
 
     /**
      * Explode and calculate complete cost of a BOM header recursively.
@@ -76,7 +80,14 @@ final class BomExplosionService
                 $latestPrice = $material?->latestPrice;
 
                 $unitCost = 0.0;
-                if ($latestPrice !== null && $item->unit !== null) {
+                if ($material !== null) {
+                    $unitCost = $this->costingEngine->getEffectiveUnitCost(
+                        item: $material,
+                        targetUnitId: $item->unit_id
+                    );
+                }
+
+                if ($unitCost <= 0.0 && $latestPrice !== null && $item->unit !== null) {
                     $unitCost = $this->materialCostService->calculateEffectiveUnitCost($latestPrice, $item->unit);
                 }
 

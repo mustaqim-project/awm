@@ -251,11 +251,25 @@
 
                             <!-- Aksi -->
                             <td class="py-3.5 px-4 text-right">
-                                <a href="{{ route('production.show', $order) }}"
-                                    class="h-8 px-3 rounded-[10px] text-[12px] font-medium bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1">
-                                    <span>{{ __('production.btn_manage') }}</span>
-                                    <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
-                                </a>
+                                <div class="flex items-center justify-end gap-1.5">
+                                    <a href="{{ route('production.print', $order) }}" target="_blank"
+                                        title="{{ __('production.btn_print') }}"
+                                        class="h-8 w-8 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition flex items-center justify-center shrink-0">
+                                        <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                    @if($order->canEdit() && (\App\Support\Context::hasPermission('production.edit') || \App\Support\Context::hasPermission('production.create')))
+                                        <a href="{{ route('production.edit', $order) }}"
+                                            title="{{ __('production.btn_edit') }}"
+                                            class="h-8 w-8 rounded-[10px] text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] transition flex items-center justify-center shrink-0">
+                                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                        </a>
+                                    @endif
+                                    <a href="{{ route('production.show', $order) }}"
+                                        class="h-8 px-3 rounded-[10px] text-[12px] font-medium bg-[#007AFF]/10 text-[#007AFF] hover:bg-[#007AFF]/15 transition inline-flex items-center gap-1 shrink-0">
+                                        <span>{{ __('production.btn_manage') }}</span>
+                                        <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     @empty

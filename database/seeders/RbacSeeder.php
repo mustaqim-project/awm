@@ -59,6 +59,7 @@ final class RbacSeeder extends Seeder
             // ─── Manufacturing / Produksi Pabrik ───────────────────────
             'production.view'             => ['Lihat Perintah Produksi',                'production',  'Melihat daftar jadwal dan status Surat Perintah Kerja Produksi (SPKP).'],
             'production.create'           => ['Buat Perintah Produksi',                 'production',  'Membuat SPKP perintah kerja produksi baru dari resep BOM.'],
+            'production.edit'             => ['Edit Perintah Produksi',                 'production',  'Mengubah data dan rincian alokasi bahan baku SPKP produksi.'],
             'production.execute'          => ['Rilis Bahan Baku Produksi',              'production',  'Mengeluarkan bahan baku gudang ke lantai produksi pabrik.'],
             'production.complete'         => ['Catat Hasil & Selesaikan Produksi',      'production',  'Mencatat hasil barang jadi aktual, produk cacat/scrap, dan memasukkan stok ke gudang.'],
             'production.cancel'           => ['Batalkan Perintah Produksi',             'production',  'Membatalkan SPKP produksi dan mengembalikan bahan baku ke gudang.'],
@@ -253,6 +254,7 @@ final class RbacSeeder extends Seeder
             'costing.manage',
             'production.view',
             'production.create',
+            'production.edit',
             'production.execute',
             'production.complete',
             'production.cancel',

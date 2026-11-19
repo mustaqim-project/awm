@@ -23,6 +23,9 @@ class GoodsReceipt extends Model
         'receipt_number',
         'receipt_date',
         'status',
+        'landed_cost_amount',
+        'landed_cost_allocation_method',
+        'landed_cost_details',
         'notes',
         'received_by',
     ];
@@ -34,6 +37,8 @@ class GoodsReceipt extends Model
     {
         return [
             'receipt_date' => 'date',
+            'landed_cost_amount' => 'float',
+            'landed_cost_details' => 'array',
         ];
     }
 

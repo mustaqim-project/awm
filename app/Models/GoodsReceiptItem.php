@@ -15,11 +15,17 @@ class GoodsReceiptItem extends Model
 
     protected $fillable = [
         'goods_receipt_id',
+        'purchase_order_item_id',
         'product_id',
         'material_id',
         'item_name',
         'quantity',
+        'received_unit_id',
+        'conversion_factor',
+        'base_quantity',
         'unit_cost',
+        'allocated_landed_cost',
+        'effective_base_cost',
         'batch_number',
         'expiry_date',
         'notes',
@@ -33,13 +39,27 @@ class GoodsReceiptItem extends Model
         return [
             'expiry_date' => 'date',
             'quantity' => 'float',
+            'conversion_factor' => 'float',
+            'base_quantity' => 'float',
             'unit_cost' => 'float',
+            'allocated_landed_cost' => 'float',
+            'effective_base_cost' => 'float',
         ];
     }
 
     public function goodsReceipt(): BelongsTo
     {
         return $this->belongsTo(GoodsReceipt::class);
+    }
+
+    public function purchaseOrderItem(): BelongsTo
+    {
+        return $this->belongsTo(PurchaseOrderItem::class);
+    }
+
+    public function receivedUnit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class, 'received_unit_id');
     }
 
     public function product(): BelongsTo

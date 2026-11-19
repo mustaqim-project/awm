@@ -174,6 +174,7 @@ final class PurchaseOrderWebController extends Controller implements HasMiddlewa
             'items.*.sku' => ['nullable', 'string', 'max:100'],
             'items.*.quantity' => ['required', 'numeric', 'gt:0'],
             'items.*.unit_id' => ['required', 'exists:units,id'],
+            'items.*.conversion_factor' => ['nullable', 'numeric', 'gt:0'],
             'items.*.unit_price' => ['required', 'numeric', 'gte:0'],
             'items.*.notes' => ['nullable', 'string'],
         ]);

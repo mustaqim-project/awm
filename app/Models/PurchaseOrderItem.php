@@ -23,6 +23,10 @@ class PurchaseOrderItem extends Model
         'quantity',
         'invoiced_quantity',
         'unit_id',
+        'base_unit_id',
+        'conversion_factor',
+        'base_quantity',
+        'estimated_base_cost',
         'unit_price',
         'purchase_price_snapshot',
         'supplier_name_snapshot',
@@ -39,6 +43,9 @@ class PurchaseOrderItem extends Model
         return [
             'quantity' => 'float',
             'invoiced_quantity' => 'float',
+            'conversion_factor' => 'float',
+            'base_quantity' => 'float',
+            'estimated_base_cost' => 'float',
             'unit_price' => 'float',
             'purchase_price_snapshot' => 'float',
             'cost_price_snapshot' => 'float',
@@ -50,6 +57,11 @@ class PurchaseOrderItem extends Model
     {
         static::saving(function (PurchaseOrderItem $item): void {
             $item->subtotal = $item->quantity * $item->unit_price;
+
+            $factor = (float) (($item->conversion_factor && $item->conversion_factor > 0) ? $item->conversion_factor : 1.0);
+            $item->conversion_factor = $factor;
+            $item->base_quantity = (float) $item->quantity * $factor;
+            $item->estimated_base_cost = $factor > 0 ? ((float) $item->unit_price / $factor) : (float) $item->unit_price;
 
             // Snapshot harga beli diisi SEKALI saja ketika item pertama kali dibuat.
             // Setelah tersimpan, snapshot tidak akan pernah diperbarui walau unit_price diubah.
@@ -106,5 +118,13 @@ class PurchaseOrderItem extends Model
     public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
+    }
+
+    /**
+     * @return BelongsTo<Unit, $this>
+     */
+    public function baseUnit(): BelongsTo
+    {
+        return $this->belongsTo(Unit::class, 'base_unit_id');
     }
 }

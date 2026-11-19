@@ -52,6 +52,8 @@ final class SalesReturnWebController extends Controller
                 'id'            => $inv->id,
                 'number'        => $inv->invoice_number,
                 'customer_name' => $inv->customer?->name ?? 'Pelanggan Umum',
+                'sender_name'   => $inv->sender_name ?: ($inv->customer?->default_sender_name ?? null),
+                'recipient_name'=> $inv->recipient_name ?: ($inv->customer?->name ?? null),
                 'date'          => $inv->invoice_date?->format('d/m/Y') ?? '-',
                 'total_amount'  => (float) $inv->total_amount,
                 'status'        => $inv->status,

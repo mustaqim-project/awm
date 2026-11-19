@@ -45,6 +45,22 @@
                 <span>{{ __('production.btn_back') }}</span>
             </a>
 
+            <!-- Tombol Cetak SPKP -->
+            <a href="{{ route('production.print', $productionOrder) }}" target="_blank"
+                class="min-h-[44px] sm:min-h-0 h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shrink-0">
+                <i data-lucide="printer" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
+                <span>{{ __('production.btn_print') }}</span>
+            </a>
+
+            <!-- Tombol Edit SPKP -->
+            @if($productionOrder->canEdit() && (\App\Support\Context::hasPermission('production.edit') || \App\Support\Context::hasPermission('production.create')))
+                <a href="{{ route('production.edit', $productionOrder) }}"
+                    class="min-h-[44px] sm:min-h-0 h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shrink-0">
+                    <i data-lucide="pencil" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
+                    <span>{{ __('production.btn_edit') }}</span>
+                </a>
+            @endif
+
             @if($productionOrder->canIssueMaterials() && \App\Support\Context::hasPermission('production.execute'))
                 <button type="button" @click="showIssueModal = true"
                     class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-[#FF9500]/25 shrink-0">

@@ -25506,3 +25506,51 @@ Business Owner / Merchant UMKM COOCA memerlukan satu pusat pengelolaan (_Single 
   - Memverifikasi keberadaan database, status `is_published = true`, ketiadaan em/en dash di kolom DB, serta live HTTP response 200, validitas Schema.org FAQPage & Article.
 
 
+
+
+---
+
+### Work ID: 20261119-02 — Penambahan Fitur Edit SPKP & Print Cetak Produksi (Nama Produk & Tabel Bahan Baku Standar vs Aktual WIP)
+**Tanggal:** 19 November 2026
+**Penanggung Jawab:** AI Full-Stack Engineer / Laravel Architect
+
+#### 1. Masalah & Kebutuhan Pengguna
+- Pengguna meminta agar halaman modul Perintah Produksi (`https://cooca.id/production`) dapat diedit dan dicetak (print).
+- Format cetak SPKP (Surat Perintah Kerja Produksi) harus menampilkan secara jelas:
+  1. Nama Product target produksi beserta kode SKU dan jumlah rencana/output.
+  2. Tabel Daftar Bahan Baku dengan 3 kolom wajib:
+     - Nama Bahan Baku
+     - Rencana Standar (+Waste)
+     - Pengeluaran Aktual (WIP)
+     - (Dilengkapi kolom nomor, unit satuan, catatan/paraf, dan lembar tanda tangan 3 pihak: perencana, operator pabrik, dan supervisor QC).
+
+#### 2. Implementasi & Perubahan Kode
+1. **Model & Migration:**
+   - Menambahkan method `canEdit(): bool` pada `App\Models\ProductionOrder`.
+   - Membuat migrasi `2026_11_19_000002_add_production_edit_permission.php` untuk mendaftarkan permission `production.edit` dan menautkannya ke role yang memiliki hak produksi.
+   - Memperbarui `database/seeders/RbacSeeder.php` dengan permission `production.edit`.
+2. **Domain Service (`App\Domain\Manufacturing\ProductionService`):**
+   - Menambahkan method `updateOrder(ProductionOrder $order, array $data, ?User $user = null): ProductionOrder`.
+   - Menangani update pada status `draft`: penyesuaian kuantitas rencana, gudang asal/tujuan, jadwal, estimasi upah/mesin, nomor batch, tgl kedaluwarsa, catatan, serta kuantitas alokasi rencana bahan baku (`planned_quantity`).
+   - Menangani update pada status `in_progress`: penyesuaian kuantitas pemakaian aktual di lantai pabrik (`actual_consumed_quantity`), sekaligus mencatat mutasi stok penyesuaian (`TYPE_PRODUCTION_ISSUE` jika ada pemakaian tambahan atau `TYPE_PRODUCTION_RETURN` jika ada pengembalian kelebihan bahan) secara otomatis dan aman.
+   - Mengunci dan mencegah pengeditan pada transaksi yang sudah `completed` atau `cancelled` demi menjaga integritas HPP, kartu stok, dan jurnal akuntansi.
+3. **Controller & Routing:**
+   - Memperbarui `routes/owner.php` dengan menambahkan route `production.edit` (`GET /production/{productionOrder}/edit`), `production.update` (`PUT /production/{productionOrder}`), dan `production.print` (`GET /production/{productionOrder}/print`).
+   - Memperbarui `App\Http\Controllers\Web\ProductionWebController` dengan middleware RBAC terpadu (`production.edit,production.create` dan `production.view`).
+   - Menambahkan method `edit()`, `update()`, dan `print()`.
+4. **Antarmuka Pengguna (UI/UX Apple HIG Bento):**
+   - Membuat `resources/views/app/production/edit.blade.php`: antarmuka responsif dengan live recalculation via Alpine.js untuk estimasi HPP/unit, total biaya batch, dan tabel alokasi bahan baku.
+   - Membuat `resources/views/app/production/print.blade.php`: tata letak cetak dokumen pabrik standar A4 potret dengan floating toolbar Sonoma (Cetak, Download PDF via html2pdf, Kembali), kop surat resmi usaha, rincian produk target, tabel alokasi bahan baku (Nama Bahan, Rencana Standar (+Waste), Pengeluaran Aktual (WIP)), dan lembar pengesahan tanda tangan.
+   - Memperbarui `resources/views/app/production/index.blade.php`: menyematkan tombol cepat Cetak SPKP dan Edit SPKP pada kolom Aksi tabel.
+   - Memperbarui `resources/views/app/production/show.blade.php`: menambahkan tombol Cetak SPKP dan Edit SPKP pada header toolbar halaman detail.
+5. **Multi-Bahasa (i18n):**
+   - Memperbarui `lang/id/production.php` dan `lang/en/production.php` dengan seluruh key terjemahan untuk formulir edit dan layout cetak SPKP.
+6. **Automated Testing:**
+   - Membuat `tests/Feature/ProductionWebWorkflowTest.php` mencakup 6 skenario end-to-end:
+     - Melihat daftar produksi (`production.index`).
+     - Membuat SPKP draf baru (`production.store`).
+     - Melihat dan memperbarui SPKP dalam status draf (`production.edit`, `production.update`).
+     - Melihat layout cetak dengan verifikasi Nama Produk dan kolom wajib: Nama Bahan Baku, Rencana Standar (+Waste), Pengeluaran Aktual (WIP) (`production.print`).
+     - Merilis bahan baku ke WIP dan mengedit pengeluaran aktual pemakaian di lantai pabrik (`production.update`).
+     - Memverifikasi pencegahan edit pada SPKP berstatus selesai (`completed`).
+   - Hasil: **6 tests passed, 39 assertions, 100% OK**.

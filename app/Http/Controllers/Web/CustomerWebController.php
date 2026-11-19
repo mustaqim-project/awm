@@ -98,6 +98,7 @@ final class CustomerWebController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
+            'default_sender_name' => ['nullable', 'string', 'max:150'],
             'code' => ['nullable', 'string', 'max:50', Rule::unique('customers', 'code')->where('business_id', $business->id)],
             'email' => ['nullable', 'email', 'max:150'],
             'phone' => ['nullable', 'string', 'max:50'],
@@ -115,6 +116,7 @@ final class CustomerWebController extends Controller implements HasMiddleware
             'business_id' => $business->id,
             'name' => $validated['name'],
             'company_name' => $validated['company_name'] ?? null,
+            'default_sender_name' => $validated['default_sender_name'] ?? null,
             'code' => $validated['code'] ?? null,
             'email' => $validated['email'] ?? null,
             'phone' => $validated['phone'] ?? null,
@@ -151,6 +153,7 @@ final class CustomerWebController extends Controller implements HasMiddleware
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
+            'default_sender_name' => ['nullable', 'string', 'max:150'],
             'code' => ['nullable', 'string', 'max:50', Rule::unique('customers', 'code')->where('business_id', $business->id)->ignore($customer->id)],
             'email' => ['nullable', 'email', 'max:150'],
             'phone' => ['nullable', 'string', 'max:50'],

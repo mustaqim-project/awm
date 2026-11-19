@@ -34,6 +34,7 @@
             slug: '',
             name: '',
             company_name: '',
+            default_sender_name: '',
             code: '',
             email: '',
             phone: '',
@@ -60,6 +61,7 @@
                 slug: c.slug || '',
                 name: c.name || '',
                 company_name: c.company_name || '',
+                default_sender_name: c.default_sender_name || '',
                 code: c.code || '',
                 email: c.email || '',
                 phone: c.phone || '',
@@ -817,6 +819,15 @@
                                         <input type="text" name="company_name" placeholder="{{ __('customers.company_placeholder') }}"
                                             class="w-full h-12 px-4 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition">
                                     </div>
+
+                                    <div class="space-y-1">
+                                        <label class="block text-[13px] font-bold text-black dark:text-white">
+                                            {{ __('customers.default_sender_name') }}
+                                        </label>
+                                        <input type="text" name="default_sender_name" placeholder="{{ __('customers.default_sender_name_placeholder') }}"
+                                            class="w-full h-12 px-4 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition">
+                                        <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">{{ __('customers.default_sender_name_hint') }}</p>
+                                    </div>
                                 @endif
 
                                 <!-- Input Khusus Sektor Bengkel & Otomotif -->
@@ -1000,6 +1011,13 @@
                                     <input type="text" name="company_name" x-model="editCustomer.company_name"
                                         class="w-full h-12 px-4 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition">
                                 </div>
+
+                                <div class="space-y-1">
+                                    <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('customers.default_sender_name') }}</label>
+                                    <input type="text" name="default_sender_name" x-model="editCustomer.default_sender_name" placeholder="{{ __('customers.default_sender_name_placeholder') }}"
+                                        class="w-full h-12 px-4 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF] focus:ring-2 focus:ring-[#007AFF]/20 transition">
+                                    <p class="text-[11px] text-black/50 dark:text-white/50 leading-relaxed">{{ __('customers.default_sender_name_hint') }}</p>
+                                </div>
                             @endif
 
                             <!-- Workshop Vehicle Input in Edit Modal -->
@@ -1174,6 +1192,12 @@
                                 <div class="p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.05] dark:border-white/[0.06] space-y-1">
                                     <span class="text-[11px] uppercase tracking-wider font-semibold text-black/50 dark:text-white/50">{{ __('customers.payment_terms') }}</span>
                                     <div class="font-bold text-[14px] text-black dark:text-white" x-text="(selectedCustomer.payment_terms_days > 0 ? (window.COOCA_I18N.net_days.replace(':days', selectedCustomer.payment_terms_days)) : window.COOCA_I18N.cash_terms)"></div>
+                                </div>
+
+                                <div x-show="selectedCustomer && selectedCustomer.default_sender_name" class="p-4 rounded-[16px] bg-[#007AFF]/5 border border-[#007AFF]/20 space-y-1 sm:col-span-2">
+                                    <span class="text-[11px] uppercase tracking-wider font-semibold text-[#007AFF]">{{ __('customers.default_sender_badge') }}</span>
+                                    <div class="font-bold text-[14px] text-black dark:text-white" x-text="selectedCustomer.default_sender_name"></div>
+                                    <p class="text-[11px] text-black/50 dark:text-white/50">{{ __('customers.default_sender_name_hint') }}</p>
                                 </div>
                             @endif
 

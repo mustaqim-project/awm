@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Material;
 
 use App\Models\MaterialUnitConversion;
+use App\Models\ProductUnitConversion;
 use App\Models\Unit;
 use App\Models\UnitConversion;
 use App\Support\Context;
@@ -15,11 +16,19 @@ final class UnitConversionService
 {
     /**
      * Convert quantity from one unit to another using Graph Pathfinding (BFS).
+     * Seamlessly traverses hybrid multi-hop conversion graphs combining global units,
+     * material-specific conversions, and product-specific conversions (e.g. Dus -> Pcs -> Liter -> ML).
      *
      * @throws InvalidArgumentException
      */
-    public function convert(float $qty, Unit|string $from, Unit|string $to, ?string $materialId = null, ?string $supplierId = null): float
-    {
+    public function convert(
+        float $qty,
+        Unit|string $from,
+        Unit|string $to,
+        ?string $materialId = null,
+        ?string $supplierId = null,
+        ?string $productId = null
+    ): float {
         $fromUnit = $this->resolveUnit($from);
         $toUnit = $this->resolveUnit($to);
 
@@ -28,31 +37,31 @@ final class UnitConversionService
             return $qty;
         }
 
-        $materialSpecificFactor = $this->resolveMaterialSpecificFactor($fromUnit, $toUnit, $materialId, $supplierId);
-        if ($materialSpecificFactor !== null) {
-            return $qty * $materialSpecificFactor;
+        $factor = $this->getConversionFactor($fromUnit, $toUnit, $materialId, $supplierId, $productId);
+
+        return $qty * $factor;
+    }
+
+    /**
+     * Get the cumulative conversion factor between two units.
+     *
+     * @throws InvalidArgumentException
+     */
+    public function getConversionFactor(
+        Unit|string $from,
+        Unit|string $to,
+        ?string $materialId = null,
+        ?string $supplierId = null,
+        ?string $productId = null
+    ): float {
+        $fromUnit = $this->resolveUnit($from);
+        $toUnit = $this->resolveUnit($to);
+
+        if ($fromUnit->id === $toUnit->id) {
+            return 1.0;
         }
 
-        // Fetch all available conversions (system default + current business)
-        $conversions = UnitConversion::available()->get();
-
-        // Build adjacency graph: graph[fromId][] = ['to' => toId, 'factor' => factor]
-        $graph = [];
-
-        foreach ($conversions as $conv) {
-            $fromId = $conv->from_unit_id;
-            $toId = $conv->to_unit_id;
-            $factor = (float) $conv->factor;
-
-            if ($factor <= 0) {
-                continue;
-            }
-
-            // Forward edge
-            $graph[$fromId][] = ['to' => $toId, 'factor' => $factor];
-            // Reverse edge (inverse factor)
-            $graph[$toId][] = ['to' => $fromId, 'factor' => 1.0 / $factor];
-        }
+        $graph = $this->buildConversionGraph($materialId, $supplierId, $productId);
 
         // BFS Search to find shortest conversion path
         /** @var SplQueue<array{unit_id: string, cumulative_factor: float}> $queue */
@@ -70,7 +79,7 @@ final class UnitConversionService
             $currentFactor = $current['cumulative_factor'];
 
             if ($currentId === $toUnit->id) {
-                return $qty * $currentFactor;
+                return $currentFactor;
             }
 
             if (isset($graph[$currentId])) {
@@ -95,9 +104,166 @@ final class UnitConversionService
     }
 
     /**
+     * Check if a valid conversion path exists between two units.
+     */
+    public function canConvert(
+        Unit|string $from,
+        Unit|string $to,
+        ?string $materialId = null,
+        ?string $supplierId = null,
+        ?string $productId = null
+    ): bool {
+        try {
+            $fromUnit = $this->resolveUnit($from);
+            $toUnit = $this->resolveUnit($to);
+
+            if ($fromUnit->id === $toUnit->id) {
+                return true;
+            }
+
+            $this->getConversionFactor($fromUnit, $toUnit, $materialId, $supplierId, $productId);
+            return true;
+        } catch (\Throwable) {
+            return false;
+        }
+    }
+
+    /**
+     * Convert safely without throwing exception, returning fallback if not convertible.
+     */
+    public function convertSafely(
+        float $qty,
+        Unit|string $from,
+        Unit|string $to,
+        ?string $materialId = null,
+        ?string $supplierId = null,
+        ?string $productId = null,
+        float $fallbackFactor = 1.0
+    ): float {
+        try {
+            return $this->convert($qty, $from, $to, $materialId, $supplierId, $productId);
+        } catch (\Throwable) {
+            return $qty * $fallbackFactor;
+        }
+    }
+
+    /**
+     * Build integrated adjacency conversion graph merging global, material, and product conversions.
+     *
+     * @return array<string, array<int, array{to: string, factor: float}>>
+     */
+    private function buildConversionGraph(
+        ?string $materialId = null,
+        ?string $supplierId = null,
+        ?string $productId = null
+    ): array {
+        $graph = [];
+
+        // 1. Load global standard & tenant conversions
+        $globalConversions = UnitConversion::available()->get();
+        foreach ($globalConversions as $conv) {
+            $fromId = (string) $conv->from_unit_id;
+            $toId = (string) $conv->to_unit_id;
+            $factor = (float) $conv->factor;
+
+            if ($factor <= 0) {
+                continue;
+            }
+
+            $this->addEdge($graph, $fromId, $toId, $factor);
+        }
+
+        // 2. Load material-specific conversions if requested
+        if ($materialId !== null) {
+            $businessId = Context::hasBusiness() ? Context::business()?->id : null;
+
+            $matQuery = MaterialUnitConversion::query()
+                ->where('material_id', $materialId);
+
+            if ($businessId !== null) {
+                $matQuery->where(function ($q) use ($businessId): void {
+                    $q->where('business_id', $businessId)->orWhereNull('business_id');
+                });
+            }
+
+            if ($supplierId !== null) {
+                $matQuery->where(function ($subQuery) use ($supplierId): void {
+                    $subQuery->where('supplier_id', $supplierId)
+                        ->orWhereNull('supplier_id');
+                });
+            }
+
+            $matConversions = $matQuery
+                ->orderByRaw('supplier_id IS NULL')
+                ->orderByDesc('is_default')
+                ->orderByDesc('effective_from')
+                ->get();
+
+            foreach ($matConversions as $mConv) {
+                $fromId = (string) $mConv->from_unit_id;
+                $toId = (string) $mConv->to_unit_id;
+                $factor = (float) $mConv->factor;
+
+                if ($factor <= 0) {
+                    continue;
+                }
+
+                $this->addEdge($graph, $fromId, $toId, $factor, true);
+            }
+        }
+
+        // 3. Load product-specific conversions if requested
+        if ($productId !== null) {
+            $prodQuery = ProductUnitConversion::available()
+                ->where('product_id', $productId)
+                ->orderByDesc('is_default');
+
+            $prodConversions = $prodQuery->get();
+            foreach ($prodConversions as $pConv) {
+                $fromId = (string) $pConv->from_unit_id;
+                $toId = (string) $pConv->to_unit_id;
+                $factor = (float) $pConv->factor;
+
+                if ($factor <= 0) {
+                    continue;
+                }
+
+                $this->addEdge($graph, $fromId, $toId, $factor, true);
+            }
+        }
+
+        return $graph;
+    }
+
+    /**
+     * Add directed forward and reverse edges to the graph.
+     * Item-specific conversions take priority over generic global ones.
+     */
+    private function addEdge(array &$graph, string $fromId, string $toId, float $factor, bool $prepend = false): void
+    {
+        $forward = ['to' => $toId, 'factor' => $factor];
+        $reverse = ['to' => $fromId, 'factor' => 1.0 / $factor];
+
+        if (! isset($graph[$fromId])) {
+            $graph[$fromId] = [];
+        }
+        if (! isset($graph[$toId])) {
+            $graph[$toId] = [];
+        }
+
+        if ($prepend) {
+            array_unshift($graph[$fromId], $forward);
+            array_unshift($graph[$toId], $reverse);
+        } else {
+            $graph[$fromId][] = $forward;
+            $graph[$toId][] = $reverse;
+        }
+    }
+
+    /**
      * Resolve unit model by instance, id or code.
      */
-    private function resolveUnit(Unit|string $unit): Unit
+    public function resolveUnit(Unit|string $unit): Unit
     {
         if ($unit instanceof Unit) {
             return $unit;
@@ -112,49 +278,16 @@ final class UnitConversionService
             ->first();
 
         if ($resolved === null) {
+            // Also search case-insensitively for unit codes like 'pcs', 'liter', 'kg', 'ml'
+            $resolved = Unit::available()
+                ->whereRaw('LOWER(code) = ?', [strtolower($unit)])
+                ->first();
+        }
+
+        if ($resolved === null) {
             throw new InvalidArgumentException("Unit [{$unit}] was not found.");
         }
 
         return $resolved;
-    }
-
-    /**
-     * Resolve a material/supplier-specific conversion prior to falling back to the global graph.
-     */
-    private function resolveMaterialSpecificFactor(Unit $fromUnit, Unit $toUnit, ?string $materialId = null, ?string $supplierId = null): ?float
-    {
-        if ($materialId === null) {
-            return null;
-        }
-
-        $businessId = Context::hasBusiness() ? Context::business()?->id : null;
-
-        $query = MaterialUnitConversion::query()
-            ->where('material_id', $materialId)
-            ->where('from_unit_id', $fromUnit->id)
-            ->where('to_unit_id', $toUnit->id);
-
-        if ($businessId !== null) {
-            $query->where('business_id', $businessId);
-        }
-
-        if ($supplierId !== null) {
-            $query->where(function ($subQuery) use ($supplierId): void {
-                $subQuery->where('supplier_id', $supplierId)
-                    ->orWhereNull('supplier_id');
-            });
-        }
-
-        $row = $query
-            ->orderByRaw('supplier_id IS NULL')
-            ->orderByDesc('is_default')
-            ->orderByDesc('effective_from')
-            ->first();
-
-        if ($row === null) {
-            return null;
-        }
-
-        return (float) $row->factor;
     }
 }

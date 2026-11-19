@@ -148,6 +148,11 @@ class ProductionOrder extends Model
         return $this->status === self::STATUS_CANCELLED;
     }
 
+    public function canEdit(): bool
+    {
+        return in_array($this->status, [self::STATUS_DRAFT, self::STATUS_RELEASED, self::STATUS_IN_PROGRESS], true);
+    }
+
     public function canIssueMaterials(): bool
     {
         return in_array($this->status, [self::STATUS_DRAFT, self::STATUS_RELEASED], true);

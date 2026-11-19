@@ -351,7 +351,7 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.sender_name_default') }}
                         </label>
-                        <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
+                        <input type="text" name="sender_name" x-model="senderName" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
                             placeholder="{{ auth()->user()?->name ?: $business->name }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
@@ -361,7 +361,7 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.recipient_name_pic') }}
                         </label>
-                        <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
+                        <input type="text" name="recipient_name" x-model="recipientName" value="{{ old('recipient_name') }}"
                             placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
@@ -466,6 +466,9 @@
                 availableItems: [],
                 refundMethod: 'cash_refund',
                 confirmReturnModalOpen: false,
+                defaultSenderName: '{{ addslashes(auth()->user()?->name ?: $business->name) }}',
+                senderName: '{{ addslashes(old('sender_name', auth()->user()?->name ?: $business->name)) }}',
+                recipientName: '{{ addslashes(old('recipient_name', '')) }}',
 
                 init() {
                     if (this.sourceType === 'pos_order' && this.selectedPosOrderId) {
@@ -496,11 +499,20 @@
                     if (!this.selectedInvoiceId) {
                         this.selectedRecord = null;
                         this.availableItems = [];
+                        this.senderName = this.defaultSenderName;
                         return;
                     }
                     const found = this.invoices.find(inv => String(inv.id) === String(this.selectedInvoiceId));
                     if (found) {
                         this.selectedRecord = found;
+                        if (found.sender_name && found.sender_name.trim() !== '') {
+                            this.senderName = found.sender_name.trim();
+                        } else {
+                            this.senderName = this.defaultSenderName;
+                        }
+                        if (!this.recipientName || this.recipientName === '') {
+                            this.recipientName = found.recipient_name || found.customer_name || '';
+                        }
                         this.availableItems = found.items.map(it => ({
                             ...it,
                             selected: false
@@ -508,6 +520,7 @@
                     } else {
                         this.selectedRecord = null;
                         this.availableItems = [];
+                        this.senderName = this.defaultSenderName;
                     }
                 },
 

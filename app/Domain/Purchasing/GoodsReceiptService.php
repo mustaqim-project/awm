@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace App\Domain\Purchasing;
 
 use App\Domain\Calculation\HppPropagationService;
+use App\Domain\Inventory\CostingEngine;
 use App\Domain\Inventory\StockService;
 use App\Domain\Material\UnitConversionService;
 use App\Models\GoodsReceipt;
 use App\Models\GoodsReceiptItem;
 use App\Models\Material;
 use App\Models\MaterialPrice;
+use App\Models\Product;
 use App\Models\ProductBatch;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderItem;
@@ -28,6 +30,7 @@ final class GoodsReceiptService
         private readonly SupplierInvoiceService $supplierInvoiceService = new SupplierInvoiceService,
         private readonly HppPropagationService $hppPropagationService = new HppPropagationService,
         private readonly UnitConversionService $unitConversionService = new UnitConversionService,
+        private readonly CostingEngine $costingEngine = new CostingEngine,
     ) {}
 
     /**
@@ -92,6 +95,40 @@ final class GoodsReceiptService
                 $receiptNotes = trim(($receiptNotes ? $receiptNotes . ' ' : '') . '[No DO/Surat Jalan: ' . $data['delivery_order_number'] . ']');
             }
 
+            // Landed cost handling
+            $landedCostAmount = (float) ($data['landed_cost_amount'] ?? 0.0);
+            $landedCostMethod = (string) ($data['landed_cost_allocation_method'] ?? 'value');
+            $landedCostDetails = isset($data['landed_cost_details']) ? (array) $data['landed_cost_details'] : null;
+
+            $allocatedLandedCosts = [];
+            if ($landedCostAmount > 0) {
+                $preparedItemsForAllocation = [];
+                foreach ($items as $idx => $it) {
+                    $itArr = (array) $it;
+                    $src = $purchaseOrder->items->first(fn ($poItem): bool =>
+                        ($key($itArr) === 'p:' . $poItem->product_id && $poItem->product_id !== null)
+                        || ($key($itArr) === 'm:' . $poItem->material_id && $poItem->material_id !== null)
+                        || ($key($itArr) === 'f:' . ($poItem->item_name ?? '') && str_starts_with($key($itArr), 'f:'))
+                    );
+                    $cFactor = $this->resolveItemConversionFactor($src, $itArr, $purchaseOrder);
+                    $q = (float) ($itArr['quantity'] ?? 0);
+                    $cost = (float) ($itArr['unit_cost'] ?? ($src?->unit_price ?? 0));
+                    $preparedItemsForAllocation[$idx] = [
+                        'quantity' => $q,
+                        'base_quantity' => $q * $cFactor,
+                        'subtotal' => $q * $cost,
+                        'unit_price' => $cost,
+                        'weight' => (float) ($itArr['weight'] ?? 1.0),
+                        'manual_cost' => (float) ($itArr['allocated_landed_cost'] ?? 0.0),
+                    ];
+                }
+                $allocatedLandedCosts = $this->costingEngine->allocateLandedCost(
+                    totalLandedCost: $landedCostAmount,
+                    items: $preparedItemsForAllocation,
+                    method: $landedCostMethod
+                );
+            }
+
             $receipt = GoodsReceipt::create([
                 'business_id' => $purchaseOrder->business_id,
                 'location_id' => $data['location_id'],
@@ -100,13 +137,16 @@ final class GoodsReceiptService
                 'receipt_number' => $receiptNumber,
                 'receipt_date' => $data['receipt_date'],
                 'status' => 'completed',
+                'landed_cost_amount' => $landedCostAmount,
+                'landed_cost_allocation_method' => $landedCostMethod,
+                'landed_cost_details' => $landedCostDetails,
                 'notes' => $receiptNotes,
                 'received_by' => $userId,
             ]);
 
             $consumedPoQuantities = [];
 
-            foreach ($items as $item) {
+            foreach ($items as $idx => $item) {
                 $item = (array) $item;
                 $rawQuantity = (float) ($item['quantity'] ?? 0);
                 if ($rawQuantity <= 0) {
@@ -152,8 +192,8 @@ final class GoodsReceiptService
 
                 $consumedPoQuantities[$itemKey] = ($consumedPoQuantities[$itemKey] ?? 0.0) + $poQty;
 
-                $materialId = $item['material_id'] ?? null;
-                $productId = $item['product_id'] ?? null;
+                $materialId = $item['material_id'] ?? $source?->material_id;
+                $productId = $item['product_id'] ?? $source?->product_id;
                 $itemNotes = $item['notes'] ?? null;
                 $damagedQty = isset($item['damaged_quantity']) ? (float) $item['damaged_quantity'] : 0.0;
                 if ($damagedQty > 0) {
@@ -163,13 +203,24 @@ final class GoodsReceiptService
                     $itemNotes = trim(($itemNotes ? $itemNotes . ' ' : '') . "[Konversi: {$stockQty} base unit ({$poQty} x {$convFactor})]");
                 }
 
+                $itemAllocatedLanded = (float) ($allocatedLandedCosts[$idx] ?? 0.0);
+                $finalBaseUnitCost = $stockQty > 0
+                    ? ((($poQty * $providedCost) + $itemAllocatedLanded) / $stockQty)
+                    : $stockUnitCost;
+
                 GoodsReceiptItem::create([
                     'goods_receipt_id' => $receipt->id,
+                    'purchase_order_item_id' => $source?->id,
                     'product_id' => $productId,
                     'material_id' => $materialId,
-                    'item_name' => $item['item_name'] ?? null,
+                    'item_name' => $item['item_name'] ?? $source?->item_name,
                     'quantity' => $poQty,
+                    'received_unit_id' => $source?->unit_id,
+                    'conversion_factor' => $convFactor,
+                    'base_quantity' => $stockQty,
                     'unit_cost' => (float) $item['unit_cost'],
+                    'allocated_landed_cost' => $itemAllocatedLanded,
+                    'effective_base_cost' => $finalBaseUnitCost,
                     'batch_number' => $item['batch_number'] ?? null,
                     'expiry_date' => $item['expiry_date'] ?? null,
                     'notes' => $itemNotes,
@@ -184,7 +235,7 @@ final class GoodsReceiptService
 
                     if ($batch) {
                         $batch->quantity = (float) $batch->quantity + $stockQty;
-                        $batch->unit_cost = $stockUnitCost;
+                        $batch->unit_cost = $finalBaseUnitCost;
                         if (! empty($item['expiry_date'])) {
                             $batch->expiry_date = $item['expiry_date'];
                         }
@@ -198,7 +249,7 @@ final class GoodsReceiptService
                             'batch_number' => (string) $item['batch_number'],
                             'expiry_date' => $item['expiry_date'] ?? null,
                             'quantity' => $stockQty,
-                            'unit_cost' => $stockUnitCost,
+                            'unit_cost' => $finalBaseUnitCost,
                             'is_active' => true,
                         ]);
                     }
@@ -207,6 +258,7 @@ final class GoodsReceiptService
                 if (! $productId && ! $materialId) {
                     continue;
                 }
+
                 $this->stockService->recordMovement(
                     businessId: $purchaseOrder->business_id,
                     locationId: $data['location_id'],
@@ -214,23 +266,25 @@ final class GoodsReceiptService
                     materialId: $materialId,
                     movementType: StockMovement::TYPE_GOODS_RECEIPT,
                     quantityChange: $stockQty,
-                    unitCost: $stockUnitCost,
+                    unitCost: $finalBaseUnitCost,
                     referenceId: $receipt->id,
                     referenceNumber: $receiptNumber,
                     batchNumber: $item['batch_number'] ?? null,
                     expiryDate: $item['expiry_date'] ?? null,
                     notes: "Penerimaan PO {$purchaseOrder->po_number}" . ($convFactor > 1.0 ? " ({$stockQty} base unit)" : ''),
                     userId: $userId,
+                    purchaseUnitId: $source?->unit_id,
+                    purchaseQuantity: $poQty,
                 );
 
-                if ($materialId && $stockUnitCost > 0) {
+                if ($materialId && $finalBaseUnitCost > 0) {
                     $material = Material::find($materialId);
                     MaterialPrice::create([
                         'business_id' => $purchaseOrder->business_id,
                         'material_id' => $materialId,
                         'supplier_id' => $purchaseOrder->supplier_id,
-                        'purchase_price' => $stockUnitCost,
-                        'shipping_cost' => 0,
+                        'purchase_price' => $finalBaseUnitCost,
+                        'shipping_cost' => $itemAllocatedLanded,
                         'handling_cost' => 0,
                         'import_cost' => 0,
                         'discount_amount' => 0,
@@ -241,6 +295,14 @@ final class GoodsReceiptService
                         'notes' => "Auto dari Goods Receipt {$receiptNumber}",
                     ]);
                     $this->hppPropagationService->refreshForMaterial($materialId);
+                }
+
+                if ($productId) {
+                    $prod = Product::find($productId);
+                    $newProdCost = $this->costingEngine->getEffectiveUnitCost($prod, $data['location_id'], $purchaseOrder->business_id);
+                    if ($newProdCost > 0) {
+                        $prod->update(['base_cost' => $newProdCost]);
+                    }
                 }
             }
 
@@ -269,6 +331,10 @@ final class GoodsReceiptService
             return (float) $item['conversion_factor'];
         }
 
+        if ($source && (float) ($source->conversion_factor ?? 0) > 0) {
+            return (float) $source->conversion_factor;
+        }
+
         if (! $source || ! $source->unit_id) {
             return 1.0;
         }
@@ -287,12 +353,12 @@ final class GoodsReceiptService
 
         if ($baseUnitId && $source->unit_id !== $baseUnitId) {
             try {
-                $factor = $this->unitConversionService->convert(
-                    1.0,
-                    $source->unit_id,
-                    $baseUnitId,
-                    $matId,
-                    $po->supplier_id
+                $factor = $this->unitConversionService->getConversionFactor(
+                    from: $source->unit_id,
+                    to: $baseUnitId,
+                    materialId: $matId,
+                    supplierId: $po->supplier_id,
+                    productId: $prodId
                 );
                 return $factor > 0 ? $factor : 1.0;
             } catch (\Throwable) {

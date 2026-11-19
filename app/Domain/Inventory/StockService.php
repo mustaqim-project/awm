@@ -21,7 +21,8 @@ use InvalidArgumentException;
 final class StockService
 {
     public function __construct(
-        private readonly UnitConversionService $unitConversionService = new UnitConversionService()
+        private readonly UnitConversionService $unitConversionService = new UnitConversionService(),
+        private readonly CostingEngine $costingEngine = new CostingEngine()
     ) {}
 
     /**
@@ -100,7 +101,9 @@ final class StockService
         ?string $expiryDate = null,
         ?string $notes = null,
         ?string $userId = null,
-        ?string $materialId = null
+        ?string $materialId = null,
+        ?string $purchaseUnitId = null,
+        ?float $purchaseQuantity = null
     ): StockMovement {
         if ($unitCost < 0) {
             throw new InvalidArgumentException('Unit cost tidak boleh negatif.');
@@ -119,7 +122,9 @@ final class StockService
             $expiryDate,
             $notes,
             $userId,
-            $materialId
+            $materialId,
+            $purchaseUnitId,
+            $purchaseQuantity
         ) {
             // Pessimistic locking to prevent race conditions
             $stock = $this->getOrCreateStock(
@@ -131,7 +136,7 @@ final class StockService
             );
 
             $oldQuantity = (float) $stock->quantity;
-            $oldAverageCost = (float) $stock->avg_purchase_cost;
+            $oldAverageCost = (float) ($stock->avg_purchase_cost > 0 ? $stock->avg_purchase_cost : $stock->last_cost);
             $newQuantity = (float) $stock->quantity + $quantityChange;
 
             // Enforce negative stock prevention if configured by the business (Rule 17)
@@ -164,12 +169,20 @@ final class StockService
             if ($unitCost > 0) {
                 $stock->last_cost = $unitCost;
             }
-            if ($movementType === StockMovement::TYPE_GOODS_RECEIPT && $quantityChange > 0 && $unitCost >= 0) {
-                $oldValue = max(0.0, $oldQuantity) * $oldAverageCost;
-                $receivedValue = $quantityChange * $unitCost;
-                $stock->avg_purchase_cost = $newQuantity > 0
-                    ? ($oldValue + $receivedValue) / $newQuantity
-                    : 0.0;
+
+            $isReceiptMovement = in_array($movementType, [
+                StockMovement::TYPE_GOODS_RECEIPT,
+                StockMovement::TYPE_PRODUCTION_RECEIPT,
+                StockMovement::TYPE_INITIAL,
+            ], true) && $quantityChange > 0 && $unitCost >= 0;
+
+            if ($isReceiptMovement) {
+                $stock->avg_purchase_cost = $this->costingEngine->calculateMovingAverage(
+                    oldQty: $oldQuantity,
+                    oldAvgCost: $oldAverageCost,
+                    receivedQty: $quantityChange,
+                    receivedUnitCost: $unitCost
+                );
             }
             $stock->save();
 
@@ -182,9 +195,14 @@ final class StockService
                 'reference_id' => $referenceId,
                 'reference_number' => $referenceNumber,
                 'quantity_change' => $quantityChange,
+                'balance_before' => $oldQuantity,
                 'balance_after' => $newQuantity,
                 'unit_cost' => $unitCost,
+                'cost_before' => $oldAverageCost,
+                'cost_after' => (float) $stock->avg_purchase_cost,
                 'total_cost' => abs($quantityChange) * $unitCost,
+                'purchase_unit_id' => $purchaseUnitId,
+                'purchase_quantity' => $purchaseQuantity,
                 'batch_number' => $batchNumber,
                 'expiry_date' => $expiryDate,
                 'notes' => $notes,

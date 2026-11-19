@@ -87,6 +87,14 @@ class Material extends Model
     }
 
     /**
+     * @return HasMany<MaterialUnitConversion, $this>
+     */
+    public function unitConversions(): HasMany
+    {
+        return $this->hasMany(MaterialUnitConversion::class);
+    }
+
+    /**
      * @return HasMany<MaterialPrice, $this>
      */
     public function prices(): HasMany
@@ -128,6 +136,14 @@ class Material extends Model
     public function getTotalStockAttribute(): float
     {
         return (float) $this->stocks()->sum('quantity');
+    }
+
+    /**
+     * Get effective acquisition cost from latest price.
+     */
+    public function getEffectiveCostAttribute(): float
+    {
+        return (float) ($this->latestPrice?->effective_cost ?? $this->latestPrice?->purchase_price ?? 0.0);
     }
 
     /**

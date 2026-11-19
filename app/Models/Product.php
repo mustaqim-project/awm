@@ -476,6 +476,14 @@ class Product extends Model
     }
 
     /**
+     * @return HasMany<ProductUnitConversion, $this>
+     */
+    public function unitConversions(): HasMany
+    {
+        return $this->hasMany(ProductUnitConversion::class);
+    }
+
+    /**
      * @return HasMany<ProductBundleItem, $this>
      */
     public function bundleItems(): HasMany

@@ -23,8 +23,9 @@ final class ProductionWebController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('require.permission:production.view', only: ['index', 'show']),
+            new Middleware('require.permission:production.view', only: ['index', 'show', 'print']),
             new Middleware('require.permission:production.create', only: ['create', 'store']),
+            new Middleware('require.permission:production.edit,production.create', only: ['edit', 'update']),
             new Middleware('require.permission:production.execute', only: ['issueMaterials']),
             new Middleware('require.permission:production.complete', only: ['complete']),
             new Middleware('require.permission:production.cancel', only: ['cancel']),
@@ -170,6 +171,124 @@ final class ProductionWebController extends Controller implements HasMiddleware
         ]);
 
         return view('app.production.show', compact('business', 'productionOrder'));
+    }
+
+    /**
+     * Show form to edit an existing Production Order.
+     */
+    public function edit(ProductionOrder $productionOrder): View|RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($productionOrder->business_id === $business->id, 404);
+
+        if ($productionOrder->isCompleted() || $productionOrder->isCancelled()) {
+            return redirect()->route('production.show', $productionOrder)
+                ->with('error', __('production.cannot_edit_completed_or_cancelled', ['status' => $productionOrder->status]));
+        }
+
+        $productionOrder->load([
+            'product.outputUnit',
+            'bomHeader.items.material.unit',
+            'sourceLocation',
+            'targetLocation',
+            'items.material.unit',
+            'items.unit',
+        ]);
+
+        $products = Product::where('business_id', $business->id)
+            ->where('is_active', true)
+            ->where('type', Product::TYPE_GOODS)
+            ->with(['activeCostModel.bomHeaders.items.material.unit', 'outputUnit'])
+            ->orderBy('name')
+            ->get();
+
+        $locations = Location::where('business_id', $business->id)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('app.production.edit', compact('business', 'productionOrder', 'products', 'locations'));
+    }
+
+    /**
+     * Update an existing Production Order.
+     */
+    public function update(Request $request, ProductionOrder $productionOrder): RedirectResponse
+    {
+        $business = Context::requireBusiness();
+        abort_unless($productionOrder->business_id === $business->id, 404);
+
+        if ($productionOrder->isCompleted() || $productionOrder->isCancelled()) {
+            return redirect()->route('production.show', $productionOrder)
+                ->with('error', __('production.cannot_edit_completed_or_cancelled', ['status' => $productionOrder->status]));
+        }
+
+        $rules = [
+            'planned_start_date' => ['nullable', 'date'],
+            'total_labor_cost' => ['nullable', 'numeric', 'gte:0'],
+            'total_machine_cost' => ['nullable', 'numeric', 'gte:0'],
+            'batch_number' => ['nullable', 'string', 'max:100'],
+            'expiry_date' => ['nullable', 'date'],
+            'notes' => ['nullable', 'string', 'max:1000'],
+            'items' => ['nullable', 'array'],
+            'items.*.id' => ['required_with:items', 'string'],
+        ];
+
+        if ($productionOrder->isDraft()) {
+            $rules['product_id'] = [
+                'nullable',
+                'string',
+                Rule::exists('products', 'id')->where('business_id', $business->id),
+            ];
+            $rules['planned_quantity'] = ['required', 'numeric', 'gt:0'];
+            $rules['source_location_id'] = [
+                'required',
+                'string',
+                Rule::exists('locations', 'id')->where('business_id', $business->id),
+            ];
+            $rules['target_location_id'] = [
+                'required',
+                'string',
+                Rule::exists('locations', 'id')->where('business_id', $business->id),
+            ];
+            $rules['items.*.planned_quantity'] = ['nullable', 'numeric', 'gte:0'];
+        } else {
+            $rules['target_location_id'] = [
+                'nullable',
+                'string',
+                Rule::exists('locations', 'id')->where('business_id', $business->id),
+            ];
+            $rules['items.*.actual_consumed_quantity'] = ['nullable', 'numeric', 'gte:0'];
+        }
+
+        $validated = $request->validate($rules);
+
+        $this->productionService->updateOrder($productionOrder, $validated, $request->user());
+
+        return redirect()->route('production.show', $productionOrder)
+            ->with('success', __('production.messages_order_updated', ['order_number' => $productionOrder->order_number]));
+    }
+
+    /**
+     * Render professional production order print-ready layout (A4 / SPKP).
+     */
+    public function print(ProductionOrder $productionOrder): View
+    {
+        $business = Context::requireBusiness();
+        abort_unless($productionOrder->business_id === $business->id, 404);
+
+        $productionOrder->load([
+            'product.outputUnit',
+            'bomHeader',
+            'sourceLocation',
+            'targetLocation',
+            'creator',
+            'completer',
+            'items.material.unit',
+            'items.unit',
+        ]);
+
+        return view('app.production.print', compact('business', 'productionOrder'));
     }
 
     /**

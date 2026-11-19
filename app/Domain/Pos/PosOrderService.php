@@ -7,6 +7,7 @@ namespace App\Domain\Pos;
 use App\Domain\Accounting\AutoJournalService;
 use App\Domain\Crm\LoyaltyService;
 use App\Domain\Finance\CashLedgerService;
+use App\Domain\Inventory\CostingEngine;
 use App\Domain\Inventory\StockService;
 use App\Models\Business;
 use App\Models\Customer;
@@ -35,7 +36,8 @@ final class PosOrderService
         private readonly LoyaltyService $loyaltyService = new LoyaltyService,
         private readonly ModifierService $modifierService = new ModifierService,
         private readonly PosTableService $tableService = new PosTableService,
-        private readonly CashLedgerService $cashLedgerService = new CashLedgerService
+        private readonly CashLedgerService $cashLedgerService = new CashLedgerService,
+        private readonly CostingEngine $costingEngine = new CostingEngine
     ) {}
 
     /**
@@ -194,13 +196,13 @@ final class PosOrderService
 
                 $unitPrice = $baseUnitPrice + $modPriceDelta;
 
-                // Unit HPP from Product bundle, base_cost or active BOM/cost model
+                // Unit HPP from Product bundle, CostingEngine or active BOM/cost model
                 $unitHpp = 0.0;
                 if ($product) {
                     if ($product->isBundle()) {
                         $unitHpp = $product->getBundleHpp();
                     } else {
-                        $unitHpp = (float) $product->base_cost;
+                        $unitHpp = $this->costingEngine->getEffectiveUnitCost($product, $locationId, $business->id);
                         if ($unitHpp <= 0 && $product->activeCostModel) {
                             $costModel = $product->activeCostModel;
                             $latestRun = $costModel->relationLoaded('costingRuns')
@@ -792,7 +794,7 @@ final class PosOrderService
 
                 $unitPrice = $baseUnitPrice + $modResult['total_price_delta'];
                 $lineSubtotal = $qty * $unitPrice;
-                $unitHpp = $product->isBundle() ? $product->getBundleHpp() : (float) $product->base_cost;
+                $unitHpp = $product->isBundle() ? $product->getBundleHpp() : $this->costingEngine->getEffectiveUnitCost($product, $locationId, $business->id);
                 $lineHpp = $qty * $unitHpp;
 
                 $subtotal += $lineSubtotal;
@@ -1299,7 +1301,7 @@ final class PosOrderService
 
                 $unitPrice = $baseUnitPrice + $modResult['total_price_delta'];
                 $lineSubtotal = $qty * $unitPrice;
-                $unitHpp = $product->isBundle() ? $product->getBundleHpp() : (float) $product->base_cost;
+                $unitHpp = $product->isBundle() ? $product->getBundleHpp() : $this->costingEngine->getEffectiveUnitCost($product, $locationId, $business->id);
                 $lineHpp = $qty * $unitHpp;
 
                 $subtotal += $lineSubtotal;

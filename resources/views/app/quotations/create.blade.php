@@ -45,10 +45,10 @@
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.quotations.customer_label') }} <span class="text-[#FF3B30]">*</span></label>
                     <x-searchable-select>
-                        <select name="customer_id" required class="sr-only">
+                        <select name="customer_id" x-model="customerId" required class="sr-only">
                         <option value="">{{ __('sales.quotations.customer_select_placeholder') }}</option>
                         @foreach($customers as $c)
-                        <option value="{{ $c->id }}">{{ $c->name }} ({{ $c->company ?? $c->phone }})</option>
+                        <option value="{{ $c->id }}">{{ $c->name }}{{ $c->company_name ? ' (' . $c->company_name . ')' : '' }}</option>
                         @endforeach
                         </select>
                     </x-searchable-select>
@@ -74,14 +74,14 @@
 
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.sender_name_default') }}</label>
-                    <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
+                    <input type="text" name="sender_name" x-model="senderName" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
                            placeholder="{{ auth()->user()?->name ?: $business->name }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
 
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.recipient_name_pic') }}</label>
-                    <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
+                    <input type="text" name="recipient_name" x-model="recipientName" value="{{ old('recipient_name') }}"
                            placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                 </div>
@@ -238,9 +238,23 @@
     </form>
 </div>
 
+@php
+    $customersMapped = $customers->map(fn($c) => [
+        'id' => (string) $c->id,
+        'name' => $c->name,
+        'company_name' => $c->company_name,
+        'default_sender_name' => $c->default_sender_name,
+    ])->values()->all();
+@endphp
+
 <script>
     function quotationForm() {
         return {
+            customers: {!! json_encode($customersMapped, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!},
+            customerId: '{{ old('customer_id', '') }}',
+            defaultSenderName: '{{ addslashes(auth()->user()?->name ?: $business->name) }}',
+            senderName: '{{ addslashes(old('sender_name', auth()->user()?->name ?: $business->name)) }}',
+            recipientName: '{{ addslashes(old('recipient_name', '')) }}',
             items: [
                 { product_id: '', product_name: '', unit_price: 0, quantity: 1, is_service: false }
             ],
@@ -251,7 +265,33 @@
             grandTotal: 0,
 
             init() {
+                this.$watch('customerId', (val) => {
+                    this.onCustomerChange(val);
+                });
+                if (this.customerId) {
+                    this.onCustomerChange(this.customerId);
+                }
                 this.calculateTotals();
+            },
+
+            onCustomerChange(val) {
+                if (!val) {
+                    this.senderName = this.defaultSenderName;
+                    return;
+                }
+                const cust = this.customers.find(c => String(c.id) === String(val));
+                if (cust) {
+                    if (cust.default_sender_name && cust.default_sender_name.trim() !== '') {
+                        this.senderName = cust.default_sender_name.trim();
+                    } else {
+                        this.senderName = this.defaultSenderName;
+                    }
+                    if (!this.recipientName || this.recipientName === '') {
+                        this.recipientName = cust.name || cust.company_name || '';
+                    }
+                } else {
+                    this.senderName = this.defaultSenderName;
+                }
             },
 
             addItem() {

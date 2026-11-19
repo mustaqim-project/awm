@@ -119,7 +119,7 @@
                             <option value="">{{ __('sales.sales_orders.customer_select_placeholder') }}</option>
                             @foreach ($customers as $c)
                                 <option value="{{ $c->id }}">
-                                    {{ $c->name }}{{ $c->company ? ' (' . $c->company . ')' : '' }}</option>
+                                    {{ $c->name }}{{ $c->company_name ? ' (' . $c->company_name . ')' : '' }}</option>
                             @endforeach
                             </select>
                         </x-searchable-select>
@@ -158,7 +158,7 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.sales_orders.shipping_address_label') }} <span class="text-black/40 dark:text-white/40 font-normal">{{ __('sales.sales_orders.optional_label') }}</span>
                         </label>
-                        <input type="text" name="shipping_address" value="{{ old('shipping_address') }}"
+                        <input type="text" name="shipping_address" x-model="shippingAddress" value="{{ old('shipping_address') }}"
                             placeholder="{{ __('sales.sales_orders.shipping_address_placeholder') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
@@ -168,7 +168,7 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.sender_name_default') }}
                         </label>
-                        <input type="text" name="sender_name" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
+                        <input type="text" name="sender_name" x-model="senderName" value="{{ old('sender_name', auth()->user()?->name ?: $business->name) }}"
                             placeholder="{{ auth()->user()?->name ?: $business->name }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
@@ -178,7 +178,7 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.recipient_name_pic') }}
                         </label>
-                        <input type="text" name="recipient_name" value="{{ old('recipient_name') }}"
+                        <input type="text" name="recipient_name" x-model="recipientName" value="{{ old('recipient_name') }}"
                             placeholder="{{ __('sales.u_p_nama_pic_pelanggan') }}"
                             class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                     </div>
@@ -484,17 +484,31 @@
             )
             ->values()
             ->all();
+
+        $customersMapped = $customers->map(fn($c) => [
+            'id' => (string) $c->id,
+            'name' => $c->name,
+            'company_name' => $c->company_name,
+            'default_sender_name' => $c->default_sender_name,
+            'shipping_address' => $c->shipping_address ?? $c->billing_address,
+        ])->values()->all();
     @endphp
 
     <script>
         window.SO_QUOTATIONS_DATA = {!! json_encode($quotationsMapped, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!};
+        window.SO_CUSTOMERS_DATA = {!! json_encode($customersMapped, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) !!};
         window.SO_PREFILL_QUOTATION_ID = @json($prefillQuotation?->id);
 
         function salesOrderForm() {
             return {
                 quotations: window.SO_QUOTATIONS_DATA || [],
+                customers: window.SO_CUSTOMERS_DATA || [],
                 selectedQuotationId: window.SO_PREFILL_QUOTATION_ID ? String(window.SO_PREFILL_QUOTATION_ID) : '',
                 customerId: '',
+                defaultSenderName: '{{ addslashes(auth()->user()?->name ?: $business->name) }}',
+                senderName: '{{ addslashes(old('sender_name', auth()->user()?->name ?: $business->name)) }}',
+                recipientName: '{{ addslashes(old('recipient_name', '')) }}',
+                shippingAddress: '{{ addslashes(old('shipping_address', '')) }}',
 
                 items: [{
                     product_id: '',
@@ -512,10 +526,36 @@
                 confirmModalOpen: false,
 
                 init() {
+                    this.$watch('customerId', (val) => {
+                        this.onCustomerChange(val);
+                    });
                     if (this.selectedQuotationId) {
                         this.$nextTick(() => this.onQuotationChange());
                     }
                     this.calculateTotals();
+                },
+
+                onCustomerChange(val) {
+                    if (!val) {
+                        this.senderName = this.defaultSenderName;
+                        return;
+                    }
+                    const cust = this.customers.find(c => String(c.id) === String(val));
+                    if (cust) {
+                        if (cust.default_sender_name && cust.default_sender_name.trim() !== '') {
+                            this.senderName = cust.default_sender_name.trim();
+                        } else {
+                            this.senderName = this.defaultSenderName;
+                        }
+                        if (!this.recipientName || this.recipientName === '') {
+                            this.recipientName = cust.name || cust.company_name || '';
+                        }
+                        if (!this.shippingAddress || this.shippingAddress === '') {
+                            this.shippingAddress = cust.shipping_address || '';
+                        }
+                    } else {
+                        this.senderName = this.defaultSenderName;
+                    }
                 },
 
                 promptSubmitOrder() {

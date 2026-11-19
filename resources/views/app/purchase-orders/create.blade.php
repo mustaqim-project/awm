@@ -10,7 +10,7 @@
     canCustomerPo: {{ $canCustomerPo ? 'true' : 'false' }},
     isSubmitting: false,
     items: [
-        { product_id: '', material_id: '', item_name: '', sku: '', quantity: 1, unit_id: '{{ $units->first()?->id }}', unit_price: 0, notes: '' }
+        { product_id: '', material_id: '', item_name: '', sku: '', quantity: 1, unit_id: '{{ $units->first()?->id }}', unit_price: 0, conversion_factor: 1, notes: '' }
     ],
     discountType: 'percentage',
     discountValue: 0,
@@ -29,6 +29,7 @@
             quantity: 1,
             unit_id: this.units.length > 0 ? this.units[0].id : '',
             unit_price: 0,
+            conversion_factor: 1,
             notes: ''
         });
     },
@@ -287,6 +288,14 @@
                                         </template>
                                         </select>
                                     </x-searchable-select>
+                                    <div class="mt-1 flex items-center gap-1.5" title="Faktor konversi ke satuan dasar">
+                                        <span class="text-[10px] text-black/40 dark:text-white/40">Faktor:</span>
+                                        <input type="number" step="any" min="0.0001" :name="'items[' + index + '][conversion_factor]'" x-model="item.conversion_factor" placeholder="1"
+                                               class="w-16 h-6 bg-black/[0.03] dark:bg-white/[0.04] border-none rounded px-1.5 text-[11px] tabular-nums text-black/70 dark:text-white/70 focus:outline-none focus:ring-1 focus:ring-[#007AFF]/50">
+                                    </div>
+                                    <div class="text-[10px] text-[#007AFF] font-medium tabular-nums mt-0.5" x-show="item.conversion_factor && parseFloat(item.conversion_factor) !== 1">
+                                        <span x-text="'= ' + ((parseFloat(item.quantity) || 0) * (parseFloat(item.conversion_factor) || 1)).toLocaleString() + ' dasar (Est. ' + formatCurrency((parseFloat(item.unit_price) || 0) / (parseFloat(item.conversion_factor) || 1)) + '/unit)'"></span>
+                                    </div>
                                 </td>
                                 <td class="px-3 py-2.5 text-right">
                                     <input type="number" step="any" min="0.0001" :name="'items[' + index + '][quantity]'" x-model="item.quantity" required
@@ -360,6 +369,11 @@
                                     </template>
                                     </select>
                                 </x-searchable-select>
+                                <div class="mt-1 flex items-center gap-1.5">
+                                    <span class="text-[10px] text-black/40 dark:text-white/40">Faktor:</span>
+                                    <input type="number" step="any" min="0.0001" :name="'items[' + index + '][conversion_factor]'" x-model="item.conversion_factor" placeholder="1"
+                                           class="w-16 h-6 bg-black/[0.03] dark:bg-white/[0.04] border-none rounded px-1.5 text-[11px] tabular-nums text-black/70 dark:text-white/70">
+                                </div>
                             </div>
 
                             <div>

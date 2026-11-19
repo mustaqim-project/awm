@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Commerce;
 
 use App\Domain\Accounting\AutoJournalService;
-use App\Domain\Inventory\StockService;
 use App\Domain\Finance\CashLedgerService;
+use App\Domain\Inventory\CostingEngine;
+use App\Domain\Inventory\StockService;
 use App\Models\Business;
 use App\Models\Customer;
 use App\Models\Invoice;
@@ -26,7 +27,8 @@ final class InvoiceService
         private readonly InvoiceNumberGenerator $numberGenerator = new InvoiceNumberGenerator,
         private readonly StockService $stockService = new StockService,
         private readonly AutoJournalService $journalService = new AutoJournalService,
-        private readonly CashLedgerService $cashLedgerService = new CashLedgerService
+        private readonly CashLedgerService $cashLedgerService = new CashLedgerService,
+        private readonly CostingEngine $costingEngine = new CostingEngine
     ) {}
 
     /**
@@ -95,7 +97,7 @@ final class InvoiceService
                 $sku = $itemData['sku'] ?? ($product?->code ?? null);
                 $unitId = $itemData['unit_id'] ?? ($product?->output_unit_id);
                 $unitPrice = (float) $itemData['unit_price'];
-                $unitHpp = isset($itemData['unit_hpp']) ? (float) $itemData['unit_hpp'] : (float) ($product?->base_cost ?? 0.0);
+                $unitHpp = isset($itemData['unit_hpp']) ? (float) $itemData['unit_hpp'] : ($product ? $this->costingEngine->getEffectiveUnitCost($product, $invoice->location_id, $invoice->business_id) : 0.0);
 
                 InvoiceItem::create([
                     'invoice_id' => $invoice->id,
@@ -185,7 +187,7 @@ final class InvoiceService
                 $sku = $itemData['sku'] ?? ($product?->code ?? null);
                 $unitId = $itemData['unit_id'] ?? ($product?->output_unit_id);
                 $unitPrice = (float) $itemData['unit_price'];
-                $unitHpp = isset($itemData['unit_hpp']) ? (float) $itemData['unit_hpp'] : (float) ($product?->base_cost ?? 0.0);
+                $unitHpp = isset($itemData['unit_hpp']) ? (float) $itemData['unit_hpp'] : ($product ? $this->costingEngine->getEffectiveUnitCost($product, $invoice->location_id, $invoice->business_id) : 0.0);
 
                 InvoiceItem::create([
                     'invoice_id' => $invoice->id,

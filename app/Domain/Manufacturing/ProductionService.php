@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Manufacturing;
 
 use App\Domain\Accounting\AutoJournalService;
+use App\Domain\Inventory\CostingEngine;
 use App\Domain\Inventory\StockService;
 use App\Domain\Material\UnitConversionService;
 use App\Models\AuditLog;
@@ -28,6 +29,7 @@ final class ProductionService
         private readonly StockService $stockService = new StockService,
         private readonly UnitConversionService $unitConversionService = new UnitConversionService,
         private readonly AutoJournalService $journalService = new AutoJournalService,
+        private readonly CostingEngine $costingEngine = new CostingEngine,
     ) {}
 
     /**
@@ -99,7 +101,19 @@ final class ProductionService
                 $itemPlannedQty = (float) $bItem->quantity * $multiplier * $wasteMultiplier;
 
                 $mat = $bItem->material;
-                $unitCost = (float) ($mat?->latestPrice?->purchase_price ?? $mat?->price ?? 0);
+                $targetUnitId = $bItem->unit_id ?? $mat?->unit_id;
+                $unitCost = 0.0;
+                if ($mat) {
+                    $unitCost = $this->costingEngine->getEffectiveUnitCost(
+                        item: $mat,
+                        locationId: $data['source_location_id'] ?? null,
+                        businessId: $business->id,
+                        targetUnitId: $targetUnitId
+                    );
+                }
+                if ($unitCost <= 0.0) {
+                    $unitCost = (float) ($mat?->latestPrice?->purchase_price ?? $mat?->price ?? 0);
+                }
                 $totalItemCost = $itemPlannedQty * $unitCost;
                 $totalEstimatedMaterialCost += $totalItemCost;
 
@@ -138,6 +152,269 @@ final class ProductionService
             ]);
 
             return $order->load(['items.material.unit', 'items.unit', 'product', 'bomHeader', 'sourceLocation', 'targetLocation']);
+        });
+    }
+
+    /**
+     * Update an existing Production Order (Draft or In Progress).
+     *
+     * @param array<string, mixed> $data
+     */
+    public function updateOrder(ProductionOrder $order, array $data, ?User $user = null): ProductionOrder
+    {
+        return DB::transaction(function () use ($order, $data, $user): ProductionOrder {
+            $order = ProductionOrder::where('business_id', $order->business_id)->lockForUpdate()->findOrFail($order->id);
+
+            if ($order->isCompleted() || $order->isCancelled()) {
+                throw new InvalidArgumentException("Perintah produksi {$order->order_number} tidak dapat diubah karena statusnya '{$order->status}'.");
+            }
+
+            $business = $order->business;
+
+            if ($order->isDraft()) {
+                $plannedQty = max(0.0001, (float) ($data['planned_quantity'] ?? $order->planned_quantity));
+                $productId = ! empty($data['product_id']) ? (string) $data['product_id'] : (string) $order->product_id;
+
+                // If product changed in draft, reload BOM and replace items
+                if ($productId !== (string) $order->product_id) {
+                    $product = Product::where('business_id', $business->id)->findOrFail($productId);
+                    $costModel = $product->activeCostModel ?? $product->costModels()->where('is_active', true)->first();
+                    $bomHeader = $costModel?->bomHeaders()->where('type', BomHeader::TYPE_RECIPE)->first()
+                        ?? $costModel?->bomHeaders()->first();
+
+                    if (! $bomHeader) {
+                        throw ValidationException::withMessages([
+                            'product_id' => "Produk '{$product->name}' belum memiliki formula Resep / BOM aktif.",
+                        ]);
+                    }
+
+                    // Delete existing items
+                    $order->items()->delete();
+
+                    $bomItems = $bomHeader->items()->with('material.prices')->get();
+                    $batchOutput = max(0.0001, (float) ($bomHeader->output_quantity ?? 1.0));
+                    $multiplier = $plannedQty / $batchOutput;
+
+                    $totalEstimatedMaterialCost = 0.0;
+
+                    foreach ($bomItems as $bItem) {
+                        $wasteMultiplier = 1.0 + ((float) ($bItem->waste_percentage ?? 0) / 100.0);
+                        $itemPlannedQty = (float) $bItem->quantity * $multiplier * $wasteMultiplier;
+
+                        $mat = $bItem->material;
+                        $targetUnitId = $bItem->unit_id ?? $mat?->unit_id;
+                        $unitCost = 0.0;
+                        if ($mat) {
+                            $unitCost = $this->costingEngine->getEffectiveUnitCost(
+                                item: $mat,
+                                locationId: $data['source_location_id'] ?? $order->source_location_id,
+                                businessId: $business->id,
+                                targetUnitId: $targetUnitId
+                            );
+                        }
+                        if ($unitCost <= 0.0) {
+                            $unitCost = (float) ($mat?->latestPrice?->purchase_price ?? $mat?->price ?? 0);
+                        }
+                        $totalItemCost = $itemPlannedQty * $unitCost;
+                        $totalEstimatedMaterialCost += $totalItemCost;
+
+                        ProductionOrderItem::create([
+                            'production_order_id' => $order->id,
+                            'material_id' => $bItem->material_id,
+                            'unit_id' => $bItem->unit_id ?? $mat?->unit_id,
+                            'planned_quantity' => $itemPlannedQty,
+                            'actual_consumed_quantity' => 0,
+                            'waste_quantity' => 0,
+                            'unit_cost' => $unitCost,
+                            'total_cost' => $totalItemCost,
+                            'notes' => $bItem->notes,
+                        ]);
+                    }
+
+                    $order->product_id = $product->id;
+                    $order->bom_header_id = $bomHeader->id;
+                } else {
+                    // Same product: update items if provided
+                    $totalEstimatedMaterialCost = 0.0;
+                    if (! empty($data['items']) && is_array($data['items'])) {
+                        foreach ($data['items'] as $itemData) {
+                            $itemId = $itemData['id'] ?? null;
+                            if (! $itemId) {
+                                continue;
+                            }
+                            $item = ProductionOrderItem::where('production_order_id', $order->id)->find($itemId);
+                            if (! $item) {
+                                continue;
+                            }
+
+                            $itemPlannedQty = max(0.0, (float) ($itemData['planned_quantity'] ?? $item->planned_quantity));
+                            $unitCost = isset($itemData['unit_cost']) ? (float) $itemData['unit_cost'] : (float) $item->unit_cost;
+                            $wasteQty = isset($itemData['waste_quantity']) ? (float) $itemData['waste_quantity'] : (float) $item->waste_quantity;
+                            $lineCost = $itemPlannedQty * $unitCost;
+
+                            $item->update([
+                                'planned_quantity' => $itemPlannedQty,
+                                'waste_quantity' => $wasteQty,
+                                'unit_cost' => $unitCost,
+                                'total_cost' => $lineCost,
+                                'notes' => $itemData['notes'] ?? $item->notes,
+                            ]);
+
+                            $totalEstimatedMaterialCost += $lineCost;
+                        }
+                    } else {
+                        // If planned quantity changed and no custom items passed, scale existing items proportionally
+                        $oldPlanned = max(0.0001, (float) $order->planned_quantity);
+                        $scaleRatio = $plannedQty / $oldPlanned;
+
+                        foreach ($order->items as $item) {
+                            $newQty = (float) $item->planned_quantity * $scaleRatio;
+                            $lineCost = $newQty * (float) $item->unit_cost;
+                            $item->update([
+                                'planned_quantity' => $newQty,
+                                'total_cost' => $lineCost,
+                            ]);
+                            $totalEstimatedMaterialCost += $lineCost;
+                        }
+                    }
+                }
+
+                $laborCost = isset($data['total_labor_cost']) ? (float) $data['total_labor_cost'] : (float) $order->total_labor_cost;
+                $machineCost = isset($data['total_machine_cost']) ? (float) $data['total_machine_cost'] : (float) $order->total_machine_cost;
+                $totalProdCost = $totalEstimatedMaterialCost + $laborCost + $machineCost;
+                $unitCostHpp = $plannedQty > 0 ? ($totalProdCost / $plannedQty) : 0.0;
+
+                $order->update([
+                    'planned_quantity' => $plannedQty,
+                    'source_location_id' => $data['source_location_id'] ?? $order->source_location_id,
+                    'target_location_id' => $data['target_location_id'] ?? $order->target_location_id,
+                    'planned_start_date' => $data['planned_start_date'] ?? $order->planned_start_date,
+                    'total_material_cost' => $totalEstimatedMaterialCost,
+                    'total_labor_cost' => $laborCost,
+                    'total_machine_cost' => $machineCost,
+                    'total_production_cost' => $totalProdCost,
+                    'unit_cost_hpp' => $unitCostHpp,
+                    'batch_number' => $data['batch_number'] ?? $order->batch_number,
+                    'expiry_date' => $data['expiry_date'] ?? $order->expiry_date,
+                    'notes' => $data['notes'] ?? $order->notes,
+                ]);
+            } elseif ($order->isInProgress()) {
+                // In progress: materials have already been issued, update actual WIP and batch/destination/costs
+                $totalActualMaterialCost = 0.0;
+                $allowNegativeStock = (bool) ($business->allow_negative_stock ?? false);
+
+                if (! empty($data['items']) && is_array($data['items'])) {
+                    foreach ($data['items'] as $itemData) {
+                        $itemId = $itemData['id'] ?? null;
+                        if (! $itemId) {
+                            continue;
+                        }
+                        $item = ProductionOrderItem::where('production_order_id', $order->id)->find($itemId);
+                        if (! $item) {
+                            continue;
+                        }
+
+                        $newActual = max(0.0, (float) ($itemData['actual_consumed_quantity'] ?? $item->actual_consumed_quantity));
+                        $oldActual = (float) $item->actual_consumed_quantity;
+                        $diff = $newActual - $oldActual;
+
+                        if (abs($diff) > 0.00001) {
+                            if ($diff > 0) {
+                                // Pre-flight check stock for extra material
+                                if (! $allowNegativeStock) {
+                                    $available = (float) (InventoryStock::where('business_id', $business->id)
+                                        ->where('location_id', $order->source_location_id)
+                                        ->where('material_id', $item->material_id)
+                                        ->value('quantity') ?? 0.0);
+
+                                    if ($available < $diff - 0.00005) {
+                                        $matName = $item->material?->name ?? 'Bahan Baku';
+                                        $uom = $item->unit?->name ?? 'Unit';
+                                        throw ValidationException::withMessages([
+                                            'materials' => "Stok tambahan bahan '{$matName}' tidak mencukupi di gudang asal. Dibutuhkan tambahan: {$diff} {$uom}, Tersedia: {$available} {$uom}.",
+                                        ]);
+                                    }
+                                }
+
+                                $this->stockService->recordMovement(
+                                    businessId: $business->id,
+                                    locationId: $order->source_location_id,
+                                    productId: null,
+                                    movementType: StockMovement::TYPE_PRODUCTION_ISSUE,
+                                    quantityChange: -abs($diff),
+                                    unitCost: (float) $item->unit_cost,
+                                    referenceId: $order->id,
+                                    referenceNumber: $order->order_number,
+                                    notes: "Penyesuaian Tambahan Bahan Baku SPKP #{$order->order_number}",
+                                    userId: $user?->id,
+                                    materialId: $item->material_id
+                                );
+                            } else {
+                                $this->stockService->recordMovement(
+                                    businessId: $business->id,
+                                    locationId: $order->source_location_id,
+                                    productId: null,
+                                    movementType: StockMovement::TYPE_PRODUCTION_RETURN,
+                                    quantityChange: abs($diff),
+                                    unitCost: (float) $item->unit_cost,
+                                    referenceId: $order->id,
+                                    referenceNumber: $order->order_number,
+                                    notes: "Pengembalian Kelebihan Bahan Baku SPKP #{$order->order_number}",
+                                    userId: $user?->id,
+                                    materialId: $item->material_id
+                                );
+                            }
+
+                            $item->actual_consumed_quantity = $newActual;
+                            $item->total_cost = $newActual * (float) $item->unit_cost;
+                        }
+
+                        if (isset($itemData['notes'])) {
+                            $item->notes = $itemData['notes'];
+                        }
+
+                        $item->save();
+                        $totalActualMaterialCost += (float) $item->total_cost;
+                    }
+                } else {
+                    $totalActualMaterialCost = (float) $order->total_material_cost;
+                }
+
+                $laborCost = isset($data['total_labor_cost']) ? (float) $data['total_labor_cost'] : (float) $order->total_labor_cost;
+                $machineCost = isset($data['total_machine_cost']) ? (float) $data['total_machine_cost'] : (float) $order->total_machine_cost;
+                $totalProdCost = $totalActualMaterialCost + $laborCost + $machineCost;
+                $unitCostHpp = $order->planned_quantity > 0 ? ($totalProdCost / $order->planned_quantity) : 0.0;
+
+                $order->update([
+                    'target_location_id' => $data['target_location_id'] ?? $order->target_location_id,
+                    'planned_start_date' => $data['planned_start_date'] ?? $order->planned_start_date,
+                    'total_material_cost' => $totalActualMaterialCost,
+                    'total_labor_cost' => $laborCost,
+                    'total_machine_cost' => $machineCost,
+                    'total_production_cost' => $totalProdCost,
+                    'unit_cost_hpp' => $unitCostHpp,
+                    'batch_number' => $data['batch_number'] ?? $order->batch_number,
+                    'expiry_date' => $data['expiry_date'] ?? $order->expiry_date,
+                    'notes' => $data['notes'] ?? $order->notes,
+                ]);
+            }
+
+            AuditLog::create([
+                'business_id' => $business->id,
+                'user_id' => $user?->id,
+                'auditable_type' => ProductionOrder::class,
+                'auditable_id' => $order->id,
+                'action' => 'production_order.updated',
+                'risk_level' => AuditLog::RISK_LOW,
+                'new_values' => [
+                    'order_number' => $order->order_number,
+                    'status' => $order->status,
+                    'total_production_cost' => $order->total_production_cost,
+                ],
+                'created_at' => now(),
+            ]);
+
+            return $order->fresh(['items.material.unit', 'items.unit', 'product', 'bomHeader', 'sourceLocation', 'targetLocation']);
         });
     }
 
@@ -314,11 +591,16 @@ final class ProductionService
                     }
                 }
 
-                // Automatically synchronize product base_cost if requested or if zero
+                // Automatically synchronize product base_cost with latest Moving Average / Production Cost
                 $product = $order->product;
-                if ($product && ((float) $product->base_cost <= 0 || ! empty($data['update_product_base_cost']))) {
+                if ($product) {
+                    $newMovingAvg = $this->costingEngine->getEffectiveUnitCost(
+                        item: $product,
+                        locationId: $order->target_location_id,
+                        businessId: $order->business_id
+                    );
                     $product->update([
-                        'base_cost' => $unitCostHpp,
+                        'base_cost' => $newMovingAvg > 0 ? $newMovingAvg : $unitCostHpp,
                     ]);
                 }
             }

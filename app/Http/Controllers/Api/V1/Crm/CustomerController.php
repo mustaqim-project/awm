@@ -66,6 +66,7 @@ final class CustomerController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
+            'default_sender_name' => ['nullable', 'string', 'max:150'],
             'code' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'max:150'],
             'phone' => ['nullable', 'string', 'max:50'],
@@ -135,6 +136,7 @@ final class CustomerController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'company_name' => ['nullable', 'string', 'max:255'],
+            'default_sender_name' => ['nullable', 'string', 'max:150'],
             'code' => ['nullable', 'string', 'max:50'],
             'email' => ['nullable', 'email', 'max:150'],
             'phone' => ['nullable', 'string', 'max:50'],

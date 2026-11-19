@@ -88,6 +88,42 @@
             </div>
         </div>
 
+        <!-- Section 1.5: Landed Cost & Biaya Tambahan (Bento Card) -->
+        <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 p-5 space-y-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-[14px] font-semibold text-black dark:text-white">Biaya Tambahan & Landed Cost (Opsional)</h3>
+                    <p class="text-[12px] text-black/50 dark:text-white/50">Alokasikan ongkos kirim, ekspedisi, asuransi, atau bea masuk ke Harga Pokok Persediaan (Moving Average Cost).</p>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-[#007AFF]/10 flex items-center justify-center text-[#007AFF]">
+                    <i data-lucide="truck" class="w-4 h-4"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">
+                        Total Biaya Tambahan (Rp)
+                    </label>
+                    <input type="number" name="landed_cost_amount" min="0" step="any" value="0" placeholder="0"
+                           class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                </div>
+
+                <div>
+                    <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">
+                        Metode Alokasi Biaya
+                    </label>
+                    <select name="landed_cost_allocation_method"
+                            class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[14px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <option value="value" selected>Proporsional Nilai Pembelian (Value)</option>
+                        <option value="quantity">Proporsional Kuantitas Fisik (Quantity)</option>
+                        <option value="weight">Proporsional Berat Barang (Weight)</option>
+                        <option value="manual">Alokasi Manual per Item</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <!-- Section 2: Verifikasi Kuantitas Barang (Responsive Desktop + Mobile) -->
         <div class="rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/5 overflow-hidden">
             <div class="px-5 py-3.5 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
@@ -123,6 +159,14 @@
                                 @elseif($item->product_id)
                                     <span class="ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-600 dark:text-blue-400">Produk</span>
                                 @endif
+                                @if($item->conversion_factor && (float)$item->conversion_factor != 1.0 && $item->baseUnit)
+                                    <div class="text-[11px] text-[#007AFF] font-medium tabular-nums mt-0.5">
+                                        Konversi: 1 {{ $item->unit?->name }} = {{ (float)$item->conversion_factor }} {{ $item->baseUnit?->name }}
+                                    </div>
+                                @endif
+                                <input type="hidden" name="items[{{ $idx }}][purchase_order_item_id]" value="{{ $item->id }}">
+                                <input type="hidden" name="items[{{ $idx }}][received_unit_id]" value="{{ $item->unit_id }}">
+                                <input type="hidden" name="items[{{ $idx }}][conversion_factor]" value="{{ (float) ($item->conversion_factor ?? 1.0) }}">
                                 <input type="hidden" name="items[{{ $idx }}][product_id]" value="{{ $item->product_id ?? '' }}">
                                 <input type="hidden" name="items[{{ $idx }}][material_id]" value="{{ $item->material_id ?? '' }}">
                                 <input type="hidden" name="items[{{ $idx }}][item_name]" value="{{ $item->item_name ?? ($item->product ? $item->product->name : ($item->material ? $item->material->name : '')) }}">
@@ -169,10 +213,18 @@
                         @endif
                     </div>
                     <p class="text-[12px] text-black/50 dark:text-white/50">
-                        {{ __('purchasing.receipts.mobile_qty_ordered', ['qty' => (float)$item->quantity]) }} &bull;
+                        {{ __('purchasing.receipts.mobile_qty_ordered', ['qty' => (float)$item->quantity]) }} {{ $item->unit?->name }} &bull;
                         {{ __('purchasing.receipts.mobile_unit_cost', ['cost' => 'Rp ' . number_format($item->unit_cost, 0, ',', '.')]) }}
                     </p>
+                    @if($item->conversion_factor && (float)$item->conversion_factor != 1.0 && $item->baseUnit)
+                        <p class="text-[11px] text-[#007AFF] font-medium tabular-nums">
+                            Konversi: 1 {{ $item->unit?->name }} = {{ (float)$item->conversion_factor }} {{ $item->baseUnit?->name }}
+                        </p>
+                    @endif
 
+                    <input type="hidden" name="items[{{ $idx }}][purchase_order_item_id]" value="{{ $item->id }}">
+                    <input type="hidden" name="items[{{ $idx }}][received_unit_id]" value="{{ $item->unit_id }}">
+                    <input type="hidden" name="items[{{ $idx }}][conversion_factor]" value="{{ (float) ($item->conversion_factor ?? 1.0) }}">
                     <input type="hidden" name="items[{{ $idx }}][product_id]" value="{{ $item->product_id ?? '' }}">
                     <input type="hidden" name="items[{{ $idx }}][material_id]" value="{{ $item->material_id ?? '' }}">
                     <input type="hidden" name="items[{{ $idx }}][item_name]" value="{{ $item->item_name ?? ($item->product ? $item->product->name : ($item->material ? $item->material->name : '')) }}">

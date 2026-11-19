@@ -11,7 +11,8 @@
     paymentTerms: 'Net 30',
     invoiceDate: '{{ date('Y-m-d') }}',
     dueDate: '{{ date('Y-m-d', strtotime('+30 days')) }}',
-    senderName: '{{ addslashes(old('sender_name', auth()->user()?->name ?: $business->name)) }}',
+    defaultSenderName: '{{ addslashes(auth()->user()?->name ?: $business->name) }}',
+    senderName: '{{ addslashes(old('sender_name', $selectedPo?->customer?->default_sender_name ?: (auth()->user()?->name ?: $business->name))) }}',
     recipientName: '{{ addslashes($selectedPo?->customer?->name ?? '') }}',
     attachmentInfo: '{{ addslashes(old('attachment_info', '-')) }}',
     
@@ -77,6 +78,13 @@
                 d.setDate(d.getDate() + days);
                 this.dueDate = d.toISOString().split('T')[0];
             }
+            if (cust.default_sender_name && cust.default_sender_name.trim() !== '') {
+                this.senderName = cust.default_sender_name.trim();
+            } else {
+                this.senderName = this.defaultSenderName;
+            }
+        } else {
+            this.senderName = this.defaultSenderName;
         }
     },
 
@@ -87,6 +95,11 @@
             this.customerId = po.customer_id;
             if (po.customer && (!this.recipientName || this.recipientName === '')) {
                 this.recipientName = po.customer.name || po.customer.company_name || '';
+            }
+            if (po.customer && po.customer.default_sender_name && po.customer.default_sender_name.trim() !== '') {
+                this.senderName = po.customer.default_sender_name.trim();
+            } else {
+                this.senderName = this.defaultSenderName;
             }
             this.discountType = po.discount_type || 'percentage';
             this.discountValue = parseFloat(po.discount_value) || 0;

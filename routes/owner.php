@@ -204,6 +204,9 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             Route::get('/production/create', [ProductionWebController::class, 'create'])->middleware('require.permission:production.create')->name('production.create');
             Route::post('/production', [ProductionWebController::class, 'store'])->middleware('require.permission:production.create')->name('production.store');
             Route::get('/production/{productionOrder}', [ProductionWebController::class, 'show'])->middleware('require.permission:production.view')->name('production.show');
+            Route::get('/production/{productionOrder}/edit', [ProductionWebController::class, 'edit'])->middleware('require.permission:production.edit,production.create')->name('production.edit');
+            Route::put('/production/{productionOrder}', [ProductionWebController::class, 'update'])->middleware('require.permission:production.edit,production.create')->name('production.update');
+            Route::get('/production/{productionOrder}/print', [ProductionWebController::class, 'print'])->middleware('require.permission:production.view')->name('production.print');
             Route::post('/production/{productionOrder}/issue-materials', [ProductionWebController::class, 'issueMaterials'])->middleware('require.permission:production.execute')->name('production.issue-materials');
             Route::post('/production/{productionOrder}/complete', [ProductionWebController::class, 'complete'])->middleware('require.permission:production.complete')->name('production.complete');
             Route::post('/production/{productionOrder}/cancel', [ProductionWebController::class, 'cancel'])->middleware('require.permission:production.cancel')->name('production.cancel');

@@ -24,6 +24,7 @@ class Customer extends Authenticatable
         'name',
         'slug',
         'company_name',
+        'default_sender_name',
         'vehicle_license_plate',
         'vehicle_model',
         'vehicle_mileage',
@@ -102,6 +103,11 @@ class Customer extends Authenticatable
             $query->where('id', $value)
                 ->orWhere('slug', $value);
         })->first();
+    }
+
+    public function getCompanyAttribute(): ?string
+    {
+        return $this->company_name;
     }
 
     public function getAddressAttribute(): ?string

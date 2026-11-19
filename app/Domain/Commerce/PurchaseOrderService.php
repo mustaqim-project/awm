@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Commerce;
 
+use App\Domain\Material\UnitConversionService;
 use App\Models\Business;
 use App\Models\Material;
 use App\Models\Product;
@@ -17,7 +18,8 @@ use InvalidArgumentException;
 final class PurchaseOrderService
 {
     public function __construct(
-        private readonly InvoiceNumberGenerator $numberGenerator = new InvoiceNumberGenerator
+        private readonly InvoiceNumberGenerator $numberGenerator = new InvoiceNumberGenerator,
+        private readonly UnitConversionService $unitConversionService = new UnitConversionService
     ) {}
 
     /**
@@ -86,6 +88,29 @@ final class PurchaseOrderService
                 $unitId = $item['unit_id'] ?? ($product?->output_unit_id ?? ($material?->unit_id));
                 $unitPrice = (float) $item['unit_price'];
 
+                $baseUnitId = $material ? $material->unit_id : ($product ? $product->output_unit_id : $unitId);
+
+                $conversionFactor = 1.0;
+                if (isset($item['conversion_factor']) && (float) $item['conversion_factor'] > 0) {
+                    $conversionFactor = (float) $item['conversion_factor'];
+                } elseif ($unitId && $baseUnitId && $unitId !== $baseUnitId) {
+                    try {
+                        $conversionFactor = $this->unitConversionService->getConversionFactor(
+                            from: $unitId,
+                            to: $baseUnitId,
+                            materialId: $materialId,
+                            supplierId: $poData['supplier_id'] ?? null,
+                            productId: $productId
+                        );
+                    } catch (\Throwable) {
+                        $conversionFactor = 1.0;
+                    }
+                }
+
+                $qty = (float) $item['quantity'];
+                $baseQty = $qty * $conversionFactor;
+                $estBaseCost = $conversionFactor > 0 ? ($unitPrice / $conversionFactor) : $unitPrice;
+
                 $costSnapshot = 0.0;
                 if ($product) {
                     $costSnapshot = (float) ($product->base_cost ?? 0.0);
@@ -100,8 +125,12 @@ final class PurchaseOrderService
                     'material_id' => $materialId,
                     'item_name' => $name,
                     'sku' => $sku,
-                    'quantity' => (float) $item['quantity'],
+                    'quantity' => $qty,
                     'unit_id' => $unitId,
+                    'base_unit_id' => $baseUnitId,
+                    'conversion_factor' => $conversionFactor,
+                    'base_quantity' => $baseQty,
+                    'estimated_base_cost' => $estBaseCost,
                     'unit_price' => $unitPrice,
                     'purchase_price_snapshot' => $unitPrice,
                     'supplier_name_snapshot' => $supplierNameSnapshot,

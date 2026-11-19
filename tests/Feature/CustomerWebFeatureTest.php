@@ -170,4 +170,69 @@ class CustomerWebFeatureTest extends TestCase
             'id' => $customer->id,
         ]);
     }
+
+    public function test_owner_can_store_customer_with_default_sender_name_for_maklon(): void
+    {
+        $payload = [
+            'name' => 'Dewi Lestari',
+            'company_name' => 'Brand Kosmetik Glow',
+            'default_sender_name' => 'PT Brand Kosmetik Glow Official',
+            'phone' => '081233445566',
+            'email' => 'dewi@glowkosmetik.id',
+            'billing_address' => 'Jl. Bisnis No. 12 Jakarta',
+            'payment_terms_days' => 30,
+        ];
+
+        $response = $this->actingAs($this->owner)->post(route('customers.store'), $payload);
+
+        $response->assertRedirect(route('customers.index'));
+        $this->assertDatabaseHas('customers', [
+            'business_id' => $this->business->id,
+            'name' => 'Dewi Lestari',
+            'company_name' => 'Brand Kosmetik Glow',
+            'default_sender_name' => 'PT Brand Kosmetik Glow Official',
+        ]);
+    }
+
+    public function test_owner_can_store_customer_without_default_sender_name(): void
+    {
+        $payload = [
+            'name' => 'Budi Santoso',
+            'company_name' => 'Toko Retail Biasa',
+            'default_sender_name' => null,
+            'phone' => '081299887766',
+        ];
+
+        $response = $this->actingAs($this->owner)->post(route('customers.store'), $payload);
+
+        $response->assertRedirect(route('customers.index'));
+        $this->assertDatabaseHas('customers', [
+            'business_id' => $this->business->id,
+            'name' => 'Budi Santoso',
+            'company_name' => 'Toko Retail Biasa',
+            'default_sender_name' => null,
+        ]);
+    }
+
+    public function test_owner_can_update_customer_default_sender_name(): void
+    {
+        $customer = Customer::create([
+            'business_id' => $this->business->id,
+            'name' => 'Rina Wijaya',
+            'company_name' => 'Brand Herbal Sehat',
+            'default_sender_name' => null,
+            'phone' => '081344556677',
+        ]);
+
+        $response = $this->actingAs($this->owner)->put(route('customers.update', $customer), [
+            'name' => 'Rina Wijaya',
+            'company_name' => 'Brand Herbal Sehat',
+            'default_sender_name' => 'PT Herbal Sehat Indonesia (Maklon)',
+            'phone' => '081344556677',
+        ]);
+
+        $response->assertRedirect(route('customers.index'));
+        $customer->refresh();
+        $this->assertEquals('PT Herbal Sehat Indonesia (Maklon)', $customer->default_sender_name);
+    }
 }
