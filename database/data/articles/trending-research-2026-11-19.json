@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-19",
+  "batch": 16,
+  "geo": "ID",
+  "category": "3",
+  "category_name": "Tren Bisnis UMKM, Minuman Teh Artisan Rendah Gula, Regulasi Anti-Surcharge MDR QRIS BI, dan Pengecualian Upah UMKM Pasca Penetapan UMP 2027",
+  "source": "Google Trends Indonesia 19 November 2026, Bank Indonesia (Kebijakan MDR QRIS), Kementerian Ketenagakerjaan RI (Jadwal UMP 2027 & PP Pengupahan), Riset Konsumen F&B Pertamina SMEXPO 2026, BPS",
+  "total_topics": 3,
+  "topics": [
+    {
+      "id": 759,
+      "topic": "Kalkulasi HPP dan Peluang Usaha Minuman Teh Artisan Rendah Gula (Light Milk Tea): Food Cost, Margin Profit, dan Resep Komersial",
+      "trending_query": "cara menghitung hpp teh artisan light milk tea modal resep bisnis",
+      "primary_keyword": "cara menghitung hpp teh artisan light milk tea",
+      "secondary_keywords": "resep komersial light milk tea botolan, standar food cost ideal kafe minuman teh, harga bahan baku daun teh loose leaf lokal, margin keuntungan jualan artisan tea kekinian, strategi menu sehat less sugar omzet kafe",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Menjelang akhir tahun 2026, tren minuman mengalami pergeseran masif dari kopi susu pekat ke teh artisan dan light milk tea rendah kalori. Pelaku usaha kuliner dan kafe membutuhkan panduan presisi menghitung HPP per cup atau per botol agar margin laba bersih terjaga di atas 60 persen.",
+      "credible_sources": [
+        "Asosiasi Pengusaha Jasaboga Indonesia (APJI)",
+        "Riset Tren Konsumen F&B Pertamina SMEXPO 2026",
+        "Standar Manajemen Biaya Kuliner Indonesia"
+      ],
+      "msme_opportunity": "Menghasilkan margin kotor hingga 70 persen dengan biaya bahan baku (food cost) di kisaran 25 sampai 28 persen, sekaligus merespons permintaan konsumen urban terhadap minuman sehat rendah gula.",
+      "article_angle": "Bedah komponen HPP per porsi (daun teh loose leaf premium, susu rendah lemak, pemanis alami, cup dan seal, sedotan, es batu, dan overhead), simulasi resep komersial 500 ml, dan strategi penetapan harga jual berdasar food cost ideal.",
+      "slug": "cara-menghitung-hpp-teh-artisan-light-milk-tea",
+      "assigned_category": "HPP & Harga Jual",
+      "image": {
+        "filename": "cara-menghitung-hpp-teh-artisan-light-milk-tea.jpg",
+        "local_path": "public/images/blog/cara-menghitung-hpp-teh-artisan-light-milk-tea.jpg",
+        "public_url": "https://cooca.id/images/blog/cara-menghitung-hpp-teh-artisan-light-milk-tea.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        { "headline": "Cara Menghitung HPP Teh Artisan Light Milk Tea dan Margin Profit", "score": 95, "formula": "Numbers & Practical Guide", "selected": true },
+        { "headline": "Awas Boncos! Cara Menghitung HPP Teh Artisan Light Milk Tea untuk Kafe", "score": 88, "formula": "Warning & Financial Loss", "selected": false },
+        { "headline": "Ternyata Ini Rahasia Cara Menghitung HPP Teh Artisan Light Milk Tea Menghasilkan Laba 70 Persen", "score": 89, "formula": "Curiosity & Unexpected Facts", "selected": false },
+        { "headline": "Panduan Lengkap Cara Menghitung HPP Teh Artisan Light Milk Tea bagi Pemilik Usaha Minuman", "score": 86, "formula": "Numbers & Practical Guide", "selected": false },
+        { "headline": "Cara Menghitung HPP Teh Artisan Light Milk Tea: Resep Food Cost dan Trik Daun Loose Leaf", "score": 91, "formula": "Numbers & Practical Guide", "selected": false },
+        { "headline": "Jangan Asal Buka Kedai! Cara Menghitung HPP Teh Artisan Light Milk Tea yang Tepat", "score": 84, "formula": "Hidden Mistakes", "selected": false },
+        { "headline": "Bongkar Resep dan Cara Menghitung HPP Teh Artisan Light Milk Tea Segar", "score": 85, "formula": "Opportunity & FOMO", "selected": false },
+        { "headline": "Simulasi Riil Cara Menghitung HPP Teh Artisan Light Milk Tea Per Botol Kemasan", "score": 90, "formula": "Case Study & Reality Check", "selected": false },
+        { "headline": "Tren Minuman Sehat: Cara Menghitung HPP Teh Artisan Light Milk Tea Rendah Kalori", "score": 87, "formula": "Trend Hijacking", "selected": false },
+        { "headline": "Kopi vs Teh: Mengapa Cara Menghitung HPP Teh Artisan Light Milk Tea Lebih Menguntungkan?", "score": 86, "formula": "Comparison & Versus", "selected": false }
+      ]
+    },
+    {
+      "id": 760,
+      "topic": "Larangan Tambahan Biaya Admin QRIS ke Pembeli: Risiko Sanksi Pencabutan Merchant, Alur POS Kasir, dan Pembukuan MDR",
+      "trending_query": "aturan biaya mdr qris dilarang dibebankan konsumen sanksi kasir toko",
+      "primary_keyword": "aturan biaya mdr qris dilarang dibebankan konsumen",
+      "secondary_keywords": "kebijakan mdr qris bank indonesia 0 persen, larangan surcharge biaya admin qris ke pembeli, sanksi toko mengenakan biaya tambahan qris, cara mencatat potongan mdr qris di laporan keuangan, sop kasir pos pembayaran digital tanpa surcharge",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Pasca penyesuaian tarif MDR QRIS oleh Bank Indonesia, masih banyak kasir toko dan warung yang membebankan biaya admin Rp1.000 kepada konsumen. Padahal, praktik surcharge tersebut dilarang keras oleh regulasi BI dan Asosiasi Sistem Pembayaran Indonesia (ASPI) dengan sanksi pemutusan terminal merchant.",
+      "credible_sources": [
+        "Bank Indonesia - Peraturan Bank Indonesia tentang Standar Nasional Quick Response Code",
+        "Asosiasi Sistem Pembayaran Indonesia (ASPI)",
+        "Undang-Undang Perlindungan Konsumen Republik Indonesia"
+      ],
+      "msme_opportunity": "Menghindari risiko pemblokiran QRIS merchant oleh PJP, menjaga kepercayaan dan kenyamanan pelanggan di kasir, serta mencatat potongan MDR secara rapi sebagai beban operasional resmi yang mengurangi pajak penghasilan.",
+      "article_angle": "Ulasan hukum larangan surcharge QRIS, rincian batas MDR 0 persen untuk usaha mikro hingga nominal Rp500.000, SOP edukasi kasir saat melayani pelanggan, dan metode pembukuan potongan MDR pada aplikasi kasir POS.",
+      "slug": "aturan-biaya-mdr-qris-dilarang-dibebankan-konsumen",
+      "assigned_category": "Kasir & POS",
+      "image": {
+        "filename": "aturan-biaya-mdr-qris-dilarang-dibebankan-konsumen.jpg",
+        "local_path": "public/images/blog/aturan-biaya-mdr-qris-dilarang-dibebankan-konsumen.jpg",
+        "public_url": "https://cooca.id/images/blog/aturan-biaya-mdr-qris-dilarang-dibebankan-konsumen.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        { "headline": "Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen dan SOP Kasir", "score": 96, "formula": "Regulation & Practical Guide", "selected": true },
+        { "headline": "Awas Sanksi Blokir! Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen Toko", "score": 90, "formula": "Warning & Risk", "selected": false },
+        { "headline": "Jangan Tambah Seribu Rupiah! Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen", "score": 89, "formula": "Hidden Mistakes", "selected": false },
+        { "headline": "Tegas! Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen Menurut Bank Indonesia", "score": 88, "formula": "Regulation & Deadline", "selected": false },
+        { "headline": "Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen: Cara Catat Potongan di Kasir", "score": 92, "formula": "Numbers & Practical Guide", "selected": false },
+        { "headline": "Pembeli Protes Tambahan Biaya? Pahami Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen", "score": 87, "formula": "Curiosity & Problem", "selected": false },
+        { "headline": "Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen dan Strategi Markup Harga Aman", "score": 88, "formula": "Financial Loss", "selected": false },
+        { "headline": "Banyak Toko Keliru! Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen Wajib Dipatuhi", "score": 86, "formula": "Hidden Mistakes", "selected": false },
+        { "headline": "SOP Kasir Ritel: Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen Tanpa Surcharge", "score": 91, "formula": "Practical Guide", "selected": false },
+        { "headline": "Pedagang Wajib Tahu! Aturan Biaya MDR QRIS Dilarang Dibebankan Konsumen dan Tarif 0 Persen", "score": 89, "formula": "Regulation & Opportunity", "selected": false }
+      ]
+    },
+    {
+      "id": 761,
+      "topic": "Penetapan UMP 2027 Jelang 21 November: Ketentuan Pengecualian Upah Usaha Mikro Kecil dan Rumus Kesepakatan Tertulis",
+      "trending_query": "aturan upah umkm pasca penetapan ump 2027 pengecualian gaji karyawan toko",
+      "primary_keyword": "aturan upah umkm pasca penetapan ump 2027",
+      "secondary_keywords": "pengecualian upah minimum bagi usaha mikro dan kecil, batas minimal upah umkm pp pengupahan 50 persen konsumsi, format surat perjanjian kerja kesepakatan upah toko, simulasi anggaran payroll karyawan umkm 2027, sanksi ketenagakerjaan dan perlindungan hak pekerja",
+      "search_intent": "informational",
+      "search_interest": "Sangat Tinggi",
+      "trending_reason": "Menjelang batas akhir pengumuman Upah Minimum Provinsi (UMP) 2027 pada 21 November 2026, para pemilik toko dan pengusaha kecil mencemaskan kewajiban penggajian. Banyak yang belum memahami bahwa hukum ketenagakerjaan secara tegas mengecualikan usaha mikro dan kecil dari standar UMP.",
+      "credible_sources": [
+        "Kementerian Ketenagakerjaan Republik Indonesia",
+        "Peraturan Pemerintah tentang Pengupahan",
+        "Badan Pusat Statistik (BPS) Data Garis Kemiskinan dan Konsumsi"
+      ],
+      "msme_opportunity": "Menyusun skema penggajian yang legal, adil, dan transparan tanpa membebani arus kas operasional toko, serta mendokumentasikan surat kesepakatan upah kerja secara sah demi perlindungan hukum dua arah.",
+      "article_angle": "Kupas tuntas dasar hukum pasal pengecualian UMP bagi usaha mikro kecil, rumus ambang batas upah (50 persen konsumsi masyarakat dan 25 persen di atas garis kemiskinan provinsi), panduan menyusun surat kesepakatan kerja, dan integrasi slip gaji digital.",
+      "slug": "aturan-upah-umkm-pasca-penetapan-ump-2027",
+      "assigned_category": "Strategi & Operasional",
+      "image": {
+        "filename": "aturan-upah-umkm-pasca-penetapan-ump-2027.jpg",
+        "local_path": "public/images/blog/aturan-upah-umkm-pasca-penetapan-ump-2027.jpg",
+        "public_url": "https://cooca.id/images/blog/aturan-upah-umkm-pasca-penetapan-ump-2027.jpg",
+        "source_type": "editorial_visual",
+        "provider": "COOCA Studio",
+        "dimensions": "1536x864",
+        "format": "jpg",
+        "keyword_match": "verified"
+      },
+      "headline_candidates": [
+        { "headline": "Aturan Upah UMKM Pasca Penetapan UMP 2027 dan Surat Kesepakatan", "score": 96, "formula": "Regulation & Practical Guide", "selected": true },
+        { "headline": "Apakah Toko Kecil Wajib Naik Gaji? Aturan Upah UMKM Pasca Penetapan UMP 2027", "score": 89, "formula": "Curiosity Gap", "selected": false },
+        { "headline": "Jelang 21 November! Pahami Aturan Upah UMKM Pasca Penetapan UMP 2027", "score": 91, "formula": "Urgency & Timeliness", "selected": false },
+        { "headline": "Aturan Upah UMKM Pasca Penetapan UMP 2027: Syarat Pengecualian Usaha Mikro Kecil", "score": 92, "formula": "Regulation & Opportunity", "selected": false },
+        { "headline": "Jangan Sampai Kena Masalah Hukum! Aturan Upah UMKM Pasca Penetapan UMP 2027", "score": 88, "formula": "Warning & Risk", "selected": false },
+        { "headline": "Aturan Upah UMKM Pasca Penetapan UMP 2027 dan Rumus 50 Persen Rata-rata Konsumsi", "score": 93, "formula": "Numbers & Practical Guide", "selected": false },
+        { "headline": "Panduan Payroll Toko: Aturan Upah UMKM Pasca Penetapan UMP 2027 Secara Legal", "score": 90, "formula": "Numbers & Practical Guide", "selected": false },
+        { "headline": "Pemilik Usaha Wajib Simak Aturan Upah UMKM Pasca Penetapan UMP 2027 dan Draf Perjanjian", "score": 87, "formula": "Regulation & Deadline", "selected": false },
+        { "headline": "Beban Gaji Membengkak? Trik Aturan Upah UMKM Pasca Penetapan UMP 2027 dan Insentif Performa", "score": 86, "formula": "Financial Loss", "selected": false },
+        { "headline": "Fakta di Balik Aturan Upah UMKM Pasca Penetapan UMP 2027 bagi Pelaku Usaha Ritel", "score": 85, "formula": "Unexpected Facts", "selected": false }
+      ]
+    }
+  ]
+}
