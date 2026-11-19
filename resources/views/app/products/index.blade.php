@@ -971,14 +971,16 @@
 
                 <!-- Category Filter -->
                 <div class="flex items-center gap-2">
-                    <select name="category_id" onchange="this.form.submit()"
-                        class="h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="category_id" onchange="this.form.submit()"
+                        class="sr-only">
                         <option value="">{{ __('products.all_categories') }}</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}"
                                 {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     @if (request('search') || request('category_id'))
                         <a href="{{ route('products.index') }}"
@@ -1607,13 +1609,15 @@
                                                         <span>{{ __('products.btn_quick_unit') }}</span>
                                                     </button>
                                                 </div>
-                                                <select name="output_unit_id" x-ref="newProductUnit" required
-                                                    class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                <x-searchable-select>
+                                                    <select name="output_unit_id" x-ref="newProductUnit" required
+                                                    class="sr-only">
                                                     <template x-for="u in unitList" :key="u.id">
                                                         <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"
                                                             :selected="u.code === 'pcs'"></option>
                                                     </template>
-                                                </select>
+                                                    </select>
+                                                </x-searchable-select>
                                             </div>
                                             <div>
                                                 <div class="flex items-center justify-between mb-1">
@@ -1625,21 +1629,24 @@
                                                         <span>{{ __('products.btn_quick_category') }}</span>
                                                     </button>
                                                 </div>
-                                                <select name="category_id" x-ref="newProductCategory" x-model="newSelectedCategoryId"
-                                                    class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                <x-searchable-select>
+                                                    <select name="category_id" x-ref="newProductCategory" x-model="newSelectedCategoryId"
+                                                    class="sr-only">
                                                     <option value="">{{ __('products.no_category') }}</option>
                                                     <template x-for="c in categoryList" :key="c.id">
                                                         <option :value="c.id" x-text="c.name"></option>
                                                     </template>
-                                                </select>
+                                                    </select>
+                                                </x-searchable-select>
                                             </div>
                                         </div>
 
                                         <div>
                                             <label
                                                 class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_costing_method') }} <span class="text-[#FF3B30]">*</span></label>
-                                            <select name="costing_method" required
-                                                class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <x-searchable-select>
+                                                <select name="costing_method" required
+                                                class="sr-only">
                                                 @if ($business && $business->isModuleEnabled('recipe_bom'))
                                                 <option value="recipe_bom">{{ __('products.method_recipe_bom') }}</option>
                                                 @endif
@@ -1649,7 +1656,8 @@
                                                 <option value="abc">{{ __('products.method_abc') }}</option>
                                                 <option value="service">{{ __('products.method_service') }}</option>
                                                 <option value="retail">{{ __('products.method_retail') }}</option>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
 
                                         <div>
@@ -1721,12 +1729,14 @@
                                                 <template x-for="(item, idx) in newBundleItems" :key="idx">
                                                     <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] flex items-center gap-2.5">
                                                         <div class="flex-1 min-w-0">
-                                                            <select :name="'bundle_items[' + idx + '][child_product_id]'" x-model="item.child_product_id" required class="w-full h-9 px-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[13px] text-black dark:text-white focus:ring-1 focus:ring-amber-500">
+                                                            <x-searchable-select>
+                                                                <select :name="'bundle_items[' + idx + '][child_product_id]'" x-model="item.child_product_id" required class="sr-only">
                                                                 <option value="">{{ __('products.placeholder_select_child_product') }}</option>
                                                                 <template x-for="p in allProductsList" :key="p.id">
                                                                     <option :value="p.id" x-text="p.name + ' (Rp ' + Number(p.price).toLocaleString('id-ID') + ')'"></option>
                                                                 </template>
-                                                            </select>
+                                                                </select>
+                                                            </x-searchable-select>
                                                         </div>
                                                         <div class="w-24 shrink-0">
                                                             <div class="relative">
@@ -2011,11 +2021,13 @@
                                                 <div>
                                                     <label
                                                         class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('products.label_po_scheme') }}</label>
-                                                    <select name="preorder_mode" x-model="newPreorderMode"
-                                                        class="w-full h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-[12px] text-black dark:text-white focus:ring-1 focus:ring-[#FF9500]">
+                                                    <x-searchable-select>
+                                                        <select name="preorder_mode" x-model="newPreorderMode"
+                                                        class="sr-only">
                                                         <option value="customer_schedule">{{ __('products.po_customer_schedule') }}</option>
                                                         <option value="merchant_batch">{{ __('products.po_merchant_batch') }}</option>
-                                                    </select>
+                                                        </select>
+                                                    </x-searchable-select>
                                                 </div>
                                                 <div>
                                                     <label
@@ -2296,14 +2308,16 @@
                                                         <span>{{ __('products.btn_quick_unit') }}</span>
                                                     </button>
                                                 </div>
-                                                <select name="output_unit_id" x-model="editProduct.output_unit_id" required
-                                                    class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                <x-searchable-select>
+                                                    <select name="output_unit_id" x-model="editProduct.output_unit_id" required
+                                                    class="sr-only">
                                                     <template x-for="u in unitList" :key="u.id">
                                                         <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"
                                                             :selected="String(u.id) === String(editProduct.output_unit_id)">
                                                         </option>
                                                     </template>
-                                                </select>
+                                                    </select>
+                                                </x-searchable-select>
                                             </div>
                                             <div>
                                                 <div class="flex items-center justify-between mb-1">
@@ -2315,15 +2329,17 @@
                                                         <span>{{ __('products.btn_quick_category') }}</span>
                                                     </button>
                                                 </div>
-                                                <select name="category_id" x-model="editProduct.category_id"
-                                                    class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                                <x-searchable-select>
+                                                    <select name="category_id" x-model="editProduct.category_id"
+                                                    class="sr-only">
                                                     <option value="">{{ __('products.no_category') }}</option>
                                                     <template x-for="c in categoryList" :key="c.id">
                                                         <option :value="c.id" x-text="c.name"
                                                             :selected="String(c.id) === String(editProduct.category_id)">
                                                         </option>
                                                     </template>
-                                                </select>
+                                                    </select>
+                                                </x-searchable-select>
                                             </div>
                                         </div>
 
@@ -2395,12 +2411,14 @@
                                                 <template x-for="(item, idx) in editProduct.bundle_items" :key="idx">
                                                     <div class="p-3 rounded-[12px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] flex items-center gap-2.5">
                                                         <div class="flex-1 min-w-0">
-                                                            <select :name="'bundle_items[' + idx + '][child_product_id]'" x-model="item.child_product_id" required class="w-full h-9 px-2.5 bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] rounded-[8px] text-[13px] text-black dark:text-white focus:ring-1 focus:ring-amber-500">
+                                                            <x-searchable-select>
+                                                                <select :name="'bundle_items[' + idx + '][child_product_id]'" x-model="item.child_product_id" required class="sr-only">
                                                                 <option value="">{{ __('products.placeholder_select_child_product') }}</option>
                                                                 <template x-for="p in allProductsList" :key="p.id">
                                                                     <option :value="p.id" :disabled="p.id === String(editProduct.id)" x-text="p.name + ' (Rp ' + Number(p.price).toLocaleString('id-ID') + ')'"></option>
                                                                 </template>
-                                                            </select>
+                                                                </select>
+                                                            </x-searchable-select>
                                                         </div>
                                                         <div class="w-24 shrink-0">
                                                             <div class="relative">
@@ -2726,11 +2744,13 @@
                                                 <div>
                                                     <label
                                                         class="block text-[11px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('products.label_po_scheme') }}</label>
-                                                    <select name="preorder_mode" x-model="editProduct.preorder_mode"
-                                                        class="w-full h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] text-[12px] text-black dark:text-white focus:ring-1 focus:ring-[#FF9500]">
+                                                    <x-searchable-select>
+                                                        <select name="preorder_mode" x-model="editProduct.preorder_mode"
+                                                        class="sr-only">
                                                         <option value="customer_schedule">{{ __('products.po_customer_schedule') }}</option>
                                                         <option value="merchant_batch">{{ __('products.po_merchant_batch') }}</option>
-                                                    </select>
+                                                        </select>
+                                                    </x-searchable-select>
                                                 </div>
                                                 <div>
                                                     <label
@@ -3054,13 +3074,15 @@
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1">{{ __('products.label_unit_category') }} <span
                                         class="text-[#FF3B30]">*</span></label>
-                                <select x-model="quickUnitCategory" required
-                                    class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-2.5 text-[16px] sm:text-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select x-model="quickUnitCategory" required
+                                    class="sr-only">
                                     <option value="quantity">{{ __('products.unit_cat_quantity') }}</option>
                                     <option value="weight">{{ __('products.unit_cat_weight') }}</option>
                                     <option value="volume">{{ __('products.unit_cat_volume') }}</option>
                                     <option value="custom">{{ __('products.unit_cat_custom') }}</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
                         <div>

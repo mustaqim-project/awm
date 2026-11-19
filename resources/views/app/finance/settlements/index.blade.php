@@ -194,15 +194,17 @@
                     {{-- Rekening Penarikan Terverifikasi --}}
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">{{ __('finance.verified_payout_account_label') }}</label>
-                        <select x-model="payoutBankAccountId" required
-                            class="w-full h-11 sm:h-10 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3 text-[16px] sm:text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="payoutBankAccountId" required
+                            class="sr-only">
                             <option value="">{{ __('finance.select_verified_account_placeholder') }}</option>
                             @foreach($payoutBankAccounts as $pba)
                                 <option value="{{ $pba->id }}" {{ $pba->is_primary ? 'selected' : '' }}>
                                     {{ $pba->bank_name }} - {{ $pba->account_number }} ({{ __('finance.account_holder_name_prefix', ['name' => $pba->account_holder_name]) }}){{ $pba->is_primary ? ' ' . __('finance.star_primary') : '' }}
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                         <p class="text-[10px] text-black/40 dark:text-white/40 mt-1">
                             {{ __('finance.account_owner_must_match', ['owner' => $ownerName]) }}
                         </p>
@@ -211,11 +213,13 @@
                     {{-- Mode Pencairan --}}
                     <div>
                         <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">{{ __('finance.payout_mode_label') }}</label>
-                        <select x-model="payoutMode"
-                            class="w-full h-11 sm:h-10 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3 text-[16px] sm:text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="payoutMode"
+                            class="sr-only">
                             <option value="manual">{{ __('finance.payout_mode_manual') }}</option>
                             <option value="auto_h1">{{ __('finance.payout_mode_auto_h1') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     {{-- Catatan --}}

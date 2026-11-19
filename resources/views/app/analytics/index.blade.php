@@ -232,15 +232,17 @@
                 <!-- Location Selector (Cabang/Outlet) -->
                 @if($locations->count() > 1)
                     <div class="relative">
-                        <select name="location_id" onchange="document.getElementById('form-analytics-filter').submit()"
-                            class="h-11 min-h-[44px] pl-8 pr-8 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-[16px] sm:text-xs font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/40 transition appearance-none cursor-pointer">
+                        <x-searchable-select>
+                            <select name="location_id" onchange="document.getElementById('form-analytics-filter').submit()"
+                            class="sr-only">
                             <option value="">{{ __('analytics.all_locations') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}" {{ $selectedLocationId === $loc->id ? 'selected' : '' }}>
                                     {{ $loc->name }} ({{ $loc->type === 'outlet' ? __('analytics.outlet') : __('analytics.warehouse') }})
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                         <i data-lucide="map-pin" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute left-2.5 top-3.5 pointer-events-none"></i>
                         <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-black/40 dark:text-white/40 absolute right-2.5 top-3.5 pointer-events-none"></i>
                     </div>

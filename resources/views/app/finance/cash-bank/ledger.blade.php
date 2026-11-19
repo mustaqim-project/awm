@@ -109,30 +109,36 @@
                     <i data-lucide="filter" class="w-4 h-4 text-black/40 dark:text-white/40 shrink-0"></i>
                     <span class="text-[13px] font-semibold">{{ __('common.filter') }}:</span>
                 </div>
-                <select name="account_id"
-                    class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
+                <x-searchable-select>
+                    <select name="account_id"
+                    class="sr-only">
                     <option value="">{{ __('finance.all_accounts') }}</option>
                     @foreach ($accounts as $item)
                         <option value="{{ $item->id }}" @selected(request('account_id') === $item->id)>
                             {{ $item->name }} ({{ $item->current_balance < 0 ? '-Rp ' . number_format(abs($item->current_balance), 0, ',', '.') . ' ' . __('finance.deficit') : 'Rp ' . number_format($item->current_balance, 0, ',', '.') }})
                         </option>
                     @endforeach
-                </select>
-                <select name="type"
-                    class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
+                    </select>
+                </x-searchable-select>
+                <x-searchable-select>
+                    <select name="type"
+                    class="sr-only">
                     <option value="">{{ __('finance.all_flow_types') }}</option>
                     <option value="in" @selected(request('type') === 'in')>{{ __('finance.flow_in') }}</option>
                     <option value="out" @selected(request('type') === 'out')>{{ __('finance.flow_out') }}</option>
                     <option value="transfer" @selected(request('type') === 'transfer')>{{ __('finance.flow_transfer') }}</option>
-                </select>
-                <select name="method"
-                    class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition-all">
+                    </select>
+                </x-searchable-select>
+                <x-searchable-select>
+                    <select name="method"
+                    class="sr-only">
                     <option value="">{{ __('finance.all_payment_methods') }}</option>
                     <option value="cash" @selected(request('method') === 'cash')>{{ __('finance.method_cash_pos') }}</option>
                     <option value="qris" @selected(request('method') === 'qris')>{{ __('finance.method_qris') }}</option>
                     <option value="transfer" @selected(in_array(request('method'), ['transfer', 'bank_transfer']))>{{ __('finance.method_bank_transfer') }}</option>
                     <option value="edc" @selected(in_array(request('method'), ['edc', 'edc_debit', 'edc_credit']))>{{ __('finance.method_edc') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
                 <input type="date" name="start_date" value="{{ request('start_date') }}"
                     class="h-11 sm:h-9 px-3 bg-[#F2F2F7] dark:bg-[#2C2C2E] border border-black/5 dark:border-white/10 rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
                 <span class="text-black/30 dark:text-white/30 text-[12px]">–</span>

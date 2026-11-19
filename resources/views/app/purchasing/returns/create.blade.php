@@ -47,13 +47,15 @@
                 <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                     {{ __('purchasing.returns.field_goods_receipt') }} <span class="text-[#FF3B30]">*</span>
                 </label>
-                <select name="goods_receipt_id" x-model="selectedReceiptId" @change="onReceiptChange()" required
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                <x-searchable-select>
+                    <select name="goods_receipt_id" x-model="selectedReceiptId" @change="onReceiptChange()" required
+                        class="sr-only">
                     <option value="">{{ __('purchasing.returns.field_goods_receipt_placeholder') }}</option>
                     <template x-for="r in receipts" :key="r.id">
                         <option :value="r.id" x-text="`${r.receipt_number} - ${r.supplier ? r.supplier.name : 'Supplier'} (${r.receipt_date || '-'})`"></option>
                     </template>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- 2. Detail Item yang Dikembalikan (Zero-Manual UI via Alpine.js) -->

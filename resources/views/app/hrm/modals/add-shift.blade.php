@@ -75,13 +75,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_late_grace') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="grace_period_minutes" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
+                        <x-searchable-select>
+                            <select name="grace_period_minutes" class="sr-only">
                             <option value="0">{{ __('hrm.opt_grace_0') }}</option>
                             <option value="5">{{ __('hrm.opt_grace_5') }}</option>
                             <option value="10" selected>{{ __('hrm.opt_grace_10') }}</option>
                             <option value="15">{{ __('hrm.opt_grace_15') }}</option>
                             <option value="30">{{ __('hrm.opt_grace_30') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_break_duration') }}</label>
@@ -93,12 +95,14 @@
                     </div>
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_branch_location') }}</label>
-                        <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#30B0C7]/40">
+                        <x-searchable-select>
+                            <select name="location_id" class="sr-only">
                             <option value="">{{ __('hrm.all_locations_global') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

@@ -38,14 +38,16 @@
         @if($locations->count() > 1)
             <div class="flex items-center gap-2">
                 <label class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('finance.branch_label') }}</label>
-                <select
+                <x-searchable-select>
+                    <select
                     @change="window.location.href = '{{ route('finance.external-recon.index') }}?period={{ $period }}&location_id=' + $event.target.value"
-                    class="h-9 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3 text-xs font-medium text-black dark:text-white focus:ring-2 focus:ring-[#007AFF] focus:outline-none">
+                    class="sr-only">
                     <option value="">{{ __('finance.all_branches') }}</option>
                     @foreach($locations as $loc)
                         <option value="{{ $loc->id }}" {{ $locationId === $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
         @endif
     </div>
@@ -354,13 +356,15 @@
 
                             <div>
                                 <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">{{ __('finance.field_channel_type') }} <span class="text-red-500">*</span></label>
-                                <select x-model="formData.channel_type" @change="autoLabel()" required
-                                    class="w-full h-11 rounded-xl bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3.5 text-sm text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF] shadow-sm">
+                                <x-searchable-select>
+                                    <select x-model="formData.channel_type" @change="autoLabel()" required
+                                    class="sr-only">
                                     <option value="">{{ __('finance.select_channel_placeholder') }}</option>
                                     @foreach($channelOptions as $key => $label)
                                         <option value="{{ $key }}">{{ $label }}</option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div>
@@ -372,13 +376,15 @@
                             @if($locations->count() > 1)
                                 <div>
                                     <label class="block text-xs font-semibold text-black dark:text-white mb-1.5">{{ __('finance.field_outlet_branch') }}</label>
-                                    <select x-model="formData.location_id"
-                                        class="w-full h-11 rounded-xl bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 px-3.5 text-sm text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF] shadow-sm">
+                                    <x-searchable-select>
+                                        <select x-model="formData.location_id"
+                                        class="sr-only">
                                         <option value="">{{ __('finance.headquarters_all_branches') }}</option>
                                         @foreach($locations as $loc)
                                             <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                             @endif
 

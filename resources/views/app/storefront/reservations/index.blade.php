@@ -211,15 +211,17 @@
                         @if (request('search'))
                             <input type="hidden" name="search" value="{{ request('search') }}">
                         @endif
-                        <select name="location_id" onchange="this.form.submit()"
-                            class="w-full sm:w-auto h-11 sm:h-10 px-3.5 rounded-full bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="location_id" onchange="this.form.submit()"
+                            class="sr-only">
                             <option value="">-- {{ __('storefront.backoffice.reservations.label_branch') }}: Semua --</option>
                             @foreach ($locations as $loc)
                                 <option value="{{ $loc->id }}" {{ $filterLocationId === $loc->id ? 'selected' : '' }}>
                                     {{ $loc->name }}
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </form>
                 @endif
 
@@ -862,14 +864,16 @@
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                             {{ __('storefront.backoffice.reservations.label_branch') }}
                                         </label>
-                                        <select name="location_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="location_id"
+                                            class="sr-only">
                                             @foreach ($locations as $loc)
                                                 <option value="{{ $loc->id }}" {{ $loc->is_primary ? 'selected' : '' }}>
                                                     {{ $loc->name }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 @endif
 
@@ -886,12 +890,14 @@
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                         {{ __('storefront.backoffice.reservations.label_time') }} <span class="text-red-500">*</span>
                                     </label>
-                                    <select name="time_slot" required
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="time_slot" required
+                                        class="sr-only">
                                         @foreach (['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'] as $slot)
                                             <option value="{{ $slot }}" {{ $slot === '12:00' ? 'selected' : '' }}>{{ $slot }}</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div>
@@ -918,15 +924,17 @@
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                             {{ __('storefront.backoffice.reservations.modal_assign_select_table') }}
                                         </label>
-                                        <select name="pos_table_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="pos_table_id"
+                                            class="sr-only">
                                             <option value="">{{ __('storefront.backoffice.reservations.modal_assign_choose_placeholder') }}</option>
                                             @foreach ($tables as $tbl)
                                                 <option value="{{ $tbl->id }}">
                                                     {{ __('storefront.backoffice.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 @endif
 
@@ -957,15 +965,17 @@
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                             {{ __('storefront.backoffice.reservations.label_service') }}
                                         </label>
-                                        <select name="product_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="product_id"
+                                            class="sr-only">
                                             <option value="">-- Bebas / Pilih di Tempat --</option>
                                             @foreach ($services as $srv)
                                                 <option value="{{ $srv->id }}">
                                                     {{ $srv->name }} (Rp {{ number_format((float) $srv->price, 0, ',', '.') }})
                                                 </option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 @endif
 
@@ -975,15 +985,17 @@
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                             {{ $isWorkshop ? __('storefront.backoffice.reservations.label_mechanic') : ($isBarbershop ? __('storefront.backoffice.reservations.label_stylist') : 'Petugas / Staf') }}
                                         </label>
-                                        <select name="staff_id"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="staff_id"
+                                            class="sr-only">
                                             <option value="">-- Bebas / Staf Tersedia --</option>
                                             @foreach ($staffList as $stf)
                                                 <option value="{{ $stf->id }}">
                                                     {{ $stf->name }}
                                                 </option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 @endif
 
@@ -993,14 +1005,16 @@
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                             {{ __('storefront.backoffice.reservations.label_service_duration') }}
                                         </label>
-                                        <select name="service_duration_minutes"
-                                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                        <x-searchable-select>
+                                            <select name="service_duration_minutes"
+                                            class="sr-only">
                                             <option value="30">30 Menit</option>
                                             <option value="45" selected>45 Menit</option>
                                             <option value="60">60 Menit</option>
                                             <option value="90">90 Menit</option>
                                             <option value="120">120 Menit (2 Jam)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 @endif
 
@@ -1054,14 +1068,16 @@
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1">
                                         {{ __('storefront.backoffice.reservations.label_dp_method') }}
                                     </label>
-                                    <select name="dp_payment_method"
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                    <x-searchable-select>
+                                        <select name="dp_payment_method"
+                                        class="sr-only">
                                         <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
                                         <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
                                         <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
                                         <option value="edc_debit">{{ __('storefront.backoffice.reservations.method_edc_debit') }}</option>
                                         <option value="edc_credit">{{ __('storefront.backoffice.reservations.method_edc_credit') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div x-show="payDpDirectly" x-cloak>
@@ -1178,14 +1194,16 @@
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     {{ __('storefront.backoffice.reservations.label_dp_method') }} <span class="text-red-500">*</span>
                                 </label>
-                                <select name="dp_payment_method" required
-                                    class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                <x-searchable-select>
+                                    <select name="dp_payment_method" required
+                                    class="sr-only">
                                     <option value="cash">{{ __('storefront.backoffice.reservations.method_cash') }}</option>
                                     <option value="transfer">{{ __('storefront.backoffice.reservations.method_transfer') }}</option>
                                     <option value="qris">{{ __('storefront.backoffice.reservations.method_qris') }}</option>
                                     <option value="edc_debit">{{ __('storefront.backoffice.reservations.method_edc_debit') }}</option>
                                     <option value="edc_credit">{{ __('storefront.backoffice.reservations.method_edc_credit') }}</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div>
@@ -1269,15 +1287,17 @@
 
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('storefront.backoffice.reservations.modal_assign_select_table') }}</label>
-                                    <select name="pos_table_id" required
-                                        class="w-full h-11 px-3.5 rounded-[12px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="pos_table_id" required
+                                        class="sr-only">
                                         <option value="">{{ __('storefront.backoffice.reservations.modal_assign_choose_placeholder') }}</option>
                                         @foreach ($tables as $tbl)
                                             <option value="{{ $tbl->id }}">
                                                 {{ __('storefront.backoffice.reservations.modal_assign_table_option', ['num' => $tbl->table_number, 'name' => $tbl->name, 'capacity' => $tbl->capacity]) }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div class="flex items-center justify-end gap-2 pt-2">

@@ -290,24 +290,28 @@
     <div class="rounded-[18px] bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 p-3.5 sm:p-4 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
         <form method="GET" action="{{ route('marketplace-hub.orders') }}" class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
             <!-- Channel Filter -->
-            <select name="channel" onchange="this.form.submit()"
-                class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
+            <x-searchable-select>
+                <select name="channel" onchange="this.form.submit()"
+                class="sr-only">
                 <option value="">{{ __('marketplace.all_channels_select') }}</option>
                 <option value="shopee" {{ request('channel') === 'shopee' ? 'selected' : '' }}>Shopee</option>
                 <option value="tiktok_shop" {{ request('channel') === 'tiktok_shop' ? 'selected' : '' }}>TikTok Shop</option>
                 <option value="tokopedia" {{ request('channel') === 'tokopedia' ? 'selected' : '' }}>Tokopedia</option>
-            </select>
+                </select>
+            </x-searchable-select>
 
             <!-- Status Filter -->
-            <select name="status" onchange="this.form.submit()"
-                class="h-10 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.06] dark:border-white/[0.08] text-[13px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/30">
+            <x-searchable-select>
+                <select name="status" onchange="this.form.submit()"
+                class="sr-only">
                 <option value="">{{ __('marketplace.all_order_statuses_select') }}</option>
                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>{{ __('marketplace.status_pending_payment') }}</option>
                 <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>{{ __('marketplace.status_paid_ready') }}</option>
                 <option value="shipped" {{ request('status') === 'shipped' ? 'selected' : '' }}>{{ __('marketplace.status_in_transit') }}</option>
                 <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('marketplace.status_completed') }}</option>
                 <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>{{ __('marketplace.status_cancelled') }}</option>
-            </select>
+                </select>
+            </x-searchable-select>
 
             @if(request()->filled('channel') || request()->filled('status'))
                 <a href="{{ route('marketplace-hub.orders') }}" class="h-10 px-3 rounded-[12px] text-[12.5px] font-medium text-black/50 hover:text-black dark:hover:text-white flex items-center">

@@ -156,11 +156,13 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_access_role') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <select name="role_id" required class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#FF9500]/40 focus:border-[#FF9500] transition">
+                                        <x-searchable-select>
+                                            <select name="role_id" required class="sr-only">
                                             @foreach($availableRoles as $r)
                                                 <option value="{{ $r->id }}" :selected="selectedEmployee?.role_id === '{{ $r->id }}'">{{ $r->name }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_specific_job') }}</label>
@@ -172,11 +174,13 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_employment_type') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <select name="employment_type" required class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#FF9500]/40 focus:border-[#FF9500] transition">
+                                        <x-searchable-select>
+                                            <select name="employment_type" required class="sr-only">
                                             <option value="permanent" :selected="selectedEmployee?.employment_type === 'permanent'">{{ __('hrm.emp_type_permanent') }}</option>
                                             <option value="contract" :selected="selectedEmployee?.employment_type === 'contract'">{{ __('hrm.emp_type_contract') }}</option>
                                             <option value="daily_worker" :selected="selectedEmployee?.employment_type === 'daily_worker'">{{ __('hrm.emp_type_daily') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_join_date') }}</label>
@@ -188,19 +192,23 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_attendance_mode') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <select name="attendance_mode" required class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#FF9500]/40 focus:border-[#FF9500] transition">
+                                        <x-searchable-select>
+                                            <select name="attendance_mode" required class="sr-only">
                                             <option value="geofenced" :selected="selectedEmployee?.attendance_mode === 'geofenced'">{{ __('hrm.att_mode_geofenced') }}</option>
                                             <option value="free" :selected="selectedEmployee?.attendance_mode === 'free'">{{ __('hrm.att_mode_free') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_office_assignment') }}</label>
-                                        <select name="primary_location_id" class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#FF9500]/40 focus:border-[#FF9500] transition">
+                                        <x-searchable-select>
+                                            <select name="primary_location_id" class="sr-only">
                                             <option value="">{{ __('hrm.opt_default_store_loc') }}</option>
                                             @foreach($locations as $loc)
                                                 <option value="{{ $loc->id }}" :selected="selectedEmployee?.primary_location_id === '{{ $loc->id }}'">{{ $loc->name }} (Radius: {{ $loc->geofence_radius_meters ?? 50 }}m)</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -208,14 +216,16 @@
                                     <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">
                                         Shift Kerja Utama (Default)
                                     </label>
-                                    <select name="default_shift_id" class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#FF9500]/40 focus:border-[#FF9500] transition">
+                                    <x-searchable-select>
+                                        <select name="default_shift_id" class="sr-only">
                                         <option value="">Bebas Jadwal / Ikuti Roster Mingguan</option>
                                         @foreach($workShifts as $ws)
                                             <option value="{{ $ws->id }}" :selected="selectedEmployee?.default_shift_id === '{{ $ws->id }}'">
                                                 {{ $ws->name }} ({{ $ws->start_time }} - {{ $ws->end_time }}{{ $ws->isOvernight() ? ' +1' : '' }})
                                             </option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <span class="text-[10.5px] text-black/50 dark:text-white/50 block mt-1">
                                         Shift acuan jika karyawan tidak memiliki jadwal spesifik pada tanggal absensi.
                                     </span>
@@ -239,7 +249,8 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_tax_ptkp') }}</label>
-                                        <select name="tax_ptkp_status" class="w-full h-11 sm:h-10.5 px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#AF52DE]/40 focus:border-[#AF52DE] transition">
+                                        <x-searchable-select>
+                                            <select name="tax_ptkp_status" class="sr-only">
                                             <option value="TK/0" :selected="selectedEmployee?.tax_ptkp_status === 'TK/0'">TK/0 (Lajang 0 Tanggungan)</option>
                                             <option value="TK/1" :selected="selectedEmployee?.tax_ptkp_status === 'TK/1'">TK/1 (Lajang 1 Tanggungan)</option>
                                             <option value="TK/2" :selected="selectedEmployee?.tax_ptkp_status === 'TK/2'">TK/2 (Lajang 2 Tanggungan)</option>
@@ -248,7 +259,8 @@
                                             <option value="K/1" :selected="selectedEmployee?.tax_ptkp_status === 'K/1'">K/1 (Menikah 1 Tanggungan)</option>
                                             <option value="K/2" :selected="selectedEmployee?.tax_ptkp_status === 'K/2'">K/2 (Menikah 2 Tanggungan)</option>
                                             <option value="K/3" :selected="selectedEmployee?.tax_ptkp_status === 'K/3'">K/3 (Menikah 3 Tanggungan)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_dependents_count') }}</label>

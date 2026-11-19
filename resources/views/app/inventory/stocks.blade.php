@@ -149,14 +149,16 @@
 
             <!-- Location Dropdown -->
             <div class="sm:col-span-4">
-                <select name="location_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                <x-searchable-select>
+                    <select name="location_id" class="sr-only">
                     <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.all_locations_outlets') }}</option>
                     @foreach($locations as $loc)
                         <option value="{{ $loc->id }}" {{ request('location_id') === $loc->id ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">
                             {{ $loc->name }} ({{ strtoupper($loc->type ?? 'Outlet') }})
                         </option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- Actions -->
@@ -385,15 +387,17 @@
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('inventory.reason_code_label') }}
                         </label>
-                        <select name="reason_code" x-model="reasonCode" required
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <x-searchable-select>
+                            <select name="reason_code" x-model="reasonCode" required
+                            class="sr-only">
                             <option value="opname_variance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_opname_variance') }}</option>
                             <option value="damaged" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_damaged') }}</option>
                             <option value="expired" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_expired') }}</option>
                             <option value="theft_loss" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_theft_loss') }}</option>
                             <option value="initial_balance" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_initial_balance') }}</option>
                             <option value="other" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.reason_other') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>

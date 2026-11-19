@@ -195,14 +195,16 @@
                 <!-- Customer Select -->
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.customer_select_label') }}</label>
-                    <select name="customer_id" x-model="customerId" @change="onCustomerChange()" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="customer_id" x-model="customerId" @change="onCustomerChange()" required class="sr-only">
                         <option value="">{{ __('sales.invoices.customer_select_placeholder') }}</option>
                         @foreach($customers as $cust)
                             <option value="{{ $cust->id }}" {{ $invoice->customer_id === $cust->id ? 'selected' : '' }}>
                                 {{ $cust->name }} {{ $cust->company_name ? "({$cust->company_name})" : '' }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <!-- Nama Pengirim -->
@@ -238,14 +240,16 @@
                     <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
                         {{ __('sales.invoices.warehouse_location_label') }}
                     </label>
-                    <select name="location_id" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="location_id" class="sr-only">
                         <option value="">{{ __('sales.invoices.warehouse_auto_option') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" {{ $invoice->location_id === $loc->id ? 'selected' : '' }}>
                                 {{ $loc->name }} {{ $loc->type ? "({$loc->type})" : '' }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 @endif
 
@@ -303,13 +307,15 @@
                                             </button>
                                         </div>
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.select_product_label') }}</span>
-                                        <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)" 
-                                                class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)" 
+                                                class="sr-only">
                                             <option value="">{{ __('sales.invoices.product_select_placeholder') }}</option>
                                             <template x-for="prod in products" :key="prod.id">
                                                 <option :value="prod.id" x-text="(prod.type === 'service' ? '[Jasa] ' : '') + prod.name + (prod.selling_price > 0 ? ' (Rp ' + new Intl.NumberFormat('id-ID').format(prod.selling_price) + ')' : '')"></option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                         <div class="mt-0.5 flex items-center gap-1" x-show="item.product_id">
                                             <template x-if="products.find(p => p.id === item.product_id)?.type === 'service'">
                                                 <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300">
@@ -323,11 +329,13 @@
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-24 py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1">{{ __('sales.invoices.col_unit') }}</span>
-                                        <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required class="w-full min-h-[44px] sm:min-h-0 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required class="sr-only">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </td>
                                     <td class="inline-block sm:table-cell w-[48%] sm:w-20 ml-[4%] sm:ml-0 text-left sm:text-right py-0 sm:py-2.5 px-0 sm:px-3 align-top">
                                         <span class="block sm:hidden text-[10px] uppercase font-semibold text-black/40 dark:text-white/40 mb-1 text-left">{{ __('sales.invoices.col_qty') }}</span>
@@ -400,10 +408,12 @@
                         <span class="text-black/60 dark:text-white/60">{{ __('sales.invoices.discount_label') }}</span>
                         <div class="flex items-center gap-1.5">
                             <input type="number" step="any" min="0" name="discount_value" x-model="discountValue" class="w-20 h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-2 text-[12px] tabular-nums text-right text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <select name="discount_type" x-model="discountType" class="h-7 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[6px] px-1.5 text-[11px] text-black/70 dark:text-white/70 focus:outline-none">
+                            <x-searchable-select>
+                                <select name="discount_type" x-model="discountType" class="sr-only">
                                 <option value="fixed">{{ $business->currency_symbol }}</option>
                                 <option value="percentage">%</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 

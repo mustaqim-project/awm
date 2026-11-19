@@ -1,0 +1,414 @@
+{
+    "summary": {
+        "total_dictionary_files": 66,
+        "total_registered_keys_id": 18335,
+        "total_registered_keys_en": 18335,
+        "dictionary_missing_in_en": 0,
+        "dictionary_missing_in_id": 0,
+        "empty_translations_id": 0,
+        "empty_translations_en": 0,
+        "placeholder_mismatches": 2,
+        "total_unique_codebase_static_keys": 10834,
+        "codebase_registered_in_both": 10799,
+        "codebase_group_loaders": 34,
+        "codebase_branch_access": 1,
+        "codebase_missing_in_both": 0,
+        "codebase_missing_in_en_only": 0,
+        "codebase_missing_in_id_only": 0,
+        "total_dynamic_calls": 56,
+        "unique_dynamic_expressions": 24
+    },
+    "issues": {
+        "codebase_missing_in_both": [],
+        "codebase_missing_in_en_only": [],
+        "codebase_missing_in_id_only": [],
+        "dictionary_missing_in_en": [],
+        "dictionary_missing_in_id": [],
+        "empty_translations_id": [],
+        "empty_translations_en": [],
+        "placeholder_mismatches": {
+            "admin.masuk_ke_workspace_business_name_untuk": {
+                "id_placeholders": [],
+                "en_placeholders": [
+                    "business"
+                ]
+            },
+            "admin.unduh_berkas_mentah_selectedfile": {
+                "id_placeholders": [],
+                "en_placeholders": [
+                    "file"
+                ]
+            }
+        }
+    },
+    "dynamic_expressions": {
+        "feedback.cat_": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 87,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 87,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 80,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 80,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "feedback.severity_": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 103,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "feedback.priority_": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 103,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'feedback.cat_' . $cat": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 87,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 87,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'feedback.severity_' . $level": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 103,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'feedback.priority_' . $level": [
+            {
+                "file": "resources/views/app/feedback/create.blade.php",
+                "line": 103,
+                "type": "concatenation_expression"
+            }
+        ],
+        "feedback.status_": [
+            {
+                "file": "resources/views/app/feedback/index.blade.php",
+                "line": 56,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/index.blade.php",
+                "line": 56,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 73,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 73,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'feedback.status_' . $item->status": [
+            {
+                "file": "resources/views/app/feedback/index.blade.php",
+                "line": 56,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/feedback/index.blade.php",
+                "line": 56,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 73,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 73,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'feedback.cat_' . $item->category": [
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 80,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/feedback/show.blade.php",
+                "line": 80,
+                "type": "concatenation_expression"
+            }
+        ],
+        "finance.inflow_categories.": [
+            {
+                "file": "resources/views/app/finance/cash-bank/index.blade.php",
+                "line": 838,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "finance.categories.": [
+            {
+                "file": "resources/views/app/finance/cash-bank/index.blade.php",
+                "line": 986,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 192,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 192,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 279,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 279,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Finance/PosFinanceWebController.php",
+                "line": 170,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'finance.inflow_categories.' . $inflowCat": [
+            {
+                "file": "resources/views/app/finance/cash-bank/index.blade.php",
+                "line": 838,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'finance.categories.' . $outflowCat": [
+            {
+                "file": "resources/views/app/finance/cash-bank/index.blade.php",
+                "line": 986,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'finance.categories.' . $ex->category": [
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 192,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 192,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 279,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/finance/expenses.blade.php",
+                "line": 279,
+                "type": "concatenation_expression"
+            }
+        ],
+        "inventory.movement_types.": [
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 284,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 284,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 331,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 331,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'inventory.movement_types.' . $m->movement_type": [
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 284,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 284,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 331,
+                "type": "concatenation_expression"
+            },
+            {
+                "file": "resources/views/app/inventory/movements.blade.php",
+                "line": 331,
+                "type": "concatenation_expression"
+            }
+        ],
+        "purchasing.statuses.": [
+            {
+                "file": "resources/views/app/purchase-orders/index.blade.php",
+                "line": 230,
+                "type": "concatenation_prefix"
+            },
+            {
+                "file": "resources/views/app/purchase-orders/show.blade.php",
+                "line": 18,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'purchasing.statuses.' . $po->status": [
+            {
+                "file": "resources/views/app/purchase-orders/index.blade.php",
+                "line": 230,
+                "type": "concatenation_expression"
+            }
+        ],
+        "'purchasing.statuses.' . $purchaseOrder->status": [
+            {
+                "file": "resources/views/app/purchase-orders/show.blade.php",
+                "line": 18,
+                "type": "concatenation_expression"
+            }
+        ],
+        "social_media.format_": [
+            {
+                "file": "resources/views/app/social_media/calendar.blade.php",
+                "line": 267,
+                "type": "concatenation_prefix"
+            }
+        ],
+        "'social_media.format_' . ($post->media_type ?: 'text'": [
+            {
+                "file": "resources/views/app/social_media/calendar.blade.php",
+                "line": 267,
+                "type": "concatenation_expression"
+            }
+        ],
+        "finance.inflow_categories.{$cat}": [
+            {
+                "file": "app/Http/Controllers/Web/Finance/CashLedgerWebController.php",
+                "line": 338,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Finance/CashLedgerWebController.php",
+                "line": 338,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Pos/PosShiftWebController.php",
+                "line": 186,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Pos/PosShiftWebController.php",
+                "line": 186,
+                "type": "interpolation"
+            }
+        ],
+        "finance.categories.{$cat}": [
+            {
+                "file": "app/Http/Controllers/Web/Finance/CashLedgerWebController.php",
+                "line": 339,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Finance/CashLedgerWebController.php",
+                "line": 339,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Pos/PosShiftWebController.php",
+                "line": 187,
+                "type": "interpolation"
+            },
+            {
+                "file": "app/Http/Controllers/Web/Pos/PosShiftWebController.php",
+                "line": 187,
+                "type": "interpolation"
+            }
+        ],
+        "'finance.categories.' . $category": [
+            {
+                "file": "app/Http/Controllers/Web/Finance/PosFinanceWebController.php",
+                "line": 170,
+                "type": "concatenation_expression"
+            }
+        ]
+    },
+    "group_loaders": [
+        "pos",
+        "ai",
+        "common",
+        "quick_actions",
+        "navigation",
+        "portal",
+        "hrm",
+        "validation",
+        "messages",
+        "finance",
+        "inventory",
+        "purchasing",
+        "customers",
+        "crm",
+        "services",
+        "settings",
+        "storefront",
+        "sales",
+        "audit",
+        "auth",
+        "billing",
+        "calculator",
+        "dashboard",
+        "exceptions",
+        "feedback",
+        "marketplace",
+        "mcp",
+        "notifications",
+        "printer",
+        "products",
+        "simulator",
+        "social_media",
+        "tax",
+        "warehouse"
+    ],
+    "branch_access": [
+        "finance.categories"
+    ],
+    "execution_time_seconds": 19.148
+}

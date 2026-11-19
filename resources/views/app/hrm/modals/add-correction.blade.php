@@ -54,12 +54,14 @@
                     </div>
                     <div>
                         <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">{{ __('hrm.field_correction_type') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="correction_type" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white">
+                        <x-searchable-select>
+                            <select name="correction_type" required class="sr-only">
                             <option value="clock_in_only">{{ __('hrm.corr_type_clock_in') }}</option>
                             <option value="clock_out_only">{{ __('hrm.corr_type_clock_out') }}</option>
                             <option value="full_day">{{ __('hrm.corr_type_full_day') }}</option>
                             <option value="status_only">{{ __('hrm.corr_type_status_only') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 
@@ -76,13 +78,15 @@
                     </div>
                     <div>
                         <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">{{ __('hrm.proposed_status_label') }}</label>
-                        <select name="proposed_status" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white">
+                        <x-searchable-select>
+                            <select name="proposed_status" class="sr-only">
                             <option value="present">{{ __('portal.status_present') }}</option>
                             <option value="late">{{ __('portal.status_late') }}</option>
                             <option value="half_day">{{ __('portal.status_half_day') }}</option>
                             <option value="sick">{{ __('portal.status_sick') }}</option>
                             <option value="leave">{{ __('portal.status_leave') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

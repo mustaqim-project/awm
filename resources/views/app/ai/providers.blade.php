@@ -247,15 +247,17 @@
                                     <span x-text="detectingModels === '{{ $slug }}' ? '{{ __('ai.providers.detecting') }}' : '{{ __('ai.providers.detect_models') }}'"></span>
                                 </button>
                             </div>
-                            <select name="model" 
+                            <x-searchable-select>
+                                <select name="model" 
                                     id="model-{{ $slug }}"
-                                    class="w-full bg-black/[0.02] dark:bg-white/[0.02] border border-black/15 dark:border-white/15 rounded-xl px-3 py-2 text-xs text-black dark:text-white focus:outline-none focus:border-black dark:focus:border-white transition">
+                                    class="sr-only">
                                 <template x-for="m in (providers['{{ $slug }}']?.models || [])" :key="m.id">
                                     <option :value="m.id" 
                                             :selected="m.id === '{{ $config?->model ?? '' }}'"
                                             x-text="m.name"></option>
                                 </template>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <!-- Options: Active & Default -->

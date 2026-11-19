@@ -159,14 +159,16 @@
                     <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                         {{ __('purchasing.fields.customer') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="customer_id" :required="poType === 'customer'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="customer_id" :required="poType === 'customer'" class="sr-only">
                         <option value="">{{ __('purchasing.placeholders.choose_customer') }}</option>
                         @foreach($customers as $cust)
                             <option value="{{ $cust->id }}" {{ $selectedCustomerId === $cust->id ? 'selected' : '' }}>
                                 {{ $cust->name }} {{ $cust->company_name ? "({$cust->company_name})" : '' }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 @endif
 
@@ -175,12 +177,14 @@
                     <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                         {{ __('purchasing.fields.supplier') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="supplier_id" :required="poType === 'supplier'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="supplier_id" :required="poType === 'supplier'" class="sr-only">
                         <option value="">{{ __('purchasing.placeholders.choose_supplier') }}</option>
                         @foreach($suppliers as $sup)
                             <option value="{{ $sup->id }}">{{ $sup->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>
@@ -249,34 +253,40 @@
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                 <td class="px-3 py-2.5">
                                     <div x-show="poType === 'customer'">
-                                        <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)"
-                                                class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)"
+                                                class="sr-only">
                                             <option value="">{{ __('purchasing.placeholders.choose_product') }}</option>
                                             <template x-for="prod in products" :key="prod.id">
                                                 <option :value="prod.id" x-text="prod.name + (prod.selling_price > 0 ? ' (' + formatCurrency(prod.selling_price) + ')' : '')"></option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div x-show="poType === 'supplier'">
-                                        <select :name="'items[' + index + '][material_id]'" x-model="item.material_id" @change="onMaterialChange(index)"
-                                                class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select :name="'items[' + index + '][material_id]'" x-model="item.material_id" @change="onMaterialChange(index)"
+                                                class="sr-only">
                                             <option value="">{{ __('purchasing.placeholders.choose_material') }}</option>
                                             <template x-for="mat in materials" :key="mat.id">
                                                 <option :value="mat.id" x-text="mat.name"></option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <input type="text" :name="'items[' + index + '][item_name]'" x-model="item.item_name" required placeholder="{{ __('purchasing.placeholders.custom_item_name') }}"
                                            class="w-full h-8 bg-black/[0.02] dark:bg-white/[0.03] border-none rounded-[6px] px-2 text-[12px] text-black/80 dark:text-white/80 mt-1.5 focus:outline-none focus:ring-1 focus:ring-[#007AFF]/50">
                                     <input type="hidden" :name="'items[' + index + '][sku]'" x-model="item.sku">
                                 </td>
                                 <td class="px-3 py-2.5">
-                                    <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required
-                                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <x-searchable-select>
+                                        <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required
+                                            class="sr-only">
                                         <template x-for="u in units" :key="u.id">
                                             <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
                                         </template>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </td>
                                 <td class="px-3 py-2.5 text-right">
                                     <input type="number" step="any" min="0.0001" :name="'items[' + index + '][quantity]'" x-model="item.quantity" required
@@ -313,22 +323,26 @@
                         <!-- Item / Material Selection -->
                         <div>
                             <div x-show="poType === 'customer'">
-                                <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[16px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(index)"
+                                        class="sr-only">
                                     <option value="">{{ __('purchasing.placeholders.choose_product') }}</option>
                                     <template x-for="prod in products" :key="prod.id">
                                         <option :value="prod.id" x-text="prod.name"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <div x-show="poType === 'supplier'">
-                                <select :name="'items[' + index + '][material_id]'" x-model="item.material_id" @change="onMaterialChange(index)"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[16px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select :name="'items[' + index + '][material_id]'" x-model="item.material_id" @change="onMaterialChange(index)"
+                                        class="sr-only">
                                     <option value="">{{ __('purchasing.placeholders.choose_material') }}</option>
                                     <template x-for="mat in materials" :key="mat.id">
                                         <option :value="mat.id" x-text="mat.name"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <input type="text" :name="'items[' + index + '][item_name]'" x-model="item.item_name" required placeholder="{{ __('purchasing.placeholders.custom_item_name') }}"
                                    class="w-full h-10 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] px-3 text-[16px] text-black dark:text-white mt-2 focus:outline-none focus:ring-1 focus:ring-[#007AFF]/50">
@@ -338,12 +352,14 @@
                         <div class="grid grid-cols-2 gap-2 text-[12px]">
                             <div>
                                 <label class="block font-medium text-black/60 dark:text-white/60 mb-1">{{ __('purchasing.fields.unit') }}</label>
-                                <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] px-2.5 text-[16px] text-black dark:text-white focus:outline-none">
+                                <x-searchable-select>
+                                    <select :name="'items[' + index + '][unit_id]'" x-model="item.unit_id" required
+                                        class="sr-only">
                                     <template x-for="u in units" :key="u.id">
                                         <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div>
@@ -393,11 +409,13 @@
                         <div class="flex items-center gap-1.5">
                             <input type="number" step="any" min="0" name="discount_value" x-model="discountValue"
                                    class="w-24 sm:w-20 h-10 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-right text-[16px] sm:text-[13px] font-medium tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
-                            <select name="discount_type" x-model="discountType"
-                                    class="h-10 sm:h-8 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2 text-[14px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="discount_type" x-model="discountType"
+                                    class="sr-only">
                                 <option value="percentage">%</option>
                                 <option value="fixed">{{ $business->currency_symbol }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 

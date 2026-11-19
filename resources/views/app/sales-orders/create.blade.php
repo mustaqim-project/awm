@@ -71,15 +71,17 @@
                             {{ __('sales.sales_orders.quotation_ref_label') }} <span
                                 class="text-black/40 dark:text-white/40 font-normal">{{ __('sales.sales_orders.optional_label') }}</span>
                         </label>
-                        <select name="quotation_id" x-model="selectedQuotationId" @change="onQuotationChange()"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                        <x-searchable-select>
+                            <select name="quotation_id" x-model="selectedQuotationId" @change="onQuotationChange()"
+                            class="sr-only">
                             <option value="">{{ __('sales.sales_orders.quotation_direct_order') }}</option>
                             @foreach ($quotations as $q)
                                 <option value="{{ $q->id }}">{{ $q->quotation_number }} - {{ $q->customer->name }}
                                     (Rp {{ number_format($q->total_amount, 0, ',', '.') }})
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div x-show="selectedQuotationId" x-cloak class="flex items-end">
@@ -111,14 +113,16 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.sales_orders.customer_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <select name="customer_id" x-model="customerId" required
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer @error('customer_id') ring-2 ring-[#FF3B30] @enderror">
+                        <x-searchable-select>
+                            <select name="customer_id" x-model="customerId" required
+                            class="sr-only">
                             <option value="">{{ __('sales.sales_orders.customer_select_placeholder') }}</option>
                             @foreach ($customers as $c)
                                 <option value="{{ $c->id }}">
                                     {{ $c->name }}{{ $c->company ? ' (' . $c->company . ')' : '' }}</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- No SO -->
@@ -230,9 +234,10 @@
                                 <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                     <!-- Product Select -->
                                     <td class="py-2 px-3">
-                                        <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id"
+                                        <x-searchable-select>
+                                            <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id"
                                             @change="productSelected(idx, $event)"
-                                            class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer font-medium">
+                                            class="sr-only">
                                             <option value="">{{ __('sales.sales_orders.select_product_placeholder') }}</option>
                                             @if (isset($goodsProducts) && $goodsProducts->isNotEmpty())
                                                 <optgroup label="{{ __('sales.sales_orders.optgroup_goods') }}">
@@ -269,7 +274,8 @@
                                                     </option>
                                                 @endforeach
                                             @endif
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                         <div class="mt-1 flex items-center gap-1.5">
                                             <template x-if="item.is_service">
                                                 <span

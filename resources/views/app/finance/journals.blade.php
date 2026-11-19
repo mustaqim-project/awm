@@ -93,15 +93,17 @@
                     placeholder="{{ __('finance.search_journal_placeholder') }}"
                     class="w-full h-11 sm:h-9 pl-8 pr-3 text-[16px] sm:text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-black dark:text-white placeholder:text-black/35 dark:placeholder:text-white/35 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             </div>
-            <select name="reference_type"
-                class="h-11 sm:h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+            <x-searchable-select>
+                <select name="reference_type"
+                class="sr-only">
                 <option value="">{{ __('finance.ref_type_all') }}</option>
                 <option value="pos_order" @selected(request('reference_type') === 'pos_order')>{{ __('finance.ref_pos_order') }}</option>
                 <option value="expense" @selected(request('reference_type') === 'expense')>{{ __('finance.ref_expense') }}</option>
                 <option value="cash_transfer" @selected(request('reference_type') === 'cash_transfer')>{{ __('finance.ref_cash_transfer') }}</option>
                 <option value="supplier_invoice" @selected(request('reference_type') === 'supplier_invoice')>{{ __('finance.ref_supplier_invoice') }}</option>
                 <option value="supplier_payment" @selected(request('reference_type') === 'supplier_payment')>{{ __('finance.ref_supplier_payment') }}</option>
-            </select>
+                </select>
+            </x-searchable-select>
             <input type="date" name="start_date" value="{{ request('start_date') }}"
                 class="h-11 sm:h-9 px-2.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
             <span class="text-black/30 dark:text-white/30 text-[12px]">-</span>

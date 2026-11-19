@@ -135,15 +135,17 @@
                     <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
                     <span>Platform:</span>
                 </span>
-                <select onchange="window.location.href=this.value"
-                    class="h-8 px-3 rounded-[10px] text-[12px] font-medium bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF] cursor-pointer">
+                <x-searchable-select>
+                    <select onchange="window.location.href=this.value"
+                    class="sr-only">
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'all']) }}" {{ $platform === 'all' ? 'selected' : '' }}>{{ __('social_media.filter_platform_all') }}</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'facebook']) }}" {{ $platform === 'facebook' ? 'selected' : '' }}>Facebook</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'instagram']) }}" {{ $platform === 'instagram' ? 'selected' : '' }}>Instagram</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'threads']) }}" {{ $platform === 'threads' ? 'selected' : '' }}>Threads</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'tiktok']) }}" {{ $platform === 'tiktok' ? 'selected' : '' }}>TikTok</option>
                     <option value="{{ route('social-media.posts.index', ['status' => $status, 'platform' => 'linkedin']) }}" {{ $platform === 'linkedin' ? 'selected' : '' }}>LinkedIn</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
         </div>
 

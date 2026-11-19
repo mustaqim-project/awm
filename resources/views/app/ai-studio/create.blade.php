@@ -191,15 +191,17 @@
                         <label for="stylePreset" class="text-xs font-semibold text-black dark:text-white">
                             Preset Gaya Estetika Visual
                         </label>
-                        <select id="stylePreset" name="style_preset" x-model="stylePreset"
-                            class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select id="stylePreset" name="style_preset" x-model="stylePreset"
+                            class="sr-only">
                             <option value="clean_commercial">Clean Commercial (Pencahayaan Terang, Studio Bersih)</option>
                             <option value="studio_minimalist">Studio Minimalist (Latar Netral Pastel, Bayangan Halus)</option>
                             <option value="editorial_vibrant">Editorial Vibrant (Warna Berani &amp; Kontras Modern)</option>
                             <option value="lifestyle_warm">Lifestyle Warm (Nuansa Alami, Hangat &amp; Human Touch)</option>
                             <option value="flatlay_overhead">Flatlay Overhead (Tampak Atas Rapi Bersih)</option>
                             <option value="cinematic_dark">Cinematic Dark Mood (Dramatis, Eksklusif &amp; Elegan)</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Custom Notes / Mood Brief -->
@@ -315,15 +317,17 @@
                     <div x-show="productTab === 'catalog'" class="space-y-3">
                         <div class="space-y-1.5">
                             <label for="productId" class="text-xs font-semibold text-black dark:text-white">Pilih dari Daftar Produk / Jasa</label>
-                            <select id="productId" name="product_id" x-model="selectedProductId" @change="onProductSelect($event)"
-                                class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <x-searchable-select>
+                                <select id="productId" name="product_id" x-model="selectedProductId" @change="onProductSelect($event)"
+                                class="sr-only">
                                 <option value="">-- Tanpa Produk (Materi Grafis Umum / Promo) --</option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}" data-name="{{ $product->name }}" data-type="{{ $product->type }}" data-img="{{ $product->image_path }}">
                                         [{{ $product->type === 'service' ? 'JASA' : 'BARANG' }}] {{ $product->name }} ({{ $product->code ?: 'SKU' }}) - Rp {{ number_format($product->selling_price, 0, ',', '.') }}
                                     </option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                             <p class="text-[11px] text-black/50 dark:text-white/50">
                                 Produk terpilih akan menjadi fokus utama komposisi foto dan atributnya diintegrasikan ke prompt AI.
                             </p>
@@ -374,13 +378,15 @@
                     <!-- Role of Product in Asset -->
                     <div class="space-y-1.5 pt-1 border-t border-black/5 dark:border-white/5">
                         <label class="text-xs font-semibold text-black dark:text-white">Peran Objek dalam Komposisi</label>
-                        <select name="role" x-model="productRole"
-                            class="w-full px-3 py-2 rounded-[10px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="role" x-model="productRole"
+                            class="sr-only">
                             <option value="hero_product">Produk Utama (Hero Product - Di Tengah &amp; Fokus Tajam)</option>
                             <option value="packaging">Sajian Mangkok / Piring / Kemasan (Fokus Presentasi Makanan)</option>
                             <option value="logo">Aplikasi Logo &amp; Merk Dagang</option>
                             <option value="supporting">Elemen Pendukung Komposisi</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

@@ -123,25 +123,29 @@
 
                 <div>
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('purchasing.bills.field_payment_method') }}</label>
-                    <select name="payment_method" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="payment_method" class="sr-only">
                         <option value="bank_transfer">{{ __('purchasing.bills.method_bank_transfer') }}</option>
                         <option value="cash">{{ __('purchasing.bills.method_cash') }}</option>
                         <option value="qris">{{ __('purchasing.bills.method_qris') }}</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('purchasing.bills.field_cash_account') }}</label>
-                    <select name="cash_account_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="cash_account_id" class="sr-only">
                         <option value="">{{ __('purchasing.bills.field_cash_account_placeholder') }}</option>
                         @foreach($cashAccounts as $account)
                             <option value="{{ $account->id }}" {{ old('cash_account_id') === $account->id ? 'selected' : '' }}>
                                 {{ $account->name }} (Saldo: Rp {{ number_format($account->current_balance ?? 0, 0, ',', '.') }})
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>

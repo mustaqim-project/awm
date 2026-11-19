@@ -2780,28 +2780,32 @@ document.addEventListener('alpine:init', () => {
                         <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                             {{ __('mcp.input_provider') }}
                         </label>
-                        <select
+                        <x-searchable-select>
+                            <select
                             name="provider_hint"
-                            class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                            class="sr-only">
                             <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
                             <option value="claude">Claude (Desktop / Code / Web)</option>
                             <option value="openai">ChatGPT / OpenAI</option>
                             <option value="gemini">Google Gemini</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
                         <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                             {{ __('mcp.input_expires') }}
                         </label>
-                        <select
+                        <x-searchable-select>
+                            <select
                             name="expires_in"
-                            class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                            class="sr-only">
                             <option value="never">{{ __('mcp.expires_never') }}</option>
                             <option value="30_days">{{ __('mcp.expires_30_days') }}</option>
                             <option value="90_days">{{ __('mcp.expires_90_days') }}</option>
                             <option value="1_year">{{ __('mcp.expires_1_year') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 
@@ -3251,31 +3255,35 @@ document.addEventListener('alpine:init', () => {
                             <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                                 {{ __('mcp.input_provider') }}
                             </label>
-                            <select
+                            <x-searchable-select>
+                                <select
                                 name="provider_hint"
                                 x-model="editTokenForm.provider_hint"
-                                class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                                class="sr-only">
                                 <option value="all">{{ __('mcp.lbl_all_providers_universal') }}</option>
                                 <option value="claude">Claude (Desktop / Code / Web)</option>
                                 <option value="openai">ChatGPT / OpenAI</option>
                                 <option value="gemini">Google Gemini</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div>
                             <label class="block text-xs font-semibold text-neutral-800 dark:text-neutral-200 mb-1.5">
                                 {{ __('mcp.lbl_expires_at') }}
                             </label>
-                            <select
+                            <x-searchable-select>
+                                <select
                                 name="expires_in"
                                 x-model="editTokenForm.expires_in"
-                                class="w-full min-h-[44px] text-[14px] px-3 py-2.5 rounded-[12px] bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-neutral-900 dark:text-white focus:outline-none">
+                                class="sr-only">
                                 <option value="keep">{{ __('mcp.expires_keep') }}</option>
                                 <option value="never">{{ __('mcp.expires_never') }}</option>
                                 <option value="30_days">{{ __('mcp.expires_30_days') }}</option>
                                 <option value="90_days">{{ __('mcp.expires_90_days') }}</option>
                                 <option value="1_year">{{ __('mcp.expires_1_year') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 

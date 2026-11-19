@@ -354,12 +354,14 @@
 
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_parent_account') }}</label>
-                                        <select name="parent_id" class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="parent_id" class="sr-only">
                                             <option value="">{{ __('finance.no_parent_main_account') }}</option>
                                             @foreach($parentCandidates as $p)
                                                 <option value="{{ $p->id }}">{{ $p->code }} – {{ $p->name }} ({{ $p->getTypeLabel() }})</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div>
@@ -383,22 +385,26 @@
 
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_type_required') }}</label>
-                                        <select name="type" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="type" required class="sr-only">
                                             <option value="asset">{{ __('finance.option_type_asset') }}</option>
                                             <option value="liability">{{ __('finance.option_type_liability') }}</option>
                                             <option value="equity">{{ __('finance.option_type_equity') }}</option>
                                             <option value="revenue">{{ __('finance.option_type_revenue') }}</option>
                                             <option value="cogs">{{ __('finance.option_type_cogs') }}</option>
                                             <option value="expense">{{ __('finance.option_type_expense') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_normal_balance_required') }}</label>
-                                        <select name="normal_balance" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="normal_balance" required class="sr-only">
                                             <option value="debit">{{ __('finance.option_debit') }}</option>
                                             <option value="credit">{{ __('finance.option_credit') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div class="pt-2 p-3 rounded-[14px] bg-black/[0.03] dark:bg-white/[0.04] text-[12px] text-black/60 dark:text-white/60 leading-relaxed">

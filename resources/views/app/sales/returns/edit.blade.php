@@ -195,13 +195,15 @@
                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                         {{ __('sales.returns.refund_method_label') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="refund_method" x-model="refundMethod" required
-                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                    <x-searchable-select>
+                        <select name="refund_method" x-model="refundMethod" required
+                        class="sr-only">
                         <option value="cash_refund">{{ __('sales.returns.opt_cash_refund_direct') }}</option>
                         <option value="credit_note">{{ __('sales.returns.opt_credit_note_next') }}</option>
                         <option value="store_credit">{{ __('sales.returns.opt_store_credit_deposit') }}</option>
                         <option value="exchange">Tukar Barang (Exchange)</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>

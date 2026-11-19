@@ -2417,8 +2417,9 @@
                             class="w-full pl-9 pr-4 py-2 text-base sm:text-xs rounded-[12px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500">
                     </div>
                     <div class="w-full sm:w-56">
-                        <select x-model="selectedCategory" @change="fetchFiles(1)"
-                            class="w-full px-3 py-2 text-base sm:text-xs rounded-[12px] bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                        <x-searchable-select>
+                            <select x-model="selectedCategory" @change="fetchFiles(1)"
+                            class="sr-only">
                             <option value="all">{{ __('billing.modal_all_categories') }}</option>
                             <option value="product_image">{{ __('billing.category_product_image') }}</option>
                             <option value="business_logo">{{ __('billing.category_business_logo') }}</option>
@@ -2428,7 +2429,8 @@
                             <option value="community_image">{{ __('billing.category_community_image') }}</option>
                             <option value="owner_avatar">{{ __('billing.category_owner_avatar') }}</option>
                             <option value="feedback_attachment">{{ __('billing.category_feedback_attachment') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

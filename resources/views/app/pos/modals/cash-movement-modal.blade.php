@@ -79,8 +79,9 @@
                         <span x-text="cashMovementType === 'cash_out' ? '{{ __('pos.expense_category_label') }}' : '{{ __('pos.inflow_category_label') }}'"></span>
                     </label>
                     <template x-if="cashMovementType === 'cash_out'">
-                        <select x-model="cashMovementCategory"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="cashMovementCategory"
+                            class="sr-only">
                             <option value="operational">{{ __('finance.categories.operational') }}</option>
                             <option value="consumption">{{ __('finance.categories.consumption') }}</option>
                             <option value="supplies">{{ __('finance.categories.supplies') }}</option>
@@ -89,17 +90,20 @@
                             <option value="maintenance">{{ __('finance.categories.maintenance') }}</option>
                             <option value="bank_admin">{{ __('finance.categories.bank_admin') }}</option>
                             <option value="other">{{ __('finance.categories.other') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </template>
                     <template x-if="cashMovementType === 'cash_in'">
-                        <select x-model="cashMovementCategory"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="cashMovementCategory"
+                            class="sr-only">
                             <option value="capital_injection">{{ __('finance.inflow_categories.capital_injection') }}</option>
                             <option value="sales_revenue">{{ __('finance.inflow_categories.sales_revenue') }}</option>
                             <option value="cash_refund">{{ __('finance.inflow_categories.cash_refund') }}</option>
                             <option value="receivable_payment">{{ __('finance.inflow_categories.receivable_payment') }}</option>
                             <option value="other">{{ __('finance.inflow_categories.other') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </template>
                 </div>
 

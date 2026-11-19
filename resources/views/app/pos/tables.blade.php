@@ -215,12 +215,14 @@
     <div class="flex items-center gap-3">
         <label class="text-[12px] font-medium text-black/60 dark:text-white/60">{{ __('pos.filter_location_label') }}</label>
         <form method="GET" action="{{ route('pos.tables.index') }}" class="flex items-center gap-2">
-            <select name="location_id" onchange="this.form.submit()" class="h-9 text-[13px] rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 px-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+            <x-searchable-select>
+                <select name="location_id" onchange="this.form.submit()" class="sr-only">
                 <option value="">{{ __('pos.all_locations_option') }}</option>
                 @foreach($locations as $loc)
                     <option value="{{ $loc->id }}" {{ $selectedLocationId === $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
                 @endforeach
-            </select>
+                </select>
+            </x-searchable-select>
         </form>
     </div>
     @endif
@@ -471,12 +473,14 @@
 
                                     <div>
                                         <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                                        <select name="location_id" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <x-searchable-select>
+                                            <select name="location_id" class="sr-only">
                                             <option value="">{{ __('pos.all_locations_option') }}</option>
                                             @foreach($locations as $loc)
                                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -614,10 +618,12 @@
 
                                     <div>
                                         <label class="block text-[12px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1.5">{{ __('pos.table_active_status') }}</label>
-                                        <select name="is_active" x-model="editForm.is_active" class="w-full min-h-[44px] h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                        <x-searchable-select>
+                                            <select name="is_active" x-model="editForm.is_active" class="sr-only">
                                             <option :value="true">{{ __('pos.table_active_option') }}</option>
                                             <option :value="false">{{ __('pos.table_inactive_option') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 

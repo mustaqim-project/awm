@@ -489,12 +489,14 @@
                             <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">
                                 {{ __('hrm.payment_method_label') }} <span class="text-[#FF3B30]">*</span>
                             </label>
-                            <select name="payment_method" x-model="paymentMethod" required
-                                class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                            <x-searchable-select>
+                                <select name="payment_method" x-model="paymentMethod" required
+                                class="sr-only">
                                 <option value="bank_transfer">{{ __('hrm.method_bank_transfer') }}</option>
                                 <option value="cash">{{ __('hrm.method_cash') }}</option>
                                 <option value="multi">{{ __('hrm.method_multi') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div>

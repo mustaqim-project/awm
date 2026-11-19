@@ -151,4 +151,5 @@ return array (
     'dashboard' => 'Dashboard',
     'portal' => 'Employee Portal',
     'more_actions' => 'More Actions',
+    'no_data_found' => 'No data found',
 );

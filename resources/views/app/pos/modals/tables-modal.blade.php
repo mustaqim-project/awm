@@ -291,13 +291,15 @@
                                     <template x-if="!rsv.pos_table_name">
                                         <div class="inline-flex items-center gap-1.5">
                                             <span class="text-[#FF9500] font-semibold italic">{{ __('pos.not_assigned_yet') }}</span>
-                                            <select x-model="rsv.pos_table_id"
-                                                class="h-7 text-xs rounded-[6px] border border-black/15 dark:border-white/15 bg-white dark:bg-[#1C1C1E] text-black dark:text-white px-2 py-0.5 focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
+                                            <x-searchable-select>
+                                                <select x-model="rsv.pos_table_id"
+                                                class="sr-only">
                                                 <option value="">{{ __('pos.select_table_placeholder') }}</option>
                                                 <template x-for="tbl in tables" :key="tbl.id">
                                                     <option :value="tbl.id" x-text="'{{ __('pos.table') }} ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' {{ __('pos.seats_suffix') }}'"></option>
                                                 </template>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                     </template>
                                 </div>
@@ -416,13 +418,15 @@
                     <template x-if="hasDineIn && tables && tables.length > 0">
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Pilih Meja (Opsional)</label>
-                            <select x-model="manualReservationForm.pos_table_id"
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <x-searchable-select>
+                                <select x-model="manualReservationForm.pos_table_id"
+                                class="sr-only">
                                 <option value="">-- Bebas / Tentukan Nanti --</option>
                                 <template x-for="tbl in tables" :key="tbl.id">
                                     <option :value="tbl.id" x-text="'Meja ' + tbl.table_number + (tbl.name ? ' (' + tbl.name + ')' : '') + ' • ' + tbl.capacity + ' Kursi'"></option>
                                 </template>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </template>
 
@@ -457,15 +461,17 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1">Estimasi Durasi</label>
-                                    <select x-model="manualReservationForm.service_duration_minutes"
-                                        class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#AF52DE]">
+                                    <x-searchable-select>
+                                        <select x-model="manualReservationForm.service_duration_minutes"
+                                        class="sr-only">
                                         <option value="">-- Standar --</option>
                                         <option value="30">30 Menit</option>
                                         <option value="45">45 Menit</option>
                                         <option value="60">60 Menit (1 Jam)</option>
                                         <option value="90">90 Menit</option>
                                         <option value="120">120 Menit (2 Jam)</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                             </div>
                         </div>
@@ -476,13 +482,15 @@
                         <div>
                             <label class="block text-[11.5px] font-semibold text-black/70 dark:text-white/70 mb-1"
                                 x-text="isWorkshop ? 'Tugaskan Mekanik / Teknisi' : (isBarbershop ? 'Pilihan Stylist / Kapster' : 'Petugas / Staf Penanggungjawab')"></label>
-                            <select x-model="manualReservationForm.staff_id"
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <x-searchable-select>
+                                <select x-model="manualReservationForm.staff_id"
+                                class="sr-only">
                                 <option value="">-- Bebas / Staf Tersedia --</option>
                                 <template x-for="tech in technicians" :key="tech.id">
                                     <option :value="tech.id" x-text="tech.name"></option>
                                 </template>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </template>
 
@@ -503,13 +511,15 @@
 
                             <div>
                                 <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">Metode Bayar DP</label>
-                                <select x-model="manualReservationForm.dp_payment_method"
-                                    class="w-full h-10 px-2 rounded-[8px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                                <x-searchable-select>
+                                    <select x-model="manualReservationForm.dp_payment_method"
+                                    class="sr-only">
                                     <option value="cash">Tunai (Cash)</option>
                                     <option value="transfer">Transfer Bank</option>
                                     <option value="qris">QRIS</option>
                                     <option value="edc_debit">Kartu Debit</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
                     </div>

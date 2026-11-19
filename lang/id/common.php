@@ -151,4 +151,5 @@ return array (
     'dashboard' => 'Dashboard',
     'portal' => 'Portal Karyawan',
     'more_actions' => 'Tindakan Lainnya',
+    'no_data_found' => 'Tidak ada data ditemukan',
 );

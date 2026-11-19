@@ -1500,8 +1500,9 @@
                                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                                                 {{ __('warehouse.fields.type') }}
                                             </label>
-                                            <select name="type"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                            <x-searchable-select>
+                                                <select name="type"
+                                                class="sr-only">
                                                 <option value="warehouse" {{ $location->type === 'warehouse' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
                                                 <option value="outlet" {{ $location->type === 'outlet' ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
                                                 @if(str_starts_with($business->template_code ?? '', 'fnb_'))
@@ -1513,7 +1514,8 @@
                                                 @elseif($location->type === 'central_kitchen')
                                                     <option value="central_kitchen" selected class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                                 @endif
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                         <div>
                                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
@@ -1554,11 +1556,13 @@
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                                             {{ __('warehouse.fields.is_active') }}
                                         </label>
-                                        <select name="is_active"
-                                            class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                        <x-searchable-select>
+                                            <select name="is_active"
+                                            class="sr-only">
                                             <option value="1" {{ $location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.badges.active') }}</option>
                                             <option value="0" {{ !$location->is_active ? 'selected' : '' }} class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.badges.inactive') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
                             </div>
@@ -1601,8 +1605,9 @@
                                             <label class="block text-[11px] font-medium text-slate-600 dark:text-slate-400 mb-1">
                                                 {{ __('warehouse.fields.timezone') }}
                                             </label>
-                                            <select name="timezone" x-model="customTimezone"
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <x-searchable-select>
+                                                <select name="timezone" x-model="customTimezone"
+                                                class="sr-only">
                                                 @foreach ($timezones as $groupLabel => $zones)
                                                     <optgroup label="{{ $groupLabel }}" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white font-semibold">
                                                         @foreach ($zones as $zoneId => $zoneName)
@@ -1610,7 +1615,8 @@
                                                         @endforeach
                                                     </optgroup>
                                                 @endforeach
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                     </div>
 
@@ -1802,15 +1808,17 @@
                                             <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                                                 {{ __('warehouse.adjust_modal.field_reason') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
-                                            <select name="reason_code" x-model="reasonCode" required
-                                                class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                            <x-searchable-select>
+                                                <select name="reason_code" x-model="reasonCode" required
+                                                class="sr-only">
                                                 <option value="opname_variance" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_variance') }}</option>
                                                 <option value="damaged" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_damaged') }}</option>
                                                 <option value="expired" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_expired') }}</option>
                                                 <option value="theft_loss" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_theft') }}</option>
                                                 <option value="initial_balance" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_initial') }}</option>
                                                 <option value="other" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.adjust_modal.reason_other') }}</option>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
 
                                         <div>

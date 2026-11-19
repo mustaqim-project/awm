@@ -285,11 +285,13 @@
             <form @submit.prevent="runGoalWorkflow()" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                     <label class="block text-[11px] font-bold text-black/60 dark:text-white/60 uppercase mb-1">Jenis Target</label>
-                    <select x-model="goalType" class="w-full px-3 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:border-[#34C759]">
-                        <option value="revenue">Omzet Penjualan Bulanan (Rp)</option>
-                        <option value="margin">Marjin Laba Kotor (%)</option>
-                        <option value="debt_recovery">Penagihan Piutang Macet (Rp)</option>
-                    </select>
+                    <x-searchable-select>
+                        <select x-model="goalType" class="sr-only">
+                            <option value="revenue">Omzet Penjualan Bulanan (Rp)</option>
+                            <option value="margin">Marjin Laba Kotor (%)</option>
+                            <option value="debt_recovery">Penagihan Piutang Macet (Rp)</option>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold text-black/60 dark:text-white/60 uppercase mb-1">Target Nominal / Persen</label>

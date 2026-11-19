@@ -66,14 +66,16 @@
                         {{ __('hrm.payroll_month') }} <span class="text-[#FF3B30]">*</span>
                     </label>
                     <div class="relative">
-                        <select name="period_month" x-model="periodMonth" required
-                            class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 text-[16px] sm:text-[13.5px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50 focus:outline-none transition cursor-pointer">
+                        <x-searchable-select>
+                            <select name="period_month" x-model="periodMonth" required
+                            class="sr-only">
                             @for($m = 1; $m <= 12; $m++)
                                 <option value="{{ $m }}" {{ $m === $month ? 'selected' : '' }}>
                                     {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
                                 </option>
                             @endfor
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

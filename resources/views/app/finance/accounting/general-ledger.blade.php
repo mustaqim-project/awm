@@ -45,14 +45,16 @@
                         {{ __('finance.kpi_selected_account') }}
                     </label>
                     <div class="relative">
-                        <select name="account_id" onchange="this.form.submit()"
-                            class="w-full h-11 sm:h-9.5 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[10px] text-[15px] sm:text-[13px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="account_id" onchange="this.form.submit()"
+                            class="sr-only">
                             @foreach($ledger['accounts'] as $acc)
                                 <option value="{{ $acc->id }}" @selected($ledger['selected_account'] && $ledger['selected_account']->id === $acc->id)>
                                     {{ $acc->code }} – {{ $acc->name }} ({{ $acc->getTypeLabel() }})
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 

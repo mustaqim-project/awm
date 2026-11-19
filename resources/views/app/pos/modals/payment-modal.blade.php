@@ -121,13 +121,15 @@
                 <div x-show="selectedPayMethod === 'edc_debit' || selectedPayMethod === 'edc_credit'" class="p-3.5 rounded-[14px] bg-[#007AFF]/5 dark:bg-[#007AFF]/10 border border-[#007AFF]/20 grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('pos.select_edc_machine_label') }}</label>
-                        <select x-model="selectedEdcTerminalId"
-                            class="w-full h-10 px-3 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="selectedEdcTerminalId"
+                            class="sr-only">
                             <option value="">{{ __('pos.select_edc_placeholder') }}</option>
                             <template x-for="t in storeEdcTerminals" :key="t.id">
                                 <option :value="t.id" x-text="t.terminal_name + ' (' + t.bank_name + ' - TID: ' + t.terminal_id_tid + ')'"></option>
                             </template>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                     <div>
                         <label class="block text-[11px] font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('pos.edc_approval_ref_optional') }}</label>
@@ -227,15 +229,17 @@
                                 {{-- Dropdown Metode --}}
                                 <div class="sm:col-span-4">
                                     <label class="block text-[10px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.pay_channel_required_label') }}</label>
-                                    <select x-model="row.payment_method"
-                                        class="w-full h-10 px-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select x-model="row.payment_method"
+                                        class="sr-only">
                                         <option value="cash">{{ __('pos.method_cash') }}</option>
                                         <option value="qris">{{ __('pos.method_qris') }}</option>
                                         <option value="edc_debit">{{ __('pos.method_edc_debit') }}</option>
                                         <option value="edc_credit">{{ __('pos.method_edc_credit') }}</option>
                                         <option value="transfer">{{ __('pos.method_transfer') }}</option>
                                         <option value="customer_credit">{{ __('pos.method_customer_credit') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 {{-- Input Nominal & Auto Fill Sisa --}}
@@ -257,13 +261,15 @@
                                         <span x-text="row.payment_method.startsWith('edc') ? '{{ __('pos.edc_machine_or_approval_label') }}' : '{{ __('pos.ref_or_notes_label') }}'"></span>
                                     </label>
                                     <template x-if="row.payment_method.startsWith('edc') && storeEdcTerminals.length > 0">
-                                        <select x-model="row.store_edc_terminal_id"
-                                            class="w-full h-10 px-2.5 rounded-[10px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 text-xs font-medium text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select x-model="row.store_edc_terminal_id"
+                                            class="sr-only">
                                             <option value="">{{ __('pos.select_edc_short_placeholder') }}</option>
                                             <template x-for="t in storeEdcTerminals" :key="t.id">
                                                 <option :value="t.id" x-text="t.terminal_name + ' (' + t.terminal_id_tid + ')'"></option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </template>
                                     <template x-if="!row.payment_method.startsWith('edc') || storeEdcTerminals.length === 0">
                                         <input type="text" x-model="row.reference_number" placeholder="{{ __('pos.ref_or_approval_placeholder') }}"

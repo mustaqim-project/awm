@@ -200,12 +200,14 @@
                     @csrf
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('approvals.field_doc_type') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="document_type" required class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/40">
+                        <x-searchable-select>
+                            <select name="document_type" required class="sr-only">
                             <option value="purchase_order">{{ __('approvals.doc_type_po') }}</option>
                             <option value="expense">{{ __('approvals.doc_type_expense') }}</option>
                             <option value="supplier_invoice">{{ __('approvals.doc_type_supplier_invoice') }}</option>
                             <option value="stock_adjustment">{{ __('approvals.doc_type_stock_adjustment') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
@@ -226,17 +228,20 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('approvals.field_required_levels') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="required_levels" x-model.number="formLevels" required class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/40">
+                        <x-searchable-select>
+                            <select name="required_levels" x-model.number="formLevels" required class="sr-only">
                             <option value="1">{{ __('approvals.levels_option_1') }}</option>
                             <option value="2">{{ __('approvals.levels_option_2') }}</option>
                             <option value="3">{{ __('approvals.levels_option_3') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div class="space-y-2.5 p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06]">
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_1') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_1" required class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_1" required class="sr-only">
                                 <option value="supervisor" selected>{{ __('approvals.role_supervisor') }}</option>
                                 <option value="manager">{{ __('approvals.role_manager') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
@@ -246,12 +251,14 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div x-show="formLevels >= 2">
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_2') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_2" :required="formLevels >= 2" class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_2" :required="formLevels >= 2" class="sr-only">
                                 <option value="manager" selected>{{ __('approvals.role_manager') }}</option>
                                 <option value="supervisor">{{ __('approvals.role_supervisor') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
@@ -261,12 +268,14 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div x-show="formLevels >= 3">
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_3') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_3" :required="formLevels >= 3" class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_3" :required="formLevels >= 3" class="sr-only">
                                 <option value="owner" selected>{{ __('approvals.role_owner') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
                                 <option value="manager">{{ __('approvals.role_manager') }}</option>
@@ -275,7 +284,8 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 
@@ -368,12 +378,14 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('approvals.field_doc_type') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="document_type" x-model="editForm.document_type" required class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/40">
+                        <x-searchable-select>
+                            <select name="document_type" x-model="editForm.document_type" required class="sr-only">
                             <option value="purchase_order">{{ __('approvals.doc_type_po') }}</option>
                             <option value="expense">{{ __('approvals.doc_type_expense') }}</option>
                             <option value="supplier_invoice">{{ __('approvals.doc_type_supplier_invoice') }}</option>
                             <option value="stock_adjustment">{{ __('approvals.doc_type_stock_adjustment') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
@@ -394,17 +406,20 @@
 
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('approvals.field_required_levels') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="required_levels" x-model.number="editForm.required_levels" required class="w-full px-3.5 py-2.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none focus:ring-2 focus:ring-[#007AFF]/40">
+                        <x-searchable-select>
+                            <select name="required_levels" x-model.number="editForm.required_levels" required class="sr-only">
                             <option value="1">{{ __('approvals.levels_option_1') }}</option>
                             <option value="2">{{ __('approvals.levels_option_2') }}</option>
                             <option value="3">{{ __('approvals.levels_option_3') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div class="space-y-2.5 p-3.5 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.04] dark:border-white/[0.06]">
                         <div>
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_1') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_1" x-model="editForm.approver_role_level_1" required class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_1" x-model="editForm.approver_role_level_1" required class="sr-only">
                                 <option value="supervisor">{{ __('approvals.role_supervisor') }}</option>
                                 <option value="manager">{{ __('approvals.role_manager') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
@@ -414,12 +429,14 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div x-show="editForm.required_levels >= 2">
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_2') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_2" x-model="editForm.approver_role_level_2" :required="editForm.required_levels >= 2" class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_2" x-model="editForm.approver_role_level_2" :required="editForm.required_levels >= 2" class="sr-only">
                                 <option value="manager">{{ __('approvals.role_manager') }}</option>
                                 <option value="supervisor">{{ __('approvals.role_supervisor') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
@@ -429,12 +446,14 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div x-show="editForm.required_levels >= 3">
                             <label class="block text-[11px] font-bold uppercase tracking-wider text-black/60 dark:text-white/60 mb-1">{{ __('approvals.field_approver_level_3') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="approver_role_level_3" x-model="editForm.approver_role_level_3" :required="editForm.required_levels >= 3" class="w-full px-3 py-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.08] text-[16px] sm:text-xs text-black dark:text-white outline-none">
+                            <x-searchable-select>
+                                <select name="approver_role_level_3" x-model="editForm.approver_role_level_3" :required="editForm.required_levels >= 3" class="sr-only">
                                 <option value="owner">{{ __('approvals.role_owner') }}</option>
                                 <option value="admin">{{ __('approvals.role_admin') }}</option>
                                 <option value="manager">{{ __('approvals.role_manager') }}</option>
@@ -443,7 +462,8 @@
                                         <option value="{{ $r->slug }}">{{ $r->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 

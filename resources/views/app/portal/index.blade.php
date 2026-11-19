@@ -1560,26 +1560,30 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_type') }} *</label>
-                            <select name="correction_type" required
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                            <x-searchable-select>
+                                <select name="correction_type" required
+                                class="sr-only">
                                 <option value="both">{{ __('portal.corr_type_both') }}</option>
                                 <option value="clock_in">{{ __('portal.corr_type_in') }}</option>
                                 <option value="clock_out">{{ __('portal.corr_type_out') }}</option>
                                 <option value="permit">{{ __('portal.corr_type_permit') }}</option>
                                 <option value="leave">{{ __('portal.corr_type_leave') }}</option>
                                 <option value="sick">{{ __('portal.corr_type_sick') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('portal.modal_correction_field_status') }}</label>
-                            <select name="proposed_status"
-                                class="w-full h-11 sm:h-10 px-3 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[16px] sm:text-xs text-black dark:text-white">
+                            <x-searchable-select>
+                                <select name="proposed_status"
+                                class="sr-only">
                                 <option value="present">{{ __('portal.metric_on_time') }}</option>
                                 <option value="late">{{ __('portal.metric_late') }}</option>
                                 <option value="permit">{{ __('portal.corr_type_permit') }}</option>
                                 <option value="leave">{{ __('portal.corr_type_leave') }}</option>
                                 <option value="sick">{{ __('portal.sick') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 

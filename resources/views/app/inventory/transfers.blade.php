@@ -279,19 +279,23 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                         <div>
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.origin') }} *</label>
-                            <select name="source_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="source_location_id" required class="sr-only">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <div>
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.destination') }} *</label>
-                            <select name="destination_location_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="destination_location_id" required class="sr-only">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" {{ $loop->last ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 
@@ -318,11 +322,13 @@
 
                         <template x-for="(item, idx) in items" :key="idx">
                             <div class="flex items-center gap-2">
-                                <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id" required class="flex-1 h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-3 text-[16px] sm:text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select :name="'items[' + idx + '][product_id]'" x-model="item.product_id" required class="sr-only">
                                     @foreach($products as $p)
                                         <option value="{{ $p->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $p->name }}</option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                                 <input type="number" step="any" min="0.0001" :name="'items[' + idx + '][quantity]'" x-model.number="item.quantity" required placeholder="Qty" class="h-11 sm:h-10 w-28 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-xl px-2.5 text-[16px] sm:text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="min-w-[40px] min-h-[40px] flex items-center justify-center text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>

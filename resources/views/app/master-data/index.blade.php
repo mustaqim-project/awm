@@ -566,24 +566,28 @@
                             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                             @csrf
                             <div>
-                                <select name="from_unit_id" required
-                                    class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select name="from_unit_id" required
+                                    class="sr-only">
                                     <option value="">Satuan Asal (Dari)</option>
                                     @foreach ($items as $unit)
                                         <option value="{{ $unit->id }}">{{ $unit->code }} - {{ $unit->name }}
                                         </option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <div>
-                                <select name="to_unit_id" required
-                                    class="w-full h-10 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select name="to_unit_id" required
+                                    class="sr-only">
                                     <option value="">Satuan Tujuan (Ke)</option>
                                     @foreach ($items as $unit)
                                         <option value="{{ $unit->id }}">{{ $unit->code }} - {{ $unit->name }}
                                         </option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <div>
                                 <input type="number" name="factor" required min="0.000001" step="0.000001"
@@ -765,8 +769,9 @@
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Kategori Dimensi
                                     <span class="text-[#FF3B30]">*</span></label>
-                                <select name="category" required
-                                    class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select name="category" required
+                                    class="sr-only">
                                     <option value="quantity">Kuantitas (Quantity)</option>
                                     <option value="weight">Berat (Weight)</option>
                                     <option value="volume">Volume (Volume)</option>
@@ -774,7 +779,8 @@
                                     <option value="time">Waktu (Time)</option>
                                     <option value="area">Luas (Area)</option>
                                     <option value="custom">Kustom (Custom)</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         @else
                             <div>
@@ -980,8 +986,9 @@
                             <div>
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">Kategori Dimensi
                                     <span class="text-[#FF3B30]">*</span></label>
-                                <select name="category" x-model="editItem.category" required
-                                    class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                <x-searchable-select>
+                                    <select name="category" x-model="editItem.category" required
+                                    class="sr-only">
                                     <option value="quantity">Kuantitas (Quantity)</option>
                                     <option value="weight">Berat (Weight)</option>
                                     <option value="volume">Volume (Volume)</option>
@@ -989,7 +996,8 @@
                                     <option value="time">Waktu (Time)</option>
                                     <option value="area">Luas (Area)</option>
                                     <option value="custom">Kustom (Custom)</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         @else
                             <div>

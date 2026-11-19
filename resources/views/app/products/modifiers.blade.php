@@ -971,26 +971,30 @@
                                     <template x-for="(matRow, idx) in optionForm.materials" :key="idx">
                                         <div class="flex items-center gap-2">
                                             <!-- Material Select -->
-                                            <select :name="'materials[' + idx + '][material_id]'" x-model="matRow.material_id" required
-                                                class="flex-1 h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <x-searchable-select>
+                                                <select :name="'materials[' + idx + '][material_id]'" x-model="matRow.material_id" required
+                                                class="sr-only">
                                                 <option value="">{{ __('products.placeholder_select_material_option') }}</option>
                                                 @foreach($materials as $mat)
                                                     <option value="{{ $mat->id }}">{{ $mat->name }} ({{ $mat->unit?->name ?? 'Unit' }})</option>
                                                 @endforeach
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
 
                                             <!-- Quantity Input -->
                                             <input type="number" :name="'materials[' + idx + '][quantity]'" x-model.number="matRow.quantity" step="0.0001" min="0.0001" placeholder="{{ __('products.placeholder_quantity') }}" required
                                                 class="w-24 h-10 px-3 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[13px] font-semibold tabular-nums text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
 
                                             <!-- Unit Select -->
-                                            <select :name="'materials[' + idx + '][unit_id]'" x-model="matRow.unit_id"
-                                                class="w-24 h-10 px-2 rounded-[10px] bg-white dark:bg-[#1C1C1E] border border-black/[0.08] dark:border-white/[0.1] text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <x-searchable-select class="w-24">
+                                                <select :name="'materials[' + idx + '][unit_id]'" x-model="matRow.unit_id"
+                                                class="sr-only">
                                                 <option value="">{{ __('products.placeholder_unit') }}</option>
                                                 @foreach($units as $u)
                                                     <option value="{{ $u->id }}">{{ $u->name }}</option>
                                                 @endforeach
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
 
                                             <!-- Remove Row -->
                                             <button type="button" @click="removeMaterialRow(idx)"

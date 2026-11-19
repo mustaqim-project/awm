@@ -970,12 +970,14 @@
                                 style="display: none;">
                                 <div class="flex items-center justify-between gap-2">
                                     <span class="text-black/60 dark:text-white/60">{{ __('calculator.app_fee_label') }}</span>
-                                    <select x-model.number="quickOnlineFeePct"
-                                        class="h-8 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[8px] px-2.5 text-black dark:text-white text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition">
+                                    <x-searchable-select>
+                                        <select x-model.number="quickOnlineFeePct"
+                                        class="sr-only">
                                         <option :value="20">{{ __('calculator.app_fee_opt_20') }}</option>
                                         <option :value="15">{{ __('calculator.app_fee_opt_15') }}</option>
                                         <option :value="10">{{ __('calculator.app_fee_opt_10') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div class="p-3.5 rounded-[10px] bg-[#AF52DE]/10 border border-[#AF52DE]/20 space-y-1">
@@ -1055,14 +1057,16 @@
                 </div>
 
                 <div class="flex items-center gap-2 flex-wrap w-full md:w-auto">
-                    <select x-model="selectedProductId" @change="selectProduct($event.target.value)"
-                        class="h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[10px] text-[13px] font-medium text-black dark:text-white w-full sm:w-auto min-w-0 sm:min-w-[260px] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40 transition">
+                    <x-searchable-select>
+                        <select x-model="selectedProductId" @change="selectProduct($event.target.value)"
+                        class="sr-only">
                         <option value="">{{ __('calculator.advanced_select_placeholder') }}</option>
                         <template x-for="p in products" :key="p.id">
                             <option :value="p.id"
                                 x-text="p.name + ' (' + (p.output_unit ? p.output_unit.name : 'pcs') + ')'"></option>
                         </template>
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     <template x-if="selectedProduct">
                         <div class="flex items-center gap-2">

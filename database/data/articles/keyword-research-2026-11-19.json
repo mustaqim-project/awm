@@ -1,0 +1,2934 @@
+{
+  "date": "2026-11-19",
+  "pipeline": "DAILY EVERGREEN SEO PIPELINE COOCA (40 ARTIKEL EDUKASI UMKM PER HARI)",
+  "total_articles": 40,
+  "pillars_distribution": {
+    "Pilar 1: Manajemen Keuangan & Pembukuan": 8,
+    "Pilar 2: Inventori, Stok & Manajemen Gudang": 8,
+    "Pilar 3: Kasir, POS & Kontrol Fraud": 8,
+    "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak": 8,
+    "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel": 8
+  },
+  "topics": [
+    {
+      "id": 1,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Cara Menghitung Biaya Tenaga Kerja Langsung UMKM agar Bebas Boncos",
+      "meta_title": "Cara Menghitung Biaya Tenaga Kerja Langsung",
+      "meta_description": "Pelajari cara menghitung biaya tenaga kerja langsung kuliner dan jasa UMKM, rumus alokasi upah per unit produk, serta tips mencegah kebocoran HPP.",
+      "slug": "cara-menghitung-biaya-tenaga-kerja-langsung-btkl-umkm",
+      "primary_keyword": "cara menghitung biaya tenaga kerja langsung",
+      "secondary_keywords": "rumus biaya tenaga kerja langsung, alokasi upah per porsi kuliner, hitung btkl usaha kecil, komponen hpp tenaga kerja, efisiensi upah produksi",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-biaya-tenaga-kerja-langsung-btkl-umkm.jpg",
+      "source_image": "photo-1554224155-8d04cb21cd6c.jpg",
+      "published_at": "2026-11-19T08:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Banyak pengusaha kuliner dan konveksi hanya menghitung bahan baku saat menetapkan HPP, mengabaikan upah tenaga kerja langsung sehingga margin laba tergerus habis.",
+      "cooca_solution": "Fitur Activity Based Costing Cooca membebankan biaya tenaga kerja langsung secara proporsional ke setiap menu dan produk berdasarkan jam kerja staf.",
+      "selected_formula": "Loss Aversion & Financial Protection",
+      "selection_reason": "Menyasar kesalahan fatal pengusaha UMKM yang sering lupa memasukkan komponen upah staf produksi ke dalam HPP produk.",
+      "headline_alternatives": [
+        {
+          "formula": "Loss Aversion",
+          "score": 95,
+          "headline": "Cara Menghitung Biaya Tenaga Kerja Langsung UMKM agar Bebas Boncos"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Upah Staf Menguras Laba? Ini Cara Menghitung Biaya Tenaga Kerja Langsung"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kesalahan Menghitung Biaya Tenaga Kerja Langsung yang Merugikan Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Praktis Cara Menghitung Biaya Tenaga Kerja Langsung Produk Usaha"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bahan Murah tapi Boncos? Pahami Cara Menghitung Biaya Tenaga Kerja Langsung"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Margin Hilang, Pelajari Cara Menghitung Biaya Tenaga Kerja Langsung"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Kunci HPP Akurat: Cara Menghitung Biaya Tenaga Kerja Langsung Usaha Kecil"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Produksi Ramai tapi Rugi? Ini Cara Menghitung Biaya Tenaga Kerja Langsung"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Bukan Hanya Bahan Baku, Ini Cara Menghitung Biaya Tenaga Kerja Langsung"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Dari Rugi Menjadi Untung: Cara Menghitung Biaya Tenaga Kerja Langsung"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Cara Mengelola Dana Darurat Usaha Kecil agar Toko Tetap Bertahan",
+      "meta_title": "Cara Mengelola Dana Darurat Usaha Kecil UMKM",
+      "meta_description": "Ketahui cara mengelola dana darurat usaha kecil, panduan alokasi 3 sampai 6 bulan biaya operasional, dan strategi menjaga likuiditas toko saat sepi.",
+      "slug": "cara-mengelola-dana-darurat-usaha-kecil-agar-tidak-bangkrut",
+      "primary_keyword": "cara mengelola dana darurat usaha kecil",
+      "secondary_keywords": "dana darurat bisnis umkm, cadangan kas operasional, mitigasi risiko keuangan toko, alokasi tabungan usaha, menjaga likuiditas kas usaha",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mengelola-dana-darurat-usaha-kecil-agar-tidak-bangkrut.jpg",
+      "source_image": "photo-1554224154-26032ffc0d07.jpg",
+      "published_at": "2026-11-19T08:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Saat omzet mendadak anjlok karena musim sepi atau perbaikan fasilitas, banyak UMKM kolaps dalam 30 hari karena tidak memiliki cadangan kas darurat likuid.",
+      "cooca_solution": "Modul akuntansi Cooca menyediakan pos pencadangan kas terpisah yang secara otomatis memisahkan persentase laba bulanan ke pos dana cadangan darurat.",
+      "selected_formula": "Business Warning & Preparedness",
+      "selection_reason": "Memberikan peringatan realistis tentang risiko kebangkrutan mendadak dan menyajikan solusi cadangan kas yang terstruktur.",
+      "headline_alternatives": [
+        {
+          "formula": "Business Warning",
+          "score": 95,
+          "headline": "Cara Mengelola Dana Darurat Usaha Kecil agar Toko Tetap Bertahan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Toko Sepi Pembeli? Ini Cara Mengelola Dana Darurat Usaha Kecil Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Kebangkrutan Dini dengan Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 87,
+          "headline": "Jangan Habiskan Laba, Pelajari Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Finansial: Cara Mengelola Dana Darurat Usaha Kecil untuk Pemula"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kas Nol Saat Krisis? Pahami Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Cadangan 6 Bulan: Terapkan Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Arus Kas Kering Saat Darurat? Ini Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Jangan Asal Ekspansi Sebelum Tahu Cara Mengelola Dana Darurat Usaha Kecil"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Bisnis Tahan Banting Berkat Cara Mengelola Dana Darurat Usaha Kecil"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Cara Menghitung Rasio Perputaran Modal Kerja untuk Efisiensi Toko",
+      "meta_title": "Cara Menghitung Rasio Perputaran Modal Kerja",
+      "meta_description": "Panduan lengkap cara menghitung rasio perputaran modal kerja usaha ritel, rumus Working Capital Turnover, dan strategi mempercepat siklus uang dagang.",
+      "slug": "cara-menghitung-rasio-perputaran-modal-kerja-toko-ritel",
+      "primary_keyword": "cara menghitung rasio perputaran modal kerja",
+      "secondary_keywords": "rumus working capital turnover, perputaran modal usaha ritel, efisiensi modal kerja umkm, rasio likuiditas dan aktivitas toko, optimalisasi kas usaha",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-rasio-perputaran-modal-kerja-toko-ritel.jpg",
+      "source_image": "photo-1460925895917-afdab827c52f.jpg",
+      "published_at": "2026-11-19T08:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pedagang ritel sering menambah modal pinjaman karena merasa kekurangan uang, padahal masalah sebenarnya adalah modal kerja berputar terlalu lambat di stok mati.",
+      "cooca_solution": "Laporan keuangan komparatif Cooca menghitung rasio perputaran aset lancar dan modal kerja secara otomatis untuk mendeteksi inefisiensi arus uang.",
+      "selected_formula": "Efficiency & Capital Optimization",
+      "selection_reason": "Menjelaskan konsep finansial penting dengan cara sederhana agar pengusaha tahu apakah modal mereka bekerja efektif.",
+      "headline_alternatives": [
+        {
+          "formula": "Efficiency",
+          "score": 94,
+          "headline": "Cara Menghitung Rasio Perputaran Modal Kerja untuk Efisiensi Toko"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Modal Macet di Gudang? Ini Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Kelola Modal Dagang? Cek Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 91,
+          "headline": "Hindari Utang Sia-Sia dengan Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 89,
+          "headline": "Langkah Praktis Cara Menghitung Rasio Perputaran Modal Kerja Usaha Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Formula Bisnis Sehat: Cara Menghitung Rasio Perputaran Modal Kerja Toko"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Modal Besar Belum Tentu Untung, Pahami Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Uang Kas Selalu Seret? Pelajari Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Jangan Pinjam Modal Dulu, Cek Cara Menghitung Rasio Perputaran Modal Kerja"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Maksimalkan Profit Toko Melalui Cara Menghitung Rasio Perputaran Modal Kerja"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Pemisahan Uang Pribadi dan Bisnis agar Keuangan Toko Tidak Hancur",
+      "meta_title": "Pemisahan Uang Pribadi dan Bisnis untuk UMKM",
+      "meta_description": "Simak panduan pemisahan uang pribadi dan bisnis bagi pemilik UMKM, penetapan gaji pemilik usaha, dan cara menghentikan kebiasaan mengambil uang di laci.",
+      "slug": "sop-pemisahan-uang-pribadi-dan-bisnis-umkm-solo-owner",
+      "primary_keyword": "pemisahan uang pribadi dan bisnis",
+      "secondary_keywords": "gaji pemilik usaha kecil, rekening terpisah bisnis dan pribadi, tips pembukuan solo owner, kelola kas usaha mikro, cara cegah campur uang toko",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-pemisahan-uang-pribadi-dan-bisnis-umkm-solo-owner.jpg",
+      "source_image": "photo-1553729459-efe14ef6055d.jpg",
+      "published_at": "2026-11-19T08:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Kebiasaan mengambil uang kas toko untuk keperluan belanja dapur rumah tangga membuat catatan laba rugi berantakan dan modal usaha terpakai tanpa disadari.",
+      "cooca_solution": "Fitur payroll dan akun ekuitas Cooca memfasilitasi pencatatan gaji resmi pemilik toko serta mencatat penarikan prive secara transparan dan tertib.",
+      "selected_formula": "Problem Recognition & Survival",
+      "selection_reason": "Menjawab problem nomor satu pelaku usaha pemula di Indonesia yaitu campur aduk rekening pribadi dan kas usaha.",
+      "headline_alternatives": [
+        {
+          "formula": "Problem Recognition",
+          "score": 95,
+          "headline": "Pemisahan Uang Pribadi dan Bisnis agar Keuangan Toko Tidak Hancur"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Uang Toko Kerap Habis? Kuncinya Ada pada Pemisahan Uang Pribadi dan Bisnis"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Modal Lenyap Lewat Pemisahan Uang Pribadi dan Bisnis yang Benar"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kesalahan Campur Rekening: Waktunya Pemisahan Uang Pribadi dan Bisnis"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Mudah Pemisahan Uang Pribadi dan Bisnis bagi Pengusaha Pemula"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Gaji Pemilik Teratur dengan Pemisahan Uang Pribadi dan Bisnis Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Omzet Besar Habis di Rumah? Solusinya Pemisahan Uang Pribadi dan Bisnis"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Bahaya Mengambil Kas Kasir Tanpa Pemisahan Uang Pribadi dan Bisnis"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Bukan Omzet yang Kurang, Ini Pentingnya Pemisahan Uang Pribadi dan Bisnis"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Bisnis Profesional Dimulai dari Pemisahan Uang Pribadi dan Bisnis"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Cara Menghitung Diskon Bertingkat agar Margin Penjualan Aman",
+      "meta_title": "Cara Menghitung Diskon Bertingkat Toko UMKM",
+      "meta_description": "Pelajari cara menghitung diskon bertingkat promosi toko, rumus persentase riil diskon 50% plus 20%, dan strategi menjaga laba kotor tetap menguntungkan.",
+      "slug": "cara-menghitung-diskon-bertingkat-agar-margin-tidak-boncos",
+      "primary_keyword": "cara menghitung diskon bertingkat",
+      "secondary_keywords": "rumus diskon ganda promo, hitung diskon bertumpuk ritel, margin aman saat diskon, promo cuci gudang toko, strategi potongan harga pedagang",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-diskon-bertingkat-agar-margin-tidak-boncos.jpg",
+      "source_image": "photo-1556742502-ec7c0e9f34b1.jpg",
+      "published_at": "2026-11-19T09:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik toko mengira diskon bertingkat 50% + 20% sama dengan diskon 70%, sehingga salah menghitung harga modal dan akhirnya menjual rugi di bawah HPP.",
+      "cooca_solution": "Mesin promo POS Cooca menghitung kalkulasi diskon bertingkat secara otomatis dan memberikan peringatan jika harga akhir berada di bawah harga pokok penjualan.",
+      "selected_formula": "Myth Busting & Financial Calculation",
+      "selection_reason": "Membongkar miskonsepsi matematis yang sangat sering terjadi saat pemilik toko membuat program promo diskon heboh.",
+      "headline_alternatives": [
+        {
+          "formula": "Myth Busting",
+          "score": 94,
+          "headline": "Cara Menghitung Diskon Bertingkat agar Margin Penjualan Aman"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 91,
+          "headline": "Diskon 50% Plus 20% Bukan 70%? Ini Cara Menghitung Diskon Bertingkat"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Jangan Sampai Jual Rugi! Pahami Cara Menghitung Diskon Bertingkat Toko"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jebakan Promo Cuci Gudang: Pelajari Cara Menghitung Diskon Bertingkat"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Panduan Praktis Kasir: Cara Menghitung Diskon Bertingkat yang Tepat"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Kunci Margin Positif: Cara Menghitung Diskon Bertingkat Produk Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kerap Bikin Boncos, Begini Sebenarnya Cara Menghitung Diskon Bertingkat"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Kasbon Modal! Perhatikan Cara Menghitung Diskon Bertingkat Ini"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Promo Ramai tapi Tekor? Evaluasi Cara Menghitung Diskon Bertingkat Anda"
+        },
+        {
+          "formula": "Transformation",
+          "score": 87,
+          "headline": "Strategi Promo Cuan dengan Cara Menghitung Diskon Bertingkat Toko"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Laporan Arus Kas Metode Langsung untuk Toko Kecil dan Jasa",
+      "meta_title": "Laporan Arus Kas Metode Langsung Toko Jasa",
+      "meta_description": "Panduan menyusun laporan arus kas metode langsung untuk toko kecil dan usaha jasa, format pencatatan penerimaan kas riil, serta analisa likuiditas harian.",
+      "slug": "cara-menyusun-laporan-arus-kas-metode-langsung-toko-jasa",
+      "primary_keyword": "laporan arus kas metode langsung",
+      "secondary_keywords": "format cash flow langsung umkm, arus kas operasional toko, pencatatan kas masuk dan keluar, pembukuan kasir sederhana, akuntansi kas usaha jasa",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menyusun-laporan-arus-kas-metode-langsung-toko-jasa.jpg",
+      "source_image": "photo-1554224155-8d04cb21cd6c.jpg",
+      "published_at": "2026-11-19T09:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Laporan laba rugi mencatat keuntungan jutaan rupiah tetapi uang kas di bank kosong karena pemilik toko tidak memonitor arus kas masuk dan keluar secara langsung.",
+      "cooca_solution": "Sistem pembukuan Cooca otomatis menghasilkan Laporan Arus Kas Metode Langsung dari rekap transaksi kasir dan pembayaran tagihan harian.",
+      "selected_formula": "Practical Guide & Financial Clarity",
+      "selection_reason": "Menyajikan panduan penyusunan arus kas yang mudah dipraktikkan tanpa perlu menguasai rumus akuntansi rumit.",
+      "headline_alternatives": [
+        {
+          "formula": "Practical Guide",
+          "score": 93,
+          "headline": "Laporan Arus Kas Metode Langsung untuk Toko Kecil dan Jasa"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Laba Tinggi tapi Uang Kas Nihil? Pahami Laporan Arus Kas Metode Langsung"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Krisis Likuiditas Toko dengan Laporan Arus Kas Metode Langsung"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 87,
+          "headline": "Jangan Cuma Laba Rugi, Lengkapi Laporan Arus Kas Metode Langsung Toko"
+        },
+        {
+          "formula": "Specificity",
+          "score": 91,
+          "headline": "Format Sederhana: Menyusun Laporan Arus Kas Metode Langsung Usaha Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kas Riil vs Angka Kertas: Peran Laporan Arus Kas Metode Langsung Bisnis"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Bahaya Kas Macet Tanpa Analisa Laporan Arus Kas Metode Langsung Harian"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Uang Kas Selalu Selisih? Saatnya Buat Laporan Arus Kas Metode Langsung"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Bukan Omzet Kuncinya, Kuasai Laporan Arus Kas Metode Langsung Sekarang"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Arus Kas Terkontrol Rapi Berkat Laporan Arus Kas Metode Langsung"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Rasio Biaya Operasional Usaha Ritel untuk Menghentikan Pemborosan",
+      "meta_title": "Rasio Biaya Operasional Usaha Ritel dan Toko",
+      "meta_description": "Ketahui cara menghitung rasio biaya operasional usaha ritel, tolok ukur Opex ratio yang sehat, serta strategi menekan beban listrik, sewa, dan logistik.",
+      "slug": "cara-menghitung-rasio-biaya-operasional-usaha-ritel-umkm",
+      "primary_keyword": "rasio biaya operasional usaha ritel",
+      "secondary_keywords": "operating expense ratio toko, efisiensi beban usaha umkm, pos biaya tetap operasional, evaluasi pengeluaran toko, kurangi biaya overhead ritel",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-rasio-biaya-operasional-usaha-ritel-umkm.jpg",
+      "source_image": "photo-1454165804606-c3d57bc86b40.jpg",
+      "published_at": "2026-11-19T09:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Biaya listrik, sewa ruko, plastik pembungkus, dan perlengkapan toko membengkak hingga memakan lebih dari 35% omzet tanpa disadari oleh pengusaha toko.",
+      "cooca_solution": "Fitur budgeting Cooca memetakan Opex ratio toko secara real-time dan memberikan peringatan dini jika pengeluaran operasional melampaui batas anggaran.",
+      "selected_formula": "Cost Cutting & Operational Efficiency",
+      "selection_reason": "Membantu pemilik toko menekan kebocoran biaya rutin yang kerap dianggap sepele padahal menggerus margin laba bersih.",
+      "headline_alternatives": [
+        {
+          "formula": "Cost Cutting",
+          "score": 94,
+          "headline": "Rasio Biaya Operasional Usaha Ritel untuk Menghentikan Pemborosan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Beban Toko Menggunung? Cek Rasio Biaya Operasional Usaha Ritel Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Hentikan Kebocoran Laba dengan Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Beban Listrik dan Sewa Membengkak? Hitung Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Langkah Mengukur dan Mengontrol Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 91,
+          "headline": "Batas Aman Opex: Evaluasi Rasio Biaya Operasional Usaha Ritel Toko"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Omzet Naik tapi Boncos? Telusuri Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Beban Usaha Liar! Pantau Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Biaya Toko Tak Terkendali? Saatnya Audit Rasio Biaya Operasional Usaha Ritel"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Operasional Ramping dan Efisien Berkat Rasio Biaya Operasional Usaha Ritel"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "pillar": "Pilar 1: Manajemen Keuangan & Pembukuan",
+      "category": "Keuangan & Pembukuan",
+      "title": "Cara Menghitung Target Laba Bersih Usaha dari Biaya Hidup",
+      "meta_title": "Cara Menghitung Target Laba Bersih Usaha UMKM",
+      "meta_description": "Pelajari cara menghitung target laba bersih usaha berdasarkan kebutuhan biaya hidup pemilik toko, target omzet minimal, dan alokasi laba ditahan usaha.",
+      "slug": "cara-menghitung-target-laba-bersih-usaha-biaya-hidup-pemilik",
+      "primary_keyword": "cara menghitung target laba bersih usaha",
+      "secondary_keywords": "target profit toko harian, hitung kebutuhan gaji pemilik, perencanaan laba ditahan umkm, target penjualan bulanan toko, omzet minimal bisnis untung",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-target-laba-bersih-usaha-biaya-hidup-pemilik.jpg",
+      "source_image": "photo-1554224155-8d04cb21cd6c.jpg",
+      "published_at": "2026-11-19T09:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pengusaha sering membuka toko tanpa target finansial jelas, sehingga bingung apakah keuntungan bisnis sudah cukup untuk mencukupi kebutuhan keluarga dan ekspansi.",
+      "cooca_solution": "Cooca menyediakan kalkulator target finansial bisnis yang menghubungkan kebutuhan gaji pemilik toko dengan target omzet harian pada modul kasir.",
+      "selected_formula": "Goal Setting & Financial Independence",
+      "selection_reason": "Memberikan peta jalan yang sangat personal bagi pengusaha UMKM untuk menyelaraskan target bisnis dengan tujuan finansial keluarga.",
+      "headline_alternatives": [
+        {
+          "formula": "Goal Setting",
+          "score": 94,
+          "headline": "Cara Menghitung Target Laba Bersih Usaha dari Biaya Hidup"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Berapa Omzet Toko yang Anda Butuhkan? Ini Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 91,
+          "headline": "Hindari Kerja Keras Tanpa Hasil Lewat Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jangan Buka Toko Tanpa Target! Kuasai Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 92,
+          "headline": "Panduan Finansial: Cara Menghitung Target Laba Bersih Usaha Toko dan Warung"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Kalkulasi Cuan Pasti: Cara Menghitung Target Laba Bersih Usaha Solo Owner"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Omzet Besar Belum Cukup, Pahami Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Tekor di Akhir Bulan, Terapkan Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Penjualan Ramai tapi Kurang? Cek Cara Menghitung Target Laba Bersih Usaha"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Capai Kebebasan Finansial dengan Cara Menghitung Target Laba Bersih Usaha"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "SOP Penerimaan Barang dari Suplier di Gudang agar Bebas Selisih",
+      "meta_title": "SOP Penerimaan Barang Suplier di Gudang Toko",
+      "meta_description": "Terapkan SOP penerimaan barang dari suplier di gudang toko, alur three way matching, verifikasi kondisi fisik barang, dan pencegahan selisih faktur kulakan.",
+      "slug": "sop-penerimaan-barang-suplier-gudang-toko-bebas-selisih",
+      "primary_keyword": "sop penerimaan barang dari suplier",
+      "secondary_keywords": "three way matching po faktur, pemeriksaan stok masuk gudang, verifikasi surat jalan barang, cegah selisih barang kulakan, checklist penerimaan logistik",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-penerimaan-barang-suplier-gudang-toko-bebas-selisih.jpg",
+      "source_image": "photo-1553413077-190dd305871c.jpg",
+      "published_at": "2026-11-19T10:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Barang yang dikirim suplier sering kurang kuantiti atau rusak kemasan, tetapi staf gudang langsung menandatangani surat jalan tanpa pemeriksaan teliti.",
+      "cooca_solution": "Modul Purchase Order Cooca mewajibkan verifikasi digital barcode saat barang datang dan memvalidasi kecocokan fisik terhadap PO secara instan.",
+      "selected_formula": "Operational Control & Loss Prevention",
+      "selection_reason": "Menutup celah kebocoran stok terbesar di pintu masuk gudang toko akibat kelalaian staf menerima barang tanpa cek fisik.",
+      "headline_alternatives": [
+        {
+          "formula": "Operational Control",
+          "score": 95,
+          "headline": "SOP Penerimaan Barang dari Suplier di Gudang agar Bebas Selisih"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Barang Sering Kurang? Perbaiki SOP Penerimaan Barang dari Suplier Toko"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hentikan Kerugian Kiriman Vendor Lewat SOP Penerimaan Barang dari Suplier"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kesalahan Tanda Tangan Surat Jalan: Wajib Punya SOP Penerimaan Barang dari Suplier"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Lengkap: SOP Penerimaan Barang dari Suplier untuk Staf Gudang"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Alur Three Way Matching dalam SOP Penerimaan Barang dari Suplier Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Vendor Nakal Mudah Terlacak Berkat SOP Penerimaan Barang dari Suplier"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Selisih Stok Masuk! Terapkan SOP Penerimaan Barang dari Suplier"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Stok Fisik Kerap Beda? Periksa SOP Penerimaan Barang dari Suplier Anda"
+        },
+        {
+          "formula": "Transformation",
+          "score": 87,
+          "headline": "Gudang Tertib dan Akurat Melalui SOP Penerimaan Barang dari Suplier"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Mencegah Penyusutan Barang Dagangan di Toko dan Gudang Ritel",
+      "meta_title": "Mencegah Penyusutan Barang Dagangan Toko",
+      "meta_description": "Ketahui cara mencegah penyusutan barang dagangan di toko ritel dan gudang, strategi mengendalikan inventory shrinkage, serta audit fisik stok berkala.",
+      "slug": "cara-mencegah-penyusutan-barang-dagangan-shrinkage-toko",
+      "primary_keyword": "mencegah penyusutan barang dagangan",
+      "secondary_keywords": "inventory shrinkage toko ritel, cegah barang hilang di rak, audit susut stok gudang, pengawasan cctv inventori, perlindungan aset dagangan",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mencegah-penyusutan-barang-dagangan-shrinkage-toko.jpg",
+      "source_image": "photo-1578916171728-46686eac8d58.jpg",
+      "published_at": "2026-11-19T10:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Toko kehilangan 2% hingga 5% dari total nilai persediaan setiap tahun akibat pencurian barang kecil di rak pajang, kerusakan penanganan, dan kelalaian pencatatan.",
+      "cooca_solution": "Cooca menyediakan sistem log mutasi stok berbasis barcode dan otorisasi bertingkat untuk setiap penyesuaian susut barang di toko.",
+      "selected_formula": "Loss Aversion & Asset Protection",
+      "selection_reason": "Menyasar isu susut barang (shrinkage) yang merupakan musuh utama pengusaha minimarket dan toko retail di Indonesia.",
+      "headline_alternatives": [
+        {
+          "formula": "Loss Aversion",
+          "score": 94,
+          "headline": "Mencegah Penyusutan Barang Dagangan di Toko dan Gudang Ritel"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Barang Lenyap Tanpa Jejak? Ini Cara Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 93,
+          "headline": "Awas Shrinkage Menguras Modal! Pahami Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 87,
+          "headline": "Kelalaian di Area Rak Toko: Kunci Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Strategis Toko Ritel: Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Tekan Susut di Bawah 1 Persen: Trik Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bukan Cuma Maling, Ini Penyebab Utama Penyusutan Barang Dagangan Toko"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Stok Kasir dan Rak Selalu Beda? Fokus Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Contrarian Angle",
+          "score": 85,
+          "headline": "Bukan Tambah Karyawan, Ini Cara Tepat Mencegah Penyusutan Barang Dagangan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Amankan Aset Usaha Anda Lewat Mencegah Penyusutan Barang Dagangan"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Lead Time Pemesanan Barang Dagangan agar Rak Toko Tidak Kosong",
+      "meta_title": "Lead Time Pemesanan Barang Dagangan Toko Ritel",
+      "meta_description": "Pelajari cara menghitung lead time pemesanan barang dagangan distributor, rumus waktu tunggu kulakan, dan strategi menjaga stok tetap tersedia di rak toko.",
+      "slug": "cara-menentukan-lead-time-pemesanan-barang-ke-distributor",
+      "primary_keyword": "lead time pemesanan barang dagangan",
+      "secondary_keywords": "waktu tunggu suplier toko, perhitungan reorder lead time, jadwal kulakan barang ritel, manajemen rantai pasok warung, antisipasi rak kosong stok",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menentukan-lead-time-pemesanan-barang-ke-distributor.jpg",
+      "source_image": "photo-1553413077-190dd305871c.jpg",
+      "published_at": "2026-11-19T10:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Konsumen kecewa dan beralih ke toko kompetitor karena barang dagangan utama sering habis berhari-hari akibat keterlambatan memesan ulang ke distributor.",
+      "cooca_solution": "Fitur Reorder Point Cooca mengkalkulasi waktu tunggu pengiriman vendor dan memberikan notifikasi kulakan otomatis sebelum stok toko habis.",
+      "selected_formula": "Supply Chain & Customer Satisfaction",
+      "selection_reason": "Menjawab problem kehabisan stok (stockout) yang membuat toko kehilangan potensi pendapatan dan pelanggan loyal.",
+      "headline_alternatives": [
+        {
+          "formula": "Supply Chain",
+          "score": 94,
+          "headline": "Lead Time Pemesanan Barang Dagangan agar Rak Toko Tidak Kosong"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Konsumen Kecewa Rak Kosong? Hitung Lead Time Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Kehilangan Omzet Lewat Lead Time Pemesanan Barang Dagangan yang Pas"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Terlambat Kulakan? Perbaiki Perhitungan Lead Time Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Akurat Menghitung Lead Time Pemesanan Barang Dagangan Suplier"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Rumus Kulakan Tepat Waktu: Lead Time Pemesanan Barang Dagangan Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Distributor Telat Kirim? Antisipasi dengan Lead Time Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Stok Kosong! Pelajari Lead Time Pemesanan Barang Dagangan Ini"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Barang Cepat Habis tapi Telat Pesan? Cek Lead Time Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Rak Selalu Terisi Penuh Berkat Lead Time Pemesanan Barang Dagangan"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Penerapan Sistem FIFO Gudang Makanan agar Stok Tidak Kedaluwarsa",
+      "meta_title": "Penerapan Sistem FIFO Gudang Makanan UMKM",
+      "meta_description": "Simak panduan penerapan sistem FIFO gudang makanan dan bahan baku UMKM, tata letak rak First In First Out, serta tips menekan kerugian barang kedaluwarsa.",
+      "slug": "penerapan-sistem-fifo-gudang-makanan-bahan-baku-umkm",
+      "primary_keyword": "penerapan sistem fifo gudang makanan",
+      "secondary_keywords": "metode first in first out gudang, rotasi stok bahan baku kuliner, tata letak rak penyimpanan makanan, cegah barang basi dapur, manajemen inventori fnb",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/penerapan-sistem-fifo-gudang-makanan-bahan-baku-umkm.jpg",
+      "source_image": "photo-1578916171728-46686eac8d58.jpg",
+      "published_at": "2026-11-19T10:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Bahan baku makanan sering ditemukan membusuk di sudut gudang karena staf selalu mengambil stok yang baru datang, sementara stok lama tertimbun di belakang.",
+      "cooca_solution": "Cooca Inventory mencatat tanggal masuk setiap batch bahan baku dan memandu alur pengambilan barang sesuai prinsip FIFO secara ketat.",
+      "selected_formula": "Waste Reduction & Food Safety",
+      "selection_reason": "Menyelesaikan masalah mendesak bisnis makanan dan minuman yang sering merugi karena bahan baku kedaluwarsa akibat salah rotasi stok.",
+      "headline_alternatives": [
+        {
+          "formula": "Waste Reduction",
+          "score": 95,
+          "headline": "Penerapan Sistem FIFO Gudang Makanan agar Stok Tidak Kedaluwarsa"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Bahan Baku Sering Basi? Kuncinya Ada di Penerapan Sistem FIFO Gudang Makanan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hentikan Buang Makanan Lewat Penerapan Sistem FIFO Gudang Makanan Rapi"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Tata Letak Rak: Benahi dengan Penerapan Sistem FIFO Gudang Makanan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Praktis Dapur: Penerapan Sistem FIFO Gudang Makanan dan Kafe"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Rotasi Stok Tanpa Limbah: Penerapan Sistem FIFO Gudang Makanan UMKM"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bahan Lama Menumpuk? Wajib Tahu Penerapan Sistem FIFO Gudang Makanan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Komplain Basi! Terapkan Penerapan Sistem FIFO Gudang Makanan"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Gudang Berantakan dan Bau? Cek Penerapan Sistem FIFO Gudang Makanan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Dapur Bersih dan Hemat Berkat Penerapan Sistem FIFO Gudang Makanan"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Biaya Pemesanan Barang Dagangan dan Cara Menekannya bagi Toko",
+      "meta_title": "Biaya Pemesanan Barang Dagangan Toko Ritel",
+      "meta_description": "Pelajari komponen biaya pemesanan barang dagangan toko ritel, rumus ordering cost, dan strategi menghemat ongkos kirim suplier tanpa menumpuk stok mati.",
+      "slug": "cara-menghitung-biaya-pemesanan-barang-ordering-cost-toko",
+      "primary_keyword": "biaya pemesanan barang dagangan",
+      "secondary_keywords": "rumus ordering cost ritel, efisiensi ongkos kirim kulakan, frekuensi order suplier toko, perhitungan biaya logistik toko, minimalkan biaya pengadaan",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-biaya-pemesanan-barang-ordering-cost-toko.jpg",
+      "source_image": "photo-1553413077-190dd305871c.jpg",
+      "published_at": "2026-11-19T11:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Toko terlalu sering kulakan dalam jumlah kecil sehingga ongkos kirim ekspedisi membengkak dan memotong keuntungan margin produk secara drastis.",
+      "cooca_solution": "Fitur konsolidasi Purchase Order Cooca menggabungkan kebutuhan barang antar-cabang untuk mendapatkan tarif ongkir grosir termurah.",
+      "selected_formula": "Cost Optimization & Procurement",
+      "selection_reason": "Menjelaskan trade-off penting antara frekuensi pemesanan dan biaya logistik agar toko kulakan secara efisien.",
+      "headline_alternatives": [
+        {
+          "formula": "Cost Optimization",
+          "score": 93,
+          "headline": "Biaya Pemesanan Barang Dagangan dan Cara Menekannya bagi Toko"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Ongkir Kulakan Bikin Tekor? Telusuri Biaya Pemesanan Barang Dagangan Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Hemat Ongkos Kirim Suplier dengan Mengatur Biaya Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Terlalu Sering Kulakan? Cek Total Biaya Pemesanan Barang Dagangan Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Panduan Efisiensi Pengadaan: Hitung Biaya Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 91,
+          "headline": "Frekuensi Order Ideal: Mengukur Biaya Pemesanan Barang Dagangan Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Beli Sedikit Ternyata Boros! Ini Rumus Biaya Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Laba Lenyap di Ongkir! Pantau Biaya Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Biaya Ekspedisi Melambung? Hitung Ulang Biaya Pemesanan Barang Dagangan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Kulakan Cerdas dan Hemat Melalui Biaya Pemesanan Barang Dagangan Tepat"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "SOP Retur Barang Rusak ke Suplier agar Pengembalian Dana Cepat",
+      "meta_title": "SOP Retur Barang Rusak ke Suplier Toko Ritel",
+      "meta_description": "Terapkan SOP retur barang rusak ke suplier toko ritel, dokumen nota debit retur pembelian, batas waktu klaim, dan cara menjaga hubungan baik dengan vendor.",
+      "slug": "sop-retur-barang-rusak-ke-suplier-dan-faktur-pengganti",
+      "primary_keyword": "sop retur barang rusak ke suplier",
+      "secondary_keywords": "nota debit retur pembelian, purchase return suplier toko, klaim barang cacat pabrik, format berita acara retur, penggantian barang rusak vendor",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-retur-barang-rusak-ke-suplier-dan-faktur-pengganti.jpg",
+      "source_image": "photo-1578916171728-46686eac8d58.jpg",
+      "published_at": "2026-11-19T11:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Barang cacat pabrik menumpuk di gudang toko tanpa bisa ditukar karena staf terlambat mengajukan klaim atau kehilangan bukti faktur pembelian asli.",
+      "cooca_solution": "Modul Purchase Return Cooca menerbitkan nota debit otomatis lengkap dengan lampiran foto bukti kerusakan barang untuk klaim suplier instan.",
+      "selected_formula": "Vendor Management & Claim Recovery",
+      "selection_reason": "Membantu toko mengamankan hak klaim ganti rugi barang rusak dari distributor secara profesional dan tepat waktu.",
+      "headline_alternatives": [
+        {
+          "formula": "Vendor Management",
+          "score": 94,
+          "headline": "SOP Retur Barang Rusak ke Suplier agar Pengembalian Dana Cepat"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Klaim Sering Ditolak? Perbaiki SOP Retur Barang Rusak ke Suplier Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Jangan Tanggung Rugi Cacat Pabrik: Terapkan SOP Retur Barang Rusak ke Suplier"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Barang Rusak Mengendap di Toko? Waktunya SOP Retur Barang Rusak ke Suplier"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Tertib Klaim Vendor: SOP Retur Barang Rusak ke Suplier Toko"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Format Nota Debit Resmi dalam SOP Retur Barang Rusak ke Suplier Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Distributor Sulit Ganti Rugi? Kuncinya SOP Retur Barang Rusak ke Suplier"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Batas Waktu Klaim Habis! Pahami SOP Retur Barang Rusak ke Suplier"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Gudang Penuh Barang Cacat? Benahi SOP Retur Barang Rusak ke Suplier"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Modal Tertagih Kembali Berkat SOP Retur Barang Rusak ke Suplier"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Cara Menata Stok Barang Toko Sembako agar Cepat Ditemukan",
+      "meta_title": "Cara Menata Stok Barang Toko Sembako Ritel",
+      "meta_description": "Simak panduan cara menata stok barang toko sembako dan kelontong, zonasi produk fast moving, visual merchandising sederhana, dan penataan lorong belanja.",
+      "slug": "cara-menata-stok-barang-toko-sembako-kelontong-rapi",
+      "primary_keyword": "cara menata stok barang toko sembako",
+      "secondary_keywords": "penataan rak toko kelontong, zonasi barang sembako cepat laku, visual merchandising warung, susunan etalase toko sembako, lorong belanja toko sembako",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menata-stok-barang-toko-sembako-kelontong-rapi.jpg",
+      "source_image": "photo-1553413077-190dd305871c.jpg",
+      "published_at": "2026-11-19T11:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Toko sembako terlihat sumpek dan berantakan, membuat pelanggan malas mencari barang dan pelayan kasir butuh waktu lama mengambil pesanan.",
+      "cooca_solution": "Fitur pemetaan lokasi rak gudang Cooca mencantumkan nomor lorong dan tingkat rak pada layar kasir untuk memandu pengambilan barang instan.",
+      "selected_formula": "Store Layout & Retail Psychology",
+      "selection_reason": "Menjawab kebutuhan jutaan pemilik toko kelontong dan sembako Indonesia untuk membuat toko lebih rapi, luas, dan memikat pembeli.",
+      "headline_alternatives": [
+        {
+          "formula": "Store Layout",
+          "score": 94,
+          "headline": "Cara Menata Stok Barang Toko Sembako agar Cepat Ditemukan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Toko Terlihat Sempit dan Berantakan? Ini Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 91,
+          "headline": "Cegah Pembeli Lari ke Minimarket: Terapkan Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Taruh Barang Cepat Laku? Evaluasi Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 92,
+          "headline": "Panduan Praktis Ritel: Cara Menata Stok Barang Toko Sembako Modern"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Zonasi Rak Rapi: Trik Mudah Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Toko Rapi Bikin Omzet Melejit, Pelajari Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Barang Rusak Tertimpa! Terapkan Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Pelayan Lama Cari Barang? Saatnya Benahi Cara Menata Stok Barang Toko Sembako"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Warung Jadi Minimarket Modern Lewat Cara Menata Stok Barang Toko Sembako"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "pillar": "Pilar 2: Inventori, Stok & Manajemen Gudang",
+      "category": "Inventori & Stok",
+      "title": "Cara Membuat Kode SKU Barang Toko Ritel agar Kasir Tidak Keliru",
+      "meta_title": "Cara Membuat Kode SKU Barang Toko Ritel",
+      "meta_description": "Pelajari cara membuat kode SKU barang toko ritel yang terstandar, struktur penomoran kategori merek dan varian, serta integrasi dengan barcode kasir.",
+      "slug": "cara-membuat-kode-sku-barang-toko-ritel-terstandar",
+      "primary_keyword": "cara membuat kode sku barang toko",
+      "secondary_keywords": "format stock keeping unit ritel, struktur kode barang inventori, cetak barcode sku produk, sistem penomoran barang dagangan, kelola varian toko",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-kode-sku-barang-toko-ritel-terstandar.jpg",
+      "source_image": "photo-1578916171728-46686eac8d58.jpg",
+      "published_at": "2026-11-19T11:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Kasir sering salah memasukkan harga karena kode barang dibuat sembarangan tanpa struktur baku sehingga varian ukuran dan rasa saling tertukar.",
+      "cooca_solution": "Fitur auto SKU generator Cooca menyusun kode produk secara sistematis berdasarkan hierarki kategori, ukuran, dan warna produk.",
+      "selected_formula": "Standardization & Barcode Integration",
+      "selection_reason": "Menjelaskan fondasi digitalisasi inventori toko ritel yaitu penomoran SKU yang bersih dan ramah barcode scanner.",
+      "headline_alternatives": [
+        {
+          "formula": "Standardization",
+          "score": 94,
+          "headline": "Cara Membuat Kode SKU Barang Toko Ritel agar Kasir Tidak Keliru"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Kasir Sering Salah Input Barang? Pelajari Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Hindari Salah Harga Transaksi Lewat Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kode Barang Berantakan? Waktunya Pahami Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Rapi dan Baku: Cara Membuat Kode SKU Barang Toko Modern"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Struktur 4 Segmen: Cara Membuat Kode SKU Barang Toko dan Gudang"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Barcode Error Akibat SKU Acak? Ini Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Stok Saling Tertukar! Terapkan Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Ribuan Barang Sulit Dicari? Gunakan Cara Membuat Kode SKU Barang Toko"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Inventori Tertata Rapi Dimulai dari Cara Membuat Kode SKU Barang Toko"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Selisih Pembayaran Non Tunai Kasir Toko dan Cara Rekonsiliasinya",
+      "meta_title": "Selisih Pembayaran Non Tunai Kasir Toko QRIS",
+      "meta_description": "Atasi selisih pembayaran non tunai kasir toko, panduan rekonsiliasi harian transaksi QRIS dan mesin EDC, serta pencocokan settlement mutasi bank.",
+      "slug": "sop-kasir-mengatasi-selisih-pembayaran-qris-debit-toko",
+      "primary_keyword": "selisih pembayaran non tunai kasir",
+      "secondary_keywords": "rekonsiliasi transaksi qris harian, audit slip edc kasir pos, closing shift settlement bank, selisih pembayaran digital toko, pembukuan mdr qris",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-kasir-mengatasi-selisih-pembayaran-qris-debit-toko.jpg",
+      "source_image": "photo-1556740738-b6a63e27c4df.jpg",
+      "published_at": "2026-11-19T12:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Saat tutup kasir harian, catatan penjualan POS mencatat nominal berbeda dengan saldo rekening bank penerima QRIS akibat potongan fee MDR atau transaksi pending.",
+      "cooca_solution": "Cooca POS menyediakan modul rekonsiliasi multi-channel yang mencocokkan kode referensi settlement QRIS dan EDC terhadap transaksi kasir secara otomatis.",
+      "selected_formula": "Reconciliation & Cash Protection",
+      "selection_reason": "Menyelesaikan pusing kepala harian pemilik toko modern yang menerima transaksi cashless namun bingung saat uang di rekening tidak cocok dengan laporan kasir.",
+      "headline_alternatives": [
+        {
+          "formula": "Reconciliation",
+          "score": 94,
+          "headline": "Selisih Pembayaran Non Tunai Kasir Toko dan Cara Rekonsiliasinya"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Saldo Rekening Beda dengan POS? Atasi Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Cegah Kerugian Transaksi QRIS Lewat Solusi Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Fee MDR Terabaikan? Kenali Penyebab Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Closing Shift: Membedah Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Cek Settlement Harian: Mengatasi Selisih Pembayaran Non Tunai Kasir Toko"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bukan Kasir yang Curang, Ini Fakta Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Pembayaran Fiktif! Telusuri Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Laporan Kasir Kacau Karena QRIS? Audit Selisih Pembayaran Non Tunai Kasir"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Tutup Kasir Tepat Waktu Tanpa Selisih Pembayaran Non Tunai Kasir"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Modus Pencurian Kasir Struk Gantung dan Cara Menghentikannya",
+      "meta_title": "Modus Pencurian Kasir Struk Gantung POS",
+      "meta_description": "Waspadai modus pencurian kasir struk gantung atau floating bill di toko dan kafe, tanda manipulasi pesanan kasir, serta proteksi sistem POS modern.",
+      "slug": "cara-mencegah-modus-pencurian-kasir-struk-gantung-pos",
+      "primary_keyword": "modus pencurian kasir struk gantung",
+      "secondary_keywords": "fraud kasir floating bill, manipulasi bill pesanan resto, kecurangan kasir toko ritel, audit transaksi pending pos, batasi akses buka laci kas",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mencegah-modus-pencurian-kasir-struk-gantung-pos.jpg",
+      "source_image": "photo-1556742502-ec7c0e9f34b1.jpg",
+      "published_at": "2026-11-19T12:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Kasir nakal menahan tagihan pesanan pembeli tanpa mencetak struk resmi, menerima uang tunai, lalu membatalkan transaksi di sistem sehingga uangnya masuk kantong pribadi.",
+      "cooca_solution": "Cooca POS memiliki sistem audit log otomatis yang melacak durasi open bill, membatasi void transaksi, dan mewajibkan PIN supervisor untuk pembatalan pesanan.",
+      "selected_formula": "Fraud Prevention & Business Warning",
+      "selection_reason": "Membongkar modus kecurangan kasir klasik yang paling sering membuat pemilik usaha restoran dan ritel kehilangan uang tunai tanpa jejak.",
+      "headline_alternatives": [
+        {
+          "formula": "Fraud Prevention",
+          "score": 95,
+          "headline": "Modus Pencurian Kasir Struk Gantung dan Cara Menghentikannya"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 91,
+          "headline": "Struk Tidak Dicetak? Kenali Tanda Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Selamatkan Kas Toko dari Ancaman Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kelalaian Pantau Pending Bill: Celah Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Langkah Pengamanan Kasir: Tangkal Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Audit Open Bill POS: Mencegah Modus Pencurian Kasir Struk Gantung Kafe"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Uang Tunai Lenyap Halus Lewat Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Kasir Nakal! Periksa Risiko Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Stok Berkurang Kas Kosong? Waspadai Modus Pencurian Kasir Struk Gantung"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Kasir Aman dan Terpercaya Bebas Modus Pencurian Kasir Struk Gantung"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "SOP Pelayanan Kasir Toko Ritel Cepat Ramah pada Jam Ramai",
+      "meta_title": "SOP Pelayanan Kasir Toko Ritel Cepat Ramah",
+      "meta_description": "Terapkan SOP pelayanan kasir toko ritel saat jam sibuk, standar sapaan ramah konsumen, efisiensi scanning barcode, dan teknik mempercepat antrean belanja.",
+      "slug": "sop-pelayanan-kasir-ramah-dan-cepat-antrean-panjang-toko",
+      "primary_keyword": "sop pelayanan kasir toko ritel",
+      "secondary_keywords": "standar greeting kasir toko, efisiensi antrean pembayaran ritel, pelatihan karyawan kasir pemula, kecepatan scanning barcode barang, customer service kasir",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-pelayanan-kasir-ramah-dan-cepat-antrean-panjang-toko.jpg",
+      "source_image": "photo-1556740738-b6a63e27c4df.jpg",
+      "published_at": "2026-11-19T12:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Antrean panjang di depan meja kasir bergerak sangat lambat karena staf kasir lamban memindai produk, salah memasukkan harga, dan tidak ramah melayani konsumen.",
+      "cooca_solution": "Tampilan kasir Cooca dirancang dengan antarmuka Apple HIG yang ringkas, mendukung tombol pintas keyboard, dan pencarian kilat untuk mempercepat transaksi.",
+      "selected_formula": "Customer Experience & Speed Optimization",
+      "selection_reason": "Memberikan panduan SOP praktis bagi kasir ritel agar pelayanan toko tetap ramah dan gesit bahkan di tengah serbuan antrean pelanggan.",
+      "headline_alternatives": [
+        {
+          "formula": "Customer Experience",
+          "score": 94,
+          "headline": "SOP Pelayanan Kasir Toko Ritel Cepat Ramah pada Jam Ramai"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Antrean Mengular Bikin Batal Beli? Benahi SOP Pelayanan Kasir Toko Ritel"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Pembeli Kabur dengan Menerapkan SOP Pelayanan Kasir Toko Ritel"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kasir Lamban Melayani? Terapkan Standar SOP Pelayanan Kasir Toko Ritel"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Staf Depan: SOP Pelayanan Kasir Toko Ritel yang Efisien"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Standar Transaksi 45 Detik: SOP Pelayanan Kasir Toko Ritel Modern"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Senyum Saja Tak Cukup, Ini Kunci SOP Pelayanan Kasir Toko Ritel Cepat"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Rating Toko Hancur! Perbaiki SOP Pelayanan Kasir Toko Ritel"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Jam Sibuk Bikin Panik? Gunakan SOP Pelayanan Kasir Toko Ritel Teruji"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Antrean Lancar Pembeli Puas Berkat SOP Pelayanan Kasir Toko Ritel"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Laporan Penjualan Kasir Harian dan Cara Membacanya untuk Bisnis",
+      "meta_title": "Laporan Penjualan Kasir Harian Toko Ritel",
+      "meta_description": "Pelajari cara membaca laporan penjualan kasir harian toko ritel, analisis basket size, jam penjualan puncak (peak hour), dan produk terlaris di meja kasir.",
+      "slug": "cara-membaca-laporan-penjualan-kasir-harian-sales-summary",
+      "primary_keyword": "laporan penjualan kasir harian",
+      "secondary_keywords": "analisis sales summary pos, basket size belanja pelanggan, jam puncak penjualan toko, produk terlaris kasir ritel, evaluasi kinerja kasir harian",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-membaca-laporan-penjualan-kasir-harian-sales-summary.jpg",
+      "source_image": "photo-1556742502-ec7c0e9f34b1.jpg",
+      "published_at": "2026-11-19T12:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik toko hanya melihat total uang yang masuk di mesin kasir setiap malam tanpa pernah menganalisis produk apa yang laku keras dan jam berapa toko paling ramai.",
+      "cooca_solution": "Dashboard analytics Cooca menyajikan grafik visual otomatis dari laporan kasir harian, memetakan jam sibuk, dan menampilkan ranking margin produk tertinggi.",
+      "selected_formula": "Data-Driven Decision & Sales Growth",
+      "selection_reason": "Mengubah struk closing kasir biasa menjadi sumber wawasan bisnis berharga untuk meningkatkan omzet dan efisiensi staf toko.",
+      "headline_alternatives": [
+        {
+          "formula": "Data-Driven Decision",
+          "score": 94,
+          "headline": "Laporan Penjualan Kasir Harian dan Cara Membacanya untuk Bisnis"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Struk Kasir Dibuang Begitu Saja? Maksimalkan Laporan Penjualan Kasir Harian"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 91,
+          "headline": "Hindari Salah Stok dengan Menganalisa Laporan Penjualan Kasir Harian"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jangan Cuma Cek Total Uang: Bedah Laporan Penjualan Kasir Harian Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 92,
+          "headline": "Panduan Pemilik Toko: Membaca Laporan Penjualan Kasir Harian POS"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Analisa Jam Sibuk Melalui Laporan Penjualan Kasir Harian Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bocoran Pola Belanja Pelanggan di Laporan Penjualan Kasir Harian"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Buta Data Bisnis! Periksa Laporan Penjualan Kasir Harian Rutin"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Bingung Atur Jadwal Shift? Cek Laporan Penjualan Kasir Harian Anda"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Dongkrak Profit Toko Lewat Analisa Laporan Penjualan Kasir Harian"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Keamanan Laci Kasir POS dan SOP Pembatasan Saldo Tunai di Meja",
+      "meta_title": "Keamanan Laci Kasir POS dan Batasan Kas Tunai",
+      "meta_description": "Terapkan SOP keamanan laci kasir POS toko ritel, aturan blind cash drop, batas maksimal uang tunai di meja kasir, dan proteksi dari modus perampokan.",
+      "slug": "sop-keamanan-laci-kasir-pos-pembatasan-uang-laci-kas",
+      "primary_keyword": "keamanan laci kasir pos",
+      "secondary_keywords": "sop cash drop kasir, kunci laci otomatis printer, batas uang tunai meja kasir, proteksi pencurian laci toko, keamanan kas fisik kasir pos",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-keamanan-laci-kasir-pos-pembatasan-uang-laci-kas.jpg",
+      "source_image": "photo-1556740738-b6a63e27c4df.jpg",
+      "published_at": "2026-11-19T13:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Uang tunai hasil penjualan dibiarkan menumpuk hingga puluhan juta di dalam laci kasir kasir terbuka, mengundang risiko pencurian internal maupun aksi perampokan.",
+      "cooca_solution": "Fitur Cash Drawer Limit Cooca POS memberi peringatan visual saat saldo uang fisik di laci melampaui batas aman dan mewajibkan serah terima cash drop.",
+      "selected_formula": "Risk Mitigation & Physical Security",
+      "selection_reason": "Menyajikan SOP keamanan fisik yang sangat penting bagi keselamatan kasir dan pencegahan kerugian uang tunai dalam jumlah besar.",
+      "headline_alternatives": [
+        {
+          "formula": "Risk Mitigation",
+          "score": 94,
+          "headline": "Keamanan Laci Kasir POS dan SOP Pembatasan Saldo Tunai di Meja"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Uang Numpuk di Meja Kasir? Waktunya Benahi Keamanan Laci Kasir POS"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Cegah Kerugian Perampokan Lewat Prosedur Keamanan Laci Kasir POS"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Bahaya Biarkan Laci Terbuka: Kunci Keamanan Laci Kasir POS Toko Ritel"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "SOP Blind Cash Drop: Menjaga Keamanan Laci Kasir POS dan Staf"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Plafon Maksimal 2 Juta: Standar Keamanan Laci Kasir POS Modern"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kasir Rawan Diincar Pelaku Kriminal Tanpa Keamanan Laci Kasir POS"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Uang Tunai Lenyap! Periksa Sistem Keamanan Laci Kasir POS"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Laci Kasir Sering Berantakan? Standarisasi Keamanan Laci Kasir POS"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Transaksi Aman Nyaman Berkat SOP Keamanan Laci Kasir POS Rapi"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Transaksi QRIS Gagal Saldo Terpotong dan Solusi Kasir Mengatasinya",
+      "meta_title": "Transaksi QRIS Gagal Saldo Terpotong Kasir",
+      "meta_description": "Panduan kasir mengatasi transaksi QRIS gagal saldo terpotong pelanggan, pemeriksaan Retrieval Reference Number (RRN), dan alur pengajuan klaim perbankan.",
+      "slug": "cara-menangani-transaksi-gagal-qris-pelanggan-terpotong-saldo",
+      "primary_keyword": "transaksi qris gagal saldo terpotong",
+      "secondary_keywords": "cek nomor rrn qris kasir, komplain saldo terpotong merchant, qris pending pos kasir, pengembalian dana transaksi digital, sop sengketa qris toko",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menangani-transaksi-gagal-qris-pelanggan-terpotong-saldo.jpg",
+      "source_image": "photo-1556742502-ec7c0e9f34b1.jpg",
+      "published_at": "2026-11-19T13:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pelanggan ngotot sudah membayar karena saldo e-wallet miliknya berkurang, tetapi notifikasi transaksi belum masuk ke mesin POS kasir sehingga terjadi perselisihan.",
+      "cooca_solution": "Cooca QRIS Gateway terintegrasi langsung dengan webhook bank yang menampilkan status transaksi secara real-time dan menerbitkan tiket dispute otomatis.",
+      "selected_formula": "Conflict Resolution & Technical SOP",
+      "selection_reason": "Menjawab situasi paling canggung dan menegangkan di kasir antara staf toko dan pembeli saat pembayaran digital mengalami kegagalan teknis.",
+      "headline_alternatives": [
+        {
+          "formula": "Conflict Resolution",
+          "score": 95,
+          "headline": "Transaksi QRIS Gagal Saldo Terpotong dan Solusi Kasir Mengatasinya"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Pelanggan Ngotot Bayar? Cara Tangani Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Rugi Dobel Transaksi: Atasi Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jangan Panik! Ini Alur Tepat Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Kasir Cek RRN Saat Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Standar Tiket Dispute: Penanganan Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Saldo Hilang Kemana? Fakta di Balik Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Kasir Teledor! Waspadai Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Antrean Kasir Macet Karena Dispute? Cek Transaksi QRIS Gagal Saldo Terpotong"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Pelanggan Tenang dan Puas Hadapi Transaksi QRIS Gagal Saldo Terpotong"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Audit Transaksi Void Kasir Toko untuk Mendeteksi Pola Kecurangan",
+      "meta_title": "Audit Transaksi Void Kasir Toko Deteksi Fraud",
+      "meta_description": "Ketahui cara audit transaksi void kasir toko ritel, mengenali pola pembatalan nota fiktif, serta penguncian izin pembatalan struk oleh supervisor.",
+      "slug": "cara-mengaudit-transaksi-void-kasir-toko-pola-kecurangan",
+      "primary_keyword": "audit transaksi void kasir toko",
+      "secondary_keywords": "fraud pembatalan nota kasir, pin supervisor void pos, modus manipulasi struk belanja, evaluasi kasir frekuensi void, proteksi transaksi ritel",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mengaudit-transaksi-void-kasir-toko-pola-kecurangan.jpg",
+      "source_image": "photo-1556740738-b6a63e27c4df.jpg",
+      "published_at": "2026-11-19T13:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Kasir melakukan void atau pembatalan transaksi berulang kali saat pemilik toko tidak di tempat untuk menggelapkan uang tunai yang sudah dibayarkan pembeli.",
+      "cooca_solution": "Cooca membatasi fungsi void dengan enkripsi supervisor PIN dan mengirimkan laporan push notification seketika ke ponsel pemilik toko saat terjadi pembatalan nota.",
+      "selected_formula": "Fraud Detection & Internal Control",
+      "selection_reason": "Membongkar celah pembatalan nota (void) yang sering disalahgunakan staf kasir nakal untuk mencuri uang tunai tanpa merusak laporan stok.",
+      "headline_alternatives": [
+        {
+          "formula": "Fraud Detection",
+          "score": 95,
+          "headline": "Audit Transaksi Void Kasir Toko untuk Mendeteksi Pola Kecurangan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Nota Sering Dibatalkan? Segera Lakukan Audit Transaksi Void Kasir Toko"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hentikan Pencurian Terselubung Lewat Audit Transaksi Void Kasir Toko"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Celah Fitur Void Terabaikan: Pentingnya Audit Transaksi Void Kasir Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Pengawasan Finansial: Audit Transaksi Void Kasir Toko Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Analisa Rasio Void Staf: Cara Audit Transaksi Void Kasir Toko Modern"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Void Fiktif Kuras Untung Toko: Bongkar dengan Audit Transaksi Void Kasir"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Kasbon Tak Tercatat! Rutin Jalankan Audit Transaksi Void Kasir Toko"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Uang Laci Berkurang Diam-Diam? Saatnya Audit Transaksi Void Kasir Toko"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Operasional Kasir Bersih Transparan Melalui Audit Transaksi Void Kasir Toko"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "pillar": "Pilar 3: Kasir, POS & Kontrol Fraud",
+      "category": "Kasir & POS",
+      "title": "Penggunaan Barcode Scanner Kasir agar Transaksi Cepat dan Akurat",
+      "meta_title": "Penggunaan Barcode Scanner Kasir Toko Ritel",
+      "meta_description": "Pelajari tips penggunaan barcode scanner kasir toko ritel, pengaturan sudut pemindaian, perawatan lensa optik, dan penanganan barcode kemasan rusak.",
+      "slug": "sop-penggunaan-barcode-scanner-kasir-cepat-dan-akurat",
+      "primary_keyword": "penggunaan barcode scanner kasir",
+      "secondary_keywords": "scanner barcode wireless bluetooth, kalibrasi pemindai kasir pos, cara scan barcode cepat, perawatan scanner optik toko, input kode produk manual kasir",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-penggunaan-barcode-scanner-kasir-cepat-dan-akurat.jpg",
+      "source_image": "photo-1556742502-ec7c0e9f34b1.jpg",
+      "published_at": "2026-11-19T13:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Scanner kasir sering gagal membaca kode barcode pada kemasan lecek atau berminyak, memaksa kasir mengetik angka secara manual dan memperlambat antrean toko.",
+      "cooca_solution": "Cooca POS mendukung integrasi barcode scanner omnidirectional dan teknologi auto-focus kamera tablet untuk pemindaian instan segala kondisi barcode.",
+      "selected_formula": "Operational Efficiency & Hardware Guide",
+      "selection_reason": "Memberikan panduan teknis yang sangat bermanfaat bagi operator kasir toko retail dalam mengoperasikan dan merawat alat pemindai kode barang.",
+      "headline_alternatives": [
+        {
+          "formula": "Operational Efficiency",
+          "score": 94,
+          "headline": "Penggunaan Barcode Scanner Kasir agar Transaksi Cepat dan Akurat"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Barcode Sulit Terbaca? Optimalkan Penggunaan Barcode Scanner Kasir Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 91,
+          "headline": "Cegah Antrean Macet Melalui SOP Penggunaan Barcode Scanner Kasir Tepat"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Sudut Pindai? Benahi Teknik Penggunaan Barcode Scanner Kasir"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 92,
+          "headline": "Panduan Praktis Kasir Toko: Penggunaan Barcode Scanner Kasir Modern"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Scan Sekali Tempel: Trik Penggunaan Barcode Scanner Kasir Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kaca Pemindai Kotor Bikin Lambat? Rawat Penggunaan Barcode Scanner Kasir"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Salah Input Barang! Maksimalkan Penggunaan Barcode Scanner Kasir"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Kemasan Lecek Bikin Pusing? Solusi Penggunaan Barcode Scanner Kasir Cerdas"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Kasir Gesit dan Tanggap Berkat Penggunaan Barcode Scanner Kasir Andal"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Cara Mengurus Izin Edar PIRT Makanan Olahan Kemasan bagi UMKM",
+      "meta_title": "Cara Mengurus Izin Edar PIRT Makanan Olahan",
+      "meta_description": "Panduan lengkap cara mengurus izin edar PIRT makanan olahan rumahan, persyaratan SPP-PIRT di OSS RBA, sertifikat PKP, dan standar label kemasan wajib.",
+      "slug": "cara-mengurus-izin-edar-pirt-makanan-olahan-kemasan-umkm",
+      "primary_keyword": "cara mengurus izin edar pirt",
+      "secondary_keywords": "syarat spp pirt dinkes, izin pangan industri rumah tangga, pengajuan pirt di oss rba, sertifikat penyuluhan keamanan pangan, label kemasan pirt legal",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mengurus-izin-edar-pirt-makanan-olahan-kemasan-umkm.jpg",
+      "source_image": "photo-1486406146926-c627a92ad1ab.jpg",
+      "published_at": "2026-11-19T14:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Produk camilan atau frozen food rumahan ditolak masuk ke rak supermarket atau disita dinas terkait karena belum mengantongi nomor izin edar SPP-PIRT resmi.",
+      "cooca_solution": "Cooca mencatat nomor registrasi PIRT dan masa berlaku izin pada database master produk dan otomatis mencetaknya pada label barcode kemasan.",
+      "selected_formula": "Regulatory Evergreen & Practical Steps",
+      "selection_reason": "Kebutuhan perizinan dasar paling dicari oleh ratusan ribu produsen makanan dan minuman skala rumahan di Indonesia.",
+      "headline_alternatives": [
+        {
+          "formula": "Regulatory Guide",
+          "score": 95,
+          "headline": "Cara Mengurus Izin Edar PIRT Makanan Olahan Kemasan bagi UMKM"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Produk Ditolak Supermarket? Pahami Cara Mengurus Izin Edar PIRT Resmi"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hindari Razia dan Sita Barang Lewat Cara Mengurus Izin Edar PIRT Makanan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Format Label Kemasan? Pelajari Cara Mengurus Izin Edar PIRT Benar"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 92,
+          "headline": "Langkah Mudah di OSS: Cara Mengurus Izin Edar PIRT Usaha Rumahan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 91,
+          "headline": "Syarat SPP-PIRT Dinkes: Cara Mengurus Izin Edar PIRT Produk Pangan"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bisa Diajukan Gratis! Begini Sebenarnya Cara Mengurus Izin Edar PIRT"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Sanksi Pidana Pangan! Segera Pahami Cara Mengurus Izin Edar PIRT"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Mau Titip Jual di Toko Modern? Ini Cara Mengurus Izin Edar PIRT Anda"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Produk Naik Kelas dan Legal Berkat Cara Mengurus Izin Edar PIRT"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Kewajiban Pemilik Usaha terhadap Karyawan Sesuai Aturan Ketenagakerjaan",
+      "meta_title": "Kewajiban Pemilik Usaha terhadap Karyawan",
+      "meta_description": "Pahami kewajiban pemilik usaha terhadap karyawan toko dan UMKM sesuai undang-undang, batas jam kerja, hak cuti istirahat, serta upah minimum usaha mikro.",
+      "slug": "hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja",
+      "primary_keyword": "kewajiban pemilik usaha terhadap karyawan",
+      "secondary_keywords": "aturan ketenagakerjaan umkm, jam kerja karyawan toko ritel, hak lembur staf warung, upah usaha mikro kecil, kompensasi kerja pkwt toko",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja.jpg",
+      "source_image": "photo-1589829545856-d10d557cf95f.jpg",
+      "published_at": "2026-11-19T14:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik usaha sering dilaporkan staf ke dinas tenaga kerja karena mempekerjakan karyawan lebih dari 12 jam sehari tanpa uang lembur dan tanpa jaminan perlindungan.",
+      "cooca_solution": "Fitur penjadwalan shift dan presensi Cooca mengunci kuota 40 jam kerja per minggu dan otomatis menghitung kompensasi lembur sesuai ketentuan hukum.",
+      "selected_formula": "Legal Protection & Employee Welfare",
+      "selection_reason": "Memberikan pemahaman hukum perburuhan yang seimbang agar pengusaha terhindar dari sengketa industrial yang merusak reputasi.",
+      "headline_alternatives": [
+        {
+          "formula": "Legal Protection",
+          "score": 94,
+          "headline": "Kewajiban Pemilik Usaha terhadap Karyawan Sesuai Aturan Ketenagakerjaan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Takut Dituntut Karyawan? Kenali Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Sengketa Ketenagakerjaan Lewat Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jam Kerja Berlebih Tanpa Lembur? Evaluasi Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan HR Toko: Memahami Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Standar Upah Usaha Mikro: Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "UMKM Punya Aturan Khusus, Ini Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Denda Dinas Tenaga Kerja! Patuhi Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Hubungan Kerja Sering Kisruh? Pahami Kewajiban Pemilik Usaha terhadap Karyawan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Bisnis Harmonis dan Berkah Berkat Kewajiban Pemilik Usaha terhadap Karyawan"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "BPJS Ketenagakerjaan Karyawan Toko dan Cara Pendaftaran Murah",
+      "meta_title": "BPJS Ketenagakerjaan Karyawan Toko dan Warung",
+      "meta_description": "Panduan mendaftarkan BPJS Ketenagakerjaan karyawan toko dan warung, program JKK dan JKM dengan iuran terjangkau, serta perlindungan risiko kerja UMKM.",
+      "slug": "cara-mendaftarkan-bpjs-ketenagakerjaan-karyawan-toko-warung",
+      "primary_keyword": "bpjs ketenagakerjaan karyawan toko",
+      "secondary_keywords": "iuran jkk jkm usaha kecil, perlindungan kecelakaan kerja toko, daftar bpjs ketenagakerjaan online umkm, jaminan kematian karyawan warung, kepatuhan jaminan sosial",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mendaftarkan-bpjs-ketenagakerjaan-karyawan-toko-warung.jpg",
+      "source_image": "photo-1486406146926-c627a92ad1ab.jpg",
+      "published_at": "2026-11-19T14:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Saat terjadi kecelakaan kerja pengantaran barang atau staf terpeleset di toko, pemilik usaha terpaksa menanggung biaya rumah sakit puluhan juta rupiah dari kantong pribadi.",
+      "cooca_solution": "Modul payroll Cooca menghitung otomatis iuran JKK dan JKM BPJS Ketenagakerjaan bulanan yang sangat terjangkau (mulai Rp10 ribuan per karyawan).",
+      "selected_formula": "Risk Protection & Low Cost Welfare",
+      "selection_reason": "Edukasi penting bahwa mengasuransikan karyawan toko tidaklah mahal dan melindungi pemilik usaha dari risiko kerugian finansial mendadak.",
+      "headline_alternatives": [
+        {
+          "formula": "Risk Protection",
+          "score": 94,
+          "headline": "BPJS Ketenagakerjaan Karyawan Toko dan Cara Pendaftaran Murah"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Cuma Belasan Ribu Rupiah? Daftarkan BPJS Ketenagakerjaan Karyawan Toko"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hindari Biaya Rumah Sakit Karyawan Lewat BPJS Ketenagakerjaan Karyawan Toko"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jangan Tunggu Kecelakaan Kerja: Wajib Ada BPJS Ketenagakerjaan Karyawan Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Daftar Online: BPJS Ketenagakerjaan Karyawan Toko dan Warung"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Paket JKK dan JKM Terjangkau: BPJS Ketenagakerjaan Karyawan Toko Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Warung Kecil Juga Bisa Daftar BPJS Ketenagakerjaan Karyawan Toko"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Tanggung Biaya Medis Mandiri Tanpa BPJS Ketenagakerjaan Karyawan Toko"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Staf Kurir Sering Celaka di Jalan? Lindungi dengan BPJS Ketenagakerjaan Toko"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Tenang Berbisnis Berkat Perlindungan BPJS Ketenagakerjaan Karyawan Toko"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Memilih Bentuk Usaha UD CV PT Perorangan yang Cocok untuk UMKM",
+      "meta_title": "Memilih Bentuk Usaha UD CV PT Perorangan UMKM",
+      "meta_description": "Ketahui panduan memilih bentuk usaha UD, CV, atau PT Perorangan bagi UMKM, perbandingan tanggung jawab modal pribadi, biaya akta, dan kemudahan rekening bank.",
+      "slug": "panduan-memilih-bentuk-usaha-ud-cv-pt-perorangan-umkm",
+      "primary_keyword": "memilih bentuk usaha ud cv pt perorangan",
+      "secondary_keywords": "perbedaan ud cv pt perorangan, pendirian pt perorangan kemenkumham, badan usaha legalitas umkm, pemisahan harta pemilik bisnis, syarat buka rekening bank pt",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/panduan-memilih-bentuk-usaha-ud-cv-pt-perorangan-umkm.jpg",
+      "source_image": "photo-1589829545856-d10d557cf95f.jpg",
+      "published_at": "2026-11-19T14:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik usaha bingung memilih legalitas badan usaha yang tepat saat ingin mengajukan tender B2B atau membuka rekening bank korporat untuk bisnisnya.",
+      "cooca_solution": "Cooca mendukung struktur entitas bisnis perorangan maupun badan hukum lengkap dengan format NPWP, NIB, dan profil faktur komersial terverifikasi.",
+      "selected_formula": "Comparison & Legal Strategy",
+      "selection_reason": "Menjadi panduan komparatif komprehensif bagi pelaku usaha yang ingin naik kelas dari usaha informal menjadi entitas formal terdaftar.",
+      "headline_alternatives": [
+        {
+          "formula": "Comparison",
+          "score": 95,
+          "headline": "Memilih Bentuk Usaha UD CV PT Perorangan yang Cocok untuk UMKM"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Mau Naik Kelas? Panduan Memilih Bentuk Usaha UD CV PT Perorangan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Lindungi Aset Pribadi Lewat Memilih Bentuk Usaha UD CV PT Perorangan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Salah Pilih Badan Usaha? Cermati Memilih Bentuk Usaha UD CV PT Perorangan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Legalitas Bisnis: Memilih Bentuk Usaha UD CV PT Perorangan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Perbandingan Biaya dan Tanggung Jawab: Memilih Bentuk Usaha UD CV PT"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "PT Perorangan Cuma 50 Ribu? Pahami Memilih Bentuk Usaha UD CV PT"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Aset Rumah Disita Utang! Cermat Memilih Bentuk Usaha UD CV PT"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Gagal Menang Tender B2B? Mulai Memilih Bentuk Usaha UD CV PT Perorangan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Bisnis Kredibel dan Bonafide Berkat Memilih Bentuk Usaha UD CV PT Tepat"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Bebas PPh Final Omzet 500 Juta bagi Wajib Pajak Orang Pribadi UMKM",
+      "meta_title": "Bebas PPh Final Omzet 500 Juta UMKM PP 55",
+      "meta_description": "Pelajari aturan fasilitas bebas PPh final omzet 500 juta bagi UMKM orang pribadi sesuai PP 55/2022, cara pencatatan akumulasi peredaran bruto, dan syaratnya.",
+      "slug": "syarat-cara-bebas-pph-final-omzet-di-bawah-500-juta",
+      "primary_keyword": "bebas pph final omzet 500 juta",
+      "secondary_keywords": "pph final 0 koma 5 persen umkm, batasan peredaran bruto tidak kena pajak, ketentuan pp nomor 55 tahun 2022, pencatatan omzet tahunan toko, pelaporan spt tahunan umkm",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/syarat-cara-bebas-pph-final-omzet-di-bawah-500-juta.jpg",
+      "source_image": "photo-1486406146926-c627a92ad1ab.jpg",
+      "published_at": "2026-11-19T15:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik usaha orang pribadi masih rutin menyetor PPh Final 0,5% sejak bulan Januari, padahal omzet kumulatif tahunannya belum menembus ambang batas Rp500 juta.",
+      "cooca_solution": "Modul perpajakan Cooca melacak akumulasi omzet tahun kalender secara real-time dan hanya menghitung tagihan PPh Final setelah omzet melewati Rp500 juta.",
+      "selected_formula": "Tax Saving & Financial Benefit",
+      "selection_reason": "Memberikan edukasi insentif pajak resmi dari pemerintah Indonesia yang sangat menguntungkan namun masih banyak belum dipahami pemilik warung.",
+      "headline_alternatives": [
+        {
+          "formula": "Tax Saving",
+          "score": 95,
+          "headline": "Bebas PPh Final Omzet 500 Juta bagi Wajib Pajak Orang Pribadi UMKM"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 91,
+          "headline": "Jangan Bayar Pajak Dulu! Manfaatkan Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Bayar Lebih Pajak Toko Lewat Fasilitas Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Rutin Setor Tiap Bulan? Cek Hak Bebas PPh Final Omzet 500 Juta Anda"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Panduan Pencatatan Omzet untuk Fasilitas Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Specificity",
+          "score": 93,
+          "headline": "Sesuai PP 55/2022: Ketentuan Bebas PPh Final Omzet 500 Juta UMKM"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Fasilitas Resmi Pemerintah: Aturan Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Salah Lapor SPT! Pahami Mekanisme Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Bingung Hitung Pajak Warung? Manfaatkan Bebas PPh Final Omzet 500 Juta"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Kelola Pajak Cerdas dan Legal Melalui Bebas PPh Final Omzet 500 Juta"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Surat Penawaran Harga B2B Profesional agar Tender Proyek Diterima",
+      "meta_title": "Surat Penawaran Harga B2B Profesional UMKM",
+      "meta_description": "Simak contoh dan format surat penawaran harga B2B resmi untuk pengadaan barang, komponen spesifikasi teknis, termin pembayaran DP, dan masa berlaku harga.",
+      "slug": "format-surat-penawaran-harga-quotation-resmi-b2b-umkm",
+      "primary_keyword": "surat penawaran harga b2b",
+      "secondary_keywords": "format quotation resmi pengadaan, contoh surat penawaran barang jasa, syarat penyerahan barang incoterms, klausul termin pembayaran b2b, invoice penawaran harga",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm.jpg",
+      "source_image": "photo-1589829545856-d10d557cf95f.jpg",
+      "published_at": "2026-11-19T15:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Penawaran harga ke klien korporat atau instansi pemerintah ditolak karena hanya dikirim via chat WhatsApp biasa tanpa dokumen quotation resmi berkop surat.",
+      "cooca_solution": "Fitur Quotation Cooca menghasilkan surat penawaran harga PDF profesional berstandar korporat yang dapat langsung dikonversi menjadi Sales Order dan Invoice.",
+      "selected_formula": "Professional B2B & Deal Closing",
+      "selection_reason": "Membantu UMKM bertransformasi dari pedagang eceran informal menjadi supplier korporat tepercaya dengan dokumen penawaran harga standar.",
+      "headline_alternatives": [
+        {
+          "formula": "Professional B2B",
+          "score": 94,
+          "headline": "Surat Penawaran Harga B2B Profesional agar Tender Proyek Diterima"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Klien Korporat Tolak Penawaran? Perbaiki Format Surat Penawaran Harga B2B"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Jangan Kehilangan Proyek Besar: Buat Surat Penawaran Harga B2B Resmi"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kirim Harga di Chat WA? Saatnya Buat Surat Penawaran Harga B2B Standar"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Contoh Template Lengkap: Menyusun Surat Penawaran Harga B2B Sukses"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Klausul Termin Pembayaran dalam Surat Penawaran Harga B2B Pengadaan"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Kop Surat Tingkatkan Kepercayaan: Rahasia Surat Penawaran Harga B2B"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Salah Cantumkan Masa Berlaku pada Surat Penawaran Harga B2B"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Tender Pengadaan Selalu Kalah? Rombak Surat Penawaran Harga B2B Anda"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Tembus Pasar Pengadaan Korporat Berkat Surat Penawaran Harga B2B"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Cara Menghitung PPh Pasal 21 Karyawan Toko Bulanan dan Harian",
+      "meta_title": "Cara Menghitung PPh Pasal 21 Karyawan Toko",
+      "meta_description": "Pelajari cara menghitung PPh Pasal 21 karyawan toko bulanan dan harian lepas, simulasi Tarif Efektif Rata-Rata (TER) terbaru, serta batas PTKP upah kerja.",
+      "slug": "cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan",
+      "primary_keyword": "cara menghitung pph pasal 21 karyawan toko",
+      "secondary_keywords": "tarif efektif rata rata ter djp, potongan pajak gaji karyawan toko, pph 21 pegawai harian lepas, bukti potong 1721 a1 umkm, perhitungan ptkp gaji ritel",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan.jpg",
+      "source_image": "photo-1486406146926-c627a92ad1ab.jpg",
+      "published_at": "2026-11-19T15:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik toko bingung memotong pajak penghasilan gaji stafnya setelah berlakunya sistem Tarif Efektif Rata-Rata (TER) dan takut salah membuat bukti potong pajak.",
+      "cooca_solution": "Mesin payroll Cooca otomatis mengalkulasi potongan PPh 21 bulanan sesuai tabel kategori TER A/B/C dan menghasilkan slip gaji bersih (Take Home Pay) instan.",
+      "selected_formula": "Tax Compliance & Payroll Accuracy",
+      "selection_reason": "Memberikan panduan penghitungan pajak gaji staf toko dengan skema aturan TER terbaru yang sering membingungkan bagian administrasi.",
+      "headline_alternatives": [
+        {
+          "formula": "Tax Compliance",
+          "score": 94,
+          "headline": "Cara Menghitung PPh Pasal 21 Karyawan Toko Bulanan dan Harian"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Skema TER Bikin Bingung? Ini Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Denda Kurang Bayar Pajak Lewat Cara Menghitung PPh Pasal 21 Karyawan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Potong Gaji Terlalu Besar? Evaluasi Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Slip Gaji: Cara Menghitung PPh Pasal 21 Karyawan Toko Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 93,
+          "headline": "Tabel TER Terbaru: Pahami Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Gaji Lepas Bebas Pajak? Cek Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Sanksi SPT Masa! Pelajari Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Administrasi Gaji Ruwet? Saatnya Kuasai Cara Menghitung PPh Pasal 21 Toko"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Penggajian Tertib Hukum Berkat Cara Menghitung PPh Pasal 21 Karyawan Toko"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "pillar": "Pilar 4: Legalitas, Perizinan & Kepatuhan Pajak",
+      "category": "Pajak & Legalitas",
+      "title": "Surat Perjanjian Kerahasiaan Resep Kuliner agar Tidak Dibajak",
+      "meta_title": "Surat Perjanjian Kerahasiaan Resep Kuliner NDA",
+      "meta_description": "Lindungi rahasia dapur lewat surat perjanjian kerahasiaan resep kuliner (NDA), klausul larangan buka usaha sejenis, dan sanksi hukum pembajakan bumbu UMKM.",
+      "slug": "sop-surat-perjanjian-kerahasiaan-nda-resep-usaha-kuliner",
+      "primary_keyword": "surat perjanjian kerahasiaan resep kuliner",
+      "secondary_keywords": "non disclosure agreement usaha fnb, perlindungan rahasia dagang bumbu, klausul non compete karyawan dapur, cegah koki curi resep kafe, hukum perlindungan kuliner",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-surat-perjanjian-kerahasiaan-nda-resep-usaha-kuliner.jpg",
+      "source_image": "photo-1589829545856-d10d557cf95f.jpg",
+      "published_at": "2026-11-19T15:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Mantan juru masak atau karyawan kunci keluar dan membuka usaha kuliner yang persis sama di seberang jalan dengan resep dan bumbu racikan milik restoran lama.",
+      "cooca_solution": "Cooca membatasi akses komposisi formula resep rahasia di dapur dengan hak akses RBAC dan menyediakan arsip digital surat perjanjian kerahasiaan karyawan.",
+      "selected_formula": "Asset Protection & Legal Safeguard",
+      "selection_reason": "Menjawab trauma terbesar pemilik usaha kuliner di Indonesia yang resep andalannya dicuri dan diduplikasi oleh mantan karyawan sendiri.",
+      "headline_alternatives": [
+        {
+          "formula": "Asset Protection",
+          "score": 95,
+          "headline": "Surat Perjanjian Kerahasiaan Resep Kuliner agar Tidak Dibajak"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 91,
+          "headline": "Mantan Koki Buka Cabang Saingan? Lindungi dengan Surat Perjanjian Kerahasiaan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Amankan Aset Bumbu Dapur Lewat Surat Perjanjian Kerahasiaan Resep Kuliner"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Percaya Tanpa Kontrak? Wajib Punya Surat Perjanjian Kerahasiaan Resep Kuliner"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 90,
+          "headline": "Contoh Klausul Baku: Surat Perjanjian Kerahasiaan Resep Kuliner Resto"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Klausul Non-Compete: Menyusun Surat Perjanjian Kerahasiaan Resep Kuliner"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Resep Bisa Dilindungi Hukum! Ini Surat Perjanjian Kerahasiaan Resep Kuliner"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Formula Rahasia Bocor! Terapkan Surat Perjanjian Kerahasiaan Kuliner"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Karyawan Kunci Mau Resign? Siapkan Surat Perjanjian Kerahasiaan Resep"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Bisnis Kuliner Aman Terlindungi Berkat Surat Perjanjian Kerahasiaan Resep"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "CRM & Loyalty",
+      "title": "Mengumpulkan Database WhatsApp Pelanggan Kasir secara Ramah",
+      "meta_title": "Mengumpulkan Database WhatsApp Pelanggan Kasir",
+      "meta_description": "Pelajari teknik mengumpulkan database WhatsApp pelanggan kasir toko ritel, penawaran struk digital, hadiah poin loyalitas, dan etika privasi data kontak.",
+      "slug": "cara-mengumpulkan-database-whatsapp-pelanggan-kasir-ramah",
+      "primary_keyword": "mengumpulkan database whatsapp pelanggan",
+      "secondary_keywords": "struk digital whatsapp pos, cara minta no wa pembeli kasir, membership database pelanggan toko, etika broadcast whatsapp bisnis, loyalty program ritel",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-mengumpulkan-database-whatsapp-pelanggan-kasir-ramah.jpg",
+      "source_image": "photo-1611746872915-64382b5c76da.jpg",
+      "published_at": "2026-11-19T16:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Ribuan transaksi terjadi di toko setiap bulan tetapi kasir tidak pernah mencatat nomor kontak pembeli, sehingga toko tidak bisa melakukan promosi ulang saat sepi.",
+      "cooca_solution": "Cooca POS menawarkan pengiriman e-receipt resmi langsung ke WhatsApp pembeli secara otomatis, mencatat nomor ponsel ke database CRM tanpa repot.",
+      "selected_formula": "Customer Acquisition & Digital Retention",
+      "selection_reason": "Membantu toko ritel membangun aset terpenting bisnis modern yaitu database kontak pelanggan yang dapat dihubungi kapan saja.",
+      "headline_alternatives": [
+        {
+          "formula": "Customer Acquisition",
+          "score": 94,
+          "headline": "Mengumpulkan Database WhatsApp Pelanggan Kasir secara Ramah"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Pembeli Datang Lalu Hilang? Mulai Mengumpulkan Database WhatsApp Pelanggan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Jangan Buang Peluang Repeat Order: Kuasai Mengumpulkan Database WhatsApp Pelanggan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Hanya Kasih Struk Kertas? Saatnya Mengumpulkan Database WhatsApp Pelanggan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Trik Meja Kasir: Cara Santun Mengumpulkan Database WhatsApp Pelanggan"
+        },
+        {
+          "formula": "Specificity",
+          "score": 89,
+          "headline": "Melalui Struk Digital: Trik Mengumpulkan Database WhatsApp Pelanggan Ritel"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Bukan Bikin Risih, Ini Seni Mengumpulkan Database WhatsApp Pelanggan Toko"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Iklan Mahal Sia-Sia Tanpa Mengumpulkan Database WhatsApp Pelanggan"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Toko Sepi Bingung Hubungi Siapa? Mulai Mengumpulkan Database WhatsApp"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Aset Kontak Bernilai Tinggi Lewat Mengumpulkan Database WhatsApp Pelanggan"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Invoice, PO & SO",
+      "title": "Harga Khusus Pelanggan Grosir Berdasarkan Volume Belanja Toko",
+      "meta_title": "Harga Khusus Pelanggan Grosir Volume Belanja",
+      "meta_description": "Ketahui strategi menetapkan harga khusus pelanggan grosir toko, syarat minimal order quantity (MOQ), tiering harga bertingkat, dan proteksi margin laba.",
+      "slug": "strategi-harga-khusus-pelanggan-grosir-volume-belanja-toko",
+      "primary_keyword": "harga khusus pelanggan grosir",
+      "secondary_keywords": "tier pricing kuantiti barang, minimal pembelian grosir moq, diskon volume pedagang, penetapan harga jual bertingkat, kelola pelanggan b2b toko",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/strategi-harga-khusus-pelanggan-grosir-volume-belanja-toko.jpg",
+      "source_image": "photo-1556740758-90de374c12ad.jpg",
+      "published_at": "2026-11-19T16:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pedagang grosir memberikan potongan harga sembarangan kepada pembeli partai besar tanpa hitungan matang, sehingga volume penjualan tinggi tetapi margin laba minus.",
+      "cooca_solution": "Fitur Multi-Tier Pricing Cooca otomatis menerapkan harga khusus saat kuantiti pembelian di kasir mencapai batas minimal tier grosir yang telah ditetapkan.",
+      "selected_formula": "Pricing Strategy & Wholesale Growth",
+      "selection_reason": "Memberikan panduan penetapan skema harga grosir (tier pricing) yang menguntungkan kedua belah pihak tanpa mengorbankan margin toko.",
+      "headline_alternatives": [
+        {
+          "formula": "Pricing Strategy",
+          "score": 94,
+          "headline": "Harga Khusus Pelanggan Grosir Berdasarkan Volume Belanja Toko"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Jual Banyak tapi Tekor? Atur Ulang Harga Khusus Pelanggan Grosir Anda"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Cegah Margin Jebol Saat Memberikan Harga Khusus Pelanggan Grosir"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Diskon Partai Tanpa Syarat MOQ? Kunci Aman Harga Khusus Pelanggan Grosir"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Tier Pricing: Menentukan Harga Khusus Pelanggan Grosir Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Skema 3 Tingkat Kuantiti: Aturan Harga Khusus Pelanggan Grosir Toko"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Volume Naik Cuan Maksimal Lewat Formula Harga Khusus Pelanggan Grosir"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas HPP Terlewati! Teliti Saat Membuat Harga Khusus Pelanggan Grosir"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Pembeli Borongan Minta Murah? Jawab dengan Harga Khusus Pelanggan Grosir"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Skalakan Omzet Toko B2B Berkat Harga Khusus Pelanggan Grosir yang Pas"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "CRM & Loyalty",
+      "title": "Cara Menghitung Rasio Retensi Pelanggan agar Toko Tetap Ramai",
+      "meta_title": "Cara Menghitung Rasio Retensi Pelanggan Toko",
+      "meta_description": "Pelajari cara menghitung rasio retensi pelanggan (Customer Retention Rate), rumus retensi toko ritel, dan strategi mencegah churn pelanggan setia usaha.",
+      "slug": "cara-menghitung-rasio-retensi-pelanggan-toko-ritel-umkm",
+      "primary_keyword": "cara menghitung rasio retensi pelanggan",
+      "secondary_keywords": "rumus customer retention rate crr, kurangi churn pelanggan toko, tingkat belanja ulang ritel, metrik loyalitas konsumen umkm, evaluasi retensi pembeli",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-menghitung-rasio-retensi-pelanggan-toko-ritel-umkm.jpg",
+      "source_image": "photo-1521791136064-7986c2920216.jpg",
+      "published_at": "2026-11-19T16:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik usaha terus menghabiskan uang jutaan rupiah untuk iklan mencari pelanggan baru, tanpa menyadari bahwa 70% pelanggan lamanya tidak pernah kembali belanja.",
+      "cooca_solution": "Modul RFM Cooca mengelompokkan pelanggan setia dan pelanggan yang mulai dorman secara otomatis, memudahkan kampanye retensi tepat sasaran.",
+      "selected_formula": "Customer Retention & Cost Efficiency",
+      "selection_reason": "Menjelaskan rumus retensi pelanggan yang membuktikan bahwa mempertahankan pembeli lama jauh lebih hemat daripada terus mencari pembeli baru.",
+      "headline_alternatives": [
+        {
+          "formula": "Customer Retention",
+          "score": 94,
+          "headline": "Cara Menghitung Rasio Retensi Pelanggan agar Toko Tetap Ramai"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Pelanggan Lama Kabur Kemana? Ini Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Hentikan Boncos Biaya Iklan Lewat Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Fokus Pembeli Baru Saja? Cermati Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Metrik CRM: Cara Menghitung Rasio Retensi Pelanggan Ritel"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Rumus CRR Sederhana: Pelajari Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Pembeli Setia Sumbang 80% Laba: Tahu Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Churn Rate Tinggi! Rutin Cek Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Toko Sepi Padahal Promosi Jalan? Audit Cara Menghitung Rasio Retensi Pelanggan"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Bisnis Stabil Berkelanjutan Melalui Cara Menghitung Rasio Retensi Pelanggan"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Strategi & Operasional",
+      "title": "SOP Pengemasan Paket Pesanan Online Aman dan Ramah Ongkir",
+      "meta_title": "SOP Pengemasan Paket Pesanan Online Aman Ongkir",
+      "meta_description": "Terapkan SOP pengemasan paket pesanan online toko, teknik packing bubble wrap efisien, perhitungan volume metrik kurir, dan pencegahan komplain barang pecah.",
+      "slug": "sop-pengemasan-paket-pesanan-online-aman-ekspedisi-murah",
+      "primary_keyword": "sop pengemasan paket pesanan online",
+      "secondary_keywords": "packing paket aman ekspedisi, hitung berat volumetrik paket, standar lakban kardus olshop, cegah barang pecah kurir, stiker fragile pengiriman",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/sop-pengemasan-paket-pesanan-online-aman-ekspedisi-murah.jpg",
+      "source_image": "photo-1553413077-190dd305871c.jpg",
+      "published_at": "2026-11-19T16:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Barang pesanan konsumen online pecah di jalan atau toko terkena charge penalti volume ekspedisi karena ukuran kardus kemasan terlalu besar.",
+      "cooca_solution": "Cooca mencatat dimensi kemasan produk dan menghitung estimasi berat volumetrik secara otomatis saat mencetak resi pengiriman kurir.",
+      "selected_formula": "Operational Packing & Logistics Efficiency",
+      "selection_reason": "Menjawab keluhan klasik seller online yang sering merugi akibat barang rusak dibanting kurir atau terkena biaya dimensi ekspedisi.",
+      "headline_alternatives": [
+        {
+          "formula": "Logistics Efficiency",
+          "score": 94,
+          "headline": "SOP Pengemasan Paket Pesanan Online Aman dan Ramah Ongkir"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Kena Denda Volumetrik? Perbaiki SOP Pengemasan Paket Pesanan Online"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Cegah Rating Toko Anjlok Lewat SOP Pengemasan Paket Pesanan Online Rapi"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kardus Kebesaran Bikin Boncos: Wajib Tahu SOP Pengemasan Paket Pesanan Online"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Standar Packing Olshop: SOP Pengemasan Paket Pesanan Online Ekspedisi"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Teknik 3 Lapis Bubble Wrap: SOP Pengemasan Paket Pesanan Online Aman"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Ongkir Murah Paket Selamat Berkat SOP Pengemasan Paket Pesanan Online"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Klaim Kerusakan Ditolak Kurir! Patuhi SOP Pengemasan Paket Pesanan Online"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Paket Sering Hancur di Jalan? Standarisasi SOP Pengemasan Paket Pesanan Online"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Pembeli Kasih Bintang 5 Berkat SOP Pengemasan Paket Pesanan Online Sempurna"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Marketing & WhatsApp",
+      "title": "Pengingat Pembayaran Invoice WhatsApp yang Sopan dan Cepat Cair",
+      "meta_title": "Pengingat Pembayaran Invoice WhatsApp Sopan",
+      "meta_description": "Simak contoh pesan pengingat pembayaran invoice WhatsApp yang sopan dan profesional, jadwal follow up tagihan H-3 jatuh tempo, dan etika penagihan B2B.",
+      "slug": "cara-membuat-pesan-pengingat-pembayaran-invoice-whatsapp",
+      "primary_keyword": "pengingat pembayaran invoice whatsapp",
+      "secondary_keywords": "template tagihan jatuh tempo wa, follow up piutang pelanggan sopan, pesan reminder tagihan usaha, etika menagih utang dagang b2b, otomasi notifikasi invoice",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-pesan-pengingat-pembayaran-invoice-whatsapp.jpg",
+      "source_image": "photo-1611746872915-64382b5c76da.jpg",
+      "published_at": "2026-11-19T17:00:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Pemilik usaha merasa canggung dan takut merusak hubungan dagang saat menagih invoice yang sudah jatuh tempo, sehingga piutang dibiarkan macet berbulan-bulan.",
+      "cooca_solution": "Cooca WhatsApp Gateway mengirimkan pesan pengingat jatuh tempo secara terjadwal dengan bahasa formal yang ramah lengkap dengan tautan rincian invoice.",
+      "selected_formula": "Communication Etiquette & Debt Recovery",
+      "selection_reason": "Menyajikan solusi penagihan piutang dagang yang elegan dan bersahabat agar arus kas lancar tanpa merenggangkan hubungan baik dengan pelanggan.",
+      "headline_alternatives": [
+        {
+          "formula": "Communication Etiquette",
+          "score": 94,
+          "headline": "Pengingat Pembayaran Invoice WhatsApp yang Sopan dan Cepat Cair"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Canggung Tagih Piutang? Terapkan Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Cegah Piutang Macet Lewat Pesan Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Menagih Terlalu Keras Bikin Kabur? Gunakan Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Template Siap Pakai: Pengingat Pembayaran Invoice WhatsApp Bisnis"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Jadwal Follow Up H-3: Rangkaian Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Klien Langsung Bayar Berkat Trik Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 88,
+          "headline": "Awas Kas Macet! Rutin Kirim Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Tagihan Kerap Terlewat? Otomasikan Pengingat Pembayaran Invoice WhatsApp"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Piutang Tertagih Lancar Berkat Pengingat Pembayaran Invoice WhatsApp"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Strategi & Operasional",
+      "title": "Omnichannel Toko Offline dan TikTok Live agar Stok Tidak Selisih",
+      "meta_title": "Omnichannel Toko Offline dan TikTok Live Ritel",
+      "meta_description": "Strategi omnichannel toko offline dan TikTok Live shopping, cara sinkronisasi stok kasir real-time, alokasi inventori virtual, dan cegah over-selling.",
+      "slug": "strategi-omnichannel-toko-offline-dan-tiktok-live-stok-sinkron",
+      "primary_keyword": "omnichannel toko offline dan tiktok live",
+      "secondary_keywords": "sinkronisasi stok live shopping, integrasi kasir pos dan tiktok shop, cegah over selling pesanan online, multi-channel inventori toko, manajemen pesanan terpusat",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/strategi-omnichannel-toko-offline-dan-tiktok-live-stok-sinkron.jpg",
+      "source_image": "photo-1611162617474-5b21e879e113.jpg",
+      "published_at": "2026-11-19T17:15:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Saat toko ramai menggelar TikTok Live malam hari, stok barang terjual habis secara online sementara pembeli di toko fisik juga sedang mengambil barang yang sama.",
+      "cooca_solution": "Cooca Omnichannel menghubungkan inventori toko fisik dan toko online secara real-time, mengunci stok virtual seketika saat ada transaksi di kanal mana pun.",
+      "selected_formula": "Omnichannel Inventory & Over-Selling Prevention",
+      "selection_reason": "Menjawab fenomena ledakan video commerce dan live shopping yang kerap memicu bencana operasional akibat selisih stok fisik toko.",
+      "headline_alternatives": [
+        {
+          "formula": "Omnichannel Strategy",
+          "score": 95,
+          "headline": "Omnichannel Toko Offline dan TikTok Live agar Stok Tidak Selisih"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Barang Rebutan Online Offline? Kuasai Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 93,
+          "headline": "Cegah Penalti Over-Selling Lewat Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Jangan Pisah Pembukuan! Integrasikan Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Panduan Sinkronisasi: Sukses Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Specificity",
+          "score": 92,
+          "headline": "Alokasi Safety Buffer: Trik Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Live Shopping Laris Manis Berkat Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 89,
+          "headline": "Awas Rating Toko Hancur! Sinkronkan Omnichannel Toko Offline dan TikTok Live"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 87,
+          "headline": "Stok Kasir dan Keranjang Live Kacau? Terapkan Omnichannel Toko Offline"
+        },
+        {
+          "formula": "Transformation",
+          "score": 88,
+          "headline": "Kuasai Pasar Digital dan Ritel Bersama Omnichannel Toko Offline dan TikTok Live"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Marketing & WhatsApp",
+      "title": "Kartu Nama Bisnis Digital QR Code Katalog Toko untuk Penjualan",
+      "meta_title": "Kartu Nama Bisnis Digital QR Code Katalog Toko",
+      "meta_description": "Tingkatkan konversi penjualan toko lewat kartu nama bisnis digital QR code katalog, kemudahan simpan kontak instan, dan integrasi WhatsApp Storefront.",
+      "slug": "cara-membuat-kartu-nama-bisnis-digital-qr-code-katalog",
+      "primary_keyword": "kartu nama bisnis digital qr code",
+      "secondary_keywords": "qr code katalog produk online, kartu nama digital nfc toko, promosi pameran umkm praktis, storefront whatsapp gateway, landing page katalog instan",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/cara-membuat-kartu-nama-bisnis-digital-qr-code-katalog.jpg",
+      "source_image": "photo-1611746872915-64382b5c76da.jpg",
+      "published_at": "2026-11-19T17:30:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Kartu nama kertas yang dibagikan saat pameran atau diselipkan di tas belanja sering berakhir di tempat sampah tanpa pernah disimpan oleh calon pelanggan.",
+      "cooca_solution": "Cooca menyediakan fitur Public Storefront Generator yang menghasilkan QR Code elegan untuk menampilkan katalog produk dan tombol chat WhatsApp langsung.",
+      "selected_formula": "Digital Networking & Conversion Rate",
+      "selection_reason": "Memberikan inovasi branding modern yang terjangkau agar interaksi dengan pembeli langsung bertransformasi menjadi penjualan nyata.",
+      "headline_alternatives": [
+        {
+          "formula": "Digital Networking",
+          "score": 94,
+          "headline": "Kartu Nama Bisnis Digital QR Code Katalog Toko untuk Penjualan"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 89,
+          "headline": "Kartu Kertas Masuk Sampah? Beralih ke Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Jangan Buang Biaya Cetak: Manfaatkan Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Ketinggalan Zaman Tanpa Link Toko: Buat Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Langkah Mudah Promosi: Desain Kartu Nama Bisnis Digital QR Code Toko"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Sekali Scan Langsung Chat WA: Kartu Nama Bisnis Digital QR Code Katalog"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Konversi Pameran Naik 3x Lipat Lewat Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Kehilangan Lead Klien! Bagikan Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Katalog Tebal Bikin Repot? Rangkum di Kartu Nama Bisnis Digital QR Code"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Branding Modern Profesional Dimulai dari Kartu Nama Bisnis Digital QR Code"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "pillar": "Pilar 5: CRM, Retensi Pelanggan & Pemasaran Omnichannel",
+      "category": "Kasir & POS",
+      "title": "Menangani Pelanggan Minta Diskon di Luar Kebijakan Toko Ritel",
+      "meta_title": "Menangani Pelanggan Minta Diskon Toko Ritel",
+      "meta_description": "Ketahui cara profesional menangani pelanggan minta diskon di luar kebijakan toko ritel, skrip jawaban sopan kasir, dan strategi substitusi nilai tambah.",
+      "slug": "strategi-menangani-pelanggan-minta-diskon-di-luar-kebijakan",
+      "primary_keyword": "menangani pelanggan minta diskon",
+      "secondary_keywords": "skrip kasir tolak tawar menawar, negosiasi harga toko ritel, jaga harga resmi produk, substitusi bonus free sample, standar pelayanan kasir tegas",
+      "search_intent": "Informational",
+      "reading_time": "9 menit",
+      "cover_image": "https://cooca.id/images/blog/strategi-menangani-pelanggan-minta-diskon-di-luar-kebijakan.jpg",
+      "source_image": "photo-1556740758-90de374c12ad.jpg",
+      "published_at": "2026-11-19T17:45:00+07:00",
+      "evergreen_score": 5,
+      "problem_statement": "Staf kasir sering serba salah saat pembeli menawar harga barang di kasir: jika ditolak pembeli tersinggung, namun jika diberikan toko menanggung kerugian margin.",
+      "cooca_solution": "Cooca POS mengunci wewenang diskon manual di kasir dan menyediakan opsi otomatisasi reward poin membership sebagai hadiah pengganti potongan harga.",
+      "selected_formula": "Customer Psychology & Price Integrity",
+      "selection_reason": "Memberikan skrip komunikasi elegan bagi staf kasir toko untuk mempertahankan harga resmi tanpa membuat konsumen merasa kecewa.",
+      "headline_alternatives": [
+        {
+          "formula": "Customer Psychology",
+          "score": 94,
+          "headline": "Menangani Pelanggan Minta Diskon di Luar Kebijakan Toko Ritel"
+        },
+        {
+          "formula": "Curiosity Gap",
+          "score": 90,
+          "headline": "Bingung Pembeli Ngotot Nawar? Trik Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Loss Aversion",
+          "score": 92,
+          "headline": "Jaga Margin Toko Tetap Utuh: Solusi Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Hidden Mistakes",
+          "score": 88,
+          "headline": "Kasir Kasih Potongan Liar? Standarisasi Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Practical Guide",
+          "score": 91,
+          "headline": "Skrip Jawaban Sopan Kasir: Cara Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Specificity",
+          "score": 90,
+          "headline": "Tawarkan Poin Bukan Potong Harga: Trik Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Unexpected Facts",
+          "score": 86,
+          "headline": "Harga Tetap Tegak Pelanggan Senang: Seni Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Business Warning",
+          "score": 87,
+          "headline": "Awas Kebiasaan Perang Harga! Pahami Menangani Pelanggan Minta Diskon"
+        },
+        {
+          "formula": "Problem Recognition",
+          "score": 88,
+          "headline": "Pelanggan Ngambek Tak Diberi Diskon? Atasi dengan Menangani Pelanggan Tepat"
+        },
+        {
+          "formula": "Transformation",
+          "score": 89,
+          "headline": "Integritas Merek Terjaga Berkat SOP Menangani Pelanggan Minta Diskon"
+        }
+      ]
+    }
+  ]
+}

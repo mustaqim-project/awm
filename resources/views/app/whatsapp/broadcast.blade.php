@@ -589,8 +589,9 @@
                                             </span>
                                         </div>
 
-                                        <select x-model="selectedTemplateName" @change="onTemplateChange()"
-                                            class="w-full min-h-[44px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] font-semibold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/40">
+                                        <x-searchable-select>
+                                            <select x-model="selectedTemplateName" @change="onTemplateChange()"
+                                            class="sr-only">
                                             @if (isset($approvedTemplates) && $approvedTemplates->isNotEmpty())
                                                 @foreach ($approvedTemplates as $tpl)
                                                     <option value="{{ $tpl->name }}">{{ $tpl->name }} ({{ strtoupper($tpl->category) }}) - {{ $tpl->status }}</option>
@@ -604,7 +605,8 @@
                                                 <option value="cooca_customer_welcome">cooca_customer_welcome (MARKETING) - APPROVED</option>
                                                 <option value="cooca_order_status_update">cooca_order_status_update (UTILITY) - APPROVED</option>
                                             @endif
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                         <p class="text-[11.5px] text-black/50 dark:text-white/50 leading-relaxed">
                                             {{ __('whatsapp.template_help_text') }}
                                         </p>

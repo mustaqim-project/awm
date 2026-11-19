@@ -122,14 +122,16 @@
             </div>
 
             <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-                <select name="status" onchange="this.form.submit()"
-                    class="h-10 px-3.5 rounded-[12px] text-[13px] font-medium bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.06] dark:border-white/[0.08] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20">
+                <x-searchable-select>
+                    <select name="status" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="">Semua Status</option>
                     <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draf</option>
                     <option value="in_progress" {{ request('status') === 'in_progress' ? 'selected' : '' }}>Sedang Dikerjakan (WIP)</option>
                     <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
                     <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
-                </select>
+                    </select>
+                </x-searchable-select>
 
                 @if(request()->filled('search') || request()->filled('status'))
                     <a href="{{ route('production.index') }}"

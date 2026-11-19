@@ -277,14 +277,16 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <select name="category_id" onchange="this.form.submit()"
-                        class="h-11 sm:h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                    <x-searchable-select>
+                        <select name="category_id" onchange="this.form.submit()"
+                        class="sr-only">
                         <option value="">{{ __('services.actions.filter_all_categories') }}</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}"
                                 {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     @if (request('search') || request('category_id'))
                         <a href="{{ route('services.index') }}"
@@ -604,13 +606,15 @@
                                     <div>
                                         <label
                                             class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_unit') }}</label>
-                                        <select name="output_unit_id" x-model="addForm.output_unit_id"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                        <x-searchable-select>
+                                            <select name="output_unit_id" x-model="addForm.output_unit_id"
+                                            class="sr-only">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'">
                                                 </option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -623,13 +627,15 @@
                                             <span>[ + ]</span> <span>{{ __('services.actions.quick_add_category') }}</span>
                                         </button>
                                     </div>
-                                    <select name="category_id" x-model="addForm.category_id"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                    <x-searchable-select>
+                                        <select name="category_id" x-model="addForm.category_id"
+                                        class="sr-only">
                                         <option value="">{{ __('services.form.select_category') }}</option>
                                         <template x-for="cat in categories" :key="cat.id">
                                             <option :value="cat.id" x-text="cat.name"></option>
                                         </template>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div>
@@ -830,13 +836,15 @@
                                     <div>
                                         <label
                                             class="block text-[13px] font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{{ __('services.form.field_unit') }}</label>
-                                        <select name="output_unit_id" x-model="editForm.output_unit_id"
-                                            class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                        <x-searchable-select>
+                                            <select name="output_unit_id" x-model="editForm.output_unit_id"
+                                            class="sr-only">
                                             <template x-for="u in units" :key="u.id">
                                                 <option :value="u.id" x-text="u.name + ' (' + u.code + ')'">
                                                 </option>
                                             </template>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -849,13 +857,15 @@
                                             <span>[ + ]</span> <span>{{ __('services.actions.quick_add_category') }}</span>
                                         </button>
                                     </div>
-                                    <select name="category_id" x-model="editForm.category_id"
-                                        class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-slate-300 dark:border-white/[0.15] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                    <x-searchable-select>
+                                        <select name="category_id" x-model="editForm.category_id"
+                                        class="sr-only">
                                         <option value="">{{ __('services.form.select_category') }}</option>
                                         <template x-for="cat in categories" :key="cat.id">
                                             <option :value="cat.id" x-text="cat.name"></option>
                                         </template>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div>

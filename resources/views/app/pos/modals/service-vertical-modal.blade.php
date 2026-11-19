@@ -115,13 +115,15 @@
                     </div>
                     <div class="space-y-1">
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.mechanic_technician') }}</label>
-                        <select x-model="technicianId"
-                            class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
+                        <x-searchable-select>
+                            <select x-model="technicianId"
+                            class="sr-only">
                             <option value="" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.select_mechanic_placeholder') }}</option>
                             <template x-for="t in technicians" :key="t.id">
                                 <option :value="t.id" :selected="technicianId === t.id" x-text="t.name" class="bg-white dark:bg-[#1C1C1E]"></option>
                             </template>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
                 <div class="space-y-1">
@@ -189,15 +191,17 @@
                     </div>
                     <div class="space-y-1">
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.laundry_status') }}</label>
-                        <select x-model="laundryStatus"
-                            class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
+                        <x-searchable-select>
+                            <select x-model="laundryStatus"
+                            class="sr-only">
                             <option value="received" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_received') }}</option>
                             <option value="washing" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_washing') }}</option>
                             <option value="drying" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_drying') }}</option>
                             <option value="ironing" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_ironing') }}</option>
                             <option value="ready" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_ready') }}</option>
                             <option value="completed" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.status_completed_taken') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
             </div>
@@ -208,13 +212,15 @@
             <div class="space-y-3">
                 <div class="space-y-1">
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.service_staff_executor') }}</label>
-                    <select x-model="technicianId"
-                        class="w-full h-9 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] cursor-pointer">
+                    <x-searchable-select>
+                        <select x-model="technicianId"
+                        class="sr-only">
                         <option value="" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.select_service_staff_placeholder') }}</option>
                         <template x-for="t in technicians" :key="t.id">
                             <option :value="t.id" :selected="technicianId === t.id" x-text="t.name" class="bg-white dark:bg-[#1C1C1E]"></option>
                         </template>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 <div class="space-y-1">
                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70">{{ __('pos.service_execution_notes_label') }}</label>

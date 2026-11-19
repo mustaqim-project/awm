@@ -192,13 +192,15 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Rasio Aspek Foto</label>
-                    <select name="aspect_ratio"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="aspect_ratio"
+                        class="sr-only">
                         <option value="1:1">1:1 Square (Feed Instagram / Katalog POS)</option>
                         <option value="9:16">9:16 Vertical (Story, TikTok, Reels)</option>
                         <option value="16:9">16:9 Landscape (Banner Website & Marketplace)</option>
                         <option value="4:5">4:5 Portrait</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="pt-2 flex items-center justify-end gap-2">

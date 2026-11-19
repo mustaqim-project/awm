@@ -1,0 +1,993 @@
+{
+    "hapus_postingan": {
+        "id": "Hapus Postingan",
+        "en": "Delete Postingan",
+        "words": [
+            "postingan"
+        ]
+    },
+    "bukti_transfer": {
+        "id": "Bukti Transfer",
+        "en": "Bukti Transfer",
+        "words": [
+            "bukti"
+        ]
+    },
+    "pilih_semua_di_halaman_ini": {
+        "id": "Pilih Semua di Halaman Ini",
+        "en": "Select All at Halaman Ini",
+        "words": [
+            "halaman"
+        ]
+    },
+    "ganti_kata_sandi": {
+        "id": "Ganti Kata Sandi",
+        "en": "Ganti Word Password",
+        "words": [
+            "ganti"
+        ]
+    },
+    "hapus_penawaran": {
+        "id": "Hapus Penawaran",
+        "en": "Delete Penawaran",
+        "words": [
+            "penawaran"
+        ]
+    },
+    "buka_halaman_penuh": {
+        "id": "Buka halaman penuh",
+        "en": "Open halaman penuh",
+        "words": [
+            "halaman"
+        ]
+    },
+    "tuliskan_catatan_verifikasi": {
+        "id": "Tuliskan catatan verifikasi...",
+        "en": "Tuliskan catatan verification",
+        "words": [
+            "catatan"
+        ]
+    },
+    "contoh_bukti_transfer_buram_mutasi_rekening": {
+        "id": "Contoh: Bukti transfer buram, mutasi rekening belum masuk, atau nomina",
+        "en": "Example Bukti transfer buram, transfer account no masuk, atau nomina",
+        "words": [
+            "masuk",
+            "bukti"
+        ]
+    },
+    "bukti_transfer_pembayaran": {
+        "id": "Bukti Transfer Pembayaran",
+        "en": "Bukti Transfer Payment",
+        "words": [
+            "bukti"
+        ]
+    },
+    "belum_ada_riwayat_callback_webhook_tercatat": {
+        "id": "Belum ada riwayat callback webhook tercatat di sistem.",
+        "en": "No existing history callback webhook tercatat at sistem.",
+        "words": [
+            "tercatat"
+        ]
+    },
+    "belum_ada_data_pengguna_terdaftar": {
+        "id": "Belum ada data pengguna terdaftar.",
+        "en": "No existing data user terdaftar.",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "belum_ada_tenant_bisnis_terdaftar": {
+        "id": "Belum ada tenant bisnis terdaftar.",
+        "en": "No existing tenant business terdaftar.",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "buka_antrean_approval": {
+        "id": "Buka Antrean Approval",
+        "en": "Open Antrean Approval",
+        "words": [
+            "antrean"
+        ]
+    },
+    "halaman_penuh": {
+        "id": "Halaman Penuh",
+        "en": "Halaman Penuh",
+        "words": [
+            "halaman"
+        ]
+    },
+    "buka_halaman_lengkap_tenant": {
+        "id": "Buka Halaman Lengkap Tenant",
+        "en": "Open Halaman Full Tenant",
+        "words": [
+            "halaman"
+        ]
+    },
+    "volume_aktivitas_fitur_ekosistem": {
+        "id": "Volume & Aktivitas Fitur Ekosistem",
+        "en": "Volume & Aktivitas Fitur Ekosistem",
+        "words": [
+            "fitur"
+        ]
+    },
+    "verifikasi_bukti_transfer_langganan": {
+        "id": "Verifikasi Bukti Transfer Langganan",
+        "en": "Verification Bukti Transfer Langganan",
+        "words": [
+            "bukti"
+        ]
+    },
+    "peninjauan_bukti_pembayaran": {
+        "id": "Peninjauan Bukti Pembayaran",
+        "en": "Peninjauan Bukti Payment",
+        "words": [
+            "bukti"
+        ]
+    },
+    "buka_halaman_detail": {
+        "id": "Buka halaman detail",
+        "en": "Open halaman details",
+        "words": [
+            "halaman"
+        ]
+    },
+    "bukti_usaha": {
+        "id": "Bukti Usaha",
+        "en": "Bukti Usaha",
+        "words": [
+            "bukti"
+        ]
+    },
+    "permohonan_ditolak": {
+        "id": "Permohonan Ditolak",
+        "en": "Permohonan Ditolak",
+        "words": [
+            "permohonan"
+        ]
+    },
+    "buka_halaman_penuh_2": {
+        "id": "Buka Halaman Penuh",
+        "en": "Open Halaman Penuh",
+        "words": [
+            "halaman"
+        ]
+    },
+    "buka_halaman_penuh_rarr": {
+        "id": "Buka Halaman Penuh &rarr;",
+        "en": "Open Halaman Penuh &rarr;",
+        "words": [
+            "halaman"
+        ]
+    },
+    "meja_uji_bukti_otentik_kepemilikan_a": {
+        "id": "Meja Uji Bukti Otentik Kepemilikan A",
+        "en": "Table Test Bukti Otentik Kepemilikan A",
+        "words": [
+            "bukti",
+            "otentik",
+            "kepemilikan"
+        ]
+    },
+    "contoh_foto_ktp_buram_dan_nama": {
+        "id": "Contoh: Foto KTP buram dan nama usaha tidak sesuai dengan bukti kepemi",
+        "en": "Example Photo KTP buram dan name usaha tidak sesuai dengan bukti kepemi",
+        "words": [
+            "tidak",
+            "bukti"
+        ]
+    },
+    "komparasi_data_akun_terdaftar_vs_kontak": {
+        "id": "Komparasi Data Akun Terdaftar vs Kontak Baru",
+        "en": "Komparasi Data Akun Terdaftar vs Contact Baru",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "meja_uji_bukti_otentik_kepemilikan_akun": {
+        "id": "Meja Uji Bukti Otentik Kepemilikan Akun",
+        "en": "Table Test Bukti Otentik Kepemilikan Akun",
+        "words": [
+            "bukti",
+            "otentik",
+            "kepemilikan"
+        ]
+    },
+    "konfirmasi_persetujuan_pemulihan": {
+        "id": "Konfirmasi Persetujuan Pemulihan",
+        "en": "Confirm Persetujuan Pemulihan",
+        "words": [
+            "persetujuan"
+        ]
+    },
+    "kirim_hibah_kredit": {
+        "id": "Kirim Hibah Kredit",
+        "en": "Send Hibah Credit",
+        "words": [
+            "hibah"
+        ]
+    },
+    "sumber_inspirasi_lisensi_admin_console": {
+        "id": "Sumber Inspirasi & Lisensi - Admin Console",
+        "en": "Sumber Inspirasi & Lisensi - Admin Console",
+        "words": [
+            "sumber",
+            "inspirasi"
+        ]
+    },
+    "tarik_konten_visual_prompt_terbaru_dari": {
+        "id": "Tarik konten visual & prompt terbaru dari sumber ini",
+        "en": "Tarik konten visual & prompt latest dari sumber ini",
+        "words": [
+            "sumber"
+        ]
+    },
+    "simpan_kredensial_terenkripsi": {
+        "id": "Simpan Kredensial Terenkripsi",
+        "en": "Save Kredensial Terenkripsi",
+        "words": [
+            "kredensial"
+        ]
+    },
+    "kelola_kredensial_api": {
+        "id": "Kelola Kredensial API",
+        "en": "Manage Kredensial API",
+        "words": [
+            "kredensial"
+        ]
+    },
+    "hapus_kunci": {
+        "id": "Hapus Kunci",
+        "en": "Delete Kunci",
+        "words": [
+            "kunci"
+        ]
+    },
+    "belum_ada_riwayat_konsumsi_token_tercatat": {
+        "id": "Belum ada riwayat konsumsi token tercatat.",
+        "en": "No existing history konsumsi token tercatat.",
+        "words": [
+            "tercatat"
+        ]
+    },
+    "belum_ada_riwayat_aktivitas_kueri_ai": {
+        "id": "Belum ada riwayat aktivitas kueri AI tercatat.",
+        "en": "No existing history aktivitas kueri AI tercatat.",
+        "words": [
+            "tercatat"
+        ]
+    },
+    "hubungkan_kunci_api": {
+        "id": "+ Hubungkan Kunci API",
+        "en": "+ Hubungkan Kunci API",
+        "words": [
+            "kunci"
+        ]
+    },
+    "hubungkan_kunci_api_2": {
+        "id": "Hubungkan Kunci API",
+        "en": "Hubungkan Kunci API",
+        "words": [
+            "kunci"
+        ]
+    },
+    "simpan_kunci_ke_gateway": {
+        "id": "Simpan Kunci ke Gateway",
+        "en": "Save Kunci to Gateway",
+        "words": [
+            "kunci"
+        ]
+    },
+    "reset_ke_13_model_bawaan": {
+        "id": "Reset ke 13 Model Bawaan",
+        "en": "Reset to 13 Model Bawaan",
+        "words": [
+            "bawaan"
+        ]
+    },
+    "distribusi_konsumsi_token_per_fitur_intent": {
+        "id": "Distribusi Konsumsi Token per Fitur (Intent)",
+        "en": "Distribusi Konsumsi Token per Fitur (Intent)",
+        "words": [
+            "fitur"
+        ]
+    },
+    "kembali_ke_halaman_login_admin": {
+        "id": "Kembali ke Halaman Login Admin",
+        "en": "Back to Halaman Login Admin",
+        "words": [
+            "halaman"
+        ]
+    },
+    "masuk_ke_admin_console": {
+        "id": "Masuk ke Admin Console",
+        "en": "Masuk to Admin Console",
+        "words": [
+            "masuk"
+        ]
+    },
+    "kembali_ke_halaman_publik_cooca": {
+        "id": "Kembali ke Halaman Publik Cooca",
+        "en": "Back to Halaman Publik Cooca",
+        "words": [
+            "halaman"
+        ]
+    },
+    "simpan_kata_sandi_baru_masuk": {
+        "id": "Simpan Kata Sandi Baru & Masuk",
+        "en": "Save Word Password Baru & Masuk",
+        "words": [
+            "masuk"
+        ]
+    },
+    "kembali_ke_halaman_login": {
+        "id": "Kembali ke Halaman Login",
+        "en": "Back to Halaman Login",
+        "words": [
+            "halaman"
+        ]
+    },
+    "rekening_transfer_batas_toleransi_pembayaran": {
+        "id": "Rekening transfer, batas toleransi pembayaran...",
+        "en": "Account transfer, batas toleransi payment",
+        "words": [
+            "batas"
+        ]
+    },
+    "ketentuan_garansi_syarat_pengiriman_termin_pembayaran": {
+        "id": "Ketentuan garansi, syarat pengiriman, termin pembayaran...",
+        "en": "Ketentuan warranty syarat delivery termin payment",
+        "words": [
+            "ketentuan",
+            "syarat"
+        ]
+    },
+    "catat_pembayaran_masuk": {
+        "id": "Catat Pembayaran Masuk",
+        "en": "Catat Payment Masuk",
+        "words": [
+            "masuk"
+        ]
+    },
+    "unduh_cetak_surat_penawaran_resmi_pdf": {
+        "id": "Unduh / Cetak Surat Penawaran Resmi PDF (A4)",
+        "en": "Download / Printing Letter Penawaran Official PDF (A4)",
+        "words": [
+            "penawaran"
+        ]
+    },
+    "ubah_penawaran": {
+        "id": "Ubah Penawaran",
+        "en": "Edit Penawaran",
+        "words": [
+            "penawaran"
+        ]
+    },
+    "daftar_surat_penawaran_harga_sales_quotations": {
+        "id": "Daftar Surat Penawaran Harga (Sales Quotations)",
+        "en": "List Letter Penawaran Prices (Sales Quotations)",
+        "words": [
+            "penawaran"
+        ]
+    },
+    "selesaikan_retur_pulihkan_stok": {
+        "id": "Selesaikan Retur & Pulihkan Stok",
+        "en": "Selesaikan Retur & Pulihkan Stock",
+        "words": [
+            "pulihkan"
+        ]
+    },
+    "keterangan_manfaat_paket": {
+        "id": "Keterangan manfaat paket...",
+        "en": "Keterangan manfaat package",
+        "words": [
+            "manfaat"
+        ]
+    },
+    "simpan_semua_batas_kuota_fitur_harga": {
+        "id": "Simpan Semua Batas Kuota, Fitur & Harga",
+        "en": "Save All Batas Kuota, Fitur & Prices",
+        "words": [
+            "batas",
+            "kuota",
+            "fitur"
+        ]
+    },
+    "harga_bawaan_kuota_langganan_cooca": {
+        "id": "Harga Bawaan & Kuota Langganan Cooca",
+        "en": "Prices Bawaan & Kuota Langganan Cooca",
+        "words": [
+            "bawaan",
+            "kuota"
+        ]
+    },
+    "konfigurasi_lengkap_batas_kuota_sumber_daya": {
+        "id": "Konfigurasi Lengkap Batas Kuota Sumber Daya (17 Limit x 4 Level)",
+        "en": "Konfigurasi Full Batas Kuota Sumber Daya (17 Limit x 4 Level)",
+        "words": [
+            "batas",
+            "kuota",
+            "sumber"
+        ]
+    },
+    "matriks_hak_akses_kunci_fitur_per": {
+        "id": "Matriks Hak Akses & Kunci Fitur per Paket (Feature Access & Lock Matrix)",
+        "en": "Matriks Hak Access & Kunci Fitur per Package (Feature Access & Lock Matrix)",
+        "words": [
+            "fitur",
+            "kunci"
+        ]
+    },
+    "masuk_ke_workspace_cek_bug": {
+        "id": "Masuk ke Workspace (Cek Bug)",
+        "en": "Masuk to Workspace check Bug)",
+        "words": [
+            "masuk"
+        ]
+    },
+    "tidak_ada_data_bisnis_ditemukan": {
+        "id": "Tidak ada data bisnis ditemukan",
+        "en": "Tidak existing data business ditemukan",
+        "words": [
+            "tidak",
+            "ditemukan"
+        ]
+    },
+    "masuk": {
+        "id": "Masuk",
+        "en": "Masuk",
+        "words": [
+            "masuk"
+        ]
+    },
+    "tangguhkan_bisnis": {
+        "id": "Tangguhkan Bisnis?",
+        "en": "Tangguhkan Business",
+        "words": [
+            "tangguhkan"
+        ]
+    },
+    "masuk_ke_workspace_business_name_untuk": {
+        "id": "Masuk ke Workspace {{ $business->name }} untuk Cek Bug",
+        "en": "Masuk to Workspace {{ $business->name }} untuk Check Bug",
+        "words": [
+            "masuk"
+        ]
+    },
+    "masuk_ke_bisnis_cek_bug": {
+        "id": "Masuk ke Bisnis (Cek Bug)",
+        "en": "Masuk to Business check Bug)",
+        "words": [
+            "masuk"
+        ]
+    },
+    "refresh_halaman_otomatis_setiap_10_detik": {
+        "id": "Refresh halaman otomatis setiap 10 detik",
+        "en": "Refresh halaman automatic setiap 10 detik",
+        "words": [
+            "halaman"
+        ]
+    },
+    "muat_ulang_halaman": {
+        "id": "Muat ulang halaman",
+        "en": "Muat repeat halaman",
+        "words": [
+            "halaman",
+            "muat"
+        ]
+    },
+    "kosongkan_isi_berkas_log_ini": {
+        "id": "Kosongkan isi berkas log ini",
+        "en": "Kosongkan isi berkas log ini",
+        "words": [
+            "kosongkan"
+        ]
+    },
+    "unduh_salinan_cadangan": {
+        "id": "Unduh Salinan Cadangan",
+        "en": "Download Salinan Cadangan",
+        "words": [
+            "salinan",
+            "cadangan"
+        ]
+    },
+    "jelaskan_detail_materi_narasumber_manfaat_bagi": {
+        "id": "Jelaskan detail materi, narasumber, manfaat bagi pemilik usaha, serta",
+        "en": "Jelaskan details materi, narasumber, manfaat bagi pemilik usaha, serta",
+        "words": [
+            "manfaat"
+        ]
+    },
+    "kosongkan_jika_kuota_tidak_dibatasi": {
+        "id": "Kosongkan jika kuota tidak dibatasi",
+        "en": "Kosongkan jika kuota tidak dibatasi",
+        "words": [
+            "tidak",
+            "kuota",
+            "kosongkan"
+        ]
+    },
+    "daftar_peserta_terdaftar": {
+        "id": "Daftar Peserta Terdaftar",
+        "en": "List Peserta Terdaftar",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "tidak_ada_data_feedback_ditemukan": {
+        "id": "Tidak ada data feedback ditemukan",
+        "en": "Tidak existing data feedback ditemukan",
+        "words": [
+            "tidak",
+            "ditemukan"
+        ]
+    },
+    "request_fitur": {
+        "id": "Request Fitur",
+        "en": "Request Fitur",
+        "words": [
+            "fitur"
+        ]
+    },
+    "tuliskan_catatan_perbaikan_atau_progres_yang": {
+        "id": "Tuliskan catatan perbaikan atau progres yang dilakukan...",
+        "en": "Tuliskan catatan perbaikan atau progres yang dilakukan...",
+        "words": [
+            "catatan"
+        ]
+    },
+    "catatan_arsitektur_atau_pertimbangan_rilis": {
+        "id": "Catatan arsitektur atau pertimbangan rilis...",
+        "en": "Catatan arsitektur atau pertimbangan rilis...",
+        "words": [
+            "catatan"
+        ]
+    },
+    "biaya_perpanjangan_server_tahunan_kuota_token": {
+        "id": "Biaya perpanjangan server tahunan / kuota token tambahan...",
+        "en": "Biaya perpanjangan server tahunan / kuota token tambahan...",
+        "words": [
+            "kuota"
+        ]
+    },
+    "catatan_baris_khusus_opsional": {
+        "id": "Catatan baris khusus (opsional)...",
+        "en": "Catatan baris khusus (opsional)...",
+        "words": [
+            "catatan"
+        ]
+    },
+    "catatan_nomor_invoice_persetujuan_direksi_atau": {
+        "id": "Catatan nomor invoice, persetujuan direksi, atau nomor referensi...",
+        "en": "Catatan number invoice persetujuan direksi, atau number referensi...",
+        "words": [
+            "catatan",
+            "persetujuan"
+        ]
+    },
+    "bukti_transaksi": {
+        "id": "Bukti Transaksi",
+        "en": "Bukti Transaction",
+        "words": [
+            "bukti"
+        ]
+    },
+    "bukti_transfer_keluar": {
+        "id": "Bukti Transfer Keluar",
+        "en": "Bukti Transfer Keluar",
+        "words": [
+            "keluar",
+            "bukti"
+        ]
+    },
+    "bukti_transfer_2": {
+        "id": "Bukti Transfer",
+        "en": "Bukti Transfer",
+        "words": [
+            "bukti"
+        ]
+    },
+    "klik_untuk_melihat_bukti_gambar_kuitansi": {
+        "id": "Klik untuk melihat bukti gambar kuitansi/struk",
+        "en": "Klik untuk melihat bukti gambar kuitansi/struk",
+        "words": [
+            "bukti"
+        ]
+    },
+    "lihat_bukti": {
+        "id": "Lihat Bukti",
+        "en": "View Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "belum_ada_akun_terdaftar_pada_kategori": {
+        "id": "Belum ada akun terdaftar pada kategori {{ $typeTitle }}.",
+        "en": "No existing akun terdaftar pada category {{ $typeTitle }}.",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "title_kotak_masuk_inbox_cooca_admin": {
+        "id": "@title: Kotak Masuk (Inbox) - COOCA Admin",
+        "en": "@title: Kotak Masuk (Inbox) - COOCA Admin",
+        "words": [
+            "masuk"
+        ]
+    },
+    "muat_seluruh_39_berkas_panduan_dari": {
+        "id": "Muat seluruh 39 berkas panduan dari folder docs/user-guides langsung k",
+        "en": "Muat seluruh 39 berkas guides dari folder docs/user-guides fresh k",
+        "words": [
+            "muat"
+        ]
+    },
+    "pengaturan_kredensial_meta_webhook": {
+        "id": "Pengaturan Kredensial Meta & Webhook",
+        "en": "Settings Kredensial Meta & Webhook",
+        "words": [
+            "kredensial"
+        ]
+    },
+    "simpan_kredensial": {
+        "id": "Simpan Kredensial",
+        "en": "Save Kredensial",
+        "words": [
+            "kredensial"
+        ]
+    },
+    "kotak_masuk_inbox": {
+        "id": "Kotak Masuk (Inbox)",
+        "en": "Kotak Masuk (Inbox)",
+        "words": [
+            "masuk"
+        ]
+    },
+    "tidak_ada_pesan": {
+        "id": "Tidak ada pesan",
+        "en": "Tidak existing message",
+        "words": [
+            "tidak"
+        ]
+    },
+    "belum_ada_pengunjung_yang_mengunduh_spreadsheet": {
+        "id": "Belum ada pengunjung yang mengunduh spreadsheet template gratis dari halaman und",
+        "en": "No existing pengunjung yang mengunduh spreadsheet template free dari halaman und",
+        "words": [
+            "halaman",
+            "pengunjung",
+            "mengunduh"
+        ]
+    },
+    "buka_tayangan_publik": {
+        "id": "Buka Tayangan Publik",
+        "en": "Open Tayangan Publik",
+        "words": [
+            "tayangan"
+        ]
+    },
+    "ketentuan_khusus_pemilik_usaha_mitra_umkm": {
+        "id": "Ketentuan Khusus Pemilik Usaha & Mitra UMKM (Owner / Merchant)",
+        "en": "Ketentuan Khusus Pemilik Usaha & Mitra Sme (Owner / Merchant)",
+        "words": [
+            "ketentuan"
+        ]
+    },
+    "klik_untuk_mengaktifkan_menonaktifkan_tayangan": {
+        "id": "Klik untuk mengaktifkan / menonaktifkan tayangan",
+        "en": "Klik untuk mengaktifkan / menonaktifkan tayangan",
+        "words": [
+            "tayangan"
+        ]
+    },
+    "belum_ada_dokumen_legal_yang_terdaftar": {
+        "id": "Belum ada dokumen legal yang terdaftar. Jalankan seeder LegalPagesSeeder.",
+        "en": "No existing documents legal yang terdaftar. Jalankan seeder LegalPagesSeeder.",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "preview_syarat_layanan": {
+        "id": "Preview Syarat Layanan",
+        "en": "Preview Syarat Services",
+        "words": [
+            "syarat"
+        ]
+    },
+    "pusat_tata_kelola_dokumen_legalitas_privasi": {
+        "id": "Pusat Tata Kelola Dokumen Legalitas & Privasi",
+        "en": "Center Tata Manage Documents Legalitas & Privasi",
+        "words": [
+            "tata"
+        ]
+    },
+    "belum_ada_rekening_terdaftar": {
+        "id": "Belum Ada Rekening Terdaftar",
+        "en": "No Existing Account Terdaftar",
+        "words": [
+            "terdaftar"
+        ]
+    },
+    "ringkasan_1_2_kalimat_untuk_kartu": {
+        "id": "Ringkasan 1-2 kalimat untuk kartu preview di halaman blog...",
+        "en": "Ringkasan 1-2 kalimat untuk card preview at halaman blog...",
+        "words": [
+            "halaman"
+        ]
+    },
+    "cari_judul_artikel_topik_atau_kata": {
+        "id": "Cari judul artikel, topik, atau kata kunci...",
+        "en": "Search judul articles topik, atau word kunci...",
+        "words": [
+            "kunci"
+        ]
+    },
+    "belum_ada_batch_pada_program_ini": {
+        "id": "Belum ada batch pada program ini. Klik \"Tambah Batch\" untuk menentukan kuota dan",
+        "en": "No existing batch pada programs ini. Klik add Batch\" untuk menentukan kuota dan",
+        "words": [
+            "kuota"
+        ]
+    },
+    "belum_ada_riwayat_perubahan_harga_khusus": {
+        "id": "Belum ada riwayat perubahan harga khusus tercatat.",
+        "en": "No existing history changes prices khusus tercatat.",
+        "words": [
+            "tercatat"
+        ]
+    },
+    "tambah_batch_kuota_harga_khusus": {
+        "id": "Tambah Batch Kuota & Harga Khusus",
+        "en": "Add Batch Kuota & Prices Khusus",
+        "words": [
+            "kuota"
+        ]
+    },
+    "profil_ganti_kata_sandi_administrator_admin": {
+        "id": "Profil & Ganti Kata Sandi Administrator - Admin Console",
+        "en": "Profil & Ganti Word Password Administrator - Admin Console",
+        "words": [
+            "ganti"
+        ]
+    },
+    "buka_halaman": {
+        "id": "Buka Halaman",
+        "en": "Open Halaman",
+        "words": [
+            "halaman"
+        ]
+    },
+    "testingsocial_menguji_kredensial": {
+        "id": "testingSocial ? 'Menguji Kredensial...' :",
+        "en": "testingSocial ? 'Menguji Kredensial...' :",
+        "words": [
+            "kredensial"
+        ]
+    },
+    "pencairan_saldo_merchant_upload_bukti_bayar": {
+        "id": "Pencairan Saldo Merchant & Upload Bukti Bayar",
+        "en": "Pencairan Balance Merchant & Upload Bukti Pay",
+        "words": [
+            "bukti"
+        ]
+    },
+    "preview_bukti_bayar": {
+        "id": "Preview Bukti Bayar",
+        "en": "Preview Bukti Pay",
+        "words": [
+            "bukti"
+        ]
+    },
+    "bukti_transfer_struk_bank": {
+        "id": "Bukti Transfer Struk Bank",
+        "en": "Bukti Transfer Receipt Bank",
+        "words": [
+            "bukti"
+        ]
+    },
+    "contoh_nomor_rekening_tidak_valid_atau": {
+        "id": "Contoh: Nomor rekening tidak valid atau nama pemilik tidak sesuai...",
+        "en": "Example Number account tidak valid atau name pemilik tidak sesuai...",
+        "words": [
+            "tidak"
+        ]
+    },
+    "tidak_ada_data_pengajuan_pencairan_saldo": {
+        "id": "Tidak ada data pengajuan pencairan saldo yang sesuai filter.",
+        "en": "Tidak existing data pengajuan pencairan balance yang sesuai filter",
+        "words": [
+            "tidak"
+        ]
+    },
+    "transfer_upload_bukti": {
+        "id": "Transfer & Upload Bukti",
+        "en": "Transfer & Upload Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "konfirmasi_selesai_kirim_bukti": {
+        "id": "Konfirmasi Selesai & Kirim Bukti",
+        "en": "Confirm Complete & Send Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "pencairan_saldo_bukti_transfer": {
+        "id": "Pencairan Saldo & Bukti Transfer",
+        "en": "Pencairan Balance & Bukti Transfer",
+        "words": [
+            "bukti"
+        ]
+    },
+    "upload_bukti_transfer_bank": {
+        "id": "Upload Bukti Transfer Bank",
+        "en": "Upload Bukti Transfer Bank",
+        "words": [
+            "bukti"
+        ]
+    },
+    "bukti_transfer_pencairan": {
+        "id": "Bukti Transfer Pencairan",
+        "en": "Bukti Transfer Pencairan",
+        "words": [
+            "bukti"
+        ]
+    },
+    "setujui_kirim_bukti": {
+        "id": "Setujui & Kirim Bukti",
+        "en": "Approve & Send Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "unduh_bukti": {
+        "id": "Unduh Bukti",
+        "en": "Download Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "bukti_transfer_bank_resmi": {
+        "id": "Bukti Transfer Bank Resmi",
+        "en": "Bukti Transfer Bank Official",
+        "words": [
+            "bukti"
+        ]
+    },
+    "lihat_detail_postingan": {
+        "id": "Lihat Detail Postingan",
+        "en": "View Details Postingan",
+        "words": [
+            "postingan"
+        ]
+    },
+    "edit_postingan": {
+        "id": "Edit Postingan",
+        "en": "Edit Postingan",
+        "words": [
+            "postingan"
+        ]
+    },
+    "belum_ada_postingan_resmi_platform": {
+        "id": "Belum Ada Postingan Resmi Platform",
+        "en": "No Existing Postingan Official Platform",
+        "words": [
+            "postingan"
+        ]
+    },
+    "belum_ada_komentar_yang_masuk_pada": {
+        "id": "Belum ada komentar yang masuk pada",
+        "en": "No existing komentar yang masuk pada",
+        "words": [
+            "masuk"
+        ]
+    },
+    "kotak_masuk_interaksi": {
+        "id": "Kotak Masuk Interaksi",
+        "en": "Kotak Masuk Interaksi",
+        "words": [
+            "masuk"
+        ]
+    },
+    "buka_kotak_masuk_baru": {
+        "id": "Buka Kotak Masuk Baru",
+        "en": "Open Kotak Masuk Baru",
+        "words": [
+            "masuk"
+        ]
+    },
+    "riwayat_postingan_resmi_platform": {
+        "id": "Riwayat Postingan Resmi Platform",
+        "en": "History Postingan Official Platform",
+        "words": [
+            "postingan"
+        ]
+    },
+    "buat_postingan_resmi_cooca": {
+        "id": "Buat Postingan Resmi Cooca",
+        "en": "Create Postingan Official Cooca",
+        "words": [
+            "postingan"
+        ]
+    },
+    "edit_konten_postingan": {
+        "id": "Edit Konten Postingan",
+        "en": "Edit Konten Postingan",
+        "words": [
+            "postingan"
+        ]
+    },
+    "detail_postingan_platform": {
+        "id": "Detail Postingan Platform",
+        "en": "Details Postingan Platform",
+        "words": [
+            "postingan"
+        ]
+    },
+    "transaksi_bukti_pembayaran": {
+        "id": "Transaksi & Bukti Pembayaran",
+        "en": "Transaction & Bukti Payment",
+        "words": [
+            "bukti"
+        ]
+    },
+    "contoh_mutasi_bca_terkonfirmasi_masuk": {
+        "id": "Contoh: Mutasi BCA terkonfirmasi masuk",
+        "en": "Example Transfer BCA terkonfirmasi masuk",
+        "words": [
+            "masuk"
+        ]
+    },
+    "contoh_nominal_transfer_kurang_rp_200": {
+        "id": "Contoh: Nominal transfer kurang Rp 200, atau struk buram/tidak terbaca",
+        "en": "Example Nominal transfer kurang Rp 200, atau receipt buram/tidak terbaca",
+        "words": [
+            "tidak"
+        ]
+    },
+    "konfirmasi_pengirim_bukti": {
+        "id": "Konfirmasi Pengirim & Bukti",
+        "en": "Confirm Pengirim & Bukti",
+        "words": [
+            "bukti"
+        ]
+    },
+    "laporan_arus_kas_bulanan": {
+        "id": "laporan-arus-kas-bulanan",
+        "en": "laporan-arus-kas-bulanan",
+        "words": [
+            "laporan",
+            "arus"
+        ]
+    },
+    "satu_poin_per_baris_contoh_10": {
+        "id": "Satu poin per baris, contoh:&#10;Perhitungan otomatis kas masuk dan ke",
+        "en": "Satu points per baris, contoh:&#10;Perhitungan automatic cash masuk dan to",
+        "words": [
+            "masuk"
+        ]
+    },
+    "tidak_ada_data": {
+        "id": "Tidak ada data",
+        "en": "Tidak existing data",
+        "words": [
+            "tidak"
+        ]
+    },
+    "belum_ada_catatan_log_pengingat": {
+        "id": "Belum ada catatan log pengingat.",
+        "en": "No existing catatan log reminder",
+        "words": [
+            "catatan"
+        ]
+    },
+    "tindakan_diperlukan_verifikasi_kepemilikan_nomor_di": {
+        "id": "Tindakan Diperlukan: Verifikasi Kepemilikan Nomor di Meta WhatsApp Manager",
+        "en": "Tindakan Diperlukan: Verification Kepemilikan Number at Meta WhatsApp Manager",
+        "words": [
+            "kepemilikan"
+        ]
+    }
+}

@@ -437,20 +437,24 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.select_location') }}</label>
-                                <select name="location_id" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="location_id" class="sr-only">
                                     @foreach($locations as $loc)
                                         <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <div>
                                 <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.register_name') }}</label>
-                                <select name="pos_register_id" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="pos_register_id" class="sr-only">
                                     <option value="">{{ __('pos.default_register') }}</option>
                                     @foreach($registers as $reg)
                                         <option value="{{ $reg->id }}">{{ $reg->name }} ({{ $reg->code }})</option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
 
@@ -819,19 +823,22 @@
                             <div class="lg:col-span-7 space-y-4">
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.movement_type') }}</label>
-                                    <select name="type" x-model="movementType" @change="category = (movementType === 'cash_out' ? 'operational' : 'capital_injection')"
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <x-searchable-select>
+                                        <select name="type" x-model="movementType" @change="category = (movementType === 'cash_out' ? 'operational' : 'capital_injection')"
+                                        class="sr-only">
                                         <option value="cash_in">{{ __('pos.movement_cash_in_desc') }}</option>
                                         <option value="cash_out">{{ __('pos.movement_cash_out_desc') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                         <span x-text="movementType === 'cash_out' ? '{{ __('pos.expense_category_label') }}' : '{{ __('pos.inflow_category_label') }}'"></span>
                                     </label>
                                     <template x-if="movementType === 'cash_out'">
-                                        <select name="category" x-model="category"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="category" x-model="category"
+                                            class="sr-only">
                                             <option value="operational">{{ __('finance.categories.operational') }}</option>
                                             <option value="consumption">{{ __('finance.categories.consumption') }}</option>
                                             <option value="supplies">{{ __('finance.categories.supplies') }}</option>
@@ -840,17 +847,20 @@
                                             <option value="maintenance">{{ __('finance.categories.maintenance') }}</option>
                                             <option value="bank_admin">{{ __('finance.categories.bank_admin') }}</option>
                                             <option value="other">{{ __('finance.categories.other') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </template>
                                     <template x-if="movementType === 'cash_in'">
-                                        <select name="category" x-model="category"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="category" x-model="category"
+                                            class="sr-only">
                                             <option value="capital_injection">{{ __('finance.inflow_categories.capital_injection') }}</option>
                                             <option value="sales_revenue">{{ __('finance.inflow_categories.sales_revenue') }}</option>
                                             <option value="cash_refund">{{ __('finance.inflow_categories.cash_refund') }}</option>
                                             <option value="receivable_payment">{{ __('finance.inflow_categories.receivable_payment') }}</option>
                                             <option value="other">{{ __('finance.inflow_categories.other') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </template>
                                 </div>
 

@@ -186,19 +186,22 @@
 
                     <div>
                         <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.col_requester_staff') }}</label>
-                        <select name="att_user_id" class="h-11 sm:h-9 px-3 rounded-[10px] sm:rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="att_user_id" class="sr-only">
                             <option value="">{{ __('hrm.filter_all_staff') }}</option>
                             @foreach($memberships as $m)
                                 @if($m->user)
                                     <option value="{{ $m->user->id }}" {{ $attUserId === $m->user->id ? 'selected' : '' }}>{{ $m->user->name }}</option>
                                 @endif
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
                         <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.attendance_status_label') }}</label>
-                        <select name="att_status" class="h-11 sm:h-9 px-3 rounded-[10px] sm:rounded-[9px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[12.5px] font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="att_status" class="sr-only">
                             <option value="">{{ __('hrm.filter_all_status') }}</option>
                             <option value="present" {{ $attStatus === 'present' ? 'selected' : '' }}>{{ __('hrm.status_on_time') }}</option>
                             <option value="late" {{ $attStatus === 'late' ? 'selected' : '' }}>{{ __('hrm.late_today') ?? 'Terlambat' }}</option>
@@ -206,7 +209,8 @@
                             <option value="absent" {{ $attStatus === 'absent' ? 'selected' : '' }}>{{ __('hrm.status_absent') }}</option>
                             <option value="leave" {{ $attStatus === 'leave' ? 'selected' : '' }}>{{ __('hrm.status_official_leave') }}</option>
                             <option value="sick" {{ $attStatus === 'sick' ? 'selected' : '' }}>{{ __('hrm.status_sick') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div class="flex items-end">

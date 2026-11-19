@@ -91,13 +91,15 @@
 
             <!-- Status Filter -->
             <div class="flex items-center gap-2">
-                <select name="status" onchange="this.form.submit()" class="h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                <x-searchable-select>
+                    <select name="status" onchange="this.form.submit()" class="sr-only">
                     <option value="">{{ __('sales.quotations.filter_all_status') }}</option>
                     <option value="sent" {{ request('status') === 'sent' ? 'selected' : '' }}>{{ __('sales.quotations.status_sent') }}</option>
                     <option value="accepted" {{ request('status') === 'accepted' ? 'selected' : '' }}>{{ __('sales.quotations.status_accepted') }}</option>
                     <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>{{ __('sales.quotations.status_rejected') }}</option>
                     <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>{{ __('sales.quotations.status_expired') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
 
                 @if(request('search') || request('status'))
                 <a href="{{ route('sales.quotations.index') }}" class="h-9 px-3 rounded-[10px] text-[12px] font-medium text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition-colors inline-flex items-center gap-1">

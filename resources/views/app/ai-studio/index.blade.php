@@ -194,27 +194,31 @@
 
             <!-- Target Channel Selector -->
             <div class="w-full md:w-48">
-                <select name="channel" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="channel" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="">Semua Channel</option>
                     <option value="instagram" {{ request('channel') === 'instagram' ? 'selected' : '' }}>Instagram (Feed &amp; Story)</option>
                     <option value="tiktok" {{ request('channel') === 'tiktok' ? 'selected' : '' }}>TikTok (Vertical 9:16)</option>
                     <option value="shopee" {{ request('channel') === 'shopee' ? 'selected' : '' }}>Shopee (Square 1:1)</option>
                     <option value="tokopedia" {{ request('channel') === 'tokopedia' ? 'selected' : '' }}>Tokopedia (Square 1:1)</option>
                     <option value="banner" {{ request('channel') === 'banner' ? 'selected' : '' }}>Banner Website (16:9)</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- Status Selector -->
             <div class="w-full md:w-44">
-                <select name="status" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="status" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="">Semua Status</option>
                     <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>Draf</option>
                     <option value="generating" {{ request('status') === 'generating' ? 'selected' : '' }}>Sedang Dibuat</option>
                     <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
                     <option value="failed" {{ request('status') === 'failed' ? 'selected' : '' }}>Gagal</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- Filter & Reset Buttons -->

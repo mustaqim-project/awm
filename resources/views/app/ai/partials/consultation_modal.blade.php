@@ -44,9 +44,10 @@
                     </div>
                     <div class="flex items-center gap-1.5 text-xs text-white/70">
                         <span>{{ __('ai.chat.select_agent') }}</span>
-                        <select x-model="activeChatAgent" 
+                        <x-searchable-select>
+                            <select x-model="activeChatAgent" 
                                 @change="switchAgent(activeChatAgent)" 
-                                class="bg-[#111827] border border-white/15 text-white font-semibold text-xs rounded-lg px-2 py-0.5 focus:outline-none focus:border-emerald-500 transition cursor-pointer">
+                                class="sr-only">
                             <optgroup label="{{ __('ai.chat.group_executives') }}" class="bg-[#0B0F19] text-white/60 font-semibold">
                                 <option value="ceo" class="text-white">{{ __('ai.chat.agents.ceo') }}</option>
                                 <option value="cfo" class="text-white">{{ __('ai.chat.agents.cfo') }}</option>
@@ -71,7 +72,8 @@
                                 <option value="social_media" class="text-white">{{ __('ai.chat.agents.social_media') }}</option>
                                 <option value="hr" class="text-white">{{ __('ai.chat.agents.hr') }}</option>
                             </optgroup>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
             </div>

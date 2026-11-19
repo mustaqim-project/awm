@@ -67,14 +67,16 @@
                     {{ __('inventory.filter_product') }}
                 </label>
                 <div class="relative">
-                    <select name="product_id" class="w-full h-11 bg-black/[0.03] dark:bg-[#2C2C2E]/60 border border-black/[0.08] dark:border-white/[0.12] rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition appearance-none">
+                    <x-searchable-select>
+                        <select name="product_id" class="sr-only">
                         <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.filter_all_products') }}</option>
                         @foreach($products as $p)
                             <option value="{{ $p->id }}" {{ request('product_id') === $p->id ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">
                                 {{ $p->name }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                     <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-black/40 dark:text-white/40">
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </div>
@@ -87,14 +89,16 @@
                     {{ __('inventory.filter_location') }}
                 </label>
                 <div class="relative">
-                    <select name="location_id" class="w-full h-11 bg-black/[0.03] dark:bg-[#2C2C2E]/60 border border-black/[0.08] dark:border-white/[0.12] rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition appearance-none">
+                    <x-searchable-select>
+                        <select name="location_id" class="sr-only">
                         <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.filter_all_locations') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" {{ request('location_id') === $loc->id ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">
                                 {{ $loc->name }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                     <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-black/40 dark:text-white/40">
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </div>
@@ -107,7 +111,8 @@
                     {{ __('inventory.filter_movement_type') }}
                 </label>
                 <div class="relative">
-                    <select name="movement_type" class="w-full h-11 bg-black/[0.03] dark:bg-[#2C2C2E]/60 border border-black/[0.08] dark:border-white/[0.12] rounded-[12px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition appearance-none">
+                    <x-searchable-select>
+                        <select name="movement_type" class="sr-only">
                         <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.filter_all_types') }}</option>
                         <option value="pos_sale" {{ request('movement_type') === 'pos_sale' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_pos_sale') }}</option>
                         <option value="pos_refund" {{ request('movement_type') === 'pos_refund' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_pos_refund') }}</option>
@@ -115,7 +120,8 @@
                         <option value="transfer_out" {{ request('movement_type') === 'transfer_out' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_transfer_out') }}</option>
                         <option value="opname" {{ request('movement_type') === 'opname' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_opname') }}</option>
                         <option value="adjustment" {{ request('movement_type') === 'adjustment' ? 'selected' : '' }} class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_adjustment') }}</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                     <div class="absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-black/40 dark:text-white/40">
                         <i data-lucide="chevron-down" class="w-4 h-4"></i>
                     </div>

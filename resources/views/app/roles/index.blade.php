@@ -458,14 +458,16 @@
 
                             <div>
                                 <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">{{ __('roles.field_role') }} <span class="text-[#FF3B30]">*</span></label>
-                                <select name="role_id" required
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                                <x-searchable-select>
+                                    <select name="role_id" required
+                                    class="sr-only">
                                     @foreach ($roles as $roleOption)
                                         <option value="{{ $roleOption->id }}">
                                             {{ $roleOption->name }}{{ $roleOption->business_id ? __('roles.role_custom_tag') : __('roles.role_preset_tag') }}
                                         </option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <button type="submit"
@@ -900,14 +902,16 @@
 
                                 <div>
                                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">{{ __('roles.select_new_role') }} <span class="text-[#FF3B30]">*</span></label>
-                                    <select name="role_id" required x-model="memberSelectedRoleId"
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                                    <x-searchable-select>
+                                        <select name="role_id" required x-model="memberSelectedRoleId"
+                                        class="sr-only">
                                         @foreach ($roles as $roleOption)
                                             <option value="{{ $roleOption->id }}">
                                                 {{ $roleOption->name }}{{ $roleOption->business_id ? __('roles.role_custom_tag') : __('roles.role_preset_tag') }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div

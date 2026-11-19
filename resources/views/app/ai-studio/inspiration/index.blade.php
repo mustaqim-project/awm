@@ -122,39 +122,45 @@
 
             <!-- Category Selector -->
             <div class="w-full md:w-48">
-                <select name="category" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="category" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="">Semua Kategori</option>
                     @foreach($categories as $cat)
                         <option value="{{ $cat->slug }}" {{ (request('category') === $cat->slug) ? 'selected' : '' }}>
                             {{ $cat->name }}
                         </option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- Target Industry Selector (Multi-Industry 20+ Sectors) -->
             <div class="w-full md:w-52">
-                <select name="industry" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="industry" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="">Semua Sektor Industri</option>
                     @foreach($industrySectors ?? [] as $secCode => $secData)
                         <option value="{{ $secCode }}" {{ request('industry') === $secCode ? 'selected' : '' }}>
                             {{ $secData['label'] }}
                         </option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <!-- Aspect Ratio Selector -->
             <div class="w-full md:w-36">
-                <select name="aspect_ratio" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs sm:text-sm text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="aspect_ratio" onchange="this.form.submit()"
+                    class="sr-only">
                     <option value="all">Semua Rasio</option>
                     <option value="1:1" {{ request('aspect_ratio') === '1:1' ? 'selected' : '' }}>1:1 Square</option>
                     <option value="9:16" {{ request('aspect_ratio') === '9:16' ? 'selected' : '' }}>9:16 Story</option>
                     <option value="16:9" {{ request('aspect_ratio') === '16:9' ? 'selected' : '' }}>16:9 Banner</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <div class="flex items-center gap-2 shrink-0">
@@ -357,13 +363,15 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">Pilih Papan Koleksi Tujuan</label>
-                    <select x-model="selectedCollectionId"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                    <x-searchable-select>
+                        <select x-model="selectedCollectionId"
+                        class="sr-only">
                         <option value="">-- Pilih Koleksi --</option>
                         @foreach($featuredCollections ?? [] as $col)
                             <option value="{{ $col->id }}">{{ $col->name }} ({{ $col->items_count }} item)</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="text-[11px] text-black/50 dark:text-white/50">

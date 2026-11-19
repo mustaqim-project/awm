@@ -1122,15 +1122,17 @@ function warehouseIndexHub() {
                                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                                         {{ __('warehouse.fields.parent_location') }}
                                     </label>
-                                    <select name="parent_id" x-model="warehouseForm.parent_id"
-                                            class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                    <x-searchable-select>
+                                        <select name="parent_id" x-model="warehouseForm.parent_id"
+                                            class="sr-only">
                                         <option value="" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.fields.no_parent') }}</option>
                                         @if(isset($parentOutlets))
                                             @foreach($parentOutlets as $pOut)
                                                 <option value="{{ $pOut->id }}" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
                                             @endforeach
                                         @endif
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                                         {{ __('warehouse.sections.general_info_desc') }}
                                     </p>
@@ -1431,7 +1433,8 @@ function warehouseIndexHub() {
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                                             {{ __('warehouse.fields.type') }}
                                         </label>
-                                        <select name="type" x-model="editData.type" class="w-full h-10 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                        <x-searchable-select>
+                                            <select name="type" x-model="editData.type" class="sr-only">
                                             <option value="warehouse" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.warehouse') }}</option>
                                             <option value="outlet" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.outlet') }}</option>
                                             @if(str_starts_with($business->template_code ?? '', 'fnb_'))
@@ -1443,7 +1446,8 @@ function warehouseIndexHub() {
                                             @elseif(($locations ?? collect())->contains('type', 'central_kitchen'))
                                                 <option value="central_kitchen" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.types.central_kitchen') }}</option>
                                             @endif
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
@@ -1459,15 +1463,17 @@ function warehouseIndexHub() {
                                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                                         {{ __('warehouse.fields.parent_location') }}
                                     </label>
-                                    <select name="parent_id" x-model="editData.parent_id"
-                                            class="w-full h-11 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/15 rounded-[10px] px-3.5 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] transition">
+                                    <x-searchable-select>
+                                        <select name="parent_id" x-model="editData.parent_id"
+                                            class="sr-only">
                                         <option value="" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.fields.no_parent') }}</option>
                                         @if(isset($parentOutlets))
                                             @foreach($parentOutlets as $pOut)
                                                 <option value="{{ $pOut->id }}" x-show="editData.id !== '{{ $pOut->id }}'" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ $pOut->name }} ({{ $pOut->code ?: __('warehouse.types.outlet') }})</option>
                                             @endforeach
                                         @endif
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
                                         {{ __('warehouse.sections.general_info_desc') }}
                                     </p>
@@ -1666,22 +1672,26 @@ function warehouseIndexHub() {
                                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                                         {{ __('warehouse.fields.timezone_mode') }}
                                     </label>
-                                    <select name="timezone_mode" x-model="editData.timezone_mode"
-                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="timezone_mode" x-model="editData.timezone_mode"
+                                            class="sr-only">
                                         <option value="inherit" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.inherit') }} ({{ $business->timezone ?? 'Asia/Jakarta' }})</option>
                                         <option value="custom" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.timezone_modes.custom') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
 
                                     <div x-show="editData.timezone_mode === 'custom'" x-cloak class="space-y-1.5 pt-1">
                                         <label class="block text-[11px] font-semibold text-slate-600 dark:text-slate-400">
                                             {{ __('warehouse.fields.timezone') }}
                                         </label>
-                                        <select name="timezone" x-model="editData.timezone"
-                                                class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="timezone" x-model="editData.timezone"
+                                                class="sr-only">
                                             @foreach(\App\Support\TimezoneHelper::commonIndonesianTimezones() as $tz)
                                                 <option value="{{ $tz['value'] }}" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ $tz['label'] }} ({{ $tz['region'] }})</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -1690,11 +1700,13 @@ function warehouseIndexHub() {
                                     <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                                         {{ __('warehouse.fields.operating_hours_mode') }}
                                     </label>
-                                    <select name="operating_hours_mode" x-model="editData.operating_hours_mode"
-                                            class="w-full h-10 bg-slate-50 dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 rounded-[10px] px-3 text-[16px] sm:text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="operating_hours_mode" x-model="editData.operating_hours_mode"
+                                            class="sr-only">
                                         <option value="inherit" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.inherit') }}</option>
                                         <option value="custom" class="bg-white dark:bg-[#1C1C1E] text-slate-900 dark:text-white">{{ __('warehouse.operating_hours_modes.custom') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <p class="text-[11px] text-slate-500 dark:text-slate-400">
                                         {{ __('warehouse.operating_hours_modes.custom_hint') }}
                                     </p>

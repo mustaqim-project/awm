@@ -608,12 +608,14 @@
                                     </div>
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_account_type_required') }}</label>
-                                        <select name="type" x-model="accountType" required
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                        <x-searchable-select>
+                                            <select name="type" x-model="accountType" required
+                                            class="sr-only">
                                             <option value="bank">{{ __('finance.account_type_bank') }}</option>
                                             <option value="cash">{{ __('finance.account_type_cash') }}</option>
                                             <option value="ewallet">{{ __('finance.account_type_ewallet') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -719,12 +721,14 @@
                                 </div>
                                 <div>
                                     <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.account_type_label') }}</label>
-                                    <select name="type" x-model="currentAccount.type" required
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="type" x-model="currentAccount.type" required
+                                        class="sr-only">
                                         <option value="bank">{{ __('finance.account_type_bank') }}</option>
                                         <option value="cash">{{ __('finance.account_type_cash') }}</option>
                                         <option value="ewallet">{{ __('finance.account_type_ewallet') }}</option>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                             </div>
 
@@ -804,31 +808,37 @@
                                 <div class="lg:col-span-6 space-y-4">
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.recipient_account') }}</label>
-                                        <select name="account_id"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        <x-searchable-select>
+                                            <select name="account_id"
+                                            class="sr-only">
                                             <option value="">{{ __('finance.auto_by_method') }}</option>
                                             @foreach ($accounts as $acc)
                                                 <option value="{{ $acc->id }}">{{ $acc->name }} ({{ strtoupper($acc->type) }}) - Saldo: {{ $acc->current_balance < 0 ? '-Rp ' . number_format(abs($acc->current_balance), 0, ',', '.') . ' [Minus]' : 'Rp ' . number_format($acc->current_balance, 0, ',', '.') }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.payment_method') }}</label>
-                                        <select name="account_method"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        <x-searchable-select>
+                                            <select name="account_method"
+                                            class="sr-only">
                                             <option value="cash">{{ __('finance.method_cash') }}</option>
                                             <option value="bank_transfer">{{ __('finance.method_bank_transfer') }}</option>
                                             <option value="qris">{{ __('finance.method_qris') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.inflow_category_label') }}</label>
-                                        <select name="category" x-model="category" required
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#34C759]">
+                                        <x-searchable-select>
+                                            <select name="category" x-model="category" required
+                                            class="sr-only">
                                             @foreach (['sales_revenue', 'capital_injection', 'receivable_payment', 'bank_interest', 'investment', 'asset_sale', 'cash_refund', 'tax_refund', 'other'] as $inflowCat)
                                                 <option value="{{ $inflowCat }}">{{ __('finance.inflow_categories.' . $inflowCat) }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div x-show="category === 'other'" x-transition class="p-3.5 rounded-[14px] bg-[#FF9500]/10 border border-[#FF9500]/30 space-y-1.5">
                                         <label class="block text-[12.5px] font-bold text-[#FF9500] dark:text-[#FF9F0A] flex items-center gap-1.5">
@@ -943,34 +953,40 @@
                                 <div class="lg:col-span-6 space-y-4">
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.source_account') }}</label>
-                                        <select name="account_id"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                                        <x-searchable-select>
+                                            <select name="account_id"
+                                            class="sr-only">
                                             <option value="">{{ __('finance.auto_by_method') }}</option>
                                             @foreach ($accounts as $acc)
                                                 <option value="{{ $acc->id }}">{{ $acc->name }} ({{ strtoupper($acc->type) }}) - Saldo: {{ $acc->current_balance < 0 ? '-Rp ' . number_format(abs($acc->current_balance), 0, ',', '.') . ' [Minus]' : 'Rp ' . number_format($acc->current_balance, 0, ',', '.') }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                         <p class="text-[11px] text-black/45 dark:text-white/45 mt-1">
                                             {{ __('finance.outflow_flexible_zero_balance_hint') }}
                                         </p>
                                     </div>
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.payment_method') }}</label>
-                                        <select name="account_method"
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                                        <x-searchable-select>
+                                            <select name="account_method"
+                                            class="sr-only">
                                             <option value="cash">{{ __('finance.method_cash') }}</option>
                                             <option value="bank_transfer">{{ __('finance.method_bank_transfer') }}</option>
                                             <option value="qris">{{ __('finance.method_qris') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div>
                                         <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.outflow_category_label') }}</label>
-                                        <select name="category" x-model="category" required
-                                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#FF3B30]">
+                                        <x-searchable-select>
+                                            <select name="category" x-model="category" required
+                                            class="sr-only">
                                             @foreach (['operational', 'utilities', 'internet_phone', 'supplies', 'salaries', 'consumption', 'logistics', 'rent', 'maintenance', 'marketing', 'taxes_legal', 'bank_admin', 'cash_advance', 'other'] as $outflowCat)
                                                 <option value="{{ $outflowCat }}">{{ __('finance.categories.' . $outflowCat) }}</option>
                                             @endforeach
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                     <div x-show="category === 'other'" x-transition class="p-3.5 rounded-[14px] bg-[#FF3B30]/10 border border-[#FF3B30]/30 space-y-1.5">
                                         <label class="block text-[12.5px] font-bold text-[#FF3B30] dark:text-[#FF453A] flex items-center gap-1.5">
@@ -1087,12 +1103,14 @@
                                     <div class="p-4 rounded-[18px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08] space-y-3">
                                         <div>
                                             <label class="block text-[12px] font-bold text-black/80 dark:text-white/80 mb-1">{{ __('finance.field_from_account_required') }}</label>
-                                            <select name="from_account_id" required
-                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <x-searchable-select>
+                                                <select name="from_account_id" required
+                                                class="sr-only">
                                                 @foreach ($accounts as $account)
                                                     <option value="{{ $account->id }}">{{ $account->name }} (Saldo: {{ $account->current_balance < 0 ? '-Rp ' . number_format(abs($account->current_balance), 0, ',', '.') . ' [Minus]' : 'Rp ' . number_format($account->current_balance, 0, ',', '.') }})</option>
                                                 @endforeach
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
 
                                         <div class="flex items-center justify-center py-0.5 text-[#007AFF]">
@@ -1101,12 +1119,14 @@
 
                                         <div>
                                             <label class="block text-[12px] font-bold text-black/80 dark:text-white/80 mb-1">{{ __('finance.field_to_account_required') }}</label>
-                                            <select name="to_account_id" required
-                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                            <x-searchable-select>
+                                                <select name="to_account_id" required
+                                                class="sr-only">
                                                 @foreach ($accounts as $account)
                                                     <option value="{{ $account->id }}">{{ $account->name }} (Saldo: {{ $account->current_balance < 0 ? '-Rp ' . number_format(abs($account->current_balance), 0, ',', '.') . ' [Minus]' : 'Rp ' . number_format($account->current_balance, 0, ',', '.') }})</option>
                                                 @endforeach
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                     </div>
 

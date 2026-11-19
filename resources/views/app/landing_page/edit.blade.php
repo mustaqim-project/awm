@@ -333,13 +333,15 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Pilih Font</label>
-                                    <select x-model="form.font_family"
-                                        class="w-full h-11 px-3.5 text-[13px] bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#007AFF] transition cursor-pointer">
+                                    <x-searchable-select>
+                                        <select x-model="form.font_family"
+                                        class="sr-only">
                                         <option value="">Bawaan Tema Aktif (Otentik)</option>
                                         <template x-for="font in curatedFonts" :key="font">
                                             <option :value="font" x-text="font" :selected="form.font_family === font"></option>
                                         </template>
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-semibold uppercase tracking-wider text-black/50 dark:text-white/50 mb-1.5">Pratinjau Huruf</label>
@@ -990,8 +992,9 @@
                                             <input type="text" x-model="val.title"
                                                 placeholder="Judul Pilar Keunggulan"
                                                 class="flex-1 h-8 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] px-2.5 text-[16px] sm:text-[12px] font-semibold text-black dark:text-white focus:outline-none focus:ring-1 focus:ring-[#007AFF]">
-                                            <select x-model="val.icon"
-                                                class="h-8 px-2 bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] text-[16px] sm:text-[12px] text-[#007AFF] font-medium focus:outline-none">
+                                            <x-searchable-select>
+                                                <select x-model="val.icon"
+                                                class="sr-only">
                                                 <option value="shield-check">Shield Check</option>
                                                 <option value="zap">Kilat (Zap)</option>
                                                 <option value="award">Penghargaan (Award)</option>
@@ -1005,7 +1008,8 @@
                                                 <option value="badge-check">Lencana (Badge)</option>
                                                 <option value="tag">Penawaran (Tag)</option>
                                                 <option value="sparkles">Istimewa (Sparkles)</option>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                         <textarea x-model="val.description" rows="2" placeholder="Uraian singkat keunggulan..."
                                             class="w-full bg-white dark:bg-[#2C2C2E] border-none rounded-[8px] p-2.5 text-[16px] sm:text-[12px] text-black/70 dark:text-white/70 focus:outline-none focus:ring-1 focus:ring-[#007AFF] resize-none"></textarea>

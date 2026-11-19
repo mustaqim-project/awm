@@ -806,15 +806,17 @@
                                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
                                                 {{ __('labor_machines.label_rate_basis') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
-                                            <select name="basis" required
-                                                class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <x-searchable-select>
+                                                <select name="basis" required
+                                                class="sr-only">
                                                 <option value="hourly">Per Jam (Hourly)</option>
                                                 <option value="daily">Per Hari (Daily)</option>
                                                 <option value="monthly">Bulanan (Monthly)</option>
                                                 <option value="per_unit">Per Unit (Potong)</option>
                                                 <option value="per_task">Per Tugas (Task)</option>
                                                 <option value="per_project">Per Proyek</option>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                         <div>
                                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
@@ -970,15 +972,17 @@
                                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">
                                                 {{ __('labor_machines.label_rate_basis') }} <span class="text-[#FF3B30]">*</span>
                                             </label>
-                                            <select name="basis" x-model="editLabor.basis" required
-                                                class="w-full min-h-[44px] h-11 px-3 bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 rounded-[10px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                                            <x-searchable-select>
+                                                <select name="basis" x-model="editLabor.basis" required
+                                                class="sr-only">
                                                 <option value="hourly">Per Jam (Hourly)</option>
                                                 <option value="daily">Per Hari (Daily)</option>
                                                 <option value="monthly">Bulanan (Monthly)</option>
                                                 <option value="per_unit">Per Unit (Potong)</option>
                                                 <option value="per_task">Per Tugas (Task)</option>
                                                 <option value="per_project">Per Proyek</option>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                         <div>
                                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5">

@@ -77,14 +77,16 @@
                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                         {{ __('sales.sales_orders.customer_label') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="customer_id" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="customer_id" required class="sr-only">
                         <option value="">{{ __('sales.sales_orders.customer_select_placeholder') }}</option>
                         @foreach ($customers as $c)
                             <option value="{{ $c->id }}" {{ old('customer_id', $salesOrder->customer_id) == $c->id ? 'selected' : '' }}>
                                 {{ $c->name }} ({{ $c->company ?? $c->phone }})
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>
@@ -99,7 +101,8 @@
                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                         Status Pesanan
                     </label>
-                    <select name="status" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="status" class="sr-only">
                         <option value="draft" {{ old('status', $salesOrder->status) == 'draft' ? 'selected' : '' }}>Draft</option>
                         <option value="confirmed" {{ old('status', $salesOrder->status) == 'confirmed' ? 'selected' : '' }}>Confirmed (Dikonfirmasi)</option>
                         <option value="processing" {{ old('status', $salesOrder->status) == 'processing' ? 'selected' : '' }}>Processing (Sedang Diproses)</option>
@@ -107,7 +110,8 @@
                         <option value="fulfilled" {{ old('status', $salesOrder->status) == 'fulfilled' ? 'selected' : '' }}>Fulfilled (Terkirim Penuh)</option>
                         <option value="completed" {{ old('status', $salesOrder->status) == 'completed' ? 'selected' : '' }}>Completed (Selesai)</option>
                         <option value="cancelled" {{ old('status', $salesOrder->status) == 'cancelled' ? 'selected' : '' }}>Cancelled (Dibatalkan)</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>
@@ -130,14 +134,16 @@
                     <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                         Tautkan Penawaran (Quotation)
                     </label>
-                    <select name="quotation_id" class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="quotation_id" class="sr-only">
                         <option value="">Tanpa Penawaran (Direct)</option>
                         @foreach ($quotations as $q)
                             <option value="{{ $q->id }}" {{ old('quotation_id', $salesOrder->quotation_id) == $q->id ? 'selected' : '' }}>
                                 {{ $q->quotation_number }} - {{ $q->customer?->name ?? 'Tanpa Pelanggan' }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="sm:col-span-2 lg:col-span-4">
@@ -205,8 +211,9 @@
                         <template x-for="(item, idx) in items" :key="idx">
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                 <td class="px-3 py-2.5">
-                                    <select :name="'items['+idx+'][product_id]'" x-model="item.product_id" @change="productSelected(idx, $event)"
-                                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition font-medium">
+                                    <x-searchable-select>
+                                        <select :name="'items['+idx+'][product_id]'" x-model="item.product_id" @change="productSelected(idx, $event)"
+                                            class="sr-only">
                                         <option value="">{{ __('sales.sales_orders.select_product_placeholder') }}</option>
                                         @if(isset($goodsProducts) && $goodsProducts->isNotEmpty())
                                             <optgroup label="Barang Fisik">
@@ -233,7 +240,8 @@
                                             </option>
                                             @endforeach
                                         @endif
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <input type="hidden" :name="'items['+idx+'][product_name]'" x-model="item.product_name">
                                 </td>
                                 <td class="px-3 py-2.5 text-right">

@@ -132,8 +132,9 @@
 
             <!-- Filter Status Dropdown Styled in Apple HIG -->
             <div class="flex items-center gap-2">
-                <select name="status" onchange="this.form.submit()"
-                        class="h-9 px-3 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                <x-searchable-select>
+                    <select name="status" onchange="this.form.submit()"
+                        class="sr-only">
                     <option value="">{{ __('sales.invoices.filter_all_status') }}</option>
                     <option value="draft" {{ request('status') === 'draft' ? 'selected' : '' }}>{{ __('sales.invoices.status_draft') }}</option>
                     <option value="sent" {{ request('status') === 'sent' ? 'selected' : '' }}>{{ __('sales.invoices.status_sent') }}</option>
@@ -142,7 +143,8 @@
                     <option value="paid" {{ request('status') === 'paid' ? 'selected' : '' }}>{{ __('sales.invoices.status_paid') }}</option>
                     <option value="overdue" {{ request('status') === 'overdue' ? 'selected' : '' }}>{{ __('sales.invoices.status_overdue') }}</option>
                     <option value="void" {{ request('status') === 'void' ? 'selected' : '' }}>{{ __('sales.invoices.status_void') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
 
                 @if(request('search') || request('status'))
                     <a href="{{ route('invoices.index') }}" class="h-9 px-3 rounded-[10px] text-[12px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 flex items-center justify-center transition">

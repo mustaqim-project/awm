@@ -609,13 +609,15 @@
                             </div>
                             <div>
                                 <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">{{ __('sales.invoices.payment_method_label') }} *</label>
-                                <select name="payment_method" required class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="payment_method" required class="sr-only">
                                     <option value="bank_transfer">{{ __('sales.invoices.method_bank_transfer') }}</option>
                                     <option value="cash">{{ __('sales.invoices.method_cash') }}</option>
                                     <option value="qris">{{ __('sales.invoices.method_qris') }}</option>
                                     <option value="credit_card">{{ __('sales.invoices.method_credit_card') }}</option>
                                     <option value="cheque">{{ __('sales.invoices.method_other') }}</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
 

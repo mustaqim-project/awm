@@ -436,8 +436,9 @@
                 <div
                     class="hidden sm:flex items-center gap-1.5 ml-1 sm:ml-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs shrink-0">
                     <span class="w-2 h-2 rounded-full bg-[#34C759]"></span>
-                    <select x-model="selectedLocationId" @change="changeLocation()"
-                        class="bg-transparent text-white text-[11px] font-semibold focus:outline-none cursor-pointer max-w-[140px] truncate">
+                    <x-searchable-select>
+                        <select x-model="selectedLocationId" @change="changeLocation()"
+                        class="sr-only">
                         @foreach ($locations as $loc)
                             <option value="{{ $loc->id }}"
                                 class="bg-[#0B1528] text-white"
@@ -445,7 +446,8 @@
                                 {{ $loc->parent ? ($loc->parent->name . ' ↳ ' . $loc->name) : $loc->name }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
             </div>
 
@@ -824,14 +826,16 @@
                     <div class="p-3 rounded-[16px] bg-white/[0.04] border border-white/10 space-y-2">
                         <label class="text-[11px] font-semibold uppercase tracking-wider text-white/50 block">{{ __('pos.outlet_location') }}</label>
                         <div class="relative">
-                            <select x-model="selectedLocationId" @change="changeLocation()"
-                                class="w-full h-10 rounded-[10px] bg-white/10 border border-white/15 px-3 pr-8 text-white text-[12px] font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <x-searchable-select>
+                                <select x-model="selectedLocationId" @change="changeLocation()"
+                                class="sr-only">
                                 @foreach ($locations as $loc)
                                     <option value="{{ $loc->id }}" class="bg-[#0B1528] text-white" {{ $loc->id === $selectedLocationId ? 'selected' : '' }}>
                                         {{ $loc->name }}
                                     </option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
 
@@ -2013,11 +2017,13 @@
                         <!-- Order Discount Row with Terapkan button -->
                         <div class="flex items-center gap-1.5 pt-0.5">
                             <div class="relative shrink-0">
-                                <select x-model="discountType"
-                                    class="h-8 bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[8px] pl-2 pr-6 text-[11px] font-semibold text-black dark:text-white focus:outline-none appearance-none cursor-pointer">
+                                <x-searchable-select>
+                                    <select x-model="discountType"
+                                    class="sr-only">
                                     <option value="fixed" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.discount_nominal') }}</option>
                                     <option value="percentage" class="bg-white dark:bg-[#1C1C1E]">{{ __('pos.discount_percent') }}</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                                 <svg class="w-3 h-3 text-black/40 dark:text-white/40 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                 </svg>

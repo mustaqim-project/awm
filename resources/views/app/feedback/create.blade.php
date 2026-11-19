@@ -79,28 +79,32 @@
                     <label class="block text-[13px] font-bold text-black dark:text-white">
                         {{ __('feedback.category_field') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="category" required
-                        class="w-full h-12 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="category" required
+                        class="sr-only">
                         @foreach($categories as $cat)
                             <option value="{{ $cat }}" {{ old('category') === $cat ? 'selected' : '' }}>
                                 {{ __('feedback.cat_' . $cat) !== 'feedback.cat_' . $cat ? __('feedback.cat_' . $cat) : ucfirst(str_replace('_', ' ', $cat)) }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="space-y-1.5">
                     <label class="block text-[13px] font-bold text-black dark:text-white">
                         {{ $type === 'bugs' ? __('feedback.severity_field') : __('feedback.priority_field') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="{{ $type === 'bugs' ? 'severity' : 'priority' }}" required
-                        class="w-full h-12 px-3.5 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[14px] text-black dark:text-white focus:outline-hidden focus:border-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="{{ $type === 'bugs' ? 'severity' : 'priority' }}" required
+                        class="sr-only">
                         @foreach($type === 'bugs' ? ['low','normal','high','critical'] : ['low','normal','high'] as $level)
                             <option value="{{ $level }}" {{ old($type === 'bugs' ? 'severity' : 'priority') === $level ? 'selected' : '' }}>
                                 {{ $type === 'bugs' ? __('feedback.severity_' . $level) : __('feedback.priority_' . $level) }}
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
             </div>
 

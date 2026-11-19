@@ -49,20 +49,24 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_employee_required') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="user_id" required class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
+                        <x-searchable-select>
+                            <select name="user_id" required class="sr-only">
                             @foreach($memberships as $m)
                                 @if($m->user)
                                     <option value="{{ $m->user->id }}">{{ $m->user->name }} ({{ $m->roleModel?->name ?? $m->role }})</option>
                                 @endif
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_schedule_type') }} <span class="text-[#FF3B30]">*</span></label>
-                        <select name="schedule_type" x-model="scheduleType" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
+                        <x-searchable-select>
+                            <select name="schedule_type" x-model="scheduleType" class="sr-only">
                             <option value="recurring">{{ __('hrm.opt_weekly_pattern') }}</option>
                             <option value="specific_date">{{ __('hrm.opt_specific_date_event') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 
@@ -71,7 +75,8 @@
                     <template x-if="scheduleType === 'recurring'">
                         <div>
                             <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_work_day') }} <span class="text-[#FF3B30]">*</span></label>
-                            <select name="day_of_week" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
+                            <x-searchable-select>
+                                <select name="day_of_week" class="sr-only">
                                 <option value="monday">{{ __('hrm.day_monday') }}</option>
                                 <option value="tuesday">{{ __('hrm.day_tuesday') }}</option>
                                 <option value="wednesday">{{ __('hrm.day_wednesday') }}</option>
@@ -79,7 +84,8 @@
                                 <option value="friday">{{ __('hrm.day_friday') }}</option>
                                 <option value="saturday">{{ __('hrm.day_saturday') }}</option>
                                 <option value="sunday">{{ __('hrm.day_sunday') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </template>
                     <template x-if="scheduleType === 'specific_date'">
@@ -92,11 +98,13 @@
 
                     <div>
                         <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.th_shift_assignment') }}</label>
-                        <select name="work_shift_id" :disabled="isOffDay" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40 disabled:opacity-40">
+                        <x-searchable-select>
+                            <select name="work_shift_id" :disabled="isOffDay" class="sr-only">
                             @foreach($workShifts as $ws)
                                 <option value="{{ $ws->id }}">{{ $ws->name }} ({{ $ws->start_time }} - {{ $ws->end_time }}{{ $ws->isOvernight() ? ' +1' : '' }})</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </div>
 
@@ -133,12 +141,14 @@
 
                 <div>
                     <label class="block text-[11.5px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1">{{ __('hrm.field_override_location') }}</label>
-                    <select name="location_id" class="w-full h-11 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#5856D6]/40">
+                    <x-searchable-select>
+                        <select name="location_id" class="sr-only">
                         <option value="">{{ __('hrm.opt_follow_placement') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>

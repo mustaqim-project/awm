@@ -334,32 +334,38 @@
             {{-- Tahun Pajak --}}
             <div class="flex items-center gap-2">
                 <label for="year-select" class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('tax.year_filter.label') }}</label>
-                <select id="year-select" name="year" onchange="this.form.submit()" class="h-10 text-sm font-medium rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                <x-searchable-select>
+                    <select id="year-select" name="year" onchange="this.form.submit()" class="sr-only">
                     @for($y = (int) date('Y'); $y >= (int) date('Y') - 4; $y--)
                         <option value="{{ $y }}" {{ $currentYear === $y ? 'selected' : '' }}>{{ $y }}</option>
                     @endfor
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             {{-- Jenis Wajib Pajak --}}
             <div class="flex items-center gap-2">
                 <label for="taxpayer-select" class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('tax.year_filter.type_label') }}</label>
-                <select id="taxpayer-select" name="taxpayer_type" onchange="this.form.submit()" class="h-10 text-sm font-medium rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                <x-searchable-select>
+                    <select id="taxpayer-select" name="taxpayer_type" onchange="this.form.submit()" class="sr-only">
                     <option value="individual" {{ $taxpayerType === 'individual' ? 'selected' : '' }}>{{ __('tax.year_filter.type_individual') }}</option>
                     <option value="pt_individual" {{ $taxpayerType === 'pt_individual' ? 'selected' : '' }}>{{ __('tax.year_filter.type_pt_individual') }}</option>
                     <option value="corporate" {{ $taxpayerType === 'corporate' ? 'selected' : '' }}>{{ __('tax.year_filter.type_corporate') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             {{-- Status PTKP jika Orang Pribadi --}}
             @if($isIndividual)
                 <div class="flex items-center gap-2">
                     <label for="ptkp-select" class="text-xs font-semibold text-black/60 dark:text-white/60">{{ __('tax.year_filter.ptkp_label') }}</label>
-                    <select id="ptkp-select" name="ptkp_status" onchange="this.form.submit()" class="h-10 text-sm font-medium rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                    <x-searchable-select>
+                        <select id="ptkp-select" name="ptkp_status" onchange="this.form.submit()" class="sr-only">
                         @foreach(['TK/0', 'TK/1', 'TK/2', 'TK/3', 'K/0', 'K/1', 'K/2', 'K/3'] as $status)
                             <option value="{{ $status }}" {{ $ptkpStatus === $status ? 'selected' : '' }}>{{ $status }} (Rp {{ number_format(\App\Domain\Tax\NetIncomeTaxService::PTKP_VALUES[$status] ?? 54000000, 0, ',', '.') }})</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
             @endif
         </form>
@@ -451,19 +457,23 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                         <div>
                             <label for="net-is-corporate" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('tax.net_income.field_entity') }}:</label>
-                            <select id="net-is-corporate" x-model="netIncomeInput.tax_entity_type" @change="netIncomeInput.is_corporate = (netIncomeInput.tax_entity_type !== 'individual'); runNetIncomeSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                            <x-searchable-select>
+                                <select id="net-is-corporate" x-model="netIncomeInput.tax_entity_type" @change="netIncomeInput.is_corporate = (netIncomeInput.tax_entity_type !== 'individual'); runNetIncomeSim()" class="sr-only">
                                 <option value="individual">{{ __('tax.year_filter.type_individual') }}</option>
                                 <option value="pt_individual">{{ __('tax.year_filter.type_pt_individual') }}</option>
                                 <option value="corporate">{{ __('tax.year_filter.type_corporate') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <div x-show="netIncomeInput.tax_entity_type === 'individual'">
                             <label for="net-ptkp-status" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Status PTKP:</label>
-                            <select id="net-ptkp-status" x-model="netIncomeInput.ptkp_status" @change="runNetIncomeSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] focus:border-transparent outline-none">
+                            <x-searchable-select>
+                                <select id="net-ptkp-status" x-model="netIncomeInput.ptkp_status" @change="runNetIncomeSim()" class="sr-only">
                                 @foreach(['TK/0', 'TK/1', 'TK/2', 'TK/3', 'K/0', 'K/1', 'K/2', 'K/3'] as $status)
                                     <option value="{{ $status }}">{{ $status }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <div x-show="netIncomeInput.tax_entity_type !== 'individual'" class="flex items-end">
                             <div class="text-[11px] text-black/60 dark:text-white/60 bg-black/[0.03] dark:bg-white/[0.04] border border-black/5 dark:border-white/5 p-2.5 rounded-xl w-full">
@@ -682,11 +692,13 @@
 
                     <div>
                         <label for="pph21-calc-type" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('tax.pph21.field_scheme') }}</label>
-                        <select id="pph21-calc-type" x-model="pph21Input.calc_type" @change="runPph21Sim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#5856D6] focus:border-transparent outline-none">
+                        <x-searchable-select>
+                            <select id="pph21-calc-type" x-model="pph21Input.calc_type" @change="runPph21Sim()" class="sr-only">
                             <option value="monthly_ter">{{ __('tax.pph21.scheme_monthly') }}</option>
                             <option value="december">{{ __('tax.pph21.scheme_december') }}</option>
                             <option value="daily_worker">{{ __('tax.pph21.scheme_daily') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
@@ -699,7 +711,8 @@
 
                     <div x-show="pph21Input.calc_type !== 'daily_worker'">
                         <label for="pph21-ptkp-status" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('tax.pph21.field_ptkp') }}:</label>
-                        <select id="pph21-ptkp-status" x-model="pph21Input.ptkp_status" @change="runPph21Sim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#5856D6] focus:border-transparent outline-none">
+                        <x-searchable-select>
+                            <select id="pph21-ptkp-status" x-model="pph21Input.ptkp_status" @change="runPph21Sim()" class="sr-only">
                             <option value="TK/0">TK/0 (TER A)</option>
                             <option value="TK/1">TK/1 (TER A)</option>
                             <option value="K/0">K/0 (TER A)</option>
@@ -708,7 +721,8 @@
                             <option value="K/1">K/1 (TER B)</option>
                             <option value="K/2">K/2 (TER B)</option>
                             <option value="K/3">K/3 (TER C)</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     {{-- Extra inputs for December Reconciliation --}}
@@ -946,12 +960,14 @@
 
                     <div>
                         <label for="sales-tax-type" class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('tax.sales.field_tax_type') }}:</label>
-                        <select id="sales-tax-type" x-model="salesTaxInput.tax_type" @change="runSalesTaxSim()" class="w-full h-11 text-sm rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.04] text-black dark:text-white px-3 font-medium focus:ring-2 focus:ring-[#007AFF] outline-none">
+                        <x-searchable-select>
+                            <select id="sales-tax-type" x-model="salesTaxInput.tax_type" @change="runSalesTaxSim()" class="sr-only">
                             <option value="pb1">{{ __('tax.sales.opt_pb1') }}</option>
                             <option value="ppn_11">{{ __('tax.sales.opt_ppn_11') }}</option>
                             <option value="ppn_12">{{ __('tax.sales.opt_ppn_12') }}</option>
                             <option value="none">{{ __('tax.sales.opt_none') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div class="pt-1">

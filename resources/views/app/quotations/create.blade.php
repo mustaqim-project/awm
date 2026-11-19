@@ -44,12 +44,14 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="sm:col-span-2">
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">{{ __('sales.quotations.customer_label') }} <span class="text-[#FF3B30]">*</span></label>
-                    <select name="customer_id" required class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="customer_id" required class="sr-only">
                         <option value="">{{ __('sales.quotations.customer_select_placeholder') }}</option>
                         @foreach($customers as $c)
                         <option value="{{ $c->id }}">{{ $c->name }} ({{ $c->company ?? $c->phone }})</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>
@@ -123,8 +125,9 @@
                         <template x-for="(item, idx) in items" :key="idx">
                             <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors">
                                 <td class="px-3 py-2.5">
-                                    <select :name="'items['+idx+'][product_id]'" x-model="item.product_id" @change="productSelected(idx, $event)"
-                                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[8px] px-2.5 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition font-medium">
+                                    <x-searchable-select>
+                                        <select :name="'items['+idx+'][product_id]'" x-model="item.product_id" @change="productSelected(idx, $event)"
+                                            class="sr-only">
                                         <option value="">{{ __('sales.quotations.select_product_placeholder') }}</option>
                                         @if(isset($goodsProducts) && $goodsProducts->isNotEmpty())
                                             <optgroup label="{{ __('sales.quotations.optgroup_goods') }}">
@@ -151,7 +154,8 @@
                                             </option>
                                             @endforeach
                                         @endif
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                     <div class="mt-1 flex items-center gap-1.5">
                                         <template x-if="item.is_service">
                                             <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10.5px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300">

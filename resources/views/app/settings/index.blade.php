@@ -492,9 +492,10 @@
                     <div class="space-y-2 pt-2">
                         <label for="rounding_strategy_select"
                             class="block text-[13px] font-medium text-black/70 dark:text-white/70">{{ __('settings.rounding_strategy') }}</label>
-                        <select id="rounding_strategy_select" name="rounding_strategy" required
+                        <x-searchable-select>
+                            <select id="rounding_strategy_select" name="rounding_strategy" required
                             x-model="roundingStrategy"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                            class="sr-only">
                             <option value="ROUND">{{ __('settings.opt_round_nearest') }}</option>
                             <option value="CEIL">{{ __('settings.opt_ceil_up') }}</option>
                             <option value="FLOOR">{{ __('settings.opt_floor_down') }}</option>
@@ -502,7 +503,8 @@
                             <option value="ROUND_100">{{ __('settings.opt_round_100') }}</option>
                             <option value="ROUND_500">{{ __('settings.opt_round_500') }}</option>
                             <option value="ROUND_1000">{{ __('settings.opt_round_1000') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
 
                         <div
                             class="rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/15 p-3 text-[13px] text-[#007AFF] font-medium flex items-center gap-2">
@@ -884,8 +886,9 @@
                                 {{ __('settings.base_timezone') }} <span class="text-[#FF3B30]">*</span>
                             </label>
                             <div class="relative">
-                                <select id="business_timezone" name="timezone" x-model="selectedTimezone"
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[15px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                                <x-searchable-select>
+                                    <select id="business_timezone" name="timezone" x-model="selectedTimezone"
+                                    class="sr-only">
                                     @foreach ($timezones as $groupLabel => $zones)
                                         <optgroup label="{{ $groupLabel }}">
                                             @foreach ($zones as $zoneId => $zoneName)
@@ -895,7 +898,8 @@
                                             @endforeach
                                         </optgroup>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <p class="mt-1.5 text-[11px] text-black/45 dark:text-white/45 leading-relaxed">
                                 {{ __('settings.base_timezone_hint') }}

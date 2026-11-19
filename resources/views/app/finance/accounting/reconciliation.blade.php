@@ -245,11 +245,13 @@
                             <div class="lg:col-span-6 space-y-4">
                                 <div>
                                     <label class="block text-[13px] font-bold text-black/80 dark:text-white/80 mb-1.5">{{ __('finance.field_target_account') }}</label>
-                                    <select name="cash_account_id" required class="w-full h-11 px-3.5 text-[16px] sm:text-[14px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/10 rounded-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                                    <x-searchable-select>
+                                        <select name="cash_account_id" required class="sr-only">
                                         @foreach($cashAccounts as $ca)
                                             <option value="{{ $ca->id }}">{{ $ca->name }} ({{ $ca->account_number ?? 'Internal' }})</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <div>

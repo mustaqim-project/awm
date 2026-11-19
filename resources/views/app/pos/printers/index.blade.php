@@ -666,19 +666,22 @@
                                 <!-- Outlet / Lokasi -->
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                                    <select name="location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <x-searchable-select>
+                                        <select name="location_id" class="sr-only">
                                         <option value="">{{ __('pos.all_outlets_global') }}</option>
                                         @foreach($locations as $loc)
                                         <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <!-- Tipe Koneksi & Lebar Kertas -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                     <div>
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
-                                        <select name="connection_type" x-model="connType" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="connection_type" x-model="connType" required class="sr-only">
                                             <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
                                             <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
                                             <option value="windows">Windows Shared Printer / Spooler</option>
@@ -686,15 +689,18 @@
                                             <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
                                             <option value="serial">Serial COM Port</option>
                                             <option value="agent">Local POS Agent (Bridge 9898)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div>
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
-                                        <select name="paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="paper_width" required class="sr-only">
                                             <option value="80mm">80mm (Standar Kasir POS / 48 Kolom)</option>
                                             <option value="58mm">58mm (Mobile Portable / 32 Kolom)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 
@@ -875,19 +881,22 @@
                                 <!-- Outlet / Lokasi -->
                                 <div>
                                     <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.table_location_label') }}</label>
-                                    <select name="location_id" x-model="editPrinter.location_id" class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <x-searchable-select>
+                                        <select name="location_id" x-model="editPrinter.location_id" class="sr-only">
                                         <option value="">{{ __('pos.all_outlets_global') }}</option>
                                         @foreach($locations as $loc)
                                         <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
 
                                 <!-- Tipe Koneksi & Lebar Kertas -->
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                                     <div>
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.connection_type') }} *</label>
-                                        <select name="connection_type" x-model="editPrinter.connection_type" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="connection_type" x-model="editPrinter.connection_type" required class="sr-only">
                                             <option value="lan">Kabel LAN (Ethernet TCP/IP)</option>
                                             <option value="wifi">Wi-Fi (Wireless TCP/IP)</option>
                                             <option value="windows">Windows Shared Printer / Spooler</option>
@@ -895,15 +904,18 @@
                                             <option value="bluetooth">Bluetooth (via Local Agent / COM)</option>
                                             <option value="serial">Serial COM Port</option>
                                             <option value="agent">Local POS Agent (Bridge 9898)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div>
                                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('pos.paper_width') }} *</label>
-                                        <select name="paper_width" x-model="editPrinter.paper_width" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                        <x-searchable-select>
+                                            <select name="paper_width" x-model="editPrinter.paper_width" required class="sr-only">
                                             <option value="80mm">80mm (Standar POS / 48 Kolom)</option>
                                             <option value="58mm">Mobile Portable (58mm / 32 Kolom)</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 

@@ -198,32 +198,38 @@
     {{-- 4. FILTER TOOLBAR --}}
     <form method="GET" action="{{ route('marketplace-hub.finances') }}" class="rounded-[18px] p-4 bg-white/80 dark:bg-[#1C1C1E]/80 border border-black/5 dark:border-white/10 flex flex-wrap items-center gap-3">
         <!-- Channel Filter -->
-        <select name="channel" onchange="this.form.submit()" class="min-h-[44px] sm:min-h-0 sm:h-9 px-3 rounded-[10px] text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-0 text-black dark:text-white focus:ring-1 focus:ring-[#007AFF]">
+        <x-searchable-select>
+            <select name="channel" onchange="this.form.submit()" class="sr-only">
             <option value="">{{ __('marketplace.filter_all_channels') }}</option>
             <option value="shopee" {{ request('channel') === 'shopee' ? 'selected' : '' }}>Shopee</option>
             <option value="tiktok_shop" {{ request('channel') === 'tiktok_shop' ? 'selected' : '' }}>TikTok Shop</option>
             <option value="tokopedia" {{ request('channel') === 'tokopedia' ? 'selected' : '' }}>Tokopedia</option>
-        </select>
+            </select>
+        </x-searchable-select>
 
         <!-- Account Filter -->
-        <select name="account_id" onchange="this.form.submit()" class="min-h-[44px] sm:min-h-0 sm:h-9 px-3 rounded-[10px] text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-0 text-black dark:text-white focus:ring-1 focus:ring-[#007AFF]">
+        <x-searchable-select>
+            <select name="account_id" onchange="this.form.submit()" class="sr-only">
             <option value="">{{ __('marketplace.filter_all_accounts') }}</option>
             @foreach($accounts as $acc)
                 <option value="{{ $acc->id }}" {{ request('account_id') === $acc->id ? 'selected' : '' }}>
                     {{ $acc->getChannelLabel() }} — {{ $acc->shop_name }}
                 </option>
             @endforeach
-        </select>
+            </select>
+        </x-searchable-select>
 
         <!-- Settlement Status Filter -->
-        <select name="settlement_status" onchange="this.form.submit()" class="min-h-[44px] sm:min-h-0 sm:h-9 px-3 rounded-[10px] text-[13px] bg-black/[0.04] dark:bg-white/[0.06] border-0 text-black dark:text-white focus:ring-1 focus:ring-[#007AFF]">
+        <x-searchable-select>
+            <select name="settlement_status" onchange="this.form.submit()" class="sr-only">
             <option value="">{{ __('marketplace.filter_all_statuses') }}</option>
             <option value="pending" {{ request('settlement_status') === 'pending' ? 'selected' : '' }}>{{ __('marketplace.status_pending') }}</option>
             <option value="escrow_holding" {{ request('settlement_status') === 'escrow_holding' ? 'selected' : '' }}>{{ __('marketplace.status_escrow_holding') }}</option>
             <option value="settled" {{ request('settlement_status') === 'settled' ? 'selected' : '' }}>{{ __('marketplace.status_settled') }}</option>
             <option value="payout_completed" {{ request('settlement_status') === 'payout_completed' ? 'selected' : '' }}>{{ __('marketplace.status_payout_completed') }}</option>
             <option value="refunded" {{ request('settlement_status') === 'refunded' ? 'selected' : '' }}>{{ __('marketplace.status_refunded') }}</option>
-        </select>
+            </select>
+        </x-searchable-select>
 
         <!-- Date Range -->
         <div class="flex items-center gap-1.5 ml-auto">
@@ -523,11 +529,13 @@
 
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">Pilih Rekening Bank Tujuan:</label>
-                        <select x-model="targetCashAccountId" class="w-full h-10 px-3 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border-0 text-black dark:text-white font-medium focus:ring-1 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="targetCashAccountId" class="sr-only">
                             @foreach($cashAccounts as $bank)
                                 <option value="{{ $bank->id }}">{{ $bank->name }} ({{ $bank->account_number ?? 'Utama' }})</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                         <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">Sistem akan otomatis membukukan jurnal debet Kas/Bank dan kredit Piutang Marketplace.</p>
                     </div>
 

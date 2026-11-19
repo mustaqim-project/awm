@@ -354,14 +354,16 @@
 
                 <!-- Category Filter -->
                 <div class="flex items-center gap-2">
-                    <select name="category_id" onchange="this.form.submit()"
-                        class="h-10 px-3.5 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] text-[13px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="category_id" onchange="this.form.submit()"
+                        class="sr-only">
                         <option value="">{{ __('materials.all_categories') }}</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}"
                                 {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     @if (request('search') || request('category_id'))
                         <a href="{{ route('materials.index') }}"
@@ -758,13 +760,15 @@
                                                     <span>[ + ]</span> <span>{{ __('materials.btn_new_unit') }}</span>
                                                 </button>
                                             </div>
-                                            <select name="unit_id" x-model="addForm.unit_id" required
-                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <x-searchable-select>
+                                                <select name="unit_id" x-model="addForm.unit_id" required
+                                                class="sr-only">
                                                 <template x-for="u in units" :key="u.id">
                                                     <option :value="u.id" x-text="u.name + ' (' + u.code + ')'">
                                                     </option>
                                                 </template>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                     </div>
 
@@ -778,13 +782,15 @@
                                                     <span>[ + ]</span> <span>{{ __('materials.btn_new_category') }}</span>
                                                 </button>
                                             </div>
-                                            <select name="category_id" x-model="addForm.category_id"
-                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <x-searchable-select>
+                                                <select name="category_id" x-model="addForm.category_id"
+                                                class="sr-only">
                                                 <option value="">{{ __('materials.option_no_category') }}</option>
                                                 <template x-for="cat in categories" :key="cat.id">
                                                     <option :value="cat.id" x-text="cat.name"></option>
                                                 </template>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
 
                                         <div>
@@ -796,13 +802,15 @@
                                                     <span>[ + ]</span> <span>{{ __('materials.btn_new_supplier') }}</span>
                                                 </button>
                                             </div>
-                                            <select name="supplier_id" x-model="addForm.supplier_id"
-                                                class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                            <x-searchable-select>
+                                                <select name="supplier_id" x-model="addForm.supplier_id"
+                                                class="sr-only">
                                                 <option value="">{{ __('materials.option_no_supplier') }}</option>
                                                 <template x-for="sup in suppliers" :key="sup.id">
                                                     <option :value="sup.id" x-text="sup.name"></option>
                                                 </template>
-                                            </select>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
                                     </div>
                                 </div>
@@ -981,15 +989,17 @@
                             <div>
                                 <label
                                     class="block text-[12px] font-medium text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_supplier_vendor') }}</label>
-                                <select name="supplier_id"
-                                    class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="supplier_id"
+                                    class="sr-only">
                                     <option value="">{{ __('materials.option_same_supplier') }}</option>
                                     <template x-for="sup in suppliers" :key="sup.id">
                                         <option :value="sup.id"
                                             :selected="selectedMaterial && selectedMaterial.supplier_id == sup.id"
                                             x-text="sup.name"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div>
@@ -1086,13 +1096,15 @@
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
                                         {{ __('materials.btn_new_category') }}</button>
                                 </div>
-                                <select name="category_id" x-model="editMaterial.category_id"
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="category_id" x-model="editMaterial.category_id"
+                                    class="sr-only">
                                     <option value="">{{ __('materials.option_no_category') }}</option>
                                     <template x-for="cat in categories" :key="cat.id">
                                         <option :value="cat.id" x-text="cat.name"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
 
@@ -1105,12 +1117,14 @@
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
                                         {{ __('materials.btn_new_unit') }}</button>
                                 </div>
-                                <select name="unit_id" x-model="editMaterial.unit_id" required
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="unit_id" x-model="editMaterial.unit_id" required
+                                    class="sr-only">
                                     <template x-for="u in units" :key="u.id">
                                         <option :value="u.id" x-text="u.name + ' (' + u.code + ')'"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
@@ -1119,13 +1133,15 @@
                                         class="text-[11px] font-semibold text-[#007AFF] hover:underline">[ + ]
                                         {{ __('materials.btn_new_supplier') }}</button>
                                 </div>
-                                <select name="supplier_id" x-model="editMaterial.supplier_id"
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[12px] px-3 text-[16px] sm:text-[14px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="supplier_id" x-model="editMaterial.supplier_id"
+                                    class="sr-only">
                                     <option value="">{{ __('materials.option_no_supplier') }}</option>
                                     <template x-for="sup in suppliers" :key="sup.id">
                                         <option :value="sup.id" x-text="sup.name"></option>
                                     </template>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
                         </div>
 
@@ -1348,13 +1364,15 @@
                         <div>
                             <label class="block font-semibold text-[#1C1C1E] dark:text-[#F2F2F7] mb-1">{{ __('materials.label_unit_dimension') }} <span
                                     class="text-[#FF3B30]">*</span></label>
-                            <select x-model="quickUnit.category" required
-                                class="w-full h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-2.5 text-[13px] text-[#1C1C1E] dark:text-[#F2F2F7] focus:ring-2 focus:ring-[#007AFF]/50">
+                            <x-searchable-select>
+                                <select x-model="quickUnit.category" required
+                                class="sr-only">
                                 <option value="weight">{{ __('materials.unit_type_weight') }}</option>
                                 <option value="volume">{{ __('materials.unit_type_volume') }}</option>
                                 <option value="quantity">{{ __('materials.unit_type_quantity') }}</option>
                                 <option value="custom">{{ __('materials.unit_type_custom') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                     </div>
                     <div>

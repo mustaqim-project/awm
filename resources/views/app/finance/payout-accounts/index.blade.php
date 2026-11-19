@@ -178,8 +178,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('finance.field_bank_issuer_simple') }}</label>
-                        <select name="bank_code" x-model="selectedBankCode" @change="updateBankName()" required
-                            class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="bank_code" x-model="selectedBankCode" @change="updateBankName()" required
+                            class="sr-only">
                             <option value="">{{ __('finance.select_bank') }}</option>
                             <option value="BCA">Bank Central Asia (BCA)</option>
                             <option value="MANDIRI">Bank Mandiri</option>
@@ -191,7 +192,8 @@
                             <option value="PERMATA">Bank Permata</option>
                             <option value="DANAMON">Bank Danamon</option>
                             <option value="BSI">Bank Syariah Indonesia (BSI)</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                         <input type="hidden" name="bank_name" :value="selectedBankName">
                     </div>
 
@@ -216,13 +218,15 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('finance.field_branch_allocation') }}</label>
-                    <select name="location_id"
-                        class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="location_id"
+                        class="sr-only">
                         <option value="">{{ __('finance.all_branches_hq_acc') }}</option>
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="pt-2 flex items-center justify-between border-t border-black/5 dark:border-white/10">

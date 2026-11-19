@@ -53,11 +53,13 @@
                     <label class="block text-[12px] font-medium text-black/60 dark:text-white/60 mb-1">
                         {{ __('purchasing.receipts.field_location') }} <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="location_id" required class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="location_id" required class="sr-only">
                         @foreach($locations as $loc)
                         <option value="{{ $loc->id }}">{{ $loc->name }} ({{ $loc->type }})</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>

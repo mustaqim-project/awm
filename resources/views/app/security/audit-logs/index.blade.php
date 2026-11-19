@@ -194,14 +194,16 @@
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
                             {{ __('audit.filter_module_category') }}
                         </label>
-                        <select name="module" class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="module" class="sr-only">
                             <option value="">{{ __('audit.filter_all_modules') }}</option>
                             <option value="pos" {{ ($filters['module'] ?? '') === 'pos' ? 'selected' : '' }}>{{ __('audit.module_pos') }}</option>
                             <option value="supplier" {{ ($filters['module'] ?? '') === 'supplier' ? 'selected' : '' }}>{{ __('audit.module_supplier') }}</option>
                             <option value="finance" {{ ($filters['module'] ?? '') === 'finance' ? 'selected' : '' }}>{{ __('audit.module_finance') }}</option>
                             <option value="inventory" {{ ($filters['module'] ?? '') === 'inventory' ? 'selected' : '' }}>{{ __('audit.module_inventory') }}</option>
                             <option value="users" {{ ($filters['module'] ?? '') === 'users' ? 'selected' : '' }}>{{ __('audit.module_users') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Pelaku / Staf -->
@@ -209,14 +211,16 @@
                         <label class="block text-[11.5px] font-semibold text-black/55 dark:text-white/55 mb-1">
                             {{ __('audit.filter_actor') }}
                         </label>
-                        <select name="user_id" class="w-full min-h-[38px] px-3 rounded-[11px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[12.5px] text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="user_id" class="sr-only">
                             <option value="">{{ __('audit.filter_all_actors') }}</option>
                             @foreach($users as $u)
                             <option value="{{ $u->id }}" {{ ($filters['user_id'] ?? '') === $u->id ? 'selected' : '' }}>
                                 {{ $u->name }}
                             </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Tanggal Mulai -->

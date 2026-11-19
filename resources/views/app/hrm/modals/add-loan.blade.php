@@ -48,12 +48,14 @@
                 @csrf
                 <div>
                     <label class="block text-[12px] font-bold uppercase tracking-wider text-black/70 dark:text-white/70 mb-1.5">{{ __('hrm.select_employee_label') }} <span class="text-[#FF3B30]">*</span></label>
-                    <select name="user_id" required class="w-full h-11 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-[16px] sm:text-[13px] font-semibold text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50">
+                    <x-searchable-select>
+                        <select name="user_id" required class="sr-only">
                         <option value="">{{ __('hrm.select_employee_ph') }}</option>
                         @foreach($memberships as $m)
                             <option value="{{ $m->user_id }}">{{ $m->user?->name ?? 'User' }} ({{ $m->job_title ?: ucfirst($m->role) }})</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div>

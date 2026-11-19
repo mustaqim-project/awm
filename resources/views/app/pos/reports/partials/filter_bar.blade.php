@@ -71,22 +71,26 @@
 
             <div>
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_outlet') }}</label>
-                <select name="location_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="location_id" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_all_outlets') }}</option>
                     @foreach ($locations as $loc)
                         <option value="{{ $loc->id }}" {{ request('location_id') == $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <div>
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_cashier') }}</label>
-                <select name="user_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="user_id" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_all_cashiers') }}</option>
                     @foreach ($cashiers as $cUser)
                         <option value="{{ $cUser->id }}" {{ request('user_id') == $cUser->id ? 'selected' : '' }}>{{ $cUser->name }}</option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
         </div>
 
@@ -94,17 +98,20 @@
         <div x-show="expanded" x-transition.opacity.duration.200ms class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-black/5 dark:border-white/5">
             <div>
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_category') }}</label>
-                <select name="category_id" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="category_id" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_all_categories') }}</option>
                     @foreach ($categories as $cat)
                         <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <div>
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_payment_method') }}</label>
-                <select name="payment_method" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="payment_method" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_all_payment_methods') }}</option>
                     <option value="cash" {{ request('payment_method') === 'cash' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_cash') }}</option>
                     <option value="qris" {{ request('payment_method') === 'qris' ? 'selected' : '' }}>QRIS</option>
@@ -113,7 +120,8 @@
                     <option value="transfer" {{ request('payment_method') === 'transfer' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_bank_transfer') }}</option>
                     <option value="customer_credit" {{ request('payment_method') === 'customer_credit' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_receivable') }}</option>
                     <option value="loyalty_points" {{ request('payment_method') === 'loyalty_points' ? 'selected' : '' }}>{{ __('pos.reports_filter_method_points') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <div>
@@ -121,7 +129,8 @@
                     $filterBiz = $business ?? $activeBiz ?? \App\Support\Context::business() ?? auth()->user()?->activeBusiness;
                 @endphp
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_sales_channel') }}</label>
-                <select name="sales_channel" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="sales_channel" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_all_channels') }}</option>
                     <option value="pos" {{ request('sales_channel') === 'pos' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_pos') }}</option>
                     @if ($filterBiz && $filterBiz->hasDineInFeature())
@@ -133,18 +142,21 @@
                         <option value="shopeefood" {{ request('sales_channel') === 'shopeefood' ? 'selected' : '' }}>ShopeeFood</option>
                     @endif
                     <option value="online" {{ request('sales_channel') === 'online' ? 'selected' : '' }}>{{ __('pos.reports_filter_channel_storefront') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
 
             <div>
                 <label class="block text-[11px] font-medium text-black/50 dark:text-white/50 mb-1">{{ __('pos.reports_filter_status') }}</label>
-                <select name="status" class="w-full h-10 bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 rounded-[10px] px-3 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="status" class="sr-only">
                     <option value="">{{ __('pos.reports_filter_status_all_finished') }}</option>
                     <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_completed') }}</option>
                     <option value="voided" {{ request('status') === 'voided' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_voided') }}</option>
                     <option value="refunded" {{ request('status') === 'refunded' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_refunded') }}</option>
                     <option value="draft_held" {{ request('status') === 'draft_held' ? 'selected' : '' }}>{{ __('pos.reports_filter_status_held') }}</option>
-                </select>
+                    </select>
+                </x-searchable-select>
             </div>
         </div>
     </form>

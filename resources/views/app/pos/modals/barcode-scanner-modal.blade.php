@@ -55,13 +55,15 @@
 
                     <div x-show="scannerDevices.length > 1" class="space-y-1">
                         <label class="block text-[11px] text-black/50 dark:text-white/50 font-medium">{{ __('pos.select_camera') }}</label>
-                        <select x-model="selectedScannerDeviceId" @change="startBarcodeScanner()"
-                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 rounded-[8px] px-3 text-xs text-black dark:text-white">
+                        <x-searchable-select>
+                            <select x-model="selectedScannerDeviceId" @change="startBarcodeScanner()"
+                            class="sr-only">
                             <template x-for="device in scannerDevices" :key="device.deviceId">
                                 <option :value="device.deviceId"
                                     x-text="device.label || 'Kamera ' + (scannerDevices.indexOf(device) + 1)"></option>
                             </template>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div class="flex items-center justify-between gap-3 pt-2 border-t border-black/10 dark:border-white/10">

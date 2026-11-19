@@ -186,23 +186,27 @@
                 </div>
 
                 <div class="flex items-center gap-2 w-full lg:w-auto">
-                    <select name="tier"
-                        class="h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] font-medium text-black dark:text-white focus:outline-hidden">
+                    <x-searchable-select>
+                        <select name="tier"
+                        class="sr-only">
                         <option value="all">{{ __('crm.all_tiers') }}</option>
                         <option value="bronze" {{ strtolower((string) request('tier')) === 'bronze' ? 'selected' : '' }}>Bronze</option>
                         <option value="silver" {{ strtolower((string) request('tier')) === 'silver' ? 'selected' : '' }}>Silver</option>
                         <option value="gold" {{ strtolower((string) request('tier')) === 'gold' ? 'selected' : '' }}>Gold</option>
                         <option value="platinum" {{ strtolower((string) request('tier')) === 'platinum' ? 'selected' : '' }}>Platinum</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
-                    <select name="segment"
-                        class="h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] font-medium text-black dark:text-white focus:outline-hidden">
+                    <x-searchable-select>
+                        <select name="segment"
+                        class="sr-only">
                         <option value="all">{{ __('crm.all_segments') }}</option>
                         <option value="VIP" {{ request('segment') === 'VIP' ? 'selected' : '' }}>VIP</option>
                         <option value="Regular" {{ request('segment') === 'Regular' ? 'selected' : '' }}>Regular</option>
                         <option value="New" {{ request('segment') === 'New' ? 'selected' : '' }}>New</option>
                         <option value="At Risk" {{ request('segment') === 'At Risk' ? 'selected' : '' }}>At Risk</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     <button type="submit"
                         class="h-11 px-5 rounded-[12px] bg-[#007AFF] text-white text-[13px] font-semibold hover:bg-[#0071E3] transition cursor-pointer flex items-center justify-center gap-1.5 shrink-0">

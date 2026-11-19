@@ -372,13 +372,15 @@
                                 {{-- Dropdown Tetapkan Percakapan (Assign to Staff) --}}
                                 <div class="flex items-center gap-1 text-[11px] text-black/50 dark:text-white/50 pt-0.5">
                                     <span>{{ __('social_media.assign_conversation_label') }}:</span>
-                                    <select x-model="activeThread.assigned_to" @change="updateAssignment()"
-                                        class="bg-transparent border-0 p-0 text-[11px] font-semibold text-[#007AFF] focus:ring-0 cursor-pointer">
+                                    <x-searchable-select>
+                                        <select x-model="activeThread.assigned_to" @change="updateAssignment()"
+                                        class="sr-only">
                                         <option value="">{{ __('social_media.unassigned_label') }}</option>
                                         @foreach($staffMembers as $staff)
                                             <option value="{{ $staff->name }}">{{ $staff->name }}</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                             </div>
                         </div>
@@ -934,14 +936,16 @@
                                         <label class="block text-[11px] font-bold text-black/70 dark:text-white/70">
                                             Ruang Lingkup Fitur:
                                         </label>
-                                        <select x-model="newRuleDomain"
-                                            class="w-full h-[38px] px-3 rounded-[12px] bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/15 text-[12px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF] outline-none">
+                                        <x-searchable-select>
+                                            <select x-model="newRuleDomain"
+                                            class="sr-only">
                                             <option value="inbox">Inbox Chat &amp; Media Sosial (Pelanggan)</option>
                                             <option value="general">Semua Modul Cooca AI (Umum)</option>
                                             <option value="pos">Kasir POS Terminal</option>
                                             <option value="purchasing">Pengadaan &amp; Restok Supplier</option>
                                             <option value="finance">Keuangan, Kas &amp; Bank</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
                                 </div>
 

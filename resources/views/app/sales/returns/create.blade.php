@@ -99,9 +99,10 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.returns.select_invoice_doc_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <select name="invoice_id" x-model="selectedInvoiceId" @change="onInvoiceChange()"
+                        <x-searchable-select>
+                            <select name="invoice_id" x-model="selectedInvoiceId" @change="onInvoiceChange()"
                             :required="sourceType === 'invoice'"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                            class="sr-only">
                             <option value="">{{ __('sales.returns.select_invoice_doc_placeholder') }}</option>
                             @foreach ($invoices as $invoice)
                                 <option value="{{ $invoice->id }}">
@@ -109,7 +110,8 @@
                                     {{ number_format($invoice->total_amount, 0, ',', '.') }})
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Info Box Invoice Terpilih -->
@@ -136,9 +138,10 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.returns.select_pos_order_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <select name="pos_order_id" x-model="selectedPosOrderId" @change="onPosOrderChange()"
+                        <x-searchable-select>
+                            <select name="pos_order_id" x-model="selectedPosOrderId" @change="onPosOrderChange()"
                             :required="sourceType === 'pos_order'"
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                            class="sr-only">
                             <option value="">{{ __('sales.returns.select_pos_order_placeholder') }}</option>
                             @foreach ($posOrders as $order)
                                 <option value="{{ $order->id }}">
@@ -147,7 +150,8 @@
                                     {{ number_format($order->total_amount, 0, ',', '.') }})
                                 </option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Info Box POS Order Terpilih -->
@@ -323,12 +327,14 @@
                         <label class="block text-[13px] font-medium text-black/70 dark:text-white/70 mb-1.5">
                             {{ __('sales.returns.refund_method_label') }} <span class="text-[#FF3B30]">*</span>
                         </label>
-                        <select name="refund_method" x-model="refundMethod" required
-                            class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3.5 text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                        <x-searchable-select>
+                            <select name="refund_method" x-model="refundMethod" required
+                            class="sr-only">
                             <option value="cash_refund">{{ __('sales.returns.opt_cash_refund_direct') }}</option>
                             <option value="credit_note">{{ __('sales.returns.opt_credit_note_next') }}</option>
                             <option value="store_credit">{{ __('sales.returns.opt_store_credit_deposit') }}</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>

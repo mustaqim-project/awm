@@ -385,9 +385,217 @@
 
         window.coocaTableSort = coocaTableSort;
 
+        // Universal Client-Side Searchable Select Helper (Bento Apple HIG, Full DOM Sync)
+        function coocaSearchableSelect(config = {}) {
+            return {
+                open: false,
+                search: '',
+                options: [],
+                highlightedIndex: -1,
+                selectedLabel: '',
+                selectedValue: '',
+                nativeSelect: null,
+                placeholder: config.placeholder || 'Pilih...',
+                searchPlaceholder: config.searchPlaceholder || 'Cari...',
+                observer: null,
+
+                init() {
+                    this.$nextTick(() => {
+                        this.nativeSelect = this.$refs.nativeSelect || this.$el.querySelector('select');
+                        if (this.nativeSelect) {
+                            this.nativeSelect.style.cssText = 'position: absolute !important; opacity: 0 !important; width: 1px !important; height: 1px !important; pointer-events: none !important; margin: 0 !important; border: 0 !important; padding: 0 !important;';
+                            this.nativeSelect.setAttribute('tabindex', '-1');
+                            this.nativeSelect.setAttribute('aria-hidden', 'true');
+
+                            this.syncFromNative();
+
+                            this.nativeSelect.addEventListener('change', () => this.syncFromNativeValue());
+                            this.nativeSelect.addEventListener('input', () => this.syncFromNativeValue());
+                            this.nativeSelect.addEventListener('focus', () => {
+                                if (this.$refs.triggerButton) this.$refs.triggerButton.focus();
+                            });
+                            this.nativeSelect.addEventListener('invalid', () => {
+                                this.open = true;
+                                if (this.$refs.triggerButton) this.$refs.triggerButton.focus();
+                            });
+
+                            if (window.MutationObserver) {
+                                this.observer = new MutationObserver(() => {
+                                    this.syncFromNative();
+                                });
+                                this.observer.observe(this.nativeSelect, {
+                                    childList: true,
+                                    subtree: true,
+                                    characterData: true,
+                                    attributes: true,
+                                    attributeFilter: ['selected', 'value', 'disabled']
+                                });
+                            }
+                        }
+                    });
+                },
+
+                destroy() {
+                    if (this.observer) {
+                        this.observer.disconnect();
+                    }
+                },
+
+                syncFromNative() {
+                    if (!this.nativeSelect) return;
+                    const opts = [];
+                    const children = Array.from(this.nativeSelect.children);
+                    for (const el of children) {
+                        if (el.tagName && el.tagName.toLowerCase() === 'optgroup') {
+                            const grp = el.getAttribute('label') || '';
+                            const grpChildren = Array.from(el.children);
+                            for (const optEl of grpChildren) {
+                                if (optEl.tagName && optEl.tagName.toLowerCase() === 'option') {
+                                    opts.push({
+                                        value: optEl.value,
+                                        text: optEl.textContent.trim(),
+                                        group: grp,
+                                        disabled: optEl.disabled,
+                                        selected: optEl.selected
+                                    });
+                                }
+                            }
+                        } else if (el.tagName && el.tagName.toLowerCase() === 'option') {
+                            opts.push({
+                                value: el.value,
+                                text: el.textContent.trim(),
+                                group: null,
+                                disabled: el.disabled,
+                                selected: el.selected
+                            });
+                        }
+                    }
+                    this.options = opts;
+                    this.syncFromNativeValue();
+                },
+
+                syncFromNativeValue() {
+                    if (!this.nativeSelect) return;
+                    const curVal = this.nativeSelect.value;
+                    this.selectedValue = curVal;
+                    const matched = this.options.find(o => String(o.value) === String(curVal));
+                    if (matched) {
+                        this.selectedLabel = matched.text;
+                    } else {
+                        const emptyOpt = this.options.find(o => String(o.value) === '');
+                        if (emptyOpt && emptyOpt.text) {
+                            this.selectedLabel = emptyOpt.text;
+                        } else {
+                            this.selectedLabel = this.placeholder;
+                        }
+                    }
+                },
+
+                get currentLabel() {
+                    if (this.nativeSelect && String(this.nativeSelect.value) !== String(this.selectedValue)) {
+                        this.syncFromNativeValue();
+                    }
+                    if (this.selectedLabel && this.selectedLabel.trim()) {
+                        return this.selectedLabel;
+                    }
+                    return this.placeholder;
+                },
+
+                get filteredOptions() {
+                    if (!this.search || !this.search.trim()) {
+                        return this.options;
+                    }
+                    const q = this.search.toLowerCase().trim();
+                    return this.options.filter(opt => {
+                        const matchText = (opt.text || '').toLowerCase().includes(q);
+                        const matchGroup = opt.group ? opt.group.toLowerCase().includes(q) : false;
+                        return matchText || matchGroup;
+                    });
+                },
+
+                toggle() {
+                    if (this.nativeSelect && this.nativeSelect.disabled) return;
+                    this.open = !this.open;
+                    if (this.open) {
+                        this.search = '';
+                        this.highlightedIndex = -1;
+                        this.$nextTick(() => {
+                            if (this.$refs.searchInput) {
+                                this.$refs.searchInput.focus();
+                            }
+                        });
+                    }
+                },
+
+                close() {
+                    this.open = false;
+                    this.search = '';
+                    this.highlightedIndex = -1;
+                },
+
+                selectOption(opt) {
+                    if (!opt || opt.disabled) return;
+                    this.selectedValue = opt.value;
+                    this.selectedLabel = opt.text;
+                    if (this.nativeSelect) {
+                        this.nativeSelect.value = opt.value;
+                        this.nativeSelect.dispatchEvent(new Event('input', { bubbles: true }));
+                        this.nativeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                    }
+                    this.close();
+                    if (this.$refs.triggerButton) {
+                        this.$refs.triggerButton.focus();
+                    }
+                },
+
+                isSelected(opt) {
+                    return String(opt.value) === String(this.selectedValue);
+                },
+
+                isHighlighted(index) {
+                    const enabledOpts = this.filteredOptions.filter(o => !o.disabled);
+                    return enabledOpts[this.highlightedIndex] === this.filteredOptions[index];
+                },
+
+                onKeyDown(event) {
+                    if (!this.open) {
+                        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+                            event.preventDefault();
+                            this.toggle();
+                        }
+                        return;
+                    }
+
+                    const enabledOpts = this.filteredOptions.filter(o => !o.disabled);
+                    if (enabledOpts.length === 0) return;
+
+                    if (event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        this.highlightedIndex = (this.highlightedIndex + 1) % enabledOpts.length;
+                    } else if (event.key === 'ArrowUp') {
+                        event.preventDefault();
+                        this.highlightedIndex = (this.highlightedIndex - 1 + enabledOpts.length) % enabledOpts.length;
+                    } else if (event.key === 'Enter') {
+                        event.preventDefault();
+                        if (this.highlightedIndex >= 0 && this.highlightedIndex < enabledOpts.length) {
+                            this.selectOption(enabledOpts[this.highlightedIndex]);
+                        }
+                    } else if (event.key === 'Escape') {
+                        event.preventDefault();
+                        this.close();
+                    } else if (event.key === 'Tab') {
+                        this.close();
+                    }
+                }
+            };
+        }
+
+        window.coocaSearchableSelect = coocaSearchableSelect;
+
         document.addEventListener('alpine:init', () => {
             if (window.Alpine) {
                 window.Alpine.data('coocaTableSort', coocaTableSort);
+                window.Alpine.data('coocaSearchableSelect', coocaSearchableSelect);
             }
         });
     </script>

@@ -145,12 +145,14 @@
                 @if($canCustomerPo)
                 <!-- Tipe PO Filter (Dynamic Context-Aware Auto-Hiding) -->
                 <div class="flex items-center gap-2">
-                    <select name="po_type" onchange="this.form.submit()"
-                            class="h-11 sm:h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                    <x-searchable-select>
+                        <select name="po_type" onchange="this.form.submit()"
+                            class="sr-only">
                         <option value="">{{ __('purchasing.filters.all_types') }}</option>
                         <option value="customer" {{ $currentType === 'customer' ? 'selected' : '' }}>{{ __('purchasing.types.customer') }}</option>
                         <option value="supplier" {{ $currentType === 'supplier' ? 'selected' : '' }}>{{ __('purchasing.types.supplier') }}</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 @endif
 
@@ -408,11 +410,13 @@
                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                                 {{ __('purchasing.instant_stock_in.destination_warehouse') }} <span class="text-[#FF3B30]">*</span>
                             </label>
-                            <select name="location_id" required class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="location_id" required class="sr-only">
                                 @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <!-- Product Selector -->
@@ -420,12 +424,14 @@
                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                                 {{ __('purchasing.fields.item') }} <span class="text-[#FF3B30]">*</span>
                             </label>
-                            <select name="product_id" :required="stockInType === 'product'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="product_id" :required="stockInType === 'product'" class="sr-only">
                                 <option value="">{{ __('purchasing.placeholders.choose_product') }}</option>
                                 @foreach($products as $p)
                                 <option value="{{ $p->id }}">{{ $p->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <!-- Material Selector -->
@@ -433,12 +439,14 @@
                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                                 {{ __('purchasing.instant_stock_in.item_material') }} <span class="text-[#FF3B30]">*</span>
                             </label>
-                            <select name="material_id" :required="stockInType === 'material'" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="material_id" :required="stockInType === 'material'" class="sr-only">
                                 <option value="">{{ __('purchasing.placeholders.choose_material') }}</option>
                                 @foreach($materials as $m)
                                 <option value="{{ $m->id }}">{{ $m->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
@@ -463,24 +471,28 @@
                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                                 {{ __('purchasing.instant_stock_in.cash_account') }}
                             </label>
-                            <select name="cash_account_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="cash_account_id" class="sr-only">
                                 <option value="">{{ __('purchasing.instant_stock_in.no_cash_outflow') }}</option>
                                 @foreach($cashAccounts as $ca)
                                 <option value="{{ $ca->id }}">{{ $ca->name }} ({{ $ca->account_number ?? 'Tunai' }})</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div>
                             <label class="block font-medium text-black/70 dark:text-white/70 mb-1">
                                 {{ __('purchasing.instant_stock_in.supplier_optional') }}
                             </label>
-                            <select name="supplier_id" class="w-full h-11 sm:h-10 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] px-3 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="supplier_id" class="sr-only">
                                 <option value="">{{ __('purchasing.instant_stock_in.no_supplier_market') }}</option>
                                 @foreach($suppliers as $s)
                                 <option value="{{ $s->id }}">{{ $s->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         <div>

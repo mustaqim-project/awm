@@ -49,15 +49,17 @@
 
             <!-- Location Selector -->
             @if($locations->count() > 1)
-                <select name="location_id" onchange="this.form.submit()"
-                        class="min-h-[40px] h-10 px-3.5 rounded-[10px] bg-black/[0.05] dark:bg-white/[0.06] text-[13px] font-semibold border border-black/5 dark:border-white/10 text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                <x-searchable-select>
+                    <select name="location_id" onchange="this.form.submit()"
+                        class="sr-only">
                     <option value="">{{ __('pos.all_locations') }}</option>
                     @foreach($locations as $loc)
                         <option value="{{ $loc->id }}" {{ $locationId === $loc->id ? 'selected' : '' }}>
                             {{ $loc->name }} ({{ $loc->type === 'central_kitchen' ? __('pos.central_kitchen_label') : ($loc->type === 'outlet' ? __('pos.outlet_kitchen_label') : __('pos.warehouse_label')) }})
                         </option>
                     @endforeach
-                </select>
+                    </select>
+                </x-searchable-select>
             @endif
         </form>
     </div>

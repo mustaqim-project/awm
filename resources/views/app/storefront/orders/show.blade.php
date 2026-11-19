@@ -578,8 +578,9 @@
                                                 <div>
                                                     <label
                                                         class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">{{ __('storefront.backoffice.order_detail.batch_update_status') }}</label>
-                                                    <select name="status"
-                                                        class="w-full h-10 px-3 rounded-xl bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                                    <x-searchable-select>
+                                                        <select name="status"
+                                                        class="sr-only">
                                                         <option value="scheduled"
                                                             {{ $batch->status === 'scheduled' ? 'selected' : '' }}>
                                                             {{ __('storefront.backoffice.order_detail.batch_status_opt_scheduled') }}</option>
@@ -593,7 +594,8 @@
                                                         <option value="cancelled"
                                                             {{ $batch->status === 'cancelled' ? 'selected' : '' }}>
                                                             {{ __('storefront.backoffice.order_detail.batch_status_opt_cancelled') }}</option>
-                                                    </select>
+                                                        </select>
+                                                    </x-searchable-select>
                                                 </div>
                                                 <div>
                                                     <label
@@ -1013,8 +1015,9 @@
                         @csrf
                         <div>
                             <label class="block text-xs font-semibold text-black/50 dark:text-white/50 mb-1.5">{{ __('storefront.backoffice.order_detail.update_order_stage_label') }}</label>
-                            <select name="status" x-model="currentStatus"
-                                class="w-full h-11 px-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-sm font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                            <x-searchable-select>
+                                <select name="status" x-model="currentStatus"
+                                class="sr-only">
                                 <option value="processing">{{ __('storefront.backoffice.order_detail.opt_processing') }}</option>
                                 <option value="ready">{{ __('storefront.backoffice.order_detail.opt_ready') }}</option>
                                 @if ($order->fulfillment_type !== 'pickup')
@@ -1022,7 +1025,8 @@
                                 @endif
                                 <option value="completed">{{ __('storefront.backoffice.order_detail.opt_completed') }}</option>
                                 <option value="cancelled">{{ __('storefront.backoffice.order_detail.opt_cancelled') }}</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
 
                         {{-- Dynamic Cancellation Reason Input --}}
@@ -1249,8 +1253,9 @@
                                 <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">
                                     {{ __('storefront.backoffice.order_detail.courier_select_label') }}
                                 </label>
-                                <select name="shipping_courier_code"
-                                    class="w-full h-10 px-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[16px] sm:text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                                <x-searchable-select>
+                                    <select name="shipping_courier_code"
+                                    class="sr-only">
                                     @php
                                         $currentCourier = strtolower($order->shipping_courier_code ?: 'jne');
                                     @endphp
@@ -1261,7 +1266,8 @@
                                     <option value="gosend" {{ $currentCourier === 'gosend' ? 'selected' : '' }}>GoSend Instant</option>
                                     <option value="grab" {{ $currentCourier === 'grab' ? 'selected' : '' }}>GrabExpress</option>
                                     <option value="kurir_toko" {{ $currentCourier === 'kurir_toko' ? 'selected' : '' }}>{{ __('storefront.backoffice.order_detail.courier_opt_internal') }}</option>
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div>

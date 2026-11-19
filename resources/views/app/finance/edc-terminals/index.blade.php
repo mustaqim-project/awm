@@ -54,13 +54,15 @@
                 <div>
                     <p class="text-[11px] font-medium text-black/50 dark:text-white/50">{{ __('finance.filter_branch') }}</p>
                     <form method="GET" action="{{ route('finance.edc-terminals.index') }}" id="branchFilterForm">
-                        <select name="location_id" onchange="document.getElementById('branchFilterForm').submit()"
-                            class="text-xs font-bold text-black dark:text-white bg-transparent border-0 p-0 focus:ring-0 cursor-pointer">
+                        <x-searchable-select>
+                            <select name="location_id" onchange="document.getElementById('branchFilterForm').submit()"
+                            class="sr-only">
                             <option value="">{{ __('common.all_branches') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}" {{ $locationId == $loc->id ? 'selected' : '' }}>{{ $loc->name }}</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </form>
                 </div>
             </div>
@@ -221,8 +223,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('finance.field_bank_issuer') }}</label>
-                        <select name="bank_name" required
-                            class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="bank_name" required
+                            class="sr-only">
                             <option value="">{{ __('finance.select_bank_edc') }}</option>
                             <option value="BCA">Bank Central Asia (BCA)</option>
                             <option value="Mandiri">Bank Mandiri</option>
@@ -233,7 +236,8 @@
                             <option value="Bank Danamon">Bank Danamon</option>
                             <option value="BSI">Bank Syariah Indonesia (BSI)</option>
                             <option value="Lainnya">Bank / Vendor Lainnya</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>
@@ -260,13 +264,15 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('finance.field_branch_placement') }}</label>
-                        <select name="location_id"
-                            class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select name="location_id"
+                            class="sr-only">
                             <option value="">{{ __('finance.all_branches_global') }}</option>
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}">{{ $loc->name }}</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <div>

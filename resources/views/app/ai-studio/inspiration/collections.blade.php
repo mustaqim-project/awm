@@ -187,11 +187,13 @@
 
                 <div>
                     <label class="block text-xs font-semibold text-black/70 dark:text-white/70 mb-1">Visibilitas</label>
-                    <select name="visibility"
-                        class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="visibility"
+                        class="sr-only">
                         <option value="private">Privat (Hanya untuk bisnis Anda)</option>
                         <option value="public">Publik (Dapat dilihat di katalog umum)</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <div class="pt-2 flex items-center justify-end gap-2">

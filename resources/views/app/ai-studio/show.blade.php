@@ -435,13 +435,15 @@
                     <div x-show="exportMode === 'update'" class="space-y-3">
                         <div class="space-y-1.5">
                             <label class="text-xs font-semibold text-black dark:text-white">Pilih Produk Sasaran</label>
-                            <select x-model="exportTargetProductId"
-                                class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#34C759]">
+                            <x-searchable-select>
+                                <select x-model="exportTargetProductId"
+                                class="sr-only">
                                 @if ($attachedProduct)
                                     <option value="{{ $attachedProduct->id }}">Produk Proyek Ini: {{ $attachedProduct->name }}</option>
                                 @endif
                                 <option value="">-- Pilih Produk Lain --</option>
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <p class="text-[11px] text-black/50 dark:text-white/50">
                             Foto produk di database katalog akan digantikan dengan gambar render AI Studio ini.
@@ -551,8 +553,9 @@
                     <!-- Connected Account Selector -->
                     <div class="space-y-1.5">
                         <label class="text-xs font-semibold text-black dark:text-white">Pilih Akun Terhubung</label>
-                        <select x-model="socialAccountId"
-                            class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="socialAccountId"
+                            class="sr-only">
                             <option value="">-- Mode Umum / Semua Akun Tertaut --</option>
                             @if(isset($socialAccounts) && $socialAccounts->isNotEmpty())
                                 @foreach($socialAccounts as $account)
@@ -561,7 +564,8 @@
                                     </option>
                                 @endforeach
                             @endif
-                        </select>
+                            </select>
+                        </x-searchable-select>
                         @if(!isset($socialAccounts) || $socialAccounts->isEmpty())
                             <p class="text-[11px] text-amber-600 dark:text-amber-400">
                                 Belum ada akun media sosial yang terhubung. Postingan akan disimpan sebagai draf atau antrean posting.
@@ -666,14 +670,16 @@
                     <!-- Model Selection -->
                     <div class="space-y-1.5">
                         <label class="text-xs font-semibold text-black dark:text-white">Pilihan Engine Model AI</label>
-                        <select x-model="dispatchModel" @change="onDrawerModelChange()"
-                            class="w-full px-3 py-2 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]">
+                        <x-searchable-select>
+                            <select x-model="dispatchModel" @change="onDrawerModelChange()"
+                            class="sr-only">
                             <option value="gpt-image-2.5-flare">Fast Generation (gpt-image-2.5-flare - 15 Kredit / Generate Harian)</option>
                             <option value="gpt-image-2.5-sunburst">Premium Generation (gpt-image-2.5-sunburst - 25 Kredit / Presisi &amp; Edit)</option>
                             <option value="ideogram-v2">Ideogram v2 (15 Kredit - Unggul Tipografi &amp; Label)</option>
                             <option value="dall-e-3">OpenAI DALL-E 3 (20 Kredit - Fotografi Realistik Tinggi)</option>
                             <option value="sdxl">Stable Diffusion XL (10 Kredit - Cepat &amp; Artistik)</option>
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
 
                     <!-- Custom Prompt Override if desired -->

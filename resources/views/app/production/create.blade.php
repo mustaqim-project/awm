@@ -131,12 +131,14 @@
                     <label class="block text-[12.5px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                         Pilih Produk Jadi <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="product_id" x-model="selectedProductId" required
-                        class="w-full h-11 px-3.5 rounded-[12px] text-[13px] font-medium bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20 focus:border-[#007AFF]">
+                    <x-searchable-select>
+                        <select name="product_id" x-model="selectedProductId" required
+                        class="sr-only">
                         @foreach($products as $p)
                             <option value="{{ $p->id }}">{{ $p->name }} (SKU: {{ $p->code ?? '-' }})</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
 
                     <template x-if="selectedProduct && !selectedProduct.has_bom">
                         <p class="text-[11.5px] text-[#FF9500] mt-1.5 flex items-center gap-1 font-medium">
@@ -181,14 +183,16 @@
                     <label class="block text-[12.5px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                         Gudang Asal Bahan Baku <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="source_location_id" required
-                        class="w-full h-11 px-3.5 rounded-[12px] text-[13px] font-medium bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20">
+                    <x-searchable-select>
+                        <select name="source_location_id" required
+                        class="sr-only">
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" {{ old('source_location_id') == $loc->id ? 'selected' : '' }}>
                                 {{ $loc->name }} ({{ strtoupper($loc->type ?? 'Gudang') }})
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <!-- Target Location (Barang Jadi) -->
@@ -196,14 +200,16 @@
                     <label class="block text-[12.5px] font-semibold text-black/70 dark:text-white/70 mb-1.5">
                         Gudang Tujuan Barang Jadi <span class="text-[#FF3B30]">*</span>
                     </label>
-                    <select name="target_location_id" required
-                        class="w-full h-11 px-3.5 rounded-[12px] text-[13px] font-medium bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/20">
+                    <x-searchable-select>
+                        <select name="target_location_id" required
+                        class="sr-only">
                         @foreach($locations as $loc)
                             <option value="{{ $loc->id }}" {{ old('target_location_id') == $loc->id ? 'selected' : '' }}>
                                 {{ $loc->name }} ({{ strtoupper($loc->type ?? 'Gudang') }})
                             </option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
 
                 <!-- Planned Start Date -->

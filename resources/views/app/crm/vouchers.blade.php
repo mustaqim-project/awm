@@ -309,11 +309,13 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div class="space-y-1">
                                         <label class="block text-[12px] font-bold text-black dark:text-white">{{ __('crm.discount_type') }} <span class="text-[#FF3B30]">*</span></label>
-                                        <select name="discount_type" required
-                                            class="w-full h-11 px-3 rounded-[12px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-[13px] text-black dark:text-white focus:outline-hidden">
+                                        <x-searchable-select>
+                                            <select name="discount_type" required
+                                            class="sr-only">
                                             <option value="percentage">{{ __('crm.type_percentage') }}</option>
                                             <option value="fixed">{{ __('crm.type_fixed') }}</option>
-                                        </select>
+                                            </select>
+                                        </x-searchable-select>
                                     </div>
 
                                     <div class="space-y-1">

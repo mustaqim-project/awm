@@ -88,8 +88,9 @@
                 <form method="GET" action="{{ route('simulator.index') }}"
                     class="flex items-center gap-2 w-full md:w-auto">
                     <div class="relative w-full md:w-80">
-                        <select name="cost_model_id" onchange="this.form.submit()"
-                            class="w-full h-9 bg-black/[0.04] dark:bg-white/[0.06] border-none rounded-[10px] pl-3.5 pr-8 text-[13px] font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition cursor-pointer">
+                        <x-searchable-select>
+                            <select name="cost_model_id" onchange="this.form.submit()"
+                            class="sr-only">
                             @foreach ($products as $p)
                                 @foreach ($p->costModels as $cm)
                                     <option value="{{ $cm->id }}"
@@ -98,7 +99,8 @@
                                     </option>
                                 @endforeach
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                 </form>
             @endif

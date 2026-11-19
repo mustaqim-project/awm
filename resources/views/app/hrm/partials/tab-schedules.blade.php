@@ -8,31 +8,37 @@
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
                 <div>
                     <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.th_employee') }}</label>
-                    <select name="sch_user_id" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
+                    <x-searchable-select>
+                        <select name="sch_user_id" class="sr-only">
                         <option value="">{{ __('hrm.filter_all_employees') }}</option>
                         @foreach($memberships as $m)
                             @if($m->user)
                                 <option value="{{ $m->user->id }}" {{ $schUserId === $m->user->id ? 'selected' : '' }}>{{ $m->user->name }}</option>
                             @endif
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 <div>
                     <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.field_work_shift') }}</label>
-                    <select name="sch_shift_id" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
+                    <x-searchable-select>
+                        <select name="sch_shift_id" class="sr-only">
                         <option value="">{{ __('hrm.filter_all_shifts') }}</option>
                         @foreach($workShifts as $ws)
                             <option value="{{ $ws->id }}" {{ $schShiftId === $ws->id ? 'selected' : '' }}>{{ $ws->name }}</option>
                         @endforeach
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 <div>
                     <label class="block text-[11px] uppercase font-bold text-black/60 dark:text-white/60 mb-1">{{ __('hrm.field_schedule_type') }}</label>
-                    <select name="sch_type" class="w-full h-10 px-3 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/10 dark:border-white/10 text-xs font-semibold text-black dark:text-white focus:ring-1 focus:ring-[#5856D6]">
+                    <x-searchable-select>
+                        <select name="sch_type" class="sr-only">
                         <option value="">{{ __('hrm.filter_all_types') }}</option>
                         <option value="recurring" {{ $schType === 'recurring' ? 'selected' : '' }}>{{ __('hrm.opt_recurring_weekly') }}</option>
                         <option value="specific_date" {{ $schType === 'specific_date' ? 'selected' : '' }}>{{ __('hrm.opt_specific_date') }}</option>
-                    </select>
+                        </select>
+                    </x-searchable-select>
                 </div>
                 <div class="flex items-center gap-2">
                     <button type="submit" class="flex-1 h-10 px-4 rounded-[10px] bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/[0.1] dark:hover:bg-white/[0.12] text-black dark:text-white text-xs font-semibold transition cursor-pointer">

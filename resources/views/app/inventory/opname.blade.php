@@ -432,11 +432,13 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.label_location_required') }}</label>
-                            <select name="location_id" x-model="selectedLocationId" required class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                            <x-searchable-select>
+                                <select name="location_id" x-model="selectedLocationId" required class="sr-only">
                                 @foreach($locations as $loc)
                                     <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                                 @endforeach
-                            </select>
+                                </select>
+                            </x-searchable-select>
                         </div>
                         <div>
                             <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.label_opname_date_required') }}</label>
@@ -461,22 +463,28 @@
 
                         <template x-for="(item, idx) in items" :key="idx">
                             <div class="grid grid-cols-[5.5rem_minmax(0,1fr)_6.5rem_auto] items-center gap-2 p-2.5 rounded-[12px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
-                                <select x-model="item.item_type" @change="changeItemType(item)" class="h-10 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[12px] font-medium text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select x-model="item.item_type" @change="changeItemType(item)" class="sr-only">
                                     <option value="material" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_material') }}</option>
                                     <option value="product" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.type_product') }}</option>
-                                </select>
-                                <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </select>
+                                </x-searchable-select>
+                                <x-searchable-select x-show="item.item_type === 'material'" class="w-0">
+                                    <select x-show="item.item_type === 'material'" :name="'items[' + idx + '][material_id]'" x-model="item.material_id" class="sr-only">
                                     <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.select_material') }}</option>
                                     @foreach($materials as $m)
                                         <option value="{{ $m->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $m->name }} ({{ $m->unit->code ?? 'unit' }})</option>
                                     @endforeach
-                                </select>
-                                <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="h-10 min-w-0 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2.5 text-[12px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    </select>
+                                </x-searchable-select>
+                                <x-searchable-select x-show="item.item_type === 'product'" class="w-0">
+                                    <select x-show="item.item_type === 'product'" :name="'items[' + idx + '][product_id]'" x-model="item.product_id" class="sr-only">
                                     <option value="" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ __('inventory.select_product') }}</option>
                                     @foreach($products as $product)
                                         <option value="{{ $product->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $product->name }}{{ $product->code ? ' (' . $product->code . ')' : '' }}</option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                                 <input type="number" step="any" :name="'items[' + idx + '][physical_quantity]'" x-model.number="item.physical_quantity" placeholder="{{ __('inventory.placeholder_physical_qty') }}" class="h-10 w-24 bg-white dark:bg-[#2C2C2E] border border-black/[0.08] dark:border-white/[0.12] rounded-[8px] px-2 text-[13px] text-center tabular-nums font-bold text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
                                 <button type="button" @click="removeItem(idx)" :disabled="items.length <= 1" class="w-9 h-9 min-h-[36px] min-w-[36px] rounded-[9px] flex items-center justify-center p-0 text-black/30 hover:text-[#FF3B30] dark:text-white/30 dark:hover:text-[#FF453A] disabled:opacity-20 transition-colors cursor-pointer">
                                     <i data-lucide="trash-2" class="w-4 h-4"></i>
@@ -606,11 +614,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-[16px] bg-black/[0.02] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/[0.08]">
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.label_location_required') }}</label>
-                        <select x-model="importLocationId" :disabled="importPreview !== null || importLoading" class="w-full h-11 bg-white dark:bg-[#2C2C2E] border border-black/10 dark:border-white/10 rounded-[10px] px-3.5 text-[16px] sm:text-[13px] text-black dark:text-white focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                        <x-searchable-select>
+                            <select x-model="importLocationId" :disabled="importPreview !== null || importLoading" class="sr-only">
                             @foreach($locations as $loc)
                                 <option value="{{ $loc->id }}" class="bg-white dark:bg-[#2C2C2E] text-black dark:text-white">{{ $loc->name }}</option>
                             @endforeach
-                        </select>
+                            </select>
+                        </x-searchable-select>
                     </div>
                     <div>
                         <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('inventory.label_doc_notes') }}</label>

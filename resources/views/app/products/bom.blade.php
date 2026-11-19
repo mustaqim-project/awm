@@ -337,15 +337,17 @@
                                 <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5 text-[13px]">
                                     {{ __('products.label_select_material') }} <span class="text-[#FF3B30]">*</span>
                                 </label>
-                                <select name="material_id" required
-                                    class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                <x-searchable-select>
+                                    <select name="material_id" required
+                                    class="sr-only">
                                     <option value="">{{ __('products.placeholder_select_material') }}</option>
                                     @foreach ($materials as $m)
                                         <option value="{{ $m->id }}">
                                             {{ $m->name }} ({{ $m->unit?->code }} - {{ $business->currency_symbol }} {{ number_format((float) ($m->prices->first()?->effective_cost ?? 0), 0, ',', '.') }})
                                         </option>
                                     @endforeach
-                                </select>
+                                    </select>
+                                </x-searchable-select>
                             </div>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -360,12 +362,14 @@
                                     <label class="block font-medium text-black/70 dark:text-white/70 mb-1.5 text-[13px]">
                                         {{ __('products.label_usage_unit') }} <span class="text-[#FF3B30]">*</span>
                                     </label>
-                                    <select name="unit_id" required
-                                        class="w-full h-11 bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.08] dark:border-white/[0.1] rounded-[12px] px-3.5 text-[16px] sm:text-[14px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]/50 transition">
+                                    <x-searchable-select>
+                                        <select name="unit_id" required
+                                        class="sr-only">
                                         @foreach ($units as $u)
                                             <option value="{{ $u->id }}">{{ $u->name }} ({{ $u->code }})</option>
                                         @endforeach
-                                    </select>
+                                        </select>
+                                    </x-searchable-select>
                                 </div>
                             </div>
 
