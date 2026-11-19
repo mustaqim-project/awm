@@ -1,7 +1,12 @@
+import base64
 import json
 import os
 import time
 from playwright.sync_api import sync_playwright
+
+ICON_PATH = os.path.join('public', 'assets', 'image', 'cooca-icon.png')
+with open(ICON_PATH, 'rb') as f:
+    COOCA_ICON_B64 = base64.b64encode(f.read()).decode('utf-8')
 
 CARDS_DATA = {
     759: {
@@ -175,18 +180,13 @@ def render_html(item):
     align-items: center;
     gap: 16px;
   }}
-  .brand-logo {{
+  .brand-logo-img {{
     width: 48px;
     height: 48px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #0284c7, #38bdf8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 26px;
-    color: white;
-    box-shadow: 0 0 24px rgba(56, 189, 248, 0.4);
+    border-radius: 12px;
+    object-fit: contain;
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.45);
+    display: block;
   }}
   .brand-text {{
     font-weight: 800;
@@ -344,7 +344,7 @@ def render_html(item):
 
   <div class="header">
     <div class="brand-badge">
-      <div class="brand-logo">C</div>
+      <img src="data:image/png;base64,{COOCA_ICON_B64}" class="brand-logo-img" alt="COOCA Logo">
       <div class="brand-text">COOCA</div>
       <div class="brand-tag">Edukasi Bisnis UMKM</div>
     </div>
