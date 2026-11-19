@@ -6,9 +6,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Domain\Security\BruteForceProtectionService;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Services\Google2FAService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 final class AdminAuthController extends Controller
@@ -26,10 +29,13 @@ final class AdminAuthController extends Controller
     }
 
     /**
-     * Process admin login with brute force protection.
+     * Process admin login with brute force protection and Google Authenticator 2FA.
      */
-    public function login(Request $request, BruteForceProtectionService $bruteForce): RedirectResponse
-    {
+    public function login(
+        Request $request,
+        BruteForceProtectionService $bruteForce,
+        Google2FAService $google2FA
+    ): RedirectResponse {
         $ip = (string) $request->ip();
 
         if ($bruteForce->isIpBlocked($ip)) {
@@ -39,23 +45,59 @@ final class AdminAuthController extends Controller
             ])->onlyInput('email');
         }
 
-        $credentials = $request->validate([
+        $validated = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
+            'totp_code' => ['nullable', 'string', 'max:16'],
         ]);
-        $credentials['email'] = strtolower(trim($credentials['email']));
+        $email = strtolower(trim($validated['email']));
 
-        if ($bruteForce->isAccountLocked($ip, $credentials['email'])) {
-            $remaining = $bruteForce->getRemainingAccountLockoutMinutes($ip, $credentials['email']);
+        if ($bruteForce->isAccountLocked($ip, $email)) {
+            $remaining = $bruteForce->getRemainingAccountLockoutMinutes($ip, $email);
             return back()->withErrors([
                 'email' => "Terlalu banyak percobaan login admin yang gagal. Akses dibatasi selama {$remaining} menit demi keamanan.",
             ])->onlyInput('email');
         }
 
-        $credentials['is_active'] = true;
+        /** @var Admin|null $admin */
+        $admin = Admin::where('email', $email)->first();
 
-        if (Auth::guard('admin')->attempt($credentials, $request->boolean('remember'))) {
-            $bruteForce->resetAttempts($ip, $credentials['email']);
+        // Verify credentials & active status
+        if ($admin && $admin->is_active && Hash::check($validated['password'], $admin->password)) {
+            // Check Google Authenticator 2FA if enabled on this admin account
+            if ($admin->hasTwoFactorEnabled()) {
+                $totpCode = trim((string) ($validated['totp_code'] ?? ''));
+
+                if ($totpCode === '') {
+                    return back()->withErrors([
+                        'totp_code' => 'Akun Administrator ini dilindungi Google Authenticator. Masukkan kode 6 digit dari aplikasi authenticator Anda.',
+                    ])->onlyInput('email');
+                }
+
+                if (! $google2FA->verifyCode((string) $admin->two_factor_secret, $totpCode)) {
+                    $status = $bruteForce->recordFailedAttempt($ip, $email, 'admin');
+
+                    if ($status['is_blocked']) {
+                        return back()->withErrors([
+                            'email' => "Alamat IP Anda diblokir sementara ({$status['remaining_minutes']} menit) karena terdeteksi aktivitas login berulang kali.",
+                        ])->onlyInput('email');
+                    }
+
+                    if ($status['is_account_locked']) {
+                        return back()->withErrors([
+                            'email' => "Terlalu banyak percobaan login admin yang gagal. Akun dikunci sementara untuk IP Anda selama {$status['remaining_minutes']} menit demi keamanan.",
+                        ])->onlyInput('email');
+                    }
+
+                    return back()->withErrors([
+                        'totp_code' => 'Kode verifikasi Google Authenticator tidak valid atau telah kedaluwarsa. Pastikan jam pada perangkat Anda sinkron.',
+                    ])->onlyInput('email');
+                }
+            }
+
+            Auth::guard('admin')->login($admin, $request->boolean('remember'));
+
+            $bruteForce->resetAttempts($ip, $email);
             $request->session()->regenerate();
 
             $intended = (string) $request->session()->get('url.intended', '');
@@ -66,7 +108,7 @@ final class AdminAuthController extends Controller
             return redirect()->intended(route('admin.dashboard'));
         }
 
-        $status = $bruteForce->recordFailedAttempt($ip, $credentials['email'], 'admin');
+        $status = $bruteForce->recordFailedAttempt($ip, $email, 'admin');
 
         if ($status['is_blocked']) {
             return back()->withErrors([
