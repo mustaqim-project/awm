@@ -884,7 +884,7 @@ return [
     'tab_schedules' => 'Roster Schedules',
     'placeholder_lat' => '-6.2088',
     'placeholder_lng' => '106.8456',
-    'placeholder_email' => 'rian@bisnis.id',
+    'placeholder_email' => 'employee@company.com',
     'placeholder_wa' => '0812xxxxxxxx',
     'placeholder_nik' => '3271xxxxxxxxxxxx',
     'placeholder_npwp' => '09.xxx.xxx.x-xxx.xxx',

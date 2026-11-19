@@ -1,0 +1,197 @@
+---
+title: "Cara Menghitung PPh Pasal 21 Karyawan Toko Harian dan Bulanan dengan TER"
+meta_title: "Cara Menghitung PPh Pasal 21 Karyawan Toko TER"
+meta_description: "Simulasi praktis cara menghitung pph pasal 21 karyawan toko dan staf ritel menggunakan Tarif Efektif Rata-Rata (TER) PP 58/2023, PTKP, dan bukti potong 1721-A1."
+slug: "cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan"
+primary_keyword: "cara menghitung pph pasal 21 karyawan toko"
+secondary_keywords: "tarif efektif rata-rata ter pp 58 2023, hitung pph 21 staf ritel kasir, ptkp karyawan toko tidak kawin kawin, bukti potong pph 21 unifikasi bulanan, pph 21 pegawai harian lepas"
+search_intent: "Informational"
+category: "Legalitas & Pajak"
+reading_time: "10 menit"
+cover_image: "https://cooca.id/images/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan.jpg"
+published_at: "2026-11-19T08:00:00+07:00"
+author: Tim Edukasi COOCA
+---
+
+# Cara Menghitung PPh Pasal 21 Karyawan Toko Harian dan Bulanan dengan TER
+
+Bagi para pemilik toko ritel, minimarket, butik fashion, kafe, dan restoran yang memiliki staf karyawan, mengelola penggajian setiap akhir bulan bukan hanya tentang menghitung jam kerja, bonus insentif, dan transfer gaji bersih. Pemilik usaha juga memikul tanggung jawab hukum sebagai pihak pemotong pajak penghasilan atas upah yang diterima para pekerjanya. Selama bertahun-tahun, perhitungan Pajak Penghasilan Pasal 21 (PPh 21) menjadi momok yang sangat membingungkan bagi staf personalia dan akunting UMKM karena rumitnya rumus biaya jabatan, iuran pensiun, dan pengkalian tarif progresif yang berlapis-lapis. Namun, terhitung sejak 1 Januari 2024, pemerintah resmi memberlakukan mekanisme baru perhitungan pajak karyawan melalui Peraturan Pemerintah Nomor 58 Tahun 2023 dan Peraturan Menteri Keuangan Nomor 168 Tahun 2023 dengan menggunakan skema Tarif Efektif Rata-Rata (TER). Menguasai cara menghitung pph pasal 21 karyawan toko dengan metode TER adalah kewajiban praktis agar proses payroll toko Anda berjalan akurat, transparan, dan patuh pajak.
+
+Skema TER dirancang untuk memberikan kemudahan dan kepastian bagi pemotong pajak. Untuk masa pajak Januari hingga November, pemotong pajak tidak perlu lagi menghitung biaya jabatan dan pengurangan rumit lainnya. Perhitungan PPh 21 bulanan kini sesederhana mengalikan penghasilan bruto sebulan dengan persentase tarif efektif yang telah ditentukan dalam tabel kategori PTKP. Baru pada masa pajak Desember, dilakukan penghitungan ulang komparatif menggunakan tarif normal Pasal 17 untuk memastikan keakuratan pajak setahun penuh.
+
+## Memahami Kategori Status PTKP dan Pengelompokan Tabel TER dan Penerapan Cara Menghitung Pph Pasal 21 Karyawan Toko
+
+Langkah pertama dalam menghitung PPh 21 karyawan toko adalah mengidentifikasi status Penghasilan Tidak Kena Pajak (PTKP) masing-masing staf pada awal tahun pajak berjalan. PTKP terbagi menjadi tiga kategori TER Bulanan:
+
+### 1. Kategori TER A
+Diperuntukkan bagi karyawan dengan status PTKP:
+- Tidak Kawin tanpa tanggungan (TK/0) dengan PTKP Rp54.000.000 setahun.
+- Tidak Kawin dengan 1 tanggungan (TK/1) dengan PTKP Rp58.500.000 setahun.
+- Kawin tanpa tanggungan (K/0) dengan PTKP Rp58.500.000 setahun.
+Pada kategori ini, karyawan dengan penghasilan bruto bulanan hingga Rp5.400.000 dikenakan tarif TER sebesar 0% (bebas pajak).
+
+### 2. Kategori TER B
+Diperuntukkan bagi karyawan dengan status PTKP:
+- Tidak Kawin dengan 2 tanggungan (TK/2) dengan PTKP Rp63.000.000 setahun.
+- Tidak Kawin dengan 3 tanggungan (TK/3) dengan PTKP Rp67.500.000 setahun.
+- Kawin dengan 1 tanggungan (K/1) dengan PTKP Rp63.000.000 setahun.
+- Kawin dengan 2 tanggungan (K/2) dengan PTKP Rp67.500.000 setahun.
+Pada kategori ini, penghasilan bruto bulanan hingga Rp6.200.000 dikenakan tarif TER sebesar 0%.
+
+### 3. Kategori TER C
+Diperuntukkan bagi karyawan dengan status PTKP Kawin dengan 3 tanggungan (K/3) dengan nilai PTKP Rp72.000.000 setahun. Pada kategori ini, penghasilan bruto bulanan hingga Rp6.600.000 dikenakan tarif TER sebesar 0%.
+
+## Tabel Simulasi Tarif Efektif Bulanan (TER) Kategori A untuk Karyawan Toko
+
+Berikut adalah cuplikan lapisan tarif TER Kategori A yang paling lazim diterapkan pada staf kasir dan pramuniaga toko ritel:
+
+| Lapisan Penghasilan Bruto Sebulan | Status PTKP Pekerja | Tarif Efektif Bulanan (TER) | Contoh Gaji Bruto | PPh 21 Dipotong per Bulan |
+| :--- | :--- | :--- | :--- | :--- |
+| Hingga Rp5.400.000 | TK/0, TK/1, K/0 | 0,00% (Bebas Pajak) | Rp4.500.000 | Rp0 (Nihil) |
+| Di atas Rp5.400.000 s.d. Rp5.650.000 | TK/0, TK/1, K/0 | 0,25% | Rp5.500.000 | Rp13.750 per bulan |
+| Di atas Rp5.650.000 s.d. Rp5.950.000 | TK/0, TK/1, K/0 | 0,50% | Rp5.800.000 | Rp29.000 per bulan |
+| Di atas Rp5.950.000 s.d. Rp6.300.000 | TK/0, TK/1, K/0 | 0,75% | Rp6.100.000 | Rp45.750 per bulan |
+| Di atas Rp6.300.000 s.d. Rp6.750.000 | TK/0, TK/1, K/0 | 1,00% | Rp6.500.000 | Rp65.000 per bulan |
+| Di atas Rp6.750.000 s.d. Rp7.500.000 | TK/0, TK/1, K/0 | 1,25% | Rp7.000.000 | Rp87.500 per bulan |
+
+Tabel di atas menunjukkan bahwa bagi sebagian besar staf toko UMKM yang menerima gaji di bawah Rp5.400.000 per bulan dengan status lajang, nilai potongan PPh 21 adalah Rp0 (nihil). Pemilik toko tidak perlu memotong sepeser pun uang dari gaji staf tersebut.
+
+## Simulasi Perhitungan PPh 21 Bulanan dan Akhir Tahun (Desember)
+
+Mari kita pelajari contoh simulasi nyata pada staf supervisor toko bernama Rian yang berstatus lajang tanpa tanggungan (TK/0). Rian menerima gaji pokok dan tunjangan tetap sebesar Rp6.000.000 per bulan secara stabil dari Januari hingga Desember.
+
+### 1. Perhitungan Masa Pajak Januari hingga November (11 Bulan)
+- Status PTKP: TK/0 (Masuk Kategori TER A).
+- Gaji Bruto Bulanan: Rp6.000.000.
+- Berdasarkan tabel TER A, penghasilan antara Rp5.950.000 hingga Rp6.300.000 dikenakan tarif 0,75%.
+- PPh 21 per Bulan = 0,75% x Rp6.000.000 = Rp45.000 per bulan.
+- Total PPh 21 yang dipotong selama Januari hingga November (11 bulan) = 11 x Rp45.000 = Rp495.000.
+
+### 2. Perhitungan Masa Pajak Desember (Rekonsiliasi Tahunan Tarif Pasal 17)
+Pada bulan Desember, perusahaan wajib menghitung total pajak terutang setahun penuh menggunakan rumus tarif umum UU PPh:
+- Total Penghasilan Bruto Setahun = 12 x Rp6.000.000 = Rp72.000.000.
+- Pengurang: Biaya Jabatan (5% x Bruto, maks 6 juta) = 5% x Rp72.000.000 = Rp3.600.000.
+- Penghasilan Neto Setahun = Rp72.000.000 dikurangi Rp3.600.000 = Rp68.400.000.
+- PTKP Setahun (TK/0) = Rp54.000.000.
+- Penghasilan Kena Pajak (PKP) = Rp68.400.000 dikurangi Rp54.000.000 = Rp14.400.000.
+- Pajak Terutang Setahun (Tarif 5% Lapis Pertama) = 5% x Rp14.400.000 = Rp720.000.
+- Pajak yang Sudah Dipotong (Januari - November) = Rp495.000.
+- PPh 21 yang Wajib Dipotong pada Bulan Desember = Rp720.000 dikurangi Rp495.000 = Rp225.000.
+
+Dengan rekonsiliasi Desember ini, total pajak yang dipotong tepat sebesar Rp720.000 sesuai kewajiban hukum yang sebenarnya.
+
+## Ketentuan PPh 21 untuk Pegawai Harian Lepas dan Staf Part-Time
+
+Bagi toko ritel yang mempekerjakan staf tambahan harian lepas (misalnya tenaga packer saat promo tanggal kembar atau staf bazar akhir pekan), pemerintah menetapkan aturan TER Harian:
+1. Upah Harian Sampai Rp450.000: Dikenakan tarif PPh 21 sebesar 0% (tidak dipotong pajak).
+2. Upah Harian di Atas Rp450.000 hingga Rp2.500.000: Dikenakan tarif efektif harian sebesar 0,5% dari upah bruto harian.
+3. Upah Kumulatif Sebulan Melebihi Rp2.500.000: Menggunakan skema perhitungan tarif efektif bulanan sesuai tabel TER bulanan.
+
+Pelajari pula aturan hukum ketenagakerjaan toko pada artikel [kewajiban pemilik usaha terhadap karyawan](https://cooca.id/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja).
+
+## Kewajiban Pembuatan Bukti Potong 1721 dan Pelaporan e-Bupot
+
+Sebagai pemotong pajak, pemilik toko memiliki kewajiban administratif berikut:
+- Membuat Bukti Pemotongan PPh 21 Bulanan (Formulir 1721-VIII) melalui aplikasi e-Bupot 21/26 di portal DJP Online dan menyerahkannya kepada karyawan setiap bulan.
+- Menyetorkan Pajak yang Telah Dipotong: Paling lambat tanggal 10 bulan berikutnya melalui kode billing pajak e-Billing.
+- Melaporkan SPT Masa PPh 21/26: Paling lambat tanggal 20 bulan berikutnya melalui portal DJP Online.
+- Menerbitkan Bukti Potong Tahunan (Formulir 1721-A1) pada bulan Januari tahun berikutnya sebagai dokumen yang wajib digunakan karyawan untuk lapor SPT Tahunan Orang Pribadi.
+
+## Peran COOCA dalam Otomasi Payroll dan Pajak PPh 21 Terintegrasi
+
+Menghitung tarif TER secara manual untuk puluhan karyawan dengan variasi status keluarga yang berbeda sangat rawan kesalahan hitung dan memakan waktu berharga. COOCA hadir dengan modul Payroll and Tax Compliance cerdas yang mengikuti regulasi perpajakan terbaru di Indonesia.
+
+Keunggulan modul pajak payroll COOCA meliputi:
+1. Otomasi Perhitungan Skema TER PP 58/2023: Sistem COOCA secara otomatis memetakan status PTKP karyawan (Kategori A, B, atau C) dan mengaplikasikan tarif TER bulanan secara instan saat generate daftar gaji.
+2. Rekonsiliasi Otomatis Masa Desember: Algoritma cerdas COOCA secara otomatis menjalankan rekonsiliasi tarif Pasal 17 pada slip gaji bulan Desember tanpa perlu perhitungan manual di spreadsheet.
+3. Ekspor Data Format e-Bupot Unifikasi DJP: Unduh file skema impor CSV yang siap diunggah langsung ke portal e-Bupot DJP Online dalam hitungan detik.
+4. Slip Gaji Transparan via WhatsApp: Rincian pemotongan pajak tertera transparan pada slip gaji digital karyawan yang dikirimkan otomatis ke nomor WhatsApp masing-masing staf.
+
+Dengan sistem payroll terintegrasi dari COOCA, Anda dapat memastikan kewajiban perpajakan ketenagakerjaan toko terpenuhi secara akurat, rapi, dan bebas dari risiko denda pajak.
+
+## Kesimpulan dan Langkah Selanjutnya
+
+Penerapan skema Tarif Efektif Rata-Rata (TER) adalah kabar baik yang mempermudah para pemilik usaha ritel dan kuliner dalam mengelola administrasi pajak karyawan. Pemotongan pajak yang akurat dan transparan adalah bentuk kepatuhan hukum yang melindungi bisnis Anda sekaligus membangun kepercayaan profesional di mata para staf. Mulailah mendata ulang status PTKP seluruh karyawan toko Anda, terapkan tabel TER resmi dalam perhitungan payroll bulanan, dan manfaatkan sistem software penggajian modern untuk mewujudkan tata kelola usaha yang tertib dan berdaya saing.
+
+Pelajari pula panduan mendalam mengenai [aturan upah umkm pasca penetapan ump 2027](https://cooca.id/blog/aturan-upah-umkm-pasca-penetapan-ump-2027) untuk memperkuat strategi operasional bisnis Anda. Pelajari pula panduan mendalam mengenai [aturan penggunaan faktur pajak elektronik pkp usaha kecil](https://cooca.id/blog/aturan-penggunaan-faktur-pajak-elektronik-pkp-usaha-kecil) untuk memperkuat strategi operasional bisnis Anda.
+
+## FAQ
+
+### Apakah toko wajib memotong PPh 21 jika seluruh karyawannya bergaji di bawah batas PTKP (di bawah 4,5 juta)?
+Toko tetap wajib melakukan perhitungan dan pelaporan SPT Masa PPh 21 melalui aplikasi e-Bupot unifikasi dengan nilai pemotongan Rp0 (nihil). Pelaporan nihil membuktikan kepada kantor pajak bahwa toko telah memenuhi kewajiban pemotongan namun penghasilan staf memang berada di bawah ambang batas kena pajak.
+
+### Bagaimana jika karyawan toko belum memiliki NPWP pribadi?
+Berdasarkan regulasi terbaru, NIK pada KTP kini diakui sebagai NPWP Wajib Pajak Orang Pribadi. Karyawan yang belum mengaktivasi NPWP tidak lagi dikenakan penalti tarif 20% lebih tinggi seperti di masa lalu, melainkan dipotong menggunakan NIK yang divalidasi ke sistem perpajakan.
+
+### Apakah tunjangan makan siang dan uang transport harian karyawan toko digabung dalam penghasilan bruto kena pajak?
+Ya. Seluruh penghasilan rutin berupa gaji pokok, tunjangan makan, tunjangan transportasi, dan uang lembur digabungkan menjadi satu kesatuan Penghasilan Bruto Bulanan sebelum dikalikan dengan persentase tarif TER.
+
+### Kapan batas waktu penyetoran dan pelaporan PPh 21 karyawan ke kas negara?
+Penyetoran PPh 21 yang dipotong dari gaji karyawan wajib disetorkan paling lambat tanggal 10 bulan berikutnya, dan pelaporan SPT Masa PPh 21 wajib dilaporkan paling lambat tanggal 20 bulan berikutnya melalui portal DJP Online.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Cara Menghitung PPh Pasal 21 Karyawan Toko Harian dan Bulanan dengan TER",
+      "description": "Simulasi praktis cara menghitung pph pasal 21 karyawan toko dan staf ritel menggunakan Tarif Efektif Rata-Rata (TER) PP 58/2023, PTKP, dan bukti potong 1721-A1.",
+      "image": "https://cooca.id/images/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan.jpg",
+      "datePublished": "2026-11-19T08:00:00+07:00",
+      "dateModified": "2026-11-19T08:00:00+07:00",
+      "url": "https://cooca.id/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan",
+      "mainEntityOfPage": "https://cooca.id/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah toko wajib memotong PPh 21 jika seluruh karyawannya bergaji di bawah batas PTKP (di bawah 4,5 juta)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Toko tetap wajib melakukan perhitungan dan pelaporan SPT Masa PPh 21 melalui aplikasi e-Bupot unifikasi dengan nilai pemotongan Rp0 (nihil). Pelaporan nihil membuktikan kepada kantor pajak bahwa toko telah memenuhi kewajiban pemotongan namun penghasilan staf memang berada di bawah ambang batas kena pajak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana jika karyawan toko belum memiliki NPWP pribadi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Berdasarkan regulasi terbaru, NIK pada KTP kini diakui sebagai NPWP Wajib Pajak Orang Pribadi. Karyawan yang belum mengaktivasi NPWP tidak lagi dikenakan penalti tarif 20% lebih tinggi seperti di masa lalu, melainkan dipotong menggunakan NIK yang divalidasi ke sistem perpajakan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah tunjangan makan siang dan uang transport harian karyawan toko digabung dalam penghasilan bruto kena pajak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya. Seluruh penghasilan rutin berupa gaji pokok, tunjangan makan, tunjangan transportasi, dan uang lembur digabungkan menjadi satu kesatuan Penghasilan Bruto Bulanan sebelum dikalikan dengan persentase tarif TER."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kapan batas waktu penyetoran dan pelaporan PPh 21 karyawan ke kas negara?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Penyetoran PPh 21 yang dipotong dari gaji karyawan wajib disetorkan paling lambat tanggal 10 bulan berikutnya, dan pelaporan SPT Masa PPh 21 wajib dilaporkan paling lambat tanggal 20 bulan berikutnya melalui portal DJP Online."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

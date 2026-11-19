@@ -443,7 +443,7 @@ return [
     'harga_grosir_bertingkat' => 'Prices Wholesale Bertingkat',
     'cari_nama_menu_atau_sku_contoh' => 'Search name menu atau Sku example Coffee Espresso, Croissant)',
     'hapus_baris' => 'Delete Baris',
-    'belum_ada_produk_aktif_yang_terdaftar' => 'No existing products aktif yang terdaftar.',
+    'belum_ada_produk_aktif_yang_terdaftar' => 'No active products registered.',
     'gratis_rp_0' => 'Free (Rp 0)',
     'wajib_diisi_oleh_pelanggan' => 'Wajib Diisi oleh Customer',
     'status_opsi' => 'Status Options',

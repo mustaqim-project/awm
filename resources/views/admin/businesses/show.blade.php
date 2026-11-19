@@ -29,7 +29,7 @@
                         @csrf
                         <button type="submit"
                             class="h-10 px-4 rounded-[12px] text-[13px] font-bold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm shadow-[#FF9500]/25 cursor-pointer"
-                            title="{{ __('admin.masuk_ke_workspace_business_name_untuk') }}">
+                            title="{{ __('admin.masuk_ke_workspace_business_name_untuk', ['business' => $business->name]) }}">
                             <i data-lucide="log-in" class="w-4 h-4" stroke-width="2"></i>
                             <span>{{ __('admin.masuk_ke_bisnis_cek_bug') }}</span>
                         </button>

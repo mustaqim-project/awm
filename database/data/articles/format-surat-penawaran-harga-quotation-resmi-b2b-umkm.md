@@ -1,0 +1,211 @@
+---
+title: "Format Surat Penawaran Harga Resmi B2B Lengkap dengan Template Siap Pakai"
+meta_title: "Format Surat Penawaran Harga B2B Resmi Template"
+meta_description: "Panduan menyusun surat penawaran harga b2b resmi untuk pengadaan korporasi dan tender UMKM, klausul termin bayar, masa berlaku penawaran, dan template docx."
+slug: "format-surat-penawaran-harga-quotation-resmi-b2b-umkm"
+primary_keyword: "surat penawaran harga b2b"
+secondary_keywords: "template quotation harga resmi docx, contoh surat penawaran barang jasa, klausul termin pembayaran b2b, cara membuat quotation pengadaan tender, surat penawaran harga umkm"
+search_intent: "Informational"
+category: "Legalitas & Pajak"
+reading_time: "10 menit"
+cover_image: "https://cooca.id/images/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm.jpg"
+published_at: "2026-11-19T08:00:00+07:00"
+author: Tim Edukasi COOCA
+---
+
+# Format Surat Penawaran Harga B2B Resmi Template Siap Pakai
+
+Dalam dinamika ekspansi bisnis UMKM, transisi dari melayani konsumen ritel perorangan (Business-to-Consumer / B2C) menuju pasar pengadaan korporasi dan instansi pemerintah (Business-to-Business / B2B) adalah lompatan besar yang sangat menguntungkan. Transaksi B2B menawarkan volume pesanan dalam jumlah besar, nilai kontrak bernilai puluhan hingga ratusan juta rupiah, serta potensi kerja sama pasokan rutin jangka panjang. Namun, etika dan prosedur bisnis di dunia korporasi memiliki standar kepatuhan yang sangat ketat. Tim pengadaan (Procurement / Purchasing) perusahaan besar tidak akan pernah menyetujui pesanan hanya melalui obrolan chat WhatsApp atau secarik kertas coretan tangan. Mereka membutuhkan dokumen penawaran harga formal yang profesional, berbobot legalitas, dan terstruktur rapi. Menguasai cara menyusun surat penawaran harga b2b resmi adalah kunci pembuka pintu kerja sama tender dan pengadaan bernilai tinggi bagi bisnis Anda.
+
+Surat penawaran harga atau Quotation resmi bukan sekadar daftar harga barang semata, melainkan instrumen hukum pra-kontrak yang mencerminkan kredibilitas, profesionalisme, dan kapabilitas operasional perusahaan Anda. Sebuah quotation yang disusun dengan sempurna memuat rincian spesifikasi teknis barang, termin pembayaran yang melindungi arus kas, batas waktu validitas harga untuk mengantisipasi inflasi bahan baku, serta ketentuan garansi purna jual yang memberikan rasa aman bagi pembeli korporasi.
+
+## Komponen Esensial dalam Surat Penawaran Harga Resmi B2B
+
+Agar penawaran harga Anda dinilai kredibel oleh manajer pengadaan korporasi, dokumen Anda wajib memuat delapan komponen struktural berikut:
+
+### 1. Kop Surat Resmi Perusahaan (Letterhead)
+Memuat logo perusahaan resolusi tajam, nama resmi badan usaha (PT/CV/UD), alamat domisili kantor operasional, nomor telepon narahubung, alamat email bisnis resmi (hindari email gratisan jika memungkinkan), dan website toko.
+
+### 2. Nomor Surat dan Tanggal Penerbitan (Reference Number)
+Nomor surat pengarsipan resmi (misalnya: Ref: 042/QUO-B2B/CK/XI/2026) sangat penting bagi tim akuntansi klien untuk melacak riwayat pengajuan penawaran dalam sistem Enterprise Resource Planning (ERP) mereka.
+
+### 3. Identitas Pihak Penerima (Client Details)
+Tuliskan nama lengkap penanggung jawab atau jabatan pihak yang dituju (misalnya: Kepada Yth. Bapak Hendra Kusuma, Head of Procurement PT Maju Sentosa Mandiri), lengkap dengan alamat kantor perusahaan klien.
+
+### 4. Tabel Rincian Produk dan Spesifikasi Teknis
+Sajikan rincian barang dalam tabel transparan yang memuat: nomor urut, kode SKU produk, nama barang beserta spesifikasi material teknis, kuantitas unit, satuan ukuran, harga satuan, dan total harga nominal rupiah.
+
+### 5. Ketentuan Pajak Pertambahan Nilai (PPN 11%)
+Jelaskan secara tegas apakah harga yang tercantum sudah termasuk PPN 11% (inclusive tax) atau belum termasuk PPN (exclusive tax) untuk menghindari perselisihan tagihan di kemudian hari.
+
+### 6. Klausul Masa Berlaku Penawaran (Price Validity Period)
+Klausul ini sangat penting untuk melindungi bisnis Anda dari fluktuasi harga bahan baku: 'Penawaran harga ini berlaku selama 14 hari kalender terhitung sejak tanggal surat ini diterbitkan'. Setelah periode tersebut, perusahaan Anda berhak meninjau ulang harga.
+
+### 7. Termin Pembayaran dan Alur Pengiriman (Terms of Payment & Delivery)
+Jelaskan syarat pembayaran (misalnya: Uang Muka DP 50% saat Purchase Order diterbitkan, dan pelunasan 50% maksimal 14 hari kerja setelah Berita Acara Serah Terima Barang ditandatangani).
+
+### 8. Otorisasi dan Tanda Tangan Pejabat Berwenang
+Tanda tangan basah di atas meterai atau tanda tangan digital resmi dari Direktur atau Manajer Pemasaran, disertai stempel basah perusahaan.
+
+Pelajari pula tata kelola dokumen sewa lokasi usaha pada artikel [format surat perjanjian sewa ruko usaha kecil](https://cooca.id/blog/cara-membuat-surat-perjanjian-kerjasama-bagi-hasil-umkm).
+
+## Tabel Struktur Penawaran Harga Pengadaan Barang Korporasi
+
+Berikut adalah contoh penyajian tabel penawaran harga profesional untuk pengadaan seragam kerja korporasi:
+
+| No | Kode SKU | Deskripsi Barang & Spesifikasi Material | Jumlah Unit | Satuan | Harga Satuan (Rp) | Subtotal Nominal (Rp) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | KMG-OX-01 | Kemeja Kerja Lengan Panjang Oxford Drill Bordir | 200 | Potong | Rp145.000 | Rp29.000.000 |
+| 2 | POLO-TC-02 | Kaos Polo Shirt Pique Cotton 24s Sablon Timbul | 350 | Potong | Rp85.000 | Rp29.750.000 |
+| 3 | TPI-TW-03 | Topi Komando Lapangan Bahan Twill Pengait Besi | 200 | Buah | Rp35.000 | Rp7.000.000 |
+| Subtotal Penjualan | - | Rincian harga dasar produksi | - | - | - | Rp65.750.000 |
+| Diskon Volume (5%) | - | Potongan harga khusus volume pesanan di atas 500 pcs | - | - | - | (Rp3.287.500) |
+| Nilai Netto | - | Nilai pesanan bersih sebelum pajak | - | - | - | Rp62.462.500 |
+| PPN 11% | - | Pajak Pertambahan Nilai pengadaan resmi B2B | - | - | - | Rp6.870.875 |
+| Total Tagihan Akhir | - | Total nilai penawaran resmi yang diajukan ke klien | - | - | - | Rp69.333.375 |
+
+Penyajian angka yang rapi dan transparan seperti tabel di atas memudahkan tim procurement klien melakukan komparasi anggaran dan mempercepat proses persetujuan Purchase Order.
+
+## Template Surat Penawaran Harga B2B Siap Pakai
+
+Berikut adalah draf teks template surat penawaran harga resmi yang dapat Anda sesuaikan langsung untuk keperluan bisnis Anda:
+
+KOP SURAT RESMI PERUSAHAAN (LOGO & ALAMAT)  
+Nomor: 088/SPH-B2B/CK/XI/2026  
+Lampiran: 1 (Satu) Berkas Spesifikasi Teknis  
+Perihal: Penawaran Harga Pengadaan Barang Operasional Kantor  
+
+Kepada Yth.  
+Bapak/Ibu Tim Procurement & Pengadaan  
+PT Samudra Mega Corpora  
+Jl. Sudirman Kav. 45, Jakarta Pusat  
+
+Dengan hormat,  
+
+Sehubungan dengan adanya kebutuhan pengadaan barang operasional kantor di lingkungan PT Samudra Mega Corpora, kami dari PT Cipta Kreasi Mandiri bermaksud mengajukan penawaran harga terbaik untuk produk-produk berkualitas tinggi dengan rincian sebagaimana terlampir dalam surat ini.  
+
+Kami berkomitmen untuk memberikan jaminan mutu bahan terbaik, ketepatan waktu pengiriman, serta layanan purna jual yang prima demi mendukung kelancaran operasional perusahaan Bapak/Ibu.  
+
+Ketentuan dan Syarat Kerjasama:  
+1. Harga: Belum termasuk PPN 11% (kecuali disepakati lain).  
+2. Masa Berlaku Penawaran: Harga ini berlaku selama 14 (empat belas) hari kerja terhitung sejak tanggal surat diterbitkan.  
+3. Termin Pembayaran: Pembayaran uang muka (DP) sebesar 40% setelah Purchase Order (PO) resmi diterbitkan, dan pelunasan 60% diselesaikan melalui transfer bank dalam waktu maksimal 14 hari kerja (TOP 14) setelah serah terima barang selesai dibuktikan dengan Berita Acara Serah Terima (BAST).  
+4. Waktu Pengerjaan dan Pengiriman: Barang akan dikirimkan maksimal 10 hari kerja setelah penerimaan uang muka.  
+5. Pembayaran ditransfer ke rekening resmi perusahaan kami: Bank Mandiri Rekening No: 137-00-982134-8 a.n. PT Cipta Kreasi Mandiri.  
+
+Demikian surat penawaran harga ini kami sampaikan. Besar harapan kami untuk dapat menjalin kerja sama kemitraan yang saling menguntungkan dengan PT Samudra Mega Corpora. Atas perhatian dan kepercayaan yang Bapak/Ibu berikan, kami ucapkan terima kasih.  
+
+Hormat kami,  
+PT Cipta Kreasi Mandiri  
+
+(Tanda Tangan & Stempel Perusahaan)  
+Ahmad Fauzi, S.E.  
+Head of Corporate Sales  
+Kontak: 0812-3456-7890 / corporate@ciptakreasi.co.id  
+
+## Tips Negosiasi dan Follow-Up Penawaran Harga B2B
+
+Setelah mengirimkan dokumen penawaran harga, jangan pasif menunggu kabar. Terapkan etika follow-up bisnis berikut:
+- Kirim Dokumen dalam Format PDF Rapi: Selalu konversi dokumen pengolah kata Anda ke dalam format PDF beresolusi tinggi sebelum dikirimkan via email resmi agar tata letak tidak berantakan di layar penerima.
+- Konfirmasi Penerimaan Dokumen dalam 24 Jam: Kirimkan pesan santun ke narahubung procurement untuk memastikan dokumen penawaran telah diterima dengan baik dan tidak masuk ke folder spam.
+- Lakukan Follow-Up Pertama di Hari Ketiga: Tanyakan apakah tim procurement membutuhkan klarifikasi teknis atau sampel fisik produk untuk dipresentasikan dalam rapat anggaran.
+- Siapkan Fleksibilitas Termin Tanpa Merusak Margin: Jika klien meminta diskon harga, tawarkan alternatif penyesuaian spesifikasi bahan atau penyesuaian termin pembayaran tunai lebih cepat alih-alih langsung memangkas harga secara cuma-cuma. Pelajari strategi harga grosir pada artikel [manajemen pelanggan vip dan grosir penetapan plafon kredit](https://cooca.id/blog/manajemen-pelanggan-vip-dan-grosir-penetapan-plafon-kredit).
+
+## Peran COOCA dalam Pembuatan Quotation, Sales Order, dan Invoicing
+
+Membuat dokumen penawaran harga secara manual menggunakan Microsoft Word dan Excel berisiko menimbulkan kesalahan hitung rumus, nomor surat ganda, dan sulit melacak status konversi penawaran menjadi uang kas. COOCA hadir sebagai platform Business Operating System terpadu yang memiliki modul Sales Order and Quotation B2B otomatis.
+
+Keunggulan modul penawaran harga B2B pada COOCA meliputi:
+1. Pembuatan Dokumen Quotation Profesional dalam Hitungan Detik: Pilih produk dari katalog inventori, masukkan diskon volume bertingkat, dan sistem COOCA langsung men-generate dokumen penawaran harga PDF ber-kop surat resmi yang siap dikirimkan ke klien.
+2. Konversi Satu Klik ke Sales Order dan Invoice: Saat klien menyetujui penawaran, dokumen Quotation dapat dikonversi langsung menjadi Purchase Order / Sales Order, surat jalan pengiriman gudang, dan invoice penagihan resmi tanpa perlu input data ulang.
+3. Pelacakan Status Penawaran Real-Time: Pantau status setiap penawaran yang diajukan (Draft, Sent, Under Review, Approved, atau Rejected) dalam satu tampilan pipeline penjualan yang rapi.
+4. Pengingat Jatuh Tempo Pembayaran Otomatis: Sistem mengirimkan notifikasi pengingat pembayaran termin piutang korporasi sebelum jatuh tempo untuk menjaga arus kas usaha tetap likuid dan sehat.
+
+Dengan tata kelola sistem penjualan modern dari COOCA, bisnis UMKM Anda dapat tampil sebagai mitra korporasi yang profesional, terpercaya, dan siap memenangkan tender-tender pengadaan bernilai besar.
+
+## Kesimpulan dan Langkah Selanjutnya
+
+Surat penawaran harga resmi adalah cerminan dari keseriusan dan standar kualitas bisnis Anda. Jangan biarkan peluang emas memenangkan kontrak pengadaan korporasi melayang hanya karena format penawaran yang berantakan dan amatir. Gunakan format standar yang memuat klausul perlindungan hukum, perhitungkan biaya produksi dengan presisi, dan terapkan disiplin tindak lanjut yang profesional. Jadikan setiap dokumen quotation yang Anda kirimkan sebagai instrumen pemasaran yang meyakinkan klien bahwa perusahaan Anda adalah mitra terbaik untuk pertumbuhan bisnis mereka.
+
+Pelajari pula panduan mendalam mengenai [aturan upah umkm pasca penetapan ump 2027](https://cooca.id/blog/aturan-upah-umkm-pasca-penetapan-ump-2027) untuk memperkuat strategi operasional bisnis Anda.
+
+## FAQ
+
+### Apa perbedaan mendasar antara Quotation, Purchase Order (PO), dan Proforma Invoice?
+Quotation adalah surat penawaran harga yang diajukan penjual kepada calon pembeli. Purchase Order (PO) adalah surat pesanan resmi yang diterbitkan pembeli sebagai tanda menyetujui penawaran tersebut. Sedangkan Proforma Invoice adalah draf faktur tagihan sementara yang dikirimkan penjual kepada pembeli sebelum barang dikirim untuk memproses pembayaran uang muka (DP).
+
+### Berapa lama durasi ideal masa berlaku (price validity) dalam surat penawaran harga?
+Durasi standar yang umum digunakan adalah 14 hingga 30 hari kalender. Untuk sektor komoditas yang harga bahan bakunya sangat fluktuatif (seperti bahan makanan segar, logam besi, atau kertas impor), masa berlaku dapat diperpendek menjadi 7 hari kalender.
+
+### Apakah penawaran harga yang ditandatangani pembeli memiliki kekuatan hukum yang mengikat?
+Ya. Jika pihak pembeli telah menandatangani atau menerbitkan Purchase Order (PO) yang merujuk pada nomor quotation tersebut, dokumen tersebut secara yuridis memenuhi syarat sah perjanjian sesuai Pasal 1320 KUHPerdata dan mengikat kedua belah pihak untuk memenuhi hak dan kewajiban masing-masing.
+
+### Bagaimana cara mencantumkan klausul garansi barang dalam surat penawaran harga?
+Cantumkan klausul garansi secara spesifik pada bagian syarat dan ketentuan, misalnya: 'Garansi kerusakan produk akibat cacat produksi berlaku selama 6 bulan sejak tanggal Berita Acara Serah Terima Barang, tidak mencakup kerusakan akibat kelalaian operasional pengguna'.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Format Surat Penawaran Harga Resmi B2B Lengkap dengan Template Siap Pakai",
+      "description": "Panduan menyusun surat penawaran harga b2b resmi untuk pengadaan korporasi dan tender UMKM, klausul termin bayar, masa berlaku penawaran, dan template docx.",
+      "image": "https://cooca.id/images/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm.jpg",
+      "datePublished": "2026-11-19T08:00:00+07:00",
+      "dateModified": "2026-11-19T08:00:00+07:00",
+      "url": "https://cooca.id/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm",
+      "mainEntityOfPage": "https://cooca.id/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa perbedaan mendasar antara Quotation, Purchase Order (PO), dan Proforma Invoice?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quotation adalah surat penawaran harga yang diajukan penjual kepada calon pembeli. Purchase Order (PO) adalah surat pesanan resmi yang diterbitkan pembeli sebagai tanda menyetujui penawaran tersebut. Sedangkan Proforma Invoice adalah draf faktur tagihan sementara yang dikirimkan penjual kepada pembeli sebelum barang dikirim untuk memproses pembayaran uang muka (DP)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Berapa lama durasi ideal masa berlaku (price validity) dalam surat penawaran harga?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Durasi standar yang umum digunakan adalah 14 hingga 30 hari kalender. Untuk sektor komoditas yang harga bahan bakunya sangat fluktuatif (seperti bahan makanan segar, logam besi, atau kertas impor), masa berlaku dapat diperpendek menjadi 7 hari kalender."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah penawaran harga yang ditandatangani pembeli memiliki kekuatan hukum yang mengikat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ya. Jika pihak pembeli telah menandatangani atau menerbitkan Purchase Order (PO) yang merujuk pada nomor quotation tersebut, dokumen tersebut secara yuridis memenuhi syarat sah perjanjian sesuai Pasal 1320 KUHPerdata dan mengikat kedua belah pihak untuk memenuhi hak dan kewajiban masing-masing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana cara mencantumkan klausul garansi barang dalam surat penawaran harga?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cantumkan klausul garansi secara spesifik pada bagian syarat dan ketentuan, misalnya: 'Garansi kerusakan produk akibat cacat produksi berlaku selama 6 bulan sejak tanggal Berita Acara Serah Terima Barang, tidak mencakup kerusakan akibat kelalaian operasional pengguna'."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

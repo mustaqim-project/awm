@@ -1,5 +1,5 @@
 {
-  "count": 893,
+  "count": 933,
   "links": [
     {
       "url": "https://cooca.id/blog/aturan-upah-umkm-pasca-penetapan-ump-2027",
@@ -5358,6 +5358,246 @@
       "slug": "cara-menghitung-hpp-kopi",
       "lastmod": "2026-11-19T08:21:46+07:00",
       "topic_from_slug": "cara menghitung hpp kopi"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-biaya-tenaga-kerja-langsung-btkl-umkm",
+      "slug": "cara-menghitung-biaya-tenaga-kerja-langsung-btkl-umkm",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara menghitung biaya tenaga kerja langsung btkl umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mengelola-dana-darurat-usaha-kecil-agar-tidak-bangkrut",
+      "slug": "cara-mengelola-dana-darurat-usaha-kecil-agar-tidak-bangkrut",
+      "lastmod": "2026-11-19T08:15:00+07:00",
+      "topic_from_slug": "cara mengelola dana darurat usaha kecil agar tidak bangkrut"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-rasio-perputaran-modal-kerja-toko-ritel",
+      "slug": "cara-menghitung-rasio-perputaran-modal-kerja-toko-ritel",
+      "lastmod": "2026-11-19T08:30:00+07:00",
+      "topic_from_slug": "cara menghitung rasio perputaran modal kerja toko ritel"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-pemisahan-uang-pribadi-dan-bisnis-umkm-solo-owner",
+      "slug": "sop-pemisahan-uang-pribadi-dan-bisnis-umkm-solo-owner",
+      "lastmod": "2026-11-19T08:45:00+07:00",
+      "topic_from_slug": "sop pemisahan uang pribadi dan bisnis umkm solo owner"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-diskon-bertingkat-agar-margin-tidak-boncos",
+      "slug": "cara-menghitung-diskon-bertingkat-agar-margin-tidak-boncos",
+      "lastmod": "2026-11-19T09:00:00+07:00",
+      "topic_from_slug": "cara menghitung diskon bertingkat agar margin tidak boncos"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menyusun-laporan-arus-kas-metode-langsung-toko-jasa",
+      "slug": "cara-menyusun-laporan-arus-kas-metode-langsung-toko-jasa",
+      "lastmod": "2026-11-19T09:15:00+07:00",
+      "topic_from_slug": "cara menyusun laporan arus kas metode langsung toko jasa"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-rasio-biaya-operasional-usaha-ritel-umkm",
+      "slug": "cara-menghitung-rasio-biaya-operasional-usaha-ritel-umkm",
+      "lastmod": "2026-11-19T09:30:00+07:00",
+      "topic_from_slug": "cara menghitung rasio biaya operasional usaha ritel umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-target-laba-bersih-usaha-biaya-hidup-pemilik",
+      "slug": "cara-menghitung-target-laba-bersih-usaha-biaya-hidup-pemilik",
+      "lastmod": "2026-11-19T09:45:00+07:00",
+      "topic_from_slug": "cara menghitung target laba bersih usaha biaya hidup pemilik"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-penerimaan-barang-suplier-gudang-toko-bebas-selisih",
+      "slug": "sop-penerimaan-barang-suplier-gudang-toko-bebas-selisih",
+      "lastmod": "2026-11-19T10:00:00+07:00",
+      "topic_from_slug": "sop penerimaan barang suplier gudang toko bebas selisih"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mencegah-penyusutan-barang-dagangan-shrinkage-toko",
+      "slug": "cara-mencegah-penyusutan-barang-dagangan-shrinkage-toko",
+      "lastmod": "2026-11-19T10:15:00+07:00",
+      "topic_from_slug": "cara mencegah penyusutan barang dagangan shrinkage toko"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menentukan-lead-time-pemesanan-barang-ke-distributor",
+      "slug": "cara-menentukan-lead-time-pemesanan-barang-ke-distributor",
+      "lastmod": "2026-11-19T10:30:00+07:00",
+      "topic_from_slug": "cara menentukan lead time pemesanan barang ke distributor"
+    },
+    {
+      "url": "https://cooca.id/blog/penerapan-sistem-fifo-gudang-makanan-bahan-baku-umkm",
+      "slug": "penerapan-sistem-fifo-gudang-makanan-bahan-baku-umkm",
+      "lastmod": "2026-11-19T10:45:00+07:00",
+      "topic_from_slug": "penerapan sistem fifo gudang makanan bahan baku umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-biaya-pemesanan-barang-ordering-cost-toko",
+      "slug": "cara-menghitung-biaya-pemesanan-barang-ordering-cost-toko",
+      "lastmod": "2026-11-19T11:00:00+07:00",
+      "topic_from_slug": "cara menghitung biaya pemesanan barang ordering cost toko"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-retur-barang-rusak-ke-suplier-dan-faktur-pengganti",
+      "slug": "sop-retur-barang-rusak-ke-suplier-dan-faktur-pengganti",
+      "lastmod": "2026-11-19T11:15:00+07:00",
+      "topic_from_slug": "sop retur barang rusak ke suplier dan faktur pengganti"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menata-stok-barang-toko-sembako-kelontong-rapi",
+      "slug": "cara-menata-stok-barang-toko-sembako-kelontong-rapi",
+      "lastmod": "2026-11-19T11:30:00+07:00",
+      "topic_from_slug": "cara menata stok barang toko sembako kelontong rapi"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-membuat-kode-sku-barang-toko-ritel-terstandar",
+      "slug": "cara-membuat-kode-sku-barang-toko-ritel-terstandar",
+      "lastmod": "2026-11-19T11:45:00+07:00",
+      "topic_from_slug": "cara membuat kode sku barang toko ritel terstandar"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-kasir-mengatasi-selisih-pembayaran-qris-debit-toko",
+      "slug": "sop-kasir-mengatasi-selisih-pembayaran-qris-debit-toko",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop kasir mengatasi selisih pembayaran qris debit toko"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mencegah-modus-pencurian-kasir-struk-gantung-pos",
+      "slug": "cara-mencegah-modus-pencurian-kasir-struk-gantung-pos",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara mencegah modus pencurian kasir struk gantung pos"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-pelayanan-kasir-ramah-dan-cepat-antrean-panjang-toko",
+      "slug": "sop-pelayanan-kasir-ramah-dan-cepat-antrean-panjang-toko",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop pelayanan kasir ramah dan cepat antrean panjang toko"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-membaca-laporan-penjualan-kasir-harian-sales-summary",
+      "slug": "cara-membaca-laporan-penjualan-kasir-harian-sales-summary",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara membaca laporan penjualan kasir harian sales summary"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-keamanan-laci-kasir-pos-pembatasan-uang-laci-kas",
+      "slug": "sop-keamanan-laci-kasir-pos-pembatasan-uang-laci-kas",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop keamanan laci kasir pos pembatasan uang laci kas"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menangani-transaksi-gagal-qris-pelanggan-terpotong-saldo",
+      "slug": "cara-menangani-transaksi-gagal-qris-pelanggan-terpotong-saldo",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara menangani transaksi gagal qris pelanggan terpotong saldo"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mengaudit-transaksi-void-kasir-toko-pola-kecurangan",
+      "slug": "cara-mengaudit-transaksi-void-kasir-toko-pola-kecurangan",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara mengaudit transaksi void kasir toko pola kecurangan"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-penggunaan-barcode-scanner-kasir-cepat-dan-akurat",
+      "slug": "sop-penggunaan-barcode-scanner-kasir-cepat-dan-akurat",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop penggunaan barcode scanner kasir cepat dan akurat"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mengurus-izin-edar-pirt-makanan-olahan-kemasan-umkm",
+      "slug": "cara-mengurus-izin-edar-pirt-makanan-olahan-kemasan-umkm",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara mengurus izin edar pirt makanan olahan kemasan umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja",
+      "slug": "hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "hak dan kewajiban pemilik usaha karyawan uu cipta kerja"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mendaftarkan-bpjs-ketenagakerjaan-karyawan-toko-warung",
+      "slug": "cara-mendaftarkan-bpjs-ketenagakerjaan-karyawan-toko-warung",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara mendaftarkan bpjs ketenagakerjaan karyawan toko warung"
+    },
+    {
+      "url": "https://cooca.id/blog/panduan-memilih-bentuk-usaha-ud-cv-pt-perorangan-umkm",
+      "slug": "panduan-memilih-bentuk-usaha-ud-cv-pt-perorangan-umkm",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "panduan memilih bentuk usaha ud cv pt perorangan umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/syarat-cara-bebas-pph-final-omzet-di-bawah-500-juta",
+      "slug": "syarat-cara-bebas-pph-final-omzet-di-bawah-500-juta",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "syarat cara bebas pph final omzet di bawah 500 juta"
+    },
+    {
+      "url": "https://cooca.id/blog/format-surat-penawaran-harga-quotation-resmi-b2b-umkm",
+      "slug": "format-surat-penawaran-harga-quotation-resmi-b2b-umkm",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "format surat penawaran harga quotation resmi b2b umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan",
+      "slug": "cara-menghitung-pph-pasal-21-karyawan-toko-harian-bulanan",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara menghitung pph pasal 21 karyawan toko harian bulanan"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-surat-perjanjian-kerahasiaan-nda-resep-usaha-kuliner",
+      "slug": "sop-surat-perjanjian-kerahasiaan-nda-resep-usaha-kuliner",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop surat perjanjian kerahasiaan nda resep usaha kuliner"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-mengumpulkan-database-whatsapp-pelanggan-kasir-ramah",
+      "slug": "cara-mengumpulkan-database-whatsapp-pelanggan-kasir-ramah",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara mengumpulkan database whatsapp pelanggan kasir ramah"
+    },
+    {
+      "url": "https://cooca.id/blog/strategi-harga-khusus-pelanggan-grosir-volume-belanja-toko",
+      "slug": "strategi-harga-khusus-pelanggan-grosir-volume-belanja-toko",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "strategi harga khusus pelanggan grosir volume belanja toko"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-menghitung-rasio-retensi-pelanggan-toko-ritel-umkm",
+      "slug": "cara-menghitung-rasio-retensi-pelanggan-toko-ritel-umkm",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara menghitung rasio retensi pelanggan toko ritel umkm"
+    },
+    {
+      "url": "https://cooca.id/blog/sop-pengemasan-paket-pesanan-online-aman-ekspedisi-murah",
+      "slug": "sop-pengemasan-paket-pesanan-online-aman-ekspedisi-murah",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "sop pengemasan paket pesanan online aman ekspedisi murah"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-membuat-pesan-pengingat-pembayaran-invoice-whatsapp",
+      "slug": "cara-membuat-pesan-pengingat-pembayaran-invoice-whatsapp",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara membuat pesan pengingat pembayaran invoice whatsapp"
+    },
+    {
+      "url": "https://cooca.id/blog/strategi-omnichannel-toko-offline-dan-tiktok-live-stok-sinkron",
+      "slug": "strategi-omnichannel-toko-offline-dan-tiktok-live-stok-sinkron",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "strategi omnichannel toko offline dan tiktok live stok sinkron"
+    },
+    {
+      "url": "https://cooca.id/blog/cara-membuat-kartu-nama-bisnis-digital-qr-code-katalog",
+      "slug": "cara-membuat-kartu-nama-bisnis-digital-qr-code-katalog",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "cara membuat kartu nama bisnis digital qr code katalog"
+    },
+    {
+      "url": "https://cooca.id/blog/strategi-menangani-pelanggan-minta-diskon-di-luar-kebijakan",
+      "slug": "strategi-menangani-pelanggan-minta-diskon-di-luar-kebijakan",
+      "lastmod": "2026-11-19T08:00:00+07:00",
+      "topic_from_slug": "strategi menangani pelanggan minta diskon di luar kebijakan"
     }
   ]
 }

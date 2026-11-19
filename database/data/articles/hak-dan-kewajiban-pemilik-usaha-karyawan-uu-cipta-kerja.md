@@ -1,0 +1,181 @@
+---
+title: "Hak dan Kewajiban Pemilik Usaha terhadap Karyawan Berdasarkan UU Cipta Kerja"
+meta_title: "Hak Kewajiban Pemilik Usaha terhadap Karyawan UU Cipta Kerja"
+meta_description: "Pahami hak dan kewajiban pemilik usaha terhadap karyawan toko dan UMKM sesuai regulasi UU Cipta Kerja, aturan PKWT, jam kerja lembur, dan pesangon PHK."
+slug: "hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja"
+primary_keyword: "kewajiban pemilik usaha terhadap karyawan"
+secondary_keywords: "uu cipta kerja klaster ketenagakerjaan umkm, aturan pkwt karyawan kontrak toko, jam kerja dan uang lembur ritel, kompensasi phk usaha kecil, hak karyawan toko warung"
+search_intent: "Informational"
+category: "Legalitas & Pajak"
+reading_time: "10 menit"
+cover_image: "https://cooca.id/images/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja.jpg"
+published_at: "2026-11-19T08:00:00+07:00"
+author: Tim Edukasi COOCA
+---
+
+# Hak dan Kewajiban Pemilik Usaha terhadap Karyawan Berdasarkan UU Cipta Kerja
+
+Hubungan kerja antara pemilik usaha dengan karyawan adalah fondasi utama yang menggerakkan roda operasional setiap bisnis, mulai dari warung makan, toko ritel pakaian, bengkel otomotif, hingga pabrik manufaktur kecil. Namun, dalam praktiknya, masih banyak pelaku usaha mikro, kecil, dan menengah yang menjalankan hubungan industrial hanya berbekal kesepakatan lisan tanpa perjanjian kerja tertulis. Hal ini kerap memicu sengketa hubungan industrial yang berujung pada gugatan hukum, tuntutan pesangon mendadak, atau mogok kerja staf di tengah jam sibuk toko. Memahami secara komprehensif apa saja hak dan kewajiban pemilik usaha terhadap karyawan berdasarkan regulasi ketenagakerjaan terbaru, khususnya Undang-Undang Nomor 6 Tahun 2023 tentang Cipta Kerja dan Peraturan Pemerintah Nomor 35 Tahun 2021, adalah langkah fundamental untuk membangun lingkungan kerja yang harmonis, produktif, dan patuh hukum.
+
+Regulasi ketenagakerjaan modern tidak hanya membebankan serangkaian kewajiban upah dan perlindungan bagi pekerja, namun juga memberikan kepastian hukum dan fleksibilitas bagi pemilik usaha untuk mengelola kinerja tim, menerapkan disiplin kerja, dan menyesuaikan struktur biaya operasional toko dengan kondisi riil kemampuan finansial UMKM. Dengan memahami batasan hak dan kewajiban ini, pengusaha dapat melindungi aset bisnisnya sekaligus memperlakukan karyawan secara adil dan bermartabat.
+
+## Hak-Hak Utama Pemilik Usaha (Pengusaha)
+
+Sebagai pihak yang menanggung risiko investasi dan menyediakan lapangan kerja, pemilik usaha dilindungi oleh undang-undang dan memiliki sejumlah hak fundamental berikut:
+
+1. Hak Menetapkan Standar Kinerja dan SOP Toko: Pengusaha berhak menyusun Peraturan Perusahaan (PP), standar operasional prosedur kerja, serta target produktivitas harian yang wajib dipatuhi oleh seluruh staf.
+2. Hak Memerintahkan Pelaksanaan Pekerjaan: Pengusaha berhak menugaskan karyawan untuk menjalankan deskripsi pekerjaan (job description) yang telah disepakati dalam perjanjian kerja selama jam operasional kerja resmi.
+3. Hak Menjatuhkan Sanksi Disipliner: Jika staf melakukan kelalaian, indisipliner, atau pelanggaran etika kerja, pemilik usaha berhak menerbitkan Surat Peringatan (SP 1, SP 2, hingga SP 3) secara bertahap sesuai bukti pelanggaran nyata.
+4. Hak Melakukan Pemutusan Hubungan Kerja (PHK) Sesuai Ketentuan Hukum: Pengusaha berhak melakukan PHK terhadap staf yang melakukan pelanggaran berat, mangkir kerja lebih dari 5 hari berturut-turut tanpa alasan sah, atau karena alasan efisiensi bisnis dengan memberikan kompensasi sesuai regulasi yang berlaku.
+
+## Kewajiban Pemilik Usaha terhadap Karyawan Menurut UU Cipta Kerja
+
+Di sisi lain, undang-undang menetapkan serangkaian kewajiban mutlak yang wajib dipenuhi oleh setiap pemilik bisnis kepada pekerjanya:
+
+### 1. Kewajiban Pembayaran Upah Sesuai Kesepakatan Khusus UMKM
+Bagi usaha skala menengah dan besar, pengusaha wajib membayar upah minimal setara Upah Minimum Provinsi (UMP) atau Upah Minimum Kabupaten/Kota (UMK). Namun, UU Cipta Kerja memberikan pengecualian istimewa bagi Usaha Mikro dan Kecil (UMK):
+- Upah pada usaha mikro dan kecil disepakati berdasarkan kesepakatan antara pengusaha dan pekerja di toko.
+- Nilai upah kesepakatan tersebut sekurang-kurangnya sebesar 50% dari rata-rata konsumsi masyarakat di tingkat provinsi, atau minimal 25% di atas garis kemiskinan provinsi setempat. Ketentuan ini memberikan ruang bernapas legal bagi warung dan toko kecil agar tidak terjerat pidana upah minimum. Pelajari regulasi terbaru pada artikel [aturan upah umkm pasca penetapan ump 2027](https://cooca.id/blog/aturan-upah-umkm-pasca-penetapan-ump-2027).
+
+### 2. Kewajiban Pengaturan Jam Kerja dan Pembayaran Upah Lembur
+Waktu kerja standar di Indonesia terbagi menjadi dua skema:
+- 7 jam sehari dan 40 jam seminggu untuk 6 hari kerja per minggu.
+- 8 jam sehari dan 40 jam seminggu untuk 5 hari kerja per minggu.
+Jika karyawan diminta bekerja melebihi waktu kerja standar tersebut, waktu tersebut dihitung sebagai kerja lembur (overtime). Pengusaha wajib membayar upah kerja lembur dengan perhitungan: 1,5 kali upah per jam untuk jam lembur pertama, dan 2 kali upah per jam untuk jam lembur berikutnya.
+
+### 3. Kewajiban Memberikan Waktu Istirahat dan Cuti Kerja
+Pekerja berhak mendapatkan:
+- Istirahat antara jam kerja sekurang-kurangnya 30 menit setelah bekerja selama 4 jam terus-menerus.
+- Istirahat mingguan 1 hari untuk 6 hari kerja atau 2 hari untuk 5 hari kerja per minggu.
+- Cuti tahunan sekurang-kurangnya 12 hari kerja setelah pekerja bekerja selama 12 bulan secara terus-menerus di toko.
+- Cuti melahirkan selama 3 bulan bagi pekerja perempuan dengan tetap menerima upah penuh.
+
+### 4. Kewajiban Perlindungan Jaminan Sosial Ketenagakerjaan (BPJS)
+Setiap pemilik usaha, termasuk UMKM, wajib mendaftarkan karyawannya ke dalam program jaminan sosial ketenagakerjaan, minimal program Jaminan Kecelakaan Kerja (JKK) dan Jaminan Kematian (JKM) yang iurannya sangat terjangkau (kurang dari Rp15.000 per bulan per staf).
+
+### 5. Kewajiban Pembayaran Uang Kompensasi PKWT (Karyawan Kontrak)
+Berdasarkan PP 35 Tahun 2021, pengusaha wajib memberikan uang kompensasi kepada karyawan dengan Perjanjian Kerja Waktu Tertentu (PKWT) yang telah menyelesaikan masa kontrak kerja minimal 1 bulan secara terus-menerus. Rumus kompensasinya adalah: (Masa Kerja dalam Bulan / 12) x 1 Bulan Upah.
+
+## Tabel Komparasi Hak dan Kewajiban Pengusaha Toko Ritel
+
+Berikut adalah ringkasan matriks hak dan kewajiban pengusaha dalam hubungan kerja sehari-hari di toko ritel:
+
+| Aspek Hubungan Kerja | Hak Pemilik Usaha (Pengusaha) | Kewajiban Pemilik Usaha kepada Staf | Landasan Regulasi Hukum |
+| :--- | :--- | :--- | :--- |
+| Struktur Upah & Gaji | Menilai hasil kerja staf secara objektif | Membayar upah tepat waktu pada tanggal gajian | UU Cipta Kerja & PP 36/2021 |
+| Jam Kerja Operasional | Menuntut kehadiran tepat waktu sesuai shift | Membayar upah lembur jika melebihi 40 jam | PP No. 35 Tahun 2021 |
+| Pengendalian Disiplin | Menerbitkan SP 1, SP 2, SP 3 atas pelanggaran | Memberikan hak membela diri kepada pekerja | UU Ketenagakerjaan No. 13/2003 |
+| Kontrak Kerja (PKWT) | Menentukan durasi kontrak maksimal 5 tahun | Membayar uang kompensasi saat kontrak selesai | Pasal 61A UU Cipta Kerja |
+| Perlindungan Keselamatan | Mewajibkan pemakaian APD kerja toko | Menyediakan lingkungan kerja yang higienis & aman | UU No. 1 Tahun 1970 K3 |
+| Jaminan Sosial (BPJS) | Menuntut produktivitas kerja yang optimal | Membayar iuran kepesertaan BPJS Ketenagakerjaan | UU No. 24 Tahun 2011 BPJS |
+
+Kepatuhan terhadap matriks di atas menjadi benteng pertahanan terbaik bagi toko ritel agar terbebas dari sanksi administratif Dinas Tenaga Kerja.
+
+## Alur Pembuatan Perjanjian Kerja Waktu Tertentu (PKWT) yang Sah
+
+Agar hubungan kerja memiliki dasar hukum yang kuat dan tidak menimbulkan sengketa di kemudian hari, pemilik usaha wajib menuangkan kesepakatan ke dalam surat kontrak kerja tertulis dengan memuat klausul berikut:
+1. Identitas Jelas Para Pihak: Nama lengkap, NIK KTP, alamat pemilik usaha, dan nama lengkap karyawan yang bersangkutan.
+2. Deskripsi Jabatan dan Lokasi Kerja: Rincian tugas yang diemban (misalnya staf kasir, barista, atau kurir) dan gerai toko tempat karyawan ditempatkan.
+3. Jangka Waktu Kontrak Kerja: Tanggal mulai dan tanggal berakhirnya masa kerja kontrak (maksimal durasi total 5 tahun termasuk perpanjangan).
+4. Besaran Upah dan Waktu Pembayaran: Nominal upah pokok, tunjangan kehadiran harian, dan tanggal rutin transfer gaji setiap bulan.
+5. Hak Cuti dan Istirahat Mingguan: Jadwal hari libur rutin per minggu dan ketentuan izin sakit dengan surat dokter resmi.
+6. Ketentuan Sanksi dan Pemutusan Kontrak: Aturan ganti rugi jika salah satu pihak mengakhiri kontrak sebelum waktunya tanpa alasan yang sah menurut undang-undang. Pelajari pula format kontrak kerjasama mitra pada artikel [cara membuat surat perjanjian kerjasama bagi hasil umkm](https://cooca.id/blog/cara-membuat-surat-perjanjian-kerjasama-bagi-hasil-umkm).
+
+## Peran COOCA dalam Tata Kelola HR, Payroll, dan Absensi Toko
+
+Mengelola jadwal shift kerja puluhan karyawan, memantau absensi jam lembur, dan menghitung potongan upah secara manual menggunakan buku catatan kertas sangat rawan kesalahan hitung dan sering menimbulkan rasa curiga antar-karyawan. COOCA menyediakan modul Human Resource Management (HRM) dan Payroll terpadu yang dirancang khusus untuk memenuhi kebutuhan UMKM modern.
+
+Keunggulan modul ketenagakerjaan COOCA meliputi:
+1. Absensi Digital Berbasis Lokasi (Geo-Fencing Attendance): Staf toko mencatatkan kehadiran shift langsung dari ponsel pintar mereka dengan validasi titik GPS toko dan swafoto (selfie), mencegah manipulasi titip absen.
+2. Otomasi Perhitungan Jam Lembur: Sistem COOCA secara otomatis menghitung durasi jam lembur berdasarkan data check-in dan check-out riil sesuai formula standar regulasi ketenagakerjaan.
+3. Cetak Slip Gaji Digital Terperinci: Generate slip gaji karyawan dalam satu klik, merinci upah pokok, tunjangan kehadiran, lembur, serta potongan BPJS secara transparan yang dapat dikirimkan langsung ke WhatsApp staf.
+4. Arsip Dokumen Digital Karyawan: Simpan salinan kontrak kerja PKWT, foto KTP, kartu keluarga, dan riwayat surat peringatan (SP) dalam satu database yang aman dan terpusat.
+
+Dengan tata kelola ketenagakerjaan yang terotomasi dari COOCA, hubungan industrial di toko Anda berjalan secara profesional, transparan, dan memberikan rasa aman bagi seluruh tim kerja.
+
+## Kesimpulan dan Langkah Selanjutnya
+
+Menghormati hak karyawan dan menunaikan kewajiban pengusaha bukanlah beban biaya semata, melainkan fondasi utama untuk membangun bisnis yang berkelanjutan dan memiliki loyalitas staf yang tinggi. Karyawan yang diperlakukan secara adil, dibayar tepat waktu, dan dilindungi hak-haknya akan melayani pembeli dengan sepenuh hati dan menjaga toko Anda seperti miliknya sendiri. Mulailah menertibkan surat perjanjian kerja tertulis di toko Anda hari ini, hitung jam kerja lembur secara jujur, dan manfaatkan teknologi manajemen HR modern demi kemajuan bisnis Anda bersama tim.
+
+Pelajari pula panduan mendalam mengenai [aturan penggunaan faktur pajak elektronik pkp usaha kecil](https://cooca.id/blog/aturan-penggunaan-faktur-pajak-elektronik-pkp-usaha-kecil) untuk memperkuat strategi operasional bisnis Anda.
+
+## FAQ
+
+### Apakah toko kecil atau warung wajib membuat kontrak kerja tertulis bagi karyawannya?
+Sangat disarankan dibuat secara tertulis. Meskipun kesepakatan lisan diakui secara perdata, ketiadaan kontrak tertulis membuat posisi pemilik usaha sangat lemah di mata hukum jika sewaktu-waktu terjadi sengketa ketenagakerjaan atau klaim sepihak dari karyawan.
+
+### Apakah pemilik usaha mikro boleh membayar upah di bawah UMR atau UMK?
+Berdasarkan Pasal 90B UU Cipta Kerja dan PP 36/2021, pelaku Usaha Mikro dan Kecil (UMK) dikecualikan dari ketentuan Upah Minimum Kabupaten/Kota (UMK). Upah dapat disepakati secara bebas antara pengusaha dan pekerja dengan batas minimal 50% dari rata-rata konsumsi masyarakat provinsi setempat.
+
+### Apa sanksi hukum bagi pemilik toko yang tidak membayarkan upah lembur karyawan?
+Berdasarkan Pasal 187 UU Cipta Kerja, pengusaha yang tidak membayar upah kerja lembur dapat dikenakan sanksi pidana kurungan paling singkat 1 bulan dan paling lama 12 bulan, dan/atau denda paling sedikit Rp10.000.000 hingga Rp100.000.000.
+
+### Kapan uang kompensasi PKWT wajib dibayarkan kepada karyawan kontrak?
+Uang kompensasi PKWT wajib dibayarkan pada saat masa kontrak kerja berakhir atau selesai. Jika kontrak diperpanjang, kompensasi untuk masa kontrak pertama wajib diselesaikan terlebih dahulu sebelum masa perpanjangan kontrak berjalan.
+
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Hak dan Kewajiban Pemilik Usaha terhadap Karyawan Berdasarkan UU Cipta Kerja",
+      "description": "Pahami hak dan kewajiban pemilik usaha terhadap karyawan toko dan UMKM sesuai regulasi UU Cipta Kerja, aturan PKWT, jam kerja lembur, dan pesangon PHK.",
+      "image": "https://cooca.id/images/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja.jpg",
+      "datePublished": "2026-11-19T08:00:00+07:00",
+      "dateModified": "2026-11-19T08:00:00+07:00",
+      "url": "https://cooca.id/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja",
+      "mainEntityOfPage": "https://cooca.id/blog/hak-dan-kewajiban-pemilik-usaha-karyawan-uu-cipta-kerja",
+      "author": {
+        "@type": "Person",
+        "name": "Tim Edukasi COOCA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "COOCA",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cooca.id/images/logo.png"
+        }
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apakah toko kecil atau warung wajib membuat kontrak kerja tertulis bagi karyawannya?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sangat disarankan dibuat secara tertulis. Meskipun kesepakatan lisan diakui secara perdata, ketiadaan kontrak tertulis membuat posisi pemilik usaha sangat lemah di mata hukum jika sewaktu-waktu terjadi sengketa ketenagakerjaan atau klaim sepihak dari karyawan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah pemilik usaha mikro boleh membayar upah di bawah UMR atau UMK?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Berdasarkan Pasal 90B UU Cipta Kerja dan PP 36/2021, pelaku Usaha Mikro dan Kecil (UMK) dikecualikan dari ketentuan Upah Minimum Kabupaten/Kota (UMK). Upah dapat disepakati secara bebas antara pengusaha dan pekerja dengan batas minimal 50% dari rata-rata konsumsi masyarakat provinsi setempat."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa sanksi hukum bagi pemilik toko yang tidak membayarkan upah lembur karyawan?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Berdasarkan Pasal 187 UU Cipta Kerja, pengusaha yang tidak membayar upah kerja lembur dapat dikenakan sanksi pidana kurungan paling singkat 1 bulan dan paling lama 12 bulan, dan/atau denda paling sedikit Rp10.000.000 hingga Rp100.000.000."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kapan uang kompensasi PKWT wajib dibayarkan kepada karyawan kontrak?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Uang kompensasi PKWT wajib dibayarkan pada saat masa kontrak kerja berakhir atau selesai. Jika kontrak diperpanjang, kompensasi untuk masa kontrak pertama wajib diselesaikan terlebih dahulu sebelum masa perpanjangan kontrak berjalan."
+          }
+        }
+      ]
+    }
+  ]
+}
+```

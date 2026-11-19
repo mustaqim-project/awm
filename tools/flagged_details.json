@@ -1,0 +1,1117 @@
+{
+  "admin.php": [
+    {
+      "line": 326,
+      "key": "ubah_penawaran",
+      "id": "Ubah Penawaran",
+      "en": "Edit Penawaran",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 328,
+      "key": "daftar_surat_penawaran_harga_sales_quotations",
+      "id": "Daftar Surat Penawaran Harga (Sales Quotations)",
+      "en": "List Letter Penawaran Prices (Sales Quotations)",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 376,
+      "key": "contoh_workshop_optimasi_omset_kasir_strategi",
+      "id": "Contoh: Workshop Optimasi Omset Kasir & Strategi Margin UMKM 2026",
+      "en": "Example Workshop Optimasi Omset Kasir & Strategi Margin Sme 2026",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 377,
+      "key": "jelaskan_detail_materi_narasumber_manfaat_bagi",
+      "id": "Jelaskan detail materi, narasumber, manfaat bagi pemilik usaha, serta",
+      "en": "Jelaskan details materi, narasumber, manfaat bagi pemilik usaha, serta",
+      "hits": [
+        "manfaat"
+      ]
+    },
+    {
+      "line": 378,
+      "key": "kosongkan_jika_kuota_tidak_dibatasi",
+      "id": "Kosongkan jika kuota tidak dibatasi",
+      "en": "Kosongkan jika kuota tidak dibatasi",
+      "hits": [
+        "tidak",
+        "kuota",
+        "kosongkan"
+      ]
+    },
+    {
+      "line": 397,
+      "key": "daftar_peserta_terdaftar",
+      "id": "Daftar Peserta Terdaftar",
+      "en": "List Peserta Terdaftar",
+      "hits": [
+        "terdaftar"
+      ]
+    },
+    {
+      "line": 398,
+      "key": "tidak_ada_data_feedback_ditemukan",
+      "id": "Tidak ada data feedback ditemukan",
+      "en": "Tidak existing data feedback ditemukan",
+      "hits": [
+        "tidak",
+        "ditemukan"
+      ]
+    },
+    {
+      "line": 401,
+      "key": "request_fitur",
+      "id": "Request Fitur",
+      "en": "Request Fitur",
+      "hits": [
+        "fitur"
+      ]
+    },
+    {
+      "line": 404,
+      "key": "tuliskan_catatan_perbaikan_atau_progres_yang",
+      "id": "Tuliskan catatan perbaikan atau progres yang dilakukan...",
+      "en": "Tuliskan catatan perbaikan atau progres yang dilakukan...",
+      "hits": [
+        "catatan"
+      ]
+    },
+    {
+      "line": 405,
+      "key": "catatan_arsitektur_atau_pertimbangan_rilis",
+      "id": "Catatan arsitektur atau pertimbangan rilis...",
+      "en": "Catatan arsitektur atau pertimbangan rilis...",
+      "hits": [
+        "catatan"
+      ]
+    },
+    {
+      "line": 429,
+      "key": "biaya_perpanjangan_server_tahunan_kuota_token",
+      "id": "Biaya perpanjangan server tahunan / kuota token tambahan...",
+      "en": "Biaya perpanjangan server tahunan / kuota token tambahan...",
+      "hits": [
+        "kuota"
+      ]
+    },
+    {
+      "line": 433,
+      "key": "catatan_baris_khusus_opsional",
+      "id": "Catatan baris khusus (opsional)...",
+      "en": "Catatan baris khusus (opsional)...",
+      "hits": [
+        "catatan"
+      ]
+    },
+    {
+      "line": 436,
+      "key": "catatan_nomor_invoice_persetujuan_direksi_atau",
+      "id": "Catatan nomor invoice, persetujuan direksi, atau nomor referensi...",
+      "en": "Catatan number invoice persetujuan direksi, atau number referensi...",
+      "hits": [
+        "catatan",
+        "persetujuan"
+      ]
+    },
+    {
+      "line": 439,
+      "key": "bukti_transaksi",
+      "id": "Bukti Transaksi",
+      "en": "Bukti Transaction",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 446,
+      "key": "lihat_faktur_tagihan",
+      "id": "Lihat Faktur/Tagihan",
+      "en": "View Faktur/Tagihan",
+      "hits": [
+        "faktur"
+      ]
+    },
+    {
+      "line": 449,
+      "key": "bukti_transfer_keluar",
+      "id": "Bukti Transfer Keluar",
+      "en": "Bukti Transfer Keluar",
+      "hits": [
+        "keluar",
+        "bukti"
+      ]
+    },
+    {
+      "line": 453,
+      "key": "bukti_transfer_2",
+      "id": "Bukti Transfer",
+      "en": "Bukti Transfer",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 461,
+      "key": "klik_untuk_melihat_bukti_gambar_kuitansi",
+      "id": "Klik untuk melihat bukti gambar kuitansi/struk",
+      "en": "Klik untuk melihat bukti gambar kuitansi/struk",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 465,
+      "key": "lihat_bukti",
+      "id": "Lihat Bukti",
+      "en": "View Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 478,
+      "key": "title_kotak_masuk_inbox_cooca_admin",
+      "id": "@title: Kotak Masuk (Inbox) - COOCA Admin",
+      "en": "@title: Kotak Masuk (Inbox) - COOCA Admin",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 494,
+      "key": "muat_seluruh_39_berkas_panduan_dari",
+      "id": "Muat seluruh 39 berkas panduan dari folder docs/user-guides langsung k",
+      "en": "Muat seluruh 39 berkas guides dari folder docs/user-guides fresh k",
+      "hits": [
+        "muat"
+      ]
+    },
+    {
+      "line": 513,
+      "key": "pengaturan_kredensial_meta_webhook",
+      "id": "Pengaturan Kredensial Meta & Webhook",
+      "en": "Settings Kredensial Meta & Webhook",
+      "hits": [
+        "kredensial"
+      ]
+    },
+    {
+      "line": 526,
+      "key": "simpan_kredensial",
+      "id": "Simpan Kredensial",
+      "en": "Save Kredensial",
+      "hits": [
+        "kredensial"
+      ]
+    },
+    {
+      "line": 576,
+      "key": "ringkasan_1_2_kalimat_untuk_kartu",
+      "id": "Ringkasan 1-2 kalimat untuk kartu preview di halaman blog...",
+      "en": "Ringkasan 1-2 kalimat untuk card preview at halaman blog...",
+      "hits": [
+        "halaman"
+      ]
+    },
+    {
+      "line": 588,
+      "key": "cari_judul_artikel_topik_atau_kata",
+      "id": "Cari judul artikel, topik, atau kata kunci...",
+      "en": "Search judul articles topik, atau word kunci...",
+      "hits": [
+        "kunci"
+      ]
+    },
+    {
+      "line": 590,
+      "key": "operasional_dan_stok",
+      "id": "operasional-dan-stok",
+      "en": "operasional-dan-stok",
+      "hits": [
+        "stok"
+      ]
+    },
+    {
+      "line": 608,
+      "key": "belum_ada_batch_pada_program_ini",
+      "id": "Belum ada batch pada program ini. Klik \"Tambah Batch\" untuk menentukan kuota dan",
+      "en": "No existing batch pada programs ini. Klik add Batch\" untuk menentukan kuota dan",
+      "hits": [
+        "kuota"
+      ]
+    },
+    {
+      "line": 611,
+      "key": "belum_ada_riwayat_perubahan_harga_khusus",
+      "id": "Belum ada riwayat perubahan harga khusus tercatat.",
+      "en": "No existing history changes prices khusus tercatat.",
+      "hits": [
+        "tercatat"
+      ]
+    },
+    {
+      "line": 624,
+      "key": "tambah_batch_kuota_harga_khusus",
+      "id": "Tambah Batch Kuota & Harga Khusus",
+      "en": "Add Batch Kuota & Prices Khusus",
+      "hits": [
+        "kuota"
+      ]
+    },
+    {
+      "line": 633,
+      "key": "profil_ganti_kata_sandi_administrator_admin",
+      "id": "Profil & Ganti Kata Sandi Administrator - Admin Console",
+      "en": "Profil & Ganti Word Password Administrator - Admin Console",
+      "hits": [
+        "ganti"
+      ]
+    },
+    {
+      "line": 681,
+      "key": "cooca_software_kasir_aplikasi_pembukuan_pos",
+      "id": "Cooca, software kasir, aplikasi pembukuan, pos toko",
+      "en": "Cooca, software kasir, aplikasi pembukuan, postal store",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 683,
+      "key": "software_kasir_pembukuan_kalkulator_bisnis_ai",
+      "id": "Software kasir, pembukuan, kalkulator bisnis & AI Assistant gratis sel",
+      "en": "Software kasir, pembukuan, kalkulator business & AI Assistant free sel",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 700,
+      "key": "buka_halaman",
+      "id": "Buka Halaman",
+      "en": "Open Halaman",
+      "hits": [
+        "halaman"
+      ]
+    },
+    {
+      "line": 712,
+      "key": "testingsocial_menguji_kredensial",
+      "id": "testingSocial ? \\'Menguji Kredensial...\\' :",
+      "en": "testingSocial ? \\'Menguji Kredensial...\\' :",
+      "hits": [
+        "kredensial"
+      ]
+    },
+    {
+      "line": 719,
+      "key": "owner_bisnis_kasir",
+      "id": "Owner Bisnis & Kasir",
+      "en": "Owner Business & Kasir",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 729,
+      "key": "pencairan_saldo_merchant_upload_bukti_bayar",
+      "id": "Pencairan Saldo Merchant & Upload Bukti Bayar",
+      "en": "Pencairan Balance Merchant & Upload Bukti Pay",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 731,
+      "key": "preview_bukti_bayar",
+      "id": "Preview Bukti Bayar",
+      "en": "Preview Bukti Pay",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 733,
+      "key": "bukti_transfer_struk_bank",
+      "id": "Bukti Transfer Struk Bank",
+      "en": "Bukti Transfer Receipt Bank",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 734,
+      "key": "contoh_nomor_rekening_tidak_valid_atau",
+      "id": "Contoh: Nomor rekening tidak valid atau nama pemilik tidak sesuai...",
+      "en": "Example Number account tidak valid atau name pemilik tidak sesuai...",
+      "hits": [
+        "tidak"
+      ]
+    },
+    {
+      "line": 735,
+      "key": "tidak_ada_data_pengajuan_pencairan_saldo",
+      "id": "Tidak ada data pengajuan pencairan saldo yang sesuai filter.",
+      "en": "Tidak existing data pengajuan pencairan balance yang sesuai filter",
+      "hits": [
+        "tidak"
+      ]
+    },
+    {
+      "line": 736,
+      "key": "transfer_upload_bukti",
+      "id": "Transfer & Upload Bukti",
+      "en": "Transfer & Upload Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 737,
+      "key": "konfirmasi_selesai_kirim_bukti",
+      "id": "Konfirmasi Selesai & Kirim Bukti",
+      "en": "Confirm Complete & Send Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 739,
+      "key": "pencairan_saldo_bukti_transfer",
+      "id": "Pencairan Saldo & Bukti Transfer",
+      "en": "Pencairan Balance & Bukti Transfer",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 740,
+      "key": "upload_bukti_transfer_bank",
+      "id": "Upload Bukti Transfer Bank",
+      "en": "Upload Bukti Transfer Bank",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 741,
+      "key": "bukti_transfer_pencairan",
+      "id": "Bukti Transfer Pencairan",
+      "en": "Bukti Transfer Pencairan",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 746,
+      "key": "setujui_kirim_bukti",
+      "id": "Setujui & Kirim Bukti",
+      "en": "Approve & Send Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 747,
+      "key": "unduh_bukti",
+      "id": "Unduh Bukti",
+      "en": "Download Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 751,
+      "key": "bukti_transfer_bank_resmi",
+      "id": "Bukti Transfer Bank Resmi",
+      "en": "Bukti Transfer Bank Official",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 755,
+      "key": "lihat_detail_postingan",
+      "id": "Lihat Detail Postingan",
+      "en": "View Details Postingan",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 756,
+      "key": "edit_postingan",
+      "id": "Edit Postingan",
+      "en": "Edit Postingan",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 760,
+      "key": "belum_ada_postingan_resmi_platform",
+      "id": "Belum Ada Postingan Resmi Platform",
+      "en": "No Existing Postingan Official Platform",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 762,
+      "key": "belum_ada_komentar_yang_masuk_pada",
+      "id": "Belum ada komentar yang masuk pada",
+      "en": "No existing komentar yang masuk pada",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 768,
+      "key": "kotak_masuk_interaksi",
+      "id": "Kotak Masuk Interaksi",
+      "en": "Kotak Masuk Interaksi",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 773,
+      "key": "buka_kotak_masuk_baru",
+      "id": "Buka Kotak Masuk Baru",
+      "en": "Open Kotak Masuk Baru",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 782,
+      "key": "riwayat_postingan_resmi_platform",
+      "id": "Riwayat Postingan Resmi Platform",
+      "en": "History Postingan Official Platform",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 786,
+      "key": "buat_postingan_resmi_cooca",
+      "id": "Buat Postingan Resmi Cooca",
+      "en": "Create Postingan Official Cooca",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 787,
+      "key": "edit_konten_postingan",
+      "id": "Edit Konten Postingan",
+      "en": "Edit Konten Postingan",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 788,
+      "key": "detail_postingan_platform",
+      "id": "Detail Postingan Platform",
+      "en": "Details Postingan Platform",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 792,
+      "key": "transaksi_bukti_pembayaran",
+      "id": "Transaksi & Bukti Pembayaran",
+      "en": "Transaction & Bukti Payment",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 808,
+      "key": "contoh_mutasi_bca_terkonfirmasi_masuk",
+      "id": "Contoh: Mutasi BCA terkonfirmasi masuk",
+      "en": "Example Transfer BCA terkonfirmasi masuk",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 809,
+      "key": "contoh_nominal_transfer_kurang_rp_200",
+      "id": "Contoh: Nominal transfer kurang Rp 200, atau struk buram/tidak terbaca",
+      "en": "Example Nominal transfer kurang Rp 200, atau receipt buram/tidak terbaca",
+      "hits": [
+        "tidak"
+      ]
+    },
+    {
+      "line": 816,
+      "key": "konfirmasi_pengirim_bukti",
+      "id": "Konfirmasi Pengirim & Bukti",
+      "en": "Confirm Pengirim & Bukti",
+      "hits": [
+        "bukti"
+      ]
+    },
+    {
+      "line": 819,
+      "key": "laporan_arus_kas_bulanan",
+      "id": "laporan-arus-kas-bulanan",
+      "en": "laporan-arus-kas-bulanan",
+      "hits": [
+        "laporan",
+        "arus"
+      ]
+    },
+    {
+      "line": 821,
+      "key": "satu_poin_per_baris_contoh_10",
+      "id": "Satu poin per baris, contoh:&#10;Perhitungan otomatis kas masuk dan ke",
+      "en": "Satu points per baris, contoh:&#10;Perhitungan automatic cash masuk dan to",
+      "hits": [
+        "masuk"
+      ]
+    },
+    {
+      "line": 835,
+      "key": "tidak_ada_data",
+      "id": "Tidak ada data",
+      "en": "Tidak existing data",
+      "hits": [
+        "tidak"
+      ]
+    },
+    {
+      "line": 855,
+      "key": "belum_ada_catatan_log_pengingat",
+      "id": "Belum ada catatan log pengingat.",
+      "en": "No existing catatan log reminder",
+      "hits": [
+        "catatan"
+      ]
+    },
+    {
+      "line": 877,
+      "key": "tindakan_diperlukan_verifikasi_kepemilikan_nomor_di",
+      "id": "Tindakan Diperlukan: Verifikasi Kepemilikan Nomor di Meta WhatsApp Manager",
+      "en": "Tindakan Diperlukan: Verification Kepemilikan Number at Meta WhatsApp Manager",
+      "hits": [
+        "kepemilikan"
+      ]
+    }
+  ],
+  "ai.php": [
+    {
+      "line": 709,
+      "key": "keluar_dari_kontrol_agen_esc",
+      "id": "Keluar dari Kontrol Agen [ESC]",
+      "en": "Keluar dari Kontrol Agent [ESC]",
+      "hits": [
+        "keluar"
+      ]
+    },
+    {
+      "line": 715,
+      "key": "keluar_esc",
+      "id": "Keluar ESC",
+      "en": "Keluar ESC",
+      "hits": [
+        "keluar"
+      ]
+    },
+    {
+      "line": 724,
+      "key": "pilih_di_galeri_inspirasi_197_template",
+      "id": "Pilih di Galeri Inspirasi (197 Template)",
+      "en": "Select at Galeri Inspirasi (197 Template)",
+      "hits": [
+        "inspirasi"
+      ]
+    },
+    {
+      "line": 740,
+      "key": "buka_katalog_inspirasi",
+      "id": "Buka Katalog Inspirasi",
+      "en": "Open Katalog Inspirasi",
+      "hits": [
+        "inspirasi"
+      ]
+    },
+    {
+      "line": 759,
+      "key": "cari_gaya_visual_mood_pencahayaan_atau",
+      "id": "Cari gaya visual, mood, pencahayaan, atau kata kunci...",
+      "en": "Search gaya visual, mood, pencahayaan, atau word kunci...",
+      "hits": [
+        "kunci"
+      ]
+    },
+    {
+      "line": 763,
+      "key": "lihat_semua_inspirasi",
+      "id": "Lihat Semua Inspirasi",
+      "en": "View All Inspirasi",
+      "hits": [
+        "inspirasi"
+      ]
+    },
+    {
+      "line": 764,
+      "key": "tidak_ada_inspirasi_ditemukan",
+      "id": "Tidak Ada Inspirasi Ditemukan",
+      "en": "Tidak Existing Inspirasi Ditemukan",
+      "hits": [
+        "tidak",
+        "ditemukan",
+        "inspirasi"
+      ]
+    },
+    {
+      "line": 768,
+      "key": "kunjungi_halaman_asli",
+      "id": "Kunjungi Halaman Asli",
+      "en": "Kunjungi Halaman Asli",
+      "hits": [
+        "halaman"
+      ]
+    },
+    {
+      "line": 771,
+      "key": "larr_ganti_paket_metode",
+      "id": "&larr; Ganti Paket / Metode",
+      "en": "&larr; Ganti Package / Methods",
+      "hits": [
+        "ganti"
+      ]
+    },
+    {
+      "line": 772,
+      "key": "buka_halaman_tagihan_lengkap",
+      "id": "Buka Halaman Tagihan Lengkap",
+      "en": "Open Halaman Tagihan Full",
+      "hits": [
+        "halaman"
+      ]
+    }
+  ],
+  "community.php": [
+    {
+      "line": 32,
+      "key": "belum_ada_postingan_komunitas",
+      "id": "Belum ada postingan komunitas\\' }}",
+      "en": "No existing postingan komunitas\\' }}",
+      "hits": [
+        "postingan"
+      ]
+    },
+    {
+      "line": 37,
+      "key": "batas_kuota",
+      "id": "Batas & Kuota",
+      "en": "Batas & Kuota",
+      "hits": [
+        "batas",
+        "kuota"
+      ]
+    }
+  ],
+  "dashboard.php": [
+    {
+      "line": 127,
+      "key": "alert_low_stock_title",
+      "id": "Peringatan Stok Rendah",
+      "en": "Peringatan Stok Rendah",
+      "hits": [
+        "stok"
+      ]
+    }
+  ],
+  "finance.php": [
+    {
+      "line": 947,
+      "key": "bukti_transfer_settlement",
+      "id": "Bukti Transfer Settlement",
+      "en": "Bukti Transfer Settlement",
+      "hits": [
+        "bukti"
+      ]
+    }
+  ],
+  "hrm.php": [
+    {
+      "line": 887,
+      "key": "placeholder_email",
+      "id": "rian@bisnis.id",
+      "en": "rian@bisnis.id",
+      "hits": [
+        "bisnis"
+      ]
+    }
+  ],
+  "inventory.php": [
+    {
+      "line": 225,
+      "key": "inventori_stok_multi_gudang",
+      "id": "Inventori & Stok Multi-Gudang",
+      "en": "Inventori & Stock Multi-Gudang",
+      "hits": [
+        "gudang"
+      ]
+    },
+    {
+      "line": 232,
+      "key": "belum_ada_data_stok_tercatat_pada",
+      "id": "Belum ada data stok tercatat pada filter ini.",
+      "en": "No existing data stock tercatat pada filter ini.",
+      "hits": [
+        "tercatat"
+      ]
+    },
+    {
+      "line": 233,
+      "key": "belum_ada_data_stok_tercatat",
+      "id": "Belum ada data stok tercatat.",
+      "en": "No existing data stock tercatat.",
+      "hits": [
+        "tercatat"
+      ]
+    },
+    {
+      "line": 242,
+      "key": "belum_ada_transfer_stok_antar_outlet",
+      "id": "Belum ada transfer stok antar outlet tercatat.",
+      "en": "No existing transfer stock delivery outlet tercatat.",
+      "hits": [
+        "tercatat"
+      ]
+    }
+  ],
+  "landing_page.php": [
+    {
+      "line": 46,
+      "key": "preview_halaman_publik_bisnis",
+      "id": "Preview halaman publik bisnis",
+      "en": "Preview halaman publik business",
+      "hits": [
+        "halaman"
+      ]
+    },
+    {
+      "line": 49,
+      "key": "contoh_suasana_ruang_tunggu_dan_kasir",
+      "id": "Contoh: Suasana Ruang Tunggu dan Kasir",
+      "en": "Example Suasana Ruang Tunggu dan Kasir",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 65,
+      "key": "pengaturan_halaman_navigasi_dinamis_auto_hide",
+      "id": "Pengaturan Halaman & Navigasi Dinamis (Auto-Hide)",
+      "en": "Settings Halaman & Navigation Dinamis (Auto-Hide)",
+      "hits": [
+        "halaman"
+      ]
+    },
+    {
+      "line": 70,
+      "key": "5_sinkronisasi_produk_kasir_pos",
+      "id": "5. Sinkronisasi Produk Kasir POS",
+      "en": "5. Sinkronisasi Products Kasir Postal",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 74,
+      "key": "10_tata_letak_konten_footer",
+      "id": "10. Tata Letak & Konten Footer",
+      "en": "10. Tata Letak & Konten Footer",
+      "hits": [
+        "tata"
+      ]
+    },
+    {
+      "line": 78,
+      "key": "tuliskan_detail_penawaran_kode_voucher_belanja",
+      "id": "Tuliskan detail penawaran, kode voucher belanja, jam operasional promo",
+      "en": "Tuliskan details penawaran, code voucher shopping hours operating promo",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 85,
+      "key": "halaman_reservasi",
+      "id": "Halaman Reservasi",
+      "en": "Halaman Reservation",
+      "hits": [
+        "halaman"
+      ]
+    }
+  ],
+  "marketplace.php": [
+    {
+      "line": 417,
+      "key": "pesanan_masuk",
+      "id": "Pesanan Masuk",
+      "en": "Order Masuk",
+      "hits": [
+        "masuk"
+      ]
+    }
+  ],
+  "master_data.php": [
+    {
+      "line": 12,
+      "key": "belum_ada_konversi_satuan_bisnis_terdaftar",
+      "id": "Belum ada konversi satuan bisnis terdaftar.",
+      "en": "No existing konversi unit business terdaftar.",
+      "hits": [
+        "terdaftar"
+      ]
+    },
+    {
+      "line": 13,
+      "key": "belum_ada_konversi_satuan_terdaftar",
+      "id": "Belum ada konversi satuan terdaftar.",
+      "en": "No existing konversi unit terdaftar.",
+      "hits": [
+        "terdaftar"
+      ]
+    }
+  ],
+  "pos.php": [
+    {
+      "line": 1719,
+      "key": "cetak_salinan_ke_o_print_count",
+      "id": "Cetak Salinan (Ke-{{ $o->print_count }})",
+      "en": "Printing Salinan to $o->print_count }})",
+      "hits": [
+        "salinan"
+      ]
+    },
+    {
+      "line": 1720,
+      "key": "belum_ada_transaksi_pos_yang_tercatat",
+      "id": "Belum ada transaksi POS yang tercatat.",
+      "en": "No existing transaction Postal yang tercatat.",
+      "hits": [
+        "tercatat"
+      ]
+    },
+    {
+      "line": 1721,
+      "key": "buka_terminal_kasir",
+      "id": "Buka Terminal Kasir",
+      "en": "Open Terminal Kasir",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 1728,
+      "key": "belum_ada_riwayat_shift_kasir_tercatat",
+      "id": "Belum ada riwayat shift kasir tercatat.",
+      "en": "No existing history shift kasir tercatat.",
+      "hits": [
+        "tercatat",
+        "kasir"
+      ]
+    },
+    {
+      "line": 1730,
+      "key": "kas_masuk_kas_keluar",
+      "id": "Kas Masuk / Kas Keluar",
+      "en": "Cash Masuk / Cash Keluar",
+      "hits": [
+        "masuk",
+        "keluar"
+      ]
+    },
+    {
+      "line": 1733,
+      "key": "belum_ada_riwayat_servis_tercatat_untuk",
+      "id": "Belum ada riwayat servis tercatat untuk kendaraan ini.",
+      "en": "No existing history service tercatat untuk kendaraan ini.",
+      "hits": [
+        "tercatat"
+      ]
+    },
+    {
+      "line": 1737,
+      "key": "contoh_kasir_utama_printer_dapur_barista",
+      "id": "Contoh: Kasir Utama, Printer Dapur, Barista",
+      "en": "Example Kasir Utama, Printer Kitchen Barista",
+      "hits": [
+        "kasir"
+      ]
+    },
+    {
+      "line": 1739,
+      "key": "contoh_penukaran_uang_kembalian_pecahan_kecil",
+      "id": "Contoh: Penukaran uang kembalian pecahan kecil dengan kasir sebelah...",
+      "en": "Example Penukaran uang kembalian pecahan kecil dengan kasir sebelah...",
+      "hits": [
+        "kasir"
+      ]
+    }
+  ],
+  "products.php": [
+    {
+      "line": 446,
+      "key": "belum_ada_produk_aktif_yang_terdaftar",
+      "id": "Belum ada produk aktif yang terdaftar.",
+      "en": "No existing products aktif yang terdaftar.",
+      "hits": [
+        "terdaftar"
+      ]
+    }
+  ],
+  "sales.php": [
+    {
+      "line": 887,
+      "key": "edit_surat_penawaran",
+      "id": "Edit Surat Penawaran:",
+      "en": "Edit Letter Penawaran:",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 888,
+      "key": "ketentuan_garansi_sla_pengiriman_atau_batas",
+      "id": "Ketentuan garansi, SLA pengiriman, atau batas DP...",
+      "en": "Ketentuan warranty SLA delivery atau batas DP...",
+      "hits": [
+        "batas",
+        "ketentuan"
+      ]
+    },
+    {
+      "line": 889,
+      "key": "edit_penawaran",
+      "id": "Edit Penawaran:",
+      "en": "Edit Penawaran:",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 891,
+      "key": "edit_penawaran_2",
+      "id": "Edit Penawaran",
+      "en": "Edit Penawaran",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 892,
+      "key": "edit_penawaran_3",
+      "id": "Edit Penawaran",
+      "en": "Edit Penawaran",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 893,
+      "key": "hapus_penawaran",
+      "id": "Hapus Penawaran",
+      "en": "Delete Penawaran",
+      "hits": [
+        "penawaran"
+      ]
+    },
+    {
+      "line": 894,
+      "key": "edit_penawaran_4",
+      "id": "Edit Penawaran",
+      "en": "Edit Penawaran",
+      "hits": [
+        "penawaran"
+      ]
+    }
+  ],
+  "settings.php": [
+    {
+      "line": 410,
+      "key": "profil_ganti_kata_sandi",
+      "id": "Profil & Ganti Kata Sandi",
+      "en": "Profil & Ganti Word Password",
+      "hits": [
+        "ganti"
+      ]
+    },
+    {
+      "line": 418,
+      "key": "ganti_nomor_whatsapp",
+      "id": "Ganti Nomor WhatsApp",
+      "en": "Ganti Number WhatsApp",
+      "hits": [
+        "ganti"
+      ]
+    },
+    {
+      "line": 419,
+      "key": "ganti_alamat_email",
+      "id": "Ganti Alamat Email",
+      "en": "Ganti Address Email",
+      "hits": [
+        "ganti"
+      ]
+    },
+    {
+      "line": 426,
+      "key": "cari_parameter_fitur",
+      "id": "Cari parameter fitur...",
+      "en": "Search parameter fitur...",
+      "hits": [
+        "fitur"
+      ]
+    }
+  ],
+  "social_media.php": [
+    {
+      "line": 607,
+      "key": "atur_provider_ai_untuk_membuka_fitur",
+      "id": "Atur Provider AI untuk membuka fitur ini",
+      "en": "Atur Provider AI untuk membuka fitur ini",
+      "hits": [
+        "fitur"
+      ]
+    },
+    {
+      "line": 614,
+      "key": "belum_ada_percakapan_masuk_hubungkan_akun",
+      "id": "Belum ada percakapan masuk. Hubungkan akun Facebook Page atau Instagram Anda unt",
+      "en": "No existing percakapan masuk. Hubungkan akun Facebook Page atau Instagram Anda unt",
+      "hits": [
+        "masuk"
+      ]
+    }
+  ],
+  "storefront.php": [
+    {
+      "line": 1755,
+      "key": "stok_berkelanjutan",
+      "id": "Stok Berkelanjutan",
+      "en": "Stok Berkelanjutan",
+      "hits": [
+        "stok"
+      ]
+    }
+  ]
+}

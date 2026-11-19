@@ -124,7 +124,7 @@ return [
     'insights_sub'                     => 'Key indicators from transactions and stock for fast decision-making.',
     'alert_thin_margin_title'          => 'Margin Tipis Terdeteksi',
     'alert_thin_margin_desc'           => 'There are :count products with margins below 25%. Consider checking raw material costs or raising retail prices.',
-    'alert_low_stock_title'            => 'Peringatan Stok Rendah',
+    'alert_low_stock_title'            => 'Low Stock Alert',
     'alert_low_stock_desc'             => 'There are :count stock items running low. Place purchase orders soon to prevent stockouts.',
     'insights_empty'                   => 'No insights recorded for this period.',
     'insights_empty_note'              => 'Evaluation summaries will appear here once initial sales are recorded.',

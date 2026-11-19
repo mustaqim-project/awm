@@ -99,7 +99,7 @@
                     </div>
                 @empty
                     <div class="p-6 text-center text-black/40 dark:text-white/40 text-[12px]">
-                        {{ __('admin.belum_ada_akun_terdaftar_pada_kategori') }}
+                        {{ __('admin.belum_ada_akun_terdaftar_pada_kategori', ['category' => $typeTitle]) }}
                     </div>
                 @endforelse
             </div>

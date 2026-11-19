@@ -1,15 +1,15 @@
 {
     "summary": {
-        "total_dictionary_files": 66,
-        "total_registered_keys_id": 18335,
-        "total_registered_keys_en": 18335,
+        "total_dictionary_files": 68,
+        "total_registered_keys_id": 18508,
+        "total_registered_keys_en": 18508,
         "dictionary_missing_in_en": 0,
         "dictionary_missing_in_id": 0,
         "empty_translations_id": 0,
         "empty_translations_en": 0,
-        "placeholder_mismatches": 2,
-        "total_unique_codebase_static_keys": 10834,
-        "codebase_registered_in_both": 10799,
+        "placeholder_mismatches": 0,
+        "total_unique_codebase_static_keys": 11007,
+        "codebase_registered_in_both": 10972,
         "codebase_group_loaders": 34,
         "codebase_branch_access": 1,
         "codebase_missing_in_both": 0,
@@ -26,20 +26,7 @@
         "dictionary_missing_in_id": [],
         "empty_translations_id": [],
         "empty_translations_en": [],
-        "placeholder_mismatches": {
-            "admin.masuk_ke_workspace_business_name_untuk": {
-                "id_placeholders": [],
-                "en_placeholders": [
-                    "business"
-                ]
-            },
-            "admin.unduh_berkas_mentah_selectedfile": {
-                "id_placeholders": [],
-                "en_placeholders": [
-                    "file"
-                ]
-            }
-        }
+        "placeholder_mismatches": []
     },
     "dynamic_expressions": {
         "feedback.cat_": [
@@ -410,5 +397,5 @@
     "branch_access": [
         "finance.categories"
     ],
-    "execution_time_seconds": 19.148
+    "execution_time_seconds": 1.066
 }

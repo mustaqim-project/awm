@@ -581,7 +581,7 @@ Tandanya adalah ketika Anda tidak bisa menjawab dengan pasti berapa keuntungan b
             "search_intent": "Informational",
             "reading_time": "9 menit",
             "cover_image": "https://cooca.id/images/blog/cara-menghitung-diskon-bertingkat-agar-margin-tidak-boncos.jpg",
-            "published_at": "2026-11-19T09:00:00+07:00",
+            "published_at": "2026-11-19T08:00:00+07:00",
             "body": """# Cara Menghitung Diskon Bertingkat agar Margin Penjualan Aman
 
 Menjelang akhir tahun atau momen pesta belanja tanggal kembar, spanduk bertuliskan promo diskon 50% + 20% sering kali terpampang mencolok di etalase toko pakaian dan pusat perbelanjaan. Bagi konsumen awam, promosi ini kerap disalahartikan sebagai diskon total sebesar 70%. Yang sangat mengkhawatirkan, tidak sedikit pemilik toko pemula yang memiliki pemahaman keliru serupa sehingga salah menetapkan batas harga jual modal barang. Mengetahui cara menghitung diskon bertingkat secara presisi adalah keterampilan finansial wajib bagi pemilik toko retail agar program promosi cuci gudang berhasil mendongkrak omzet tanpa membuat margin keuntungan tergerus habis.
@@ -707,7 +707,7 @@ Tuliskan dua baris perhitungan terpisah pada nota penjualan: baris pertama menca
             "search_intent": "Informational",
             "reading_time": "9 menit",
             "cover_image": "https://cooca.id/images/blog/cara-menyusun-laporan-arus-kas-metode-langsung-toko-jasa.jpg",
-            "published_at": "2026-11-19T09:15:00+07:00",
+            "published_at": "2026-11-19T08:00:00+07:00",
             "body": """# Laporan Arus Kas Metode Langsung untuk Toko Kecil dan Jasa
 
 Banyak pemilik toko kelontong, salon kecantikan, kafe, dan bengkel jasa merasa bingung saat akuntan atau laporan keuangan mereka menunjukkan angka laba bersih puluhan juta rupiah, namun saat hendak membayar gaji karyawan atau sewa toko, uang tunai di rekening bank justru tidak tersedia. Paradoks ini terjadi karena laporan laba rugi mencatat pendapatan berdasarkan akrual (transaksi penjualan dicatat meskipun uangnya belum dibayar pembeli). Menyusun laporan arus kas metode langsung adalah solusi paling jernih dan praktis bagi pemilik usaha kecil untuk melacak ke mana sebenarnya uang tunai mengalir dan memastikan bisnis memiliki daya tahan likuiditas nyata.
@@ -845,7 +845,7 @@ Sebaiknya diperiksa setiap minggu untuk memantau kecukupan kas operasional, dan 
             "search_intent": "Informational",
             "reading_time": "9 menit",
             "cover_image": "https://cooca.id/images/blog/cara-menghitung-rasio-biaya-operasional-usaha-ritel-umkm.jpg",
-            "published_at": "2026-11-19T09:30:00+07:00",
+            "published_at": "2026-11-19T08:00:00+07:00",
             "evergreen_score": 5,
             "problem_statement": "Biaya listrik, sewa ruko, plastik pembungkus, dan perlengkapan toko membengkak hingga memakan lebih dari 35% omzet tanpa disadari oleh pengusaha toko.",
             "cooca_solution": "Fitur budgeting Cooca memetakan Opex ratio toko secara real-time dan memberikan peringatan dini jika pengeluaran operasional melampaui batas anggaran.",
@@ -982,7 +982,7 @@ Ya, seluruh biaya promosi media sosial, cetak brosur, dan iklan berbayar dimasuk
             "search_intent": "Informational",
             "reading_time": "9 menit",
             "cover_image": "https://cooca.id/images/blog/cara-menghitung-target-laba-bersih-usaha-biaya-hidup-pemilik.jpg",
-            "published_at": "2026-11-19T09:45:00+07:00",
+            "published_at": "2026-11-19T08:00:00+07:00",
             "evergreen_score": 5,
             "problem_statement": "Pengusaha sering membuka toko tanpa target finansial jelas, sehingga bingung apakah keuntungan bisnis sudah cukup untuk mencukupi kebutuhan keluarga dan ekspansi.",
             "cooca_solution": "Cooca menyediakan kalkulator target finansial bisnis yang menghubungkan kebutuhan gaji pemilik toko dengan target omzet harian pada modul kasir.",

@@ -1752,7 +1752,7 @@ return [
     'pengiriman_aman' => 'Delivery Safe',
     'kategori_pasokan_grosir' => 'Category Supplies Wholesale',
     'harga_bertingkat' => 'Prices Bertingkat',
-    'stok_berkelanjutan' => 'Stok Berkelanjutan',
+    'stok_berkelanjutan' => 'Sustainable Stock',
     'katalog_harga_grosir' => 'Katalog Prices Wholesale',
     'gudang_pusat' => 'Warehouse Center',
     'kontak_agen_toko' => 'Contact Agent & Store',

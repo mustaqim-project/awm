@@ -1,7 +1,90 @@
 @extends('layouts.app', [
     'title' => 'SDM & Penggajian (HRM)',
     'headerTitle' => 'Manajemen SDM & Penggajian',
-    'headerSubtitle' => 'Kelola profil staf, biometrik wajah anti-spoofing, kepesertaan BPJS, kasbon, geofencing lokasi, dan penggajian otomatis.'
+    'headerSubtitle' => 'Kelola profil staf, biometrik wajah anti-spoofing, kepesertaan BPJS, kasbon, geofencing lokasi, dan penggajian otomatis.',
+    'activeModuleKey' => 'hrm',
+    'secondaryNavTabs' => [
+        [
+            'key' => 'employees',
+            'label' => __('hrm.tab_employees'),
+            'url' => route('hrm.index', ['tab' => 'employees']),
+            'is_active' => request('tab', $tab ?? 'employees') === 'employees',
+            'icon' => 'users-2',
+            'badge' => (string) $totalStaff,
+        ],
+        [
+            'key' => 'attendance',
+            'label' => __('hrm.tab_attendance'),
+            'url' => route('hrm.index', ['tab' => 'attendance']),
+            'is_active' => request('tab') === 'attendance',
+            'icon' => 'scan-face',
+            'badge' => (string) $todayPresentCount,
+        ],
+        [
+            'key' => 'corrections',
+            'label' => __('hrm.tab_corrections'),
+            'url' => route('hrm.index', ['tab' => 'corrections']),
+            'is_active' => request('tab') === 'corrections',
+            'icon' => 'file-check-2',
+            'badge' => $pendingCorrectionsCount > 0 ? (string) $pendingCorrectionsCount : ($corrections->total() > 0 ? (string) $corrections->total() : null),
+        ],
+        [
+            'key' => 'locations',
+            'label' => __('hrm.tab_locations'),
+            'url' => route('hrm.index', ['tab' => 'locations']),
+            'is_active' => request('tab') === 'locations',
+            'icon' => 'map-pin',
+            'badge' => (string) $allLocations->count(),
+        ],
+        [
+            'key' => 'shifts',
+            'label' => __('hrm.tab_shifts'),
+            'url' => route('hrm.index', ['tab' => 'shifts']),
+            'is_active' => request('tab') === 'shifts',
+            'icon' => 'clock',
+            'badge' => (string) $workShifts->count(),
+        ],
+        [
+            'key' => 'schedules',
+            'label' => __('hrm.tab_schedules'),
+            'url' => route('hrm.index', ['tab' => 'schedules']),
+            'is_active' => request('tab') === 'schedules',
+            'icon' => 'calendar',
+            'badge' => (string) $employeeSchedules->total(),
+        ],
+        [
+            'key' => 'payrolls',
+            'label' => __('hrm.tab_payrolls'),
+            'url' => route('hrm.index', ['tab' => 'payrolls']),
+            'is_active' => request('tab') === 'payrolls',
+            'icon' => 'receipt',
+            'badge' => (string) $payrolls->total(),
+        ],
+        [
+            'key' => 'loans',
+            'label' => __('hrm.tab_loans'),
+            'url' => route('hrm.index', ['tab' => 'loans']),
+            'is_active' => request('tab') === 'loans',
+            'icon' => 'credit-card',
+            'badge' => (string) $loans->total(),
+        ],
+        [
+            'key' => 'portal',
+            'label' => 'Portal Presensi Mandiri',
+            'url' => route('portal'),
+            'is_active' => false,
+            'icon' => 'smartphone',
+            'badge' => null,
+        ],
+        [
+            'key' => 'simulator',
+            'label' => __('hrm.tax_simulator_pph21'),
+            'url' => route('tax.index'),
+            'is_active' => false,
+            'icon' => 'scale',
+            'badge' => null,
+        ],
+    ]
 ])
 
 @section('content')
@@ -23,6 +106,80 @@
         const url = new URL(window.location.href);
         url.searchParams.set('tab', tabName);
         window.history.replaceState({}, '', url.toString());
+        if (window.__coocaSyncSecondarySidebar) {
+            window.__coocaSyncSecondarySidebar(tabName);
+        }
+        this.$nextTick(() => {
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        });
+    },
+
+    init() {
+        const syncSidebar = (tabKey) => {
+            document.querySelectorAll('#secondary-sidebar a[data-subnav-key]').forEach(el => {
+                const isCurrent = el.getAttribute('data-subnav-key') === tabKey;
+                el.setAttribute('data-active-secondary-nav', isCurrent ? 'true' : 'false');
+                el.setAttribute('aria-current', isCurrent ? 'page' : 'false');
+                if (isCurrent) {
+                    el.className = 'secondary-subnav-link group w-full flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] transition-all active:scale-[0.98] bg-[#007AFF] text-white font-semibold shadow-sm shadow-[#007AFF]/25 is-active';
+                    const iconBox = el.querySelector('.subnav-icon-box');
+                    if (iconBox) {
+                        iconBox.className = 'subnav-icon-box w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 bg-white/20 text-white';
+                        const icon = iconBox.querySelector('i, svg');
+                        if (icon) {
+                            icon.classList.remove('text-[#007AFF]', 'dark:text-[#0A84FF]');
+                            icon.classList.add('text-white');
+                        }
+                    }
+                    const badge = el.querySelector('.subnav-badge');
+                    if (badge) {
+                        badge.className = 'subnav-badge px-2 py-0.5 rounded-full text-[10px] font-bold tabular-nums shrink-0 bg-white/20 text-white';
+                    }
+                    const chevron = el.querySelector('.subnav-active-chevron');
+                    if (chevron) {
+                        chevron.classList.remove('hidden');
+                    }
+                } else {
+                    el.className = 'secondary-subnav-link group w-full flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] transition-all active:scale-[0.98] text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white font-medium';
+                    const iconBox = el.querySelector('.subnav-icon-box');
+                    if (iconBox) {
+                        iconBox.className = 'subnav-icon-box w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105';
+                        const icon = iconBox.querySelector('i, svg');
+                        if (icon) {
+                            icon.classList.add('text-[#007AFF]', 'dark:text-[#0A84FF]');
+                            icon.classList.remove('text-white');
+                        }
+                    }
+                    const badge = el.querySelector('.subnav-badge');
+                    if (badge) {
+                        badge.className = 'subnav-badge px-2 py-0.5 rounded-full text-[10px] font-bold tabular-nums shrink-0 bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]';
+                    }
+                    const chevron = el.querySelector('.subnav-active-chevron');
+                    if (chevron) {
+                        chevron.classList.add('hidden');
+                    }
+                }
+            });
+        };
+
+        window.__coocaSyncSecondarySidebar = syncSidebar;
+
+        window.__coocaSubnavClick = (key, url, event) => {
+            const validTabs = ['employees', 'attendance', 'corrections', 'locations', 'shifts', 'schedules', 'payrolls', 'loans'];
+            if (!validTabs.includes(key)) {
+                return false;
+            }
+            this.setTab(key);
+            return true;
+        };
+
+        window.addEventListener('popstate', () => {
+            const params = new URLSearchParams(window.location.search);
+            const tabFromUrl = params.get('tab') || 'employees';
+            if (this.activeTab !== tabFromUrl) {
+                this.setTab(tabFromUrl);
+            }
+        });
     },
 
     formatCurrency(num) {
@@ -859,193 +1016,274 @@
     </div>
 
     <!-- ======================================================== -->
-    <!-- 2. SEGMENTED NAVIGATION CONTROLS                         -->
+    <!-- 2. SECTION HEADER & ACTION TOOLBAR (APPLE HIG / LINEAR)   -->
     <!-- ======================================================== -->
-    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-black/10 dark:border-white/10 pb-3">
-        <div class="inline-flex p-1.5 rounded-[14px] bg-black/[0.05] dark:bg-white/[0.08] backdrop-blur-md overflow-x-auto max-w-full">
-            <button type="button" @click="setTab('employees')"
-                :class="activeTab === 'employees' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="users" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>{{ __('hrm.tab_employees') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $totalStaff }}</span>
-            </button>
-
-            <button type="button" @click="setTab('attendance')"
-                :class="activeTab === 'attendance' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="scan-face" class="w-4 h-4 text-[#34C759]"></i>
-                <span>{{ __('hrm.tab_attendance') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-[#34C759]/15 text-[#34C759] font-bold">{{ $todayPresentCount }}</span>
-            </button>
-
-            <button type="button" @click="setTab('corrections')"
-                :class="activeTab === 'corrections' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="file-check-2" class="w-4 h-4 text-[#FF9500]"></i>
-                <span>{{ __('hrm.tab_corrections') }}</span>
-                @if($pendingCorrectionsCount > 0)
-                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-[#FF3B30] text-white font-bold animate-pulse">{{ $pendingCorrectionsCount }}</span>
-                @else
-                    <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $corrections->total() }}</span>
-                @endif
-            </button>
-
-            <button type="button" @click="setTab('locations')"
-                :class="activeTab === 'locations' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="map-pin" class="w-4 h-4 text-[#FF2D55]"></i>
-                <span>{{ __('hrm.tab_locations') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $allLocations->count() }}</span>
-            </button>
-
-            <button type="button" @click="setTab('shifts')"
-                :class="activeTab === 'shifts' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="clock" class="w-4 h-4 text-[#30B0C7]"></i>
-                <span>{{ __('hrm.tab_shifts') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $workShifts->count() }}</span>
-            </button>
-
-            <button type="button" @click="setTab('schedules')"
-                :class="activeTab === 'schedules' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="calendar" class="w-4 h-4 text-[#5856D6]"></i>
-                <span>{{ __('hrm.tab_schedules') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $employeeSchedules->total() }}</span>
-            </button>
-
-            <button type="button" @click="setTab('payrolls')"
-                :class="activeTab === 'payrolls' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="receipt" class="w-4 h-4 text-[#AF52DE]"></i>
-                <span>{{ __('hrm.tab_payrolls') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $payrolls->total() }}</span>
-            </button>
-
-            <button type="button" @click="setTab('loans')"
-                :class="activeTab === 'loans' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs font-bold' : 'text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white font-semibold'"
-                class="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[10px] text-[13px] transition-all flex items-center gap-2 cursor-pointer whitespace-nowrap active:scale-[0.98]">
-                <i data-lucide="credit-card" class="w-4 h-4 text-[#007AFF]"></i>
-                <span>{{ __('hrm.tab_loans') }}</span>
-                <span class="px-1.5 py-0.2 rounded-full text-[10.5px] bg-black/5 dark:bg-white/10 font-bold">{{ $loans->total() }}</span>
-            </button>
+    <div class="space-y-3 border-b border-black/10 dark:border-white/10 pb-4">
+        {{-- Mobile Subnav Selector (< lg viewports where desktop secondary sidebar is hidden) --}}
+        <div class="lg:hidden w-full flex items-center justify-between gap-2.5 p-2 rounded-[14px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-xs">
+            <label for="mobile-hrm-tab-select" class="text-[12px] font-bold text-black/60 dark:text-white/60 flex items-center gap-1.5 shrink-0 pl-1">
+                <i data-lucide="layers" class="w-4 h-4 text-[#007AFF]"></i>
+                <span class="hidden sm:inline">Navigasi:</span>
+            </label>
+            <select id="mobile-hrm-tab-select" @change="setTab($event.target.value)" :value="activeTab"
+                class="flex-1 bg-black/[0.04] dark:bg-white/[0.06] text-black dark:text-white font-semibold text-[13px] rounded-[10px] px-3 py-2 border-0 focus:ring-2 focus:ring-[#007AFF] outline-hidden cursor-pointer">
+                <option value="employees">👥 {{ __('hrm.tab_employees') }} ({{ $totalStaff }})</option>
+                <option value="attendance">📷 {{ __('hrm.tab_attendance') }} ({{ $todayPresentCount }})</option>
+                <option value="corrections">📝 {{ __('hrm.tab_corrections') }} ({{ $pendingCorrectionsCount > 0 ? $pendingCorrectionsCount . ' ' . __('hrm.needs_review') : $corrections->total() }})</option>
+                <option value="locations">📍 {{ __('hrm.tab_locations') }} ({{ $allLocations->count() }})</option>
+                <option value="shifts">⏰ {{ __('hrm.tab_shifts') }} ({{ $workShifts->count() }})</option>
+                <option value="schedules">📅 {{ __('hrm.tab_schedules') }} ({{ $employeeSchedules->total() }})</option>
+                <option value="payrolls">🧾 {{ __('hrm.tab_payrolls') }} ({{ $payrolls->total() }})</option>
+                <option value="loans">💳 {{ __('hrm.tab_loans') }} ({{ $loans->total() }})</option>
+            </select>
         </div>
 
-        <div class="flex items-center gap-2 w-full lg:w-auto justify-between sm:justify-end flex-wrap sm:flex-nowrap">
-            <!-- Link ke Simulator Pajak -->
-            <a href="{{ route('tax.index') }}"
-                class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98]">
-                <i data-lucide="scale" class="w-4 h-4 text-[#AF52DE]"></i>
-                <span>{{ __('hrm.tax_simulator_pph21') }}</span>
-            </a>
+        {{-- Desktop Section Title & Dynamic Context Action Bar --}}
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            {{-- Contextual Section Title & Description --}}
+            <div class="flex items-center gap-3 min-w-0">
+                <template x-if="activeTab === 'employees'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                            <i data-lucide="users-2" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_employees') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]">{{ $totalStaff }} Staf</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Kelola profil anggota tim, struktur upah, status kepegawaian, dan biometrik wajah.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <!-- Action CTA Dinamis sesuai Tab -->
-            <template x-if="activeTab === 'employees'">
-                <div class="flex items-center gap-2">
-                    @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                    <a href="{{ route('hrm.employees.export') }}"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="{{ __('hrm.title_export_employees_excel') }}">
-                        <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span class="hidden sm:inline">{{ __('hrm.btn_export_excel') }}</span>
-                    </a>
-                    <button type="button" @click="showImportEmployeeModal = true"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="{{ __('hrm.title_import_employees_excel') }}">
-                        <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
-                        <span class="hidden sm:inline">{{ __('hrm.btn_import_employees') }}</span>
-                    </button>
-                    <button type="button" @click="showAddEmployeeModal = true"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-[0.98] cursor-pointer">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>{{ __('hrm.btn_add_employee') }}</span>
-                    </button>
-                    @endif
-                </div>
-            </template>
+                <template x-if="activeTab === 'attendance'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#34C759]/10 text-[#34C759] dark:bg-[#34C759]/20 dark:text-[#30D158] flex items-center justify-center shrink-0">
+                            <i data-lucide="scan-face" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_attendance') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#34C759]/10 text-[#34C759] dark:bg-[#30D158]/20 dark:text-[#30D158]">{{ $todayPresentCount }} Hadir Hari Ini</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Log presensi wajah harian, status kehadiran, jam clock-in/out, dan kepatuhan radius.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'attendance'">
-                <div class="flex items-center gap-2">
-                    @if (\App\Support\Context::hasPermission('hrm.attendance.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                    <a href="{{ route('hrm.attendance.export') }}"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="{{ __('hrm.title_export_attendance_excel') }}">
-                        <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
-                        <span class="hidden sm:inline">{{ __('hrm.btn_export_attendance') }}</span>
-                    </a>
-                    <button type="button" @click="showImportAttendanceModal = true"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-3.5 rounded-[12px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[13px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
-                        title="{{ __('hrm.title_import_fingerprint') }}">
-                        <i data-lucide="fingerprint" class="w-4 h-4 text-[#34C759]"></i>
-                        <span class="hidden sm:inline">{{ __('hrm.btn_import_fingerprint') }}</span>
-                    </button>
-                    @endif
-                    <button type="button" @click="startFaceAttendance('in')"
-                        class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
-                        <i data-lucide="scan-face" class="w-4 h-4"></i>
-                        <span>{{ __('hrm.btn_face_attendance') }}</span>
-                    </button>
-                </div>
-            </template>
+                <template x-if="activeTab === 'corrections'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#FF9500]/10 text-[#FF9500] dark:bg-[#FF9500]/20 dark:text-[#FF9F0A] flex items-center justify-center shrink-0">
+                            <i data-lucide="file-check-2" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_corrections') }}</h2>
+                                @if($pendingCorrectionsCount > 0)
+                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FF3B30] text-white animate-pulse">{{ $pendingCorrectionsCount }} Perlu Review</span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-black/5 dark:bg-white/10 text-black/70 dark:text-white/70">{{ $corrections->total() }} Pengajuan</span>
+                                @endif
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Daftar permohonan koreksi jam presensi yang diajukan staf beserta alasan dan bukti foto.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'corrections'">
-                <button type="button" @click="showAddCorrectionModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_apply_correction') }}</span>
-                </button>
-            </template>
+                <template x-if="activeTab === 'locations'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#FF2D55]/10 text-[#FF2D55] dark:bg-[#FF2D55]/20 dark:text-[#FF375F] flex items-center justify-center shrink-0">
+                            <i data-lucide="map-pin" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_locations') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#FF2D55]/10 text-[#FF2D55] dark:bg-[#FF375F]/20 dark:text-[#FF375F]">{{ $allLocations->count() }} Titik Presensi</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Pengaturan titik koordinat kantor/cabang dan radius geofence GPS untuk clock-in staf.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'locations'">
-                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                <button type="button" @click="showAddLocationModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#FF2D55] hover:bg-[#E02648] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,45,85,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_add_location') }}</span>
-                </button>
-                @endif
-            </template>
+                <template x-if="activeTab === 'shifts'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#30B0C7]/10 text-[#30B0C7] dark:bg-[#30B0C7]/20 dark:text-[#40C8E0] flex items-center justify-center shrink-0">
+                            <i data-lucide="clock" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_shifts') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#30B0C7]/10 text-[#30B0C7] dark:bg-[#40C8E0]/20 dark:text-[#40C8E0]">{{ $workShifts->count() }} Shift Terdaftar</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Atur jam kerja masuk, jam pulang, toleransi keterlambatan, dan jam istirahat staf.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'shifts'">
-                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                <button type="button" @click="showAddShiftModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#30B0C7] hover:bg-[#2591a3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(48,176,199,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_add_shift') }}</span>
-                </button>
-                @endif
-            </template>
+                <template x-if="activeTab === 'schedules'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#5856D6]/10 text-[#5856D6] dark:bg-[#5856D6]/20 dark:text-[#5E5CE6] flex items-center justify-center shrink-0">
+                            <i data-lucide="calendar" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_schedules') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#5856D6]/10 text-[#5856D6] dark:bg-[#5E5CE6]/20 dark:text-[#5E5CE6]">{{ $employeeSchedules->total() }} Roster</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Penugasan shift kerja harian dan roster bergilir per karyawan atau divisi.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'schedules'">
-                @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                <button type="button" @click="showAddScheduleModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(88,86,214,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_set_roster_schedule') }}</span>
-                </button>
-                @endif
-            </template>
+                <template x-if="activeTab === 'payrolls'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#AF52DE]/20 dark:text-[#BF5AF2] flex items-center justify-center shrink-0">
+                            <i data-lucide="receipt" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_payrolls') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#AF52DE]/10 text-[#AF52DE] dark:bg-[#BF5AF2]/20 dark:text-[#BF5AF2]">{{ $payrolls->total() }} Periode</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Kalkulasi penggajian bulanan otomatis, potongan BPJS, PPh 21 TER, dan slip gaji digital.</p>
+                        </div>
+                    </div>
+                </template>
 
-            <template x-if="activeTab === 'payrolls'">
-                @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
-                <a href="{{ route('hrm.payrolls.create') }}"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_create_payroll') }}</span>
+                <template x-if="activeTab === 'loans'">
+                    <div class="flex items-center gap-2.5">
+                        <span class="w-8 h-8 rounded-[10px] bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] flex items-center justify-center shrink-0">
+                            <i data-lucide="credit-card" class="w-4.5 h-4.5" stroke-width="2"></i>
+                        </span>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h2 class="text-[17px] font-bold text-black dark:text-white tracking-tight">{{ __('hrm.tab_loans') }}</h2>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#0A84FF]/20 dark:text-[#0A84FF]">{{ $loans->total() }} Kasbon</span>
+                            </div>
+                            <p class="text-[12px] text-black/55 dark:text-white/55 hidden sm:block">Pencatatan pinjaman darurat karyawan dan skema potong gaji otomatis.</p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            {{-- Action Toolbar: Simulator Link + Dynamic Primary CTA --}}
+            <div class="flex items-center gap-2 justify-end flex-wrap sm:flex-nowrap shrink-0">
+                <!-- Simulator Pajak Button -->
+                <a href="{{ route('tax.index') }}"
+                    class="h-10 px-3 rounded-[11px] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98]">
+                    <i data-lucide="scale" class="w-4 h-4 text-[#AF52DE]"></i>
+                    <span class="hidden md:inline">{{ __('hrm.tax_simulator_pph21') }}</span>
+                    <span class="md:hidden">PPh 21</span>
                 </a>
-                @endif
-            </template>
 
-            <template x-if="activeTab === 'loans'">
-                @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
-                <button type="button" @click="showAddLoanModal = true"
-                    class="h-11 sm:h-10 min-h-[44px] sm:min-h-0 px-4 rounded-[12px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer">
-                    <i data-lucide="plus" class="w-4 h-4"></i>
-                    <span>{{ __('hrm.btn_record_loan') }}</span>
-                </button>
-                @endif
-            </template>
+                <!-- Dynamic Actions per Active Tab -->
+                <template x-if="activeTab === 'employees'">
+                    <div class="flex items-center gap-2">
+                        @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                        <a href="{{ route('hrm.employees.export') }}"
+                            class="h-10 px-3 rounded-[11px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                            title="{{ __('hrm.title_export_employees_excel') }}">
+                            <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                            <span class="hidden xl:inline">{{ __('hrm.btn_export_excel') }}</span>
+                        </a>
+                        <button type="button" @click="showImportEmployeeModal = true"
+                            class="h-10 px-3 rounded-[11px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                            title="{{ __('hrm.title_import_employees_excel') }}">
+                            <i data-lucide="upload" class="w-4 h-4 text-[#007AFF]"></i>
+                            <span class="hidden xl:inline">{{ __('hrm.btn_import_employees') }}</span>
+                        </button>
+                        <button type="button" @click="showAddEmployeeModal = true"
+                            class="h-10 px-3.5 rounded-[11px] bg-[#007AFF] hover:bg-[#0071E3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(0,122,255,0.3)] transition active:scale-[0.98] cursor-pointer">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>{{ __('hrm.btn_add_employee') }}</span>
+                        </button>
+                        @endif
+                    </div>
+                </template>
+
+                <template x-if="activeTab === 'attendance'">
+                    <div class="flex items-center gap-2">
+                        @if (\App\Support\Context::hasPermission('hrm.attendance.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                        <a href="{{ route('hrm.attendance.export') }}"
+                            class="h-10 px-3 rounded-[11px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                            title="{{ __('hrm.title_export_attendance_excel') }}">
+                            <i data-lucide="download" class="w-4 h-4 text-emerald-600 dark:text-emerald-400"></i>
+                            <span class="hidden xl:inline">{{ __('hrm.btn_export_attendance') }}</span>
+                        </a>
+                        <button type="button" @click="showImportAttendanceModal = true"
+                            class="h-10 px-3 rounded-[11px] bg-black/[0.05] dark:bg-white/[0.08] hover:bg-black/[0.08] dark:hover:bg-white/[0.12] text-black dark:text-white text-[12.5px] font-semibold flex items-center gap-2 transition active:scale-[0.98] cursor-pointer"
+                            title="{{ __('hrm.title_import_fingerprint') }}">
+                            <i data-lucide="fingerprint" class="w-4 h-4 text-[#34C759]"></i>
+                            <span class="hidden xl:inline">{{ __('hrm.btn_import_fingerprint') }}</span>
+                        </button>
+                        @endif
+                        <button type="button" @click="startFaceAttendance('in')"
+                            class="h-10 px-3.5 rounded-[11px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
+                            <i data-lucide="scan-face" class="w-4 h-4"></i>
+                            <span>{{ __('hrm.btn_face_attendance') }}</span>
+                        </button>
+                    </div>
+                </template>
+
+                <template x-if="activeTab === 'corrections'">
+                    <button type="button" @click="showAddCorrectionModal = true"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_apply_correction') }}</span>
+                    </button>
+                </template>
+
+                <template x-if="activeTab === 'locations'">
+                    @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                    <button type="button" @click="showAddLocationModal = true"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#FF2D55] hover:bg-[#E02648] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,45,85,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_add_location') }}</span>
+                    </button>
+                    @endif
+                </template>
+
+                <template x-if="activeTab === 'shifts'">
+                    @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                    <button type="button" @click="showAddShiftModal = true"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#30B0C7] hover:bg-[#2591a3] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(48,176,199,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_add_shift') }}</span>
+                    </button>
+                    @endif
+                </template>
+
+                <template x-if="activeTab === 'schedules'">
+                    @if (\App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                    <button type="button" @click="showAddScheduleModal = true"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#5856D6] hover:bg-[#4745B8] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(88,86,214,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_set_roster_schedule') }}</span>
+                    </button>
+                    @endif
+                </template>
+
+                <template x-if="activeTab === 'payrolls'">
+                    @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('users.manage'))
+                    <a href="{{ route('hrm.payrolls.create') }}"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#34C759] hover:bg-[#2FB34F] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(52,199,89,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_create_payroll') }}</span>
+                    </a>
+                    @endif
+                </template>
+
+                <template x-if="activeTab === 'loans'">
+                    @if (\App\Support\Context::hasPermission('hrm.payroll.manage') || \App\Support\Context::hasPermission('hrm.manage') || \App\Support\Context::hasPermission('users.manage'))
+                    <button type="button" @click="showAddLoanModal = true"
+                        class="h-10 px-3.5 rounded-[11px] bg-[#FF9500] hover:bg-[#E08500] text-white text-[13px] font-bold flex items-center gap-2 shadow-[0_2px_8px_rgba(255,149,0,0.3)] transition active:scale-[0.98] cursor-pointer">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                        <span>{{ __('hrm.btn_record_loan') }}</span>
+                    </button>
+                    @endif
+                </template>
+            </div>
         </div>
     </div>
 

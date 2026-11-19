@@ -54,14 +54,15 @@
                     data-subnav-key="{{ $tab['key'] }}"
                     data-active-secondary-nav="{{ $tab['is_active'] ? 'true' : 'false' }}"
                     aria-current="{{ $tab['is_active'] ? 'page' : 'false' }}"
-                    class="group w-full flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] transition-all active:scale-[0.98] {{ $tab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-sm shadow-[#007AFF]/25' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white font-medium' }}">
+                    @click="if (window.__coocaSubnavClick && window.__coocaSubnavClick('{{ $tab['key'] }}', '{{ $tab['url'] }}', $event)) { $event.preventDefault(); }"
+                    class="secondary-subnav-link group w-full flex items-center justify-between px-2.5 h-[38px] rounded-[11px] text-[13px] transition-all active:scale-[0.98] {{ $tab['is_active'] ? 'bg-[#007AFF] text-white font-semibold shadow-sm shadow-[#007AFF]/25 is-active' : 'text-[#1C1C1E]/80 dark:text-[#F2F2F7]/80 hover:bg-black/[0.04] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white font-medium' }}">
                     <div class="flex items-center gap-2.5 min-w-0 flex-1">
                         @if (!empty($tab['icon']))
-                            <span class="w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
+                            <span class="subnav-icon-box w-7 h-7 rounded-[8px] flex items-center justify-center shrink-0 transition-all duration-150 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }}">
                                 <i data-lucide="{{ $tab['icon'] }}" class="w-4 h-4 shrink-0 {{ $tab['is_active'] ? 'text-white' : 'text-[#007AFF] dark:text-[#0A84FF]' }}" stroke-width="2"></i>
                             </span>
                         @else
-                            <span class="w-6 h-6 rounded-[7px] flex items-center justify-center text-[11px] font-mono shrink-0 {{ $tab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] font-semibold group-hover:bg-[#007AFF]/15' }}">
+                            <span class="subnav-index-box w-6 h-6 rounded-[7px] flex items-center justify-center text-[11px] font-mono shrink-0 {{ $tab['is_active'] ? 'bg-white/25 text-white font-bold' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] font-semibold group-hover:bg-[#007AFF]/15' }}">
                                 {{ $index + 1 }}
                             </span>
                         @endif
@@ -69,13 +70,11 @@
                     </div>
                     <div class="flex items-center gap-1.5 shrink-0 ml-1.5">
                         @if (!empty($tab['badge']))
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tabular-nums shrink-0 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]' }}">
+                            <span class="subnav-badge px-2 py-0.5 rounded-full text-[10px] font-bold tabular-nums shrink-0 {{ $tab['is_active'] ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF]' }}">
                                 {{ $tab['badge'] }}
                             </span>
                         @endif
-                        @if ($tab['is_active'])
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-white shrink-0 group-hover:translate-x-0.5 transition-transform" stroke-width="2"></i>
-                        @endif
+                        <i data-lucide="chevron-right" class="subnav-active-chevron w-4 h-4 text-white shrink-0 group-hover:translate-x-0.5 transition-transform {{ $tab['is_active'] ? '' : 'hidden' }}" stroke-width="2"></i>
                     </div>
                 </a>
             @endforeach

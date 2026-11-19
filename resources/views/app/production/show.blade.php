@@ -1,5 +1,5 @@
 @extends('layouts.app', [
-    'title' => 'Detail SPKP #' . $productionOrder->order_number,
+    'title' => __('production.page_title_show', ['order_number' => $productionOrder->order_number]),
 ])
 
 @section('content')
@@ -31,25 +31,25 @@
     <!-- 1. TOOLBAR / PAGE HEADER                              -->
     <!-- ===================================================== -->
     <x-module-header
-        title="SPKP #{{ $productionOrder->order_number }}"
-        subtitle="{{ $productionOrder->product?->name }} • Dibuat oleh {{ $productionOrder->creator?->name ?? 'Sistem' }} pada {{ $productionOrder->created_at?->translatedFormat('d F Y H:i') }}"
+        :title="__('production.title_show', ['order_number' => $productionOrder->order_number])"
+        :subtitle="__('production.subtitle_show', ['product' => $productionOrder->product?->name, 'creator' => $productionOrder->creator?->name ?? 'Sistem', 'date' => $productionOrder->created_at?->translatedFormat('d F Y H:i')])"
         :breadcrumbs="[
-            ['label' => 'Dashboard', 'url' => route('dashboard')],
-            ['label' => 'Perintah Produksi', 'url' => route('production.index')],
+            ['label' => __('common.dashboard'), 'url' => route('dashboard')],
+            ['label' => __('production.nav_breadcrumb_production'), 'url' => route('production.index')],
             ['label' => $productionOrder->order_number, 'url' => null],
         ]">
         <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <a href="{{ route('production.index') }}"
                 class="min-h-[44px] sm:min-h-0 h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-black/80 dark:text-white/80 bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] border border-black/[0.06] dark:border-white/[0.08] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shrink-0">
                 <i data-lucide="arrow-left" class="w-4 h-4 text-black/60 dark:text-white/60 shrink-0"></i>
-                <span>Kembali</span>
+                <span>{{ __('production.btn_back') }}</span>
             </a>
 
             @if($productionOrder->canIssueMaterials() && \App\Support\Context::hasPermission('production.execute'))
                 <button type="button" @click="showIssueModal = true"
                     class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#FF9500] hover:bg-[#E08500] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-[#FF9500]/25 shrink-0">
                     <i data-lucide="send" class="w-4 h-4"></i>
-                    <span>Rilis Bahan Baku (Issue WIP)</span>
+                    <span>{{ __('production.btn_issue_materials') }}</span>
                 </button>
             @endif
 
@@ -57,7 +57,7 @@
                 <button type="button" @click="showCompleteModal = true"
                     class="min-h-[44px] sm:min-h-0 h-10 px-4 rounded-[12px] text-[13px] font-semibold text-white bg-[#34C759] hover:bg-[#30B34E] active:scale-[0.98] transition flex items-center justify-center gap-1.5 shadow-sm shadow-[#34C759]/25 shrink-0">
                     <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    <span>Catat Hasil Selesai (Yield)</span>
+                    <span>{{ __('production.btn_complete_yield') }}</span>
                 </button>
             @endif
 
@@ -65,7 +65,7 @@
                 <button type="button" @click="showCancelModal = true"
                     class="min-h-[44px] sm:min-h-0 h-10 px-3.5 rounded-[12px] text-[13px] font-medium text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.98] transition flex items-center justify-center gap-1.5 shrink-0">
                     <i data-lucide="x" class="w-4 h-4"></i>
-                    <span>Batalkan SPKP</span>
+                    <span>{{ __('production.btn_cancel_order') }}</span>
                 </button>
             @endif
         </div>
@@ -82,8 +82,8 @@
                     1
                 </div>
                 <div>
-                    <span class="font-bold text-black dark:text-white block">Draf SPKP</span>
-                    <span class="text-[11px] text-black/50 dark:text-white/50">BOM & Target Terkunci</span>
+                    <span class="font-bold text-black dark:text-white block">{{ __('production.stepper_step_1_title') }}</span>
+                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ __('production.stepper_step_1_desc') }}</span>
                 </div>
             </div>
 
@@ -93,8 +93,8 @@
                     2
                 </div>
                 <div>
-                    <span class="font-bold text-black dark:text-white block">Bahan Baku (WIP)</span>
-                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isInProgress() || $productionOrder->isCompleted() ? 'Dikeluarkan ke Pabrik' : 'Belum Dikeluarkan' }}</span>
+                    <span class="font-bold text-black dark:text-white block">{{ __('production.stepper_step_2_title') }}</span>
+                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isInProgress() || $productionOrder->isCompleted() ? __('production.stepper_step_2_issued') : __('production.stepper_step_2_pending') }}</span>
                 </div>
             </div>
 
@@ -104,8 +104,8 @@
                     3
                 </div>
                 <div>
-                    <span class="font-bold text-black dark:text-white block">Pengerjaan Pabrik</span>
-                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isCompleted() ? 'Produksi Selesai' : ($productionOrder->isInProgress() ? 'Sedang Berlangsung' : 'Menunggu Rilis') }}</span>
+                    <span class="font-bold text-black dark:text-white block">{{ __('production.stepper_step_3_title') }}</span>
+                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isCompleted() ? __('production.stepper_step_3_completed') : ($productionOrder->isInProgress() ? __('production.stepper_step_3_in_progress') : __('production.stepper_step_3_waiting')) }}</span>
                 </div>
             </div>
 
@@ -115,8 +115,8 @@
                     4
                 </div>
                 <div>
-                    <span class="font-bold text-black dark:text-white block">Barang Jadi (FG)</span>
-                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isCompleted() ? '+ ' . number_format($productionOrder->actual_quantity, 0, ',', '.') . ' ' . ($productionOrder->product?->outputUnit?->name ?? 'pcs') . ' Masuk Gudang' : 'Belum Selesai' }}</span>
+                    <span class="font-bold text-black dark:text-white block">{{ __('production.stepper_step_4_title') }}</span>
+                    <span class="text-[11px] text-black/50 dark:text-white/50">{{ $productionOrder->isCompleted() ? __('production.stepper_step_4_received', ['qty' => number_format($productionOrder->actual_quantity, 0, ',', '.'), 'unit' => ($productionOrder->product?->outputUnit?->name ?? 'pcs')]) : __('production.stepper_step_4_pending') }}</span>
                 </div>
             </div>
         </div>
@@ -128,47 +128,47 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Target Output -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">Target Rencana Output</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">{{ __('production.highlight_planned_output') }}</span>
             <span class="text-2xl font-bold tabular-nums text-black dark:text-white mt-1 block">
                 {{ number_format((float) $productionOrder->planned_quantity, 0, ',', '.') }}
                 <span class="text-[13px] font-normal text-black/45 dark:text-white/45">{{ $productionOrder->product?->outputUnit?->name ?? 'pcs' }}</span>
             </span>
             <span class="text-[11px] text-black/40 dark:text-white/40 mt-1 block">
-                Mulai: {{ \Carbon\Carbon::parse($productionOrder->planned_start_date)->translatedFormat('d M Y') }}
+                {{ __('production.highlight_start_date', ['date' => \Carbon\Carbon::parse($productionOrder->planned_start_date)->translatedFormat('d M Y')]) }}
             </span>
         </div>
 
         <!-- Output Aktual & Yield -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">Output Aktual Barang Jadi</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">{{ __('production.highlight_actual_output') }}</span>
             <span class="text-2xl font-bold tabular-nums mt-1 block {{ $productionOrder->isCompleted() ? 'text-[#34C759]' : 'text-black/40 dark:text-white/40' }}">
                 {{ $productionOrder->isCompleted() ? number_format((float) $productionOrder->actual_quantity, 0, ',', '.') : '0' }}
                 <span class="text-[13px] font-normal text-black/45 dark:text-white/45">{{ $productionOrder->product?->outputUnit?->name ?? 'pcs' }}</span>
             </span>
             <span class="text-[11px] mt-1 block {{ (float)$productionOrder->rejected_quantity > 0 ? 'text-[#FF3B30] font-medium' : 'text-black/40 dark:text-white/40' }}">
-                Reject: {{ number_format((float) $productionOrder->rejected_quantity, 0, ',', '.') }} unit • Yield {{ $productionOrder->yield_percentage }}%
+                {{ __('production.highlight_reject_yield', ['rejected' => number_format((float) $productionOrder->rejected_quantity, 0, ',', '.'), 'yield' => $productionOrder->yield_percentage]) }}
             </span>
         </div>
 
         <!-- HPP Pabrik Final per Unit -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">HPP Pabrik / Unit</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">{{ __('production.highlight_final_hpp') }}</span>
             <span class="text-2xl font-bold tabular-nums text-[#007AFF] mt-1 block">
                 {{ $business->currency_symbol }} {{ number_format((float) $productionOrder->unit_cost_hpp, 0, ',', '.') }}
             </span>
             <span class="text-[11px] text-black/40 dark:text-white/40 mt-1 block">
-                Harga Jual: {{ $business->currency_symbol }} {{ number_format((float) ($productionOrder->product?->selling_price ?? 0), 0, ',', '.') }}
+                {{ __('production.highlight_selling_price', ['price' => $business->currency_symbol . ' ' . number_format((float) ($productionOrder->product?->selling_price ?? 0), 0, ',', '.')]) }}
             </span>
         </div>
 
         <!-- Total Biaya Batch -->
         <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">Total Biaya Batch Produksi</span>
+            <span class="text-[12px] font-medium text-black/50 dark:text-white/50 block">{{ __('production.highlight_total_batch_cost') }}</span>
             <span class="text-2xl font-bold tabular-nums text-black dark:text-white mt-1 block">
                 {{ $business->currency_symbol }} {{ number_format((float) $productionOrder->total_production_cost, 0, ',', '.') }}
             </span>
             <span class="text-[11px] text-black/40 dark:text-white/40 mt-1 block">
-                Bahan: {{ number_format((float) $productionOrder->total_material_cost, 0, ',', '.') }} • Upah: {{ number_format((float) $productionOrder->total_labor_cost, 0, ',', '.') }}
+                {{ __('production.highlight_cost_breakdown', ['material' => number_format((float) $productionOrder->total_material_cost, 0, ',', '.'), 'labor' => number_format((float) $productionOrder->total_labor_cost, 0, ',', '.')]) }}
             </span>
         </div>
     </div>
@@ -177,22 +177,22 @@
     <!-- 4. RINCIAN LOKASI GUDANG & BATCH                      -->
     <!-- ===================================================== -->
     <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-        <h3 class="text-[14px] font-bold text-black dark:text-white mb-3">Parameter Gudang & Traceability Batch</h3>
+        <h3 class="text-[14px] font-bold text-black dark:text-white mb-3">{{ __('production.traceability_title') }}</h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-[12.5px]">
             <div>
-                <span class="text-black/45 dark:text-white/45 block text-[11px]">Gudang Asal Bahan Baku:</span>
+                <span class="text-black/45 dark:text-white/45 block text-[11px]">{{ __('production.traceability_source') }}</span>
                 <span class="font-semibold text-black dark:text-white">{{ $productionOrder->sourceLocation?->name ?? 'Gudang Utama' }}</span>
             </div>
             <div>
-                <span class="text-black/45 dark:text-white/45 block text-[11px]">Gudang Tujuan Barang Jadi:</span>
+                <span class="text-black/45 dark:text-white/45 block text-[11px]">{{ __('production.traceability_target') }}</span>
                 <span class="font-semibold text-[#007AFF]">{{ $productionOrder->targetLocation?->name ?? 'Gudang Utama' }}</span>
             </div>
             <div>
-                <span class="text-black/45 dark:text-white/45 block text-[11px]">Nomor Batch / Lot:</span>
+                <span class="text-black/45 dark:text-white/45 block text-[11px]">{{ __('production.traceability_batch') }}</span>
                 <span class="font-mono font-semibold text-black dark:text-white">{{ $productionOrder->batch_number ?: '-' }}</span>
             </div>
             <div>
-                <span class="text-black/45 dark:text-white/45 block text-[11px]">Kedaluwarsa Produk:</span>
+                <span class="text-black/45 dark:text-white/45 block text-[11px]">{{ __('production.traceability_expiry') }}</span>
                 <span class="font-medium text-black dark:text-white">{{ $productionOrder->expiry_date ? \Carbon\Carbon::parse($productionOrder->expiry_date)->translatedFormat('d M Y') : '-' }}</span>
             </div>
         </div>
@@ -204,11 +204,11 @@
     <div class="rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/[0.06] dark:border-white/[0.08] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
         <div class="p-4 sm:p-5 border-b border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between">
             <div>
-                <h3 class="text-[15px] font-bold text-black dark:text-white">Alokasi Bahan Baku Produksi</h3>
-                <p class="text-[12px] text-black/50 dark:text-white/50">Kebutuhan standar BOM vs Bahan yang dikeluarkan ke lantai produksi (WIP).</p>
+                <h3 class="text-[15px] font-bold text-black dark:text-white">{{ __('production.table_materials_allocation') }}</h3>
+                <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('production.table_materials_allocation_sub') }}</p>
             </div>
             <span class="text-[12px] font-bold text-[#007AFF] tabular-nums">
-                {{ $productionOrder->items->count() }} Macam Bahan
+                {{ __('production.count_materials', ['count' => $productionOrder->items->count()]) }}
             </span>
         </div>
 
@@ -216,11 +216,11 @@
             <table class="w-full text-left text-[13px] min-w-[750px]">
                 <thead class="bg-black/[0.02] dark:bg-white/[0.02] border-b border-black/[0.06] dark:border-white/[0.08] text-[11px] font-semibold text-black/45 dark:text-white/45 uppercase tracking-wider">
                     <tr>
-                        <th class="py-3 px-4">Nama Bahan Baku</th>
-                        <th class="py-3 px-4 text-right">Rencana Standar (+Waste)</th>
-                        <th class="py-3 px-4 text-right">Pengeluaran Aktual (WIP)</th>
-                        <th class="py-3 px-4 text-right">Harga Beli Satuan</th>
-                        <th class="py-3 px-4 text-right">Subtotal Biaya</th>
+                        <th class="py-3 px-4">{{ __('production.col_mat_name') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('production.col_mat_planned') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('production.col_mat_actual') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('production.col_mat_purchase_price') }}</th>
+                        <th class="py-3 px-4 text-right">{{ __('production.col_mat_total') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
@@ -228,7 +228,7 @@
                         <tr class="hover:bg-black/[0.015] dark:hover:bg-white/[0.015] transition-colors">
                             <td class="py-3.5 px-4">
                                 <div class="font-medium text-black dark:text-white">
-                                    {{ $item->material?->name ?? 'Bahan Dihapus' }}
+                                    {{ $item->material?->name ?? __('production.material_deleted') }}
                                 </div>
                                 <div class="text-[11px] text-black/45 dark:text-white/45 font-mono">
                                     {{ $item->material?->code ?? '-' }}
@@ -246,7 +246,7 @@
                                         {{ number_format((float) $item->actual_consumed_quantity, 2, ',', '.') }}
                                     </span>
                                 @else
-                                    <span class="text-black/30 dark:text-white/30 font-normal">Belum Rilis</span>
+                                    <span class="text-black/30 dark:text-white/30 font-normal">{{ __('production.material_not_released') }}</span>
                                 @endif
                                 <span class="text-[11px] font-normal text-black/45 dark:text-white/45">{{ $item->unit?->name ?? $item->material?->unit?->name ?? 'Unit' }}</span>
                             </td>
@@ -277,23 +277,23 @@
                         <i data-lucide="send" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Rilis Bahan Baku ke Pabrik</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Pengeluaran fisik stok bahan dari gudang ke proses produksi (WIP).</p>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('production.modal_issue_title') }}</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('production.modal_issue_desc') }}</p>
                     </div>
                 </div>
 
                 <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
-                    Sistem akan memotong kuantitas bahan baku pada gudang <strong>{{ $productionOrder->sourceLocation?->name }}</strong> dan mencatat mutasi <code>production_issue</code> ke kartu stok secara otomatis.
+                    {{ __('production.modal_issue_warning', ['warehouse' => $productionOrder->sourceLocation?->name]) }}
                 </p>
 
                 <form method="POST" action="{{ route('production.issue-materials', $productionOrder) }}" class="space-y-4 pt-2">
                     @csrf
                     <div class="flex items-center justify-end gap-2.5">
                         <button type="button" @click="showIssueModal = false" class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.05]">
-                            Batal
+                            {{ __('production.btn_cancel') }}
                         </button>
                         <button type="submit" class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF9500] hover:bg-[#E08500] shadow-md shadow-[#FF9500]/25">
-                            Ya, Keluarkan Bahan Baku
+                            {{ __('production.modal_issue_btn_confirm') }}
                         </button>
                     </div>
                 </form>
@@ -313,8 +313,8 @@
                         <i data-lucide="check-circle" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Penyelesaian Hasil Produksi (Yield)</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Catat kuantitas produk bagus, produk reject, dan masukkan stok barang jadi.</p>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('production.modal_complete_title') }}</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('production.modal_complete_desc') }}</p>
                     </div>
                 </div>
 
@@ -323,19 +323,19 @@
 
                     <div>
                         <label class="block text-[12.5px] font-semibold text-black/70 dark:text-white/70 mb-1">
-                            Jumlah Produk Jadi Berkualitas Baik (Good Units) <span class="text-[#FF3B30]">*</span>
+                            {{ __('production.modal_complete_label_actual') }} <span class="text-[#FF3B30]">*</span>
                         </label>
                         <input type="number" step="any" min="0" name="actual_quantity" x-model="actualQty" required
                             class="w-full h-11 px-3.5 rounded-[12px] text-[15px] font-bold tabular-nums bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white">
                         <p class="text-[11px] text-black/40 dark:text-white/40 mt-1">
-                            Stok ini akan langsung ditambahkan ke gudang <strong>{{ $productionOrder->targetLocation?->name }}</strong>.
+                            {!! __('production.modal_complete_hint_stock', ['warehouse' => '<strong>' . e($productionOrder->targetLocation?->name) . '</strong>']) !!}
                         </p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
-                                Jumlah Cacat / Reject (Scrap)
+                                {{ __('production.modal_complete_label_rejected') }}
                             </label>
                             <input type="number" step="any" min="0" name="rejected_quantity" x-model="rejectedQty"
                                 class="w-full h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white">
@@ -343,7 +343,7 @@
 
                         <div>
                             <label class="block text-[12px] font-medium text-black/70 dark:text-white/70 mb-1">
-                                Nomor Batch Hasil
+                                {{ __('production.modal_complete_label_batch') }}
                             </label>
                             <input type="text" name="batch_number" value="{{ $productionOrder->batch_number ?: 'BATCH-' . now()->format('Ymd') }}"
                                 class="w-full h-10 px-3.5 rounded-[12px] text-[13px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.08] dark:border-white/[0.1] text-black dark:text-white">
@@ -351,7 +351,7 @@
                     </div>
 
                     <div class="p-3.5 rounded-[14px] bg-[#34C759]/10 border border-[#34C759]/20 text-[12.5px]">
-                        <span class="text-black/60 dark:text-white/60 block">HPP Pabrik Aktual Hasil Selesai:</span>
+                        <span class="text-black/60 dark:text-white/60 block">{{ __('production.modal_complete_banner_hpp') }}</span>
                         <span class="text-lg font-bold text-[#34C759] tabular-nums" x-text="formatRupiah(hppPerUnit) + ' / unit'"></span>
                     </div>
 
@@ -359,16 +359,16 @@
                         <input type="checkbox" id="updateHpp" name="update_product_base_cost" value="1" checked
                             class="w-4 h-4 rounded text-[#007AFF] focus:ring-[#007AFF]">
                         <label for="updateHpp" class="text-[12px] text-black/80 dark:text-white/80 select-none">
-                            Perbarui modal dasar katalog (HPP produk master) dengan kalkulasi pabrik ini
+                            {{ __('production.modal_complete_checkbox_update') }}
                         </label>
                     </div>
 
                     <div class="flex items-center justify-end gap-2.5 pt-2">
                         <button type="button" @click="showCompleteModal = false" class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.05]">
-                            Batal
+                            {{ __('production.btn_cancel') }}
                         </button>
                         <button type="submit" class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#34C759] hover:bg-[#30B34E] shadow-md shadow-[#34C759]/25">
-                            Selesaikan & Masukkan ke Stok
+                            {{ __('production.modal_complete_btn_submit') }}
                         </button>
                     </div>
                 </form>
@@ -388,23 +388,23 @@
                         <i data-lucide="alert-triangle" class="w-5 h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-[16px] font-bold text-black dark:text-white">Batalkan Perintah Produksi</h3>
-                        <p class="text-[12px] text-black/50 dark:text-white/50">Apakah Anda yakin ingin membatalkan SPKP ini?</p>
+                        <h3 class="text-[16px] font-bold text-black dark:text-white">{{ __('production.modal_cancel_title') }}</h3>
+                        <p class="text-[12px] text-black/50 dark:text-white/50">{{ __('production.modal_cancel_desc') }}</p>
                     </div>
                 </div>
 
                 <p class="text-[13px] text-black/70 dark:text-white/70 leading-relaxed">
-                    Jika bahan baku telah dikeluarkan ke pabrik, sistem akan mengembalikan stok bahan baku tersebut kembali ke gudang asal (<code>production_return</code>).
+                    {{ __('production.modal_cancel_warning') }}
                 </p>
 
                 <form method="POST" action="{{ route('production.cancel', $productionOrder) }}" class="space-y-4 pt-1">
                     @csrf
                     <div class="flex items-center justify-end gap-2.5">
                         <button type="button" @click="showCancelModal = false" class="h-10 px-4 rounded-[12px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/[0.05]">
-                            Tidak
+                            {{ __('production.modal_cancel_btn_no') }}
                         </button>
                         <button type="submit" class="h-10 px-5 rounded-[12px] text-[13px] font-bold text-white bg-[#FF3B30] hover:bg-[#D93025]">
-                            Ya, Batalkan SPKP
+                            {{ __('production.modal_cancel_btn_confirm') }}
                         </button>
                     </div>
                 </form>

@@ -124,7 +124,7 @@
             @if(Auth::guard('admin')->user()?->hasPermission('admin.error_logs.download'))
             <a href="{{ route('admin.error-logs.download', ['file' => $selectedFile]) }}"
                 class="h-10 px-3.5 rounded-[12px] bg-[#007AFF]/10 hover:bg-[#007AFF]/20 text-[#007AFF] dark:text-[#0A84FF] text-[12.5px] font-bold flex items-center gap-1.5 transition-all active:scale-[0.98]"
-                title="{{ __('admin.unduh_berkas_mentah_selectedfile') }}">
+                title="{{ __('admin.unduh_berkas_mentah_selectedfile', ['file' => $selectedFile]) }}">
                 <i data-lucide="download" class="w-4 h-4" stroke-width="2"></i>
                 <span>{{ __('admin.unduh_log') }}</span>
             </a>

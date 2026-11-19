@@ -414,7 +414,7 @@ return [
     'belum_ada_akun_shopee_yang_terhubung' => 'No existing akun Shopee yang terhubung.',
     'belum_ada_akun_tiktok_shop_atau' => 'No existing akun TikTok Shop atau Tokopedia yang terhubung.',
     'atur_produk_stok' => 'Atur Products & Stock',
-    'pesanan_masuk' => 'Order Masuk',
+    'pesanan_masuk' => 'Incoming Orders',
     'produk_tiktok' => 'Products TikTok',
     'produk_tokopedia' => 'Products Tokopedia',
     '1_shopee_indonesia' => '1. Shopee Indonesia',

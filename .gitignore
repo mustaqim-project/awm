@@ -67,6 +67,7 @@ lerna-debug.log*
 .baileys_auth/
 whatsapp-web.js/
 /wa-server.zip
+*.zip
 
 # --- Laravel Storage & Cache ---
 /storage/app/*

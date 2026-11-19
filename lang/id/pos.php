@@ -1716,7 +1716,7 @@ return [
     'workshop_spk_title' => 'SPK Bengkel & Kendaraan',
     'workshop_vehicle' => 'Bengkel & Kendaraan',
     'yes_regenerate_qr' => 'Ya, Perbarui QR',
-    'cetak_salinan_ke_o_print_count' => 'Cetak Salinan (Ke-{{ $o->print_count }})',
+    'cetak_salinan_ke_o_print_count' => 'Cetak Salinan (Ke-:count)',
     'belum_ada_transaksi_pos_yang_tercatat' => 'Belum ada transaksi POS yang tercatat.',
     'buka_terminal_kasir' => 'Buka Terminal Kasir',
     'struk' => 'Struk',

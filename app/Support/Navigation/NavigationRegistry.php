@@ -823,27 +823,82 @@ final class NavigationRegistry
                 'module'            => null,
                 'tabs'              => [
                     [
-                        'key'           => 'portal',
-                        'label'         => 'Portal & Presensi',
+                        'key'           => 'employees',
+                        'label'         => 'Karyawan & Profil Gaji',
+                        'icon'          => 'users-2',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'employees'],
+                        'active_routes' => ['hrm.index', 'hrm.create', 'hrm.edit', 'hrm.show'],
+                    ],
+                    [
+                        'key'           => 'attendance',
+                        'label'         => 'Presensi Wajah & Log',
+                        'icon'          => 'scan-face',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'attendance'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'corrections',
+                        'label'         => 'Pengajuan Koreksi',
+                        'icon'          => 'file-check-2',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'corrections'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'locations',
+                        'label'         => 'Lokasi & Radius Presensi',
+                        'icon'          => 'map-pin',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'locations'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'shifts',
+                        'label'         => 'Shift Kerja',
                         'icon'          => 'clock',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'shifts'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'schedules',
+                        'label'         => 'Jadwal & Roster',
+                        'icon'          => 'calendar',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'schedules'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'payrolls',
+                        'label'         => 'Penggajian (Payroll)',
+                        'icon'          => 'receipt',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'payrolls'],
+                        'active_routes' => ['hrm.payrolls.*', 'hrm.payslips.*', 'hrm.index'],
+                    ],
+                    [
+                        'key'           => 'loans',
+                        'label'         => 'Kasbon Karyawan',
+                        'icon'          => 'credit-card',
+                        'route'         => 'hrm.index',
+                        'params'        => ['tab' => 'loans'],
+                        'active_routes' => ['hrm.index'],
+                    ],
+                    [
+                        'key'           => 'portal',
+                        'label'         => 'Portal Presensi Mandiri',
+                        'icon'          => 'smartphone',
                         'route'         => 'portal',
                         'active_routes' => ['portal*'],
                     ],
                     [
-                        'key'           => 'employees',
-                        'label'         => 'Karyawan & Staf SDM',
-                        'icon'          => 'users-2',
-                        'route'         => 'hrm.index',
-                        'active_routes' => ['hrm.index', 'hrm.create', 'hrm.edit', 'hrm.show'],
-                        'permission'    => 'users.manage',
-                    ],
-                    [
-                        'key'           => 'payrolls',
-                        'label'         => 'Penggajian & Payroll',
-                        'icon'          => 'badge-percent',
-                        'route'         => 'hrm.payrolls.index',
-                        'active_routes' => ['hrm.payrolls.*'],
-                        'permission'    => 'users.manage',
+                        'key'           => 'simulator',
+                        'label'         => 'Simulator Pajak PPh 21',
+                        'icon'          => 'scale',
+                        'route'         => 'tax.index',
+                        'active_routes' => ['tax*'],
                     ],
                 ],
             ],
@@ -1200,6 +1255,11 @@ final class NavigationRegistry
 
         foreach ($activeRoutes as $pattern) {
             if (request()->routeIs($pattern)) {
+                // If this is a dedicated sub-route pattern (e.g. hrm.payrolls.*, hrm.payslips.*) and not the multi-tab index
+                if (! empty($tabConfig['params']) && ! request()->routeIs('hrm.index') && ! request()->routeIs('units.index')) {
+                    return true;
+                }
+
                 // If specific params are required, check query params
                 if (! empty($tabConfig['params'])) {
                     $matches = true;
@@ -1207,6 +1267,10 @@ final class NavigationRegistry
                         $queryVal = request()->query($k);
                         // Default fallback: if from is not passed, treat as materials
                         if ($k === 'from' && empty($queryVal) && $v === 'materials') {
+                            continue;
+                        }
+                        // Default fallback: if tab is not passed on hrm.index, treat as employees
+                        if ($k === 'tab' && empty($queryVal) && $v === 'employees' && request()->routeIs('hrm.index')) {
                             continue;
                         }
                         if ($queryVal !== (string) $v) {

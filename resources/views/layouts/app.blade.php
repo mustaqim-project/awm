@@ -1504,8 +1504,8 @@
                     return saved === 'true';
                 }
             } catch (e) {}
-            // Khusus desktop: jangan otomatis tampil saat render JS / fresh session (default collapsed)
-            return true;
+            // On desktop (>= 1024px), expand secondary sidebar by default so module subnav is immediately accessible
+            return typeof window !== 'undefined' ? window.innerWidth < 1024 : false;
         })(),
         toggleSidebarCollapse() {
             this.sidebarCollapsed = !this.sidebarCollapsed;
@@ -1551,7 +1551,7 @@
         $navContext = \App\Support\Navigation\NavigationRegistry::getContextForCurrentRoute();
         $activeModuleKey = $activeModuleKey ?? $navContext['module_key'] ?? $activeModule ?? $module ?? null;
         $activeModuleDef = !empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getModule($activeModuleKey) : null;
-        $secondaryNavTabs = !empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getTabsForModule($activeModuleKey) : [];
+        $secondaryNavTabs = $secondaryNavTabs ?? (!empty($activeModuleKey) ? \App\Support\Navigation\NavigationRegistry::getTabsForModule($activeModuleKey) : []);
         $hasSecondaryNav = !empty($secondaryNavTabs);
     @endphp
     <div class="min-h-full flex flex-col lg:flex-row">

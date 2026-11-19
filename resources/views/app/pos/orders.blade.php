@@ -384,7 +384,7 @@
                 <button type="button"
                     @click="confirmReprint('{{ route('pos.receipt', $o->id) }}?reprint=1', {{ (int)$o->print_count }})"
                     class="h-8 px-2.5 rounded-[8px] text-[12px] font-semibold text-[#B25E00] dark:text-[#FF9F0A] bg-[#FF9500]/15 flex items-center gap-1"
-                    title="{{ __('pos.cetak_salinan_ke_o_print_count') }}">
+                    title="{{ __('pos.cetak_salinan_ke_o_print_count', ['count' => $o->print_count]) }}">
                     <span>Re-Print ({{ $o->print_count }}x)</span>
                 </button>
                 @else

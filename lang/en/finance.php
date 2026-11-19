@@ -944,7 +944,7 @@ return [
     'pajak_retribusi_pajak_daer' => 'Tax & Retribusi Tax daer',
     'kasbon_karyawan_talangan_kas' => 'Kasbon Employee Talangan cash',
     'lain_lain_others_wajib_isi' => 'Lain-lain / Others Wajib isi',
-    'bukti_transfer_settlement' => 'Bukti Transfer Settlement',
+    'bukti_transfer_settlement' => 'Settlement Transfer Proof',
     'parameter_biaya_penjualan' => 'Parameter Biaya & Sales',
     'cat_salaries' => 'Salaries & Wages',
     'cat_salaries_desc' => 'Staff salary, daily wages',
