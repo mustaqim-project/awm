@@ -68,6 +68,16 @@
         marketplaceCategories: {{ Js::from($marketplaceCategories ?? []) }},
         isPharmacy: {{ $isPharmacy ? 'true' : 'false' }},
         isServiceSector: {{ $isServiceSector ? 'true' : 'false' }},
+        selectedCostingMethod: 'recipe_bom',
+        costingMethodDescriptions: {
+            recipe_bom: @js(__('products.method_recipe_bom_desc')),
+            simple: @js(__('products.method_simple_desc')),
+            job: @js(__('products.method_job_desc')),
+            process: @js(__('products.method_process_desc')),
+            abc: @js(__('products.method_abc_desc')),
+            service: @js(__('products.method_service_desc')),
+            retail: @js(__('products.method_retail_desc')),
+        },
         newIsMarketplaceEnabled: false,
         newSelectedCategoryId: '',
         getInheritedMarketplaceCategory(catId) {
@@ -1667,7 +1677,7 @@
                                             <label
                                                 class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_costing_method') }} <span class="text-[#FF3B30]">*</span></label>
                                             <x-searchable-select>
-                                                <select name="costing_method" required
+                                                <select name="costing_method" required x-model="selectedCostingMethod"
                                                 class="sr-only">
                                                 @if ($business && $business->isModuleEnabled('recipe_bom'))
                                                 <option value="recipe_bom">{{ __('products.method_recipe_bom') }}</option>
@@ -1680,6 +1690,15 @@
                                                 <option value="retail">{{ __('products.method_retail') }}</option>
                                                 </select>
                                             </x-searchable-select>
+                                            <div x-show="selectedCostingMethod && costingMethodDescriptions[selectedCostingMethod]" 
+                                                 x-transition
+                                                 class="mt-2 p-2.5 rounded-xl bg-[#007AFF]/[0.06] dark:bg-[#007AFF]/[0.1] border border-[#007AFF]/20 flex items-start gap-2 text-xs">
+                                                <svg class="w-4 h-4 text-[#007AFF] shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-4m0-4h.01"></path>
+                                                </svg>
+                                                <p class="text-black/75 dark:text-white/75 leading-relaxed text-[11.5px]" x-text="costingMethodDescriptions[selectedCostingMethod]"></p>
+                                            </div>
                                         </div>
 
                                         <div>
@@ -2375,18 +2394,6 @@
                                                     </select>
                                                 </x-searchable-select>
                                             </div>
-                                        </div>
-
-                                        <div>
-                                            <label
-                                                class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_bom_consumption_type') }}</label>
-                                            <x-searchable-select>
-                                                <select name="bom_consumption_type" x-model="editProduct.bom_consumption_type" class="sr-only">
-                                                    <option value="no_bom">{{ __('products.scheme_no_bom') }}</option>
-                                                    <option value="consumption_on_sale">{{ __('products.scheme_consumption_on_sale') }}</option>
-                                                    <option value="consumption_on_production">{{ __('products.scheme_consumption_on_production') }}</option>
-                                                </select>
-                                            </x-searchable-select>
                                         </div>
 
                                         <div>
