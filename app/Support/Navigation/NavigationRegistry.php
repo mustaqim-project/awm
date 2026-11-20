@@ -903,6 +903,48 @@ final class NavigationRegistry
                 ],
             ],
 
+            'operations' => [
+                'key'               => 'operations',
+                'label'             => 'Operasional & Proyek',
+                'icon'              => 'kanban',
+                'parent_breadcrumb' => ['label' => 'Operasional', 'route' => 'operations.projects.index'],
+                'module'            => null,
+                'tabs'              => [
+                    [
+                        'key'           => 'projects',
+                        'label'         => 'Proyek & Kanban',
+                        'icon'          => 'kanban',
+                        'route'         => 'operations.projects.index',
+                        'active_routes' => ['operations.projects.*', 'projects.index'],
+                        'permission'    => 'projects.view',
+                    ],
+                    [
+                        'key'           => 'tasks',
+                        'label'         => 'Todo List & Tugas',
+                        'icon'          => 'check-square',
+                        'route'         => 'operations.tasks.index',
+                        'active_routes' => ['operations.tasks.*', 'tasks.index'],
+                        'permission'    => 'tasks.view',
+                    ],
+                    [
+                        'key'           => 'calendar',
+                        'label'         => 'Kalender Kegiatan',
+                        'icon'          => 'calendar',
+                        'route'         => 'operations.calendar.index',
+                        'active_routes' => ['operations.calendar.index', 'calendar.index'],
+                        'permission'    => 'calendar.view',
+                    ],
+                    [
+                        'key'           => 'calendar-settings',
+                        'label'         => 'Integrasi Google',
+                        'icon'          => 'settings',
+                        'route'         => 'operations.calendar.settings',
+                        'active_routes' => ['operations.calendar.settings', 'operations.calendar.google.*'],
+                        'permission'    => 'calendar.manage',
+                    ],
+                ],
+            ],
+
             'reports' => [
                 'key'               => 'reports',
                 'label'             => 'Laporan & Analitik',
@@ -990,6 +1032,14 @@ final class NavigationRegistry
                         'route'         => 'roles.index',
                         'active_routes' => ['roles.*'],
                         'permission'    => 'roles.view',
+                    ],
+                    [
+                        'key'           => 'communication',
+                        'label'         => 'Email & Komunikasi',
+                        'icon'          => 'mail',
+                        'route'         => 'communication.settings.index',
+                        'active_routes' => ['communication.*'],
+                        'permission'    => 'settings.view',
                     ],
                     [
                         'key'           => 'billing',

@@ -153,14 +153,21 @@ class CustomerPaymentTermReminderService
         if (in_array($channel, [CustomerTermReminder::CHANNEL_EMAIL, CustomerTermReminder::CHANNEL_BOTH], true)) {
             if ($email) {
                 try {
-                    Mail::to($email)->send(new CustomerPaymentTermReminderMail(
+                    $tenantMail = app(\App\Domain\Communication\Services\TenantMailService::class);
+                    $mailable = new CustomerPaymentTermReminderMail(
                         $invoice,
                         $customer,
                         $business,
                         $reminderType,
                         $customNotes
-                    ));
-                    $emailStatus = CustomerTermReminder::STATUS_SENT;
+                    );
+                    $sendRes = $tenantMail->send($business, $email, $mailable, \App\Domain\Communication\Models\BusinessSmtpAccount::CHANNEL_INVOICE);
+                    if ($sendRes['success']) {
+                        $emailStatus = CustomerTermReminder::STATUS_SENT;
+                    } else {
+                        $emailStatus = CustomerTermReminder::STATUS_FAILED;
+                        $errorMessage = $sendRes['error'] ?? 'Gagal mengirim email.';
+                    }
                 } catch (\Throwable $e) {
                     $emailStatus = CustomerTermReminder::STATUS_FAILED;
                     $errorMessage = 'Email dispatch error: ' . $e->getMessage();

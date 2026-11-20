@@ -152,6 +152,7 @@ return [
     'audit_anti_fraud' => 'Jejak Audit & Anti-Fraud',
     'audit_trail_security' => 'Jejak Audit & Keamanan',
     'roles_permissions' => 'Izin Akses & Peran Karyawan',
+    'business_communication' => 'Email & Komunikasi Bisnis',
     'billing_subscription' => 'Paket Berlangganan & Kuota',
     'help_support' => 'Bantuan & Dukungan',
     'online_store_channels' => 'Toko Online & Saluran',

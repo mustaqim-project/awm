@@ -152,6 +152,7 @@ return [
     'audit_anti_fraud' => 'Audit Trail & Anti-Fraud',
     'audit_trail_security' => 'Audit Trail & Security',
     'roles_permissions' => 'Roles & Staff Permissions',
+    'business_communication' => 'Business Mail & Communication',
     'billing_subscription' => 'Subscription Plans & Quota',
     'help_support' => 'Help & Support',
     'online_store_channels' => 'Online Store & Channels',

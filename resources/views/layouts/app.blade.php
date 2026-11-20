@@ -58,6 +58,7 @@
             social_media: @json(__('social_media')),
             tax: @json(__('tax')),
             warehouse: @json(__('warehouse')),
+            operations: @json(__('operations')),
         };
 
         // Universal Client-Side i18n Helper

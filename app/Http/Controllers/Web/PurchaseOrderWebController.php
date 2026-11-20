@@ -382,6 +382,35 @@ final class PurchaseOrderWebController extends Controller implements HasMiddlewa
     }
 
     /**
+     * Send Purchase Order to supplier via email with attached PDF.
+     */
+    public function sendEmail(
+        Request $request,
+        PurchaseOrder $purchaseOrder,
+        \App\Domain\Communication\Services\PurchaseOrderDispatchService $dispatchService
+    ): RedirectResponse {
+        $business = Context::requireBusiness();
+        abort_unless($purchaseOrder->business_id === $business->id, 403);
+
+        $validated = $request->validate([
+            'recipient_email' => ['nullable', 'email'],
+            'custom_notes' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $result = $dispatchService->dispatch(
+            $purchaseOrder,
+            $validated['recipient_email'] ?? null,
+            $validated['custom_notes'] ?? null
+        );
+
+        if ($result['success']) {
+            return back()->with('success', __('communication.email_sent_success', ['email' => $result['recipient']]));
+        }
+
+        return back()->with('error', __('communication.email_sent_failed', ['error' => ($result['error'] ?? 'System error')]));
+    }
+
+    /**
      * Delete a purchase order (Only allowed for draft orders; confirmed/final orders must be cancelled).
      */
     public function destroy(PurchaseOrder $purchaseOrder): RedirectResponse

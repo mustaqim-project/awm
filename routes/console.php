@@ -73,4 +73,29 @@ Schedule::command('marketplace:sync-orders')
     ->withoutOverlapping()
     ->appendOutputTo(storage_path('logs/marketplace-sync.log'));
 
+// 11. Schedule operational event reminder notifications (WhatsApp / Email / In-App) (Setiap 5 menit)
+Schedule::command('operations:send-event-reminders')
+    ->everyFiveMinutes()
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/operations-reminders.log'));
+
+// 12. Schedule Google Calendar two-way synchronization for active connected accounts (Setiap 15 menit)
+Schedule::command('operations:sync-google-calendars')
+    ->everyFifteenMinutes()
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/operations-calendar-sync.log'));
+
+// 13. Schedule inbound email detection & processing (Setiap 5 menit)
+Schedule::command('communication:process-inbound')
+    ->everyFiveMinutes()
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/communication-inbound.log'));
+
+// 14. Schedule automated invoice payment reminders based on tenant preference (Setiap hari pukul 09:00)
+Schedule::command('communication:send-invoice-reminders')
+    ->dailyAt('09:00')
+    ->withoutOverlapping()
+    ->appendOutputTo(storage_path('logs/communication-invoice-reminders.log'));
+
+
 

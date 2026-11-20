@@ -56,8 +56,15 @@
         request()->routeIs('social-media.*') ||
         in_array($activeModuleKey, ['communication', 'storefront'], true);
     $isApprovalsRoute = request()->routeIs('approvals.*') || $activeModuleKey === 'approvals';
+    $isOperationsRoute =
+        request()->routeIs('operations.*') ||
+        request()->routeIs('projects.*') ||
+        request()->routeIs('tasks.*') ||
+        request()->routeIs('calendar.*') ||
+        $activeModuleKey === 'operations';
     $isSettingsRoute =
         request()->routeIs('settings.*') ||
+        request()->routeIs('communication.*') ||
         request()->routeIs('approval-rules.*') ||
         request()->routeIs('audit-logs.*') ||
         request()->routeIs('roles.*') ||
@@ -193,6 +200,13 @@
             && $sidebarBiz->isModuleEnabled(\App\Domain\Template\ModuleRegistry::MODULE_MERCHANT_SHIPPING)
             && ($sidebarStoreSetting->allow_delivery ?? true)
         );
+
+    $canAccessOperations =
+        \App\Support\Context::isOwner() ||
+        \App\Support\Context::hasPermission('operations.view') ||
+        \App\Support\Context::hasPermission('projects.view') ||
+        \App\Support\Context::hasPermission('tasks.view') ||
+        \App\Support\Context::hasPermission('calendar.view');
 @endphp
 
 @include('layouts.partials.sidebar-styles')
@@ -1526,6 +1540,66 @@
         @endif
 
         {{-- ======================================================== --}}
+        {{-- KLASTER OPERASIONAL, PROYEK & KALENDER                    --}}
+        {{-- ======================================================== --}}
+        @if ($canAccessOperations)
+        <div class="space-y-1 pt-1">
+            <div x-show="!sidebarCollapsed"
+                class="px-3 pt-3.5 pb-1 text-[10.5px] font-bold uppercase tracking-wider text-[#8E8E93] dark:text-[#98989D] select-none">
+                {{ __('operations.title') }}
+            </div>
+            <div x-show="sidebarCollapsed"
+                class="sidebar-separator w-8 mx-auto my-1 border-t border-black/5 dark:border-white/10">
+            </div>
+
+            {{-- Proyek & Kanban --}}
+            <div class="relative group"
+                @mouseenter="if(sidebarCollapsed) activeFlyout = 'operations_projects'"
+                @mouseleave="activeFlyout = null">
+                <a href="{{ route('operations.projects.index') }}"
+                    {{ request()->routeIs('operations.projects.*') || request()->routeIs('projects.*') ? 'aria-current="page"' : '' }}
+                    :title="sidebarCollapsed ? '{{ __('operations.projects_title') }}' : ''"
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('operations.projects.*') || request()->routeIs('projects.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('operations.projects.*') || request()->routeIs('projects.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
+                        <i data-lucide="kanban" class="w-3.5 h-3.5"></i>
+                    </span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('operations.projects_title') }}</span>
+                </a>
+            </div>
+
+            {{-- Todo List & Tugas --}}
+            <div class="relative group"
+                @mouseenter="if(sidebarCollapsed) activeFlyout = 'operations_tasks'"
+                @mouseleave="activeFlyout = null">
+                <a href="{{ route('operations.tasks.index') }}"
+                    {{ request()->routeIs('operations.tasks.*') || request()->routeIs('tasks.*') ? 'aria-current="page"' : '' }}
+                    :title="sidebarCollapsed ? '{{ __('operations.tasks_title') }}' : ''"
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('operations.tasks.*') || request()->routeIs('tasks.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('operations.tasks.*') || request()->routeIs('tasks.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
+                        <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+                    </span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('operations.tasks_title') }}</span>
+                </a>
+            </div>
+
+            {{-- Kalender & Pengingat --}}
+            <div class="relative group"
+                @mouseenter="if(sidebarCollapsed) activeFlyout = 'operations_calendar'"
+                @mouseleave="activeFlyout = null">
+                <a href="{{ route('operations.calendar.index') }}"
+                    {{ request()->routeIs('operations.calendar.*') || request()->routeIs('calendar.*') ? 'aria-current="page"' : '' }}
+                    :title="sidebarCollapsed ? '{{ __('operations.calendar_title') }}' : ''"
+                    class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-all active:scale-[0.98] {{ request()->routeIs('operations.calendar.*') || request()->routeIs('calendar.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                    <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('operations.calendar.*') || request()->routeIs('calendar.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    </span>
+                    <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('operations.calendar_title') }}</span>
+                </a>
+            </div>
+        </div>
+        @endif
+
+        {{-- ======================================================== --}}
         {{-- KLASTER 6: SOCIAL MEDIA DAN MARKETING                     --}}
         {{-- ======================================================== --}}
         @if ($canAccessStorefront || $canAccessChannels || \App\Support\Context::isOwner())
@@ -2099,6 +2173,23 @@
                             <i data-lucide="shield" class="w-3.5 h-3.5"></i>
                         </span>
                         <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.roles_permissions') }}</span>
+                    </a>
+                </div>
+            @endif
+
+            {{-- 9.5b Email & Komunikasi Bisnis --}}
+            @if ($canAccessSettings)
+                <div class="relative group"
+                    @mouseenter="if(sidebarCollapsed) { activeFlyout = 'communication'; setTooltip('{{ __('navigation.business_communication') }}', $event); }"
+                    @mouseleave="activeFlyout = null; clearTooltip();">
+                    <a href="{{ route('communication.settings.index') }}" id="tour-nav-communication"
+                        {{ request()->routeIs('communication.*') ? 'aria-current="page"' : '' }}
+                        :title="sidebarCollapsed ? '{{ __('navigation.business_communication') }}' : ''"
+                        class="sidebar-item w-full flex items-center gap-2.5 px-3 py-2 rounded-[10px] text-[13px] font-medium transition-all active:scale-[0.98] {{ request()->routeIs('communication.*') ? 'bg-[#007AFF] text-white shadow-[0_2px_8px_rgba(0,122,255,0.35)]' : 'text-black/80 dark:text-white/80 hover:bg-black/[0.05] dark:hover:bg-white/[0.06] hover:text-black dark:hover:text-white' }}">
+                        <span class="sidebar-icon-box w-7 h-7 rounded-[8px] {{ request()->routeIs('communication.*') ? 'bg-white/20 text-white' : 'bg-[#007AFF]/10 text-[#007AFF] dark:bg-[#007AFF]/20 dark:text-[#0A84FF] group-hover:bg-[#007AFF]/15 group-hover:scale-105' }} flex items-center justify-center shrink-0">
+                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                        </span>
+                        <span class="truncate" x-show="!sidebarCollapsed" x-transition.opacity>{{ __('navigation.business_communication') }}</span>
                     </a>
                 </div>
             @endif

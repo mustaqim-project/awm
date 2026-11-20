@@ -36,6 +36,7 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI', 'https://cooca.id/auth/google/callback'),
         'customer_redirect' => env('GOOGLE_CUSTOMER_REDIRECT_URI', 'https://cooca.id/customer/auth/google/callback'),
+        'calendar_redirect' => env('GOOGLE_CALENDAR_REDIRECT_URI', env('APP_URL', 'http://localhost') . '/operations/calendar/google/callback'),
     ],
 
 

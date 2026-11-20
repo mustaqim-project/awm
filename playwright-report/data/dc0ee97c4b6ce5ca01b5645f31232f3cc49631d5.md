@@ -1,0 +1,684 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: auth.setup.js >> authenticate as owner/demo user
+- Location: tests\e2e\auth.setup.js:7:1
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+TimeoutError: page.waitForURL: Timeout 20000ms exceeded.
+=========================== logs ===========================
+waiting for navigation until "load"
+============================================================
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=f1e2]:
+  - complementary [ref=f1e3]:
+    - link "Cooca Business OS" [ref=f1e5] [cursor=pointer]:
+      - /url: http://cooca_core.test/dashboard
+      - generic [ref=f1e8]:
+        - generic [ref=f1e9]: Cooca
+        - generic [ref=f1e10]: Business OS
+    - 'link "Switch Business: Dapur Sedap Rasa" [ref=f1e13] [cursor=pointer]':
+      - /url: http://cooca_core.test/select-business
+      - generic [ref=f1e17]:
+        - generic [ref=f1e18]: Active Business
+        - generic [ref=f1e19]: Dapur Sedap Rasa
+    - navigation "Main Navigation" [ref=f1e21]:
+      - generic [ref=f1e22]:
+        - generic [ref=f1e23]:
+          - text: Core Business
+          - generic [ref=f1e24]: Daily Operations Daily Operations
+        - link "Main Dashboard" [ref=f1e27] [cursor=pointer]:
+          - /url: http://cooca_core.test/dashboard
+        - generic [ref=f1e31]:
+          - button "Cashier & POS Cashier & POS" [ref=f1e32] [cursor=pointer]:
+            - generic [ref=f1e33]:
+              - generic [ref=f1e36]: Cashier & POS
+              - generic [ref=f1e37]: Cashier & POS
+          - generic [ref=f1e39]:
+            - link "Open Cashier" [ref=f1e40] [cursor=pointer]:
+              - /url: http://cooca_core.test/pos
+            - link "Cashier Shifts & Records" [ref=f1e43] [cursor=pointer]:
+              - /url: http://cooca_core.test/pos/orders
+            - link "Kitchen Display (KDS)" [ref=f1e46] [cursor=pointer]:
+              - /url: http://cooca_core.test/pos/kitchen
+            - link "Tables & QR Orders" [ref=f1e49] [cursor=pointer]:
+              - /url: http://cooca_core.test/pos/tables
+        - link "Storefront Orders" [ref=f1e53] [cursor=pointer]:
+          - /url: http://cooca_core.test/storefront/orders
+        - link "Restaurant Reservations" [ref=f1e59] [cursor=pointer]:
+          - /url: http://cooca_core.test/storefront/reservations
+        - link "3D Virtual Office" [ref=f1e65] [cursor=pointer]:
+          - /url: http://cooca_core.test/cooca-ai
+        - link "AI Studio NEW" [ref=f1e71] [cursor=pointer]:
+          - /url: http://cooca_core.test/ai-studio
+          - generic [ref=f1e74]:
+            - generic [ref=f1e75]: AI Studio
+            - generic [ref=f1e76]: NEW
+        - link "Owner Community" [ref=f1e78] [cursor=pointer]:
+          - /url: http://cooca_core.test/community
+      - generic [ref=f1e83]:
+        - generic [ref=f1e84]: Inventory
+        - link "Stocks & Multi-Warehouse" [ref=f1e87] [cursor=pointer]:
+          - /url: http://cooca_core.test/inventory/stocks
+        - link "Warehouse Locations" [ref=f1e92] [cursor=pointer]:
+          - /url: http://cooca_core.test/warehouse
+        - link "Warehouse Stock Transfers" [ref=f1e97] [cursor=pointer]:
+          - /url: http://cooca_core.test/inventory/transfers
+        - link "Physical Stock Opname" [ref=f1e102] [cursor=pointer]:
+          - /url: http://cooca_core.test/inventory/opnames
+        - link "Stock Movement Card" [ref=f1e107] [cursor=pointer]:
+          - /url: http://cooca_core.test/inventory/movements
+        - generic [ref=f1e111]:
+          - button "Purchasing & Vendors" [ref=f1e112] [cursor=pointer]
+          - generic [ref=f1e118]:
+            - link "Purchase Orders (PO)" [ref=f1e119] [cursor=pointer]:
+              - /url: http://cooca_core.test/purchase-orders
+            - link "Supplier Bills" [ref=f1e122] [cursor=pointer]:
+              - /url: http://cooca_core.test/purchasing/bills
+            - link "Purchase Returns" [ref=f1e125] [cursor=pointer]:
+              - /url: http://cooca_core.test/purchasing/returns
+      - generic [ref=f1e128]:
+        - generic [ref=f1e129]:
+          - text: Finance & Accounting
+          - generic [ref=f1e130]: Reports & Finance Reports & Finance
+        - link "Cash & Bank Accounts Cash & Bank Accounts" [ref=f1e133] [cursor=pointer]:
+          - /url: http://cooca_core.test/finance/cash-bank
+          - generic [ref=f1e136]:
+            - generic [ref=f1e137]: Cash & Bank Accounts
+            - generic [ref=f1e138]: Cash & Bank Accounts
+        - link "Operational Expenses" [ref=f1e140] [cursor=pointer]:
+          - /url: http://cooca_core.test/finance/expenses
+        - link "Accounts Receivable" [ref=f1e145] [cursor=pointer]:
+          - /url: http://cooca_core.test/finance/receivables
+        - link "Accounts Payable" [ref=f1e150] [cursor=pointer]:
+          - /url: http://cooca_core.test/finance/payables
+        - link "Sales Funds Settlement" [ref=f1e155] [cursor=pointer]:
+          - /url: http://cooca_core.test/finance/settlements
+        - generic [ref=f1e159]:
+          - button "Corporate Accounting" [ref=f1e160] [cursor=pointer]
+          - generic [ref=f1e166]:
+            - link "Chart of Accounts (COA)" [ref=f1e167] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/chart-of-accounts
+            - link "Journal Entries" [ref=f1e170] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/journals
+            - link "General Ledger" [ref=f1e173] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/general-ledger
+            - link "Balance Sheet" [ref=f1e176] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/balance-sheet
+            - link "Trial Balance" [ref=f1e179] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/trial-balance
+            - link "Bank Reconciliation" [ref=f1e182] [cursor=pointer]:
+              - /url: http://cooca_core.test/finance/reconciliations
+        - generic [ref=f1e185]:
+          - button "Costing & Profit Margin COGS & Margin Calculator" [ref=f1e186] [cursor=pointer]:
+            - generic [ref=f1e187]:
+              - generic [ref=f1e190]: Costing & Profit Margin
+              - generic [ref=f1e191]: COGS & Margin Calculator
+          - generic [ref=f1e193]:
+            - link "COGS & Margin Calculator" [ref=f1e194] [cursor=pointer]:
+              - /url: http://cooca_core.test/calculator
+            - link "Selling Price Simulator" [ref=f1e197] [cursor=pointer]:
+              - /url: http://cooca_core.test/simulator
+            - link "Margin & BEP Analysis" [ref=f1e200] [cursor=pointer]:
+              - /url: http://cooca_core.test/profitability
+      - generic [ref=f1e203]:
+        - generic [ref=f1e204]: CRM
+        - link "Customer Directory" [ref=f1e207] [cursor=pointer]:
+          - /url: http://cooca_core.test/customers
+        - link "Members & Loyalty" [ref=f1e212] [cursor=pointer]:
+          - /url: http://cooca_core.test/crm/members
+        - link "Discount Vouchers & Promos" [ref=f1e217] [cursor=pointer]:
+          - /url: http://cooca_core.test/crm/vouchers
+      - generic [ref=f1e221]:
+        - generic [ref=f1e222]: HRM
+        - link "Portal & Attendance" [ref=f1e225] [cursor=pointer]:
+          - /url: http://cooca_core.test/portal
+        - link "Staff & Attendance" [ref=f1e230] [cursor=pointer]:
+          - /url: http://cooca_core.test/hrm
+        - link "Payroll & Pay Slips" [ref=f1e235] [cursor=pointer]:
+          - /url: http://cooca_core.test/hrm/payrolls
+      - generic [ref=f1e239]:
+        - generic [ref=f1e240]: Operations & Projects
+        - link "Project Management" [ref=f1e243] [cursor=pointer]:
+          - /url: http://cooca_core.test/operations/projects
+        - link "Todo List & Tasks" [ref=f1e248] [cursor=pointer]:
+          - /url: http://cooca_core.test/operations/tasks
+        - link "Activity Calendar & Events" [ref=f1e253] [cursor=pointer]:
+          - /url: http://cooca_core.test/operations/calendar
+      - generic [ref=f1e257]:
+        - generic [ref=f1e258]: Social Media & Marketing
+        - link "Landing Page CMS" [ref=f1e261] [cursor=pointer]:
+          - /url: http://cooca_core.test/landing-page
+        - link "Promo Popups" [ref=f1e266] [cursor=pointer]:
+          - /url: http://cooca_core.test/landing-page/popup
+        - link "Shipping & Delivery Settings" [ref=f1e271] [cursor=pointer]:
+          - /url: http://cooca_core.test/storefront/shipping
+        - link "Online Store Settings" [ref=f1e276] [cursor=pointer]:
+          - /url: http://cooca_core.test/storefront/settings
+        - link "WhatsApp Business" [ref=f1e281] [cursor=pointer]:
+          - /url: http://cooca_core.test/whatsapp
+        - link "WhatsApp Broadcast" [ref=f1e286] [cursor=pointer]:
+          - /url: http://cooca_core.test/whatsapp/broadcast
+        - link "WhatsApp Message Logs" [ref=f1e291] [cursor=pointer]:
+          - /url: http://cooca_core.test/whatsapp/logs
+        - link "Social Media Omnichannel" [ref=f1e296] [cursor=pointer]:
+          - /url: http://cooca_core.test/social-media
+        - link "Posts & Schedule" [ref=f1e301] [cursor=pointer]:
+          - /url: http://cooca_core.test/social-media/posts
+        - link "Content Calendar" [ref=f1e306] [cursor=pointer]:
+          - /url: http://cooca_core.test/social-media/calendar
+        - link "Social Media Inbox" [ref=f1e311] [cursor=pointer]:
+          - /url: http://cooca_core.test/social-media/inbox
+      - generic [ref=f1e315]:
+        - generic [ref=f1e316]:
+          - text: Reporting
+          - generic [ref=f1e317]: Reports & Finance Reports & Finance
+        - link "Reports Center" [ref=f1e320] [cursor=pointer]:
+          - /url: http://cooca_core.test/reports
+        - link "Business Trends Analytics" [ref=f1e325] [cursor=pointer]:
+          - /url: http://cooca_core.test/analytics
+        - link "Income Statement (P&L)" [ref=f1e330] [cursor=pointer]:
+          - /url: http://cooca_core.test/reports?tab=income_statement
+        - link "Cash Flow Statement" [ref=f1e335] [cursor=pointer]:
+          - /url: http://cooca_core.test/reports?tab=cash_flow
+        - link "Cashier Sales Reports" [ref=f1e340] [cursor=pointer]:
+          - /url: http://cooca_core.test/pos/reports
+        - link "Stock Valuation & Reports" [ref=f1e345] [cursor=pointer]:
+          - /url: http://cooca_core.test/reports?tab=stock
+        - link "Tax & Compliance Reports" [ref=f1e350] [cursor=pointer]:
+          - /url: http://cooca_core.test/tax
+      - generic [ref=f1e354]:
+        - generic [ref=f1e355]:
+          - text: Master Data & Catalog
+          - generic [ref=f1e356]: Master Data & Catalog
+        - link "Products & BOM Catalog" [ref=f1e359] [cursor=pointer]:
+          - /url: http://cooca_core.test/products
+        - link "Marketplace Integration" [ref=f1e365] [cursor=pointer]:
+          - /url: http://cooca_core.test/marketplace-hub
+        - link "Raw Materials & Recipes" [ref=f1e370] [cursor=pointer]:
+          - /url: http://cooca_core.test/materials
+        - link "Perintah Produksi (SPKP)" [ref=f1e375] [cursor=pointer]:
+          - /url: http://cooca_core.test/production
+        - link "Suppliers & Purchasing" [ref=f1e380] [cursor=pointer]:
+          - /url: http://cooca_core.test/suppliers
+        - link "Product Categories" [ref=f1e385] [cursor=pointer]:
+          - /url: http://cooca_core.test/product-categories
+        - link "Material Categories" [ref=f1e390] [cursor=pointer]:
+          - /url: http://cooca_core.test/material-categories
+        - link "Measurement Units" [ref=f1e395] [cursor=pointer]:
+          - /url: http://cooca_core.test/units
+        - link "Excel Import & Export" [ref=f1e400] [cursor=pointer]:
+          - /url: http://cooca_core.test/import
+      - generic [ref=f1e404]:
+        - generic [ref=f1e405]:
+          - text: Settings Hub
+          - generic [ref=f1e406]: Settings Hub
+        - link "Business & Branch Settings" [ref=f1e409] [cursor=pointer]:
+          - /url: http://cooca_core.test/settings
+        - link "User Profile" [ref=f1e414] [cursor=pointer]:
+          - /url: http://cooca_core.test/profile
+        - link "Approval Workflow Rules (MAR)" [ref=f1e419] [cursor=pointer]:
+          - /url: http://cooca_core.test/settings/approval-rules
+        - link "Audit Trail & Anti-Fraud" [ref=f1e424] [cursor=pointer]:
+          - /url: http://cooca_core.test/settings/audit-logs
+        - link "Roles & Staff Permissions" [ref=f1e430] [cursor=pointer]:
+          - /url: http://cooca_core.test/roles
+        - link "Subscription Plans & Quota" [ref=f1e435] [cursor=pointer]:
+          - /url: http://cooca_core.test/billing/limits
+        - button "Storage & Audit Pruning Preview" [ref=f1e440] [cursor=pointer]
+        - link "Guides & Documentation" [ref=f1e445] [cursor=pointer]:
+          - /url: http://cooca_core.test/docs
+        - link "Help & Support" [ref=f1e450] [cursor=pointer]:
+          - /url: http://cooca_core.test/feedback/bugs
+    - generic [ref=f1e456]:
+      - generic [ref=f1e457]:
+        - generic [ref=f1e458]: Free Plan (Solo)
+        - generic [ref=f1e459]: Free
+      - generic [ref=f1e460]:
+        - generic [ref=f1e462]:
+          - generic [ref=f1e463]: "Product Catalog:"
+          - generic [ref=f1e464]: 18 / 50
+        - generic [ref=f1e468]:
+          - generic [ref=f1e469]: "Recipe / BOM:"
+          - generic [ref=f1e470]: 0 / 20
+        - generic [ref=f1e473]:
+          - generic [ref=f1e474]: "Invoices This Month:"
+          - generic [ref=f1e475]: 0 / 10
+      - generic [ref=f1e477]:
+        - link "Upgrade / Renew" [ref=f1e478] [cursor=pointer]:
+          - /url: http://cooca_core.test/patungan
+        - generic [ref=f1e481]:
+          - link "Quota Details ›" [ref=f1e482] [cursor=pointer]:
+            - /url: http://cooca_core.test/billing/limits
+          - button "Prune Space" [ref=f1e483] [cursor=pointer]
+  - generic [ref=f1e486]:
+    - banner [ref=f1e487]:
+      - generic [ref=f1e488]:
+        - button "Toggle Sidebar" [ref=f1e489] [cursor=pointer]
+        - generic [ref=f1e492]:
+          - heading "Business Overview & Operational Cockpit" [level=1] [ref=f1e493]
+          - paragraph [ref=f1e494]: Comprehensive monitoring of revenue, COGS, profit margin, inventory, and cashiers for Dapur Sedap Rasa
+      - generic [ref=f1e495]:
+        - button "Search menu, products, or transactions (Ctrl+K)... Ctrl K" [ref=f1e496] [cursor=pointer]:
+          - generic [ref=f1e498]: Search menu, products, or transactions (Ctrl+K)...
+          - generic [ref=f1e499]: Ctrl K
+        - button "Peringatan Stok Menipis" [ref=f1e502] [cursor=pointer]
+        - generic [ref=f1e504]:
+          - button "Full Screen Mode" [ref=f1e505] [cursor=pointer]
+          - button "Switch Language" [ref=f1e508] [cursor=pointer]:
+            - generic [ref=f1e510]: en
+          - button "Toggle Theme" [ref=f1e512] [cursor=pointer]
+        - button "De Demo User (Multi-Industri) Dapur Sedap Rasa" [ref=f1e515] [cursor=pointer]:
+          - generic [ref=f1e516]: De
+          - generic [ref=f1e517]:
+            - generic [ref=f1e518]: Demo User (Multi-Industri)
+            - generic [ref=f1e519]: Dapur Sedap Rasa
+    - main [ref=f1e521]:
+      - generic [ref=f1e522]:
+        - generic [ref=f1e523]:
+          - generic [ref=f1e524]:
+            - navigation "Breadcrumb" [ref=f1e525]:
+              - link "Dashboard" [ref=f1e526] [cursor=pointer]:
+                - /url: http://cooca_core.test/dashboard
+              - generic [ref=f1e528]: Business Cockpit & Real-Time Analytics
+            - generic [ref=f1e529]:
+              - heading "Hello, Demo User (Multi-Industri)! Have a productive day." [level=1] [ref=f1e530]
+              - generic [ref=f1e531]: Cashier Not Open
+          - generic [ref=f1e534]:
+            - link "POS Terminal" [ref=f1e535] [cursor=pointer]:
+              - /url: http://cooca_core.test/pos
+            - link "COGS Calculator" [ref=f1e538] [cursor=pointer]:
+              - /url: http://cooca_core.test/calculator
+            - button "Quick Actions" [ref=f1e542] [cursor=pointer]
+        - generic [ref=f1e546]:
+          - generic [ref=f1e548]:
+            - generic [ref=f1e549]:
+              - generic [ref=f1e550]:
+                - heading "Business Performance Analysis" [level=2] [ref=f1e551]
+                - generic [ref=f1e552]: Bulan Ini · 2026-11-01 → 2026-11-20
+              - paragraph [ref=f1e553]: Key performance indicators, trend charts, and product rankings adjust dynamically to the selected period.
+            - generic [ref=f1e554]:
+              - generic [ref=f1e555]:
+                - button "Today" [ref=f1e556] [cursor=pointer]
+                - button "This Week" [ref=f1e557] [cursor=pointer]
+                - button "This Month" [ref=f1e558] [cursor=pointer]
+                - button "This Year" [ref=f1e559] [cursor=pointer]
+                - button "Custom" [ref=f1e560] [cursor=pointer]
+              - generic [ref=f1e561]:
+                - textbox "Start date" [ref=f1e562]
+                - generic [ref=f1e563]: to
+                - textbox "End date" [ref=f1e564]
+                - button "Apply" [ref=f1e565] [cursor=pointer]
+                - button "Cancel" [ref=f1e566] [cursor=pointer]
+          - generic [ref=f1e567]:
+            - generic [ref=f1e571]:
+              - generic [ref=f1e572]: Today's Revenue
+              - generic [ref=f1e574]: Rp 1.328.000
+              - generic [ref=f1e575]: Accumulation of POS, Online Store & Invoices
+            - generic [ref=f1e579]:
+              - generic [ref=f1e580]: Estimated Net Profit (MTD)
+              - generic [ref=f1e582]: Rp 65.538
+              - generic "After deducting store expenses & COGS" [ref=f1e583]
+            - generic [ref=f1e587]:
+              - generic [ref=f1e588]:
+                - generic [ref=f1e589]: Gross Profit
+                - generic [ref=f1e590]: Margin 4.9%
+              - generic [ref=f1e591]: Rp 65.538
+              - generic "Difference between selling price and recipe cost" [ref=f1e592]
+            - generic [ref=f1e596]:
+              - generic [ref=f1e597]: Total Transactions
+              - generic [ref=f1e599]: "6"
+              - 'generic "Average: Rp 221.333 / tx · Unpaid Receivables: Rp 0" [ref=f1e600]'
+            - generic [ref=f1e604]:
+              - generic [ref=f1e605]: Total Store Expenses
+              - generic [ref=f1e607]: Rp 0
+              - 'generic "COGS Sold: Rp 86.462" [ref=f1e608]'
+            - generic [ref=f1e612]:
+              - generic [ref=f1e613]: Stock Asset Valuation & Alert
+              - generic [ref=f1e615]: "0"
+              - generic [ref=f1e616]: "Stock Safe · Cost: Rp 0"
+          - generic [ref=f1e618]:
+            - generic [ref=f1e620]:
+              - generic [ref=f1e624]:
+                - heading "Last 7 Days Sales Trend & Gross Profit" [level=3] [ref=f1e625]
+                - paragraph [ref=f1e626]: Last 7 Days Sales Trend & rhythm of revenue and gross profit
+              - generic [ref=f1e627]:
+                - generic [ref=f1e628]: Daily
+                - generic [ref=f1e629]:
+                  - button "All" [ref=f1e630] [cursor=pointer]
+                  - button "Revenue" [ref=f1e631] [cursor=pointer]
+                  - button "Gross Profit" [ref=f1e632] [cursor=pointer]
+            - generic [ref=f1e639]:
+              - heading "Sales Channels" [level=3] [ref=f1e640]
+              - paragraph [ref=f1e641]: Direct cashier vs billed invoices
+          - generic [ref=f1e645]:
+            - generic [ref=f1e650]:
+              - heading "Service Method" [level=3] [ref=f1e651]
+              - paragraph [ref=f1e652]: Cashier customer order preferences
+            - generic [ref=f1e659]:
+              - heading "Top Categories" [level=3] [ref=f1e660]
+              - paragraph [ref=f1e661]: Highest contributing categories
+            - generic [ref=f1e668]:
+              - heading "Payment Methods" [level=3] [ref=f1e669]
+              - paragraph [ref=f1e670]: Cash, QRIS, & Bank Transfer
+          - generic [ref=f1e674]:
+            - generic [ref=f1e675]:
+              - generic [ref=f1e676]:
+                - heading "Top 10 Best Selling Products" [level=3] [ref=f1e680]
+                - generic [ref=f1e681]: 3 products
+              - table [ref=f1e684]:
+                - rowgroup [ref=f1e685]:
+                  - row [ref=f1e686]:
+                    - columnheader "#" [ref=f1e687]
+                    - columnheader "Best Selling Product" [ref=f1e688] [cursor=pointer]
+                    - columnheader "Sold" [ref=f1e698] [cursor=pointer]
+                    - columnheader "Revenue" [ref=f1e708] [cursor=pointer]
+                    - columnheader "Share" [ref=f1e718] [cursor=pointer]
+                - rowgroup [ref=f1e728]:
+                  - row [ref=f1e729]:
+                    - cell "1" [ref=f1e730]
+                    - cell "Paket Nasi Rendang Daging Sapi RST-NASI-RENDANG" [ref=f1e731]
+                    - cell "4" [ref=f1e732]
+                    - cell "Rp 152.000" [ref=f1e733]
+                    - cell [ref=f1e734]:
+                      - generic "100%" [ref=f1e735]
+                  - row [ref=f1e737]:
+                    - cell "2" [ref=f1e738]
+                    - cell "Nasi Ayam Bakar Bumbu Madu DSR-AYM-01" [ref=f1e739]
+                    - cell "1" [ref=f1e740]
+                    - cell "Rp 32.000" [ref=f1e741]
+                    - cell [ref=f1e742]:
+                      - generic "21%" [ref=f1e743]
+                  - row [ref=f1e745]:
+                    - cell "3" [ref=f1e746]
+                    - cell "Es Cendol Dawet Gula Aren Nangka DSR-CND-07" [ref=f1e747]
+                    - cell "1" [ref=f1e748]
+                    - cell "Rp 18.000" [ref=f1e749]
+                    - cell [ref=f1e750]:
+                      - generic "12%" [ref=f1e751]
+            - generic [ref=f1e753]:
+              - generic [ref=f1e754]:
+                - heading "Top 15 Most Used Materials" [level=3] [ref=f1e758]
+                - generic [ref=f1e759]: 0 materials
+              - generic [ref=f1e761]:
+                - paragraph [ref=f1e763]: No material usage in this period yet.
+                - generic [ref=f1e764]: Material usage is calculated automatically from recipes and stock-out mutations.
+            - generic [ref=f1e765]:
+              - generic [ref=f1e766]:
+                - heading "Low Stock Alert" [level=3] [ref=f1e770]
+                - generic [ref=f1e771]: 10 items
+              - table [ref=f1e774]:
+                - rowgroup [ref=f1e775]:
+                  - row [ref=f1e776]:
+                    - columnheader "#" [ref=f1e777]
+                    - columnheader "Item" [ref=f1e778] [cursor=pointer]
+                    - columnheader "Remaining" [ref=f1e788] [cursor=pointer]
+                    - columnheader "Status" [ref=f1e798] [cursor=pointer]
+                - rowgroup [ref=f1e808]:
+                  - row [ref=f1e809]:
+                    - cell "1" [ref=f1e810]
+                    - cell "Tumpeng Besar Syukuran 20 Porsi Komplit Hias (Produk)" [ref=f1e811]
+                    - cell "20,00 porsi" [ref=f1e812]
+                    - cell "Safe" [ref=f1e813]
+                  - row [ref=f1e817]:
+                    - cell "2" [ref=f1e818]
+                    - cell "Bumbu Rempah Masak Padang (Bahan)" [ref=f1e819]
+                    - cell "40,00 kg" [ref=f1e820]
+                    - cell "Safe" [ref=f1e821]
+                  - row [ref=f1e825]:
+                    - cell "3" [ref=f1e826]
+                    - cell "Rawon Daging Sapi Surabaya Sambal Terasi (Produk)" [ref=f1e827]
+                    - cell "50,00 porsi" [ref=f1e828]
+                    - cell "Safe" [ref=f1e829]
+                  - row [ref=f1e833]:
+                    - cell "4" [ref=f1e834]
+                    - cell "Daging Sapi Rendang (Bahan)" [ref=f1e835]
+                    - cell "50,00 kg" [ref=f1e836]
+                    - cell "Safe" [ref=f1e837]
+                  - row [ref=f1e841]:
+                    - cell "5" [ref=f1e842]
+                    - cell "Paket Nasi Rendang Daging Sapi Payakumbuh (Produk)" [ref=f1e843]
+                    - cell "60,00 porsi" [ref=f1e844]
+                    - cell "Safe" [ref=f1e845]
+                  - row [ref=f1e849]:
+                    - cell "6" [ref=f1e850]
+                    - cell "Sate Ayam Bumbu Kacang Madura (10 Tusuk) (Produk)" [ref=f1e851]
+                    - cell "70,00 porsi" [ref=f1e852]
+                    - cell "Safe" [ref=f1e853]
+                  - row [ref=f1e857]:
+                    - cell "7" [ref=f1e858]
+                    - cell "Nasi Ayam Bakar Bumbu Madu (Produk)" [ref=f1e859]
+                    - cell "80,00 porsi" [ref=f1e860]
+                    - cell "Safe" [ref=f1e861]
+                  - row [ref=f1e865]:
+                    - cell "8" [ref=f1e866]
+                    - cell "Daging Ayam Kampung (Bahan)" [ref=f1e867]
+                    - cell "80,00 kg" [ref=f1e868]
+                    - cell "Safe" [ref=f1e869]
+                  - row [ref=f1e873]:
+                    - cell "9" [ref=f1e874]
+                    - cell "Nasi Goreng Kampung Spesial Telur Ceplok (Produk)" [ref=f1e875]
+                    - cell "90,00 porsi" [ref=f1e876]
+                    - cell "Safe" [ref=f1e877]
+                  - row [ref=f1e881]:
+                    - cell "10" [ref=f1e882]
+                    - cell "Tempe Mendoan Gurih Sambal Kecap Rawit (Produk)" [ref=f1e883]
+                    - cell "100,00 porsi" [ref=f1e884]
+                    - cell "Safe" [ref=f1e885]
+          - generic [ref=f1e890]:
+            - generic [ref=f1e891]:
+              - heading "Cooca AI Business Advisor & Operational Insights" [level=3] [ref=f1e894]
+              - generic [ref=f1e895]: Performance Summary
+            - paragraph [ref=f1e896]: Key indicators from transactions and stock for fast decision-making.
+            - generic [ref=f1e898]:
+              - generic [ref=f1e899]:
+                - generic [ref=f1e901]: "Produk Terlaris #1"
+                - generic [ref=f1e902]: Paket Nasi Rendang Daging Sapi (4 terjual)
+              - generic [ref=f1e903]:
+                - generic [ref=f1e905]: Kategori Paling Diminati
+                - generic [ref=f1e906]: Menu Santap Langsung & Harian (Rp 32.000)
+              - generic [ref=f1e907]:
+                - generic [ref=f1e909]: Rata-Rata Nilai Belanja
+                - generic [ref=f1e910]: Rp 221.333 / transaksi
+              - generic [ref=f1e911]:
+                - generic [ref=f1e913]: Kesehatan Margin Kotor
+                - generic [ref=f1e914]: 4.9% (Perlu Evaluasi)
+        - generic [ref=f1e915]:
+          - generic [ref=f1e916]:
+            - generic [ref=f1e917]:
+              - generic [ref=f1e921]:
+                - heading "Recent Cashier Transactions" [level=2] [ref=f1e922]
+                - paragraph [ref=f1e923]: Today's POS orders and cashier transactions
+              - link "All Transactions" [ref=f1e924] [cursor=pointer]:
+                - /url: http://cooca_core.test/pos/orders
+            - generic [ref=f1e927]:
+              - generic [ref=f1e928]:
+                - generic [ref=f1e929]:
+                  - generic [ref=f1e930]:
+                    - generic [ref=f1e931]: POS-DSR-20261111-001
+                    - generic [ref=f1e932]: (General Customer)
+                  - generic [ref=f1e933]:
+                    - generic [ref=f1e934]: 1 week ago
+                    - generic [ref=f1e935]: •
+                    - generic [ref=f1e936]: dine in
+                - generic [ref=f1e937]:
+                  - generic [ref=f1e938]: Rp 50.000
+                  - generic [ref=f1e939]: completed
+              - generic [ref=f1e942]:
+                - generic [ref=f1e943]:
+                  - generic [ref=f1e944]:
+                    - generic [ref=f1e945]: POS-20261111-8ONM
+                    - generic [ref=f1e946]: (PT Makmur Jaya Abadi)
+                  - generic [ref=f1e947]:
+                    - generic [ref=f1e948]: 1 week ago
+                    - generic [ref=f1e949]: •
+                    - generic [ref=f1e950]: dine in
+                - generic [ref=f1e951]:
+                  - generic [ref=f1e952]: Rp 152.000
+                  - generic [ref=f1e953]: completed
+          - generic [ref=f1e956]:
+            - generic [ref=f1e957]:
+              - generic [ref=f1e961]:
+                - heading "Product Catalog & Margins" [level=2] [ref=f1e962]
+                - paragraph [ref=f1e963]: COGS and product profit percentages
+              - link "All (18)" [ref=f1e964] [cursor=pointer]:
+                - /url: http://cooca_core.test/products
+            - table [ref=f1e969]:
+              - rowgroup [ref=f1e970]:
+                - row [ref=f1e971]:
+                  - columnheader "Product" [ref=f1e972] [cursor=pointer]
+                  - columnheader "Base COGS" [ref=f1e982] [cursor=pointer]
+                  - columnheader "Selling Price" [ref=f1e992] [cursor=pointer]
+                  - columnheader "Margin %" [ref=f1e1002] [cursor=pointer]
+              - rowgroup [ref=f1e1012]:
+                - row [ref=f1e1013]:
+                  - cell "Ekstra Sambal Bawang Ulek Menu Santap Langsung & Harian" [ref=f1e1014]:
+                    - link "Ekstra Sambal Bawang Ulek" [ref=f1e1015] [cursor=pointer]:
+                      - /url: http://cooca_core.test/products/ekstra-sambal-bawang-ulek/bom
+                    - generic [ref=f1e1016]: Menu Santap Langsung & Harian
+                  - cell "Rp 1.500" [ref=f1e1017]
+                  - cell "Rp 4.000" [ref=f1e1018]
+                  - cell "62.5%" [ref=f1e1019]
+                - row [ref=f1e1023]:
+                  - cell "Es Cendol Dawet Gula Aren Nangka Minuman Segar Tradisional" [ref=f1e1024]:
+                    - link "Es Cendol Dawet Gula Aren Nangka" [ref=f1e1025] [cursor=pointer]:
+                      - /url: http://cooca_core.test/products/es-cendol-dawet-gula-aren-nangka/bom
+                    - generic [ref=f1e1026]: Minuman Segar Tradisional
+                  - cell "Rp 8.000" [ref=f1e1027]
+                  - cell "Rp 18.000" [ref=f1e1028]
+                  - cell "55.6%" [ref=f1e1029]
+                - row [ref=f1e1033]:
+                  - cell "Es Jeruk Peras Segar Murni Minuman Segar Tradisional" [ref=f1e1034]:
+                    - link "Es Jeruk Peras Segar Murni" [ref=f1e1035] [cursor=pointer]:
+                      - /url: http://cooca_core.test/products/es-jeruk-peras-segar-murni/bom
+                    - generic [ref=f1e1036]: Minuman Segar Tradisional
+                  - cell "Rp 5.000" [ref=f1e1037]
+                  - cell "Rp 12.000" [ref=f1e1038]
+                  - cell "58.3%" [ref=f1e1039]
+                - row [ref=f1e1043]:
+                  - cell "Es Kopi Susu Gula Aren Kampung Minuman Segar Tradisional" [ref=f1e1044]:
+                    - link "Es Kopi Susu Gula Aren Kampung" [ref=f1e1045] [cursor=pointer]:
+                      - /url: http://cooca_core.test/products/es-kopi-susu-gula-aren-kampung/bom
+                    - generic [ref=f1e1046]: Minuman Segar Tradisional
+                  - cell "Rp 7.000" [ref=f1e1047]
+                  - cell "Rp 18.000" [ref=f1e1048]
+                  - cell "61.1%" [ref=f1e1049]
+                - row [ref=f1e1053]:
+                  - cell "Kerupuk Udang Renyah Kudapan & Snack Box" [ref=f1e1054]:
+                    - link "Kerupuk Udang Renyah" [ref=f1e1055] [cursor=pointer]:
+                      - /url: http://cooca_core.test/products/kerupuk-udang-renyah/bom
+                    - generic [ref=f1e1056]: Kudapan & Snack Box
+                  - cell "Rp 1.000" [ref=f1e1057]
+                  - cell "Rp 3.000" [ref=f1e1058]
+                  - cell "66.7%" [ref=f1e1059]
+        - generic [ref=f1e1063]:
+          - generic [ref=f1e1064]:
+            - generic [ref=f1e1065]:
+              - generic [ref=f1e1069]:
+                - heading "Margin & Selling Price Simulation" [level=2] [ref=f1e1070]
+                - paragraph [ref=f1e1071]: Simulate instant recommended prices based on target gross margin
+              - link "Full Calculator" [ref=f1e1072] [cursor=pointer]:
+                - /url: http://cooca_core.test/calculator
+            - generic [ref=f1e1075]:
+              - generic [ref=f1e1076]:
+                - generic [ref=f1e1077]: Estimated Base COGS
+                - generic [ref=f1e1078]:
+                  - generic: Rp
+                  - spinbutton "Estimated Base COGS" [ref=f1e1079]
+              - generic [ref=f1e1080]:
+                - generic [ref=f1e1081]: Target Gross Profit (Margin %)
+                - slider "Target Gross Profit (Margin %)" [ref=f1e1083] [cursor=pointer]: "43"
+                - generic [ref=f1e1084]: "Quick Choices:"
+            - generic [ref=f1e1087]:
+              - generic [ref=f1e1088]:
+                - generic [ref=f1e1089]: Recommended Price
+                - generic [ref=f1e1090]: Rp
+                - generic [ref=f1e1091]: Cost / (1 - Margin%)
+              - generic [ref=f1e1092]:
+                - generic [ref=f1e1093]: Gross Profit / Unit
+                - generic [ref=f1e1094]: Rp
+                - generic [ref=f1e1095]: Estimated profit amount
+              - generic [ref=f1e1096]:
+                - generic [ref=f1e1097]: Cost Markup
+                - generic [ref=f1e1098]: "%"
+                - generic [ref=f1e1099]: Base price increase
+          - generic [ref=f1e1100]:
+            - generic [ref=f1e1101]:
+              - heading "Quick Shortcuts" [level=2] [ref=f1e1102]
+              - paragraph [ref=f1e1103]: Fast access to analysis and reporting modules
+            - generic [ref=f1e1104]:
+              - link "Raw Materials & History" [ref=f1e1105] [cursor=pointer]:
+                - /url: http://cooca_core.test/materials
+              - link "What-If Simulator" [ref=f1e1111] [cursor=pointer]:
+                - /url: http://cooca_core.test/simulator
+              - link "Break-Even Point (BEP)" [ref=f1e1117] [cursor=pointer]:
+                - /url: http://cooca_core.test/profitability
+              - link "Profit & COGS Reports" [ref=f1e1123] [cursor=pointer]:
+                - /url: http://cooca_core.test/reports
+    - contentinfo [ref=f1e1129]:
+      - generic [ref=f1e1130]: © 2026 Cooca (cooca.id). Business Operating System.
+      - generic [ref=f1e1131]:
+        - link "Docs" [ref=f1e1132] [cursor=pointer]:
+          - /url: http://cooca_core.test/docs
+        - generic [ref=f1e1133]: •
+        - link "Business Templates" [ref=f1e1134] [cursor=pointer]:
+          - /url: http://cooca_core.test/settings
+```
+
+# Test source
+
+```ts
+  1  | import { test as setup, expect } from '@playwright/test';
+  2  | import fs from 'fs';
+  3  | import path from 'path';
+  4  | 
+  5  | const authFile = 'tests/e2e/.auth/user.json';
+  6  | 
+  7  | setup('authenticate as owner/demo user', async ({ page }) => {
+  8  |   // Ensure directory exists
+  9  |   const authDir = path.dirname(authFile);
+  10 |   if (!fs.existsSync(authDir)) {
+  11 |     fs.mkdirSync(authDir, { recursive: true });
+  12 |   }
+  13 | 
+  14 |   // Navigate to login page
+  15 |   await page.goto('/login');
+  16 | 
+  17 |   // Verify login page loaded
+  18 |   await expect(page.locator('input[name="email"]')).toBeVisible({ timeout: 15000 });
+  19 | 
+  20 |   // Fill credentials
+  21 |   await page.fill('input[name="email"]', 'demo@cooca.id');
+  22 |   await page.fill('input[name="password"]', 'password123');
+  23 | 
+  24 |   // Submit form
+  25 |   await Promise.all([
+> 26 |     page.waitForURL((url) => !url.pathname.includes('/login'), { timeout: 20000 }),
+     |          ^ TimeoutError: page.waitForURL: Timeout 20000ms exceeded.
+  27 |     page.click('button[type="submit"]')
+  28 |   ]);
+  29 | 
+  30 |   // Ensure session is established
+  31 |   console.log('Login successful! Current URL:', page.url());
+  32 | 
+  33 |   // Save auth state
+  34 |   await page.context().storageState({ path: authFile });
+  35 | });
+  36 | 
+  37 | 
+```

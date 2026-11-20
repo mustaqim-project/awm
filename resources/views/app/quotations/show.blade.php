@@ -8,6 +8,7 @@
 <div class="max-w-[1080px] mx-auto space-y-6 pb-28 lg:pb-12" x-data="{
     convertModalOpen: false,
     deleteModalOpen: false,
+    emailModalOpen: false,
     openConvert() {
         this.convertModalOpen = true;
     },
@@ -25,6 +26,12 @@
     },
     submitDelete() {
         document.getElementById('form-delete-quotation-show').submit();
+    },
+    openEmailModal() {
+        this.emailModalOpen = true;
+    },
+    closeEmailModal() {
+        this.emailModalOpen = false;
     }
 }">
     <!-- ===================================================== -->
@@ -107,6 +114,13 @@
                 <span>{{ __('sales.quotations.btn_whatsapp') }}</span>
             </a>
             @endif
+
+            <!-- Send Quotation via Email -->
+            <button type="button" @click="openEmailModal()"
+               class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-medium text-[#007AFF] dark:text-[#0A84FF] bg-[#007AFF]/10 hover:bg-[#0071E3]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+                <span>{{ __('communication.send_email_button') }}</span>
+            </button>
 
             @if($quotation->status === 'draft' && \App\Support\Context::hasPermission('sales.pipeline'))
             <button type="button" @click="openDelete()" class="min-h-[44px] sm:min-h-0 h-11 sm:h-9 px-3.5 rounded-[10px] text-[13px] font-semibold text-[#FF3B30] bg-[#FF3B30]/10 hover:bg-[#FF3B30]/15 active:scale-[0.97] active:opacity-80 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
@@ -330,6 +344,85 @@
                         <button type="button" @click="submitDelete()"
                                 class="min-h-[44px] py-3 text-[#FF3B30] font-semibold active:bg-black/5 dark:active:bg-white/5 transition-colors cursor-pointer">{{ __('common.delete') }}</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Send Quotation via Email Modal (Native Apple HIG Dialog) -->
+    <template x-teleport="body">
+        <div x-show="emailModalOpen"
+             x-cloak
+             class="fixed inset-0 z-[220] overflow-y-auto"
+             @keydown.escape.window="closeEmailModal()"
+             role="dialog"
+             aria-modal="true">
+
+            <div x-show="emailModalOpen"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+                 @click="closeEmailModal()"></div>
+
+            <div class="flex min-h-full items-center justify-center p-4">
+                <div x-show="emailModalOpen"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95"
+                     class="w-full max-w-[480px] rounded-[20px] bg-white dark:bg-[#1C1C1E] border border-black/10 dark:border-white/10 shadow-2xl overflow-hidden transition-all text-left p-6 space-y-5"
+                     @click.stop>
+
+                    <div class="flex items-start justify-between border-b border-black/5 dark:border-white/10 pb-4">
+                        <div>
+                            <h3 class="text-[17px] font-bold text-black dark:text-white tracking-tight flex items-center gap-2">
+                                <i data-lucide="mail" class="w-4 h-4 text-[#007AFF]"></i>
+                                <span>{{ __('communication.send_quotation_modal_title') }}</span>
+                            </h3>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mt-0.5">
+                                {{ __('communication.send_quotation_modal_subtitle') }}
+                            </p>
+                        </div>
+                        <button type="button" @click="closeEmailModal()" class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white">
+                            <i data-lucide="x" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <form action="{{ route('sales.quotations.send-email', $quotation) }}" method="POST" class="space-y-4">
+                        @csrf
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('communication.recipient_email_label') }} *</label>
+                            <input type="email" name="recipient_email" value="{{ $quotation->customer->email ?? '' }}" required
+                                   class="w-full h-11 px-3.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF]">
+                        </div>
+
+                        <div>
+                            <label class="block text-[12px] font-semibold text-black/70 dark:text-white/70 mb-1.5">{{ __('communication.additional_notes_label') }}</label>
+                            <textarea name="custom_notes" rows="3" placeholder="{{ __('communication.additional_notes_placeholder') }}"
+                                      class="w-full p-3.5 rounded-[10px] bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[13px] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#007AFF] resize-none"></textarea>
+                        </div>
+
+                        <div class="p-3 rounded-[10px] bg-[#007AFF]/8 border border-[#007AFF]/20 text-[12px] text-[#007AFF] dark:text-[#0A84FF] flex items-center gap-2">
+                            <i data-lucide="paperclip" class="w-4 h-4 shrink-0"></i>
+                            <span>{{ __('communication.pdf_attachment_included') }}</span>
+                        </div>
+
+                        <div class="flex items-center justify-end gap-3 pt-2">
+                            <button type="button" @click="closeEmailModal()" class="h-10 px-4 rounded-[10px] text-[13px] font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+                                {{ __('communication.cancel') }}
+                            </button>
+                            <button type="submit" class="h-10 px-5 rounded-[10px] text-[13px] font-semibold text-white bg-[#007AFF] hover:bg-[#0071E3] active:scale-[0.98] transition-all flex items-center gap-2 shadow-[0_2px_6px_rgba(0,122,255,0.25)]">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                <span>{{ __('communication.send_now') }}</span>
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

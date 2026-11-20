@@ -222,6 +222,15 @@ final class RbacSeeder extends Seeder
             // ─── Unified Data Exchange / Import ───────────────────────
             'import.view'                 => ['Lihat Data Exchange Hub',                'import',      'Melihat hub import dan mengunduh spreadsheet template resmi.'],
             'import.manage'               => ['Eksekusi Import Data Massal',            'import',      'Mengunggah dan mengeksekusi import massal produk, bahan baku, resep, dan stok.'],
+
+            // ─── Operasional, Proyek & Kalender ───────────────────────
+            'operations.view'             => ['Lihat Modul Operasional',                'operations',  'Akses menu utama operasional, proyek, tugas, dan kalender kegiatan.'],
+            'projects.view'               => ['Lihat Manajemen Proyek',                 'operations',  'Melihat daftar proyek, kanban board, timeline, dan progres kerja.'],
+            'projects.manage'             => ['Kelola Proyek & Milestone',              'operations',  'Membuat, mengubah status, budget, anggota tim, dan menghapus proyek.'],
+            'tasks.view'                  => ['Lihat Todo List & Tugas',                'operations',  'Melihat daftar tugas, filter prioritas, dan status pengerjaan.'],
+            'tasks.manage'                => ['Kelola Tugas & Checklist',               'operations',  'Membuat tugas baru, checklist subtask, log waktu, dan status selesai.'],
+            'calendar.view'               => ['Lihat Kalender Kegiatan',                'operations',  'Melihat jadwal acara, meeting, dan agenda kalender operasional.'],
+            'calendar.manage'             => ['Kelola Kalender & Sinkronisasi Google',  'operations',  'Menambah kegiatan, mengatur pengingat otomatis, dan sinkronisasi Google Calendar.'],
         ];
     }
 
@@ -334,6 +343,13 @@ final class RbacSeeder extends Seeder
             'feedback.create',
             'hrm.view',
             'hrm.manage',
+            'operations.view',
+            'projects.view',
+            'projects.manage',
+            'tasks.view',
+            'tasks.manage',
+            'calendar.view',
+            'calendar.manage',
             'hrm.attendance.manage',
             'hrm.payroll.view',
             'hrm.payroll.manage',

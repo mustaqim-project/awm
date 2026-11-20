@@ -57,6 +57,10 @@ use App\Http\Controllers\Web\ProfitabilityWebController;
 use App\Http\Controllers\Web\Purchasing\GoodsReceiptWebController;
 use App\Http\Controllers\Web\PurchaseReturnWebController;
 use App\Http\Controllers\Web\Purchasing\SupplierInvoiceWebController;
+use App\Http\Controllers\Web\Operations\CalendarWebController;
+use App\Http\Controllers\Web\Operations\GoogleCalendarWebController;
+use App\Http\Controllers\Web\Operations\ProjectWebController;
+use App\Http\Controllers\Web\Operations\TaskWebController;
 use App\Http\Controllers\Web\PurchaseOrderWebController;
 use App\Http\Controllers\Web\ReportWebController;
 use App\Http\Controllers\Web\RoleWebController;
@@ -273,6 +277,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::post('/purchase-orders/{purchaseOrder}/confirm', [PurchaseOrderWebController::class, 'confirm'])->middleware('require.permission:purchasing.manage')->name('purchase-orders.confirm');
         Route::post('/purchase-orders/{purchaseOrder}/cancel', [PurchaseOrderWebController::class, 'cancel'])->middleware('require.permission:purchasing.manage')->name('purchase-orders.cancel');
         Route::post('/purchase-orders/{purchaseOrder}/generate-invoice', [PurchaseOrderWebController::class, 'generateInvoice'])->middleware('require.permission:purchasing.manage')->name('purchase-orders.generate-invoice');
+        Route::post('/purchase-orders/{purchaseOrder}/send-email', [PurchaseOrderWebController::class, 'sendEmail'])->middleware('require.permission:purchasing.manage')->name('purchase-orders.send-email');
         Route::delete('/purchase-orders/{purchaseOrder}', [PurchaseOrderWebController::class, 'destroy'])->middleware('require.permission:purchasing.manage')->name('purchase-orders.destroy');
 
         // Goods Receipt (Penerimaan Barang Fisik dari PO & 1-Klik Beli ke Stok)
@@ -326,6 +331,7 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
         Route::put('/sales/quotations/{quotation}', [QuotationWebController::class, 'update'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.update');
         Route::get('/sales/quotations/{quotation}/pdf', [QuotationWebController::class, 'pdf'])->middleware('require.permission:sales.view')->name('sales.quotations.pdf');
         Route::get('/sales/quotations/{quotation}/print', [QuotationWebController::class, 'print'])->middleware('require.permission:sales.view')->name('sales.quotations.print');
+        Route::post('/sales/quotations/{quotation}/send-email', [QuotationWebController::class, 'sendEmail'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.send-email');
         Route::post('/sales/quotations/{quotation}/convert', [QuotationWebController::class, 'convertToSalesOrder'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.convert');
         Route::delete('/sales/quotations/{quotation}', [QuotationWebController::class, 'destroy'])->middleware('require.permission:sales.pipeline')->name('sales.quotations.destroy');
 
@@ -1140,5 +1146,64 @@ Route::middleware(['auth:web', 'wa.otp'])->group(function (): void {
             });
 
         });
+
+        // ─── Operations: Project Management, Todo List, & Calendar ───────────────────
+        Route::prefix('operations')->name('operations.')->group(function (): void {
+            // Projects
+            Route::get('/projects', [ProjectWebController::class, 'index'])->middleware('require.permission:projects.view')->name('projects.index');
+            Route::post('/projects', [ProjectWebController::class, 'store'])->middleware('require.permission:projects.manage')->name('projects.store');
+            Route::get('/projects/{project}', [ProjectWebController::class, 'show'])->middleware('require.permission:projects.view')->name('projects.show');
+            Route::put('/projects/{project}', [ProjectWebController::class, 'update'])->middleware('require.permission:projects.manage')->name('projects.update');
+            Route::patch('/projects/{project}/status', [ProjectWebController::class, 'updateStatus'])->middleware('require.permission:projects.manage')->name('projects.status');
+            Route::delete('/projects/{project}', [ProjectWebController::class, 'destroy'])->middleware('require.permission:projects.manage')->name('projects.destroy');
+
+            // Tasks / Todo List
+            Route::get('/tasks', [TaskWebController::class, 'index'])->middleware('require.permission:tasks.view')->name('tasks.index');
+            Route::post('/tasks', [TaskWebController::class, 'store'])->middleware('require.permission:tasks.manage')->name('tasks.store');
+            Route::get('/tasks/{task}', [TaskWebController::class, 'show'])->middleware('require.permission:tasks.view')->name('tasks.show');
+            Route::put('/tasks/{task}', [TaskWebController::class, 'update'])->middleware('require.permission:tasks.manage')->name('tasks.update');
+            Route::post('/tasks/{task}/toggle', [TaskWebController::class, 'toggleComplete'])->middleware('require.permission:tasks.manage')->name('tasks.toggle');
+            Route::post('/tasks/{task}/checklists', [TaskWebController::class, 'storeChecklist'])->middleware('require.permission:tasks.manage')->name('tasks.checklists.store');
+            Route::post('/tasks/checklists/{checklist}/toggle', [TaskWebController::class, 'toggleChecklist'])->middleware('require.permission:tasks.manage')->name('tasks.checklists.toggle');
+            Route::post('/tasks/{task}/time-logs', [TaskWebController::class, 'storeTimeLog'])->middleware('require.permission:tasks.manage')->name('tasks.time-logs.store');
+            Route::delete('/tasks/{task}', [TaskWebController::class, 'destroy'])->middleware('require.permission:tasks.manage')->name('tasks.destroy');
+
+            // Calendar & Google Sync
+            Route::get('/calendar', [CalendarWebController::class, 'index'])->middleware('require.permission:calendar.view')->name('calendar.index');
+            Route::get('/calendar/events', [CalendarWebController::class, 'eventsJson'])->middleware('require.permission:calendar.view')->name('calendar.events');
+            Route::post('/calendar/events', [CalendarWebController::class, 'store'])->middleware('require.permission:calendar.manage')->name('calendar.events.store');
+            Route::put('/calendar/events/{event}', [CalendarWebController::class, 'update'])->middleware('require.permission:calendar.manage')->name('calendar.events.update');
+            Route::delete('/calendar/events/{event}', [CalendarWebController::class, 'destroy'])->middleware('require.permission:calendar.manage')->name('calendar.events.destroy');
+            Route::get('/calendar/settings', [CalendarWebController::class, 'settings'])->middleware('require.permission:calendar.manage')->name('calendar.settings');
+
+            // Google OAuth & Sync Actions
+            Route::get('/calendar/google/connect', [GoogleCalendarWebController::class, 'redirect'])->middleware('require.permission:calendar.manage')->name('calendar.google.connect');
+            Route::get('/calendar/google/callback', [GoogleCalendarWebController::class, 'callback'])->name('calendar.google.callback');
+            Route::post('/calendar/google/sync-now', [GoogleCalendarWebController::class, 'syncNow'])->middleware('require.permission:calendar.manage')->name('calendar.google.sync-now');
+            Route::post('/calendar/google/disconnect', [GoogleCalendarWebController::class, 'disconnect'])->middleware('require.permission:calendar.manage')->name('calendar.google.disconnect');
+        });
+
+        // Convenient Top-Level Aliases
+        Route::get('/projects', fn() => redirect()->route('operations.projects.index'))->name('projects.index');
+        Route::get('/tasks', fn() => redirect()->route('operations.tasks.index'))->name('tasks.index');
+        Route::get('/calendar', fn() => redirect()->route('operations.calendar.index'))->name('calendar.index');
+
+        // ─── Business Email & Communication: Multi-SMTP, Templates, Reminders, Inbound Reader ───────
+        Route::prefix('communication')->name('communication.')->group(function (): void {
+            Route::get('/', fn() => redirect()->route('communication.settings.index'))->name('index');
+            Route::get('/settings', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'index'])->name('settings.index');
+            Route::get('/config', fn() => redirect()->route('communication.settings.index'))->name('settings');
+            Route::post('/settings/smtp', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'updateSmtp'])->name('settings.smtp.update');
+            Route::post('/settings/test-smtp', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'testSmtp'])->name('settings.smtp.test');
+            Route::get('/templates', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'templates'])->name('templates.index');
+            Route::post('/templates', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'updateTemplate'])->name('templates.update');
+            Route::post('/templates/reset', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'resetTemplate'])->name('templates.reset');
+            Route::get('/reminders', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'reminders'])->name('reminders.index');
+            Route::post('/reminders', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'updateReminders'])->name('reminders.update');
+            Route::get('/inbound', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'inbound'])->name('inbound.index');
+            Route::post('/inbound/check-now', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'checkInboundNow'])->name('inbound.check-now');
+            Route::get('/notifications/feed', [\App\Domain\Communication\Controllers\BusinessMailSettingsWebController::class, 'notificationsFeed'])->name('notifications.feed');
+        });
+
     });
 });

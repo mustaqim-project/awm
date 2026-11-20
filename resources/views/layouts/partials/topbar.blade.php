@@ -371,6 +371,223 @@
         </div>
         @endif
 
+        <!-- Real-Time Email & Communication Notification Center (Bento Apple HIG Popover) -->
+        @if(\App\Support\Context::isOwner() || \App\Support\Context::hasPermission('sales.view') || \App\Support\Context::hasPermission('purchasing.view') || \App\Support\Context::hasPermission('invoices.view') || \App\Support\Context::hasPermission('settings.view'))
+        <div class="relative" x-data="{
+            open: false,
+            activeTab: 'inbound',
+            loading: false,
+            isCheckingNow: false,
+            unreadCount: 0,
+            sentTodayCount: 0,
+            inbound: [],
+            sent: [],
+            hasFetched: false,
+            async fetchFeed() {
+                this.loading = true;
+                try {
+                    const res = await fetch('{{ route('communication.notifications.feed') }}');
+                    const json = await res.json();
+                    if (json.success) {
+                        this.unreadCount = json.unread_inbound_count || 0;
+                        this.sentTodayCount = json.sent_today_count || 0;
+                        this.inbound = json.inbound || [];
+                        this.sent = json.sent || [];
+                    }
+                } catch (e) {
+                    // silently handle
+                } finally {
+                    this.loading = false;
+                    this.hasFetched = true;
+                }
+            },
+            async checkNow() {
+                this.isCheckingNow = true;
+                try {
+                    const res = await fetch('{{ route('communication.inbound.check-now') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    });
+                    const data = await res.json();
+                    if (data.message && typeof AppAlert !== 'undefined') {
+                        if (data.success) {
+                            AppAlert.success(data.message);
+                        } else {
+                            AppAlert.warning(data.message);
+                        }
+                    }
+                    await this.fetchFeed();
+                } catch (err) {
+                    if (typeof AppAlert !== 'undefined') {
+                        AppAlert.error('Gagal memeriksa email: ' + err.message);
+                    }
+                } finally {
+                    this.isCheckingNow = false;
+                }
+            },
+            toggle() {
+                this.open = !this.open;
+                if (this.open) {
+                    this.fetchFeed();
+                }
+            }
+        }" x-init="fetchFeed()" @click.outside="open = false" @keydown.esc.window="open = false">
+            <button type="button" @click="toggle()"
+                class="relative h-8.5 w-8.5 sm:h-8 sm:w-8 rounded-[9px] bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] border border-black/5 dark:border-white/10 text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white flex items-center justify-center transition-all cursor-pointer active:scale-95"
+                title="{{ __('communication.notif_center_title') }}" aria-label="{{ __('communication.notif_center_title') }}">
+                <i data-lucide="mail" class="w-4 h-4"></i>
+                <span x-show="unreadCount > 0" x-cloak
+                    class="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 rounded-full bg-[#007AFF] text-white text-[10px] font-extrabold flex items-center justify-center shadow-xs"
+                    x-text="unreadCount > 99 ? '99+' : unreadCount">
+                </span>
+                <span x-show="unreadCount === 0 && sentTodayCount > 0" x-cloak
+                    class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#34C759] shadow-xs">
+                </span>
+            </button>
+
+            <!-- Dropdown Popover (macOS / iOS Sheet) -->
+            <div x-show="open" x-cloak
+                x-transition:enter="transition ease-out duration-150"
+                x-transition:enter-start="opacity-0 scale-95 -translate-y-1"
+                x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-100"
+                x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="opacity-0 scale-95 -translate-y-1"
+                class="absolute right-0 mt-2 w-84 sm:w-96 rounded-[18px] bg-white/95 dark:bg-[#1C1C1E]/95 backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.2)] p-3 z-50 space-y-2 text-[13px]">
+                
+                <!-- Popover Header -->
+                <div class="flex items-center justify-between pb-2 border-b border-black/[0.06] dark:border-white/[0.08]">
+                    <div class="flex items-center gap-2">
+                        <div class="w-7 h-7 rounded-lg bg-[#007AFF]/12 text-[#007AFF] flex items-center justify-center shrink-0">
+                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-[13px] text-black dark:text-white leading-tight">{{ __('communication.notif_center_title') }}</h4>
+                            <p class="text-[11px] text-black/50 dark:text-white/50 leading-tight">{{ __('communication.notif_center_subtitle') }}</p>
+                        </div>
+                    </div>
+                    <button type="button" @click="checkNow()" :disabled="isCheckingNow"
+                        class="px-2 py-1 rounded-md text-[11px] font-semibold text-[#007AFF] hover:bg-[#007AFF]/10 transition flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                        title="{{ __('communication.notif_check_now') }}">
+                        <i data-lucide="refresh-cw" class="w-3 h-3" :class="isCheckingNow ? 'animate-spin' : ''"></i>
+                        <span x-text="isCheckingNow ? 'Memeriksa...' : '{{ __('communication.notif_check_now') }}'"></span>
+                    </button>
+                </div>
+
+                <!-- Tabs: Inbound vs Sent -->
+                <div class="flex p-0.5 rounded-[10px] bg-black/[0.04] dark:bg-white/[0.06] text-[12px] font-semibold">
+                    <button type="button" @click="activeTab = 'inbound'"
+                        class="flex-1 py-1 px-2 rounded-[8px] transition flex items-center justify-center gap-1.5 cursor-pointer"
+                        :class="activeTab === 'inbound' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>{{ __('communication.notif_tab_inbound') }}</span>
+                        <span x-show="unreadCount > 0" class="px-1.5 py-0.2 rounded-full text-[10px] bg-[#007AFF] text-white font-bold" x-text="unreadCount"></span>
+                    </button>
+                    <button type="button" @click="activeTab = 'sent'"
+                        class="flex-1 py-1 px-2 rounded-[8px] transition flex items-center justify-center gap-1.5 cursor-pointer"
+                        :class="activeTab === 'sent' ? 'bg-white dark:bg-[#2C2C2E] text-black dark:text-white shadow-xs' : 'text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white'">
+                        <span>{{ __('communication.notif_tab_sent') }}</span>
+                        <span x-show="sentTodayCount > 0" class="px-1.5 py-0.2 rounded-full text-[10px] bg-[#34C759] text-white font-bold" x-text="sentTodayCount"></span>
+                    </button>
+                </div>
+
+                <!-- Tab 1: Inbound List -->
+                <div x-show="activeTab === 'inbound'" class="max-h-72 overflow-y-auto space-y-1.5 custom-scrollbar py-1">
+                    <template x-if="loading">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs flex items-center justify-center gap-2">
+                            <div class="w-4 h-4 border-2 border-[#007AFF] border-t-transparent rounded-full animate-spin"></div>
+                            <span>Memuat email masuk...</span>
+                        </div>
+                    </template>
+
+                    <template x-if="!loading && inbound.length === 0">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs space-y-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center mx-auto">
+                                <i data-lucide="inbox" class="w-5 h-5"></i>
+                            </div>
+                            <p class="font-semibold text-black/80 dark:text-white/80">{{ __('communication.notif_empty_inbound') }}</p>
+                        </div>
+                    </template>
+
+                    <template x-for="item in inbound" :key="item.id">
+                        <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.06] flex items-start gap-2.5 transition">
+                            <div class="w-7 h-7 rounded-lg bg-[#007AFF]/10 text-[#007AFF] flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center justify-between gap-1">
+                                    <h5 class="font-semibold text-[12.5px] text-black dark:text-white truncate" x-text="item.from_name"></h5>
+                                    <span class="text-[10px] text-black/40 dark:text-white/40 shrink-0 font-mono" x-text="item.received_at"></span>
+                                </div>
+                                <p class="text-[11.5px] text-black/70 dark:text-white/70 truncate mt-0.5" x-text="item.subject"></p>
+                                <div class="flex items-center gap-1.5 mt-1">
+                                    <template x-if="item.document_number">
+                                        <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158] flex items-center gap-1 font-mono">
+                                            <i data-lucide="file-text" class="w-2.5 h-2.5"></i>
+                                            <span x-text="item.document_number"></span>
+                                        </span>
+                                    </template>
+                                    <span class="text-[10px] font-medium px-1.5 py-0.5 rounded"
+                                        :class="item.status === 'matched' ? 'bg-[#34C759]/10 text-[#248A3D] dark:text-[#30D158]' : 'bg-[#FF9500]/10 text-[#B25E00] dark:text-[#FF9F0A]'"
+                                        x-text="item.status === 'matched' ? '{{ __('communication.notif_matched_badge') }}' : '{{ __('communication.notif_received_badge') }}'"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Tab 2: Sent List -->
+                <div x-show="activeTab === 'sent'" class="max-h-72 overflow-y-auto space-y-1.5 custom-scrollbar py-1">
+                    <template x-if="loading">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs flex items-center justify-center gap-2">
+                            <div class="w-4 h-4 border-2 border-[#34C759] border-t-transparent rounded-full animate-spin"></div>
+                            <span>Memuat riwayat pengiriman...</span>
+                        </div>
+                    </template>
+
+                    <template x-if="!loading && sent.length === 0">
+                        <div class="py-6 text-center text-black/40 dark:text-white/40 text-xs space-y-1.5">
+                            <div class="w-9 h-9 rounded-full bg-[#34C759]/10 text-[#34C759] flex items-center justify-center mx-auto">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </div>
+                            <p class="font-semibold text-black/80 dark:text-white/80">{{ __('communication.notif_empty_sent') }}</p>
+                        </div>
+                    </template>
+
+                    <template x-for="item in sent" :key="item.id">
+                        <div class="p-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.06] flex items-start gap-2.5 transition">
+                            <div class="w-7 h-7 rounded-lg bg-[#34C759]/12 text-[#34C759] flex items-center justify-center shrink-0 mt-0.5">
+                                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center justify-between gap-1">
+                                    <span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#007AFF]/10 text-[#007AFF] dark:text-[#0A84FF]" x-text="item.document_type"></span>
+                                    <span class="text-[10px] text-black/40 dark:text-white/40 shrink-0 font-mono" x-text="item.created_at"></span>
+                                </div>
+                                <p class="text-[11.5px] text-black/70 dark:text-white/70 mt-1 leading-snug" x-text="item.notes"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="pt-2 border-t border-black/[0.06] dark:border-white/[0.08] flex items-center justify-between text-[11.5px]">
+                    <a href="{{ route('communication.inbound.index') }}" class="font-semibold text-[#007AFF] hover:underline flex items-center gap-1">
+                        <span>{{ __('communication.notif_view_all_inbound') }}</span>
+                        <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </a>
+                    <a href="{{ route('communication.settings.index') }}" class="font-semibold text-black/60 dark:text-white/60 hover:underline flex items-center gap-1">
+                        <i data-lucide="settings" class="w-3 h-3"></i>
+                        <span>Pengaturan</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endif
+
 
         <!-- Unified System Controls Capsule (Desktop / Tablet sm+) -->
         <div class="hidden sm:flex items-center p-0.5 rounded-[8px] bg-black/[0.04] dark:bg-white/[0.06] border border-black/5 dark:border-white/5 gap-0.5">
