@@ -468,6 +468,7 @@
                     'slug' => $editProduct->slug,
                     'name' => $editProduct->name,
                     'sku' => $editProduct->code ?? '',
+                    'bom_consumption_type' => (string) ($editProduct->bom_consumption_type ?? 'no_bom'),
                     'category_id' => (string) ($editProduct->category_id ?? ''),
                     'output_unit_id' => (string) $editProduct->output_unit_id,
                     'base_cost' => (float) $editProduct->base_cost,
@@ -498,7 +499,7 @@
                 ],
                 JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE,
             )
-            : "{ id: '', slug: '', name: '', sku: '', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, wholesale_min_qty: '', wholesale_price: '', min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: false, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
+            : "{ id: '', slug: '', name: '', sku: '', bom_consumption_type: 'no_bom', category_id: '', output_unit_id: '', base_cost: 0, selling_price: 0, wholesale_min_qty: '', wholesale_price: '', min_stock: 0, weight: 200, length: '', width: '', height: '', is_active: true, show_in_website: false, show_in_pos: true, show_in_sales_order: true, show_price_on_web: true, is_preorder: false, preorder_mode: 'customer_schedule', preorder_lead_days: 1, is_bundle: false, bundle_items: [], channel_prices: {}, description: '', image_url: '', images: [], is_marketplace_enabled: false, marketplace_mappings_count: 0 }" !!},
     
         hasActiveLandingPage: {{ $hasActiveLandingPage ? 'true' : 'false' }},
 
@@ -602,6 +603,7 @@
             const currentToggle = this.productToggles[p.id];
             this.editProduct = {
                 ...p,
+                bom_consumption_type: p.bom_consumption_type || 'no_bom',
                 wholesale_min_qty: p.wholesale_min_qty ? Number(p.wholesale_min_qty) : '',
                 wholesale_price: p.wholesale_price ? Number(p.wholesale_price) : '',
                 category_id: String(p.category_id || ''),
@@ -1064,6 +1066,15 @@
                                                         {{ __('products.badge_combo', ['count' => $prod->bundleItems->count()]) }}
                                                     </span>
                                                 @endif
+                                                @if ($prod->isConsumptionOnProduction())
+                                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30">
+                                                        {{ __('products.badge_scheme_consumption_on_production') }}
+                                                    </span>
+                                                @elseif ($prod->isConsumptionOnSale())
+                                                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30">
+                                                        {{ __('products.badge_scheme_consumption_on_sale') }}
+                                                    </span>
+                                                @endif
                                             </div>
                                             <div class="text-[11px] text-black/45 dark:text-white/45 tabular-nums">
                                                 {{ $prod->code ?? ($prod->sku ?? __('products.no_barcode')) }}</div>
@@ -1242,6 +1253,7 @@
                                     slug: '{{ $prod->slug }}',
                                     name: '{{ addslashes($prod->name) }}',
                                     sku: '{{ addslashes($prod->code ?? '') }}',
+                                    bom_consumption_type: '{{ $prod->bom_consumption_type ?? 'no_bom' }}',
                                     category_id: '{{ $prod->category_id ?? '' }}',
                                     output_unit_id: '{{ $prod->output_unit_id }}',
                                     base_cost: {{ (float) $prod->base_cost }},
@@ -1363,6 +1375,15 @@
                                             {{ __('products.badge_combo', ['count' => $prod->bundleItems->count()]) }}
                                         </span>
                                     @endif
+                                    @if ($prod->isConsumptionOnProduction())
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30">
+                                            {{ __('products.badge_scheme_consumption_on_production') }}
+                                        </span>
+                                    @elseif ($prod->isConsumptionOnSale())
+                                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-500/15 text-blue-700 dark:text-blue-300 border border-blue-500/30">
+                                            {{ __('products.badge_scheme_consumption_on_sale') }}
+                                        </span>
+                                    @endif
                                     <span class="w-2 h-2 rounded-full shrink-0"
                                         :class="productToggles['{{ $prod->id }}']?.is_active ? 'bg-[#34C759]' :
                                             'bg-[#FF3B30]'"></span>
@@ -1401,6 +1422,7 @@
                         slug: '{{ $prod->slug }}',
                         name: '{{ addslashes($prod->name) }}',
                         sku: '{{ addslashes($prod->code ?? '') }}',
+                        bom_consumption_type: '{{ $prod->bom_consumption_type ?? 'no_bom' }}',
                         category_id: '{{ $prod->category_id ?? '' }}',
                         output_unit_id: '{{ $prod->output_unit_id }}',
                         base_cost: {{ (float) $prod->base_cost }},
@@ -1656,6 +1678,18 @@
                                                 <option value="abc">{{ __('products.method_abc') }}</option>
                                                 <option value="service">{{ __('products.method_service') }}</option>
                                                 <option value="retail">{{ __('products.method_retail') }}</option>
+                                                </select>
+                                            </x-searchable-select>
+                                        </div>
+
+                                        <div>
+                                            <label
+                                                class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_bom_consumption_type') }}</label>
+                                            <x-searchable-select>
+                                                <select name="bom_consumption_type" class="sr-only">
+                                                    <option value="no_bom">{{ __('products.scheme_no_bom') }}</option>
+                                                    <option value="consumption_on_sale">{{ __('products.scheme_consumption_on_sale') }}</option>
+                                                    <option value="consumption_on_production">{{ __('products.scheme_consumption_on_production') }}</option>
                                                 </select>
                                             </x-searchable-select>
                                         </div>
@@ -2341,6 +2375,30 @@
                                                     </select>
                                                 </x-searchable-select>
                                             </div>
+                                        </div>
+
+                                        <div>
+                                            <label
+                                                class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_bom_consumption_type') }}</label>
+                                            <x-searchable-select>
+                                                <select name="bom_consumption_type" x-model="editProduct.bom_consumption_type" class="sr-only">
+                                                    <option value="no_bom">{{ __('products.scheme_no_bom') }}</option>
+                                                    <option value="consumption_on_sale">{{ __('products.scheme_consumption_on_sale') }}</option>
+                                                    <option value="consumption_on_production">{{ __('products.scheme_consumption_on_production') }}</option>
+                                                </select>
+                                            </x-searchable-select>
+                                        </div>
+
+                                        <div>
+                                            <label
+                                                class="block font-medium text-black/70 dark:text-white/70 mb-1 text-[13px]">{{ __('products.label_bom_consumption_type') }}</label>
+                                            <x-searchable-select>
+                                                <select name="bom_consumption_type" x-model="editProduct.bom_consumption_type" class="sr-only">
+                                                    <option value="no_bom">{{ __('products.scheme_no_bom') }}</option>
+                                                    <option value="consumption_on_sale">{{ __('products.scheme_consumption_on_sale') }}</option>
+                                                    <option value="consumption_on_production">{{ __('products.scheme_consumption_on_production') }}</option>
+                                                </select>
+                                            </x-searchable-select>
                                         </div>
 
                                         <div>

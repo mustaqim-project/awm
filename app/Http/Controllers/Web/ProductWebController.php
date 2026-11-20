@@ -382,6 +382,7 @@ final class ProductWebController extends Controller implements HasMiddleware
             'business_type_hint' => ['nullable', 'string'],
             'description' => ['nullable', 'string', 'max:2000'],
             'costing_method' => ['required', 'string', 'in:simple,per_unit,recipe_bom,job,process,abc,service,retail,custom'],
+            'bom_consumption_type' => ['nullable', 'string', 'in:no_bom,consumption_on_sale,consumption_on_production'],
             'show_in_website' => ['nullable', 'boolean'],
             'show_in_pos' => ['nullable', 'boolean'],
             'show_in_sales_order' => ['nullable', 'boolean'],
@@ -413,6 +414,8 @@ final class ProductWebController extends Controller implements HasMiddleware
         $product = Product::create([
             'business_id' => $business->id,
             'type' => Product::TYPE_GOODS,
+            'bom_consumption_type' => $validated['bom_consumption_type']
+                ?? ($validated['costing_method'] === 'recipe_bom' ? Product::BOM_CONSUMPTION_ON_SALE : Product::BOM_NO_BOM),
             'category_id' => $validated['category_id'] ?? $validated['product_category_id'] ?? null,
             'output_unit_id' => $validated['output_unit_id'],
             'code' => $validated['sku'] ?? null,
@@ -601,6 +604,7 @@ final class ProductWebController extends Controller implements HasMiddleware
             'channel_prices' => ['nullable', 'array'],
             'channel_prices.*' => ['nullable', 'numeric', 'gte:0'],
             'description' => ['nullable', 'string'],
+            'bom_consumption_type' => ['nullable', 'string', 'in:no_bom,consumption_on_sale,consumption_on_production'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096', 'dimensions:max_width=2400,max_height=2400'],
             'remove_image' => ['nullable', 'boolean'],
             'gallery_images' => ['nullable', 'array', 'max:10'],
@@ -628,6 +632,7 @@ final class ProductWebController extends Controller implements HasMiddleware
 
         $product->update([
             'name' => $validated['name'],
+            'bom_consumption_type' => $validated['bom_consumption_type'] ?? $product->bom_consumption_type,
             'category_id' => $validated['category_id'] ?? null,
             'output_unit_id' => $validated['output_unit_id'],
             'code' => $validated['sku'] ?? $product->code,

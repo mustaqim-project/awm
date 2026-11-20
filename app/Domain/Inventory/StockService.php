@@ -276,7 +276,65 @@ final class StockService
             return $movements;
         }
 
-        // Cek ketersediaan stok fisik barang jadi (Finished Goods) di lokasi ini atau child sub-warehouse
+        // =========================================================================
+        // SKEMA 1: MANUFAKTUR / MAKE TO STOCK (consumption_on_production)
+        // =========================================================================
+        // Produk wajib diproduksi via SPKP terlebih dahulu.
+        // Bahan baku sudah dipotong saat proses produksi (issueMaterials).
+        // Saat penjualan kasir/POS: HANYA potong stok barang jadi (Finished Goods).
+        // HARAM memotong bahan baku kembali (Anti-Double Deduction).
+        // =========================================================================
+        if ($productModel->isConsumptionOnProduction()) {
+            $finishedStockLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
+            return [
+                $this->recordMovement(
+                    businessId: $businessId,
+                    locationId: $finishedStockLocationId,
+                    productId: $productModel->id,
+                    movementType: $movementType,
+                    quantityChange: -abs($productQuantity),
+                    unitCost: $unitCost,
+                    referenceId: $orderId,
+                    referenceNumber: $orderNumber,
+                    notes: ($notes ?? "Penjualan Produk Manufaktur {$productModel->name} #{$orderNumber}") . " (Stok Barang Jadi)",
+                    userId: $userId,
+                    materialId: null
+                ),
+            ];
+        }
+
+        // =========================================================================
+        // SKEMA 2: RETAIL / TRADING GOODS (no_bom)
+        // =========================================================================
+        // Produk dibeli dari supplier dan dijual kembali tanpa BOM maupun produksi.
+        // Pemotongan stok langsung pada stok fisik barang jadi.
+        // =========================================================================
+        if ($productModel->isNoBom()) {
+            $targetLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
+            return [
+                $this->recordMovement(
+                    businessId: $businessId,
+                    locationId: $targetLocationId,
+                    productId: $productModel->id,
+                    movementType: $movementType,
+                    quantityChange: -abs($productQuantity),
+                    unitCost: $unitCost,
+                    referenceId: $orderId,
+                    referenceNumber: $orderNumber,
+                    notes: ($notes ?? "Penjualan Retail {$productModel->name} #{$orderNumber}") . " (Stok Barang Jadi)",
+                    userId: $userId,
+                    materialId: null
+                ),
+            ];
+        }
+
+        // =========================================================================
+        // SKEMA 3: F&B / ON-DEMAND / MADE TO ORDER (consumption_on_sale)
+        // =========================================================================
+        // Produk diracik langsung saat ada pesanan pelanggan di kasir/POS.
+        // Jika ada stok barang jadi pre-made, potong terlebih dahulu.
+        // Sisa kuantitas otomatis memotong bahan baku sesuai resep/BOM secara realtime.
+        // =========================================================================
         $finishedStockLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
         $availableFinishedStock = (float) (InventoryStock::where('business_id', $businessId)
             ->where('location_id', $finishedStockLocationId)
@@ -286,8 +344,6 @@ final class StockService
         $movements = [];
         $remainingProductQuantity = $productQuantity;
 
-        // 1. Prioritaskan pemotongan stok produk jadi siap jual (Finished Goods) jika tersedia
-        // Mencegah pemotongan bahan baku ganda (double deduction) dan mendukung pemenuhan parsial (split fulfillment)
         if ($availableFinishedStock > 0) {
             $deductFromFinished = min($availableFinishedStock, $remainingProductQuantity);
             $movements[] = $this->recordMovement(
@@ -309,7 +365,6 @@ final class StockService
             }
         }
 
-        // 2. Sisa kuantitas yang belum terpenuhi dari barang jadi diproses via Resep / BOM (On-Demand F&B / Made-to-Order)
         $deductions = $productModel->getMaterialDeductions($remainingProductQuantity);
 
         if (!empty($deductions)) {
@@ -333,7 +388,7 @@ final class StockService
                     unitCost: $unitCost,
                     referenceId: $orderId,
                     referenceNumber: $orderNumber,
-                    notes: ($notes ?? "Penjualan Produk {$productModel->name} #{$orderNumber}") . ($remainingProductQuantity < $productQuantity ? " (Sisa On-Demand: {$remainingProductQuantity})" : ""),
+                    notes: ($notes ?? "Penjualan F&B {$productModel->name} #{$orderNumber}") . ($remainingProductQuantity < $productQuantity ? " (Sisa On-Demand: {$remainingProductQuantity})" : " (Konsumsi Resep Kasir)"),
                     userId: $userId,
                     materialId: $matId
                 );
@@ -341,7 +396,7 @@ final class StockService
             return $movements;
         }
 
-        // 3. Fallback: Potong stok produk standar langsung di lokasi target
+        // Fallback: Potong stok produk standar langsung di lokasi target
         $targetLocationId = $this->resolveDeductionLocationId($businessId, $locationId, $productModel->id, null);
 
         $movements[] = $this->recordMovement(

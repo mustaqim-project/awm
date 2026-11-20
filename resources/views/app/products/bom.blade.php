@@ -77,6 +77,22 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-[#34C759]"></span>
                     {{ __('products.badge_batch_output', ['qty' => $bomHeader->output_quantity, 'unit' => $product->outputUnit?->name ?? 'pcs']) }}
                 </span>
+                @if ($product->isConsumptionOnProduction())
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-purple-500/15 text-purple-700 dark:text-purple-300 shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                        {{ __('products.badge_scheme_consumption_on_production') }}
+                    </span>
+                @elseif ($product->isConsumptionOnSale())
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-blue-500/15 text-blue-700 dark:text-blue-300 shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                        {{ __('products.badge_scheme_consumption_on_sale') }}
+                    </span>
+                @else
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-semibold bg-gray-500/15 text-gray-700 dark:text-gray-300 shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                        {{ __('products.badge_scheme_no_bom') }}
+                    </span>
+                @endif
             </div>
             <p class="text-[13px] text-black/50 dark:text-white/50 mt-1">
                 {{ __('products.model_hpp_desc', ['name' => $costModel->name, 'method' => strtoupper($costModel->method)]) }}

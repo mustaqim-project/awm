@@ -63,6 +63,11 @@ final class ProductionService
                 ]);
             }
 
+            // Ensure the product is marked as manufacturing (consumption_on_production) to prevent double deduction at POS
+            if ($product->bom_consumption_type !== Product::BOM_CONSUMPTION_ON_PRODUCTION) {
+                $product->update(['bom_consumption_type' => Product::BOM_CONSUMPTION_ON_PRODUCTION]);
+            }
+
             // Generate Sequential Order Number: SPKP-YYYYMM-XXXX
             $orderNumber = $this->generateOrderNumber($business);
 

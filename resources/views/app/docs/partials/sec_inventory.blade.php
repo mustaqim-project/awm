@@ -172,70 +172,164 @@
         </div>
     </div>
 
-    <!-- 4. DIAGRAM RESEP BILL OF MATERIALS (BOM) & HPP OTOMATIS -->
-    <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-4 shadow-2xs">
-        <div class="flex items-center justify-between pb-2 border-b border-black/5 dark:border-white/10">
+    <!-- 4. DIAGRAM RESEP BILL OF MATERIALS (BOM), KONVERSI SATUAN & 3 SKEMA PRODUKSI -->
+    <div class="p-5 sm:p-7 rounded-2xl bg-white dark:bg-[#1C1C1E] border border-black/5 dark:border-white/10 space-y-6 shadow-2xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-black/5 dark:border-white/10 gap-3">
             <div>
-                <h3 class="text-sm sm:text-base font-bold text-black dark:text-white flex items-center gap-2">
-                    <i data-lucide="git-fork" class="w-4 h-4 text-emerald-600"></i>
-                    <span>Bagaimana Resep (Bill of Materials) &amp; Potong Stok Otomatis Bekerja?</span>
-                </h3>
-                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Satu transaksi penjualan kasir memotong banyak bahan baku sekaligus secara presisi.</p>
+                <div class="flex items-center gap-2">
+                    <h3 class="text-base sm:text-lg font-extrabold text-black dark:text-white flex items-center gap-2">
+                        <i data-lucide="git-fork" class="w-5 h-5 text-emerald-600"></i>
+                        <span>Konversi Satuan Pembelian Otomatis &amp; 3 Skema Persediaan BOM</span>
+                    </h3>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">Fitur Baru</span>
+                </div>
+                <p class="text-xs text-black/50 dark:text-white/50 mt-0.5">Panduan fleksibilitas persediaan Cooca: dari pembelian multi-satuan (Dus &rarr; Pcs &rarr; Liter &rarr; mL), kalkulasi HPP otomatis, hingga 3 model bisnis UMKM.</p>
             </div>
-            <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-md">Otomasi Kasir POS</span>
+            <div class="flex items-center gap-2 flex-wrap shrink-0">
+                <a href="{{ route('products.index') }}" class="h-8 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11.5px] font-semibold flex items-center gap-1.5 transition active:scale-95 shadow-xs">
+                    <i data-lucide="package" class="w-3.5 h-3.5"></i>
+                    <span>Kelola Produk</span>
+                </a>
+                <a href="{{ route('materials.index') }}" class="h-8 px-3 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[11.5px] font-semibold flex items-center gap-1.5 transition active:scale-95">
+                    <i data-lucide="boxes" class="w-3.5 h-3.5 text-amber-500"></i>
+                    <span>Master Bahan</span>
+                </a>
+                <a href="{{ route('production.index') }}" class="h-8 px-3 rounded-lg bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] dark:hover:bg-white/[0.1] text-black/80 dark:text-white/80 text-[11.5px] font-semibold flex items-center gap-1.5 transition active:scale-95">
+                    <i data-lucide="factory" class="w-3.5 h-3.5 text-blue-600"></i>
+                    <span>SPKP Produksi</span>
+                </a>
+            </div>
         </div>
 
-        <div class="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-3">
-            <div class="flex items-center justify-between flex-wrap gap-2 text-xs font-bold text-black dark:text-white">
-                <span class="flex items-center gap-1.5 text-sm">
-                    <i data-lucide="coffee" class="w-4 h-4 text-amber-600"></i>
-                    Contoh: Kasir Menjual 1 Cup "Kopi Susu Gula Aren"
-                </span>
-                <span class="text-emerald-600 dark:text-emerald-400 flex items-center gap-1 text-[11px]">
-                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                    Sistem Otomatis Mengurangi Bahan Baku:
-                </span>
+        <!-- 4.1 SIMULASI KONVERSI SATUAN PEMBELIAN (Contoh Kasus Susu Greenfields) -->
+        <div class="space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white flex items-center gap-2">
+                    <i data-lucide="calculator" class="w-4 h-4 text-amber-500"></i>
+                    <span>A. Simulasi Beli Multi-Satuan: Beli Dus &rarr; Simpan Liter &rarr; Pakai mL</span>
+                </h4>
+                <span class="text-[11px] font-bold text-amber-600 dark:text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">Otomatisasi Tanpa Hitung Manual</span>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2.5 text-xs">
-                <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
-                    <span class="font-bold text-black dark:text-white text-[12px] block">1. Biji Kopi Espresso</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs">-18 Gram</span>
-                    <p class="text-[10.5px] text-black/50 dark:text-white/50">HPP Rp 1.800</p>
+            <div class="p-4 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 space-y-3">
+                <div class="text-xs text-black/70 dark:text-white/70 leading-relaxed">
+                    Seringkali Anda membeli bahan baku dalam satuan besar (misal <strong>20 Dus Susu UHT Greenfields</strong> seharga <strong>Rp 150.000 / Dus</strong>), namun di dapur/bar resep diukur dalam <strong>mL</strong>. Cooca secara otomatis mengonversi satuan dan menghitung modal dasar per tetes susu secara presisi saat barang diterima di gudang:
                 </div>
 
-                <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
-                    <span class="font-bold text-black dark:text-white text-[12px] block">2. Susu Fresh Milk</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs">-120 mL</span>
-                    <p class="text-[10.5px] text-black/50 dark:text-white/50">HPP Rp 2.400</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                    <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
+                        <span class="text-[11px] font-medium text-black/50 dark:text-white/50 block">Kuantiti PO Supplier</span>
+                        <span class="font-bold text-black dark:text-white text-sm">20 Dus</span>
+                        <p class="text-[10.5px] text-black/40 dark:text-white/40">Total Faktur Rp 3.000.000</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
+                        <span class="text-[11px] font-medium text-black/50 dark:text-white/50 block">Rantai Konversi</span>
+                        <span class="font-bold text-blue-600 dark:text-blue-400 text-sm">1 Dus = 12 Pcs</span>
+                        <p class="text-[10.5px] text-black/40 dark:text-white/40">1 Pcs = 1 Liter = 1.000 mL</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
+                        <span class="text-[11px] font-medium text-black/50 dark:text-white/50 block">Saldo Stok Fisik Masuk</span>
+                        <span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">240.000 mL</span>
+                        <p class="text-[10.5px] text-black/40 dark:text-white/40">Setara 240 Liter</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
+                        <span class="text-[11px] font-medium text-black/50 dark:text-white/50 block">HPP Satuan Dasar</span>
+                        <span class="font-bold text-emerald-600 dark:text-emerald-400 text-sm">Rp 12,50 / mL</span>
+                        <p class="text-[10.5px] text-black/40 dark:text-white/40">Rp 12.500 / Liter</p>
+                    </div>
                 </div>
 
-                <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
-                    <span class="font-bold text-black dark:text-white text-[12px] block">3. Gula Aren Cair</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs">-25 mL</span>
-                    <p class="text-[10.5px] text-black/50 dark:text-white/50">HPP Rp 750</p>
-                </div>
-
-                <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
-                    <span class="font-bold text-black dark:text-white text-[12px] block">4. Cup &amp; Lid Sablon</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs">-1 Pcs</span>
-                    <p class="text-[10.5px] text-black/50 dark:text-white/50">HPP Rp 850</p>
-                </div>
-
-                <div class="p-3 rounded-xl bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 space-y-1">
-                    <span class="font-bold text-black dark:text-white text-[12px] block">5. Sedotan Bio</span>
-                    <span class="text-emerald-600 dark:text-emerald-400 font-mono font-bold text-xs">-1 Pcs</span>
-                    <p class="text-[10.5px] text-black/50 dark:text-white/50">HPP Rp 150</p>
+                <div class="p-3 rounded-xl bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/20 text-xs text-black/70 dark:text-white/70">
+                    <strong>Keuntungan Bagi Owner:</strong> Dokumen PO dan faktur hutang ke supplier tetap tertulis <em>20 Dus</em>, namun kartu stok gudang Anda langsung mencatat <em>240.000 mL</em> dengan modal <em>Rp 12,50/mL</em>. Saat kasir menjual 1 cup es kopi susu (pakai 120 mL), sistem memotong nilai modal tepat <strong>Rp 1.500</strong> tanpa ada selisih pembulatan!
                 </div>
             </div>
+        </div>
 
-            <div class="p-3 rounded-xl bg-emerald-500/[0.08] dark:bg-emerald-500/[0.12] border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-                <span class="text-black/70 dark:text-white/70">
-                    <strong>Hasil Kalkulasi HPP Otomatis:</strong> Total Modal Bahan Baku = <strong>Rp 5.950</strong>. Jika dijual Rp 18.000, margin laba kotor Anda adalah <strong>Rp 12.050 (66,9%)</strong>.
-                </span>
-                <span class="text-[11px] font-bold text-emerald-700 dark:text-emerald-400 shrink-0">
-                    Jika harga susu naik, HPP otomatis ter-update!
-                </span>
+        <!-- 4.2 TIGA (3) SKEMA PENGELOLAAN PRODUK & BOM -->
+        <div class="space-y-3 pt-2">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="text-xs sm:text-sm font-bold text-black dark:text-white flex items-center gap-2">
+                    <i data-lucide="layers" class="w-4 h-4 text-emerald-600"></i>
+                    <span>B. 3 Skema Pengelolaan Produk &amp; Resep Persediaan (Pilih Saat Buat Produk)</span>
+                </h4>
+                <span class="text-[11px] font-semibold text-black/50 dark:text-white/50">Disesuaikan dengan Karakter Bisnis Anda</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 text-xs">
+                <!-- Skema 1 -->
+                <div class="p-4 rounded-xl border border-amber-500/20 bg-amber-500/[0.03] dark:bg-amber-500/[0.06] space-y-2.5 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-amber-700 dark:text-amber-400 text-xs sm:text-[13px] flex items-center gap-1.5">
+                                <i data-lucide="coffee" class="w-4 h-4"></i>
+                                1. Penjualan Langsung
+                            </span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-500/15 text-amber-700 dark:text-amber-300">F&amp;B / Made-to-Order</span>
+                        </div>
+                        <p class="text-black/60 dark:text-white/60 text-[11.5px] leading-relaxed">
+                            <strong>Untuk:</strong> Coffee shop, kafe, restoran, booth minuman boba, katering, dan fast food.
+                        </p>
+                        <ul class="space-y-1.5 text-[11px] text-black/70 dark:text-white/70 list-disc list-inside">
+                            <li>Memiliki Resep (BOM bahan baku).</li>
+                            <li><strong>Tanpa proses pabrikasi terpisah</strong> (produk diracik saat ada pesanan).</li>
+                            <li>Setiap kasir POS klik <em>Checkout</em>, stok bahan baku (kopi, susu, sirup, cup) <strong>langsung berkurang seketika</strong>.</li>
+                            <li>Stok produk jadi tidak perlu ditimbun di gudang.</li>
+                        </ul>
+                    </div>
+                    <div class="pt-2 border-t border-amber-500/10 text-[10.5px] text-amber-700 dark:text-amber-400 font-semibold">
+                        Contoh: 1 Kopi Americano &rarr; potong 18g espresso &amp; 1 cup.
+                    </div>
+                </div>
+
+                <!-- Skema 2 -->
+                <div class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/[0.03] dark:bg-blue-500/[0.06] space-y-2.5 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-blue-700 dark:text-blue-400 text-xs sm:text-[13px] flex items-center gap-1.5">
+                                <i data-lucide="factory" class="w-4 h-4"></i>
+                                2. Manufaktur via SPKP
+                            </span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-blue-500/15 text-blue-700 dark:text-blue-300">Pabrik / Make-to-Stock</span>
+                        </div>
+                        <p class="text-black/60 dark:text-white/60 text-[11.5px] leading-relaxed">
+                            <strong>Untuk:</strong> Produsen frozen food (Tahu Bakso), konveksi baju, bakery kemasan, pabrik mebel, bengkel bubut.
+                        </p>
+                        <ul class="space-y-1.5 text-[11px] text-black/70 dark:text-white/70 list-disc list-inside">
+                            <li>Memiliki Resep BOM bahan baku &amp; melalui proses kerja bertahap.</li>
+                            <li>Bahan baku <strong>hanya berkurang saat SPKP Produksi dijalankan</strong>.</li>
+                            <li>Hasil lolos QC masuk ke <strong>Stok Barang Jadi</strong>; barang reject dicatat sebagai kerugian produksi dan biayanya diserap ke HPP unit jadi.</li>
+                            <li><strong>Bebas Potong Ganda:</strong> Saat kasir menjual barang jadi, sistem HANYA memotong stok produk jadi tanpa memotong bahan baku lagi!</li>
+                        </ul>
+                    </div>
+                    <div class="pt-2 border-t border-blue-500/10 text-[10.5px] text-blue-700 dark:text-blue-400 font-semibold">
+                        Contoh: SPKP Tahu Bakso 100 pcs &rarr; 95 lolos masuk stok, 5 reject.
+                    </div>
+                </div>
+
+                <!-- Skema 3 -->
+                <div class="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] dark:bg-emerald-500/[0.06] space-y-2.5 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-emerald-700 dark:text-emerald-400 text-xs sm:text-[13px] flex items-center gap-1.5">
+                                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                                3. Tanpa BOM (Ritel Murni)
+                            </span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-500/15 text-emerald-700 dark:text-emerald-300">Trading / Minimarket</span>
+                        </div>
+                        <p class="text-black/60 dark:text-white/60 text-[11.5px] leading-relaxed">
+                            <strong>Untuk:</strong> Minimarket, toko kelontong, apotek (obat paten jadi), toko kosmetik, aksesoris, distributor grosir.
+                        </p>
+                        <ul class="space-y-1.5 text-[11px] text-black/70 dark:text-white/70 list-disc list-inside">
+                            <li><strong>Tanpa resep atau bahan baku penyusun</strong>. Barang dibeli siap jual langsung dari supplier.</li>
+                            <li>Stok bertambah saat penerimaan barang (PO / Goods Receipt).</li>
+                            <li>Stok berkurang saat kasir scan barcode atau transaksi penjualan grosir.</li>
+                            <li>HPP dihitung otomatis dari riwayat harga beli supplier (Moving Average).</li>
+                        </ul>
+                    </div>
+                    <div class="pt-2 border-t border-emerald-500/10 text-[10.5px] text-emerald-700 dark:text-emerald-400 font-semibold">
+                        Contoh: Beli 1 Karton Aqua (24 botol) &rarr; jual eceran botol.
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -23,6 +23,12 @@ class Product extends Model
 
     public const TYPE_SERVICE = 'service';
 
+    public const BOM_CONSUMPTION_ON_SALE = 'consumption_on_sale';
+
+    public const BOM_CONSUMPTION_ON_PRODUCTION = 'consumption_on_production';
+
+    public const BOM_NO_BOM = 'no_bom';
+
     public const PREORDER_MODE_BATCH = 'merchant_batch';
 
     public const PREORDER_MODE_SCHEDULE = 'customer_schedule';
@@ -30,6 +36,7 @@ class Product extends Model
     protected $fillable = [
         'business_id',
         'type',
+        'bom_consumption_type',
         'category_id',
         'output_unit_id',
         'direct_material_id',
@@ -66,6 +73,7 @@ class Product extends Model
      */
     protected $attributes = [
         'type' => self::TYPE_GOODS,
+        'bom_consumption_type' => self::BOM_NO_BOM,
         'weight' => 200.0,
         'is_active' => true,
         'show_in_website' => false,
@@ -77,6 +85,26 @@ class Product extends Model
         'preorder_lead_days' => 1,
         'is_bundle' => false,
     ];
+
+    public function isConsumptionOnSale(): bool
+    {
+        return $this->bom_consumption_type === self::BOM_CONSUMPTION_ON_SALE;
+    }
+
+    public function isConsumptionOnProduction(): bool
+    {
+        return $this->bom_consumption_type === self::BOM_CONSUMPTION_ON_PRODUCTION;
+    }
+
+    public function isNoBom(): bool
+    {
+        return empty($this->bom_consumption_type) || $this->bom_consumption_type === self::BOM_NO_BOM;
+    }
+
+    public function hasBom(): bool
+    {
+        return in_array($this->bom_consumption_type, [self::BOM_CONSUMPTION_ON_SALE, self::BOM_CONSUMPTION_ON_PRODUCTION], true);
+    }
 
     protected static function booted(): void
     {
@@ -583,6 +611,12 @@ class Product extends Model
             return [];
         }
 
+        // Scheme rule: Manufacturing products (produced via SPKP) and Retail products (No BOM)
+        // must NEVER deduct raw materials upon sale/POS checkout!
+        if ($this->isConsumptionOnProduction() || ($this->isNoBom() && ! $this->isBundle())) {
+            return [];
+        }
+
         // Case 0: Bundle / Kombo Product Handling
         if ($this->isBundle()) {
             $deductions = [];
@@ -717,6 +751,17 @@ class Product extends Model
             ->when($locIds, fn ($q) => $q->whereIn('location_id', $locIds))
             ->sum('quantity');
 
+        // Scheme rule: For manufacturing (Make to Stock), effective stock is strictly finished goods stock!
+        // Unproduced raw materials in the warehouse are NOT yet manufactured into finished goods.
+        if ($this->isConsumptionOnProduction()) {
+            return max(0.0, $physicalStock);
+        }
+
+        // Scheme rule: For Retail / Trading goods (No BOM), stock is solely physical goods stock.
+        if ($this->isNoBom()) {
+            return max(0.0, $physicalStock);
+        }
+
         // 2. If Direct Material (e.g. Pharmacy / Retail repackaging)
         if ($this->direct_material_id) {
             $query = InventoryStock::where('material_id', $this->direct_material_id);
@@ -821,6 +866,17 @@ class Product extends Model
         }
 
         $locIds = $locationId ? Location::resolveLocationIds($locationId) : null;
+
+        // Scheme rule: For Manufacturing and Retail products, available stock is physical unreserved finished goods.
+        if ($this->isConsumptionOnProduction() || $this->isNoBom()) {
+            $query = $this->stocks();
+            if ($locIds) {
+                $query->whereIn('location_id', $locIds);
+            }
+            $qty = (float) $query->sum('quantity');
+            $reserved = (float) $query->sum('reserved_quantity');
+            return max(0.0, $qty - $reserved);
+        }
 
         // If Direct Material
         if ($this->direct_material_id) {
